@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Internal Structure</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      background: #fff;
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Internal Structure</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Internal Structure of Flowering Plants & Mammals 🚀</h1>
+        <p class="subtitle">Abumchukwu – JAMB Biology Made Visual & Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Definition: Internal Structure of a Flowering Plant</h2>
+        <p>Refers to the microscopic organization of tissues in root, stem, and leaf of angiosperms (flowering plants).</p>
+        <p>Divided into dicotyledons (dicots: 2 cotyledons) and monocotyledons (monocots: 1 cotyledon).</p>
+        <p><strong>Key focus</strong>: Identify T.S. (transverse section), relate structure to functions (absorption, support, transport, photosynthesis), distribution of supporting tissues.</p>
+
+        <h2>• Vascular Bundles – Definition & Functions</h2>
+        <p><strong>Definition</strong>: Longitudinal strands of conducting tissues (xylem + phloem), often with fibers and bundle sheath.</p>
+        <p><strong>Functions</strong>:</p>
+        <ul>
+          <li><strong>Xylem</strong>: Transports water + minerals upward (unidirectional; transpiration pull).</li>
+          <li><strong>Phloem</strong>: Transports food (sugars, amino acids) bidirectionally (translocation).</li>
+          <li>Mechanical support: Lignified xylem + sclerenchyma fibers prevent collapse.</li>
+          <li>Connects all plant parts for nutrient/water distribution and structural integrity.</li>
+        </ul>
+
+        <h2>• Xylem Structure (Key Component of Vascular Bundles)</h2>
+        <p>Composed of dead, lignified cells for strength and water conduction.</p>
+        <p><strong>Main elements</strong>:</p>
+        <ul>
+          <li><strong>Tracheids</strong>: Long, tapered, pointed cells with pits; water passes via bordered pits; common in all vascular plants.</li>
+          <li><strong>Vessels</strong> (vessel elements): Wider, shorter, tube-like; joined end-to-end with perforation plates; efficient water flow; mainly in angiosperms (dicots more).</li>
+          <li><strong>Xylem fibers</strong>: Sclerenchyma; provide mechanical support.</li>
+          <li><strong>Xylem parenchyma</strong>: Living cells; store food, aid lateral transport.</li>
+        </ul>
+        <p><strong>Types of thickening</strong> (lignin patterns):</p>
+        <ul>
+          <li>Annular/spiral (protoxylem): Early, extensible.</li>
+          <li>Scalariform/pitted/reticulate (metaxylem): Later, rigid.</li>
+        </ul>
+        <p><strong>Function</strong>: Water/mineral transport + mechanical rigidity (lignin prevents collapse under tension).</p>
+
+        <h2>• i. Root (T.S.)</h2>
+
+        <h3>Dicot Root (e.g. bean)</h3>
+        <p>Epidermis → root hairs (absorption) → thick cortex (parenchyma, storage) → endodermis (Casparian strip regulates entry) → pericycle (lateral roots) → star-shaped xylem (tetrarch: 2–6 arms) + phloem between arms → small/no pith.</p>
+        <p><strong>Vascular bundles</strong>: Central stele; xylem dominant for support/transport.</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Dicot-Root-T.S.png" alt="Transverse section of dicot root (bean) labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Dicot Root):</strong></p>
+          <ul>
+            <li><strong>Epidermis</strong>: Outermost layer with root hairs for absorption</li>
+            <li><strong>Cortex</strong>: Parenchyma cells for storage</li>
+            <li><strong>Endodermis</strong>: Casparian strip controls water/mineral entry</li>
+            <li><strong>Pericycle</strong>: Origin of lateral roots</li>
+            <li><strong>Xylem</strong>: Star-shaped, transports water upward</li>
+            <li><strong>Phloem</strong>: Between xylem arms, transports food</li>
+          </ul>
+        </div>
+
+        <h3>Monocot Root (e.g. maize)</h3>
+        <p>Epidermis → large cortex → endodermis → pericycle → polyarch xylem (>6–20 arms) around large central pith → vascular bundles in ring.</p>
+        <p><strong>Vascular bundles</strong>: Scattered around pith; sclerenchymatous conjunctive tissue.</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Monocot-Root-T.S.png" alt="Transverse section of monocot root (maize) labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Monocot Root):</strong></p>
+          <ul>
+            <li><strong>Epidermis</strong>: Outer protective layer</li>
+            <li><strong>Cortex</strong>: Large, storage tissue</li>
+            <li><strong>Endodermis</strong>: Regulates flow</li>
+            <li><strong>Pericycle</strong>: Lateral root origin</li>
+            <li><strong>Xylem</strong>: Polyarch (many arms), central support</li>
+            <li><strong>Pith</strong>: Large central storage area</li>
+          </ul>
+        </div>
+
+        <h2>• ii. Stem (T.S.)</h2>
+
+        <h3>Dicot Stem (e.g. sunflower)</h3>
+        <p>Epidermis (cuticle) → cortex (collenchyma hypodermis) → vascular bundles in ring (open: xylem inner, phloem outer, cambium between) → central pith (storage).</p>
+        <p><strong>Vascular bundles</strong>: Ring arrangement; allow secondary growth.</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Dicot-Stem-T.S.png" alt="Transverse section of dicot stem (sunflower) labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Dicot Stem):</strong></p>
+          <ul>
+            <li><strong>Epidermis</strong>: Protective layer with cuticle</li>
+            <li><strong>Hypodermis</strong>: Collenchyma – flexible support</li>
+            <li><strong>Cortex</strong>: Storage tissue</li>
+            <li><strong>Vascular bundle</strong>: Ring arrangement; open (cambium present)</li>
+            <li><strong>Xylem</strong>: Inner, water transport & support</li>
+            <li><strong>Phloem</strong>: Outer, food transport</li>
+            <li><strong>Pith</strong>: Central storage</li>
+          </ul>
+        </div>
+
+        <h3>Monocot Stem (e.g. maize)</h3>
+        <p>Epidermis → sclerenchyma hypodermis → scattered vascular bundles (closed: no cambium) in ground tissue → often hollow center.</p>
+        <p><strong>Vascular bundles</strong>: Scattered; bundle sheath + sclerenchyma caps.</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Monocot-Stem-T.S.png" alt="Transverse section of monocot stem (maize) labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Monocot Stem):</strong></p>
+          <ul>
+            <li><strong>Epidermis</strong>: Outer protection</li>
+            <li><strong>Hypodermis</strong>: Sclerenchyma – rigid support</li>
+            <li><strong>Ground tissue</strong>: Storage & support</li>
+            <li><strong>Vascular bundle</strong>: Scattered, closed (no cambium)</li>
+            <li><strong>Bundle sheath</strong>: Surrounds vascular tissue</li>
+          </ul>
+        </div>
+
+        <h2>• iii. Leaf (T.S.)</h2>
+
+        <h3>Dicot Leaf (dorsiventral, e.g. bean)</h3>
+        <p>Upper epidermis (thick cuticle, few stomata) → palisade mesophyll (columnar, chloroplast-rich) → spongy mesophyll (air spaces, gas exchange) → lower epidermis (many stomata) → veins (xylem upper, phloem lower).</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Dicot-Leaf-T.S.png" alt="Transverse section of dicot leaf labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Dicot Leaf):</strong></p>
+          <ul>
+            <li><strong>Upper epidermis</strong>: Thick cuticle, fewer stomata</li>
+            <li><strong>Palisade mesophyll</strong>: Columnar cells, max photosynthesis</li>
+            <li><strong>Spongy mesophyll</strong>: Air spaces for gas exchange</li>
+            <li><strong>Lower epidermis</strong>: Many stomata</li>
+            <li><strong>Vein</strong>: Xylem (upper), phloem (lower)</li>
+          </ul>
+        </div>
+
+        <h3>Monocot Leaf (isobilateral, e.g. maize)</h3>
+        <p>Both epidermises similar (stomata on both) → undifferentiated mesophyll → scattered vascular bundles with bundle sheath → bulliform cells (rolling).</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Monocot-Leaf-T.S.png" alt="Transverse section of monocot leaf labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Monocot Leaf):</strong></p>
+          <ul>
+            <li><strong>Epidermis</strong>: Stomata on both sides</li>
+            <li><strong>Mesophyll</strong>: Undifferentiated</li>
+            <li><strong>Vascular bundle</strong>: Scattered with bundle sheath</li>
+            <li><strong>Bulliform cells</strong>: Help in leaf rolling</li>
+          </ul>
+        </div>
+
+        <h2>• Stomata Structure (in Leaf Epidermis)</h2>
+        <p><strong>Definition</strong>: Pores in epidermis for gas exchange and transpiration.</p>
+        <p><strong>Structure</strong>:</p>
+        <ul>
+          <li>Two kidney-shaped guard cells (living, chloroplast-containing) surround stomatal pore.</li>
+          <li>Thick inner walls (thicker toward pore); thin outer walls.</li>
+          <li>Subsidiary cells (epidermal cells around guard cells; help regulate).</li>
+          <li>Sub-stomatal cavity below pore connects to air spaces in mesophyll.</li>
+        </ul>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Stomata-Structure.png" alt="Labeled stomata diagram" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Stomata):</strong></p>
+          <ul>
+            <li><strong>Guard cells</strong>: Control pore opening/closing</li>
+            <li><strong>Stomatal pore</strong>: Gas exchange & transpiration</li>
+            <li><strong>Subsidiary cells</strong>: Assist in regulation</li>
+            <li><strong>Sub-stomatal cavity</strong>: Connects to mesophyll air spaces</li>
+          </ul>
+        </div>
+
+        <h2>• Supporting Tissues Summary</h2>
+        <ul>
+          <li><strong>Collenchyma</strong>: Living, flexible; corners thickened; dicot stems/petiole.</li>
+          <li><strong>Sclerenchyma</strong>: Dead, rigid; fibers/sclereids; monocot stems, bundle caps.</li>
+          <li><strong>Xylem</strong>: Lignified; mechanical support + water transport.</li>
+          <li><strong>Phloem fibers</strong>: Sclerenchymatous; extra support near phloem.</li>
+        </ul>
+
+        <h2>• Monocotyledons vs Dicotyledonous Plants: Key Differences</h2>
+        <table border="1" cellpadding="8" style="width:100%; border-collapse: collapse; margin: 16px 0;">
+          <tr>
+            <th>Feature</th>
+            <th>Dicot</th>
+            <th>Monocot</th>
+          </tr>
+          <tr><td>Cotyledons</td><td>2</td><td>1</td></tr>
+          <tr><td>Root system</td><td>Taproot</td><td>Fibrous</td></tr>
+          <tr><td>Root T.S. vascular</td><td>Tetrarch, small pith</td><td>Polyarch, large pith</td></tr>
+          <tr><td>Stem T.S. vascular bundles</td><td>Ring, open</td><td>Scattered, closed</td></tr>
+          <tr><td>Stem hypodermis</td><td>Collenchyma</td><td>Sclerenchyma</td></tr>
+          <tr><td>Leaf venation</td><td>Reticulate</td><td>Parallel</td></tr>
+          <tr><td>Leaf symmetry</td><td>Dorsiventral</td><td>Isobilateral</td></tr>
+          <tr><td>Mesophyll</td><td>Palisade + spongy</td><td>Undifferentiated</td></tr>
+          <tr><td>Secondary growth</td><td>Present</td><td>Absent</td></tr>
+          <tr><td>Examples</td><td>Bean, mango</td><td>Maize, grass</td></tr>
+        </table>
+
+        <h2>Definition: Internal Structure of a Mammal</h2>
+        <p>Arrangement, appearance, and position of major organs in thoracic/abdominal cavities (dissection view).</p>
+        <p>Diaphragm separates thoracic (heart, lungs) from abdominal.</p>
+
+        <h3>General Arrangement</h3>
+        <p><strong>Thoracic cavity</strong>: Heart (central, pericardium), lungs (lateral).</p>
+        <p><strong>Abdominal cavity</strong>: Liver (upper right, reddish-brown), stomach (left, J-shaped), intestines (coiled), kidneys (posterior, bean-shaped), spleen (left), reproductive organs (pelvis).</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Mammalian_digestive_system_diagram.svg/800px-Mammalian_digestive_system_diagram.svg.png" alt="Mammalian internal organs diagram (labeled)" class="diagram-img">
+
+        <h3>Digestive Organs</h3>
+        <p>Esophagus → stomach (left upper) → small intestine (central, long/coiled) → large intestine (frame-like) → rectum.</p>
+        <p>Liver (large, right), pancreas (below stomach).</p>
+
+        <h3>Reproductive Organs</h3>
+        <p><strong>Male</strong>: Testes (scrotum), vas deferens, prostate.</p>
+        <p><strong>Female</strong>: Ovaries (small, lower abdomen), uterus (central, pear-shaped), vagina.</p>
+        <p>Position: Lower abdomen/pelvis.</p>
+
+        <h3>Excretory Organs</h3>
+        <p>Kidneys (reddish-brown, posterior; right slightly lower) → ureters → bladder (pelvis) → urethra.</p>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Abumchukwu, ace your JAMB Biology! 🌟 Master these internal structures!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
+        <button class="explore-btn" onclick="window.location.href='question.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item active">
+      <button class="neumorphic-btn">🏠</button>
+      <p>Home</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">⚙️</button>
+      <p>Settings</p>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
