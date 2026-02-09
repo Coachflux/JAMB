@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Evolutionary Trends</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Evolutionary Trends</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Evolutionary Trends Made Easy! 🚀</h1>
+        <p class="subtitle">Abumchukwu – From Simple to Complex Life for JAMB Success</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Overall Evolutionary Trend 🌍</h2>
+        <p>Life started simple and got more complex over time: From <strong>unicellular prokaryotes</strong> (Monera) → <strong>unicellular eukaryotes</strong> (Protista) → <strong>multicellular heterotrophs</strong> (Fungi) → <strong>multicellular autotrophs</strong> (Plantae) → <strong>highly complex multicellular heterotrophs</strong> (Animalia).</p>
+        <p><strong>Key trends</strong>: Cells get fancier (prokaryotic to eukaryotic), bodies organize better (unicellular to multicellular with tissues/organs/systems), plants develop vascular tissues, and life moves from water to land.</p>
+
+        <h2>a. Monera (Prokaryotes) 🦠</h2>
+        <p>Simplest life; no true nucleus or organelles.</p>
+        <p><strong>Examples</strong>: Bacteria (E. coli, Streptococcus), Blue-green algae (Cyanobacteria like Anabaena).</p>
+        <p><strong>Shapes</strong>: Spherical (coccus), rod (bacillus), spiral (spirillum), comma (vibrio).</p>
+        <p><strong>External features</strong>: Cell wall of peptidoglycan, some have flagella for movement; cyanobacteria have pigments for photosynthesis.</p>
+        <p><strong>Evolutionary position</strong>: First life on Earth – primitive prokaryotes.</p>
+        <p><strong>Reproduction</strong>: Binary fission (asexual); quick and simple.</p>
+        <p><strong>Life history</strong>: No complex stages; just divide in good conditions.</p>
+
+<grok:render card_id="1df198,9c8030,a7df01" card_type="image_card_group"></grok:render>
+
+        <h2>b. Protista (Protozoans and Algae) 🔬</h2>
+        <p>Unicellular eukaryotes; have nucleus and organelles.</p>
+        <p><strong>Examples</strong>: Amoeba, Euglena, Paramecium, Chlamydomonas (alga), Trypanosoma (parasite).</p>
+        <p><strong>Shapes</strong>: Amoeba (irregular, changing), Euglena (elongated, spindle-like), Paramecium (slipper-shaped, cigar-like).</p>
+        <p><strong>External features</strong>: Pseudopodia for movement (Amoeba), flagella (Euglena), cilia (Paramecium); some like Euglena have chloroplasts.</p>
+        <p><strong>Evolutionary position</strong>: Bridge to multicellular life; first eukaryotes.</p>
+        <p><strong>Life history</strong>: Mostly asexual (fission); some sexual; in water or moist places.</p>
+        <p><strong>Complexity</strong>: Organelles like vacuoles for water balance.</p>
+
+<grok:render card_id="2927a3,3463df,112d05" card_type="image_card_group"></grok:render>
+
+        <h2>c. Fungi 🍄</h2>
+        <p>Mostly multicellular eukaryotes; eat by absorbing (heterotrophs), no chlorophyll.</p>
+        <p><strong>Examples</strong>: Mushroom (Agaricus), Rhizopus (bread mold), Yeast (unicellular), Penicillium (mold).</p>
+        <p><strong>Shapes</strong>: Mushroom (umbrella with cap and stalk), Rhizopus (thread-like hyphae with sporangia).</p>
+        <p><strong>External features</strong>: Hyphae form mycelium; cell wall of chitin; mushrooms have gills for spores.</p>
+        <p><strong>Evolutionary position</strong>: After Protista; first multicellular but no vascular system.</p>
+        <p><strong>Reproduction</strong>: Spores (asexual/sexual); Rhizopus forms zygospores.</p>
+        <p><strong>Life history</strong>: Spore → mycelium → fruiting body (like mushroom).</p>
+
+<grok:render card_id="c70eaa,bc37fe,3368de" card_type="image_card_group"></grok:render>
+
+        <h2>d. Plantae (Plants) – Evolutionary Trend 🌿</h2>
+        <p>Plants evolve from water to land, getting more complex structures.</p>
+
+        <h3>i. Thallophyta (Algae)</h3>
+        <p>Simplest plants; no roots/stems/leaves (thallus body), mostly aquatic.</p>
+        <p><strong>Examples</strong>: Spirogyra, Ulothrix, Chlorella, Seaweed.</p>
+        <p><strong>Shapes</strong>: Filamentous (Spirogyra – spiral chloroplasts in threads).</p>
+        <p><strong>Features</strong>: Chlorophyll for photosynthesis; no vascular tissues.</p>
+        <p><strong>Life history</strong>: Asexual (fragmentation); sexual (conjugation in Spirogyra).</p>
+        <p><strong>Evolutionary</strong>: Fully water-based; primitive.</p>
+
+<grok:render card_id="9ff138,5e639b" card_type="image_card_group"></grok:render>
+
+        <h3>ii. Bryophyta (Mosses and Liverworts)</h3>
+        <p>No vascular tissues; simple stems/leaves; rhizoids instead of roots.</p>
+        <p><strong>Examples</strong>: Brachymenium (moss), Marchantia (liverwort), Funaria (moss), Riccia (liverwort).</p>
+        <p><strong>Shapes</strong>: Moss (leafy, erect), Liverwort (flat, lobed thallus).</p>
+        <p><strong>Features</strong>: Live in moist places; <strong>alternation of generations</strong> (gametophyte main).</p>
+        <p><strong>Life history</strong>: Green gametophyte → gametes → zygote → dependent sporophyte.</p>
+        <p><strong>Evolutionary</strong>: First land plants; need water for sperm to swim.</p>
+
+<grok:render card_id="811e27,fa8c94" card_type="image_card_group"></grok:render>
+
+        <h3>iii. Pteridophyta (Ferns)</h3>
+        <p>Vascular plants; true roots, stems, leaves (fronds).</p>
+        <p><strong>Examples</strong>: Dryopteris, Nephrolepis, Selaginella, Equisetum.</p>
+        <p><strong>Shapes</strong>: Fronds (feathery leaves), coiled young leaves (fiddleheads).</p>
+        <p><strong>Features</strong>: No seeds; produce spores; sporophyte dominant.</p>
+        <p><strong>Life history</strong>: Fern (sporophyte) → spores → small gametophyte → gametes.</p>
+        <p><strong>Evolutionary</strong>: Better on land with vascular tissues; still water for fertilization.</p>
+
+<grok:render card_id="12f8c6,73c311" card_type="image_card_group"></grok:render>
+
+        <h3>iv. Spermatophyta (Seed Plants)</h3>
+        <p>Advanced with seeds; no need for water to fertilize.</p>
+
+        <h4>Gymnosperms (Naked Seeds)</h4>
+        <p><strong>Examples</strong>: Cycads, Pines (conifers), Ginkgo, Fir.</p>
+        <p><strong>Shapes</strong>: Cones (male small, female large woody).</p>
+        <p><strong>Features</strong>: Cones for reproduction; woody stems.</p>
+        <p><strong>Evolutionary</strong>: Fully land-adapted; pollen tubes for sperm.</p>
+
+<grok:render card_id="339994,8ec81b,d4ae33" card_type="image_card_group"></grok:render>
+
+        <h4>Angiosperms (Flowering Plants)</h4>
+        <p>Seeds in fruits; flowers for pollination.</p>
+        <p><strong>Monocots</strong>: One cotyledon, parallel veins (e.g. Maize, Grass, Onion).</p>
+        <p><strong>Dicots</strong>: Two cotyledons, net veins (e.g. Water leaf, Bean, Sunflower).</p>
+        <p><strong>Evolutionary</strong>: Most advanced; fruits help spread seeds.</p>
+
+<grok:render card_id="0ff4bb,7abb01" card_type="image_card_group"></grok:render>
+
+        <h3>v. Plants by Life Cycle</h3>
+        <p><strong>Annuals</strong>: 1 year (Maize, Rice).</p>
+        <p><strong>Biennials</strong>: 2 years (Carrot, Beetroot).</p>
+        <p><strong>Perennials</strong>: Many years (Trees like Mango, Shrubs).</p>
+        <p><strong>Trend in plants</strong>: Water (Thallophyta) → half-land (Bryophyta) → land with pipes (Pteridophyta) → seeds (Spermatophyta) → flowers/fruits.</p>
+
+        <h2>e. Animalia (Animals) – Evolutionary Trend 🐾</h2>
+        <p>From simple no-backbone to complex with backbone; water to land.</p>
+
+        <h3>i. Invertebrates (No Backbone)</h3>
+        <p><strong>Coelenterata</strong>: e.g. Hydra, Jellyfish, Sea anemone.</p>
+        <p><strong>Shapes</strong>: Hydra (tubular polyp), Jellyfish (umbrella medusa).</p>
+        <p>Radial symmetry, tissue level, aquatic.</p>
+
+        <p><strong>Platyhelminthes (Flatworms)</strong>: e.g. Taenia (tapeworm), Planaria, Liver fluke.</p>
+        <p><strong>Shapes</strong>: Flat, ribbon-like (Taenia long tape).</p>
+        <p>Bilateral symmetry, organ level, mostly parasitic.</p>
+
+        <p><strong>Nematoda (Roundworms)</strong>: e.g. Ascaris, Hookworm, Pinworm.</p>
+        <p><strong>Shapes</strong>: Round, cylindrical, tapered ends.</p>
+        <p>Pseudocoelom, complete gut.</p>
+
+        <p><strong>Annelida</strong>: e.g. Earthworm, Leech, Nereis.</p>
+        <p><strong>Shapes</strong>: Segmented tube (Earthworm ringed body).</p>
+        <p>True coelom, setae for movement.</p>
+
+        <p><strong>Arthropoda</strong>: e.g. Mosquito, Cockroach, Housefly, Bee, Butterfly, Spider, Crab.</p>
+        <p><strong>Shapes</strong>: Jointed legs, segmented (Mosquito slender with wings, Cockroach flat oval).</p>
+        <p>Exoskeleton, metamorphosis (e.g. butterfly: egg → larva → pupa → adult).</p>
+        <p><strong>Economic importance of insects</strong>: Good (bees pollinate, honey; silkworms silk); Bad (mosquito spreads malaria, pests damage crops).</p>
+        <p>Environment: Decompose waste, food for others, pollination.</p>
+
+        <p><strong>Mollusca</strong>: e.g. Snails, Octopus, Squid, Clam.</p>
+        <p><strong>Shapes</strong>: Snail (coiled shell, soft body).</p>
+        <p>Soft body, mantle, some shells.</p>
+
+        <p><strong>Advancement</strong>: Radial to bilateral; tissues to systems; specialization in Arthropoda.</p>
+
+<grok:render card_id="53522c,a15e57,c4739b,a70c12,e5d046,ce7668,46a89c" card_type="image_card_group"></grok:render>
+
+        <h3>ii. Vertebrates (With Backbone)</h3>
+        <p><strong>Pisces (Fish)</strong>: e.g. Shark (cartilaginous), Tilapia (bony).</p>
+        <p><strong>Shapes</strong>: Streamlined body, fins, scales.</p>
+        <p>Gills, fully water.</p>
+
+        <p><strong>Amphibia</strong>: e.g. Toads, Frogs, Salamanders.</p>
+        <p><strong>Shapes</strong>: Frog (jumping legs, moist skin).</p>
+        <p>Metamorphosis (tadpole to adult); lungs + skin; semi-land.</p>
+
+        <p><strong>Reptilia</strong>: e.g. Lizards, Snakes, Turtles, Crocodiles.</p>
+        <p><strong>Shapes</strong>: Lizard (scaled, four legs), Snake (elongated, no legs).</p>
+        <p>Scales, amniotic eggs; fully land.</p>
+
+        <p><strong>Aves (Birds)</strong>: e.g. Eagle, Pigeon, Ostrich.</p>
+        <p><strong>Shapes</strong>: Feathers, wings, beaks.</p>
+        <p>Endothermic, fly (most).</p>
+
+        <p><strong>Mammalia</strong>: e.g. Humans, Dogs, Whales, Bats.</p>
+        <p><strong>Shapes</strong>: Hair/fur, varied (e.g. dog four-legged).</p>
+        <p>Milk glands, placenta; smart brains.</p>
+
+        <p><strong>Advancement</strong>: Water (fish) → land-water (amphibians) → full land (reptiles, birds, mammals with eggs/lungs/parent care).</p>
+
+<grok:render card_id="48e340,380370,79bd88" card_type="image_card_group"></grok:render>
+
+        <h2>Key JAMB Tips 📝</h2>
+        <ul>
+          <li>Describe features showing complexity (e.g. from no nucleus to organs).</li>
+          <li>Life histories: Metamorphosis in animals, alternation in plants.</li>
+          <li>Water to land: Amphibians/plants need water, higher don't.</li>
+          <li>Economic: Insects good/bad; earthworms aerate soil.</li>
+        </ul>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Abumchukwu, ace that JAMB! 🌟 Study these trends!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
+        <button class="explore-btn" onclick="window.location.href='question.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item active">
+      <button class="neumorphic-btn">🏠</button>
+      <p>Home</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">⚙️</button>
+      <p>Settings</p>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
