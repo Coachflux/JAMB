@@ -186,8 +186,19 @@
     .diagram-img {
       width: 100%;
       border-radius: 12px;
-      margin: 16px 0;
+      margin: 16px 0 8px;
       box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
     }
 
     .explore-btn {
@@ -195,21 +206,18 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    body.light .explore-btn {
-      color: #000;
     }
 
     /* Footer Nav Bar */
@@ -283,107 +291,134 @@
     <div class="content">
       <div class="main-header">
         <h1>Level Up Your Biology Knowledge! 🚀</h1>
-        <p class="subtitle">Abumchukwu – Cells, Life & Organization Made Super Easy</p>
+        <p class="subtitle">Abumchukwu – Cells Made Super Easy & Fun</p>
       </div>
 
       <div class="welcome-note neumorphic">
         <h2>1. Characteristics of Living Things 🧬</h2>
-        <p>How do we know something is <strong>alive</strong>? Use the famous mnemonic <strong>MRS GREN</strong>!</p>
+        <p>How do we know something is <strong>alive</strong>? Use <strong>MRS GREN</strong>!</p>
 
         <p><strong>MRS GREN stands for:</strong></p>
         <ul>
-          <li><strong>M</strong>ovement – Animals run 🏃, plants grow toward light (phototropism) ☀️</li>
-          <li><strong>R</strong>espiration – Breaking down food to release energy (with or without oxygen)</li>
-          <li><strong>S</strong>ensitivity – Detect and respond to environment (pull hand from fire 🔥, Mimosa closes leaves)</li>
-          <li><strong>G</strong>rowth – Permanent increase in size (cell division & enlargement)</li>
-          <li><strong>R</strong>eproduction – Make offspring (sexual or asexual)</li>
-          <li><strong>E</strong>xcretion – Remove waste (CO₂, urea, sweat)</li>
-          <li><strong>N</strong>utrition – Get food/energy (plants photosynthesize 🌱, animals eat 🍔)</li>
+          <li><strong>M</strong>ovement – Animals run 🏃, plants grow to light ☀️</li>
+          <li><strong>R</strong>espiration – Get energy from food</li>
+          <li><strong>S</strong>ensitivity – Feel and react (hot? Pull hand! 🔥)</li>
+          <li><strong>G</strong>rowth – Get bigger forever</li>
+          <li><strong>R</strong>eproduction – Make babies/offspring</li>
+          <li><strong>E</strong>xcretion – Throw out waste (sweat, pee, CO₂)</li>
+          <li><strong>N</strong>utrition – Eat or make food (plants use sun 🌱)</li>
         </ul>
 
-        <p>Living things also adapt over time. Non-living things (like rocks) don't do these!</p>
+        <p>Non-living things like rocks can't do these!</p>
 
         <img src="https://images.teachthis.com.au/Product/image/original/04e9fc8494caaa5595970226ade0cce69879aeaf47d3ffadc99489ec7e29d8e55cad288450218.png" alt="MRS GREN mnemonic poster" class="diagram-img">
         <img src="https://i.pinimg.com/736x/5d/47/65/5d47653d7359a09d439922701de02595.jpg" alt="MRS GREN life processes display" class="diagram-img">
 
-        <h2>2. Cell Theory – The Foundation of Biology 📜</h2>
-        <p>All living things are made of cells! This big idea came from many scientists.</p>
-
-        <p><strong>Key discoveries:</strong></p>
+        <h2>2. Cell Theory – The Big Rule 📜</h2>
+        <p>Everything alive is made of cells!</p>
         <ul>
-          <li>1665 – Robert Hooke saw "cells" in cork under microscope</li>
-          <li>1670s – Leeuwenhoek saw living cells (bacteria, protozoa)</li>
-          <li>1838 – Schleiden: All plants are made of cells</li>
-          <li>1839 – Schwann: All animals are made of cells</li>
-          <li>1855 – Virchow: "All cells come from pre-existing cells"</li>
+          <li>All living things = 1 or more cells</li>
+          <li>Cell = basic unit of life</li>
+          <li>New cells come from old cells (no magic!)</li>
         </ul>
 
-        <p><strong>Three main rules today:</strong></p>
-        <ol>
-          <li>All organisms are made of one or more cells</li>
-          <li>Cell is the basic unit of structure, function, and life</li>
-          <li>All cells come from other cells (via division)</li>
-        </ol>
-
-        <img src="https://s3-us-west-2.amazonaws.com/courses-images/wp-content/uploads/sites/1094/2016/11/03153808/OSC_Microbio_03_02_GermTimeln.jpg" alt="Cell theory historical timeline" class="diagram-img">
+        <img src="https://s3-us-west-2.amazonaws.com/courses-images/wp-content/uploads/sites/1094/2016/11/03153808/OSC_Microbio_03_02_GermTimeln.jpg" alt="Cell theory timeline" class="diagram-img">
 
         <h2>3. Cell Structure – Plant vs Animal Cells 🔬</h2>
-        <p>Cells are tiny living units. Plant 🌿 and animal 🐱 cells are similar but different!</p>
+        <p>Plant 🌿 and animal 🐱 cells are tiny life factories — similar but different!</p>
 
         <h3>Plant Cell Parts</h3>
         <ul>
-          <li><strong>Cell wall</strong> – Rigid protection & shape (cellulose)</li>
-          <li><strong>Chloroplasts</strong> – Photosynthesis (make food from light)</li>
-          <li><strong>Large central vacuole</strong> – Storage & keeps plant firm</li>
-          <li>Others: nucleus, mitochondria, ribosomes, ER, Golgi, cytoplasm</li>
+          <li><strong>Cell wall</strong> (only plants)</li>
+          <li><strong>Chloroplasts</strong> (only plants)</li>
+          <li><strong>Large central vacuole</strong> (only plants)</li>
+          <li><strong>Cell membrane</strong></li>
+          <li><strong>Nucleus</strong></li>
+          <li><strong>Mitochondria</strong></li>
+          <li><strong>Ribosomes</strong></li>
+          <li><strong>Endoplasmic reticulum (ER)</strong></li>
+          <li><strong>Golgi apparatus</strong></li>
+          <li><strong>Cytoplasm</strong></li>
         </ul>
 
-        <p><strong>Functions of Key Organelles in Plant Cells:</strong> The cell wall provides structural support and prevents bursting. Chloroplasts convert sunlight into energy via photosynthesis. The large vacuole stores nutrients and maintains turgor pressure for rigidity. The nucleus controls activities and holds DNA. Mitochondria produce ATP energy. Ribosomes build proteins. ER and Golgi handle transport and packaging.</p>
+        <div class="organelle-list">
+          <p><strong>Easy Functions – What each part does:</strong></p>
+          <ul>
+            <li><strong>Cell wall</strong>: Strong wall — protects & gives shape (like a box!)</li>
+            <li><strong>Cell membrane</strong>: Gatekeeper — controls what goes in/out</li>
+            <li><strong>Chloroplasts</strong>: Food factory — uses sun to make sugar (photosynthesis ☀️)</li>
+            <li><strong>Large central vacuole</strong>: Big storage bag — holds water, keeps plant stiff & fresh</li>
+            <li><strong>Nucleus</strong>: Brain of cell — holds DNA, controls everything</li>
+            <li><strong>Mitochondria</strong>: Powerhouse — makes energy (ATP) from food</li>
+            <li><strong>Ribosomes</strong>: Tiny protein builders — make proteins for the cell</li>
+            <li><strong>Endoplasmic reticulum (ER)</strong>: Highway — rough makes proteins, smooth makes fats</li>
+            <li><strong>Golgi apparatus</strong>: Packaging center — wraps & sends proteins out</li>
+            <li><strong>Cytoplasm</strong>: Jelly inside — where most reactions happen</li>
+          </ul>
+        </div>
 
-        <img src="https://sciencenotes.org/wp-content/uploads/2023/05/Labeled-Plant-Cell-Diagram.png" alt="Labeled plant cell diagram" class="diagram-img">
+        <img src="https://sciencenotes.org/wp-content/uploads/2023/05/Labeled-Plant-Cell-Diagram.png" alt="Labeled plant cell" class="diagram-img">
         <img src="https://cdn1.byjus.com/wp-content/uploads/2022/05/Plant-cell.png" alt="Plant cell structure" class="diagram-img">
 
         <h3>Animal Cell Parts</h3>
         <ul>
           <li>No cell wall, no chloroplasts, no large vacuole</li>
-          <li>Has <strong>centrioles</strong> for cell division</li>
-          <li>Others same as plant: nucleus, mitochondria, ribosomes, ER, Golgi, cytoplasm</li>
+          <li><strong>Centrioles</strong> (only animals)</li>
+          <li><strong>Cell membrane</strong></li>
+          <li><strong>Nucleus</strong></li>
+          <li><strong>Mitochondria</strong></li>
+          <li><strong>Ribosomes</strong></li>
+          <li><strong>Endoplasmic reticulum (ER)</strong></li>
+          <li><strong>Golgi apparatus</strong></li>
+          <li><strong>Cytoplasm</strong></li>
+          <li>Small vacuoles & lysosomes</li>
         </ul>
 
-        <p><strong>Functions of Key Organelles in Animal Cells:</strong> The cell membrane regulates substance entry/exit. Centrioles organize spindles during division. The nucleus directs cell functions with DNA. Mitochondria generate energy through respiration. Ribosomes synthesize proteins. ER modifies and transports proteins/lipids. Golgi packages and secretes materials. Cytoplasm hosts reactions.</p>
+        <div class="organelle-list">
+          <p><strong>Easy Functions – What each part does:</strong></p>
+          <ul>
+            <li><strong>Cell membrane</strong>: Gatekeeper — lets good stuff in, bad out</li>
+            <li><strong>Centrioles</strong>: Help cell divide — like organizers for splitting</li>
+            <li><strong>Nucleus</strong>: Boss — holds DNA & tells cell what to do</li>
+            <li><strong>Mitochondria</strong>: Energy factory — turns food into power (ATP)</li>
+            <li><strong>Ribosomes</strong>: Protein makers — build what cell needs</li>
+            <li><strong>Endoplasmic reticulum (ER)</strong>: Transport tubes — rough for proteins, smooth for fats</li>
+            <li><strong>Golgi apparatus</strong>: Post office — packs & ships proteins</li>
+            <li><strong>Cytoplasm</strong>: Jelly space — reactions happen here</li>
+            <li><strong>Lysosomes</strong> (more in animals): Trash bags — break down waste</li>
+            <li><strong>Small vacuoles</strong>: Little storage pockets</li>
+          </ul>
+        </div>
 
-        <img src="https://i.pinimg.com/736x/f0/af/86/f0af8656ed8b45370a11bc02dd7085c8.jpg" alt="Labeled animal cell diagram" class="diagram-img">
+        <img src="https://i.pinimg.com/736x/f0/af/86/f0af8656ed8b45370a11bc02dd7085c8.jpg" alt="Labeled animal cell" class="diagram-img">
 
-        <h3>Plant vs Animal – Quick Comparison</h3>
+        <h3>Quick Comparison</h3>
         <ul>
-          <li><strong>Both:</strong> membrane, nucleus, cytoplasm, mitochondria, ribosomes, ER, Golgi</li>
-          <li><strong>Plant only:</strong> cell wall, chloroplasts, large vacuole</li>
-          <li><strong>Animal only:</strong> centrioles</li>
+          <li><strong>Both have</strong>: membrane, nucleus, mitochondria, ribosomes, ER, Golgi, cytoplasm</li>
+          <li><strong>Only Plant</strong>: cell wall, chloroplasts, large vacuole</li>
+          <li><strong>Only Animal</strong>: centrioles, more lysosomes</li>
         </ul>
 
-        <img src="https://microbenotes.com/wp-content/uploads/2023/06/Animal-cell-vs.-Plant-cell.jpeg" alt="Plant vs animal cell comparison" class="diagram-img">
-        <img src="https://rsscience.com/wp-content/uploads/2021/01/Animal-cell-vs-Plant-cell-similarities-difference-1024x698.jpg" alt="Side-by-side plant and animal cells" class="diagram-img">
+        <img src="https://microbenotes.com/wp-content/uploads/2023/06/Animal-cell-vs.-Plant-cell.jpeg" alt="Plant vs animal comparison" class="diagram-img">
+        <img src="https://rsscience.com/wp-content/uploads/2021/01/Animal-cell-vs-Plant-cell-similarities-difference-1024x698.jpg" alt="Side-by-side cells" class="diagram-img">
 
-        <h2>4. Levels of Organization – Building Life Step by Step 📏</h2>
-        <p>Life gets more complex layer by layer:</p>
-
+        <h2>4. Levels of Organization 📏</h2>
         <ol>
-          <li><strong>Cell</strong> – Basic unit (e.g., Euglena, Paramecium, Chlamydomonas)</li>
-          <li><strong>Tissue</strong> – Similar cells together (e.g., epithelial tissue, Hydra layers)</li>
-          <li><strong>Organ</strong> – Tissues team up (e.g., onion bulb, heart ❤️)</li>
-          <li><strong>System</strong> – Organs working together (e.g., digestive, reproductive)</li>
-          <li><strong>Organism</strong> – Whole living thing (you! 👦 or a tree 🌳)</li>
+          <li><strong>Cell</strong> → basic unit (e.g. Euglena, Paramecium)</li>
+          <li><strong>Tissue</strong> → same cells together (e.g. skin tissue)</li>
+          <li><strong>Organ</strong> → tissues team up (e.g. heart, onion bulb)</li>
+          <li><strong>System</strong> → organs work together (e.g. digestive system)</li>
+          <li><strong>Organism</strong> → whole living thing (you! 👦)</li>
         </ol>
 
-        <img src="https://thumbs.dreamstime.com/b/living-world-biosphere-structural-hierarchy-division-outline-concept-labeled-educational-classification-atom-to-bioma-239382954.jpg" alt="Biological hierarchy from cell to biosphere" class="diagram-img">
-        <img src="https://thumbs.dreamstime.com/b/organisation-organisms-hierarchical-level-structure-outline-diagram-organisation-organisms-hierarchical-level-252942090.jpg" alt="Levels of organization in organisms diagram" class="diagram-img">
+        <img src="https://thumbs.dreamstime.com/b/living-world-biosphere-structural-hierarchy-division-outline-concept-labeled-educational-classification-atom-to-bioma-239382954.jpg" alt="Hierarchy diagram" class="diagram-img">
 
         <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
-          Abumchukwu, you're doing great! 🌟 Keep studying – you've got the basics of life down now!
+          Great job, Abumchukwu! 🌟 You now know cells inside out!
         </p>
 
         <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
-        <button class="explore-btn" onclick="window.location.href='question.html'">Take Quiz</button>
+        <button class="explore-btn" onclick="window.location.href='question.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
