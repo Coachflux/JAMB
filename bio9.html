@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Support & Movement</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      background: #fff;
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Support & Movement</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Support & Movement Made Easy for JAMB 🚀</h1>
+        <p class="subtitle">Abumchukwu – Visual Notes & Diagrams</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Need for Support and Movement in Organisms</h2>
+        <p><strong>Support</strong>: Maintains shape, resists gravity/wind/external forces; positions organs (e.g., leaves for photosynthesis, upright posture in animals).</p>
+        <p><strong>Movement</strong>: Enables escape from danger, foraging for food/water/light, reproduction (e.g., pollen dispersal), and stimulus responses (e.g., tropisms).</p>
+        <p><strong>JAMB Example</strong>: "The need for support in tall plants is primarily to: A. Absorb water B. Resist wind C. Store food D. Produce seeds" (Ans: B).</p>
+
+        <h2>a. Tropic, Tactic, Nastic, and Sleep Movements in Plants</h2>
+        <p><strong>Tropic (Tropisms)</strong>: Directional growth to unidirectional stimulus (auxin-driven unequal elongation). E.g., Phototropism (shoots +ve to light), Geotropism (roots +ve to gravity), Hydrotropism (roots to water), Thigmotropism (tendrils to touch).</p>
+        <p><strong>Tactic (Taxes)</strong>: Whole organism/cell movement. E.g., Positive phototaxis (Euglena to light).</p>
+        <p><strong>Nastic (Nasties)</strong>: Non-directional, turgor-based. E.g., Seismonasty (Mimosa leaf folding on touch).</p>
+        <p><strong>Sleep (Nyctinastic)</strong>: Rhythmic day-night responses. E.g., Legume leaves fold at night to reduce transpiration.</p>
+        <p><strong>Regions of growth</strong>: Shoot apex (meristem), root tip (behind cap) – auxins control tropisms.</p>
+        <p><strong>JAMB Example</strong>: "The response of Mimosa pudica to touch is an example of: A. Phototropism B. Geotropism C. Thigmotropism D. Seismonasty" (Ans: D).</p>
+        <p>Another: "Auxins are produced in the: A. Root cap B. Shoot tip C. Leaf base D. Stem cortex" (Ans: B).</p>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Phototropism_in_plants.svg/800px-Phototropism_in_plants.svg.png" alt="Phototropism in plants (auxin distribution labeled)" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Phototropism):</strong></p>
+          <ul>
+            <li><strong>Light source</strong>: Unidirectional stimulus</li>
+            <li><strong>Auxin accumulation</strong>: More on shaded side → cell elongation</li>
+            <li><strong>Bending</strong>: Toward light (shoot +ve phototropism)</li>
+          </ul>
+        </div>
+
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Mimosa-Pudica-Seismonasty.png" alt="Mimosa pudica seismonasty (touch response)" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Mimosa pudica):</strong></p>
+          <ul>
+            <li><strong>Leaf before touch</strong>: Open leaflets</li>
+            <li><strong>Leaf after touch</strong>: Folded leaflets (seismonasty)</li>
+            <li><strong>Pulvinus</strong>: Swellable motor organ (turgor change)</li>
+          </ul>
+        </div>
+
+        <h2>Auxin Mechanism in Tropisms (Cholodny-Went Theory)</h2>
+        <p>Auxin (IAA) synthesized at shoot tip; polar transport (basipetal via AUX/LAX influx & PIN efflux proteins).</p>
+        <p><strong>Acid Growth Hypothesis</strong>: Auxin binds receptors → H⁺ pumps activate → cell wall pH drops → expansins loosen cellulose → wall becomes extensible → osmosis causes water entry → irreversible cell elongation.</p>
+        <p>Shoots: Auxin accumulates on shaded/lower side → promotes elongation → bends toward light/upward.</p>
+        <p>Roots: Auxin on lower side → inhibits elongation → bends downward.</p>
+        <p><strong>JAMB Example</strong>: "In phototropism, the bending of shoots toward light is due to: A. Equal auxin on both sides B. More auxin on lit side C. More auxin on shaded side D. No auxin involvement" (Ans: C).</p>
+
+        <h2>b. Supporting Tissues in Plants</h2>
+        <p><strong>Collenchyma</strong>: Living cells, uneven pectin-cellulose walls – flexible support in growing parts (e.g., young stems, petioles, leaf veins).</p>
+        <p><strong>Sclerenchyma</strong>: Dead, thick lignified walls – rigid support (fibres: long, in bundles; sclereids: short, in nutshells/pears).</p>
+        <p><strong>Xylem fibres</strong>: Lignified tracheids/vessels – mechanical support + water transport.</p>
+        <p><strong>Phloem fibres</strong>: Sclerenchyma in phloem – added strength.</p>
+        <p><strong>Distribution</strong>:</p>
+        <ul>
+          <li>Root: Xylem central (star-shaped in dicots), sclerenchyma around vascular tissue.</li>
+          <li>Stem: Vascular bundles (xylem inner, phloem outer) with collenchyma below epidermis (young); sclerenchyma caps in older stems.</li>
+          <li>Leaf: Collenchyma/sclerenchyma in midrib/veins; xylem/phloem in bundles.</li>
+        </ul>
+        <p><strong>JAMB Example</strong>: "The tissue providing flexible support in herbaceous stems is: A. Xylem B. Phloem C. Collenchyma D. Sclerenchyma" (Ans: C).</p>
+        <p>Another: "Lignified walls are characteristic of: A. Parenchyma B. Collenchyma C. Sclerenchyma D. Epidermis" (Ans: C).</p>
+
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Supporting-Tissues-in-Plants.png" alt="Supporting tissues in plants (collenchyma & sclerenchyma labeled)" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Plant Supporting Tissues):</strong></p>
+          <ul>
+            <li><strong>Collenchyma</strong>: Living, unevenly thickened corners, flexible support</li>
+            <li><strong>Sclerenchyma fibres</strong>: Dead, thick lignified walls, rigid support</li>
+            <li><strong>Sclereids</strong>: Short, thick-walled cells (e.g., in nutshells)</li>
+          </ul>
+        </div>
+
+        <h2>c. Types and Functions of the Skeleton</h2>
+
+        <h3>Hydrostatic Skeleton</h3>
+        <p>Fluid-filled cavity (coelom) with antagonistic muscles (circular/longitudinal) – uses incompressible fluid pressure for support/movement.</p>
+        <p><strong>Examples</strong>: Earthworm (peristalsis for burrowing), jellyfish (bell pulsing), sea anemone (tentacle extension).</p>
+        <p><strong>Advantages</strong>: Flexible, no moulting; <strong>Disadvantages</strong>: Limited in large/dry environments.</p>
+        <p><strong>JAMB Example</strong>: "The skeleton in earthworms is: A. Exoskeleton B. Endoskeleton C. Hydrostatic D. Cartilaginous" (Ans: C).</p>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Earthworm_peristalsis.svg/800px-Earthworm_peristalsis.svg.png" alt="Hydrostatic skeleton in earthworm (peristalsis labeled)" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Earthworm Hydrostatic Skeleton):</strong></p>
+          <ul>
+            <li><strong>Coelom (fluid-filled cavity)</strong>: Provides pressure for support</li>
+            <li><strong>Circular muscles</strong>: Contract → lengthen body</li>
+            <li><strong>Longitudinal muscles</strong>: Contract → shorten body</li>
+            <li><strong>Setae</strong>: Anchor during movement</li>
+          </ul>
+        </div>
+
+        <h3>i. Exoskeleton</h3>
+        <p>External covering (chitin in arthropods like insects; CaCO₃ shells in molluscs).</p>
+        <p><strong>Functions</strong>: Protection (from predators/desiccation), support, muscle attachment (internal); moulting for growth.</p>
+        <p><strong>JAMB Example</strong>: "Moulting in insects is necessary because the exoskeleton: A. Grows with the body B. Does not grow C. Is too soft D. Absorbs water" (Ans: B).</p>
+
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Exoskeleton-in-Insects.png" alt="Insect exoskeleton structure labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Insect Exoskeleton):</strong></p>
+          <ul>
+            <li><strong>Cuticle</strong>: Outer protective layer (chitin + proteins)</li>
+            <li><strong>Epidermis</strong>: Secretes cuticle</li>
+            <li><strong>Muscle attachment</strong>: Internal to exoskeleton</li>
+          </ul>
+        </div>
+
+        <h3>ii. Endoskeleton</h3>
+        <p>Internal framework (cartilage/bone in vertebrates).</p>
+        <p><strong>Functions</strong>: Support, continuous growth, muscle attachment (external), organ protection.</p>
+        <p><strong>Materials</strong>: Cartilage (flexible, e.g., shark skeleton, human ears/nose), bone (rigid, mineralized).</p>
+        <p><strong>JAMB Example</strong>: "The endoskeleton in mammals is mainly composed of: A. Chitin B. Cartilage and bone C. Fluid D. Shell" (Ans: B).</p>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Human_skeleton_diagram.svg/800px-Human_skeleton_diagram.svg.png" alt="Human endoskeleton (axial & appendicular labeled)" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Human Skeleton):</strong></p>
+          <ul>
+            <li><strong>Axial skeleton</strong>: Skull, vertebral column, ribs, sternum (central support & protection)</li>
+            <li><strong>Appendicular skeleton</strong>: Limbs & girdles (locomotion & manipulation)</li>
+            <li><strong>Skull</strong>: Protects brain</li>
+            <li><strong>Ribs & sternum</strong>: Protect heart & lungs</li>
+            <li><strong>Pelvic girdle</strong>: Supports lower limbs & organs</li>
+          </ul>
+        </div>
+
+        <h3>iii. Functions of the Skeleton in Animals (Mammalian Focus)</h3>
+        <ul>
+          <li><strong>Support</strong>: Maintains shape/posture against gravity.</li>
+          <li><strong>Locomotion</strong>: Bones act as levers with muscles/joints for movement.</li>
+          <li><strong>Protection</strong>: Skull (brain), ribs (heart/lungs), vertebrae (spinal cord).</li>
+          <li><strong>Respiration</strong>: Ribs/sternum expand/contract chest for breathing.</li>
+          <li><strong>Other</strong>: Blood production (red marrow), mineral storage (Ca/P), pH balance.</li>
+        </ul>
+        <p><strong>Application to Wellbeing</strong>: Strong bones prevent fractures/osteoporosis; healthy joints aid mobility/avoid arthritis; supports respiration for oxygen supply.</p>
+        <p><strong>JAMB Example</strong>: "A major function of the mammalian skeleton is: A. Photosynthesis B. Protection of organs C. Water conduction D. Seed dispersal" (Ans: B).</p>
+        <p>Another: "The ribs and sternum aid in: A. Digestion B. Respiration C. Excretion D. Reproduction" (Ans: B).</p>
+
+        <h3>Structure and Layout of Mammalian Skeleton</h3>
+        <p><strong>Axial Skeleton</strong>: Central axis – skull, vertebral column, ribs, sternum (support/protection/respiration).</p>
+        <p><strong>Appendicular Skeleton</strong>: Limbs/girdles – pectoral (shoulders), pelvic (hips), arms/legs (locomotion).</p>
+        <p><strong>Total Bones in Human Body</strong>: Adults have 206 bones (newborns ~270; fuses during growth, e.g., sacral vertebrae fuse).</p>
+        <p><strong>Distribution</strong>:</p>
+        <ul>
+          <li>Axial (80 bones): Skull (22), ear ossicles (6), hyoid (1), vertebral column (26), ribs (24), sternum (1).</li>
+          <li>Appendicular (126 bones): Pectoral girdles (4), upper limbs (60), pelvic girdles (2), lower limbs (60).</li>
+        </ul>
+        <p><strong>JAMB Example</strong>: "The total number of bones in an adult human is: A. 200 B. 206 C. 210 D. 220" (Ans: B).</p>
+        <p>Another: "The axial skeleton includes the: A. Limbs B. Skull and vertebrae C. Pelvic girdle D. Arms" (Ans: B).</p>
+
+        <h3>Types of Joints</h3>
+        <p><strong>Functional Classification</strong>: Synarthroses (fixed, e.g., skull sutures), Amphiarthroses (slightly movable, e.g., pubic symphysis), Diarthroses (freely movable/synovial, e.g., knee).</p>
+        <p><strong>Structural Classification</strong>: Fibrous (fixed), Cartilaginous (slightly movable), Synovial (freely movable; fluid-filled).</p>
+        <p><strong>6 Types of Synovial Joints</strong>:</p>
+        <ul>
+          <li>Plane (Gliding): Sliding (e.g., wrist carpals).</li>
+          <li>Hinge: Flexion/extension (e.g., elbow).</li>
+          <li>Pivot: Rotation (e.g., neck atlas-axis).</li>
+          <li>Condyloid: Biaxial (e.g., knuckles).</li>
+          <li>Saddle: Thumb opposition (e.g., carpometacarpal).</li>
+          <li>Ball-and-Socket: Multiaxial (e.g., shoulder).</li>
+        </ul>
+        <p><strong>JAMB Example</strong>: "The joint allowing rotation in the neck is: A. Hinge B. Pivot C. Ball-and-socket D. Gliding" (Ans: B).</p>
+        <p>Another: "Ball-and-socket joints are found in the: A. Elbow B. Knee C. Shoulder D. Ankle" (Ans: C).</p>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Types_of_synovial_joints.svg/800px-Types_of_synovial_joints.svg.png" alt="Types of synovial joints labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Synovial Joints):</strong></p>
+          <ul>
+            <li><strong>Ball-and-socket</strong>: Shoulder/hip – multiaxial movement</li>
+            <li><strong>Hinge</strong>: Elbow/knee – flexion/extension</li>
+            <li><strong>Pivot</strong>: Neck atlas-axis – rotation</li>
+            <li><strong>Saddle</strong>: Thumb – opposition</li>
+            <li><strong>Plane</strong>: Carpals – gliding</li>
+          </ul>
+        </div>
+
+        <h2>Muscle Contraction Mechanisms (Sliding Filament Theory)</h2>
+        <p><strong>Structure</strong>: Sarcomere = actin (thin) + myosin (thick) filaments.</p>
+        <p><strong>Steps</strong>:</p>
+        <ul>
+          <li>Nerve impulse → Ca²⁺ release from sarcoplasmic reticulum.</li>
+          <li>Ca²⁺ binds troponin → tropomyosin exposes actin sites.</li>
+          <li>Myosin heads (ATP-bound) attach to actin → cross-bridges.</li>
+          <li>Power stroke: ADP/Pi release → filaments slide (sarcomere shortens).</li>
+          <li>New ATP detaches myosin → cycle repeats.</li>
+          <li>Ca²⁺ pumped back → relaxation.</li>
+        </ul>
+        <p><strong>Result</strong>: Actin-myosin overlap increases → muscle contracts.</p>
+        <p><strong>JAMB Example</strong>: "In muscle contraction, the sliding of filaments is explained by: A. All-or-none law B. Sliding filament theory C. Cholodny-Went theory D. Acid growth hypothesis" (Ans: B).</p>
+        <p>Another: "Calcium ions in contraction bind to: A. Myosin B. Actin C. Troponin D. Tropomyosin" (Ans: C).</p>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Sliding_filament_theory.svg/800px-Sliding_filament_theory.svg.png" alt="Sliding filament theory of muscle contraction labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Sliding Filament Theory):</strong></p>
+          <ul>
+            <li><strong>Sarcomere</strong>: Basic unit of contraction</li>
+            <li><strong>Actin (thin filaments)</strong>: Attached to Z-line</li>
+            <li><strong>Myosin (thick filaments)</strong>: Cross-bridges form</li>
+            <li><strong>Cross-bridge</strong>: Myosin head attaches to actin</li>
+            <li><strong>Z-line</strong>: Anchors actin</li>
+            <li><strong>Shortened sarcomere</strong>: Muscle contracts</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Abumchukwu, ace Support & Movement in JAMB! 🌟 Practice labeling these structures!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
+        <button class="explore-btn" onclick="window.location.href='question.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item active">
+      <button class="neumorphic-btn">🏠</button>
+      <p>Home</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">⚙️</button>
+      <p>Settings</p>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
