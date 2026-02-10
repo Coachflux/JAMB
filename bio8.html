@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Excretion</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      background: #fff;
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Excretion</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Excretion Made Easy for JAMB 🚀</h1>
+        <p class="subtitle">Abumchukwu – Visual Notes & Diagrams</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Definition of Excretion</h2>
+        <p>Excretion is the biological process by which organisms remove metabolic waste products (toxic or excess substances like nitrogenous wastes, CO₂, excess water/salts) to maintain homeostasis and prevent toxicity.</p>
+        <p><strong>Significance</strong>: Regulates body fluid composition, osmotic pressure, pH, electrolyte balance; prevents cellular damage/death from waste accumulation.</p>
+
+        <h2>a. Types of Excretory Structures</h2>
+        <ul>
+          <li><strong>Contractile vacuole</strong>: Unicellular freshwater protozoa (e.g., Amoeba). Collects excess water/wastes → contracts to expel via membrane. Prevents osmotic bursting.</li>
+          <li><strong>Flame cell (protonephridia)</strong>: Flatworms (e.g., Planaria). Ciliated tubules filter body fluids; wastes exit pores. Simple filtration + osmoregulation in aquatic forms.</li>
+          <li><strong>Nephridium</strong>: Annelids (e.g., earthworm). Coiled tubules per segment; filter coelomic fluid, reabsorb useful substances, excrete via pores. Excretion + osmoregulation in moist habitats.</li>
+          <li><strong>Malpighian tubule</strong>: Insects/arachnids. Blind tubules at gut junction; secrete uric acid/salts → water reabsorbed in rectum. Water conservation in terrestrial life.</li>
+          <li><strong>Kidney</strong>: Vertebrates. Nephrons filter blood; excrete urea/ammonia/uric acid. Advanced waste removal + osmoregulation/ion balance.</li>
+          <li><strong>Stoma & Lenticel</strong>: Plants. Stomata (leaves) diffuse CO₂/O₂/water vapor; lenticels (stems) allow gas exchange. Gaseous waste removal via diffusion.</li>
+        </ul>
+
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Contractile-Vacuole-in-Amoeba.png" alt="Contractile vacuole in Amoeba labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Amoeba Contractile Vacuole):</strong></p>
+          <ul>
+            <li><strong>Contractile vacuole</strong>: Collects excess water & wastes</li>
+            <li><strong>Radiating canals</strong>: Feed water into vacuole</li>
+            <li><strong>Pore</strong>: Expels contents to outside</li>
+          </ul>
+        </div>
+
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Flame-Cell-System-in-Flatworms.png" alt="Flame cell (protonephridia) in flatworm labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Flame Cell):</strong></p>
+          <ul>
+            <li><strong>Flame cell</strong>: Ciliated bulb filters body fluid</li>
+            <li><strong>Tubule</strong>: Carries waste to excretory pore</li>
+            <li><strong>Excretory pore</strong>: Wastes exit body</li>
+          </ul>
+        </div>
+
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Nephridia-in-Earthworm.png" alt="Nephridia in earthworm labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Earthworm Nephridium):</strong></p>
+          <ul>
+            <li><strong>Nephridiopore</strong>: External opening</li>
+            <li><strong>Nephrostome</strong>: Internal opening into coelom</li>
+            <li><strong>Tubule</strong>: Filters & reabsorbs useful substances</li>
+          </ul>
+        </div>
+
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Malpighian-Tubules-in-Insects.png" alt="Malpighian tubules in insect labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Malpighian Tubules):</strong></p>
+          <ul>
+            <li><strong>Malpighian tubules</strong>: Blind tubes at gut junction</li>
+            <li><strong>Hindgut/rectum</strong>: Reabsorbs water</li>
+            <li><strong>Uric acid paste</strong>: Excreted with minimal water</li>
+          </ul>
+        </div>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Nephron.svg/800px-Nephron.svg.png" alt="Human nephron structure labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Mammalian Nephron):</strong></p>
+          <ul>
+            <li><strong>Glomerulus + Bowman's capsule</strong>: Ultrafiltration site</li>
+            <li><strong>Proximal convoluted tubule (PCT)</strong>: Reabsorbs glucose, amino acids, Na⁺</li>
+            <li><strong>Loop of Henle</strong>: Countercurrent multiplier for concentration</li>
+            <li><strong>Distal convoluted tubule (DCT)</strong>: Hormone-regulated reabsorption/secretion</li>
+            <li><strong>Collecting duct</strong>: Final water reabsorption (ADH)</li>
+          </ul>
+        </div>
+
+        <h2>b. Excretory Mechanisms</h2>
+
+        <h3>Kidneys</h3>
+        <p>Main vertebrate organs. Structure: Cortex/medulla/pelvis; nephron is functional unit.</p>
+        <p><strong>Detailed nephron function (human/mammal example)</strong>:</p>
+        <ul>
+          <li><strong>Glomerulus + Bowman's capsule</strong>: Ultrafiltration → glomerular filtrate (water, urea, glucose, salts).</li>
+          <li><strong>Proximal convoluted tubule (PCT)</strong>: Reabsorbs ~65-80% (glucose, amino acids, Na⁺, water osmotically).</li>
+          <li><strong>Loop of Henle</strong>: Countercurrent multiplier → descending limb (water out), ascending limb (Na⁺/Cl⁻ out) → hyperosmotic medulla.</li>
+          <li><strong>Distal convoluted tubule (DCT) + collecting duct</strong>: Hormone-regulated (aldosterone: Na⁺ reabsorption; ADH: water reabsorption via aquaporins); secretion of H⁺/wastes.</li>
+        </ul>
+        <p>→ Urine formation; maintains blood volume, pressure, pH, electrolytes.</p>
+        <p><strong>Diseases & treatments</strong>: Kidney stones (lithotripsy/surgery); CKD/AKI (dialysis/transplant); infections (antibiotics).</p>
+
+        <h3>Lungs</h3>
+        <p>Excrete CO₂ + water vapor via diffusion/expiration. Aids pH balance.</p>
+        <p><strong>Diseases & treatments</strong>: COPD/asthma (inhalers, steroids); pneumonia (antibiotics, ventilation).</p>
+
+        <h3>Skin</h3>
+        <p>Largest organ in the human body; covers the entire external surface.</p>
+        <p>Surface area: Approximately 1.5–2.0 m² (15–20 sq ft) in an average adult (varies with height, weight, age).</p>
+        <p>Weight: About 3.5–10 kg (7.5–22 lbs), roughly 6–16% of total body weight.</p>
+        <p>Thickness: Varies (0.5 mm on eyelids to 4 mm on soles/palms); average 1–2 mm over most body.</p>
+        <p>Sweat excretes water, NaCl, minor urea. Mainly thermoregulation + minor excretion/osmoregulation.</p>
+        <p><strong>Diseases & treatments</strong>: Hyperhidrosis (antiperspirants/botox); eczema/infections (creams/antibiotics).</p>
+
+        <h2>Comparison: Excretion in Fish vs Birds</h2>
+        <p><strong>Fish</strong> (e.g., bony): Ammonotelic (ammonia waste, toxic but diluted). Freshwater: dilute urine + salt uptake; marine: concentrated urine + gill salt excretion. Gills aid ion/ammonia exchange.</p>
+        <p><strong>Birds</strong>: Uricotelic (uric acid paste, conserves water). Kidneys produce hypertonic urine; no bladder; cloaca precipitates uric acid. Adapted for arid/flight (water retention).</p>
+        <p><strong>Similarities</strong>: Kidney-based filtration/reabsorption; habitat-linked osmoregulation.</p>
+
+        <h2>Excretion in Earthworm</h2>
+        <p>Nephridia (paired/segment): Septal, integumentary, pharyngeal types.</p>
+        <p>Mechanism: Coelomic fluid enters nephrostome → reabsorption in tubule → dilute urine (ammonia/urea) via nephridiopores.</p>
+        <p>Functions: Waste removal + osmotic balance (prevents dehydration in moist soil). Chloragogen cells aid waste storage/conversion.</p>
+
+        <h2>Osmoregulation in Amphibians</h2>
+        <p>Dual life (aquatic larva → terrestrial adult).</p>
+        <p>In water: Permeable skin absorbs excess water → dilute urine; active salt uptake via skin/gills.</p>
+        <p>On land: Risk dehydration → concentrated urine (ADH-like); mucus reduces evaporation; behavioral (burrowing/nocturnal).</p>
+        <p>Ureotelic (urea waste).</p>
+
+        <h2>Osmoregulation in Reptiles</h2>
+        <p>Fully terrestrial/adapted to arid/marine habitats; minimize water loss.</p>
+        <p><strong>Key adaptations</strong>:</p>
+        <ul>
+          <li>Thick, impermeable skin → reduces evaporative loss.</li>
+          <li>Uricotelic excretion → uric acid (insoluble, semi-solid paste) excreted with minimal water via cloaca (no bladder in most).</li>
+          <li>Kidneys: Metanephric; limited hyperosmotic urine production (no mammalian loop of Henle); rely on uric acid precipitation.</li>
+          <li>Extrarenal salt glands (marine/desert species): Nasal (lizards/snakes), lingual (crocodiles), orbital (sea turtles) → excrete concentrated NaCl solution (up to 4-5x plasma) with little water. Eliminate excess salts (e.g., seawater).</li>
+          <li>Behavioral: Nocturnal, burrowing, reduced heat activity.</li>
+        </ul>
+        <p><strong>Overall</strong>: Efficient water/salt balance; salt glands vital for marine forms.</p>
+
+        <h2>c. Excretory Products of Plants</h2>
+        <p>Via diffusion/storage: CO₂ (respiration), O₂ (photosynthesis excess), water vapor (transpiration), tannins/resins/gums/mucilage/alkaloids (stored harmlessly).</p>
+        <p><strong>Economic importance</strong>:</p>
+        <ul>
+          <li>CO₂: Beverages, dry ice, industry.</li>
+          <li>O₂: Medical, welding.</li>
+          <li>Tannins: Leather tanning, dyes, medicine.</li>
+          <li>Resins: Varnishes, adhesives.</li>
+          <li>Gums: Food thickeners, pharmaceuticals.</li>
+          <li>Mucilage: Cosmetics, laxatives.</li>
+          <li>Alkaloids: Drugs (caffeine, quinine), pesticides.</li>
+        </ul>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Abumchukwu, you're crushing Excretion for JAMB! 🌟 Keep labeling these diagrams!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
+        <button class="explore-btn" onclick="window.location.href='question.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item active">
+      <button class="neumorphic-btn">🏠</button>
+      <p>Home</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">⚙️</button>
+      <p>Settings</p>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
