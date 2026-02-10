@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Respiration</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      background: #fff;
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Respiration</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Respiration Made Easy for JAMB 🚀</h1>
+        <p class="subtitle">Abumchukwu – Visual Notes & Diagrams</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Definition of Respiration</h2>
+        <p>Respiration is the process by which living organisms release energy from food (mainly glucose) in the form of ATP. It involves gaseous exchange and energy production.</p>
+        <p><strong>Significance</strong>: Provides energy for movement (e.g., muscle contraction in humans), growth (e.g., cell division in plants), active transport (e.g., mineral uptake in roots), bioluminescence (e.g., fireflies), heat production (e.g., shivering in mammals), and reproduction (e.g., sperm motility).</p>
+
+        <h2>a. Respiratory Organs and Surfaces</h2>
+        <p><strong>Examples of organisms</strong>:</p>
+        <ul>
+          <li><strong>Body surface</strong> — Earthworm, flatworm, frog skin (moist skin allows direct diffusion).</li>
+          <li><strong>Gills</strong> — Fish (e.g., tilapia), tadpole, crab (feathery for water).</li>
+          <li><strong>Trachea</strong> — Insects (e.g., cockroach, butterfly) — spiracles → tracheae → tracheoles.</li>
+          <li><strong>Lungs</strong> — Mammals (e.g., human, goat), birds, reptiles (alveoli for air).</li>
+          <li><strong>Stomata</strong> — Plants (e.g., maize, hibiscus leaves).</li>
+          <li><strong>Lenticels</strong> — Woody plants (e.g., mango stem, yam tuber).</li>
+        </ul>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Respiratory_system_diagram_en.svg/800px-Respiratory_system_diagram_en.svg.png" alt="Human respiratory system (lungs & alveoli labeled)" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Mammalian Lungs):</strong></p>
+          <ul>
+            <li><strong>Trachea</strong>: Air passage with cartilage rings</li>
+            <li><strong>Bronchi</strong>: Branch into lungs</li>
+            <li><strong>Bronchioles</strong>: Smaller branches</li>
+            <li><strong>Alveoli</strong>: Gas exchange sites (thin walls, large surface area)</li>
+            <li><strong>Diaphragm</strong>: Muscle for breathing</li>
+          </ul>
+        </div>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Fish_gills_diagram.svg/800px-Fish_gills_diagram.svg.png" alt="Fish gills structure (counter-current flow labeled)" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Fish Gills):</strong></p>
+          <ul>
+            <li><strong>Gill filaments</strong>: Feathery, large surface area</li>
+            <li><strong>Gill lamellae</strong>: Thin plates for gas exchange</li>
+            <li><strong>Blood flow</strong>: Opposite to water flow (counter-current)</li>
+            <li><strong>Water flow</strong>: Over gills for O₂ uptake</li>
+          </ul>
+        </div>
+
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Tracheal-System-in-Insects.png" alt="Insect tracheal system (spiracles & tracheoles labeled)" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Insect Trachea):</strong></p>
+          <ul>
+            <li><strong>Spiracles</strong>: Openings on body surface</li>
+            <li><strong>Tracheae</strong>: Main air tubes</li>
+            <li><strong>Tracheoles</strong>: Fine branches to cells</li>
+          </ul>
+        </div>
+
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Stomata-Structure.png" alt="Plant stomata structure labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Plant Stomata):</strong></p>
+          <ul>
+            <li><strong>Guard cells</strong>: Control pore opening/closing</li>
+            <li><strong>Stomatal pore</strong>: Gas exchange & transpiration</li>
+            <li><strong>Subsidiary cells</strong>: Assist regulation</li>
+          </ul>
+        </div>
+
+        <h2>b. Mechanism of Gaseous Exchange</h2>
+
+        <h3>i. Plants</h3>
+        <p>Diffusion through stomata (day: CO₂ in, O₂ out), lenticels, and epidermis.</p>
+        <p>Stomata opening/closing: Guard cells become turgid (K⁺ ions pumped in → water enters by osmosis → pore opens) during day for photosynthesis. Close at night/low water to prevent transpiration (e.g., in xerophytes like cactus, stomata open at night).</p>
+
+        <h3>ii. Animals</h3>
+        <p><strong>Fish</strong>: Counter-current flow in gills (high efficiency, e.g., 80–90% O₂ extraction).</p>
+        <p><strong>Insects</strong>: Spiracles open/close to control water loss (e.g., locust during flight).</p>
+        <p><strong>Mammals</strong>: Breathing (inhalation → alveoli → O₂ to blood, CO₂ out).</p>
+
+        <h2>c. Aerobic Respiration</h2>
+        <p>Occurs with oxygen; complete breakdown of glucose in mitochondria (most efficient).</p>
+        <p><strong>Overall equation</strong>: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + 36–38 ATP (energy + heat).</p>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Cellular_respiration.svg/800px-Cellular_respiration.svg.png" alt="Aerobic respiration stages (glycolysis, Krebs, ETC) labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Aerobic Respiration):</strong></p>
+          <ul>
+            <li><strong>Glycolysis</strong>: Cytoplasm → Glucose → 2 Pyruvate + 2 ATP + 2 NADH</li>
+            <li><strong>Link reaction</strong>: Pyruvate → Acetyl-CoA + CO₂ + NADH</li>
+            <li><strong>Krebs cycle</strong>: Mitochondrial matrix → Acetyl-CoA cycle → NADH, FADH₂, ATP, CO₂</li>
+            <li><strong>Electron Transport Chain</strong>: Inner membrane → NADH/FADH₂ → ATP synthase → 32–34 ATP</li>
+            <li><strong>Oxygen</strong>: Final electron acceptor → forms water</li>
+          </ul>
+        </div>
+
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Krebs-Cycle.png" alt="Krebs cycle (Citric Acid Cycle) simplified labeled" class="diagram-img">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Krebs Cycle):</strong></p>
+          <ul>
+            <li><strong>Acetyl-CoA</strong>: Enters cycle</li>
+            <li><strong>Citrate</strong>: First 6-carbon compound</li>
+            <li><strong>CO₂</strong>: Released twice per turn</li>
+            <li><strong>NADH & FADH₂</strong>: Carry electrons to ETC</li>
+            <li><strong>ATP</strong>: Produced directly (1 per turn)</li>
+            <li><strong>Oxaloacetate</strong>: Regenerated to restart cycle</li>
+          </ul>
+        </div>
+
+        <h2>d. Anaerobic Respiration</h2>
+        <p>No oxygen; only 2 ATP per glucose.</p>
+        <p><strong>Plants/yeast</strong>: Glucose → Ethanol + CO₂ + 2 ATP (alcoholic fermentation).</p>
+        <p><strong>Examples</strong>: Yeast in bread (CO₂ makes it rise), palm wine.</p>
+        <p><strong>Animals/muscles</strong>: Glucose → Lactic acid + 2 ATP.</p>
+        <p><strong>Example</strong>: Muscle cramps during intense exercise (oxygen debt).</p>
+
+        <p><strong>Economic importance of yeast</strong>: Baking (CO₂ leavening), brewing (ethanol in beer, wine), biofuel (ethanol from sugarcane), food (bread flavour).</p>
+
+        <h2>Experimental deductions (JAMB style)</h2>
+        <ul>
+          <li>Germinating seeds in respirometer → O₂ uptake, CO₂ release, heat produced.</li>
+          <li>Yeast + glucose (anaerobic) → CO₂ bubbles (limewater milky), ethanol smell.</li>
+          <li>Muscle fatigue → lactic acid accumulation.</li>
+        </ul>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Abumchukwu, master Respiration for JAMB! 🌟 Practice labeling these diagrams!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
+        <button class="explore-btn" onclick="window.location.href='question.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item active">
+      <button class="neumorphic-btn">🏠</button>
+      <p>Home</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">⚙️</button>
+      <p>Settings</p>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
