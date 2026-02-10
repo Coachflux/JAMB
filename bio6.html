@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Transport System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      background: #fff;
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Transport System</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Transport System Made Easy for JAMB 🚀</h1>
+        <p class="subtitle">Abumchukwu – Visual Notes & Diagrams</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Definition of Transport System</h2>
+        <p>A transport system (also called circulatory or vascular system) is the specialized network in multicellular organisms that moves essential substances (nutrients, water, gases, hormones, wastes) from sites of production/absorption to sites of use, storage, or removal.</p>
+        <p>It ensures efficient distribution in large/complex organisms where simple diffusion is too slow.</p>
+        <p>In animals: Mainly blood/lymph in vessels (closed/open systems).</p>
+        <p>In plants: Xylem and phloem tissues (no pump; relies on physical forces and active processes).</p>
+
+        <h2>a. Need for Transportation</h2>
+        <p>As organisms increase in size and complexity (from unicellular to multicellular, simple to complex), diffusion alone becomes insufficient due to low surface area to volume ratio. Materials cannot reach all cells quickly enough.</p>
+        <p>A transport system develops to move essential substances efficiently.</p>
+        <p>In small/simple organisms (e.g., Amoeba, Paramecium): Diffusion suffices.</p>
+        <p>In large/complex organisms (plants & animals): Specialized transport system is required.</p>
+
+        <h2>b. Materials for Transportation</h2>
+        <p>Transported substances (in forms ready for movement):</p>
+        <ul>
+          <li>Excretory products (e.g., urea, CO₂) — removed from cells/tissues.</li>
+          <li>Gases (O₂ from lungs/gills to tissues; CO₂ from tissues to lungs/gills).</li>
+          <li>Manufactured food (in plants: sugars/glucose from leaves via photosynthesis).</li>
+          <li>Digested food/nutrients (e.g., glucose, amino acids, fatty acids, vitamins from gut to cells).</li>
+          <li>Water and mineral salts (from soil/root to all parts in plants).</li>
+          <li>Hormones (from glands to target organs for regulation).</li>
+        </ul>
+
+        <h2>c. Channels for Transportation</h2>
+
+        <h3>i. Mammalian Circulatory System (Closed Circulatory System)</h3>
+        <p><strong>Heart</strong>: Muscular pump that circulates blood.</p>
+        <p><strong>Arteries</strong>: Thick, elastic walls; carry oxygenated blood away from heart under high pressure (except pulmonary artery).</p>
+        <p><strong>Veins</strong>: Thinner walls with valves; carry deoxygenated blood toward heart (except pulmonary vein).</p>
+        <p><strong>Capillaries</strong>: Thin walls (one cell thick); site of exchange (nutrients, gases, wastes) between blood and tissues.</p>
+        <p><strong>Specific functions of key vessels</strong>:</p>
+        <ul>
+          <li><strong>Hepatic portal vein</strong>: Nutrient-rich blood from gut → liver (processing).</li>
+          <li><strong>Pulmonary vein</strong>: Oxygenated blood from lungs → heart.</li>
+          <li><strong>Pulmonary artery</strong>: Deoxygenated blood from heart → lungs.</li>
+          <li><strong>Aorta</strong>: Oxygenated blood from heart → body.</li>
+          <li><strong>Renal artery/vein</strong>: Kidney blood supply and return.</li>
+        </ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Human_circulatory_system.svg/800px-Human_circulatory_system.svg.png" alt="Labeled human circulatory system diagram" class="diagram-img">
+
+        <h3>ii. Plant Vascular System</h3>
+        <p><strong>Xylem</strong>: Water + minerals upwards (unidirectional, dead cells).</p>
+        <p><strong>Phloem</strong>: Sugars/food bidirectional (source to sink, living cells).</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Xylem-and-Phloem.png" alt="Xylem and phloem in vascular bundles labeled" class="diagram-img">
+
+        <h2>d. Media and Processes/Mechanisms of Transportation</h2>
+
+        <h3>Media of Transportation</h3>
+        <ul>
+          <li>Cytoplasm/cell sap (short distances).</li>
+          <li>Haemolymph (open systems, e.g., insects).</li>
+          <li>Blood (closed systems).</li>
+          <li>Lymph (returns fluid, fats, immunity).</li>
+        </ul>
+
+        <h3>Mechanisms of Transportation</h3>
+        <ul>
+          <li><strong>Diffusion</strong>: High → low concentration (passive).</li>
+          <li><strong>Osmosis</strong>: Water movement across membrane.</li>
+          <li><strong>Plasmolysis</strong> (shrinkage of protoplast): Cell shrinks in hypertonic solution (flaccid).</li>
+          <li><strong>Turgidity</strong> (turgor/turgid state): Cell swells/firm in hypotonic solution (support).</li>
+        </ul>
+
+        <h3>Comparison of Mechanisms</h3>
+        <p>Open circulatory system (e.g., insects): Slow, low pressure.</p>
+        <p>Plants:</p>
+        <ul>
+          <li><strong>Transpiration pull (cohesion-tension)</strong>: Evaporation → negative pressure → pulls water up (main force, passive).</li>
+          <li><strong>Root pressure</strong> (positive pressure): Active ion transport into xylem → osmosis draws water → hydrostatic pressure pushes sap up (minor role; night/high soil water).</li>
+          <li><strong>Active transport</strong>: ATP for ions/minerals (e.g., root uptake).</li>
+          <li><strong>Phloem translocation (pressure flow/Mass flow/Münch hypothesis)</strong>: Source (high sugar) → water in → high turgor → flow to sink (low sugar) → water out (bidirectional, ATP for loading).</li>
+        </ul>
+
+        <h3>Guttation</h3>
+        <p>Exudation/loss of water in liquid form (droplets) from leaf tips/edges via special pores called hydathodes (not stomata).</p>
+        <p>Caused mainly by high root pressure when transpiration is low/suppressed.</p>
+        <p>Occurs mostly at night/early morning or in high humidity + abundant soil water (roots absorb excess water → builds positive pressure in xylem).</p>
+        <p>Liquid (xylem sap) forced out through hydathodes (epithem tissue helps); contains water + dissolved minerals (e.g., K, sugars, nitrates), slightly acidic.</p>
+        <p>Visible as droplets on leaf margins/tips (e.g., grass, tomatoes, strawberries); may leave white crust when dries.</p>
+        <p>Differs from dew (condensation from air) and transpiration (water vapour via stomata).</p>
+        <p>Acts as pressure relief to prevent excess water buildup; common in small herbs, not tall trees.</p>
+        <p>Demonstrated: Cut stem exudes sap under high root pressure.</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Guttation-in-Plants.png" alt="Guttation in plants diagram (droplets from hydathodes)" class="diagram-img">
+
+        <h2>Key Comparison Summary</h2>
+        <ul>
+          <li><strong>Animals</strong>: Fast, pumped blood.</li>
+          <li><strong>Plants</strong>: Slower; transpiration pull (dominant for water), pressure flow (food), root pressure + guttation (excess water relief).</li>
+          <li>Both maintain homeostasis.</li>
+        </ul>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Abumchukwu, master Transport for JAMB! 🌟 Keep practicing these diagrams!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
+        <button class="explore-btn" onclick="window.location.href='question.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item active">
+      <button class="neumorphic-btn">🏠</button>
+      <p>Home</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">⚙️</button>
+      <p>Settings</p>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
