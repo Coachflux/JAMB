@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Nutrition</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      background: #fff;
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Nutrition</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Nutrition Made Easy for JAMB 🚀</h1>
+        <p class="subtitle">Abumchukwu – Visual Notes & Diagrams</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Definition: Nutrition</h2>
+        <p>Nutrition is the process by which living organisms obtain and utilize food for energy, growth, repair, and maintenance.</p>
+
+        <h2>a. Modes of Nutrition</h2>
+
+        <h3>i. Autotrophic (Self-feeding / Producer mode)</h3>
+        <p>Organisms synthesize their own food from inorganic substances using energy.</p>
+        <p><strong>Examples</strong>: Green plants (flowering: maize, bean; non-flowering: algae like Spirogyra, ferns).</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Photosynthesis_diagram.svg/800px-Photosynthesis_diagram.svg.png" alt="Photosynthesis in green plants diagram" class="diagram-img">
+
+        <h3>ii. Heterotrophic (Dependent / Consumer mode)</h3>
+        <p>Organisms obtain ready-made organic food from external sources.</p>
+        <p><strong>Examples</strong>: Animals (man, sheep), fungi, some plants (Loranthus).</p>
+        <p><strong>Comparison</strong>: Autotrophs are independent producers; heterotrophs are dependent consumers.</p>
+
+        <h2>b. Types of Nutrition (Mainly heterotrophic types with other/common alternative names)</h2>
+
+        <h3>Holozoic (Holophytic in older texts; ingestion of solid food)</h3>
+        <p>Involves ingestion of complex solid/liquid food, internal digestion.</p>
+        <p><strong>Subtypes</strong>: Herbivores (plant-eaters), Carnivores (meat-eaters), Omnivores (both).</p>
+        <p><strong>Examples</strong>: Sheep (herbivore), man (omnivore).</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Holozoic-Nutrition.png" alt="Holozoic nutrition process diagram" class="diagram-img">
+
+        <h3>Parasitic (Parasitism mode)</h3>
+        <p>Absorb nutrients from living host (host harmed).</p>
+        <p><strong>Examples</strong>: Tapeworm, roundworm (in gut), Loranthus (on plants).</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Tapeworm_scolex.jpg/800px-Tapeworm_scolex.jpg" alt="Tapeworm (parasitic nutrition) scolex" class="diagram-img">
+
+        <h3>Saprophytic (Saprotrophic / Saprobiontic nutrition)</h3>
+        <p>Feed on dead/decaying organic matter (external digestion).</p>
+        <p><strong>Examples</strong>: Rhizopus (bread mould), mushroom (on decaying wood).</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2018/11/Rhizopus.png" alt="Rhizopus (saprophytic nutrition) structure" class="diagram-img">
+
+        <h3>Carnivorous (Insectivorous / Predatory in plants)</h3>
+        <p>Trap and digest living prey (usually insects).</p>
+        <p><strong>Examples</strong>: Sundew (sticky leaves), bladderwort (suction traps in water).</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Drosera_rotundifolia.jpg/800px-Drosera_rotundifolia.jpg" alt="Sundew plant (carnivorous nutrition)" class="diagram-img">
+
+        <h2>c. Plant Nutrition</h2>
+
+        <h3>i. Photosynthesis</h3>
+        <p>Green plants convert light energy: 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ (requires chlorophyll).</p>
+        <ul>
+          <li><strong>Light reaction</strong>: Produces ATP, NADPH, O₂ (water splitting).</li>
+          <li><strong>Dark reaction</strong>: CO₂ fixed into glucose (Calvin cycle).</li>
+        </ul>
+        <p><strong>Photosynthesis Experiments (Starch Test – Key Evidence)</strong>:</p>
+        <ul>
+          <li>Aim: Prove starch formation and factor necessity.</li>
+          <li>Procedure: Destarch plant (48 hrs dark) → expose to test conditions → boil leaf → ethanol → iodine test (blue-black = starch).</li>
+          <li>Results: Variegated leaf (starch only in green parts), covered part (no starch), CO₂-free (no starch).</li>
+        </ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Photosynthesis_diagram.svg/800px-Photosynthesis_diagram.svg.png" alt="Photosynthesis process diagram" class="diagram-img">
+
+        <h3>ii. Chemosynthesis (Chemoautotrophic nutrition)</h3>
+        <p>Use chemical energy (e.g., oxidation of NH₃, H₂S) to make food (no light).</p>
+        <p><strong>Examples</strong>: Nitrifying bacteria, sulphur bacteria.</p>
+        <p><strong>Comparison</strong>: Photosynthesis (light energy); chemosynthesis (chemical energy).</p>
+
+        <h3>iii. Mineral Requirements</h3>
+        <p><strong>Macro-nutrients</strong>: N, P, K, Ca, Mg, S.</p>
+        <p><strong>Micro-nutrients</strong>: Fe, Mn, Zn, Cu, B, Mo, Cl.</p>
+        <p><strong>Deficiency Symptoms (key JAMB ones)</strong>:</p>
+        <ul>
+          <li><strong>Nitrogen</strong>: Chlorosis (yellow older leaves), stunted growth.</li>
+          <li><strong>Phosphorus</strong>: Purple/dark leaves, poor roots.</li>
+          <li><strong>Potassium</strong>: Scorched/brown leaf edges, weak stems.</li>
+          <li><strong>Magnesium</strong>: Interveinal chlorosis (yellow between green veins).</li>
+          <li><strong>Iron</strong>: Chlorosis in young leaves (green veins).</li>
+        </ul>
+
+        <h2>d. Animal Nutrition</h2>
+
+        <h3>i. Classes of Food Substances & Sources/Importance/Deficiency</h3>
+        <ul>
+          <li><strong>Carbohydrates</strong>: Energy (rice, yam). Deficiency: Fatigue.</li>
+          <li><strong>Proteins</strong>: Growth/repair (meat, beans). Deficiency: Kwashiorkor.</li>
+          <li><strong>Fats & Oils</strong>: Reserve energy (oils, nuts). Deficiency: Dry skin.</li>
+          <li><strong>Vitamins</strong>: e.g., C (fruits) → scurvy; D → rickets.</li>
+          <li><strong>Mineral Salts</strong>: e.g., Fe → anaemia; Ca → weak bones.</li>
+          <li><strong>Water</strong>: Transport/solvent.</li>
+        </ul>
+        <p><strong>Balanced diet</strong>: Prevents deficiencies, supports health.</p>
+
+        <h3>ii. Food Tests</h3>
+        <ul>
+          <li><strong>Starch</strong>: Iodine → blue-black.</li>
+          <li><strong>Reducing sugar</strong>: Benedict's → brick-red.</li>
+          <li><strong>Protein</strong>: Biuret → violet.</li>
+          <li><strong>Fat</strong>: Sudan III → red / grease spot.</li>
+        </ul>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Food-Tests.png" alt="Food test reactions diagram" class="diagram-img">
+
+        <h3>iii. Mammalian Tooth</h3>
+        <p><strong>Structure</strong>: Enamel, dentine, pulp, cement.</p>
+        <p><strong>Types</strong>: Incisors (cut), Canines (tear), Premolars/Molars (crush/grind).</p>
+        <p><strong>Dental Formulae</strong>:</p>
+        <ul>
+          <li>Man: 2:1:2:3 / 2:1:2:3 (32 teeth).</li>
+          <li>Sheep: 0:0:3:3 / 3:1:3:3 (32 teeth).</li>
+          <li>Dog: 3:1:4:2 / 3:1:4:3 (42 teeth).</li>
+        </ul>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Types-of-Teeth.png" alt="Mammalian teeth types diagram" class="diagram-img">
+
+        <h3>iv. Mammalian Alimentary Canal</h3>
+        <p>Mouth (saliva/amylase) → Oesophagus → Stomach (pepsin/HCl) → Small intestine (enzymes, absorption via villi) → Large intestine (water) → Anus.</p>
+        <p><strong>Accessories</strong>: Liver (bile), Gall bladder, Pancreas (trypsin, lipase, amylase).</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Mammalian_digestive_system_diagram.svg/800px-Mammalian_digestive_system_diagram.svg.png" alt="Mammalian alimentary canal labeled" class="diagram-img">
+
+        <h3>v. Nutrition Process</h3>
+        <ul>
+          <li><strong>Ingestion</strong>: Food intake.</li>
+          <li><strong>Digestion</strong>: Carbs → glucose; Proteins → amino acids; Fats → fatty acids + glycerol.</li>
+          <li><strong>Absorption</strong>: Into blood (ileum).</li>
+          <li><strong>Assimilation</strong>: Use by cells.</li>
+          <li><strong>Egestion</strong>: Waste out.</li>
+        </ul>
+
+        <h2>Key JAMB Focus</h2>
+        <ul>
+          <li>Comparisons (autotrophic vs heterotrophic, photosynthesis vs chemosynthesis).</li>
+          <li>Examples with alternative names.</li>
+          <li>Experiments (starch test).</li>
+          <li>Deficiencies (minerals & vitamins).</li>
+          <li>Food tests, teeth types, enzymes, balanced diet.</li>
+        </ul>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Abumchukwu, you're set for Nutrition in JAMB! 🌟 Keep practicing these diagrams!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
+        <button class="explore-btn" onclick="window.location.href='question.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item active">
+      <button class="neumorphic-btn">🏠</button>
+      <p>Home</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">⚙️</button>
+      <p>Settings</p>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
