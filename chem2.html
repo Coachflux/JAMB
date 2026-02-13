@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Chemical Combination</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      background: #fff;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .diagram-img:hover {
+      transform: scale(1.05);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .calculator-box {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      box-shadow: inset 2px 2px 5px var(--shadow-in), inset -2px -2px 5px var(--shadow-out);
+    }
+
+    .calculator-box input, .calculator-box button {
+      margin: 8px 0;
+      padding: 8px;
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .calculator-box button {
+      background: var(--accent);
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .calculator-box button:hover {
+      background: #1aa34a;
+    }
+
+    .result {
+      margin-top: 12px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 30;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 80%;
+      max-height: 80%;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Chemical Combination</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Chemical Combination Made Easy for JAMB 🚀</h1>
+        <p class="subtitle">Abumchukwu – Interactive Calculations & Visuals</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Chemical Combination</h2>
+        <p>Chemical combination refers to the process by which elements or compounds react to form new substances, governed by fundamental laws and principles. This note covers the key laws of chemical combination, chemical symbols, formulae, and equations, relative atomic mass (RAM), the mole concept, and stoichiometry of reactions, as outlined in JAMB chemistry syllabus. It includes deductions of laws from expressions/statements/data, simple calculations, and stoichiometry examples for clarity.</p>
+
+        <h2>1. Laws of Chemical Combination</h2>
+        <p>These laws explain how elements combine in predictable ways during chemical reactions.</p>
+
+        <h3>Law of Conservation of Matter (Mass)</h3>
+        <p>This law states that matter can neither be created nor destroyed in a chemical reaction; the total mass of reactants equals the total mass of products. It was proposed by Antoine Lavoisier.</p>
+        <p><strong>Deduction from data</strong>: If 4 g of hydrogen reacts with 32 g of oxygen to form 36 g of water, the mass is conserved (4 g + 32 g = 36 g). This implies atoms are rearranged, not lost or gained.</p>
+
+        <h3>Law of Definite Proportions</h3>
+        <p>A given chemical compound always contains the same elements in the same fixed proportion by mass, regardless of the source. It was proposed by Joseph Proust.</p>
+        <p><strong>Deduction from statements/data</strong>: In water (H₂O), hydrogen and oxygen always combine in a 1:8 mass ratio (2 g H with 16 g O, or multiples). If analysis of 18 g water yields 2 g H and 16 g O, the ratio is fixed, confirming the law.</p>
+
+        <h3>Law of Multiple Proportions</h3>
+        <p>When two elements combine to form more than one compound, the masses of one element that combine with a fixed mass of the other element are in the ratio of small whole numbers. It was proposed by John Dalton.</p>
+        <p><strong>Deduction from data</strong>: Carbon and oxygen form CO (12 g C with 16 g O) and CO₂ (12 g C with 32 g O). For fixed 12 g C, oxygen masses are 16 g and 32 g, ratio 1:2 (whole numbers).</p>
+
+        <h3>Law of Reciprocal Proportions</h3>
+        <p>If two elements (A and B) combine separately with a third element (C), the ratio of masses in which A and B combine with a fixed mass of C is the same as (or a simple multiple of) the ratio in which A and B combine with each other. It was proposed by Richter.</p>
+        <p><strong>Deduction from data</strong>: Hydrogen combines with oxygen (1 g H with 8 g O) and chlorine (1 g H with 35.5 g Cl) to form H₂O and HCl. For fixed 1 g H, O:Cl = 8:35.5 ≈ 1:4.4. Oxygen and chlorine combine in Cl₂O₇ (35.5×2 g Cl with 8×7/2 g O, but simplified ratio matches multiples).</p>
+        <p>These laws form the basis of modern atomic theory, showing that atoms combine in fixed ratios.</p>
+
+        <h2>2. Chemical Symbols, Formulae, Equations, and Their Uses</h2>
+        <p><strong>Chemical Symbols</strong>: These are shorthand notations for elements, usually one or two letters (e.g., H for hydrogen, Na for sodium). They represent one atom of the element and are used in writing formulae and equations.</p>
+
+        <p><strong>Chemical Formulae</strong>: These represent compounds or molecules using symbols and subscripts (e.g., H₂O for water: 2 H atoms, 1 O atom; CO₂ for carbon dioxide). Empirical formulae show simplest ratios (e.g., CH for benzene), while molecular formulae show actual numbers (e.g., C₆H₆).</p>
+
+        <p><strong>Chemical Equations</strong>: These are symbolic representations of reactions, showing reactants → products, balanced for atoms and mass (e.g., 2H₂ + O₂ → 2H₂O). They must obey the law of conservation of mass.</p>
+
+        <p><strong>Uses</strong>:</p>
+        <ul>
+          <li>Symbols and formulae simplify communication of chemical composition.</li>
+          <li>Equations predict reaction outcomes, calculate quantities (stoichiometry), and represent industrial processes (e.g., Haber process: N₂ + 3H₂ → 2NH₃).</li>
+          <li>They help in identifying reaction types (e.g., combination: A + B → AB) and balancing for accuracy.</li>
+        </ul>
+
+        <h3>Simple Calculation Example on Formulae</h3>
+        <div class="calculator-box">
+          <p><strong>Interactive: Percentage Composition of Carbon in CO₂</strong></p>
+          <p>RAM: C = 12, O = 16</p>
+          <input type="number" id="massC" placeholder="Mass of C (default 12)" value="12">
+          <input type="number" id="massO" placeholder="Mass of O (default 32)" value="32">
+          <button onclick="calcPercent()">Calculate % Carbon</button>
+          <p id="percentResult" class="result">Result will appear here...</p>
+        </div>
+        <p><strong>Step-by-step explanation</strong>: Add atomic masses → divide element's mass by total → multiply by 100.</p>
+
+        <h2>3. Relative Atomic Mass (RAM) Based on ¹²C=12</h2>
+        <p>RAM is the weighted average mass of an element's atoms compared to 1/12th the mass of a carbon-12 atom (¹²C=12 exactly). It accounts for isotopes (e.g., chlorine: 35.5 due to ³⁵Cl and ³⁷Cl).</p>
+        <p><strong>Uses</strong>: Basis for mole concept; calculates formula masses (e.g., H₂O: 1×2 + 16 = 18).</p>
+        <p><strong>Deduction</strong>: If ¹²C is standard, RAM of H ≈1 means H atom is 1/12th mass of ¹²C.</p>
+
+        <h2>4. The Mole Concept</h2>
+        <p>A mole is the amount of substance containing 6.022 × 10²³ particles (Avogadro's number), equal to the RAM in grams (molar mass). E.g., 1 mole C = 12 g, contains 6.022 × 10²³ atoms.</p>
+        <p><strong>Uses</strong>: Links microscopic (atoms) to macroscopic (grams); used in calculations.</p>
+
+        <h3>Interactive Mole Calculator</h3>
+        <div class="calculator-box">
+          <p><strong>Calculate Moles or Mass</strong></p>
+          <input type="number" id="givenMass" placeholder="Mass in grams">
+          <input type="number" id="molarMass" placeholder="Molar mass (g/mol)">
+          <button onclick="calcMoles()">Calculate Moles</button>
+          <p id="molesResult" class="result">Result will appear here...</p>
+        </div>
+        <p><strong>Step-by-step</strong>: Moles = mass / molar mass</p>
+
+        <h2>5. Stoichiometry of Reactions</h2>
+        <p>Stoichiometry is the quantitative study of reactants and products in balanced equations, using mole ratios.</p>
+        <p><strong>Deduction of Stoichiometry</strong>: From balanced equation 2H₂ + O₂ → 2H₂O, mole ratio H₂:O₂:H₂O = 2:1:2. So, 2 moles H₂ produce 2 moles H₂O.</p>
+
+        <h3>Interactive Stoichiometry Calculator (2H₂ + O₂ → 2H₂O)</h3>
+        <div class="calculator-box">
+          <p><strong>Calculate product from reactant</strong></p>
+          <input type="number" id="h2Moles" placeholder="Moles of H₂">
+          <button onclick="calcWaterFromH2()">Calculate moles of H₂O</button>
+          <p id="waterResult" class="result">Result will appear here...</p>
+        </div>
+        <p><strong>Step-by-step</strong>: Ratio 2 H₂ : 2 H₂O → moles H₂O = moles H₂</p>
+
+        <h3>More Examples (Practice these manually too)</h3>
+        <p><strong>Example 1: Mass from Moles</strong></p>
+        <p>How much water (g) from 4 moles H₂? → 4 moles H₂O = 4 × 18 g = 72 g.</p>
+
+        <p><strong>Example 2: Limiting Reactant</strong></p>
+        <p>2 g H₂ + 16 g O₂ → ? g H₂O → 18 g H₂O (O₂ limiting).</p>
+
+        <p><strong>Example 3: Empirical Formula</strong></p>
+        <p>40% C, 6.7% H, 53.3% O → CH₂O.</p>
+
+        <p><strong>Example 4: Volume at STP</strong></p>
+        <p>44.8 L H₂ requires 22.4 L O₂.</p>
+
+        <p>These examples illustrate deductions and calculations. Practice balancing equations first for accuracy.</p>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Abumchukwu, you're set to master Chemical Combination in JAMB! 🌟 Try the interactive calculators above!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
+        <button class="explore-btn" onclick="window.location.href='question.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item active">
+      <button class="neumorphic-btn">🏠</button>
+      <p>Home</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">⚙️</button>
+      <p>Settings</p>
+    </div>
+  </div>
+
+  <!-- Modal for Image Zoom -->
+  <div id="imgModal" class="modal" onclick="closeModal()">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+
+    // Image Modal for Interactivity
+    function openModal(src) {
+      document.getElementById('imgModal').style.display = "block";
+      document.getElementById('modalImg').src = src;
+    }
+
+    function closeModal() {
+      document.getElementById('imgModal').style.display = "none";
+    }
+
+    // Interactive Calculations
+    function calcPercent() {
+      let massC = parseFloat(document.getElementById('massC').value) || 12;
+      let massO = parseFloat(document.getElementById('massO').value) || 32;
+      let total = massC + massO;
+      let percent = (massC / total) * 100;
+      document.getElementById('percentResult').innerText = `Percentage of Carbon: ${percent.toFixed(2)}%`;
+    }
+
+    function calcMoles() {
+      let mass = parseFloat(document.getElementById('givenMass').value);
+      let molar = parseFloat(document.getElementById('molarMass').value);
+      if (mass && molar && molar !== 0) {
+        let moles = mass / molar;
+        document.getElementById('molesResult').innerText = `Moles = ${moles.toFixed(3)} mol`;
+      } else {
+        document.getElementById('molesResult').innerText = "Please enter valid mass and molar mass";
+      }
+    }
+
+    function calcWaterFromH2() {
+      let h2 = parseFloat(document.getElementById('h2Moles').value);
+      if (h2) {
+        // From 2H₂ + O₂ → 2H₂O → 2 moles H₂ produce 2 moles H₂O
+        let water = h2; // 1:1 after ratio adjustment
+        document.getElementById('waterResult').innerText = `Moles of H₂O produced = ${water.toFixed(3)} mol`;
+      } else {
+        document.getElementById('waterResult').innerText = "Enter moles of H₂";
+      }
+    }
+  </script>
+</body>
+</html>
