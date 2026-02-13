@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Separation of Mixtures</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      background: #fff;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .diagram-img:hover {
+      transform: scale(1.05);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 30;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 80%;
+      max-height: 80%;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Separation of Mixtures</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Separation of Mixtures & Purification Made Easy for JAMB 🚀</h1>
+        <p class="subtitle">Abumchukwu – Visual Notes & Diagrams</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Separation of Mixtures and Purification of Chemical Substances</h2>
+
+        <h3>(a) Elements, Compounds and Mixtures</h3>
+        <p><strong>Element</strong> — A pure substance that cannot be broken down into simpler substances by chemical means. It consists of only one type of atom.</p>
+        <p><strong>Examples</strong>: Oxygen (O), Iron (Fe), Gold (Au), Hydrogen (H), Carbon (C).</p>
+
+        <p><strong>Compound</strong> — A pure substance formed when two or more different elements combine chemically in a fixed ratio by mass. It has new properties different from its elements and can only be separated by chemical reactions.</p>
+        <p><strong>Examples</strong>: Water (H₂O), Sodium chloride (NaCl), Carbon dioxide (CO₂), Glucose (C₆H₁₂O₆).</p>
+
+        <p><strong>Mixture</strong> — A physical combination of two or more substances (elements or compounds) in any proportion. Components keep their individual properties and can be separated by physical methods.</p>
+        <p><strong>Types</strong>:</p>
+        <ul>
+          <li>Homogeneous (uniform composition throughout) — e.g., salt solution, air, alloys like brass.</li>
+          <li>Heterogeneous (non-uniform) — e.g., sand + water, oil + water, soil.</li>
+        </ul>
+        <p><strong>Key Differences</strong>:</p>
+        <ul>
+          <li>Elements & compounds = pure, fixed composition.</li>
+          <li>Mixtures = impure, variable composition.</li>
+        </ul>
+
+        <h3>(b) Chemical and Physical Changes</h3>
+        <p><strong>Physical Change</strong> — No new substance is formed. Only physical properties change (e.g., state, shape, size). Usually easy to reverse; small energy change.</p>
+        <p><strong>Examples</strong>: Melting of ice, Boiling of water, Dissolving sugar in water, Crushing chalk.</p>
+
+        <p><strong>Chemical Change</strong> — One or more new substances with different properties are formed. Usually difficult or impossible to reverse; large energy change (heat, light, gas, sound).</p>
+        <p><strong>Examples</strong>: Burning of paper, Rusting of iron, Digestion of food, Reaction of iron with sulphur.</p>
+
+        <p><strong>How to Distinguish</strong>:</p>
+        <ul>
+          <li>Physical: Reversible, no new substance.</li>
+          <li>Chemical: Irreversible (often), new substance formed.</li>
+        </ul>
+
+        <h3>(c) Pure and Impure Substances</h3>
+        <p><strong>Pure substance</strong> — Has definite/fixed composition and properties (element or compound). Sharp and fixed melting point and boiling point.</p>
+        <p><strong>Examples</strong>: Distilled water, Pure sodium chloride, Pure oxygen gas.</p>
+
+        <p><strong>Impure substance</strong> — A mixture containing more than one component. Melting point is depressed (lower) and occurs over a range. Boiling point is elevated (higher) and occurs over a range.</p>
+        <p><strong>Examples</strong>: Tap water, Sea water, Crude oil.</p>
+
+        <h3>(d) Boiling, Density, Freezing and Melting Points</h3>
+        <p>These properties are used as criteria for purity:</p>
+        <ul>
+          <li>Pure substances have sharp, fixed melting point (mp) and boiling point (bp) at standard pressure (1 atm).</li>
+          <li>Example: Pure ice melts sharply at 0°C; pure water boils at 100°C.</li>
+          <li>Impure substances show: Melting point range (depressed and broader). Boiling point range (elevated and broader).</li>
+          <li>Density: Pure substances have constant density; impurities change it.</li>
+        </ul>
+        <p><strong>Practical Use</strong>: Melting point determination is a common lab test for purity of solids.</p>
+
+        <h3>(e) Separation Processes</h3>
+        <p>Separation depends on differences in physical properties (e.g., boiling point, solubility, particle size, density, magnetism, sublimation).</p>
+
+        <h4>Evaporation</h4>
+        <p><strong>Principle</strong>: Solvent is volatile and evaporates, leaving non-volatile solute.</p>
+        <p><strong>Used for</strong>: Soluble solids from solutions.</p>
+        <p><strong>Example</strong>: Obtaining salt from seawater.</p>
+
+        <h4>Simple Distillation</h4>
+        <p><strong>Principle</strong>: Large difference in boiling points (>25–30°C). Lower-boiling liquid vaporizes first, condenses separately.</p>
+        <p><strong>Used for</strong>: Miscible liquids with big bp difference.</p>
+        <p><strong>Example</strong>: Separating water from ethanol (rough separation).</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Simple-Distillation-Setup.png" alt="Simple distillation apparatus labeled" class="diagram-img" onclick="openModal(this.src)">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Simple Distillation):</strong></p>
+          <ul>
+            <li><strong>Round-bottom flask</strong>: Contains mixture</li>
+            <li><strong>Thermometer</strong>: Measures vapor temperature</li>
+            <li><strong>Liebig condenser</strong>: Cools vapor to liquid</li>
+            <li><strong>Receiver</strong>: Collects distilled liquid</li>
+          </ul>
+        </div>
+
+        <h4>Fractional Distillation</h4>
+        <p><strong>Principle</strong>: Small difference in boiling points (<25–30°C). Uses fractionating column for repeated vaporization-condensation cycles.</p>
+        <p><strong>Used for</strong>: Crude oil fractions (petrol, kerosene, diesel), separating liquid air (N₂, O₂).</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Fractional-Distillation-Setup.png" alt="Fractional distillation apparatus labeled" class="diagram-img" onclick="openModal(this.src)">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Fractional Distillation):</strong></p>
+          <ul>
+            <li><strong>Fractionating column</strong>: Repeated condensation/vaporization</li>
+            <li><strong>Round-bottom flask</strong>: Mixture heated</li>
+            <li><strong>Thermometer</strong>: Monitors temperature</li>
+            <li><strong>Condenser</strong>: Cools vapor</li>
+            <li><strong>Fraction receiver</strong>: Collects fractions</li>
+          </ul>
+        </div>
+
+        <h4>Sublimation</h4>
+        <p><strong>Principle</strong>: Solid sublimes directly to vapour on heating, then condenses on cooling.</p>
+        <p><strong>Used for</strong>: Sublimable solids from non-sublimable ones.</p>
+        <p><strong>Example</strong>: Iodine or naphthalene from sand.</p>
+
+        <h4>Recrystallization (Simple / Fractional Crystallization)</h4>
+        <p><strong>Principle</strong>: Solubility increases with temperature; cool hot solution to form pure crystals (impurities remain dissolved).</p>
+        <p><strong>Used for</strong>: Purifying solids.</p>
+        <p><strong>Example</strong>: Purifying impure sugar or salts.</p>
+
+        <h4>Paper Chromatography</h4>
+        <p><strong>Principle</strong>: Components have different solubilities and adsorption on paper; travel at different rates (different Rf values).</p>
+        <p><strong>Used for</strong>: Separating dyes, plant pigments, amino acids.</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Paper-Chromatography-Setup.png" alt="Paper chromatography setup and result labeled" class="diagram-img" onclick="openModal(this.src)">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Paper Chromatography):</strong></p>
+          <ul>
+            <li><strong>Chromatography paper</strong>: Stationary phase</li>
+            <li><strong>Solvent</strong>: Mobile phase rises by capillary action</li>
+            <li><strong>Spots</strong>: Separated components (different Rf)</li>
+            <li><strong>Origin line</strong>: Starting point of sample</li>
+          </ul>
+        </div>
+
+        <h4>Column Chromatography</h4>
+        <p><strong>Principle</strong>: Similar to paper but uses packed column with adsorbent (e.g., alumina, silica).</p>
+        <p><strong>Used for</strong>: Larger-scale or complex mixture separation.</p>
+
+        <h4>Magnetization</h4>
+        <p><strong>Principle</strong>: Difference in magnetic properties.</p>
+        <p><strong>Used for</strong>: Magnetic substances from non-magnetic.</p>
+        <p><strong>Example</strong>: Iron filings from sulphur or sand.</p>
+
+        <h4>Decantation</h4>
+        <p><strong>Principle</strong>: Difference in density or settling.</p>
+        <p><strong>Used for</strong>: Immiscible liquids or sediment from liquid.</p>
+        <p><strong>Example</strong>: Pouring off water from settled sand.</p>
+
+        <h4>Filtration</h4>
+        <p><strong>Principle</strong>: Particle size difference; filter traps solids, liquid passes through.</p>
+        <p><strong>Used for</strong>: Insoluble solids from liquids.</p>
+        <p><strong>Example</strong>: Sand from water, coffee making.</p>
+        <img src="https://cdn1.byjus.com/wp-content/uploads/2020/02/Filtration-Setup.png" alt="Filtration setup labeled" class="diagram-img" onclick="openModal(this.src)">
+        <div class="organelle-list">
+          <p><strong>Short Notes on Labeled Parts (Filtration):</strong></p>
+          <ul>
+            <li><strong>Filter paper / funnel</strong>: Traps solid residue</li>
+            <li><strong>Residue</strong>: Insoluble solid left on filter</li>
+            <li><strong>Filtrate</strong>: Liquid that passes through</li>
+            <li><strong>Beaker</strong>: Collects filtrate</li>
+          </ul>
+        </div>
+
+        <h4>Centrifugation</h4>
+        <p><strong>Principle</strong>: Rapid spinning creates centrifugal force; denser particles settle faster.</p>
+        <p><strong>Used for</strong>: Emulsions, suspensions, blood components.</p>
+        <p><strong>Example</strong>: Separating cream from milk.</p>
+
+        <h3>Quick Revision Table</h3>
+        <table border="1" cellpadding="8" style="width:100%; border-collapse: collapse; margin: 16px 0; font-size: 14px;">
+          <tr style="background:#333; color:#fff;">
+            <th>Method</th>
+            <th>Property Used</th>
+            <th>Mixture Type</th>
+            <th>Example</th>
+          </tr>
+          <tr><td>Evaporation</td><td>Volatility</td><td>Solid in solution</td><td>Salt from brine</td></tr>
+          <tr><td>Simple Distillation</td><td>Boiling point (large Δ)</td><td>Miscible liquids (big difference)</td><td>Water + ethanol (rough)</td></tr>
+          <tr><td>Fractional Distillation</td><td>Boiling point (small Δ)</td><td>Miscible liquids (close bp)</td><td>Crude oil fractions</td></tr>
+          <tr><td>Sublimation</td><td>Sublimation</td><td>Sublimable + non-sublimable</td><td>Iodine + sand</td></tr>
+          <tr><td>Recrystallization</td><td>Solubility vs temperature</td><td>Impure soluble solid</td><td>Purifying copper(II) sulphate</td></tr>
+          <tr><td>Paper Chromatography</td><td>Adsorption + solubility</td><td>Soluble mixtures (dyes)</td><td>Ink / plant pigments</td></tr>
+          <tr><td>Magnetization</td><td>Magnetism</td><td>Magnetic + non-magnetic</td><td>Iron + sulphur</td></tr>
+          <tr><td>Decantation</td><td>Density / settling</td><td>Immiscible / sediment</td><td>Oil + water</td></tr>
+          <tr><td>Filtration</td><td>Particle size</td><td>Insoluble solid + liquid</td><td>Sand + water</td></tr>
+          <tr><td>Centrifugation</td><td>Density (centrifugal force)</td><td>Suspensions / emulsions</td><td>Blood cells from plasma</td></tr>
+        </table>
+
+        <p><strong>Everyday / Real-Life Applications</strong>:</p>
+        <ul>
+          <li>Water purification (filtration + distillation).</li>
+          <li>Petrol and diesel from crude oil (fractional distillation).</li>
+          <li>Testing food colours or inks (paper chromatography).</li>
+          <li>Salt production from seawater (evaporation).</li>
+          <li>Metal separation in recycling (magnetization).</li>
+        </ul>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Abumchukwu, you're set to ace Separation & Purification in JAMB! 🌟 Revise by drawing & labeling these apparatus!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
+        <button class="explore-btn" onclick="window.location.href='question.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item active">
+      <button class="neumorphic-btn">🏠</button>
+      <p>Home</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">⚙️</button>
+      <p>Settings</p>
+    </div>
+  </div>
+
+  <!-- Modal for Image Zoom -->
+  <div id="imgModal" class="modal" onclick="closeModal()">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+
+    // Image Modal for Interactivity
+    function openModal(src) {
+      document.getElementById('imgModal').style.display = "block";
+      document.getElementById('modalImg').src = src;
+    }
+
+    function closeModal() {
+      document.getElementById('imgModal').style.display = "none";
+    }
+  </script>
+</body>
+</html>
