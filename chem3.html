@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Kinetic Theory & Gas Laws</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .diagram-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      background: #fff;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .diagram-img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 30;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 80%;
+      max-height: 80%;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Kinetic Theory & Gas Laws</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Kinetic Theory & Gas Laws Made Easy for JAMB 🚀</h1>
+        <p class="subtitle">Abumchukwu – Simplified Explanations & Calculations</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Updated Short Note on Kinetic Theory of Matter and Gas Laws (JAMB-Aligned, Simplified for Understanding)</h2>
+        <p>This note is based on the JAMB syllabus and New School Chemistry by Osei Yaw Ababio. I've made explanations clearer by showing what happens when variables like pressure (P), volume (V), or temperature (T) increase. I've also stated if relationships are directly proportional (both increase or decrease together) or inversely proportional (one increases while the other decreases). Calculations are included with step-by-step workings for easy understanding. Focus on ideal gases (perfect behavior) unless noted.</p>
+
+        <h2>Introduction to Kinetic Theory of Matter</h2>
+        <p>The Kinetic Theory says all matter is made of tiny particles (atoms or molecules) that are always moving randomly. Their movement explains how solids, liquids, and gases behave differently.</p>
+        <p><strong>Key Ideas (from Ababio's postulates):</strong></p>
+        <ul>
+          <li>Particles move faster with higher temperature (more kinetic energy).</li>
+          <li>In solids: Particles vibrate in fixed spots (strong forces hold them).</li>
+          <li>In liquids: Particles slide around but stay close (weaker forces).</li>
+          <li>In gases: Particles zoom freely and far apart (very weak forces).</li>
+          <li>Collisions are elastic (like bouncy balls—no energy lost).</li>
+        </ul>
+        <p>This helps distinguish states: Solids keep shape and volume; liquids keep volume but flow; gases spread out and can be squeezed.</p>
+
+        <img class="diagram-img" src="https://chem.libretexts.org/@api/deki/files/125771/imageedit_13_4028956051.png?revision=1&size=bestfit&width=793&height=517" alt="Particles in solid, liquid, and gas states according to kinetic theory" onclick="openModal(this.src)">
+
+        <p><strong>Brownian Movement:</strong> Proof of the theory—tiny particles (like dust in air) jiggle randomly because invisible gas molecules bump them (Ababio example: Pollen in water under a microscope).</p>
+
+        <img class="diagram-img" src="https://www.igcsephysics.com/content/cambridge/topics/thermal_physics/page86/page86_img1.jpg" alt="Brownian motion experiment setup with microscope and smoke particles" onclick="openModal(this.src)">
+
+        <h2>Phenomena Supporting Kinetic Theory</h2>
+        <p>State changes happen when heat changes particle speed (kinetic energy) against holding forces.</p>
+        <ol>
+          <li><strong>Melting:</strong> Solid to liquid. Heat makes particles move more, breaking fixed positions to flow.</li>
+          <li><strong>Vaporization (Evaporation):</strong> Liquid to gas below boiling point. Fast surface particles escape forces.</li>
+          <li><strong>Boiling:</strong> Liquid to gas at boiling point. Particles move so fast that bubbles form everywhere.</li>
+          <li><strong>Freezing:</strong> Liquid to solid. Cooling slows particles; forces lock them in place.</li>
+          <li><strong>Condensation:</strong> Gas to liquid. Cooling slows particles; forces pull them together into drops.</li>
+        </ol>
+        <p><strong>Inference:</strong> More heat = more motion = easier state change (e.g., solid to liquid to gas). Brownian movement shows constant random hits.</p>
+
+        <img class="diagram-img" src="https://geo.libretexts.org/@api/deki/files/33399/water.phases.png?revision=1&size=bestfit&width=550&height=350" alt="Phase changes diagram: melting, boiling, condensation, freezing with arrows" onclick="openModal(this.src)">
+
+        <h2>Gas Laws</h2>
+        <p>These describe how gases respond to changes in P, V, T, or amount (n). From kinetic theory: Pressure comes from particles hitting walls; higher T means faster hits.</p>
+
+        <h3>(i) Boyle's Law</h3>
+        <p>P and V are inversely proportional at constant T (P ∝ 1/V, or PV = constant).</p>
+        <p>If P increases, V decreases (particles hit walls harder, gas squeezes).<br>If V increases, P decreases (more space, fewer hits).</p>
+        <p>Graph: Curved line (P up, V down).</p>
+
+        <img class="diagram-img" src="https://lh3.googleusercontent.com/8r2FpnR9Jqd_kKfrnmgMgwtoGgVazNbbxrDp9lBsBmsMCQyg93O7zIoUuJbzY42THCqXbs48hNUkz1Zf4Q6g67YW5cxPBv3vQejn=s800" alt="Boyle's Law graph: Pressure vs Volume hyperbolic curve" onclick="openModal(this.src)">
+
+        <p><strong>Example 1:</strong> Gas at 2 atm, 500 cm³. At 5 atm? V₂ = (P₁V₁)/P₂ = (2×500)/5 = 200 cm³. (Volume halves as pressure more than doubles.)</p>
+        <p><strong>Example 2 (Ababio-style):</strong> 4 L at 760 mmHg to 2 L. P₂ = (760×4)/2 = 1520 mmHg. (Pressure doubles as volume halves.)</p>
+
+        <h3>(ii) Charles's Law</h3>
+        <p>V and T are directly proportional at constant P (V ∝ T, or V/T = constant; T in Kelvin).</p>
+        <p>If T increases, V increases (faster particles need more space).<br>If T decreases, V decreases (slower particles, gas shrinks).</p>
+        <p>Graph: Straight line (V up with T).</p>
+
+        <img class="diagram-img" src="https://lh3.googleusercontent.com/FHyxrw_1nAN2n5UTRNBfMXNQ1x5gVom2d-rEyU3MfwUB1JxoTMc6KdgrFGfNQzk7Q0UKqE2cSoIwwULgSqa5Nq0efE8hAbq-9snm=s800" alt="Charles's Law graph: Volume vs Temperature (Kelvin) straight line" onclick="openModal(this.src)">
+
+        <p><strong>Example 1:</strong> 200 mL at 27°C (300 K) to 127°C (400 K). V₂ = 200×(400/300) = 266.7 mL. (Volume increases by 1/3 as T increases by 1/3.)</p>
+        <p><strong>Example 2 (Ababio):</strong> 1 L at 0°C (273 K) to 30°C (303 K). V₂ = 1×(303/273) ≈ 1.11 L. (Slight increase with warmth.)</p>
+
+        <h3>(iii) Avogadro's Law</h3>
+        <p>V and n (moles) are directly proportional at constant P and T (V ∝ n, or V/n = constant).</p>
+        <p>If n increases, V increases (more particles need more space).</p>
+        <p>Molar volume: 22.4 L/mol at STP (0°C, 1 atm). Atomicity: Atoms in a molecule (e.g., H₂ = 2).</p>
+        <p><strong>Example (Ababio):</strong> 11.2 L at STP. n = 11.2/22.4 = 0.5 mol. (Half molar volume = half mole.)</p>
+
+        <h3>(iv) Gay-Lussac's Law</h3>
+        <p>P and T are directly proportional at constant V (P ∝ T, or P/T = constant).</p>
+        <p>If T increases, P increases (faster hits on walls).<br>If T decreases, P decreases.</p>
+        <p>Graph: Straight line (P up with T).</p>
+
+        <img class="diagram-img" src="https://www.tec-science.com/wp-content/uploads/2021/05/en-thermodynamics-thermodynamic-processes-isobaric-law-gay-lussac-diagram-volume-temperature.jpg" alt="Gay-Lussac's Law graph: Pressure vs Temperature straight line" onclick="openModal(this.src)">
+
+        <p><strong>Example:</strong> 1 atm at 300 K to 600 K. P₂ = 1×(600/300) = 2 atm. (Pressure doubles as T doubles.)</p>
+
+        <h3>(v) Graham's Law</h3>
+        <p>Diffusion rate and √(1/molar mass) are directly proportional (rate ∝ 1/√MM).</p>
+        <p>Lighter gas (lower MM) diffuses faster (quicker movement).</p>
+
+        <img class="diagram-img" src="https://www.iitianacademy.com/wp-content/uploads/2025/09/labelled-diagram-to-show-the-diffusion-of-ammonia-and-hydrogen-chloride-H3N06P-e1756782060209.jpg" alt="Graham's Law of diffusion: NH₃ and HCl gases meeting in a tube forming white NH₄Cl ring" onclick="openModal(this.src)">
+
+        <p><strong>Example:</strong> HCl (MM=36.5) vs. NH₃ (MM=17). Rate NH₃/HCl = √(36.5/17) ≈ 1.46. (NH₃ faster as lighter.)</p>
+
+        <h3>(vi) Dalton's Law of Partial Pressures</h3>
+        <p>Total P = sum of individual gas Ps (no reaction).</p>
+        <p>Adding a gas increases total P by its partial P.</p>
+        <p><strong>Example (Ababio):</strong> Air mix—O₂ 0.21 atm, N₂ 0.78 atm, others 0.01 atm. Total = 1 atm.</p>
+
+        <h2>Ideal Gas Equation</h2>
+        <p>PV = nRT (combines laws; R = 0.0821 L·atm/mol·K).</p>
+        <p>Use for any changes in P, V, T, n.</p>
+        <p><strong>Example 1:</strong> 0.5 mol at 27°C (300 K), 2 atm. V = (0.5×0.0821×300)/2 ≈ 6.16 L.</p>
+        <p><strong>Example 2 (Combined):</strong> 4 L at 1 atm, 300 K to 2 L, 600 K. P₂ = 1×(4/2)×(600/300) = 4 atm. (From Boyle: ×2; Charles: ×2.)</p>
+        <p><strong>Example 3 (Molar mass):</strong> 2 g in 1.12 L at STP. n = 1.12/22.4 = 0.05 mol. MM = 2/0.05 = 40 g/mol.</p>
+
+        <h2>Relationship Between Vapour Density (VD) and Relative Molecular Mass (RMM)</h2>
+        <p>VD = RMM / 2 (compared to H₂).</p>
+        <p>Higher RMM means higher VD (denser gas).</p>
+        <p><strong>Example 1:</strong> VD=32. RMM=64.</p>
+        <p><strong>Example 2:</strong> 0.5 g in 280 cm³ STP. Vol for 1 g = 560 cm³. H₂ for 1 g = 11,200 cm³. VD=11,200/560=20. RMM=40.</p>
+
+        <h2>Ideal and Real Gases</h2>
+        <p>Ideal: Follow laws perfectly (no forces, tiny particles). Good at high T, low P.</p>
+        <p>Real: Deviate (e.g., attractions at low T reduce P; volume at high P reduces V).</p>
+        <p>Factors: High P (particles take space); low T (sticky forces); polar gases deviate more.</p>
+        <p>(Ababio graphs: Real P-V curves bend from ideal.)</p>
+
+        <img class="diagram-img" src="https://saylordotorg.github.io/text_general-chemistry-principles-patterns-and-applications-v1.0/section_14/e524c43ad0c0149af3325f4909df3025.jpg" alt="Deviation of real gases from ideal behavior: PV/nRT vs Pressure plots" onclick="openModal(this.src)">
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold; color: var(--accent);">
+          Abumchukwu, you're set to master Kinetic Theory & Gas Laws in JAMB! 🌟 Practice the examples step-by-step!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item active">
+      <button class="neumorphic-btn">🏠</button>
+      <p>Home</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">⚙️</button>
+      <p>Settings</p>
+    </div>
+  </div>
+
+  <!-- Modal for Image Zoom -->
+  <div id="imgModal" class="modal" onclick="closeModal()">
+    <span class="close" onclick="closeModal()">×</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+
+    // Image Modal
+    function openModal(src) {
+      document.getElementById('imgModal').style.display = "block";
+      document.getElementById('modalImg').src = src;
+    }
+
+    function closeModal() {
+      document.getElementById('imgModal').style.display = "none";
+    }
+  </script>
+</body>
+</html>
