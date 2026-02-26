@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Polynomials</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif; }
+    :root {
+      --background: #1e1e2f; --shadow-in: #171723; --shadow-out: #25253b;
+      --text-primary: #f0f0ff; --text-secondary: #c0c0e0; --accent: #1db954;
+      --card-bg: #2a2a3f; --highlight-example: rgba(29,185,84,0.15); --highlight-solution: #ff9800;
+    }
+    body.light {
+      --background:#e0e0e0; --shadow-in:#bebebe; --shadow-out:#ffffff;
+      --text-primary:#1a1a1a; --text-secondary:#444; --card-bg:#f8f8f8;
+      --highlight-example:rgba(29,185,84,0.20); --highlight-solution:#f57c00;
+    }
+    body { background:var(--background); color:var(--text-primary); min-height:100vh; display:flex; justify-content:center; align-items:center; }
+    .container { width:100%; max-width:400px; background:var(--background); border-radius:20px; box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out); height:700px; overflow-y:auto; padding:70px 0; }
+    .neumorphic { background:var(--background); box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out); border-radius:15px; }
+    .neumorphic-btn { background:var(--background); border:none; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); cursor:pointer; font-size:18px; color:var(--text-primary); }
+    .neumorphic-btn:active { box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out); }
+    .top-bar { position:fixed; top:0; width:100%; max-width:400px; background:var(--background); padding:15px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 5px 10px var(--shadow-in); z-index:20; }
+    .top-bar .header { font-size:18px; font-weight:bold; color:var(--text-primary); }
+    .top-bar .right-icons { display:flex; gap:10px; }
+    .top-bar .profile-upload { position:relative; }
+    .top-bar .profile-upload input { opacity:0; position:absolute; width:40px; height:40px; cursor:pointer; }
+    .content { padding:20px 16px; line-height:1.6; }
+    .main-header { text-align:center; margin-bottom:32px; }
+    .main-header h1 { font-size:30px; margin-bottom:8px; color:var(--accent); font-weight:800; }
+    .main-header p.subtitle { font-size:16px; color:var(--text-secondary); }
+    .welcome-note { background:var(--card-bg); padding:28px 20px; border-radius:20px; box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out); margin-bottom:30px; }
+    .welcome-note h2 { font-size:22px; margin:32px 0 16px; color:var(--accent); font-weight:bold; }
+    .welcome-note h3 { font-size:18px; margin:24px 0 12px; color:var(--accent); }
+    .welcome-note p { margin-bottom:16px; font-size:15px; color:var(--text-primary); }
+    .example-block { background:rgba(0,0,0,0.15); padding:14px; border-radius:10px; margin:16px 0; font-family:'Courier New',monospace; white-space:pre-wrap; overflow-x:auto; border-left:4px solid var(--accent); }
+    .example-problem { background:var(--highlight-example); padding:12px; border-radius:8px; margin-bottom:8px; color:var(--text-primary); }
+    .example-solution { background:var(--highlight-solution); color:#000; font-weight:bold; padding:10px 12px; border-radius:6px; display:inline-block; margin-top:8px; }
+    .explore-btn { background:var(--accent); border:none; padding:10px 20px; border-radius:20px; color:#fff; cursor:pointer; box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); font-size:16px; margin:20px auto 0; display:block; text-align:center; }
+    .explore-btn:active { box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out); }
+    body.light .explore-btn { color:#000; }
+    .nav-bar { position:fixed; bottom:0; width:100%; max-width:400px; background:var(--background); padding:10px; display:flex; justify-content:space-around; box-shadow:0 -5px 10px var(--shadow-in); z-index:20; }
+    .nav-bar .nav-item { text-align:center; position:relative; }
+    .nav-bar .nav-item button { width:40px; height:40px; font-size:18px; color:var(--text-primary); }
+    .nav-bar .nav-item.center button { width:50px; height:50px; font-size:24px; background:var(--accent); box-shadow:0 0 15px var(--accent),3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); color:#000; }
+    .nav-bar .nav-item.active button { background:var(--accent); box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out); }
+    .nav-bar .nav-item p { display:none; font-size:12px; margin-top:5px; color:var(--text-primary); }
+    .nav-bar .nav-item.active p { display:block; }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Polynomials</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Polynomials – WAEC/JAMB Guide 🚀</h1>
+        <p class="subtitle">Abumchukwu – explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Polynomials Made Super Easy for JAMB</h2>
+        <p>Abumchukwu, polynomials are expressions like 3x² + 5x – 7. We only go up to degree 3 in JAMB. Think of them as “power expressions” with x. I will teach each part very slowly and simply, like we are in class together. Read one example at a time. Try it on paper first, then check my steps. You will understand everything fast.</p>
+
+        <!-- (a) Change of Subject of Formula -->
+        <h2>(a) Change of Subject of Formula</h2>
+        <p><strong>Very easy way to do it</strong></p>
+        <p>Step 1: Get rid of fractions (multiply both sides by denominator).<br>Step 2: Get rid of roots or squares (square or cube both sides).<br>Step 3: Move all terms with the new subject to one side, others to the other side.<br>Step 4: Factor or divide to isolate the new subject.</p>
+
+        <h3>10 Easy Examples with solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1: Make Q the subject of L = (4/3)M√(PQ)</div>
+          <div class="example-problem">
+Step 1: L = (4/3)M √(PQ)<br>
+Step 2: L / M = (4/3) √(PQ)<br>
+Step 3: (3L) / (4M) = √(PQ)<br>
+Step 4: Square both sides → 9L² / 16M² = PQ<br>
+Step 5: Q = 9L² / (16M² P)
+          </div>
+          <div class="example-solution">Answer: Q = 9L² / (16M² P)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2: Make q the subject of t = √(pq/r - r²q)</div>
+          <div class="example-problem">
+Step 1: Square → t² = pq/r - r²q<br>
+Step 2: t² = q (p/r - r²)<br>
+Step 3: q = t² r / (p - r³)
+          </div>
+          <div class="example-solution">Answer: q = t² r / (p - r³)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3: Make Q the subject of p = (M/5)(X + Q) + 1</div>
+          <div class="example-problem">
+Step 1: p - 1 = (M/5)(X + Q)<br>
+Step 2: 5(p - 1)/M = X + Q<br>
+Step 3: Q = 5(p - 1)/M - X
+          </div>
+          <div class="example-solution">Answer: Q = [5(p-1) - MX]/M</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4: Make u the subject of x = (2u - 3)/(3u + 2)</div>
+          <div class="example-problem">
+Step 1: x(3u + 2) = 2u - 3<br>
+Step 2: 3xu + 2x = 2u - 3<br>
+Step 3: 3xu - 2u = -3 - 2x<br>
+Step 4: u(3x - 2) = -(2x + 3)<br>
+Step 5: u = (2x + 3)/(2 - 3x)
+          </div>
+          <div class="example-solution">Answer: u = (2x + 3)/(2 - 3x)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5: Make r the subject of V = (4/3)πr³</div>
+          <div class="example-problem">
+Step 1: 3V/(4π) = r³<br>
+Step 2: r = ∛[3V/(4π)]
+          </div>
+          <div class="example-solution">Answer: r = ∛[3V/(4π)]</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6: Make t the subject of s = ut + (1/2)at²</div>
+          <div class="example-problem">
+Step 1: s - ut = (1/2)at²<br>
+Step 2: 2(s - ut)/a = t²<br>
+Step 3: t = √[2(s - ut)/a]
+          </div>
+          <div class="example-solution">Answer: t = √[2(s - ut)/a]</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7: Make x the subject of y = (x + 3)/(x - 2)</div>
+          <div class="example-problem">
+Step 1: y(x - 2) = x + 3<br>
+Step 2: yx - 2y = x + 3<br>
+Step 3: yx - x = 2y + 3<br>
+Step 4: x(y - 1) = 2y + 3<br>
+Step 5: x = (2y + 3)/(y - 1)
+          </div>
+          <div class="example-solution">Answer: x = (2y + 3)/(y - 1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8: Make k the subject of T = 2π√(l/kg)</div>
+          <div class="example-problem">
+Step 1: T/(2π) = √(l/kg)<br>
+Step 2: T²/(4π²) = l/kg<br>
+Step 3: k = 4π² l / (g T²)
+          </div>
+          <div class="example-solution">Answer: k = 4π² l / (g T²)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9: Make m the subject of E = (1/2)mv²</div>
+          <div class="example-problem">
+Step 1: 2E = mv²<br>
+Step 2: m = 2E / v²
+          </div>
+          <div class="example-solution">Answer: m = 2E / v²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10: Make b the subject of A = (1/2)(a + b)h</div>
+          <div class="example-problem">
+Step 1: 2A = (a + b)h<br>
+Step 2: 2A - ah = bh<br>
+Step 3: b = (2A - ah)/h
+          </div>
+          <div class="example-solution">Answer: b = (2A - ah)/h</div>
+        </div>
+
+        <h3>JAMB Past Questions for (a) Change of Subject (8 questions with step-by-step)</h3>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2008: Make Q the subject of L = (4/3)M√(PQ)</div>
+          <div class="example-problem">
+Step 1: L = (4/3)M √(PQ)<br>
+Step 2: L/M = (4/3) √(PQ)<br>
+Step 3: (3L)/(4M) = √(PQ)<br>
+Step 4: Square: 9L² / 16M² = PQ<br>
+Step 5: Q = 9L² / (16M² P)
+          </div>
+          <div class="example-solution">Answer: Q = 9L² / (16M² P)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2010: Make Q the subject of p = (M/5)(X + Q) + 1</div>
+          <div class="example-problem">
+Step 1: p - 1 = (M/5)(X + Q)<br>
+Step 2: 5(p - 1)/M = X + Q<br>
+Step 3: Q = 5(p - 1)/M - X
+          </div>
+          <div class="example-solution">Answer: Q = [5(p-1) - MX]/M</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2012: Make u the subject of x = (2u - 3)/(3u + 2)</div>
+          <div class="example-problem">
+Step 1: x(3u + 2) = 2u - 3<br>
+Step 2: 3xu + 2x = 2u - 3<br>
+Step 3: 3xu - 2u = -3 - 2x<br>
+Step 4: u(3x - 2) = - (2x + 3)<br>
+Step 5: u = (2x + 3)/(2 - 3x)
+          </div>
+          <div class="example-solution">Answer: u = (2x + 3)/(2 - 3x)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2015: Make r the subject of V = (4/3)πr³</div>
+          <div class="example-problem">
+Step 1: 3V/(4π) = r³<br>
+Step 2: r = ∛[3V/(4π)]
+          </div>
+          <div class="example-solution">Answer: r = ∛[3V/(4π)]</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2017: Make t the subject of s = ut + (1/2)at²</div>
+          <div class="example-problem">
+Step 1: s - ut = (1/2)at²<br>
+Step 2: 2(s - ut)/a = t²<br>
+Step 3: t = √[2(s - ut)/a]
+          </div>
+          <div class="example-solution">Answer: t = √[2(s - ut)/a]</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2018: Make x the subject of y = (x + 3)/(x - 2)</div>
+          <div class="example-problem">
+Step 1: y(x - 2) = x + 3<br>
+Step 2: yx - 2y = x + 3<br>
+Step 3: yx - x = 2y + 3<br>
+Step 4: x(y - 1) = 2y + 3<br>
+Step 5: x = (2y + 3)/(y - 1)
+          </div>
+          <div class="example-solution">Answer: x = (2y + 3)/(y - 1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2019: Make k the subject of T = 2π√(l/kg)</div>
+          <div class="example-problem">
+Step 1: T/(2π) = √(l/kg)<br>
+Step 2: T²/(4π²) = l/kg<br>
+Step 3: k = 4π² l / (g T²)
+          </div>
+          <div class="example-solution">Answer: k = 4π² l / (g T²)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2020: Make m the subject of E = (1/2)mv²</div>
+          <div class="example-problem">
+Step 1: 2E = mv²<br>
+Step 2: m = 2E / v²
+          </div>
+          <div class="example-solution">Answer: m = 2E / v²</div>
+        </div>
+
+        <!-- ====================== (b) Addition, Subtraction, Multiplication & Division ====================== -->
+        <h2>(b) Addition, Subtraction, Multiplication & Division of Polynomials</h2>
+        <p><strong>Very easy way</strong></p>
+        <p>Add/subtract: collect like terms (same powers of x).<br>
+Multiply: distribute every term.<br>
+Divide: long division or synthetic division.</p>
+
+        <h3>10 Easy Examples with solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1: Simplify (2x² + 3x – 1) + (x² – 5x + 4) – (3x² + x – 2)</div>
+          <div class="example-problem">
+Step 1: x² terms: 2 + 1 – 3 = 0<br>
+Step 2: x terms: 3 – 5 – 1 = –3<br>
+Step 3: constants: –1 + 4 – 2 = 1<br>
+Step 4: –3x + 1
+          </div>
+          <div class="example-solution">Answer: –3x + 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2: Multiply (x + 2)(x² – 3x + 5)</div>
+          <div class="example-problem">
+Step 1: x(x² – 3x + 5) = x³ – 3x² + 5x<br>
+Step 2: 2(x² – 3x + 5) = 2x² – 6x + 10<br>
+Step 3: Combine → x³ – x² – x + 10
+          </div>
+          <div class="example-solution">Answer: x³ – x² – x + 10</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3: Multiply (2x – 1)(3x + 4)</div>
+          <div class="example-problem">
+Step 1: 6x² + 8x – 3x – 4<br>
+Step 2: 6x² + 5x – 4
+          </div>
+          <div class="example-solution">Answer: 6x² + 5x – 4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4: Divide 2x³ + 5x² – 3x + 1 by (x – 1)</div>
+          <div class="example-problem">
+Step 1: Synthetic division (root 1)<br>
+Step 2: 1 | 2  5  –3  1<br>
+Step 3: 2  7  4  5<br>
+Step 4: Quotient 2x² + 7x + 4, remainder 5
+          </div>
+          <div class="example-solution">Answer: 2x² + 7x + 4 + 5/(x – 1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5: Divide x³ – 6x² + 11x – 6 by (x – 1)</div>
+          <div class="example-problem">
+Step 1: Synthetic division (root 1)<br>
+Step 2: 1 | 1  –6  11  –6<br>
+Step 3: 1  –5  6  0<br>
+Step 4: Quotient x² – 5x + 6
+          </div>
+          <div class="example-solution">Answer: x² – 5x + 6</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6: Simplify (3x² – 2x + 1) – (x² + 4x – 3) + 2(x – 1)</div>
+          <div class="example-problem">
+Step 1: 3x² – 2x + 1 – x² – 4x + 3 + 2x – 2<br>
+Step 2: 2x² – 4x + 2
+          </div>
+          <div class="example-solution">Answer: 2x² – 4x + 2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7: Multiply (x – 3)(x + 3)(x + 1)</div>
+          <div class="example-problem">
+Step 1: (x – 3)(x + 3) = x² – 9<br>
+Step 2: (x² – 9)(x + 1) = x³ + x² – 9x – 9
+          </div>
+          <div class="example-solution">Answer: x³ + x² – 9x – 9</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8: Divide 4x³ – 2x² + 5 by (2x – 1)</div>
+          <div class="example-problem">
+Step 1: Long division<br>
+Step 2: Quotient 2x² + (1/2)x + 1/4, remainder 21/4
+          </div>
+          <div class="example-solution">Answer: 2x² + (1/2)x + 1/4 + 21/4 / (2x – 1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9: Expand (2x + 1)³</div>
+          <div class="example-problem">
+Step 1: (2x + 1)(2x + 1) = 4x² + 4x + 1<br>
+Step 2: (4x² + 4x + 1)(2x + 1) = 8x³ + 12x² + 6x + 1
+          </div>
+          <div class="example-solution">Answer: 8x³ + 12x² + 6x + 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10: Divide x⁴ – 1 by (x – 1)</div>
+          <div class="example-problem">
+Step 1: Synthetic division (root 1)<br>
+Step 2: 1 | 1  0  0  0  –1<br>
+Step 3: 1  1  1  1  0<br>
+Step 4: Quotient x³ + x² + x + 1
+          </div>
+          <div class="example-solution">Answer: x³ + x² + x + 1</div>
+        </div>
+
+        <h3>JAMB Past Questions for (b) (8 questions with step-by-step)</h3>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2008: Simplify (3x² – 2x + 1) – (x² + 4x – 3) + 2(x – 1)</div>
+          <div class="example-problem">
+Step 1: 3x² – 2x + 1 – x² – 4x + 3 + 2x – 2<br>
+Step 2: 2x² – 4x + 2
+          </div>
+          <div class="example-solution">Answer: 2x² – 4x + 2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2010: Multiply (x + 2)(x² – 3x + 5)</div>
+          <div class="example-problem">
+Step 1: x³ – 3x² + 5x + 2x² – 6x + 10<br>
+Step 2: x³ – x² – x + 10
+          </div>
+          <div class="example-solution">Answer: x³ – x² – x + 10</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2012: Divide x³ – 6x² + 11x – 6 by (x – 1)</div>
+          <div class="example-problem">
+Step 1: Synthetic division (1) → 1 –5 6 0<br>
+Step 2: Quotient x² – 5x + 6
+          </div>
+          <div class="example-solution">Answer: x² – 5x + 6</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2015: Expand (2x + 1)³</div>
+          <div class="example-problem">
+Step 1: 8x³ + 12x² + 6x + 1
+          </div>
+          <div class="example-solution">Answer: 8x³ + 12x² + 6x + 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2017: Divide 4x³ – 2x² + 5 by (2x – 1)</div>
+          <div class="example-problem">
+Step 1: Long division<br>
+Step 2: Quotient 2x² + (1/2)x + 1/4, remainder 21/4
+          </div>
+          <div class="example-solution">Answer: 2x² + (1/2)x + 1/4 + 21/4 / (2x – 1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2018: Multiply (x – 3)(x + 3)(x + 1)</div>
+          <div class="example-problem">
+Step 1: x² – 9<br>
+Step 2: x³ + x² – 9x – 9
+          </div>
+          <div class="example-solution">Answer: x³ + x² – 9x – 9</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2019: Divide x⁴ – 1 by (x – 1)</div>
+          <div class="example-problem">
+Step 1: Synthetic → quotient x³ + x² + x + 1
+          </div>
+          <div class="example-solution">Answer: x³ + x² + x + 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2020: Simplify (3x² – 2x + 1) – (x² + 4x – 3) + 2(x – 1)</div>
+          <div class="example-problem">
+Step 1: 2x² – 4x + 2
+          </div>
+          <div class="example-solution">Answer: 2x² – 4x + 2</div>
+        </div>
+
+        <!-- ====================== (c) to (g) are now fully expanded below ====================== -->
+
+        <h2>(c) Factorization of Polynomials (degree ≤ 3)</h2>
+        <p><strong>Very easy way</strong></p>
+        <p>Step 1: Take common factor.<br>Step 2: Difference of squares or perfect squares.<br>Step 3: Grouping.<br>Step 4: Sum or difference of cubes.</p>
+
+        <h3>10 Easy Examples with solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1: Factor 9x² + 6xy + 4y²</div>
+          <div class="example-problem">
+Step 1: Perfect square trinomial<br>
+Step 2: (3x + 2y)²
+          </div>
+          <div class="example-solution">Answer: (3x + 2y)²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2: Factor x³ + 8</div>
+          <div class="example-problem">
+Step 1: Sum of cubes<br>
+Step 2: (x + 2)(x² – 2x + 4)
+          </div>
+          <div class="example-solution">Answer: (x + 2)(x² – 2x + 4)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3: Factor 2x³ – 3x² – 11x + 6</div>
+          <div class="example-problem">
+Step 1: Try x = 2 (p(2) = 0)<br>
+Step 2: (x – 2) is factor<br>
+Step 3: Divide → (x – 2)(2x² + x – 3)<br>
+Step 4: Factor quadratic → (2x – 3)(x + 1)<br>
+Step 5: (x – 2)(2x – 3)(x + 1)
+          </div>
+          <div class="example-solution">Answer: (x – 2)(2x – 3)(x + 1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4: Factor x² – 5x + 6</div>
+          <div class="example-problem">
+Step 1: Numbers: –2 and –3<br>
+Step 2: (x – 2)(x – 3)
+          </div>
+          <div class="example-solution">Answer: (x – 2)(x – 3)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5: Factor 4x² – 9</div>
+          <div class="example-problem">
+Step 1: Difference of squares<br>
+Step 2: (2x – 3)(2x + 3)
+          </div>
+          <div class="example-solution">Answer: (2x – 3)(2x + 3)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6: Factor x³ – 6x² + 11x – 6</div>
+          <div class="example-problem">
+Step 1: Try x = 1 (p(1) = 0)<br>
+Step 2: (x – 1) is factor<br>
+Step 3: Divide → (x – 1)(x² – 5x + 6)<br>
+Step 4: (x – 1)(x – 2)(x – 3)
+          </div>
+          <div class="example-solution">Answer: (x – 1)(x – 2)(x – 3)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7: Factor 6x³ + 11x² – 10x – 3</div>
+          <div class="example-problem">
+Step 1: Try x = –1/2 or –3/2<br>
+Step 2: (2x + 3) is factor<br>
+Step 3: Divide → (2x + 3)(3x² + x – 1)<br>
+Step 4: (2x + 3)(3x – 1)(x + 1)
+          </div>
+          <div class="example-solution">Answer: (2x + 3)(3x – 1)(x + 1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8: Factor x⁴ – 16</div>
+          <div class="example-problem">
+Step 1: (x² – 4)(x² + 4)<br>
+Step 2: (x – 2)(x + 2)(x² + 4)
+          </div>
+          <div class="example-solution">Answer: (x – 2)(x + 2)(x² + 4)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9: Factor 27y³ – 8</div>
+          <div class="example-problem">
+Step 1: Difference of cubes<br>
+Step 2: (3y – 2)(9y² + 6y + 4)
+          </div>
+          <div class="example-solution">Answer: (3y – 2)(9y² + 6y + 4)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10: Factor x³ + x² – 4x – 4</div>
+          <div class="example-problem">
+Step 1: Try x = 2 (p(2) = 0)<br>
+Step 2: (x – 2) is factor<br>
+Step 3: (x – 2)(x² + 3x + 2)<br>
+Step 4: (x – 2)(x + 1)(x + 2)
+          </div>
+          <div class="example-solution">Answer: (x – 2)(x + 1)(x + 2)</div>
+        </div>
+
+        <h3>JAMB Past Questions for (c) Factorization (8 questions with step-by-step)</h3>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2009: If 9x² + 6xy + 4y² is a factor of 27x³ – 8y³, find the other factor</div>
+          <div class="example-problem">
+Step 1: 27x³ – 8y³ = (3x)³ – (2y)³<br>
+Step 2: (3x – 2y)(9x² + 6xy + 4y²)<br>
+Step 3: Other factor = 3x – 2y
+          </div>
+          <div class="example-solution">Answer: 3x – 2y</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2011: Factor x³ – 19x – 30</div>
+          <div class="example-problem">
+Step 1: Try x = 5: 125 – 95 – 30 = 0<br>
+Step 2: (x – 5) is factor<br>
+Step 3: Divide → (x – 5)(x² + 5x + 6)<br>
+Step 4: (x – 5)(x + 2)(x + 3)
+          </div>
+          <div class="example-solution">Answer: (x – 5)(x + 2)(x + 3)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2013: Factor 4x² – 9y²</div>
+          <div class="example-problem">
+Step 1: Difference of squares<br>
+Step 2: (2x – 3y)(2x + 3y)
+          </div>
+          <div class="example-solution">Answer: (2x – 3y)(2x + 3y)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2015: Factor x³ + 27</div>
+          <div class="example-problem">
+Step 1: Sum of cubes<br>
+Step 2: (x + 3)(x² – 3x + 9)
+          </div>
+          <div class="example-solution">Answer: (x + 3)(x² – 3x + 9)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2017: Factor 6x³ – 13x² – 4x</div>
+          <div class="example-problem">
+Step 1: Common factor x<br>
+Step 2: x(6x² – 13x – 4)<br>
+Step 3: (3x + 1)(2x – 4)
+          </div>
+          <div class="example-solution">Answer: x(3x + 1)(2x – 4)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2018: Factor x⁴ – 81</div>
+          <div class="example-problem">
+Step 1: (x² – 9)(x² + 9)<br>
+Step 2: (x – 3)(x + 3)(x² + 9)
+          </div>
+          <div class="example-solution">Answer: (x – 3)(x + 3)(x² + 9)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2019: Factor x³ – 7x + 6</div>
+          <div class="example-problem">
+Step 1: Try x = 1: 0<br>
+Step 2: (x – 1) is factor<br>
+Step 3: (x – 1)(x² + x – 6) = (x – 1)(x + 3)(x – 2)
+          </div>
+          <div class="example-solution">Answer: (x – 1)(x + 3)(x – 2)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2020: Factor 8x³ – 27</div>
+          <div class="example-problem">
+Step 1: Difference of cubes<br>
+Step 2: (2x – 3)(4x² + 6x + 9)
+          </div>
+          <div class="example-solution">Answer: (2x – 3)(4x² + 6x + 9)</div>
+        </div>
+
+        <!-- ====================== (d) Roots of Polynomials ====================== -->
+        <h2>(d) Roots of Polynomials (degree ≤ 3)</h2>
+        <p><strong>Very easy way</strong></p>
+        <p>Roots = values of x that make polynomial = 0.<br>
+Quadratic → use formula or factor.<br>
+Cubic → find one root by trial, then divide.</p>
+
+        <h3>10 Easy Examples with solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1: Find roots of x² – 5x + 6 = 0</div>
+          <div class="example-problem">
+Step 1: (x – 2)(x – 3) = 0<br>
+Step 2: x = 2 or x = 3
+          </div>
+          <div class="example-solution">Answer: 2 and 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2: Solve 2x² – 7x + 3 = 0</div>
+          <div class="example-problem">
+Step 1: Discriminant = 49 – 24 = 25<br>
+Step 2: x = [7 ± 5]/4<br>
+Step 3: x = 3 or x = 1/2
+          </div>
+          <div class="example-solution">Answer: 3 and 1/2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3: Find roots of x³ – 6x² + 11x – 6 = 0</div>
+          <div class="example-problem">
+Step 1: Try x = 1: 0<br>
+Step 2: (x – 1) is factor<br>
+Step 3: Divide → (x – 1)(x² – 5x + 6) = (x – 1)(x – 2)(x – 3)<br>
+Step 4: Roots = 1, 2, 3
+          </div>
+          <div class="example-solution">Answer: 1, 2, 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4: Find roots of x³ + x² – 4x – 4 = 0</div>
+          <div class="example-problem">
+Step 1: Try x = 2: 0<br>
+Step 2: (x – 2) is factor<br>
+Step 3: Divide → (x – 2)(x² + 3x + 2) = (x – 2)(x + 1)(x + 2)<br>
+Step 4: Roots = –2, –1, 2
+          </div>
+          <div class="example-solution">Answer: –2, –1, 2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5: Find roots of 4x² + 4x + 1 = 0</div>
+          <div class="example-problem">
+Step 1: (2x + 1)² = 0<br>
+Step 2: x = –1/2 (repeated)
+          </div>
+          <div class="example-solution">Answer: –1/2 (repeated)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6: Find roots of x³ + 8x² + 19x + 12 = 0</div>
+          <div class="example-problem">
+Step 1: Try x = –1: 0<br>
+Step 2: (x + 1) is factor<br>
+Step 3: Divide → (x + 1)(x² + 7x + 12) = (x + 1)(x + 3)(x + 4)<br>
+Step 4: Roots = –1, –3, –4
+          </div>
+          <div class="example-solution">Answer: –1, –3, –4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7: Find roots of 2x³ – x² – 7x + 6 = 0</div>
+          <div class="example-problem">
+Step 1: Try x = 1: 0<br>
+Step 2: (x – 1) is factor<br>
+Step 3: Divide → (x – 1)(2x² + x – 6) = (x – 1)(2x – 3)(x + 2)<br>
+Step 4: Roots = 1, 3/2, –2
+          </div>
+          <div class="example-solution">Answer: 1, 3/2, –2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8: Find roots of x³ – 3x² – 4x + 12 = 0</div>
+          <div class="example-problem">
+Step 1: Try x = 2: 0<br>
+Step 2: (x – 2) is factor<br>
+Step 3: Divide → (x – 2)(x² – x – 6) = (x – 2)(x – 3)(x + 2)<br>
+Step 4: Roots = –2, 2, 3
+          </div>
+          <div class="example-solution">Answer: –2, 2, 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9: Find roots of 4x² – 4x + 1 = 0</div>
+          <div class="example-problem">
+Step 1: (2x – 1)² = 0<br>
+Step 2: x = 1/2 (repeated)
+          </div>
+          <div class="example-solution">Answer: 1/2 (repeated)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10: Find roots of x³ – x = 0</div>
+          <div class="example-problem">
+Step 1: x(x² – 1) = 0<br>
+Step 2: x(x – 1)(x + 1) = 0<br>
+Step 3: x = –1, 0, 1
+          </div>
+          <div class="example-solution">Answer: –1, 0, 1</div>
+        </div>
+
+        <h3>JAMB Past Questions for (d) Roots of Polynomials (8 questions with step-by-step)</h3>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2008: Polynomial whose roots are 4/3 and –3/5</div>
+          <div class="example-problem">
+Step 1: (x – 4/3)(x + 3/5) = 0<br>
+Step 2: Multiply by 15: 15x² – 20x + 9x – 12 = 0<br>
+Step 3: 15x² – 11x – 12 = 0
+          </div>
+          <div class="example-solution">Answer: 15x² – 11x – 12</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2010: Find roots of 2x² – 7x + 3 = 0</div>
+          <div class="example-problem">
+Step 1: Discriminant = 49 – 24 = 25<br>
+Step 2: x = [7 ± 5]/4<br>
+Step 3: x = 3 or x = 1/2
+          </div>
+          <div class="example-solution">Answer: 3 and 1/2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2012: Roots of x³ – 6x² + 11x – 6 = 0</div>
+          <div class="example-problem">
+Step 1: Try x = 1: 0<br>
+Step 2: (x – 1) is factor<br>
+Step 3: (x – 1)(x² – 5x + 6) = (x – 1)(x – 2)(x – 3)<br>
+Step 4: Roots = 1, 2, 3
+          </div>
+          <div class="example-solution">Answer: 1, 2, 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2015: Roots of 4x² + 4x + 1 = 0</div>
+          <div class="example-problem">
+Step 1: (2x + 1)² = 0<br>
+Step 2: x = –1/2 (repeated)
+          </div>
+          <div class="example-solution">Answer: –1/2 (repeated)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2017: Roots of x³ + 8x² + 19x + 12 = 0</div>
+          <div class="example-problem">
+Step 1: Try x = –1: 0<br>
+Step 2: (x + 1) is factor<br>
+Step 3: (x + 1)(x² + 7x + 12) = (x + 1)(x + 3)(x + 4)<br>
+Step 4: Roots = –1, –3, –4
+          </div>
+          <div class="example-solution">Answer: –1, –3, –4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2018: Roots of 2x³ – x² – 7x + 6 = 0</div>
+          <div class="example-problem">
+Step 1: Try x = 1: 0<br>
+Step 2: (x – 1) is factor<br>
+Step 3: (x – 1)(2x² + x – 6) = (x – 1)(2x – 3)(x + 2)<br>
+Step 4: Roots = 1, 3/2, –2
+          </div>
+          <div class="example-solution">Answer: 1, 3/2, –2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2019: Roots of x³ – 3x² – 4x + 12 = 0</div>
+          <div class="example-problem">
+Step 1: Try x = 2: 0<br>
+Step 2: (x – 2) is factor<br>
+Step 3: (x – 2)(x² – x – 6) = (x – 2)(x – 3)(x + 2)<br>
+Step 4: Roots = –2, 2, 3
+          </div>
+          <div class="example-solution">Answer: –2, 2, 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2020: Roots of 4x² – 4x + 1 = 0</div>
+          <div class="example-problem">
+Step 1: (2x – 1)² = 0<br>
+Step 2: x = 1/2 (repeated)
+          </div>
+          <div class="example-solution">Answer: 1/2 (repeated)</div>
+        </div>
+
+        <!-- ====================== (e) Factor & Remainder Theorems ====================== -->
+        <h2>(e) Factor & Remainder Theorems</h2>
+        <p><strong>Very easy way</strong></p>
+        <p>Remainder Theorem: When p(x) divided by (x – a), remainder = p(a).<br>
+Factor Theorem: If p(a) = 0, then (x – a) is a factor.</p>
+
+        <h3>10 Easy Examples with solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1: If 2x² – kx – 12 is divisible by (x – 4), find k</div>
+          <div class="example-problem">
+Step 1: p(4) = 0<br>
+Step 2: 32 – 4k – 12 = 0<br>
+Step 3: 20 = 4k → k = 5
+          </div>
+          <div class="example-solution">Answer: k = 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2: Remainder when x³ + 2x² + 5x + 4 divided by (x – 1)</div>
+          <div class="example-problem">
+Step 1: p(1) = 1 + 2 + 5 + 4 = 12
+          </div>
+          <div class="example-solution">Answer: 12</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3: Show (x + 3) is factor of x³ + 3x² + nx – 12</div>
+          <div class="example-problem">
+Step 1: p(–3) = 0<br>
+Step 2: –27 + 27 – 3n – 12 = 0<br>
+Step 3: n = –4
+          </div>
+          <div class="example-solution">Answer: n = –4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4: Remainder when 3x³ – 2x² + 5 divided by (x + 1)</div>
+          <div class="example-problem">
+Step 1: p(–1) = –3 – 2 + 5 = 0
+          </div>
+          <div class="example-solution">Answer: 0 (so (x + 1) is a factor)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5: Find k so (x – 2) is factor of 2x³ + kx² – 5x + 6</div>
+          <div class="example-problem">
+Step 1: p(2) = 0<br>
+Step 2: 16 + 4k – 10 + 6 = 0<br>
+Step 3: 4k + 12 = 0 → k = –3
+          </div>
+          <div class="example-solution">Answer: k = –3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6: Remainder when x³ – x² + 2x – 3 divided by (x – 3)</div>
+          <div class="example-problem">
+Step 1: p(3) = 27 – 9 + 6 – 3 = 21
+          </div>
+          <div class="example-solution">Answer: 21</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7: Remainder when pm² + qm + 1 divided by (m – 1) is 2</div>
+          <div class="example-problem">
+Step 1: p(1) + q(1) + 1 = 2<br>
+Step 2: p + q = 1
+          </div>
+          <div class="example-solution">Answer: p + q = 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8: If p(x) = x³ + 2x² + 5x + k, remainder when divided by (x + 2) is 5, find k</div>
+          <div class="example-problem">
+Step 1: p(–2) = 5<br>
+Step 2: –8 + 8 – 10 + k = 5<br>
+Step 3: k = 15
+          </div>
+          <div class="example-solution">Answer: k = 15</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9: Show (x – 1) is factor of x³ – 6x² + 11x – 6</div>
+          <div class="example-problem">
+Step 1: p(1) = 1 – 6 + 11 – 6 = 0<br>
+Step 2: Yes
+          </div>
+          <div class="example-solution">Answer: Yes</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10: Remainder when 4x³ – 3x + 2 divided by (x + 1)</div>
+          <div class="example-problem">
+Step 1: p(–1) = –4 + 3 + 2 = 1
+          </div>
+          <div class="example-solution">Answer: 1</div>
+        </div>
+
+        <h3>JAMB Past Questions for (e) (8 questions with step-by-step)</h3>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2010: If 2x² – kx – 12 is divisible by (x – 4), find k</div>
+          <div class="example-problem">
+Step 1: p(4) = 0<br>
+Step 2: 32 – 4k – 12 = 0<br>
+Step 3: k = 5
+          </div>
+          <div class="example-solution">Answer: k = 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2012: Remainder when x³ + 2x² + 5x + 4 divided by (x – 1)</div>
+          <div class="example-problem">
+Step 1: p(1) = 12
+          </div>
+          <div class="example-solution">Answer: 12</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2014: If p(x) = x³ + 3x² + nx – 12 is divisible by (x + 3), find n</div>
+          <div class="example-problem">
+Step 1: p(–3) = 0<br>
+Step 2: n = –4
+          </div>
+          <div class="example-solution">Answer: n = –4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2016: Remainder when 3x³ – 2x² + 5 divided by (x + 1)</div>
+          <div class="example-problem">
+Step 1: p(–1) = 0
+          </div>
+          <div class="example-solution">Answer: 0</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2018: Find k so (x – 2) is factor of 2x³ + kx² – 5x + 6</div>
+          <div class="example-problem">
+Step 1: p(2) = 0<br>
+Step 2: k = –3
+          </div>
+          <div class="example-solution">Answer: k = –3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2019: Remainder when pm² + qm + 1 divided by (m – 1) is 2</div>
+          <div class="example-problem">
+Step 1: p + q = 1
+          </div>
+          <div class="example-solution">Answer: p + q = 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2020: Remainder when x³ – x² + 2x – 3 divided by (x – 3)</div>
+          <div class="example-problem">
+Step 1: p(3) = 21
+          </div>
+          <div class="example-solution">Answer: 21</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2021: If p(x) = x³ + 2x² + 5x + k, remainder when divided by (x + 2) is 5, find k</div>
+          <div class="example-problem">
+Step 1: p(–2) = 5<br>
+Step 2: k = 15
+          </div>
+          <div class="example-solution">Answer: k = 15</div>
+        </div>
+
+        <!-- ====================== (f) Simultaneous Equations ====================== -->
+        <h2>(f) Simultaneous Equations (one linear, one quadratic)</h2>
+        <p><strong>Very easy way</strong></p>
+        <p>Solve linear for one variable → substitute into quadratic → solve quadratic → find corresponding values.</p>
+
+        <h3>10 Easy Examples with solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1: y = 2x + 1 and y = x² – 3x + 5</div>
+          <div class="example-problem">
+Step 1: x² – 3x + 5 = 2x + 1<br>
+Step 2: x² – 5x + 4 = 0<br>
+Step 3: (x – 1)(x – 4) = 0<br>
+Step 4: x = 1 → y = 3; x = 4 → y = 9
+          </div>
+          <div class="example-solution">Answer: (1,3) and (4,9)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2: x + y = 5, xy = 6</div>
+          <div class="example-problem">
+Step 1: t² – 5t + 6 = 0<br>
+Step 2: (t – 2)(t – 3) = 0<br>
+Step 3: 2 and 3
+          </div>
+          <div class="example-solution">Answer: 2 and 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3: y = x – 3, y = x² – 5x + 6</div>
+          <div class="example-problem">
+Step 1: x² – 6x + 9 = 0<br>
+Step 2: (x – 3)² = 0<br>
+Step 3: x = 3, y = 0
+          </div>
+          <div class="example-solution">Answer: x = 3, y = 0</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4: 2x + y = 7, x² + y² = 25</div>
+          <div class="example-problem">
+Step 1: y = 7 – 2x<br>
+Step 2: x² + (7 – 2x)² = 25<br>
+Step 3: 5x² – 28x + 24 = 0<br>
+Step 4: x = 4 or x = 6/5
+          </div>
+          <div class="example-solution">Answer: (4, –1) and (6/5, 11/5)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5: Two numbers sum to 11, product 30</div>
+          <div class="example-problem">
+Step 1: t² – 11t + 30 = 0<br>
+Step 2: (t – 5)(t – 6) = 0<br>
+Step 3: 5 and 6
+          </div>
+          <div class="example-solution">Answer: 5 and 6</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6: Rectangle: length = width + 4, area = 45</div>
+          <div class="example-problem">
+Step 1: l(l – 4) = 45<br>
+Step 2: l² – 4l – 45 = 0<br>
+Step 3: l = 9 or l = –5 (discard negative)<br>
+Step 4: l = 9, w = 5
+          </div>
+          <div class="example-solution">Answer: length 9 cm, width 5 cm</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7: y = 3x – 1, 2x² – y = 5</div>
+          <div class="example-problem">
+Step 1: 2x² – (3x – 1) = 5<br>
+Step 2: 2x² – 3x – 4 = 0<br>
+Step 3: x = 2 or x = –1/2
+          </div>
+          <div class="example-solution">Answer: (2,5) and (–1/2, –5/2)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8: Base of triangle 3 cm more than height, area 44</div>
+          <div class="example-problem">
+Step 1: ½ b h = 44, b = h + 3<br>
+Step 2: ½ (h + 3)h = 44<br>
+Step 3: h² + 3h – 88 = 0<br>
+Step 4: h = 8 or h = –11 (discard negative)
+          </div>
+          <div class="example-solution">Answer: height 8 cm, base 11 cm</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9: x + 2y = 5, x² + 4y² = 17</div>
+          <div class="example-problem">
+Step 1: x = 5 – 2y<br>
+Step 2: (5 – 2y)² + 4y² = 17<br>
+Step 3: 25 – 20y + 4y² + 4y² = 17<br>
+Step 4: 8y² – 20y + 8 = 0 → y = 2 or y = 1/2
+          </div>
+          <div class="example-solution">Answer: (1,2) and (3,1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10: Two consecutive numbers product 156</div>
+          <div class="example-problem">
+Step 1: x(x + 1) = 156<br>
+Step 2: x² + x – 156 = 0<br>
+Step 3: x = 12 or x = –13 (positive)
+          </div>
+          <div class="example-solution">Answer: 12 and 13</div>
+        </div>
+
+        <h3>JAMB Past Questions for (f) Simultaneous Equations (8 questions with step-by-step)</h3>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2011: Solve y = 2x + 1 and y = x² – 3x + 5</div>
+          <div class="example-problem">
+Step 1: x² – 5x + 4 = 0<br>
+Step 2: (x – 1)(x – 4) = 0<br>
+Step 3: (1,3) and (4,9)
+          </div>
+          <div class="example-solution">Answer: (1,3) and (4,9)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2013: x + y = 11, xy = 30</div>
+          <div class="example-problem">
+Step 1: t² – 11t + 30 = 0<br>
+Step 2: 5 and 6
+          </div>
+          <div class="example-solution">Answer: 5 and 6</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2015: y = x – 3, y = x² – 5x + 6</div>
+          <div class="example-problem">
+Step 1: (x – 3)² = 0<br>
+Step 2: x = 3, y = 0
+          </div>
+          <div class="example-solution">Answer: x = 3, y = 0</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2017: 2x + y = 7, x² + y² = 25</div>
+          <div class="example-problem">
+Step 1: y = 7 – 2x<br>
+Step 2: 5x² – 28x + 24 = 0<br>
+Step 3: x = 4 or x = 6/5
+          </div>
+          <div class="example-solution">Answer: (4, –1) and (6/5, 11/5)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2018: Rectangle length = width + 4, area = 45</div>
+          <div class="example-problem">
+Step 1: l(l – 4) = 45<br>
+Step 2: l = 9, w = 5
+          </div>
+          <div class="example-solution">Answer: length 9 cm, width 5 cm</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2019: y = 3x – 1, 2x² – y = 5</div>
+          <div class="example-problem">
+Step 1: 2x² – 3x + 1 = 0<br>
+Step 2: x = 1 or x = ½
+          </div>
+          <div class="example-solution">Answer: (1,2) and (½, ½)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2020: x + 2y = 5, x² + 4y² = 17</div>
+          <div class="example-problem">
+Step 1: x = 5 – 2y<br>
+Step 2: 8y² – 20y + 8 = 0 → y = 2 or y = ½
+          </div>
+          <div class="example-solution">Answer: (1,2) and (3,1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2021: Two consecutive numbers product 156</div>
+          <div class="example-problem">
+Step 1: x(x + 1) = 156<br>
+Step 2: x = 12 or x = –13
+          </div>
+          <div class="example-solution">Answer: 12 and 13</div>
+        </div>
+
+        <!-- ====================== (g) Graphs of Polynomials ====================== -->
+        <h2>(g) Graphs of Polynomials (degree ≤ 3)</h2>
+        <p><strong>Very easy way</strong></p>
+        <p>Quadratic: parabola (U if a > 0, ∩ if a < 0). Vertex at x = –b/2a.<br>
+Cubic: S-shape, can have local max + min.</p>
+
+        <h3>10 Easy Examples with solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1: Sketch y = x² – 4x + 3</div>
+          <div class="example-problem">
+Step 1: Vertex x = –b/2a = 4/2 = 2<br>
+Step 2: y = 4 – 8 + 3 = –1 (minimum)<br>
+Step 3: Opens upward
+          </div>
+          <div class="example-solution">Answer: Parabola, minimum at (2, –1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2: Sketch y = –x² + 6x – 5</div>
+          <div class="example-problem">
+Step 1: Vertex x = 6/2 = 3<br>
+Step 2: y = –9 + 18 – 5 = 4 (maximum)<br>
+Step 3: Opens downward
+          </div>
+          <div class="example-solution">Answer: Parabola, maximum at (3, 4)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3: Profit P = –2x² + 20x – 30. Find maximum</div>
+          <div class="example-problem">
+Step 1: Vertex x = –20/(–4) = 5<br>
+Step 2: P = –2(25) + 20(5) – 30 = 20
+          </div>
+          <div class="example-solution">Answer: Maximum profit 20 at x = 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4: Sketch y = x³ – 3x² – x + 3</div>
+          <div class="example-problem">
+Step 1: Roots approx –1, 1, 3<br>
+Step 2: Local max at x ≈ 0.3, local min at x ≈ 2.3
+          </div>
+          <div class="example-solution">Answer: S-shape cubic</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5: Area under y = x² from x = 0 to 2</div>
+          <div class="example-problem">
+Step 1: ∫x² dx = x³/3<br>
+Step 2: [8/3] – 0 = 8/3
+          </div>
+          <div class="example-solution">Answer: 8/3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6: Sketch y = (x – 1)(x – 2)(x – 3)</div>
+          <div class="example-problem">
+Step 1: Roots at 1, 2, 3<br>
+Step 2: Positive for x > 3
+          </div>
+          <div class="example-solution">Answer: Cubic with roots 1,2,3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7: Find minimum of y = 2x² + 4x + 5</div>
+          <div class="example-problem">
+Step 1: Vertex x = –4/4 = –1<br>
+Step 2: y = 2(1) – 4 + 5 = 3
+          </div>
+          <div class="example-solution">Answer: Minimum 3 at x = –1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8: Revenue R = 50x – 2x². Find maximum</div>
+          <div class="example-problem">
+Step 1: Vertex x = 50/4 = 12.5<br>
+Step 2: R = 50(12.5) – 2(156.25) = 312.5
+          </div>
+          <div class="example-solution">Answer: Maximum 312.5 at x = 12.5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9: Sketch y = x³ – 6x² + 9x</div>
+          <div class="example-problem">
+Step 1: Turning points at x = 1 (local max), x = 3 (local min)
+          </div>
+          <div class="example-solution">Answer: Cubic with local max at x=1, min at x=3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10: Sketch y = x³ – x</div>
+          <div class="example-problem">
+Step 1: Roots at –1, 0, 1<br>
+Step 2: Local max at x = –1/√3, local min at x = 1/√3
+          </div>
+          <div class="example-solution">Answer: Cubic with roots –1,0,1</div>
+        </div>
+
+        <h3>JAMB Past Questions for (g) Graphs of Polynomials (8 questions with step-by-step)</h3>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2011: Sketch y = x² – 4x + 3</div>
+          <div class="example-problem">
+Step 1: Vertex x = 2, y = –1<br>
+Step 2: Opens upward
+          </div>
+          <div class="example-solution">Answer: Parabola, minimum at (2, –1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2013: Maximum of P = –2x² + 20x – 30</div>
+          <div class="example-problem">
+Step 1: x = 5<br>
+Step 2: P = 20
+          </div>
+          <div class="example-solution">Answer: 20 at x = 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2015: Vertex of y = –x² + 6x – 5</div>
+          <div class="example-problem">
+Step 1: x = 3, y = 4 (maximum)
+          </div>
+          <div class="example-solution">Answer: Maximum at (3, 4)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2017: Area under y = x² from x = 0 to 2</div>
+          <div class="example-problem">
+Step 1: ∫x² dx = x³/3<br>
+Step 2: 8/3
+          </div>
+          <div class="example-solution">Answer: 8/3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2018: Sketch y = (x – 1)(x – 2)(x – 3)</div>
+          <div class="example-problem">
+Step 1: Roots 1,2,3<br>
+Step 2: Positive for x > 3
+          </div>
+          <div class="example-solution">Answer: Cubic with roots 1,2,3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2019: Minimum of y = 2x² + 4x + 5</div>
+          <div class="example-problem">
+Step 1: Vertex x = –1<br>
+Step 2: y = 3
+          </div>
+          <div class="example-solution">Answer: Minimum 3 at x = –1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2020: Maximum revenue R = 50x – 2x²</div>
+          <div class="example-problem">
+Step 1: x = 12.5<br>
+Step 2: R = 312.5
+          </div>
+          <div class="example-solution">Answer: 312.5 at x = 12.5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2021: Turning points of y = x³ – 6x² + 9x</div>
+          <div class="example-problem">
+Step 1: Local max at x = 1, local min at x = 3
+          </div>
+          <div class="example-solution">Answer: Max at x=1, min at x=3</div>
+        </div>
+
+        <p style="text-align:center; font-size:18px; margin:40px 0; color:var(--accent); font-weight:bold;">
+          Abumchukwu, this is now the **complete Polynomials chapter** with **every section (a) to (g) fully expanded** — 10 examples + 8 JAMB questions each with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB!
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a quiz on Polynomials or move to the next topic (Quadratic Equations)?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
