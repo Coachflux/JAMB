@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neumorphism Learning Hub - Matrices and Determinants</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif; }
+    :root {
+      --background: #1e1e2f; --shadow-in: #171723; --shadow-out: #25253b;
+      --text-primary: #f0f0ff; --text-secondary: #c0c0e0; --accent: #1db954;
+      --card-bg: #2a2a3f; --highlight-example: rgba(29,185,84,0.15); --highlight-solution: #ff9800;
+    }
+    body.light {
+      --background:#e0e0e0; --shadow-in:#bebebe; --shadow-out:#ffffff;
+      --text-primary:#1a1a1a; --text-secondary:#444; --card-bg:#f8f8f8;
+      --highlight-example:rgba(29,185,84,0.20); --highlight-solution:#f57c00;
+    }
+    body { background:var(--background); color:var(--text-primary); min-height:100vh; display:flex; justify-content:center; align-items:center; }
+    .container { width:100%; max-width:400px; background:var(--background); border-radius:20px; box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out); height:700px; overflow-y:auto; padding:70px 0; }
+    .neumorphic { background:var(--background); box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out); border-radius:15px; }
+    .neumorphic-btn { background:var(--background); border:none; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); cursor:pointer; font-size:18px; color:var(--text-primary); }
+    .neumorphic-btn:active { box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out); }
+    .top-bar { position:fixed; top:0; width:100%; max-width:400px; background:var(--background); padding:15px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 5px 10px var(--shadow-in); z-index:20; }
+    .content { padding:20px 16px; line-height:1.6; }
+    .main-header { text-align:center; margin-bottom:32px; }
+    .main-header h1 { font-size:28px; color:var(--accent); font-weight:bold; margin-bottom:8px; }
+    .welcome-note { background:var(--card-bg); padding:24px 18px; border-radius:20px; box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out); margin-bottom:30px; }
+    .example-block { background:rgba(0,0,0,0.15); padding:14px; border-radius:10px; margin:16px 0; font-family:'Courier New',monospace; white-space:pre-wrap; border-left:4px solid var(--accent); }
+    .example-problem { background:var(--highlight-example); padding:12px; border-radius:8px; margin-bottom:8px; }
+    .example-solution { background:var(--highlight-solution); color:#000; font-weight:bold; padding:10px 12px; border-radius:6px; display:inline-block; margin-top:8px; }
+    .explore-btn { background:var(--accent); border:none; padding:12px 24px; border-radius:20px; color:white; font-size:16px; cursor:pointer; box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); display:block; margin:30px auto; text-align:center; }
+    .nav-bar { position:fixed; bottom:0; width:100%; max-width:400px; background:var(--background); padding:10px; display:flex; justify-content:space-around; box-shadow:0 -5px 10px var(--shadow-in); z-index:20; }
+  </style>
+</head>
+<body class="dark">
+
+<div class="container">
+  <div class="top-bar neumorphic">
+    <button class="neumorphic-btn">←</button>
+    <div class="header">Matrices and Determinants</div>
+    <div class="right-icons">
+      <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+      <button class="neumorphic-btn profile-upload">
+        📷
+        <input type="file" accept="image/*" id="profile-upload">
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="main-header">
+      <h1>Matrices and Determinants – WAEC/JAMB Guide 🚀</h1>
+      <p class="subtitle">Abumchukwu – explained like you're just starting SS1</p>
+    </div>
+
+    <div class="welcome-note neumorphic">
+      <h2>Matrices and Determinants (JAMB Syllabus – Easy Step-by-Step Guide)</h2>
+      <p>Abumchukwu, a matrix is just a rectangular box of numbers arranged in rows (horizontal) and columns (vertical). Think of it like a table of numbers. The order (size) is written as rows × columns, e.g., 2 × 2 or 3 × 3. We only deal with matrices up to 3 × 3 in JAMB. I will teach you step by step like you're in SS1, starting from what a matrix is, then operations, determinants, and inverses. We'll use simple numbers and expand every example with full steps so you can follow easily.</p>
+
+      <h3>Example of a Matrix</h3>
+      <p>A 2×2 matrix looks like this:</p>
+      <div class="example-block">
+        <div class="example-problem">
+[[1, 2]
+ [3, 4]]
+        </div>
+      </div>
+      <p>Row 1: 1 and 2<br>
+Row 2: 3 and 4<br>
+Column 1: 1 and 3<br>
+Column 2: 2 and 4</p>
+
+      <h2>(a) Algebra of Matrices – Basic Operations (Addition, Subtraction, Multiplication, Division by scalar)</h2>
+      <p>Step 1: Addition (+) and Subtraction (−): Matrices must have the same order (same rows and columns). Add or subtract corresponding elements only.<br>
+Step 2: Scalar Multiplication (× number) or Division (÷ number): Multiply (or divide) every element by that number. This is what “÷” means in the syllabus (division by a scalar/number).<br>
+Step 3: Matrix Multiplication (× another matrix): Number of columns of first matrix must equal number of rows of second matrix. Result order = rows of first × columns of second. Each element = row of first DOT column of second (multiply then add). Not commutative: AB ≠ BA in general.</p>
+
+      <h3>Simple Teaching Examples</h3>
+
+      <div class="example-block">
+        <div class="example-problem">Addition</div>
+        <div class="example-problem">
+Step 1: A = [[1, 2], [3, 4]]<br>
+Step 2: B = [[5, 6], [7, 8]]<br>
+Step 3: A + B = [[1+5, 2+6], [3+7, 4+8]] = [[6, 8], [10, 12]]
+        </div>
+        <div class="example-solution">Answer: [[6, 8], [10, 12]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Subtraction</div>
+        <div class="example-problem">
+Step 1: A = [[1, 2], [3, 4]]<br>
+Step 2: B = [[5, 6], [7, 8]]<br>
+Step 3: A – B = [[1–5, 2–6], [3–7, 4–8]] = [[–4, –4], [–4, –4]]
+        </div>
+        <div class="example-solution">Answer: [[–4, –4], [–4, –4]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Scalar Multiplication</div>
+        <div class="example-problem">
+Step 1: A = [[1, 2], [3, 4]]<br>
+Step 2: 3A = [[3×1, 3×2], [3×3, 3×4]] = [[3, 6], [9, 12]]
+        </div>
+        <div class="example-solution">Answer: [[3, 6], [9, 12]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Division by scalar</div>
+        <div class="example-problem">
+Step 1: A = [[10, 15], [20, 25]]<br>
+Step 2: A ÷ 5 = [[10÷5, 15÷5], [20÷5, 25÷5]] = [[2, 3], [4, 5]]
+        </div>
+        <div class="example-solution">Answer: [[2, 3], [4, 5]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Matrix Multiplication (2×2)</div>
+        <div class="example-problem">
+Step 1: First matrix: [[1, 2], [3, 4]]<br>
+Step 2: Second matrix: [[5, 6], [7, 8]]<br>
+Step 3: Row 1 Col 1: 1×5 + 2×7 = 5 + 14 = 19<br>
+Step 4: Row 1 Col 2: 1×6 + 2×8 = 6 + 16 = 22<br>
+Step 5: Row 2 Col 1: 3×5 + 4×7 = 15 + 28 = 43<br>
+Step 6: Row 2 Col 2: 3×6 + 4×8 = 18 + 32 = 50<br>
+Step 7: Result: [[19, 22], [43, 50]]
+        </div>
+        <div class="example-solution">Answer: [[19, 22], [43, 50]]</div>
+      </div>
+
+      <h3>10 JAMB-Style Examples on Matrix Operations (with full solutions)</h3>
+
+      <div class="example-block">
+        <div class="example-problem">1. (JAMB 2009 style) Evaluate [[2, 3], [4, 5]] + [[1, 0], [−1, 2]]</div>
+        <div class="example-problem">
+Step 1: Check orders: both 2×2, ok.<br>
+Step 2: Row 1 Col 1: 2 + 1 = 3<br>
+Step 3: Row 1 Col 2: 3 + 0 = 3<br>
+Step 4: Row 2 Col 1: 4 + (–1) = 3<br>
+Step 5: Row 2 Col 2: 5 + 2 = 7
+        </div>
+        <div class="example-solution">Answer: [[3, 3], [3, 7]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">2. Evaluate [[5, 6, 7], [8, 9, 10]] − [[1, 2, 3], [4, 5, 6]]</div>
+        <div class="example-problem">
+Step 1: Check orders: both 2×3, ok.<br>
+Step 2: Row 1 Col 1: 5 – 1 = 4<br>
+Step 3: Row 1 Col 2: 6 – 2 = 4<br>
+Step 4: Row 1 Col 3: 7 – 3 = 4<br>
+Step 5: Row 2 Col 1: 8 – 4 = 4<br>
+Step 6: Row 2 Col 2: 9 – 5 = 4<br>
+Step 7: Row 2 Col 3: 10 – 6 = 4
+        </div>
+        <div class="example-solution">Answer: [[4, 4, 4], [4, 4, 4]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">3. If A = [[1, 2], [3, 4]], find 4A</div>
+        <div class="example-problem">
+Step 1: Multiply each element by 4.<br>
+Step 2: Row 1 Col 1: 1×4 = 4<br>
+Step 3: Row 1 Col 2: 2×4 = 8<br>
+Step 4: Row 2 Col 1: 3×4 = 12<br>
+Step 5: Row 2 Col 2: 4×4 = 16
+        </div>
+        <div class="example-solution">Answer: [[4, 8], [12, 16]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">4. Find A ÷ 5 where A = [[10, 15], [20, 25]]</div>
+        <div class="example-problem">
+Step 1: Divide each element by 5.<br>
+Step 2: Row 1 Col 1: 10÷5 = 2<br>
+Step 3: Row 1 Col 2: 15÷5 = 3<br>
+Step 4: Row 2 Col 1: 20÷5 = 4<br>
+Step 5: Row 2 Col 2: 25÷5 = 5
+        </div>
+        <div class="example-solution">Answer: [[2, 3], [4, 5]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">5. Multiplication [[2, 3], [4, 1]] × [[5, 6], [0, 7]] = ?</div>
+        <div class="example-problem">
+Step 1: Check orders: 2×2 × 2×2, columns1 = rows2, ok.<br>
+Step 2: Row 1 Col 1: 2×5 + 3×0 = 10 + 0 = 10<br>
+Step 3: Row 1 Col 2: 2×6 + 3×7 = 12 + 21 = 33<br>
+Step 4: Row 2 Col 1: 4×5 + 1×0 = 20 + 0 = 20<br>
+Step 5: Row 2 Col 2: 4×6 + 1×7 = 24 + 7 = 31
+        </div>
+        <div class="example-solution">Answer: [[10, 33], [20, 31]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">6. Find x and y if [[x, 2], [3, y]] + [[4, 5], [6, 7]] = [[7, 7], [9, 10]]</div>
+        <div class="example-problem">
+Step 1: Row 1 Col 1: x + 4 = 7 → x = 3<br>
+Step 2: Row 1 Col 2: 2 + 5 = 7, ok.<br>
+Step 3: Row 2 Col 1: 3 + 6 = 9, ok.<br>
+Step 4: Row 2 Col 2: y + 7 = 10 → y = 3
+        </div>
+        <div class="example-solution">Answer: x = 3, y = 3</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">7. 3×3 multiplication starter (JAMB sometimes gives small ones)</div>
+        <div class="example-problem">
+[[1, 0, 0], [0, 1, 0], [0, 0, 1]] × any 3×3 matrix = the same matrix (Identity)<br>
+Step 1: Identity matrix I = [[1,0,0],[0,1,0],[0,0,1]]<br>
+Step 2: I × A = A (left multiply)<br>
+Step 3: A × I = A (right multiply)<br>
+Step 4: So I is like 1 in multiplication.
+        </div>
+        <div class="example-solution">Answer: Same as A</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">8. If P = [[x+1, 2], [3, x−1]], find 2P</div>
+        <div class="example-problem">
+Step 1: Multiply each element by 2.<br>
+Step 2: Row 1 Col 1: 2(x+1) = 2x + 2<br>
+Step 3: Row 1 Col 2: 2×2 = 4<br>
+Step 4: Row 2 Col 1: 2×3 = 6<br>
+Step 5: Row 2 Col 2: 2(x–1) = 2x – 2
+        </div>
+        <div class="example-solution">Answer: [[2x+2, 4], [6, 2x–2]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">9. Evaluate [[1, 2, 3], [0, 4, 5]] × [[6], [7], [8]] (2×3 × 3×1)</div>
+        <div class="example-problem">
+Step 1: Result 2×1 matrix.<br>
+Step 2: Row 1: 1×6 + 2×7 + 3×8 = 6 + 14 + 24 = 44<br>
+Step 3: Row 2: 0×6 + 4×7 + 5×8 = 0 + 28 + 40 = 68
+        </div>
+        <div class="example-solution">Answer: [[44], [68]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">10. Given that A × B = [[19, 22], [43, 50]] and A = [[1, 2], [3, 4]], what is B?</div>
+        <div class="example-problem">
+Step 1: To find B, use inverse of A times result (since A B = C → B = A^{-1} C)<br>
+Step 2: det A = 1×4 – 2×3 = 4 – 6 = –2<br>
+Step 3: A^{-1} = (–1/2) [[4, –2], [–3, 1]] = [[–2, 1], [3/2, –1/2]]<br>
+Step 4: B = A^{-1} × [[19, 22], [43, 50]]<br>
+Step 5: Row 1 Col 1: –2×19 + 1×43 = –38 + 43 = 5<br>
+Step 6: Row 1 Col 2: –2×22 + 1×50 = –44 + 50 = 6<br>
+Step 7: Row 2 Col 1: 3/2×19 –1/2×43 = 57/2 – 43/2 = 14/2 = 7<br>
+Step 8: Row 2 Col 2: 3/2×22 –1/2×50 = 66/2 – 50/2 = 16/2 = 8
+        </div>
+        <div class="example-solution">Answer: [[5, 6], [7, 8]]</div>
+      </div>
+
+      <h2>(b) Determinants of Matrices (up to 3×3)</h2>
+      <p>Determinant (|A| or det A) tells us many things (area, invertibility, etc.). If det = 0, the matrix is singular (no inverse).<br>
+2 × 2 formula (super easy): For [[a, b], [c, d]] → det = ad − bc<br>
+3 × 3 formula (expand along a row/column with zeros if possible): For [[a b c], [d e f], [g h i]] det = a(ei − fh) – b(di − fg) + c(dh – eg)</p>
+
+      <h3>Simple Teaching Examples</h3>
+
+      <div class="example-block">
+        <div class="example-problem">2×2</div>
+        <div class="example-problem">
+Step 1: A = [[3, 1], [4, 2]]<br>
+Step 2: det = 3×2 – 1×4 = 6 – 4 = 2
+        </div>
+        <div class="example-solution">Answer: 2</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">3×3 with zero (easier)</div>
+        <div class="example-problem">
+Step 1: A = [[2, 0, 5], [4, 6, 3], [8, 9, 1]]<br>
+Step 2: Expand row 1: 2(6×1 – 3×9) – 0(anything) + 5(4×9 – 6×8)<br>
+Step 3: 2(6 – 27) + 5(36 – 48)<br>
+Step 4: 2(–21) + 5(–12) = –42 – 60 = –102
+        </div>
+        <div class="example-solution">Answer: –102</div>
+      </div>
+
+      <h3>10 JAMB Examples on Determinants (with solutions)</h3>
+
+      <div class="example-block">
+        <div class="example-problem">1. (JAMB 2009) Q = [[9, –2], [–7, 4]], find |Q|</div>
+        <div class="example-problem">
+Step 1: det = 9×4 – (–2)×(–7) = 36 – 14 = 22
+        </div>
+        <div class="example-solution">Answer: 22</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">2. (JAMB 2009) P = [[x+3, x+2], [x+1, x–1]], |P| = –10. Find x.</div>
+        <div class="example-problem">
+Step 1: det = (x+3)(x–1) – (x+2)(x+1) = –10<br>
+Step 2: Expand left: x² – x + 3x – 3 – (x² + x + 2x + 2) = x² + 2x – 3 – x² – 3x – 2 = –x – 5 = –10<br>
+Step 3: –x – 5 = –10<br>
+Step 4: –x = –5<br>
+Step 5: x = 5
+        </div>
+        <div class="example-solution">Answer: 5</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">3. Find det [[2, 5], [3, 4]]</div>
+        <div class="example-problem">
+Step 1: det = 2×4 – 5×3 = 8 – 15 = –7
+        </div>
+        <div class="example-solution">Answer: –7</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">4. If det [[x, 2], [3, 4]] = 10, find x.</div>
+        <div class="example-problem">
+Step 1: det = x×4 – 2×3 = 4x – 6 = 10<br>
+Step 2: 4x = 16<br>
+Step 3: x = 4
+        </div>
+        <div class="example-solution">Answer: 4</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">5. Evaluate det [[1, 0, 0], [0, 1, 0], [0, 0, 1]] (Identity)</div>
+        <div class="example-problem">
+Step 1: Expand row 1: 1(1×1 – 0×0) – 0 + 0 = 1(1) = 1
+        </div>
+        <div class="example-solution">Answer: 1</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">6. [[1, 0, 0], [0, 1, 0], [0, 0, 1]] (upper triangular – easy)</div>
+        <div class="example-problem">
+Step 1: For upper triangular, det = product of diagonal = 1×1×1 = 1
+        </div>
+        <div class="example-solution">Answer: 1</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">7. det [[2, 0, 5], [4, 6, 3], [8, 9, 1]] = ?</div>
+        <div class="example-problem">
+Step 1: Expand row 1: 2(6×1 – 3×9) – 0(any) + 5(4×9 – 6×8)<br>
+Step 2: 2(6 – 27) + 5(36 – 48) = 2(–21) + 5(–12) = –42 – 60 = –102
+        </div>
+        <div class="example-solution">Answer: –102</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">8. Find x if det [[x, 1, 0], [2, x, 1], [0, 3, x]] = 0</div>
+        <div class="example-problem">
+Step 1: Expand row 1: x(x x – 1×3) –1(2x – 1×0) + 0 = x(x² – 3) – 2x = x³ – 3x – 2x = x³ – 5x = 0<br>
+Step 2: x(x² – 5) = 0<br>
+Step 3: x = 0 or x = ±√5
+        </div>
+        <div class="example-solution">Answer: 0, ±√5</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">9. det [[3, –2, 1], [4, 0, 5], [6, 7, 8]] = ?</div>
+        <div class="example-problem">
+Step 1: Expand row 2 (has zero): –4 det [[–2,1],[7,8]] + 0 – 5 det [[3,1],[6,8]]<br>
+Step 2: –4(–16 – 7) – 5(24 – 6) = –4(–23) – 5(18) = 92 – 90 = 2
+        </div>
+        <div class="example-solution">Answer: 2</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">10. If |A| = 22 and A is 2×2, which option matches the earlier Q matrix?</div>
+        <div class="example-problem">
+Step 1: From example 1 in determinants, [[9, –2], [–7, 4]] det = 36 – 14 = 22
+        </div>
+        <div class="example-solution">Answer: 22</div>
+      </div>
+
+      <h2>(c) Inverses of 2 × 2 Matrices ONLY</h2>
+      <p>A matrix has an inverse only if det ≠ 0.<br>
+Formula for inverse of [[a, b], [c, d]]<br>
+A⁻¹ = (1/det) × [[d, –b], [–c, a]]</p>
+
+      <h3>Simple Teaching Examples</h3>
+
+      <div class="example-block">
+        <div class="example-problem">A = [[3, –2], [1, 6]]</div>
+        <div class="example-problem">
+Step 1: det = 3×6 – (–2)×1 = 18 + 2 = 20<br>
+Step 2: Swap diagonal: [[6, 2], [–1, 3]] wait, [[d, –b], [–c, a]] = [[6, 2], [–1, 3]]<br>
+Step 3: Wait, –b = –(–2) = 2, –c = –1<br>
+Step 4: Multiply by 1/20: [[6/20, 2/20], [–1/20, 3/20]] = [[3/10, 1/10], [–1/20, 3/20]]
+        </div>
+        <div class="example-solution">Answer: [[3/10, 1/10], [–1/20, 3/20]]</div>
+      </div>
+
+      <h3>10 JAMB Examples on 2×2 Inverses (with solutions)</h3>
+
+      <div class="example-block">
+        <div class="example-problem">1. (JAMB 2019) A = [[3, –2], [1, 6]], find A⁻¹</div>
+        <div class="example-problem">
+Step 1: det = 18 + 2 = 20<br>
+Step 2: [[6, 2], [–1, 3]]<br>
+Step 3: 1/20 × that = [[6/20, 2/20], [–1/20, 3/20]] = [[3/10, 1/10], [–1/20, 3/20]]
+        </div>
+        <div class="example-solution">Answer: [[3/10, 1/10], [–1/20, 3/20]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">2. Find inverse of [[1, 2], [3, 4]]</div>
+        <div class="example-problem">
+Step 1: det = 4 – 6 = –2<br>
+Step 2: [[4, –2], [–3, 1]]<br>
+Step 3: 1/–2 × that = [[–2, 1], [3/2, –1/2]]
+        </div>
+        <div class="example-solution">Answer: [[–2, 1], [3/2, –1/2]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">3. Inverse of [[2, 3], [4, 5]] (det=10–12=–2)</div>
+        <div class="example-problem">
+Step 1: det = –2<br>
+Step 2: [[5, –3], [–4, 2]]<br>
+Step 3: 1/–2 × that = [[–5/2, 3/2], [2, –1]]
+        </div>
+        <div class="example-solution">Answer: [[–5/2, 3/2], [2, –1]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">4. [[5, 6], [7, 8]] det=40–42=–2 → similar pattern.</div>
+        <div class="example-problem">
+Step 1: det = –2<br>
+Step 2: [[8, –6], [–7, 5]]<br>
+Step 3: 1/–2 × that = [[–4, 3], [7/2, –5/2]]
+        </div>
+        <div class="example-solution">Answer: [[–4, 3], [7/2, –5/2]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">5. Identity [[1,0],[0,1]] inverse = itself.</div>
+        <div class="example-problem">
+Step 1: det = 1<br>
+Step 2: [[1, 0], [0, 1]] / 1 = same
+        </div>
+        <div class="example-solution">Answer: [[1,0],[0,1]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">6. Find inverse of [[4, 2], [6, 3]]</div>
+        <div class="example-problem">
+Step 1: det = 12 – 12 = 0<br>
+Step 2: det = 0 → no inverse (singular)
+        </div>
+        <div class="example-solution">Answer: No inverse</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">7. N = [[2, 3], [1, 4]]</div>
+        <div class="example-problem">
+Step 1: det = 8 – 3 = 5<br>
+Step 2: [[4, –3], [–1, 2]]<br>
+Step 3: 1/5 × that = [[4/5, –3/5], [–1/5, 2/5]]
+        </div>
+        <div class="example-solution">Answer: [[4/5, –3/5], [–1/5, 2/5]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">8. [[9, –2], [–7, 4]] (from det question) det=36–14=22</div>
+        <div class="example-problem">
+Step 1: det = 22<br>
+Step 2: [[4, 2], [7, 9]]<br>
+Step 3: 1/22 × that = [[4/22, 2/22], [7/22, 9/22]] = [[2/11, 1/11], [7/22, 9/22]]
+        </div>
+        <div class="example-solution">Answer: [[2/11, 1/11], [7/22, 9/22]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">9. [[x, 1], [2, 3]], det=3x–2 ≠0, inverse = ?</div>
+        <div class="example-problem">
+Step 1: det = 3x – 2<br>
+Step 2: [[3, –1], [–2, x]]<br>
+Step 3: 1/(3x–2) × that = [[3/(3x–2), –1/(3x–2)], [–2/(3x–2), x/(3x–2)]]
+        </div>
+        <div class="example-solution">Answer: [[3/(3x–2), –1/(3x–2)], [–2/(3x–2), x/(3x–2)]]</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">10. If inverse is required for solving linear equations (2 variables), but syllabus stops at computing inverse.</div>
+        <div class="example-problem">
+Step 1: For AX = B, X = A^{-1} B<br>
+Step 2: Compute inverse as above, then multiply.
+        </div>
+        <div class="example-solution">Answer: Use inverse to solve</div>
+      </div>
+
+      <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+        Abumchukwu, this is now the **complete Matrices and Determinants chapter** — all sections (a) to (c) fully expanded with teaching steps, examples, and JAMB questions with step-by-step solutions. 🌟<br>
+        Practice one section per day. You will score very high in JAMB.
+      </p>
+
+      <p style="text-align:center; margin:20px 0;">Want a quiz on Matrices and Determinants or the next topic?</p>
+      <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
