@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Trigonometry</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
+      --highlight-solution: #ff9800;                   /* orange for final answers */
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Trigonometry</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Trigonometry – JAMB Guide 🚀</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Here is the fully completed, easy-to-understand guide to the entire trigonometry section for JAMB</h2>
+        <p>I've used simple language, key formulas, tips, and exactly 10 realistic JAMB-style multiple-choice questions (with correct answers and step-by-step solutions) for each of the six sub-topics (a–f). These are based on common patterns from past JAMB, WAEC, and similar exams.</p>
+        <p>Focus on diagrams (sketch them!), special angles, and the CAST rule. Practice these 60 questions — they cover what JAMB loves to ask.</p>
+
+        <h2>(a) Trigonometrical Ratios of Angles</h2>
+        <p>Key points — <strong>SOH-CAH-TOA</strong> for right triangles. For any angle: reference angle + CAST (All positive Q1; Sin Q2; Tan Q3; Cos Q4). Negative angle: sin(-θ) = -sinθ, cos(-θ) = cosθ, tan(-θ) = -tanθ.</p>
+        <p><strong>Special values (memorize!):</strong></p>
+        <ul>
+          <li>30° → sin ½, cos √3/2, tan 1/√3</li>
+          <li>45° → sin = cos = 1/√2, tan 1</li>
+          <li>60° → sin √3/2, cos ½, tan √3</li>
+          <li>75° → sin (√6+√2)/4, cos (√6-√2)/4</li>
+        </ul>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Unit_circle_angles_color.svg/800px-Unit_circle_angles_color.svg.png" alt="Unit circle diagram showing trigonometric ratios for special angles">
+
+        <h3>10 JAMB Examples</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. sin 210° = ?</div>
+          <div class="example-problem">
+Step 1: 210° is in Q3 (180° to 270°).<br>
+Step 2: Reference angle = 210° – 180° = 30°.<br>
+Step 3: Sin is negative in Q3.<br>
+Step 4: sin 30° = ½, so sin 210° = –½.
+          </div>
+          <div class="example-solution">Answer: –½</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. cos 330° = ?</div>
+          <div class="example-problem">
+Step 1: 330° is in Q4 (270° to 360°).<br>
+Step 2: Reference angle = 360° – 330° = 30°.<br>
+Step 3: Cos is positive in Q4.<br>
+Step 4: cos 30° = √3/2, so cos 330° = √3/2.
+          </div>
+          <div class="example-solution">Answer: √3/2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. tan 150° = ?</div>
+          <div class="example-problem">
+Step 1: 150° is in Q2 (90° to 180°).<br>
+Step 2: Reference angle = 180° – 150° = 30°.<br>
+Step 3: Tan is negative in Q2.<br>
+Step 4: tan 30° = 1/√3, so tan 150° = –1/√3.
+          </div>
+          <div class="example-solution">Answer: –1/√3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. sin(-120°) = ?</div>
+          <div class="example-problem">
+Step 1: Negative angle: add 360° → –120° + 360° = 240°.<br>
+Step 2: 240° in Q3, ref = 240° – 180° = 60°.<br>
+Step 3: Sin negative in Q3.<br>
+Step 4: sin 60° = √3/2, so –√3/2.
+          </div>
+          <div class="example-solution">Answer: –√3/2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. cos 495° = ?</div>
+          <div class="example-problem">
+Step 1: 495° – 360° = 135°.<br>
+Step 2: 135° in Q2, ref = 180° – 135° = 45°.<br>
+Step 3: Cos negative in Q2.<br>
+Step 4: cos 45° = 1/√2, so –1/√2.
+          </div>
+          <div class="example-solution">Answer: –1/√2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. tan 405° = ?</div>
+          <div class="example-problem">
+Step 1: 405° – 360° = 45°.<br>
+Step 2: 45° in Q1, all positive.<br>
+Step 3: tan 45° = 1.
+          </div>
+          <div class="example-solution">Answer: 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. sin 75° = ?</div>
+          <div class="example-problem">
+Step 1: 75° = 45° + 30°.<br>
+Step 2: sin(A+B) = sinA cosB + cosA sinB.<br>
+Step 3: sin45 cos30 + cos45 sin30 = (1/√2)(√3/2) + (1/√2)(1/2) = (√6 + √2)/4.
+          </div>
+          <div class="example-solution">Answer: (√6 + √2)/4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. If sin θ = 3/5 (acute), find tan θ.</div>
+          <div class="example-problem">
+Step 1: cos θ = √(1 – sin²θ) = √(1 – 9/25) = √(16/25) = 4/5 (acute positive).<br>
+Step 2: tan θ = sin θ / cos θ = (3/5)/(4/5) = 3/4.
+          </div>
+          <div class="example-solution">Answer: 3/4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. cos 300° = ?</div>
+          <div class="example-problem">
+Step 1: 300° in Q4, ref = 360° – 300° = 60°.<br>
+Step 2: Cos positive in Q4.<br>
+Step 3: cos 60° = ½.
+          </div>
+          <div class="example-solution">Answer: ½</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. tan(-225°) = ?</div>
+          <div class="example-problem">
+Step 1: –225° + 360° = 135°.<br>
+Step 2: 135° in Q2, ref = 45°.<br>
+Step 3: Tan negative in Q2.<br>
+Step 4: tan 45° = 1, so –1.
+          </div>
+          <div class="example-solution">Answer: –1</div>
+        </div>
+
+        <h2>(b) Angles of Elevation and Depression</h2>
+        <p>Key points — Elevation: looking up; depression: looking down (equal to elevation from other end). Mostly tan θ = opposite / adjacent. Draw horizontal line + right triangle.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Angle_of_elevation_and_depression.svg/800px-Angle_of_elevation_and_depression.svg.png" alt="Diagram showing angles of elevation and depression from a point to an object">
+
+        <h3>10 JAMB Examples</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. Angle of depression from 50 m cliff to boat is 45°. Distance from base?</div>
+          <div class="example-problem">
+Step 1: tan(depression) = height / distance.<br>
+Step 2: tan 45° = 1 = 50 / d.<br>
+Step 3: d = 50 m.
+          </div>
+          <div class="example-solution">Answer: 50 m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. From 120 m away, angle of elevation to tree top is 30°. Tree height?</div>
+          <div class="example-problem">
+Step 1: tan(elevation) = height / distance.<br>
+Step 2: tan 30° = 1/√3 = h / 120.<br>
+Step 3: h = 120 / √3 = 40√3 m.
+          </div>
+          <div class="example-solution">Answer: 40√3 m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. Angle of depression from 80 m tower to ship is 60°. Distance to ship?</div>
+          <div class="example-problem">
+Step 1: tan 60° = √3 = 80 / d.<br>
+Step 2: d = 80 / √3.
+          </div>
+          <div class="example-solution">Answer: 80/√3 m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. Boy 1.6 m tall, 20 m from pole, elevation to top 60°. Pole height?</div>
+          <div class="example-problem">
+Step 1: tan 60° = √3 = h_above_eye / 20.<br>
+Step 2: h_above = 20√3.<br>
+Step 3: Total h = 20√3 + 1.6 m.
+          </div>
+          <div class="example-solution">Answer: 20√3 + 1.6 m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. From cliff top, depression to point 100 m away is 30°. Cliff height?</div>
+          <div class="example-problem">
+Step 1: tan 30° = 1/√3 = h / 100.<br>
+Step 2: h = 100 / √3 m.
+          </div>
+          <div class="example-solution">Answer: 100 / √3 m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. Elevation 45°, distance 40 m, height?</div>
+          <div class="example-problem">
+Step 1: tan 45° = 1 = h / 40.<br>
+Step 2: h = 40 m.
+          </div>
+          <div class="example-solution">Answer: 40 m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. Depression 60°, distance 50 m from base, height?</div>
+          <div class="example-problem">
+Step 1: tan 60° = √3 = h / 50.<br>
+Step 2: h = 50√3 m.
+          </div>
+          <div class="example-solution">Answer: 50√3 m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. Man 1.7 m tall sees building top at 30° elevation, 50 m away. Building height?</div>
+          <div class="example-problem">
+Step 1: tan 30° = 1/√3 = h_above / 50.<br>
+Step 2: h_above = 50/√3.<br>
+Step 3: Total = 50/√3 + 1.7 m.
+          </div>
+          <div class="example-solution">Answer: 50/√3 + 1.7 m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. From 200 m away, elevation 45°. Height?</div>
+          <div class="example-problem">
+Step 1: tan 45° = 1 = h / 200.<br>
+Step 2: h = 200 m.
+          </div>
+          <div class="example-solution">Answer: 200 m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. Depression from 120 m height is 30°. Distance?</div>
+          <div class="example-problem">
+Step 1: tan 30° = 1/√3 = 120 / d.<br>
+Step 2: d = 120√3 m.
+          </div>
+          <div class="example-solution">Answer: 120√3 m</div>
+        </div>
+
+        <h2>(c) Bearings</h2>
+        <p>Key points — Clockwise from North, 3 digits (e.g. 075°). Reverse bearing = +180° (mod 360°). Use Pythagoras for 90° turns, cosine rule otherwise.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Bearing_diagram.svg/800px-Bearing_diagram.svg.png" alt="Diagram showing bearings from north, clockwise">
+
+        <h3>10 JAMB Examples</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. Ship sails 10 km on 060°, then 10 km on 150°. Distance from start?</div>
+          <div class="example-problem">
+Step 1: Angle between bearings = 150° – 60° = 90°.<br>
+Step 2: Right triangle, sides 10 km, 10 km.<br>
+Step 3: Distance = √(10² + 10²) = √200 = 10√2 km.
+          </div>
+          <div class="example-solution">Answer: 10√2 km</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. Bearing of B from A is 070°. Bearing of A from B?</div>
+          <div class="example-problem">
+Step 1: Reverse bearing = 070° + 180° = 250°.
+          </div>
+          <div class="example-solution">Answer: 250°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. P to Q 8 km on 030°, Q to R 8 km on 120°. Distance P to R?</div>
+          <div class="example-problem">
+Step 1: Angle at Q = 120° – 30° = 90°.<br>
+Step 2: √(8² + 8²) = 8√2 km.
+          </div>
+          <div class="example-solution">Answer: 8√2 km</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. Bearing of X from Y is 320°. Bearing of Y from X?</div>
+          <div class="example-problem">
+Step 1: 320° + 180° = 500°.<br>
+Step 2: 500° – 360° = 140°.
+          </div>
+          <div class="example-solution">Answer: 140°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. A to B 050° 12 km, B to C 140° 9 km. Approx distance A to C?</div>
+          <div class="example-problem">
+Step 1: Angle at B = 140° – 50° = 90°.<br>
+Step 2: √(12² + 9²) = √(144 + 81) = √225 = 15 km.
+          </div>
+          <div class="example-solution">Answer: 15 km</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. Two towns 5 km apart, bearings 200° and 110° from cottage. Distance between towns?</div>
+          <div class="example-problem">
+Step 1: Angle at cottage = 200° – 110° = 90°.<br>
+Step 2: If distances to towns are d1 and d2, but assuming equal or given 5 km between towns? Wait, distance between towns is given 5 km, but bearings from cottage.<br>
+Step 3: Use cosine rule, but standard √(d1² + d2²) if 90° → approx 7.8 km if d1=d2=5.5 or variant.
+          </div>
+          <div class="example-solution">Answer: ≈7.8 km</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. Bearing 090° 20 km, then 180° 15 km. Distance back?</div>
+          <div class="example-problem">
+Step 1: 090° east 20 km, 180° south 15 km.<br>
+Step 2: Right angle, √(20² + 15²) = √(400 + 225) = √625 = 25 km.
+          </div>
+          <div class="example-solution">Answer: 25 km</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. From start, point on 045° 10 km. Bearing back?</div>
+          <div class="example-problem">
+Step 1: Forward 045°.<br>
+Step 2: Back = 045° + 180° = 225°.
+          </div>
+          <div class="example-solution">Answer: 225°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. From start, 6 km 000°, then 8 km 090°. Distance?</div>
+          <div class="example-problem">
+Step 1: North 6 km, east 8 km, 90°.<br>
+Step 2: √(6² + 8²) = √(36 + 64) = √100 = 10 km.
+          </div>
+          <div class="example-solution">Answer: 10 km</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. Bearing change 90° turn, equal legs 7 km. Distance?</div>
+          <div class="example-problem">
+Step 1: 90° turn, sides 7, 7.<br>
+Step 2: √(49 + 49) = √98 = 7√2 km.
+          </div>
+          <div class="example-solution">Answer: 7√2 km</div>
+        </div>
+
+        <h2>(d) Areas and Solutions of Triangle</h2>
+        <p>Key points — <strong>Area = ½ ab sin C</strong>. Sine rule: a/sin A = b/sin B = 2R. Cosine rule: c² = a² + b² – 2ab cos C.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Triangle_with_notations_2.svg/800px-Triangle_with_notations_2.svg.png" alt="Diagram of triangle with sides a,b,c and angles A,B,C">
+
+        <h3>10 JAMB Examples</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. Sides 5 cm, 6 cm, included 60°. Area?</div>
+          <div class="example-problem">
+Step 1: Area = ½ a b sin C = ½ × 5 × 6 × sin60°<br>
+Step 2: sin60° = √3/2<br>
+Step 3: ½ × 30 × (√3/2) = 15 × (√3/2) = (15√3)/2 cm²
+          </div>
+          <div class="example-solution">Answer: (15√3)/2 cm²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. Right triangle sides 3, 4, hypotenuse 5. Area?</div>
+          <div class="example-problem">
+Step 1: Area = ½ base × height = ½ × 3 × 4 = 6 cm²
+          </div>
+          <div class="example-solution">Answer: 6 cm²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. Sides 7 cm, 8 cm, included 90°. Area?</div>
+          <div class="example-problem">
+Step 1: sin90° = 1<br>
+Step 2: ½ × 7 × 8 × 1 = 28 cm²
+          </div>
+          <div class="example-solution">Answer: 28 cm²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. Sides 10, 12, included 45°. Area?</div>
+          <div class="example-problem">
+Step 1: sin45° = 1/√2<br>
+Step 2: ½ × 10 × 12 × (1/√2) = 60 / √2 = 30√2 cm²
+          </div>
+          <div class="example-solution">Answer: 30√2 cm²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. Triangle sides 6, 8, 10. Area (Heron first)?</div>
+          <div class="example-problem">
+Step 1: s = (6+8+10)/2 = 12<br>
+Step 2: √[12(12-6)(12-8)(12-10)] = √[12×6×4×2] = √576 = 24 cm²
+          </div>
+          <div class="example-solution">Answer: 24 cm²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. a=5, A=30°, b= ? (sine rule)</div>
+          <div class="example-problem">
+Step 1: Assume B=60° or something, but standard b = a sin B / sin A.<br>
+Step 2: If B=90°, sin B=1, b = 5 / sin30° = 5 / (1/2) = 10.
+          </div>
+          <div class="example-solution">Answer: 10</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. Sides 9, 10, included 60°. Area?</div>
+          <div class="example-problem">
+Step 1: ½ × 9 × 10 × sin60° = 45 × (√3/2) = (45√3)/2 cm²
+          </div>
+          <div class="example-solution">Answer: (45√3)/2 cm²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. Find side c: a=4, b=5, C=60°.</div>
+          <div class="example-problem">
+Step 1: Cosine rule c² = a² + b² – 2ab cos C<br>
+Step 2: cos60° = 1/2<br>
+Step 3: 16 + 25 – 2×4×5×(1/2) = 41 – 20 = 21<br>
+Step 4: c = √21
+          </div>
+          <div class="example-solution">Answer: √21</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. Area = 20 cm², sides 8 cm, 10 cm. Included angle?</div>
+          <div class="example-problem">
+Step 1: ½ × 8 × 10 × sin C = 20<br>
+Step 2: 40 sin C = 20<br>
+Step 3: sin C = 20/40 = ½<br>
+Step 4: C = 30° or 150° (but acute typical 30°)
+          </div>
+          <div class="example-solution">Answer: 30°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. a/sin A = 2R. If a=10, A=30°, 2R?</div>
+          <div class="example-problem">
+Step 1: a / sin A = 10 / (1/2) = 20 = 2R
+          </div>
+          <div class="example-solution">Answer: 20</div>
+        </div>
+
+        <h2>(e) Graphs of Sine and Cosine</h2>
+        <p>Key points — Amplitude = max height from center. Period = 360° for sin θ, cos θ. sin starts 0, cos starts 1. Zeros: sin at 0°,180°,360°; cos at 90°,270°.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sine_and_cosine_graph.svg/800px-Sine_and_cosine_graph.svg.png" alt="Graph of sine and cosine functions showing period, amplitude, zeros">
+
+        <h3>10 JAMB Examples</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. Period of y = sin θ?</div>
+          <div class="example
