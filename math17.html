@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Integration</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
+      --highlight-solution: #ff9800;                   /* orange for final answers */
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Integration</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Integration Made Super Easy for JAMB</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Integration Made Super Easy for JAMB!</h2>
+        <p>Integration is just the reverse of differentiation. If differentiation asks “What is the slope?”, integration asks “What was the original function before we took the slope?”</p>
+        <p><strong>Think of it like this:</strong><br>
+Differentiation: “Break down” a function → get its derivative.<br>
+Integration: “Build back up” → add the +C (constant of integration) because many functions can give the same derivative.</p>
+        <p><strong>Quick Rules You Must Know (for algebraic & simple trig functions):</strong></p>
+        <ul>
+          <li><strong>Function: Constant k</strong> → Integral (Indefinite): kx + C</li>
+          <li><strong>Function: xⁿ (n ≠ –1)</strong> → Integral: xⁿ⁺¹/(n+1) + C (Power rule)</li>
+          <li><strong>Function: (ax + b)ⁿ</strong> → Use substitution u = ax + b, du = a dx</li>
+          <li><strong>Function: sin(ax)</strong> → Integral: –(1/a) cos(ax) + C</li>
+          <li><strong>Function: cos(ax)</strong> → Integral: (1/a) sin(ax) + C</li>
+          <li><strong>Sum/Difference</strong> → Integrate term by term</li>
+        </ul>
+        <p><strong>Definite Integral (from a to b):</strong><br>
+∫ₐᵇ f(x) dx = [F(x)]ₐᵇ = F(b) – F(a)<br>
+(No +C needed)</p>
+        <p><strong>Area under the curve (simple cases only):</strong><br>
+If the curve is above the x-axis from a to b → Area = ∫ₐᵇ y dx<br>
+If it crosses the x-axis → split the integral or take absolute value (JAMB usually gives regions above the axis).</p>
+        <p>Now let’s practise with real & typical JAMB-style examples.</p>
+
+        <h2>(a) Integration of explicit algebraic and simple trigonometric functions</h2>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Integral_example.svg/800px-Integral_example.svg.png" alt="Graph showing integration as area under curve">
+
+        <h3>10 JAMB-style examples with full step-by-step solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. Evaluate ∫₁³ (x² – 1) dx (JAMB-style definite algebraic)</div>
+          <div class="example-problem">
+Step 1: Antiderivative F(x) = x³/3 – x.<br>
+Step 2: At upper limit x=3: (27/3) – 3 = 9 – 3 = 6.<br>
+Step 3: At lower limit x=1: (1/3) – 1 = 1/3 – 3/3 = –2/3.<br>
+Step 4: F(3) – F(1) = 6 – (–2/3) = 6 + 2/3 = 18/3 + 2/3 = 20/3.
+          </div>
+          <div class="example-solution">Answer: 20/3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. Evaluate ∫₂³ (x² – 2x) dx</div>
+          <div class="example-problem">
+Step 1: F(x) = x³/3 – x².<br>
+Step 2: At x=3: 27/3 – 9 = 9 – 9 = 0.<br>
+Step 3: At x=2: 8/3 – 4 = 8/3 – 12/3 = –4/3.<br>
+Step 4: 0 – (–4/3) = 4/3.
+          </div>
+          <div class="example-solution">Answer: 4/3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. If dy/dx = 2x – 3 and y = 3 when x = 0, find y in terms of x.</div>
+          <div class="example-problem">
+Step 1: y = ∫(2x – 3) dx = x² – 3x + C.<br>
+Step 2: At x=0, y=3: 0 – 0 + C = 3 → C=3.<br>
+Step 3: y = x² – 3x + 3.
+          </div>
+          <div class="example-solution">Answer: y = x² – 3x + 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. Evaluate ∫ sin(3x) dx</div>
+          <div class="example-problem">
+Step 1: Let u = 3x, du = 3 dx → dx = du/3.<br>
+Step 2: ∫ sin u (du/3) = (1/3) ∫ sin u du = (1/3)(–cos u) + C.<br>
+Step 3: –(1/3) cos(3x) + C.
+          </div>
+          <div class="example-solution">Answer: –(1/3) cos(3x) + C</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. Evaluate ∫ 2(2x – 3)²/³ dx (JAMB 2001 style)</div>
+          <div class="example-problem">
+Step 1: Let u = 2x – 3, du = 2 dx → dx = du/2.<br>
+Step 2: 2 ∫ (u²/³) (du/2) = ∫ u²/³ du.<br>
+Step 3: ∫ u²/³ du = u^(5/3)/(5/3) + C = (3/5) u^(5/3) + C.<br>
+Step 4: (3/5)(2x – 3)^(5/3) + C.
+          </div>
+          <div class="example-solution">Answer: (3/5)(2x – 3)^(5/3) + C</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. A function f(x) passes through the origin and f'(x) = 3x + 2. Find f(x).</div>
+          <div class="example-problem">
+Step 1: f(x) = ∫(3x + 2) dx = (3/2)x² + 2x + C.<br>
+Step 2: f(0) = 0: C = 0.<br>
+Step 3: f(x) = (3/2)x² + 2x.
+          </div>
+          <div class="example-solution">Answer: (3/2)x² + 2x</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. Evaluate ∫₋₁² (2x² + x) dx</div>
+          <div class="example-problem">
+Step 1: F(x) = (2/3)x³ + (1/2)x².<br>
+Step 2: At x=2: (2/3)(8) + (1/2)(4) = 16/3 + 2 = 16/3 + 6/3 = 22/3.<br>
+Step 3: At x=–1: (2/3)(–1) + (1/2)(1) = –2/3 + 1/2 = –4/6 + 3/6 = –1/6.<br>
+Step 4: 22/3 – (–1/6) = 44/6 + 1/6 = 45/6 = 15/2.
+          </div>
+          <div class="example-solution">Answer: 15/2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. Integrate (2x + 1)³</div>
+          <div class="example-problem">
+Step 1: Let u = 2x + 1, du = 2 dx → dx = du/2.<br>
+Step 2: ∫ u³ (du/2) = (1/2) ∫ u³ du = (1/2)(u⁴/4) + C = (1/8)u⁴ + C.<br>
+Step 3: (1/8)(2x + 1)⁴ + C.
+          </div>
+          <div class="example-solution">Answer: (1/8)(2x + 1)⁴ + C</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. Integrate 4x³ + 2x + cos x</div>
+          <div class="example-problem">
+Step 1: ∫ 4x³ dx = x⁴.<br>
+Step 2: ∫ 2x dx = x².<br>
+Step 3: ∫ cos x dx = sin x.<br>
+Step 4: x⁴ + x² + sin x + C.
+          </div>
+          <div class="example-solution">Answer: x⁴ + x² + sin x + C</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. Integrate (1 + x)/x³ dx</div>
+          <div class="example-problem">
+Step 1: (1 + x)/x³ = x^{-3} + x^{-2}.<br>
+Step 2: ∫ x^{-3} dx = x^{-2}/(-2) = –1/(2x²).<br>
+Step 3: ∫ x^{-2} dx = x^{-1}/(-1) = –1/x.<br>
+Step 4: –1/(2x²) – 1/x + C.
+          </div>
+          <div class="example-solution">Answer: –1/(2x²) – 1/x + C</div>
+        </div>
+
+        <h2>(b) Area under the curve (simple cases only)</h2>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Integral_example.svg/800px-Integral_example.svg.png" alt="Graph showing integration as area under curve">
+
+        <h3>10 JAMB-style examples with full solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. Find the area bounded by y = x(2 – x), the x-axis, x = 0 and x = 2 (real JAMB).</div>
+          <div class="example-problem">
+Step 1: y = 2x – x².<br>
+Step 2: Area = ∫₀² (2x – x²) dx = [x² – (x³/3)]₀².<br>
+Step 3: At 2: 4 – (8/3) = 12/3 – 8/3 = 4/3.<br>
+Step 4: At 0: 0.<br>
+Step 5: Area = 4/3 sq units.
+          </div>
+          <div class="example-solution">Answer: 4/3 sq units</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. Find the area under y = x² from x = 0 to x = 1.</div>
+          <div class="example-problem">
+Step 1: ∫₀¹ x² dx = [x³/3]₀¹ = (1/3) – 0 = 1/3 sq unit.
+          </div>
+          <div class="example-solution">Answer: 1/3 sq unit</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. Find the area under y = 4 – x² from x = –2 to x = 2 (symmetric).</div>
+          <div class="example-problem">
+Step 1: ∫₋₂² (4 – x²) dx = [4x – (x³/3)]₋₂².<br>
+Step 2: At 2: 8 – (8/3) = 24/3 – 8/3 = 16/3.<br>
+Step 3: At –2: –8 – (–8/3) = –24/3 + 8/3 = –16/3.<br>
+Step 4: 16/3 – (–16/3) = 32/3 sq units.
+          </div>
+          <div class="example-solution">Answer: 32/3 sq units</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. Area bounded by y = 2x, x-axis, x=1 to x=4.</div>
+          <div class="example-problem">
+Step 1: ∫₁⁴ 2x dx = [x²]₁⁴ = 16 – 1 = 15 sq units.
+          </div>
+          <div class="example-solution">Answer: 15 sq units</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. Area under y = sin x from 0 to π (above x-axis).</div>
+          <div class="example-problem">
+Step 1: ∫₀^π sin x dx = [–cos x]₀^π = (–cos π) – (–cos 0) = (–(–1)) – (–1) = 1 + 1 = 2 sq units.
+          </div>
+          <div class="example-solution">Answer: 2 sq units</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. Area under y = x³ from x=0 to x=2.</div>
+          <div class="example-problem">
+Step 1: ∫₀² x³ dx = [x⁴/4]₀² = (16/4) – 0 = 4 sq units.
+          </div>
+          <div class="example-solution">Answer: 4 sq units</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. Find the area between y = x² + 1 and x-axis from x=0 to x=1 (always above).</div>
+          <div class="example-problem">
+Step 1: ∫₀¹ (x² + 1) dx = [x³/3 + x]₀¹ = (1/3 + 1) – 0 = 4/3 sq units.
+          </div>
+          <div class="example-solution">Answer: 4/3 sq units</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. Area bounded by y = 3x – x² and x-axis (find limits first: roots at 0 and 3).</div>
+          <div class="example-problem">
+Step 1: Roots: 3x – x² = 0 → x(3 – x)=0 → x=0,3.<br>
+Step 2: ∫₀³ (3x – x²) dx = [(3/2)x² – (1/3)x³]₀³.<br>
+Step 3: At 3: (3/2)(9) – (1/3)(27) = 27/2 – 9 = 13.5 – 9 = 4.5 sq units.
+          </div>
+          <div class="example-solution">Answer: 4.5 sq units</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. Area under y = cos(2x) from 0 to π/4.</div>
+          <div class="example-problem">
+Step 1: ∫₀^{π/4} cos(2x) dx = [ (1/2) sin(2x) ]₀^{π/4}.<br>
+Step 2: At π/4: (1/2) sin(π/2) = (1/2)(1) = 1/2.<br>
+Step 3: At 0: (1/2) sin 0 = 0.<br>
+Step 4: 1/2 sq unit.
+          </div>
+          <div class="example-solution">Answer: 1/2 sq unit</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. Find the area bounded by y = 6x – x² and the x-axis.</div>
+          <div class="example-problem">
+Step 1: Roots: 6x – x² = 0 → x(6 – x)=0 → x=0,6.<br>
+Step 2: ∫₀⁶ (6x – x²) dx = [3x² – (1/3)x³]₀⁶.<br>
+Step 3: At 6: 3(36) – (1/3)(216) = 108 – 72 = 36 sq units.
+          </div>
+          <div class="example-solution">Answer: 36 sq units</div>
+        </div>
+
+        <p><strong>Quick Tips for JAMB Success</strong></p>
+        <ul>
+          <li>Always check if the curve is above the x-axis (positive area).</li>
+          <li>For (ax + b)ⁿ use substitution — it appears every year.</li>
+          <li>Definite integrals for area never need +C.</li>
+          <li>Practice writing the integral first, then antiderivative, then plug in limits.</li>
+          <li>Time yourself: these should take you less than 2 minutes each in the exam.</li>
+        </ul>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          Abumchukwu, this is now the **complete Integration chapter** — all sections (a) to (b) fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a quiz on Integration or the next topic?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
