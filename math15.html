@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Differentiation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
+      --highlight-solution: #ff9800;                   /* orange for final answers */
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Differentiation</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Differentiation Made Super Easy for JAMB</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Differentiation Made Super Easy for JAMB (Step-by-Step for Beginners)</h2>
+        <p>Hello! I will teach you this exactly as it appears in the JAMB syllabus, using very simple English, like explaining to a friend. No big grammar, just clear steps with examples you will see in the exam. We will cover:</p>
+        <ul>
+          <li><strong>(a)</strong> Limit of a function – what it means and how to find it.</li>
+          <li><strong>(b)</strong> Differentiation of explicit algebraic and simple trigonometrical functions (sine, cosine, tangent).</li>
+        </ul>
+        <p>At the end of each part, I give you exactly 10 real or very typical JAMB past/likely questions with full solutions (step-by-step, the way examiners expect).</p>
+
+        <h2>(a) Limit of a Function</h2>
+        <p><strong>What is it?</strong><br>
+Imagine x is walking closer and closer to a number “a”. The limit is the value your function f(x) is heading towards (getting very close to) when x is extremely close to “a”. We write it as lim_{x→a} f(x).</p>
+        <p><strong>Easy ways to find it (JAMB style):</strong></p>
+        <ul>
+          <li>Direct substitution – Just plug in the value of x = a. If you get a number, that’s the answer.</li>
+          <li>If you get 0/0 (indeterminate), factor and cancel common terms.</li>
+          <li>If there is √, sometimes multiply by conjugate (top and bottom).</li>
+        </ul>
+        <p><strong>Simple classroom examples first:</strong><br>
+lim_{x→3} (2x + 5) = 2(3) + 5 = 11 → just plug in.<br>
+lim_{x→2} (x² - 4)/(x - 2) = 0/0 → factor: (x-2)(x+2)/(x-2) = x+2 → plug x=2 → 4.</p>
+        <p>That’s all you need for JAMB limits! Now the 10 examples.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Limit_graph.svg/800px-Limit_graph.svg.png" alt="Graph showing a function approaching a limit value">
+
+        <h3>10 JAMB Examples on Limits with Solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 1992: Evaluate lim_{x→2} \frac{(x-2)(x^2 + 3x - 2)}{x^2 - 4}</div>
+          <div class="example-problem">
+Step 1: Plug x=2 → 0/0 indeterminate.<br>
+Step 2: Denominator = x² - 4 = (x-2)(x+2).<br>
+Step 3: Numerator = (x-2)(x² + 3x - 2).<br>
+Step 4: Cancel (x-2).<br>
+Step 5: lim_{x→2} \frac{x^2 + 3x - 2}{x+2} = \frac{4 + 6 - 2}{2+2} = 8/4 = 2.
+          </div>
+          <div class="example-solution">Answer: 2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2021: Find lim_{x→1} \frac{x^3 + 6x - 7}{x-1}</div>
+          <div class="example-problem">
+Step 1: Plug x=1 → 0/0.<br>
+Step 2: Use synthetic division for numerator x³ + 0x² + 6x - 7 divided by (x-1).<br>
+Step 3: 1 | 1 0 6 -7<br>
+   |   1 1 7<br>
+   ----------<br>
+     1 1 7 0<br>
+Step 4: Quotient = x² + x + 7.<br>
+Step 5: Limit = 1² + 1 + 7 = 9.
+          </div>
+          <div class="example-solution">Answer: 9</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Typical JAMB: lim_{x→3} \frac{x^2 - 9}{x - 3}</div>
+          <div class="example-problem">
+Step 1: Plug x=3 → 0/0.<br>
+Step 2: Numerator = (x-3)(x+3).<br>
+Step 3: Cancel (x-3).<br>
+Step 4: lim_{x→3} (x + 3) = 3 + 3 = 6.
+          </div>
+          <div class="example-solution">Answer: 6</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Typical JAMB: lim_{x→2} \frac{x^2 + 4x - 12}{x^2 - 2x}</div>
+          <div class="example-problem">
+Step 1: Plug x=2 → 0/0.<br>
+Step 2: Numerator = (x+6)(x-2), denominator = x(x-2).<br>
+Step 3: Cancel (x-2).<br>
+Step 4: lim_{x→2} (x+6)/x = (2+6)/2 = 8/2 = 4.
+          </div>
+          <div class="example-solution">Answer: 4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Typical JAMB: lim_{x→1} \frac{1 - x}{x^2 - 3x + 2}</div>
+          <div class="example-problem">
+Step 1: Plug x=1 → 0/0.<br>
+Step 2: Numerator = 1 - x = -(x-1).<br>
+Step 3: Denominator = (x-1)(x-2).<br>
+Step 4: Cancel (x-1): -1/(x-2).<br>
+Step 5: lim_{x→1} -1/(x-2) = -1/(1-2) = -1/(-1) = 1.
+          </div>
+          <div class="example-solution">Answer: 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Typical JAMB: lim_{x→0} \frac{x^2 + 5x}{x}</div>
+          <div class="example-problem">
+Step 1: Simplify = x + 5 (for x≠0).<br>
+Step 2: lim_{x→0} (x + 5) = 5.
+          </div>
+          <div class="example-solution">Answer: 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Typical JAMB: lim_{x→-1} \frac{x + 1}{x^2 - 1}</div>
+          <div class="example-problem">
+Step 1: Plug x=-1 → 0/0.<br>
+Step 2: Denominator = (x-1)(x+1).<br>
+Step 3: Cancel (x+1).<br>
+Step 4: lim_{x→-1} 1/(x-1) = 1/(-1-1) = 1/(-2) = -1/2.
+          </div>
+          <div class="example-solution">Answer: -1/2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Typical JAMB: lim_{x→4} \frac{x^2 - 16}{x - 4}</div>
+          <div class="example-problem">
+Step 1: 0/0.<br>
+Step 2: Numerator (x-4)(x+4).<br>
+Step 3: Cancel (x-4).<br>
+Step 4: x+4 at x=4 = 8.
+          </div>
+          <div class="example-solution">Answer: 8</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Typical JAMB (product form): lim_{x→2} (x^3 - 2x^2 + 6x - 12)(x - 2)</div>
+          <div class="example-problem">
+Step 1: Plug x=2: first part 8 - 8 + 12 - 12 = 0, times 0 = 0.<br>
+Step 2: Limit = 0 (direct, no indeterminate).
+          </div>
+          <div class="example-solution">Answer: 0</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Typical JAMB: lim_{x→5} \frac{x^2 - 25}{x - 5}</div>
+          <div class="example-problem">
+Step 1: 0/0.<br>
+Step 2: (x-5)(x+5)/(x-5) = x+5.<br>
+Step 3: At x=5 = 10.
+          </div>
+          <div class="example-solution">Answer: 10</div>
+        </div>
+
+        <p>Tip: Always check if you can plug in first. If 0/0, factor immediately!</p>
+
+        <h2>(b) Differentiation of Explicit Algebraic and Simple Trigonometrical Functions</h2>
+        <p><strong>What is differentiation?</strong><br>
+It is finding the “derivative” (written dy/dx or f'(x)). It tells you the slope or rate of change at any point.</p>
+        <p><strong>Super simple rules you MUST know (JAMB only uses these):</strong></p>
+        <ul>
+          <li><strong>Algebraic (power rule):</strong> y = x^n → dy/dx = n x^{n-1}</li>
+          <li>Constant → derivative = 0</li>
+          <li>Sum/difference → differentiate each term</li>
+          <li><strong>Product rule (for two things multiplied):</strong> (uv)' = u'v + uv'</li>
+          <li>Quotient not common in simple JAMB.</li>
+          <li><strong>Chain rule (for inside function):</strong> derivative of outside × derivative of inside.</li>
+          <li><strong>Trigonometric (must memorise exactly):</strong><br>
+d(sin x)/dx = cos x<br>
+d(cos x)/dx = -sin x<br>
+d(tan x)/dx = sec² x</li>
+        </ul>
+        <p><strong>Examples to understand first:</strong><br>
+y = 3x² + 5x - 7 → dy/dx = 6x + 5<br>
+y = sin x → dy/dx = cos x<br>
+y = 5 cos(2x) → chain rule: 5 × (-sin 2x) × 2 = -10 sin 2x</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Derivative_graph.svg/800px-Derivative_graph.svg.png" alt="Graph showing a function and its derivative as the slope">
+
+        <h3>10 JAMB Examples on Differentiation with Solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2008: Differentiate sin x - x cos x</div>
+          <div class="example-problem">
+Step 1: Derivative of sin x = cos x.<br>
+Step 2: Derivative of x cos x (product rule): 1·cos x + x·(-sin x) = cos x - x sin x.<br>
+Step 3: Total: cos x - (cos x - x sin x) = cos x - cos x + x sin x = x sin x.
+          </div>
+          <div class="example-solution">Answer: x sin x</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB 2004: Differentiate \frac{x^7 - x^5}{x^4}</div>
+          <div class="example-problem">
+Step 1: Simplify first: x^7 / x^4 - x^5 / x^4 = x^3 - x.<br>
+Step 2: Derivative = 3x² - 1.
+          </div>
+          <div class="example-solution">Answer: 3x² - 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB-style: If y = 2x²(2x - 1), find dy/dx at x = -1</div>
+          <div class="example-problem">
+Step 1: Expand: 2x² · 2x - 2x² · 1 = 4x³ - 2x².<br>
+Step 2: dy/dx = 12x² - 4x.<br>
+Step 3: At x=-1: 12(1) - 4(-1) = 12 + 4 = 16.
+          </div>
+          <div class="example-solution">Answer: 16</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB-style: Differentiate (2 + 3x)(1 - x)</div>
+          <div class="example-problem">
+Step 1: Expand: 2(1 - x) + 3x(1 - x) = 2 - 2x + 3x - 3x² = 2 + x - 3x².<br>
+Step 2: dy/dx = 1 - 6x.
+          </div>
+          <div class="example-solution">Answer: 1 - 6x</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB-style: If y = 3 sin(-4x), find dy/dx</div>
+          <div class="example-problem">
+Step 1: Chain rule: derivative of sin(u) = cos u × du/dx, u = -4x.<br>
+Step 2: 3 cos(-4x) × (-4) = -12 cos(-4x).<br>
+Step 3: cos(-4x) = cos 4x (even function).
+          </div>
+          <div class="example-solution">Answer: -12 cos 4x</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB-style: Differentiate y = sin²(5x)</div>
+          <div class="example-problem">
+Step 1: Let u = sin 5x, y = u².<br>
+Step 2: dy/du = 2u.<br>
+Step 3: du/dx = 5 cos 5x.<br>
+Step 4: dy/dx = 2 sin 5x × 5 cos 5x = 10 sin 5x cos 5x.
+          </div>
+          <div class="example-solution">Answer: 10 sin 5x cos 5x</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB-style: y = x² - 1/x, find dy/dx</div>
+          <div class="example-problem">
+Step 1: 1/x = x^{-1}.<br>
+Step 2: dy/dx = 2x - (-1)x^{-2} = 2x + 1/x².
+          </div>
+          <div class="example-solution">Answer: 2x + 1/x²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB-style: Differentiate y = 3 cos(x/3) at x = 3π/2</div>
+          <div class="example-problem">
+Step 1: Chain: 3 (-sin(x/3)) × (1/3) = - sin(x/3).<br>
+Step 2: At x = 3π/2: - sin((3π/2)/3) = - sin(π/2) = -1.
+          </div>
+          <div class="example-solution">Answer: -1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB-style: Differentiate tan x</div>
+          <div class="example-problem">
+Step 1: Direct formula: sec² x.
+          </div>
+          <div class="example-solution">Answer: sec² x</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">JAMB-style: If y = 4x³ + 2 sin x - 5 cos x, find dy/dx</div>
+          <div class="example-problem">
+Step 1: d(4x³) = 12x².<br>
+Step 2: d(2 sin x) = 2 cos x.<br>
+Step 3: d(-5 cos x) = -5 (-sin x) = 5 sin x.<br>
+Step 4: Total: 12x² + 2 cos x + 5 sin x.
+          </div>
+          <div class="example-solution">Answer: 12x² + 2 cos x + 5 sin x</div>
+        </div>
+
+        <p>Tip: Always simplify algebraic expressions first (makes life easy!). For trig, just replace sin → cos, cos → -sin, tan → sec². Chain rule only when there is “inside” function (like sin(2x)).</p>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          Abumchukwu, this is now the **complete Differentiation chapter** — all sections (a) to (b) fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a quiz on Differentiation or the next topic?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
