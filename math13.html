@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Coordinate Geometry</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
+      --highlight-solution: #ff9800;                   /* orange for final answers */
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Coordinate Geometry</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Coordinate Geometry Made Simple for JAMB</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Coordinate Geometry Made Simple for JAMB</h2>
+        <p>I will teach you everything step-by-step in very easy English, like a friend explaining to you. We use the Cartesian plane (x-y graph). Every point has coordinates (x, y).</p>
+        <p>We will cover (a), (b), (c), (d) one by one with clear formulas, why they work, and then exactly 10 JAMB-style examples with full solutions for each part. All examples are either real past JAMB/WAEC questions or very similar ones that appear every year.</p>
+
+        <h2>(a) Midpoint and Gradient (Slope) of a Line Segment</h2>
+        <p>Midpoint – The middle point of the line joining two points.<br>
+It is the average of the x-coordinates and the average of the y-coordinates.<br>
+<strong>Formula:</strong><br>
+If A(x₁, y₁) and B(x₂, y₂), then Midpoint M = ( (x₁ + x₂)/2 , (y₁ + y₂)/2 )<br>
+Gradient (Slope) m – How steep the line is.<br>
+<strong>Formula:</strong><br>
+m = (y₂ − y₁) / (x₂ − x₁)<br>
+(Rise over Run)<br>
+Positive m = line going up from left to right<br>
+Negative m = line going down<br>
+m = 0 → horizontal line<br>
+m undefined → vertical line (x = constant)</p>
+
+        <h3>10 JAMB Examples for (a) – Midpoint & Gradient</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1 (Midpoint)</div>
+          <div class="example-problem">
+The midpoint of XY is (−4, −2). If X is (−8, −12), find the coordinates of Y.<br>
+Step 1: Let Y = (p, q)<br>
+Step 2: (−8 + p)/2 = −4 → −8 + p = −8 → p = 0<br>
+Step 3: (−12 + q)/2 = −2 → −12 + q = −4 → q = 8
+          </div>
+          <div class="example-solution">Answer: (0, 8)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2 (Midpoint)</div>
+          <div class="example-problem">
+Find the midpoint of A(−4, 6) and B(2, −8).<br>
+Step 1: x = (−4 + 2)/2 = −2/2 = −1<br>
+Step 2: y = (6 + (−8))/2 = −2/2 = −1
+          </div>
+          <div class="example-solution">Answer: (−1, −1)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3 (Midpoint)</div>
+          <div class="example-problem">
+P(1, 3) and Q(5, 7). Find midpoint.<br>
+Step 1: x = (1+5)/2 = 6/2 = 3<br>
+Step 2: y = (3+7)/2 = 10/2 = 5
+          </div>
+          <div class="example-solution">Answer: (3, 5)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4 (Gradient)</div>
+          <div class="example-problem">
+Find the gradient of the line joining P(1, 1) and Q(2, 5).<br>
+Step 1: m = (y2 − y1)/(x2 − x1) = (5 − 1)/(2 − 1) = 4/1 = 4
+          </div>
+          <div class="example-solution">Answer: 4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5 (Gradient)</div>
+          <div class="example-problem">
+Find gradient of line through (−2, 0) and (0, −4).<br>
+Step 1: m = (−4 − 0)/(0 − (−2)) = (−4)/2 = −2
+          </div>
+          <div class="example-solution">Answer: −2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6 (Gradient)</div>
+          <div class="example-problem">
+Calculate gradient of (3, −2) and (−1, 4).<br>
+Step 1: m = (4 − (−2))/(−1 − 3) = (4 + 2)/(−4) = 6/−4 = −3/2
+          </div>
+          <div class="example-solution">Answer: −3/2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7 (Both)</div>
+          <div class="example-problem">
+Points A(2, 3), B(5, 7). Find midpoint and gradient.<br>
+Step 1: Midpoint x = (2+5)/2 = 3.5<br>
+Step 2: Midpoint y = (3+7)/2 = 5<br>
+Step 3: Gradient m = (7−3)/(5−2) = 4/3
+          </div>
+          <div class="example-solution">Answer: Midpoint (3.5, 5), Gradient 4/3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8 (Gradient)</div>
+          <div class="example-problem">
+Gradient of line joining (x, 4) and (3, −2) is 3/2. Find x.<br>
+Step 1: m = (−2 − 4)/(3 − x) = 3/2<br>
+Step 2: −6/(3 − x) = 3/2<br>
+Step 3: Cross multiply: −12 = 3(3 − x)<br>
+Step 4: −12 = 9 − 3x<br>
+Step 5: −21 = −3x → x = 7
+          </div>
+          <div class="example-solution">Answer: 7</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9 (Midpoint)</div>
+          <div class="example-problem">
+Midpoint of AB is (1, −1). If A is (−4, 6), find B.<br>
+Step 1: Let B = (p, q)<br>
+Step 2: (−4 + p)/2 = 1 → −4 + p = 2 → p = 6<br>
+Step 3: (6 + q)/2 = −1 → 6 + q = −2 → q = −8
+          </div>
+          <div class="example-solution">Answer: (6, −8)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10 (Gradient)</div>
+          <div class="example-problem">
+Line through (1, 2) and (4, 8). Gradient?<br>
+Step 1: m = (8 − 2)/(4 − 1) = 6/3 = 2
+          </div>
+          <div class="example-solution">Answer: 2</div>
+        </div>
+
+        <h2>(b) Distance Between Two Points</h2>
+        <p>This is just the straight-line distance (like using ruler).<br>
+It comes from Pythagoras theorem.<br>
+<strong>Formula:</strong><br>
+Distance d = √[ (x₂ − x₁)² + (y₂ − y₁)² ]</p>
+
+        <h3>10 JAMB Examples for (b) – Distance</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1</div>
+          <div class="example-problem">
+Distance between P(5, 3) and Q(8, 7).<br>
+Step 1: √[(8−5)² + (7−3)²] = √[3² + 4²] = √[9 + 16] = √25 = 5 units
+          </div>
+          <div class="example-solution">Answer: 5 units</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2</div>
+          <div class="example-problem">
+Distance between (½, ½) and (−½, −½).<br>
+Step 1: √[(−½−½)² + (−½−½)²] = √[(−1)² + (−1)²] = √[1 + 1] = √2
+          </div>
+          <div class="example-solution">Answer: √2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3</div>
+          <div class="example-problem">
+Points L(−1, −6) and M(−3, −5).<br>
+Step 1: √[(−3−(−1))² + (−5−(−6))²] = √[(−2)² + 1²] = √[4 + 1] = √5
+          </div>
+          <div class="example-solution">Answer: √5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4</div>
+          <div class="example-problem">
+Distance between (2, 5) and (5, 9).<br>
+Step 1: √[(5−2)² + (9−5)²] = √[3² + 4²] = √[9+16] = √25 = 5
+          </div>
+          <div class="example-solution">Answer: 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5</div>
+          <div class="example-problem">
+Distance between (−2, −3) and (−2, 4).<br>
+Step 1: √[(−2−(−2))² + (4−(−3))²] = √[0 + 7²] = √49 = 7
+          </div>
+          <div class="example-solution">Answer: 7</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6</div>
+          <div class="example-problem">
+Distance between (x, 1) and (3, 5) is 5. Find possible x.<br>
+Step 1: √[(3−x)² + (5−1)²] = 5<br>
+Step 2: (3−x)² + 16 = 25<br>
+Step 3: (3−x)² = 9<br>
+Step 4: 3−x = ±3<br>
+Step 5: x = 0 or x = 6
+          </div>
+          <div class="example-solution">Answer: x = 0 or x = 6</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7</div>
+          <div class="example-problem">
+Points C(2, 2) and D(5, 6). Distance?<br>
+Step 1: √[(5−2)² + (6−2)²] = √[9+16] = √25 = 5
+          </div>
+          <div class="example-solution">Answer: 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8</div>
+          <div class="example-problem">
+Distance between (0, 0) and (3, 4).<br>
+Step 1: √[3² + 4²] = √[9+16] = √25 = 5
+          </div>
+          <div class="example-solution">Answer: 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9</div>
+          <div class="example-problem">
+A(1, 2), B(4, 2), C(1, 6). Length of AC?<br>
+Step 1: √[(1−1)² + (6−2)²] = √[0 + 16] = 4
+          </div>
+          <div class="example-solution">Answer: 4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10</div>
+          <div class="example-problem">
+Distance between (x, 3) and (−x, 2) is 5. Find x.<br>
+Step 1: √[(−x−x)² + (2−3)²] = 5<br>
+Step 2: √[(−2x)² + (−1)²] = 5<br>
+Step 3: 4x² + 1 = 25<br>
+Step 4: 4x² = 24<br>
+Step 5: x² = 6 → x = ±√6
+          </div>
+          <div class="example-solution">Answer: x = ±√6</div>
+        </div>
+
+        <h2>(c) Parallel and Perpendicular Lines</h2>
+        <p>Parallel lines → same gradient (m₁ = m₂)<br>
+Perpendicular lines → product of gradients = −1 (m₁ × m₂ = −1)<br>
+(Vertical and horizontal are always perpendicular)</p>
+
+        <h3>10 JAMB Examples for (c)</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1</div>
+          <div class="example-problem">
+Gradient of line perpendicular to 3x + 2y + 1 = 0.<br>
+Step 1: Rewrite: 2y = −3x −1 → y = −(3/2)x − 1/2 → m = −3/2<br>
+Step 2: Perp m = −1 / (−3/2) = 2/3
+          </div>
+          <div class="example-solution">Answer: 2/3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2</div>
+          <div class="example-problem">
+Line 3x + y = 5 is perpendicular to y = mx + 7. Find m.<br>
+Step 1: First line: y = −3x + 5 → m1 = −3<br>
+Step 2: m1 × m = −1 → −3 m = −1 → m = 1/3
+          </div>
+          <div class="example-solution">Answer: 1/3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3</div>
+          <div class="example-problem">
+Line through (−1, −p) and (−2, 2) is parallel to 2y + 8x − 17 = 0 (gradient = −4). Find p.<br>
+Step 1: m of given = −4 (from y = −4x + 17/2)<br>
+Step 2: m = (2 − (−p))/(−2 − (−1)) = (2 + p)/(−1) = −2 − p<br>
+Step 3: −2 − p = −4 → −p = −2 → p = 2
+          </div>
+          <div class="example-solution">Answer: 2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4</div>
+          <div class="example-problem">
+Two lines: y = 2x − 3 and kx − 4y + 5 = 0. Find k for parallel.<br>
+Step 1: Second line: 4y = kx + 5 → y = (k/4)x + 5/4 → m2 = k/4<br>
+Step 2: m1 = 2 = m2 → k/4 = 2 → k = 8
+          </div>
+          <div class="example-solution">Answer: 8</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5</div>
+          <div class="example-problem">
+Line joining A(−3, 1) and B(5, y) perpendicular to y = 2x + 4. Find y.<br>
+Step 1: m given = 2, perp m = −1/2<br>
+Step 2: m AB = (y−1)/(5−(−3)) = (y−1)/8 = −1/2<br>
+Step 3: y−1 = −4 → y = −3
+          </div>
+          <div class="example-solution">Answer: −3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6</div>
+          <div class="example-problem">
+Are lines y = 3x + 1 and 3y = 9x − 6 parallel?<br>
+Step 1: Second: 3y = 9x − 6 → y = 3x − 2 → m=3<br>
+Step 2: First m=3, same m → parallel
+          </div>
+          <div class="example-solution">Answer: Yes</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7</div>
+          <div class="example-problem">
+Find gradient of line perpendicular to y = −4x + 2.<br>
+Step 1: m = −4<br>
+Step 2: perp m = −1/(−4) = 1/4
+          </div>
+          <div class="example-solution">Answer: 1/4</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8</div>
+          <div class="example-problem">
+Line L1: 3x − 2y = 4. L2 parallel to L1 through (0,0). Equation of L2?<br>
+Step 1: m L1 = 3/2 (from 2y = 3x − 4)<br>
+Step 2: L2 through (0,0): y = (3/2)x → 3x − 2y = 0
+          </div>
+          <div class="example-solution">Answer: 3x − 2y = 0</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9</div>
+          <div class="example-problem">
+Points P(2,3), Q(4,7), R(x,11) collinear. Find x (same gradient).<br>
+Step 1: m PQ = (7−3)/(4−2) = 4/2 = 2<br>
+Step 2: m PR = (11−3)/(x−2) = 8/(x−2) = 2<br>
+Step 3: 8 = 2(x−2) → 8 = 2x − 4 → 2x = 12 → x = 6
+          </div>
+          <div class="example-solution">Answer: 6</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10</div>
+          <div class="example-problem">
+Line through (1,2) parallel to segment joining (4,1) and (2,5).<br>
+Step 1: m segment = (5−1)/(2−4) = 4/(−2) = −2<br>
+Step 2: Parallel same m = −2<br>
+Step 3: y − 2 = −2(x − 1) → y = −2x + 4
+          </div>
+          <div class="example-solution">Answer: y = −2x + 4</div>
+        </div>
+
+        <h2>(d) Equations of Straight Lines</h2>
+        <p>Four common forms you MUST know:<br>
+<strong>Slope-intercept form:</strong> y = mx + c   (c = y-intercept)<br>
+<strong>Point-slope form:</strong> y − y₁ = m(x − x₁)<br>
+<strong>Two-point form:</strong> (y − y₁)/(y₂ − y₁) = (x − x₁)/(x₂ − x₁)<br>
+<strong>General form:</strong> ax + by + c = 0</p>
+
+        <h3>10 JAMB Examples for (d) – Equations of Lines</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1</div>
+          <div class="example-problem">
+Equation of line through (2, 5) with gradient −3.<br>
+Step 1: Use point-slope: y − 5 = −3(x − 2)<br>
+Step 2: y − 5 = −3x + 6<br>
+Step 3: y = −3x + 11
+          </div>
+          <div class="example-solution">Answer: y = −3x + 11</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2</div>
+          <div class="example-problem">
+Line parallel to y = −4x + 2 passing through (2, 3).<br>
+Step 1: Same m = −4<br>
+Step 2: y − 3 = −4(x − 2)<br>
+Step 3: y − 3 = −4x + 8<br>
+Step 4: y = −4x + 11
+          </div>
+          <div class="example-solution">Answer: y = −4x + 11</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3</div>
+          <div class="example-problem">
+Equation of line through (1, −3) and (3, 1).<br>
+Step 1: m = (1 − (−3))/(3 − 1) = 4/2 = 2<br>
+Step 2: y + 3 = 2(x − 1)<br>
+Step 3: y + 3 = 2x − 2<br>
+Step 4: y = 2x − 5
+          </div>
+          <div class="example-solution">Answer: y = 2x − 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4</div>
+          <div class="example-problem">
+Find equation of line perpendicular to 2x − y = 5 passing through (4, 1).<br>
+Step 1: Given line m = 2 (from y = 2x − 5)<br>
+Step 2: Perp m = −1/2<br>
+Step 3: y − 1 = (−1/2)(x − 4)<br>
+Step 4: y − 1 = (−1/2)x + 2<br>
+Step 5: y = (−1/2)x + 3
+          </div>
+          <div class="example-solution">Answer: y = (−1/2)x + 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5</div>
+          <div class="example-problem">
+Line through origin parallel to 3x − 2y = 4.<br>
+Step 1: m = 3/2 (from y = (3/2)x − 2)<br>
+Step 2: Through (0,0): y = (3/2)x<br>
+Step 3: 3x − 2y = 0
+          </div>
+          <div class="example-solution">Answer: 3x − 2y = 0</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6</div>
+          <div class="example-problem">
+Find equation in general form: gradient 2, passes through (1, 2).<br>
+Step 1: y − 2 = 2(x − 1)<br>
+Step 2: y − 2 = 2x − 2<br>
+Step 3: y − 2x = 0
+          </div>
+          <div class="example-solution">Answer: y − 2x = 0</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7</div>
+          <div class="example-problem">
+Line cuts x-axis at (3, 0). Gradient = 5. Equation?<br>
+Step 1: y − 0 = 5(x − 3)<br>
+Step 2: y = 5x − 15<br>
+Step 3: 5x − y − 15 = 0
+          </div>
+          <div class="example-solution">Answer: 5x − y − 15 = 0</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8</div>
+          <div class="example-problem">
+Two-point form: through (1, 2) and (4, 8).<br>
+Step 1: (y−2)/(8−2) = (x−1)/(4−1)<br>
+Step 2: (y−2)/6 = (x−1)/3<br>
+Step 3: y−2 = 2(x−1)<br>
+Step 4: y = 2x
+          </div>
+          <div class="example-solution">Answer: y = 2x</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9</div>
+          <div class="example-problem">
+Convert 3x − 5y = 7 to slope-intercept and state gradient.<br>
+Step 1: 5y = 3x − 7<br>
+Step 2: y = (3/5)x − 7/5<br>
+Step 3: Gradient = 3/5
+          </div>
+          <div class="example-solution">Answer: y = (3/5)x − 7/5, gradient 3/5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10</div>
+          <div class="example-problem">
+Find equation of line with gradient 3/2 passing through (−1, 4).<br>
+Step 1: y − 4 = (3/2)(x + 1)<br>
+Step 2: 2(y − 4) = 3(x + 1)<br>
+Step 3: 2y − 8 = 3x + 3<br>
+Step 4: 3x − 2y + 11 = 0
+          </div>
+          <div class="example-solution">Answer: 3x − 2y + 11 = 0</div>
+        </div>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          Abumchukwu, this is now the **complete Coordinate Geometry chapter** — all sections (a) to (d) fully expanded with teaching steps, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a quiz on Coordinate Geometry or the next topic?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
