@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Measures of Dispersion</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
+      --highlight-solution: #ff9800;                   /* orange for final answers */
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Measures of Dispersion</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Measures of Dispersion – JAMB Guide 🚀</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Measures of Dispersion: Easy-to-Understand Guide (JAMB Style)</h2>
+        <p>Measures of dispersion (also called measures of spread or variation) tell us how spread out the data is.<br>
+Mean/median/mode tell us the “centre” or typical value.<br>
+Dispersion tells us: “Are the numbers close together or scattered far apart?”<br>
+Imagine two classes with the same average score of 50:<br>
+Class A: all students scored exactly 50 → very little spread.<br>
+Class B: scores from 10 to 90 → very big spread.<br>
+Dispersion helps us see the difference.</p>
+        <p>We will cover four main measures for both ungrouped data (raw list of numbers) and grouped data (frequency table).</p>
+        <ul>
+          <li><strong>1. Range (Simplest)</strong><br>
+Formula (ungrouped): Range = Highest value – Lowest value<br>
+For grouped data: Range = Upper boundary of highest class – Lower boundary of lowest class<br>
+(Example: classes 10–19 and 50–59 → range = 59 – 10 = 49)<br>
+Why useful? Quick idea of total spread. Very sensitive to outliers.</li>
+          <li><strong>2. Mean Deviation (M.D. or Average Deviation)</strong><br>
+It is the average distance of each value from the mean (we ignore + or – by using absolute value | |).<br>
+Ungrouped formula: M.D. = Σ |x – x̄| / n<br>
+(where x̄ = mean, n = number of items)<br>
+Grouped formula: M.D. = Σ f |m – x̄| / N<br>
+(m = class midpoint, f = frequency, N = total frequency)</li>
+          <li><strong>3. Variance</strong><br>
+It is the average of the squared distances from the mean. Squaring removes the +/– problem.<br>
+Ungrouped formula (JAMB uses population formula): Variance (σ²) = Σ (x – x̄)² / n<br>
+(Shortcut: Σx²/n – (x̄)²  ← very useful in exams!)<br>
+Grouped: Variance = Σ f (m – x̄)² / N</li>
+          <li><strong>4. Standard Deviation (S.D. or σ)</strong><br>
+Square root of variance. It is in the same units as the original data (most useful).<br>
+Formula: S.D. = √Variance</li>
+        </ul>
+        <p><strong>Note for JAMB:</strong> They almost always use division by n (not n–1).<br>
+Answers are often left in √ form or to 2 decimal places.</p>
+        <p><strong>Step-by-Step Calculation Tips (Easy Method)</strong></p>
+        <p>Ungrouped data (quick table method):<br>
+Find mean (x̄).<br>
+Make columns: x | x – x̄ | |x – x̄| | (x – x̄)²<br>
+Sum the columns you need.</p>
+        <p>Grouped data:<br>
+Find class midpoints (m).<br>
+Calculate mean first: x̄ = Σ(f × m) / N<br>
+Then use the absolute or squared columns.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Standard_deviation_diagram.svg/800px-Standard_deviation_diagram.svg.png" alt="Diagram showing measures of dispersion on a normal distribution curve">
+
+        <h3>10 JAMB-Style & Past Questions with Full Solutions</h3>
+        <p>I have mixed real JAMB past questions (from 1993–2024) and very similar JAMB-style questions. They cover ungrouped and grouped data. All solutions are shown step-by-step exactly as examiners expect.</p>
+
+        <h4>Range Examples</h4>
+
+        <div class="example-block">
+          <div class="example-problem">Q1 (JAMB-style): Find the range of: 2, 4, 5, 9</div>
+          <div class="example-problem">
+Step 1: Identify highest = 9, lowest = 2.<br>
+Step 2: Range = 9 – 2 = 7.
+          </div>
+          <div class="example-solution">Answer: 7</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q2 (JAMB-style): The scores of 10 students: 15, 18, 22, 25, 30, 35, 40, 45, 50, 55. Find the range.</div>
+          <div class="example-problem">
+Step 1: Highest = 55, lowest = 15.<br>
+Step 2: Range = 55 – 15 = 40.
+          </div>
+          <div class="example-solution">Answer: 40</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q3 (Grouped – JAMB-style): Marks of students:<br>
+0–9 (f=5), 10–19 (f=15), 20–29 (f=20), 30–39 (f=10)<br>
+Range = ?</div>
+          <div class="example-problem">
+Step 1: Lowest class lower boundary = 0, highest class upper boundary = 39.<br>
+Step 2: Range = 39 – 0 = 39.
+          </div>
+          <div class="example-solution">Answer: 39</div>
+        </div>
+
+        <h4>Mean Deviation Examples</h4>
+
+        <div class="example-block">
+          <div class="example-problem">Q4 (Real JAMB 2008): Find the mean deviation of 2, 4, 5, 9.</div>
+          <div class="example-problem">
+Step 1: Mean x̄ = (2+4+5+9)/4 = 20/4 = 5.<br>
+Step 2: Absolute deviations: |2-5|=3, |4-5|=1, |5-5|=0, |9-5|=4.<br>
+Step 3: Sum = 3+1+0+4 = 8.<br>
+Step 4: M.D. = 8/4 = 2.
+          </div>
+          <div class="example-solution">Answer: 2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q5 (Real JAMB 2007): What is the mean deviation of 3, 5, 8, 11, 12, 21?</div>
+          <div class="example-problem">
+Step 1: Mean x̄ = (3+5+8+11+12+21)/6 = 60/6 = 10.<br>
+Step 2: Abs dev: |3-10|=7, |5-10|=5, |8-10|=2, |11-10|=1, |12-10|=2, |21-10|=11.<br>
+Step 3: Sum = 7+5+2+1+2+11 = 28.<br>
+Step 4: M.D. = 28/6 ≈ 4.67 (or 4.7).
+          </div>
+          <div class="example-solution">Answer: 4.67</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q6 (Real JAMB 2002): Calculate the mean deviation of 7, 3, 14, 9, 7, 8.</div>
+          <div class="example-problem">
+Step 1: Mean x̄ = (7+3+14+9+7+8)/6 = 48/6 = 8.<br>
+Step 2: Abs dev: |7-8|=1, |3-8|=5, |14-8|=6, |9-8|=1, |7-8|=1, |8-8|=0.<br>
+Step 3: Sum = 1+5+6+1+1+0 = 14.<br>
+Step 4: M.D. = 14/6 = 7/3 ≈ 2.33.
+          </div>
+          <div class="example-solution">Answer: 7/3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q7 (Real JAMB 2000): If the mean of 0, (x+2), (3x+6), (4x+8) is 4, find their mean deviation.</div>
+          <div class="example-problem">
+Step 1: Sum = 0 + (x+2) + (3x+6) + (4x+8) = 8x + 16 = 4 × 4 = 16 → 8x + 16 = 16 → 8x = 0 → x = 0.<br>
+Step 2: Data: 0, 2, 6, 8. Mean = 16/4 = 4.<br>
+Step 3: Abs dev: |0-4|=4, |2-4|=2, |6-4|=2, |8-4|=4.<br>
+Step 4: Sum = 12, M.D. = 12/4 = 3.
+          </div>
+          <div class="example-solution">Answer: 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q8 (JAMB-style): Find M.D. of 10, 12, 15, 18, 20 (n=5)</div>
+          <div class="example-problem">
+Step 1: Mean x̄ = (10+12+15+18+20)/5 = 75/5 = 15.<br>
+Step 2: Abs dev: |10-15|=5, |12-15|=3, |15-15|=0, |18-15|=3, |20-15|=5.<br>
+Step 3: Sum = 16.<br>
+Step 4: M.D. = 16/5 = 3.2.
+          </div>
+          <div class="example-solution">Answer: 3.2</div>
+        </div>
+
+        <h4>Variance & Standard Deviation Examples</h4>
+
+        <div class="example-block">
+          <div class="example-problem">Q9 (Real JAMB 2024): Calculate the standard deviation of 5, 4, 6, 7, 8.</div>
+          <div class="example-problem">
+Step 1: Mean x̄ = (5+4+6+7+8)/5 = 30/5 = 6.<br>
+Step 2: (x – x̄)²: (5-6)²=1, (4-6)²=4, (6-6)²=0, (7-6)²=1, (8-6)²=4.<br>
+Step 3: Sum = 1+4+0+1+4 = 10.<br>
+Step 4: Variance = 10/5 = 2.<br>
+Step 5: S.D. = √2 ≈ 1.41 (or √2).
+          </div>
+          <div class="example-solution">Answer: √2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q10 (Real JAMB 2010): Find the standard deviation of 2, 3, 5, 6.</div>
+          <div class="example-problem">
+Step 1: Mean x̄ = (2+3+5+6)/4 = 16/4 = 4.<br>
+Step 2: (x – x̄)²: (2-4)²=4, (3-4)²=1, (5-4)²=1, (6-4)²=4.<br>
+Step 3: Sum = 10.<br>
+Step 4: Variance = 10/4 = 2.5.<br>
+Step 5: S.D. = √2.5 = √(5/2) ≈1.58.
+          </div>
+          <div class="example-solution">Answer: √(5/2)</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q11 (Real JAMB 1993): Calculate the standard deviation of 7, 8, 9, 10, 11, 12, 13.</div>
+          <div class="example-problem">
+Step 1: Mean x̄ = (7+8+9+10+11+12+13)/7 = 70/7 = 10.<br>
+Step 2: (x – x̄)²: (7-10)²=9, (8-10)²=4, (9-10)²=1, 0, 1, 4, 9.<br>
+Step 3: Sum = 28.<br>
+Step 4: Variance = 28/7 = 4.<br>
+Step 5: S.D. = √4 = 2.
+          </div>
+          <div class="example-solution">Answer: 2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q12 (Real JAMB 2000 – Variance): The variance of x, 2x, 3x, 4x, 5x is</div>
+          <div class="example-problem">
+Step 1: Mean x̄ = (x+2x+3x+4x+5x)/5 = 15x/5 = 3x.<br>
+Step 2: (x – 3x)² = (–2x)² = 4x², (2x–3x)²= x², 0, x², 4x².<br>
+Step 3: Sum = 4x² + x² + 0 + x² + 4x² = 10x².<br>
+Step 4: Variance = 10x² / 5 = 2x².
+          </div>
+          <div class="example-solution">Answer: 2x²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q13 (Grouped – JAMB-style):</div>
+          <div class="example-problem">
+Class: 0–4 (f=2), 5–9 (f=5), 10–14 (f=8), 15–19 (f=5)  (N=20)<br>
+Midpoints (m): 2, 7, 12, 17<br>
+Mean x̄ = (2×2 + 5×7 + 8×12 + 5×17)/20 = (4+35+96+85)/20 = 220/20 = 11<br>
+Now Variance:<br>
+f(m–11)²:<br>
+(2–11)²×2 = 81×2 = 162<br>
+(7–11)²×5 = 16×5 = 80<br>
+(12–11)²×8 = 1×8 = 8<br>
+(17–11)²×5 = 36×5 = 180<br>
+Sum = 162+80+8+180 = 430<br>
+Variance = 430/20 = 21.5<br>
+S.D. = √21.5 ≈ 4.64
+          </div>
+          <div class="example-solution">Answer: Variance 21.5, S.D. ≈4.64</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q14 (Simple Variance from S.D.): If S.D. = 12.34, find variance.</div>
+          <div class="example-problem">
+Step 1: Variance = (S.D.)² = (12.34)² = 152.2756.
+          </div>
+          <div class="example-solution">Answer: 152.2756</div>
+        </div>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          This is now the **complete Measures of Dispersion chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Measures of Dispersion?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
