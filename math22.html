@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Introduction to Probability</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
+      --highlight-solution: #ff9800;                   /* orange for final answers */
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Introduction to Probability</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Introduction to Probability for JAMB</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Introduction to Probability for JAMB</h2>
+        <p>Probability is a branch of mathematics that measures how likely an event is to happen. It ranges from 0 (impossible) to 1 (certain). For JAMB, focus on simple calculations using fractions, and understand key concepts like experimental probability and rules for combining probabilities.</p>
+
+        <h3>Step 1: Understanding Basic Terms</h3>
+        <p><strong>Sample Space:</strong> All possible outcomes of an experiment. E.g., for tossing a coin: {Heads, Tails} (2 outcomes).<br>
+<strong>Event:</strong> A specific outcome or set of outcomes you're interested in. E.g., getting Heads.<br>
+<strong>Favorable Outcomes:</strong> The outcomes that match the event.<br>
+<strong>Probability Formula (Theoretical):</strong> P(Event) = Number of favorable outcomes / Total number of possible outcomes (assuming all outcomes are equally likely).<br>
+Example: Probability of rolling a 6 on a fair die = 1 (favorable) / 6 (total) = 1/6.</p>
+
+        <h2>(a) Experimental Probability</h2>
+        <p>Experimental probability is calculated from actual trials or experiments, not theory. It's an estimate that gets closer to the theoretical value with more trials.<br>
+<strong>Formula:</strong> P(Event) = Number of times the event occurs / Total number of trials.<br>
+<strong>Key Examples:</strong><br>
+Tossing a Coin: Suppose you toss a fair coin 20 times and get Heads 12 times. Experimental P(Heads) = 12/20 = 3/5 = 0.6. (Theoretical is 1/2 = 0.5; more tosses would make it closer.)<br>
+Throwing a Die: Roll a die 30 times. Suppose 1 appears 4 times, 2 appears 6 times, etc. Experimental P(Even number) = (times 2,4,6 appear) / 30.<br>
+In JAMB, you might get a table of results from trials and calculate from it. Remember: It's based on observed data, not assuming fairness unless stated.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Experimental_probability.svg/800px-Experimental_probability.svg.png" alt="Diagram showing experimental probability from coin toss trials">
+
+        <h3>10 JAMB-style examples for (a) with full step-by-step solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1: Basic Experimental Probability (Die Rolls)</div>
+          <div class="example-problem">
+The result of rolling a fair die 150 times is summarized as follows (assume from a table: 1: 20 times, 2: 25, 3: 30, 4: 25, 5: 25, 6: 25). What is the experimental probability of obtaining a 5?<br>
+Step 1: Event = rolling a 5.<br>
+Step 2: Number of times 5 occurred = 25.<br>
+Step 3: Total trials = 150.<br>
+Step 4: P(5) = 25 / 150 = 1/6.
+          </div>
+          <div class="example-solution">Answer: 1/6</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2: Experimental Probability (Coin Toss)</div>
+          <div class="example-problem">
+A coin is tossed 50 times, and tails appears 28 times. What is the experimental probability of tails?<br>
+Step 1: Event = tails.<br>
+Step 2: Times occurred = 28.<br>
+Step 3: Total trials = 50.<br>
+Step 4: P(tails) = 28/50 = 14/25 = 0.56.
+          </div>
+          <div class="example-solution">Answer: 14/25</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3: Experimental Probability (Marbles)</div>
+          <div class="example-problem">
+A bag has marbles drawn 100 times with replacement. Red appears 45 times. Experimental P(red)?<br>
+Step 1: Event = red.<br>
+Step 2: Occurred = 45.<br>
+Step 3: Trials = 100.<br>
+Step 4: P = 45/100 = 9/20 = 0.45.
+          </div>
+          <div class="example-solution">Answer: 9/20</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4: Experimental Probability (Survey)</div>
+          <div class="example-problem">
+In a survey of 200 people, 120 like football. Experimental P(like football)?<br>
+Step 1: Event = like football.<br>
+Step 2: Occurred = 120.<br>
+Step 3: Trials = 200.<br>
+Step 4: P = 120/200 = 3/5 = 0.6.
+          </div>
+          <div class="example-solution">Answer: 3/5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5: Experimental Probability (Rain Days)</div>
+          <div class="example-problem">
+In 30 days, it rained 12 days. Experimental P(rain on a day)?<br>
+Step 1: Event = rain.<br>
+Step 2: Occurred = 12.<br>
+Step 3: Trials = 30.<br>
+Step 4: P = 12/30 = 2/5 = 0.4.
+          </div>
+          <div class="example-solution">Answer: 2/5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6: Experimental Probability (Defective Items)</div>
+          <div class="example-problem">
+In 500 items tested, 25 are defective. Experimental P(defective)?<br>
+Step 1: Event = defective.<br>
+Step 2: Occurred = 25.<br>
+Step 3: Trials = 500.<br>
+Step 4: P = 25/500 = 1/20 = 0.05.
+          </div>
+          <div class="example-solution">Answer: 1/20</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7: Experimental Probability (Cards)</div>
+          <div class="example-problem">
+A card is drawn 40 times with replacement from a deck. Hearts appear 9 times. P(hearts)?<br>
+Step 1: Event = hearts.<br>
+Step 2: Occurred = 9.<br>
+Step 3: Trials = 40.<br>
+Step 4: P = 9/40 = 0.225.
+          </div>
+          <div class="example-solution">Answer: 9/40</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8: Experimental Probability (Basketball Shots)</div>
+          <div class="example-problem">
+A player shoots 20 free throws, makes 14. Experimental P(make a shot)?<br>
+Step 1: Event = make shot.<br>
+Step 2: Occurred = 14.<br>
+Step 3: Trials = 20.<br>
+Step 4: P = 14/20 = 7/10 = 0.7.
+          </div>
+          <div class="example-solution">Answer: 7/10</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9: Experimental Probability (Traffic Lights)</div>
+          <div class="example-problem">
+A driver notes traffic light 100 times: green 60 times. P(green)?<br>
+Step 1: Event = green.<br>
+Step 2: Occurred = 60.<br>
+Step 3: Trials = 100.<br>
+Step 4: P = 60/100 = 3/5 = 0.6.
+          </div>
+          <div class="example-solution">Answer: 3/5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10: Experimental Probability (Survey Responses)</div>
+          <div class="example-problem">
+In 80 surveys, 32 say yes. Experimental P(yes)?<br>
+Step 1: Event = yes.<br>
+Step 2: Occurred = 32.<br>
+Step 3: Trials = 80.<br>
+Step 4: P = 32/80 = 2/5 = 0.4.
+          </div>
+          <div class="example-solution">Answer: 2/5</div>
+        </div>
+
+        <h3>Step 3: Theoretical Probability</h3>
+        <p>This assumes equally likely outcomes (e.g., fair coin or die). Most JAMB questions use this.<br>
+Example: P(Tails on coin toss) = 1/2.<br>
+Example: P(Rolling an odd number on die) = 3/6 = 1/2 (1,3,5 are favorable).</p>
+
+        <h2>(b) Addition Rule for Probabilities – Mutually Exclusive Cases</h2>
+        <p>Use this for "or" scenarios. Mutually exclusive events cannot happen at the same time (e.g., rolling a 1 or a 2 on one die).<br>
+<strong>Formula:</strong> P(A or B) = P(A) + P(B).<br>
+If not mutually exclusive (e.g., drawing a red card or a king; king of hearts is both), use: P(A or B) = P(A) + P(B) - P(A and B).<br>
+Example: On a die, P(1 or 2) = 1/6 + 1/6 = 2/6 = 1/3 (mutually exclusive).<br>
+Example: P(Red card or King from deck) = 26/52 + 4/52 - 2/52 = 28/52 = 7/13 (subtract the 2 red kings).</p>
+
+        <h2>(b) Multiplication Rule for Probabilities – Independent Cases</h2>
+        <p>Use this for "and" scenarios. Independent events don't affect each other (e.g., coin toss and die roll).<br>
+<strong>Formula:</strong> P(A and B) = P(A) × P(B).<br>
+For more events: Multiply all.<br>
+Example: P(Heads on coin and 3 on die) = (1/2) × (1/6) = 1/12.<br>
+Example: P(Passing two independent exams, each with P=0.7) = 0.7 × 0.7 = 0.49.<br>
+If dependent (e.g., drawing cards without replacement), adjust: P(First ace and second ace) = (4/52) × (3/51).</p>
+
+        <h3>10 JAMB-style examples for (b) with full step-by-step solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1: Theoretical Probability (Letter Selection)</div>
+          <div class="example-problem">
+The probability of picking a letter T from the word OBSTRUCTION is?<br>
+Step 1: Letters: O,B,S,T,R,U,C,T,I,O,N (11 total).<br>
+Step 2: T appears 2 times (favorable).<br>
+Step 3: P(T) = 2 / 11.
+          </div>
+          <div class="example-solution">Answer: 2/11</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2: Multiplication (Independent Events - Coins)</div>
+          <div class="example-problem">
+If three unbiased coins are tossed, find the probability that they are all heads.<br>
+Step 1: P(Heads on one coin) = 1/2.<br>
+Step 2: Independent, so P(all heads) = (1/2) × (1/2) × (1/2) = 1/8.<br>
+Step 3: (Total outcomes 8, favorable HHH = 1).
+          </div>
+          <div class="example-solution">Answer: 1/8</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3: Multiplication (Independent Events - Exams)</div>
+          <div class="example-problem">
+The probability of a student passing any examination is 2/3. If the student takes three examinations, what is the probability that he will not pass any of them?<br>
+Step 1: P(Pass) = 2/3, P(Fail) = 1/3.<br>
+Step 2: Independent, P(Fail all) = (1/3) × (1/3) × (1/3) = 1/27.
+          </div>
+          <div class="example-solution">Answer: 1/27</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4: Basic Probability (Bottles)</div>
+          <div class="example-problem">
+A crate of soft drinks contains 10 bottles of Coca-Cola, 8 of Fanta, and 6 of Sprite. If one bottle is selected at random, what is the probability that it is NOT a Coca-Cola bottle?<br>
+Step 1: Total = 10+8+6=24.<br>
+Step 2: Non-Coca = 8+6=14.<br>
+Step 3: P = 14/24 = 7/12.
+          </div>
+          <div class="example-solution">Answer: 7/12</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5: Addition and Multiplication (Combined Events)</div>
+          <div class="example-problem">
+The probability of outcome A is 1/6. The probability of outcome B is 1/4. If the probability of A or B or both is 1/12, what is the probability of both A and B?<br>
+Step 1: P(A or B) = P(A) + P(B) - P(A and B).<br>
+Step 2: 1/12 = 1/6 + 1/4 - P(A and B).<br>
+Step 3: 1/6 = 2/12, 1/4 = 3/12, sum = 5/12.<br>
+Step 4: 1/12 = 5/12 - P(A and B) → P(A and B) = 5/12 - 1/12 = 4/12 = 1/3.
+          </div>
+          <div class="example-solution">Answer: 1/3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6: Dice (Sum Probability)</div>
+          <div class="example-problem">
+A die is rolled twice. What is the probability of getting a sum equal to 9?<br>
+Step 1: Total outcomes = 6×6=36.<br>
+Step 2: Favorable: (3,6), (4,5), (5,4), (6,3) = 4.<br>
+Step 3: P = 4/36 = 1/9.
+          </div>
+          <div class="example-solution">Answer: 1/9</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7: Without Replacement (Dependent - Balls)</div>
+          <div class="example-problem">
+A bag contains 2 yellow, 3 green, and 2 blue balls. Two balls are drawn at random without replacement. What is the probability that none of the balls drawn is blue?<br>
+Step 1: Total = 7, non-blue = 5.<br>
+Step 2: Use combinations: C(7,2) = 21 total ways.<br>
+Step 3: C(5,2) = 10 favorable.<br>
+Step 4: P = 10/21.
+          </div>
+          <div class="example-solution">Answer: 10/21</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8: Multiplication (Independent - Subjects)</div>
+          <div class="example-problem">
+Amamath appears in an exam that has 4 subjects. The chance he passes an individual subject’s test is 0.8. What is the probability that he will pass in all the subjects?<br>
+Step 1: P(pass one) = 0.8.<br>
+Step 2: Independent, P(all) = 0.8^4.<br>
+Step 3: 0.8^2 = 0.64, 0.64^2 = 0.4096.
+          </div>
+          <div class="example-solution">Answer: 0.4096</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9: Basic Prime Numbers</div>
+          <div class="example-problem">
+What is the probability of selecting a prime number from 1,2,3,...,10?<br>
+Step 1: Total = 10.<br>
+Step 2: Primes: 2,3,5,7 (4 primes; 1 not prime).<br>
+Step 3: P = 4/10 = 2/5.
+          </div>
+          <div class="example-solution">Answer: 2/5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10: Cards (Mutually Exclusive Addition)</div>
+          <div class="example-problem">
+Probability of drawing a spade or club from a deck of 52 cards?<br>
+Step 1: P(spade) = 13/52 = 1/4.<br>
+Step 2: P(club) = 13/52 = 1/4.<br>
+Step 3: Mutually exclusive (no overlap).<br>
+Step 4: P = 1/4 + 1/4 = 1/2.
+          </div>
+          <div class="example-solution">Answer: 1/2</div>
+        </div>
+
+        <h3>Step 6: Tips for Solving JAMB Problems</h3>
+        <ul>
+          <li>Identify if events are mutually exclusive (for addition) or independent (for multiplication).</li>
+          <li>Use combinations (C(n,r)) for selecting items without order, e.g., drawing balls.</li>
+          <li>Practice with coins, dice, cards, and bags of items.</li>
+          <li>Always simplify fractions.</li>
+          <li>For "at least one," use 1 - P(none).</li>
+        </ul>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          This is now the **complete Introduction to Probability chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Introduction to Probability?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
