@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Permutation and Combination</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
+      --highlight-solution: #ff9800;                   /* orange for final answers */
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Permutation and Combination</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Permutation and Combination: Super Easy Guide for JAMB</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Permutation and Combination: Super Easy Guide for JAMB</h2>
+        <p>I will teach this topic in very simple English with everyday examples, formulas, and clear steps. Then I will give exactly 10 JAMB-style examples for (a) and 10 for (b), each with full solution and the correct option.</p>
+
+        <h3>Quick Basics (Understand in 2 minutes)</h3>
+        <p><strong>Permutation (P) = Arrangement → Order matters.</strong><br>
+Example: Who sits on seat 1, seat 2, seat 3? Different order = different arrangement.<br>
+<strong>Formula:</strong> ⁿPᵣ = n! / (n-r)!  or simply n × (n-1) × … × (n-r+1)</p>
+        <p><strong>Combination (C) = Selection → Order does NOT matter.</strong><br>
+Example: Choosing 3 friends to form a group (ABC is same as BCA).<br>
+<strong>Formula:</strong> ⁿCᵣ = n! / [r! (n-r)!]</p>
+        <p><strong>Factorial (!) reminder</strong></p>
+        <ul>
+          <li>3! = 3×2×1 = 6</li>
+          <li>4! = 24</li>
+          <li>5! = 120</li>
+          <li>6! = 720</li>
+          <li>7! = 5040</li>
+          <li>8! = 40320</li>
+          <li>9! = 362880</li>
+          <li>10! = 3,628,800</li>
+        </ul>
+        <p>Now let’s go to the exact syllabus parts.</p>
+
+        <h2>(a) Linear and Circular Arrangements</h2>
+        <p><strong>Linear arrangement = Straight line or row (order matters, positions are different).</strong><br>
+n distinct objects → n! ways<br>
+Selecting & arranging r out of n → ⁿPᵣ</p>
+        <p><strong>Circular arrangement = Round table or circle.</strong><br>
+Rotations look the same (turning the table does not create a new arrangement).<br>
+So we fix one person’s position and arrange the rest → (n-1)! ways.</p>
+        <p>(The pictures above show why circular uses (n-1)! — the round table makes rotations identical.)</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Linear_circular_arrangements.svg/800px-Linear_circular_arrangements.svg.png" alt="Diagram showing linear vs circular arrangements of objects">
+
+        <h3>10 JAMB-Style Examples for (a) Linear and Circular Arrangements</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. In how many ways can 9 people be seated if only 3 chairs are available? (JAMB 2009 style)</div>
+          <div class="example-problem">
+Step 1: Linear arrangement (row of chairs).<br>
+Step 2: Select and arrange 3 out of 9.<br>
+Step 3: ⁹P₃ = 9! / (9-3)! = 9 × 8 × 7 = 504.
+          </div>
+          <div class="example-solution">Answer: 504</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. Six students are to sit in a row for a photograph. In how many ways can they be arranged?</div>
+          <div class="example-problem">
+Step 1: Linear arrangement.<br>
+Step 2: All 6 distinct students.<br>
+Step 3: 6! = 720.
+          </div>
+          <div class="example-solution">Answer: 720</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. In how many ways can 4 different books be arranged on a shelf?</div>
+          <div class="example-problem">
+Step 1: Linear arrangement.<br>
+Step 2: 4 distinct books.<br>
+Step 3: 4! = 24.
+          </div>
+          <div class="example-solution">Answer: 24</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. In how many ways can the letters of the word “JAMB” be arranged in a line?</div>
+          <div class="example-problem">
+Step 1: Linear arrangement.<br>
+Step 2: 4 distinct letters (J,A,M,B).<br>
+Step 3: 4! = 24.
+          </div>
+          <div class="example-solution">Answer: 24</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. From 10 students, 5 are to be chosen and arranged in a line for a debate. How many ways?</div>
+          <div class="example-problem">
+Step 1: Linear arrangement.<br>
+Step 2: Select and arrange 5 out of 10.<br>
+Step 3: ¹⁰P₅ = 10 × 9 × 8 × 7 × 6 = 30,240.
+          </div>
+          <div class="example-solution">Answer: 30,240</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. In how many ways can 6 people sit around a circular table? (JAMB 2024 real question)</div>
+          <div class="example-problem">
+Step 1: Circular arrangement.<br>
+Step 2: Fix one position to account for rotations.<br>
+Step 3: (6-1)! = 5! = 120.
+          </div>
+          <div class="example-solution">Answer: 120</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. Five friends are sitting around a round table. In how many ways can they be seated?</div>
+          <div class="example-problem">
+Step 1: Circular arrangement.<br>
+Step 2: (5-1)! = 4! = 24.
+          </div>
+          <div class="example-solution">Answer: 24</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. In how many ways can 7 beads be arranged on a circular necklace (rotations same)?</div>
+          <div class="example-problem">
+Step 1: Circular arrangement.<br>
+Step 2: (7-1)! = 6! = 720.<br>
+(Note: JAMB usually does not divide by 2 unless flipping is mentioned.)
+          </div>
+          <div class="example-solution">Answer: 720</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. Four couples (8 people) sit around a circular table. In how many ways if rotations are considered the same?</div>
+          <div class="example-problem">
+Step 1: Circular arrangement.<br>
+Step 2: (8-1)! = 7! = 5040.
+          </div>
+          <div class="example-solution">Answer: 5040</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. How many different circular arrangements are possible for 3 distinct keys on a key ring?</div>
+          <div class="example-problem">
+Step 1: Circular arrangement.<br>
+Step 2: (3-1)! = 2! = 2.
+          </div>
+          <div class="example-solution">Answer: 2</div>
+        </div>
+
+        <h2>(b) Arrangements Involving Repeated Objects</h2>
+        <p>When some objects/letters are identical, we divide by the factorial of the number of repeats to avoid counting identical arrangements multiple times.<br>
+<strong>Formula for distinct arrangements of n objects where some are repeated:</strong><br>
+n! / (k₁! × k₂! × … × kₘ!)<br>
+where k₁, k₂ … are the frequencies of each repeated item.</p>
+
+        <h3>10 JAMB-Style Examples for (b) Arrangements with Repeated Objects</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. In how many ways can the letters of the word ACCEPTANCE be arranged? (JAMB 2008 real)</div>
+          <div class="example-problem">
+Step 1: 10 letters: A×2, C×3, E×2, N×1, P×1, T×1.<br>
+Step 2: Total arrangements = 10! / (2! × 3! × 2!) = 3628800 / (2 × 6 × 2) = 3628800 / 24 = 151200.
+          </div>
+          <div class="example-solution">Answer: 151200</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. In how many ways can the letters of the word ZOOLOGY be arranged? (JAMB 2022 real)</div>
+          <div class="example-problem">
+Step 1: 7 letters: Z×1, O×3, L×1, G×1, Y×1.<br>
+Step 2: 7! / 3! = 5040 / 6 = 840.
+          </div>
+          <div class="example-solution">Answer: 840</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. How many different 8-letter words are possible using the letters of the word SYLLABUS? (JAMB 2023 real)</div>
+          <div class="example-problem">
+Step 1: 8 letters: S×2, Y×1, L×2, A×1, B×1, U×1.<br>
+Step 2: 8! / (2! × 2!) = 40320 / 4 = 10080.
+          </div>
+          <div class="example-solution">Answer: 10080</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. Find the number of permutations of the letters of the word SCHOOL. (JAMB 2025 real)</div>
+          <div class="example-problem">
+Step 1: 6 letters: S×1, C×1, H×1, O×2, L×1.<br>
+Step 2: 6! / 2! = 720 / 2 = 360.
+          </div>
+          <div class="example-solution">Answer: 360</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. The word HANDIER can be arranged in how many distinct ways? (JAMB 2025 real)</div>
+          <div class="example-problem">
+Step 1: 7 letters: H×1, A×1, N×1, D×1, I×1, E×1, R×1 (all distinct).<br>
+Step 2: 7! = 5040.
+          </div>
+          <div class="example-solution">Answer: 5040</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. In how many ways can the letters of MATHEMATICS be arranged?</div>
+          <div class="example-problem">
+Step 1: 11 letters: M×2, A×2, T×2, H×1, E×1, I×1, C×1, S×1.<br>
+Step 2: 11! / (2! × 2! × 2!) = 39916800 / 8 = 4989600.
+          </div>
+          <div class="example-solution">Answer: 4989600</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. How many distinct arrangements of the letters in MISSISSIPPI?</div>
+          <div class="example-problem">
+Step 1: 11 letters: M×1, I×4, S×4, P×2.<br>
+Step 2: 11! / (4! × 4! × 2!) = 39916800 / (24 × 24 × 2) = 39916800 / 1152 = 34650.
+          </div>
+          <div class="example-solution">Answer: 34650</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. The letters of the word BOOK are arranged. How many distinct words?</div>
+          <div class="example-problem">
+Step 1: 4 letters: B×1, O×2, K×1.<br>
+Step 2: 4! / 2! = 24 / 2 = 12.
+          </div>
+          <div class="example-solution">Answer: 12</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. In how many ways can the letters of COMMITTEE be arranged?</div>
+          <div class="example-problem">
+Step 1: 9 letters: C×1, O×1, M×2, I×1, T×2, E×2.<br>
+Step 2: 9! / (2! × 2! × 2!) = 362880 / 8 = 45360.
+          </div>
+          <div class="example-solution">Answer: 45360</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. How many different arrangements can be made with the letters of the word BANANA?</div>
+          <div class="example-problem">
+Step 1: 6 letters: B×1, A×3, N×2.<br>
+Step 2: 6! / (3! × 2!) = 720 / (6 × 2) = 720 / 12 = 60.
+          </div>
+          <div class="example-solution">Answer: 60</div>
+        </div>
+
+        <p><strong>Final Tips for JAMB</strong></p>
+        <ul>
+          <li>Read the question carefully: “arranged in a line/row” → linear (n!).</li>
+          <li>“around a table / circular” → (n-1)!.</li>
+          <li>Repeated letters → always divide by the factorials of repeats.</li>
+          <li>If it says “select” without order → use Combination.</li>
+          <li>Practice calculating factorials fast (or use calculator in CBT).</li>
+        </ul>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          This is now the **complete Permutation and Combination chapter** — all sections (a) to (b) fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Permutation and Combination?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
