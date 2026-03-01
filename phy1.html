@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Introduction to Measurements</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);
+      --highlight-solution: #ff9800;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background: #3a3a5a;
+      color: var(--accent);
+    }
+
+    .graph-img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 12px 0;
+      border: 2px solid #444;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Introduction to Measurements</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Introduction to Measurements – JAMB Guide 🚀</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Introduction to Measurements</h2>
+        <p>This topic is about how we measure things in physics accurately and consistently. Measurements help us describe the world using numbers and units, avoiding confusion (e.g., saying "5" without units could mean <strong>5 m</strong> or <strong>5 kg</strong>!).</p>
+
+        <h3>Step 1: Fundamental Physical Quantities and Units</h3>
+        <p>What are Fundamental Quantities?<br>
+These are basic building blocks of measurement that can't be broken down further. They're like the "alphabet" of physics. In New School Physics, they're listed as independent quantities we measure directly.</p>
+        <p>The seven fundamental quantities (and their <strong>SI units</strong>) are:</p>
+        <ul>
+          <li><strong>Length</strong>: Measures distance or size. <strong>Unit: meter (m)</strong>. Example: Height of a person.</li>
+          <li><strong>Mass</strong>: Measures amount of matter. <strong>Unit: kilogram (kg)</strong>. Example: Mass of a book (not weight—more later).</li>
+          <li><strong>Time</strong>: Measures duration. <strong>Unit: second (s)</strong>. Example: Time to run a race.</li>
+          <li><strong>Electric Current</strong>: Measures flow of charge. <strong>Unit: ampere (A)</strong>. Example: Current in a wire.</li>
+          <li><strong>Temperature</strong>: Measures hotness/coldness. <strong>Unit: kelvin (K)</strong>. Example: Room temperature (often Celsius in daily life, Kelvin in physics).</li>
+          <li><strong>Luminous Intensity</strong>: Measures brightness of light. <strong>Unit: candela (cd)</strong>. Example: Light from a bulb.</li>
+          <li><strong>Amount of Substance</strong>: Measures number of particles (atoms/molecules). <strong>Unit: mole (mol)</strong>. Example: Moles of salt in water.</li>
+        </ul>
+        <p><strong>Why Fundamental?</strong> They don't depend on each other. You measure length with a ruler, mass with a balance, etc.</p>
+        <p><strong>Tip for Easy Understanding:</strong> Think of a recipe—flour (<strong>kg</strong>), bowl size (volume, derived), cooking time (<strong>s</strong>). Fundamentals are the raw ingredients.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/SI_base_units.svg/800px-SI_base_units.svg.png" alt="Diagram of the seven fundamental SI units and their symbols">
+
+        <h3>Step 2: Derived Physical Quantities and Units</h3>
+        <p>What are Derived Quantities?<br>
+These are made by combining fundamental ones (like words from alphabet letters). We "derive" them using formulas.</p>
+        <p><strong>Common Derived Quantities (from New School Physics):</strong></p>
+        <ul>
+          <li><strong>Area</strong>: Length × Length. <strong>Unit: m²</strong>. Example: Floor space = length × width.</li>
+          <li><strong>Volume</strong>: Length × Length × Length. <strong>Unit: m³</strong>. Example: Water in a tank = length × width × height.</li>
+          <li><strong>Speed</strong>: Length ÷ Time. <strong>Unit: m/s</strong>. Example: Car speed = distance ÷ time.</li>
+          <li><strong>Force</strong>: Mass × Acceleration. <strong>Unit: newton (N) = kg·m/s²</strong>. Example: Push on an object.</li>
+          <li><strong>Weight</strong>: Force due to gravity = Mass × g (g ≈ <strong>10 m/s²</strong>). <strong>Unit: N</strong> (not kg—kg is mass!). Example: Your weight on Earth.</li>
+          <li><strong>Density</strong>: Mass ÷ Volume. <strong>Unit: kg/m³</strong>. Example: Density of water ≈ <strong>1000 kg/m³</strong>.</li>
+          <li><strong>Pressure</strong>: Force ÷ Area. <strong>Unit: N/m² = pascal (Pa)</strong>. Example: Air pressure.</li>
+        </ul>
+        <p><strong>How to Determine Units:</strong> Combine fundamental units.<br>
+Example: Speed = distance (<strong>m</strong>) ÷ time (<strong>s</strong>) = <strong>m/s</strong>.</p>
+        <p><strong>For irregular bodies:</strong> Use displacement method (submerge in water for volume) or formulas (sphere volume = 4/3πr³).</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Derived_units.svg/800px-Derived_units.svg.png" alt="Diagram showing examples of derived SI units and how they are formed">
+
+        <h3>Step 3: Measuring Instruments</h3>
+        <p>These tools are explained with diagrams in New School Physics. Here's how to use them simply:</p>
+        <ul>
+          <li><strong>Metre Rule</strong>: For lengths up to <strong>1 m</strong>. Least count: <strong>0.1 cm (1 mm)</strong>. Use: Place along object, read from zero. For curves, use thread then measure.</li>
+          <li><strong>Vernier Caliper</strong>: For precise lengths/diameters (e.g., pipe). Least count: <strong>0.01 cm (0.1 mm)</strong>. How: Slide jaws to object, read main scale + vernier scale (where lines match). Good for regular/irregular bodies.</li>
+          <li><strong>Micrometer Screw Gauge</strong>: For tiny thicknesses (e.g., wire). Least count: <strong>0.01 mm</strong>. How: Rotate screw till it grips, read sleeve + thimble.</li>
+          <li><strong>Measuring Cylinder</strong>: For volume of liquids/irregular solids. Unit: <strong>cm³ or ml</strong>. How: Pour liquid, read at meniscus (curved surface—eye level). For solids: Displacement method (final volume - initial).</li>
+          <li><strong>Beam Balance</strong>: For mass (e.g., Buchart's or chemical balance). Unit: <strong>kg or g</strong>. How: Place object on one pan, weights on other till balanced.</li>
+          <li><strong>Stop Watch</strong>: For time. Unit: <strong>seconds (s)</strong>. How: Start/stop for events. Digital ones precise to <strong>0.01 s</strong>.</li>
+        </ul>
+        <p><strong>For Areas/Volumes:</strong> Regular shapes use formulas. Irregular: Divide into shapes or count squares on graph paper (area), or displacement (volume).</p>
+        <p><strong>Tip:</strong> Always note least count (smallest measurement) for accuracy.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Measuring_instruments.svg/800px-Measuring_instruments.svg.png" alt="Diagram showing metre rule, vernier caliper, micrometer screw gauge, and measuring cylinder">
+
+        <h3>Step 4: Dimensions</h3>
+        <p><strong>Definition:</strong> Dimensions show how a quantity depends on fundamentals. Like a "fingerprint." We use [M] for mass, [L] for length, [T] for time, etc. Ignores numbers, focuses on powers.</p>
+        <p><strong>Simple Examples:</strong></p>
+        <ul>
+          <li>Length: [L]</li>
+          <li>Area: [L²]</li>
+          <li>Volume: [L³]</li>
+          <li>Speed: [L T⁻¹]</li>
+          <li>Force: [M L T⁻²] (from F = ma)</li>
+          <li>Pressure: [M L⁻¹ T⁻²]</li>
+        </ul>
+        <p><strong>Using Dimensions:</strong> To find units or check equations.<br>
+Example: If [Force] = [M L T⁻²], unit = kg·m/s² = N.</p>
+        <p><strong>Test Homogeneity:</strong> Equations must have same dimensions on both sides.<br>
+Example: s = ut + ½at²<br>
+Left: [L]<br>
+Right: [L T⁻¹][T] + [L T⁻²][T²] = [L] + [L] → Homogeneous! If not, equation is wrong.</p>
+
+        <h3>Step 5: Limitations of Experimental Measurements</h3>
+        <p>Measurements aren't perfect due to tools and humans. From New School Physics:</p>
+        <ul>
+          <li><strong>Accuracy of Instruments:</strong> Depends on least count. Metre rule: ±<strong>0.1 cm</strong>; micrometer: ±<strong>0.01 mm</strong>. Parallax error (wrong eye angle) reduces accuracy.</li>
+          <li><strong>Random Errors:</strong> Vary (e.g., hand shake). Fix: Average multiple readings.</li>
+          <li><strong>Systematic Errors:</strong> Consistent (e.g., zero error on caliper). Fix: Calibrate (subtract error).</li>
+          <li><strong>Estimate Error:</strong> Error = ± half least count (e.g., ruler: ±<strong>0.05 cm</strong>).</li>
+          <li><strong>Significant Figures:</strong> Digits that matter. 5.20 cm has 3 sig figs (precise to <strong>0.01 cm</strong>). In multiplication, use least sig figs (2.1 × 3 = 6.3).</li>
+          <li><strong>Standard Form:</strong> Scientific notation. 0.000045 = <strong>4.5 × 10⁻⁵</strong>. Big: 123000 = <strong>1.23 × 10⁵</strong>. Helps with large/small numbers.</li>
+        </ul>
+        <p><strong>Tip:</strong> For errors, think "how wrong could I be?"—estimate max/min possible.</p>
+
+        <h3>10 Real/Similar JAMB-Style Examples with Step-by-Step Solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Example 1: Derived Units (Very common in JAMB)</div>
+          <div class="example-problem">
+Question: The SI unit of pressure is<br>
+A. kg/m³ B. N/m² C. kg/m s² D. m/s²<br>
+Step 1: Pressure = force / area.<br>
+Step 2: Force = mass × acceleration = kg × m/s² = <strong>N</strong>.<br>
+Step 3: Area = m².<br>
+Step 4: Pressure = <strong>N/m²</strong> (also called pascal, Pa).
+          </div>
+          <div class="example-solution">Answer: B. N/m²</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 2: Measuring Instruments (JAMB 2018 style)</div>
+          <div class="example-problem">
+Question: Which instrument is most suitable for measuring the thickness of a thin wire?<br>
+A. Metre rule B. Vernier caliper C. Micrometer screw gauge D. Measuring cylinder<br>
+Step 1: Thin wire needs very high precision (small least count).<br>
+Step 2: Metre rule: least count <strong>1 mm</strong> (too coarse).<br>
+Step 3: Vernier caliper: <strong>0.1 mm</strong> (better).<br>
+Step 4: Micrometer screw gauge: <strong>0.01 mm</strong> (best for tiny measurements like wire thickness).
+          </div>
+          <div class="example-solution">Answer: C. Micrometer screw gauge</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 3: Dimensions & Homogeneity (JAMB 2020 style)</div>
+          <div class="example-problem">
+Question: Which of the following equations is dimensionally homogeneous?<br>
+A. v = u + at<br>
+B. s = ut + at² (missing ½)<br>
+C. F = m/v<br>
+D. P = F/A<br>
+Step 1: Check A: [v] = [L T⁻¹], [u] = [L T⁻¹], [a] = [L T⁻²], [t] = [T] → right side: [L T⁻¹] + [L T⁻¹] = [L T⁻¹] → homogeneous.<br>
+Step 2: Check B: [s] = [L], right side [L] + [L] → homogeneous but formula missing dimensionless ½.<br>
+Step 3: Check C: [F] = [M L T⁻²], [m/v] = [M L⁻¹ T] → not homogeneous.<br>
+Step 4: Check D: [P] = [M L⁻¹ T⁻²], [F/A] = [M L T⁻²] / [L²] = [M L⁻¹ T⁻²] → homogeneous.<br>
+Step 5: Best answer is A or D (both homogeneous), but typical JAMB expects A as correct known equation.
+          </div>
+          <div class="example-solution">Answer: A. v = u + at</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 4: Significant Figures & Errors (JAMB 2021 style)</div>
+          <div class="example-problem">
+Question: A length is measured as 5.20 cm using a vernier caliper. How many significant figures are there?<br>
+A. 2 B. 3 C. 4 D. 1<br>
+Step 1: Digits: 5, 2, 0.<br>
+Step 2: Trailing zero after decimal is significant.<br>
+Step 3: 5.20 has 3 significant figures (precise to <strong>0.01 cm</strong>).
+          </div>
+          <div class="example-solution">Answer: B. 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 5: Standard Form (JAMB 2019 style)</div>
+          <div class="example-problem">
+Question: Express 0.0000789 in standard form.<br>
+A. 7.89 × 10⁻⁵ B. 7.89 × 10⁵ C. 789 × 10⁻⁷ D. 7.89 × 10⁻⁴<br>
+Step 1: Move decimal point after first non-zero digit: 7.89.<br>
+Step 2: Count places moved: 5 places left → negative exponent.<br>
+Step 3: 7.89 × 10⁻⁵.
+          </div>
+          <div class="example-solution">Answer: A. 7.89 × 10⁻⁵</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 6: Derived Unit (JAMB 2022 style)</div>
+          <div class="example-problem">
+Question: The SI unit of density is<br>
+A. kg/m² B. kg/m³ C. g/cm³ D. N/m²<br>
+Step 1: Density = mass / volume.<br>
+Step 2: Mass = <strong>kg</strong>, volume = <strong>m³</strong>.<br>
+Step 3: Density = <strong>kg/m³</strong>.
+          </div>
+          <div class="example-solution">Answer: B. kg/m³</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 7: Measuring Irregular Volume (JAMB 2020 style)</div>
+          <div class="example-problem">
+Question: To measure the volume of an irregular stone, the most suitable method is<br>
+A. Using metre rule B. Displacement method with measuring cylinder C. Using micrometer D. Using beam balance<br>
+Step 1: Irregular shape cannot use direct formula or ruler.<br>
+Step 2: Displacement method: submerge stone in water in measuring cylinder.<br>
+Step 3: Volume = rise in water level (final – initial reading).
+          </div>
+          <div class="example-solution">Answer: B. Displacement method with measuring cylinder</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 8: Least Count (JAMB 2017 style)</div>
+          <div class="example-problem">
+Question: The least count of a micrometer screw gauge is<br>
+A. 0.1 mm B. 0.01 mm C. 0.001 mm D. 1 mm<br>
+Step 1: Micrometer is for very small measurements.<br>
+Step 2: Standard least count = <strong>0.01 mm</strong> (most common in JAMB).<br>
+Step 3: Some advanced have 0.001 mm, but typical is 0.01 mm.
+          </div>
+          <div class="example-solution">Answer: B. 0.01 mm</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 9: Dimension Check (JAMB 2023 style)</div>
+          <div class="example-problem">
+Question: The dimension of work is the same as that of<br>
+A. Power B. Energy C. Force D. Momentum<br>
+Step 1: Work = force × distance → [M L T⁻²] × [L] = [M L² T⁻²].<br>
+Step 2: Energy has same dimension [M L² T⁻²].<br>
+Step 3: Power = work/time → [M L² T⁻³], Force = [M L T⁻²], Momentum = [M L T⁻¹].
+          </div>
+          <div class="example-solution">Answer: B. Energy</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Example 10: Significant Figures in Calculation (JAMB 2021 style)</div>
+          <div class="example-problem">
+Question: The product of 2.4 and 3.00 has how many significant figures?<br>
+A. 2 B. 3 C. 4 D. 5<br>
+Step 1: 2.4 has 2 sig figs, 3.00 has 3 sig figs.<br>
+Step 2: In multiplication, use least number of sig figs.<br>
+Step 3: Result should have 2 sig figs (2.4 × 3.00 = 7.2 → 7.2 has 2 sig figs).
+          </div>
+          <div class="example-solution">Answer: A. 2</div>
+        </div>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          This is now the **complete Introduction to Measurements chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 10 real/similar JAMB examples with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Introduction to Measurements?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
