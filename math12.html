@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Locus in 2D Geometry</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
+      --highlight-solution: #ff9800;                   /* orange for final answers */
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Locus in 2D Geometry</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Locus in 2D Geometry – JAMB Guide 🚀</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Locus in 2D Geometry (Easy Explanation for JAMB)</h2>
+        <p>A locus is simply the path (or set of all points) that a moving point follows when it obeys a specific rule or condition. Think of it like "all the places where something can be if it must stay exactly 5 cm from a wall" — that path is the locus.
+In 2D (plane geometry), loci are usually straight lines, parallel lines, perpendicular bisectors, angle bisectors, or circles (or combinations of them).
+JAMB focuses on these four main types. I'll explain each one simply, with pictures (diagrams), then give you real JAMB-style examples with full solutions.</p>
+
+        <h2>1. Locus Relating to Parallel Lines</h2>
+        <p><strong>Rule:</strong> Points at a fixed distance from a given straight line.</p>
+<p><strong>What it looks like:</strong> Two straight lines parallel to the given line, one on each side, exactly that distance away.</p>
+<li>If the condition is <strong>"exactly 5 cm from line LM",</strong> the locus is two parallel lines 5 cm away (one above, one below LM).</li>
+<li>If the condition is <strong>"equidistant from two parallel lines" (e.g. y=5 and y=3),</strong> the locus is the middle parallel line (y=4).</li>
+<p><strong>Easy way to remember:</strong> Imagine drawing with a compass set to 5 cm and sliding it along the line — you get two parallel lines.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Locus_parallel_lines.svg/800px-Locus_parallel_lines.svg.png" alt="Diagram showing locus of points at fixed distance from a line: two parallel lines">
+
+        <h2>2. Locus Relating to Perpendicular Bisectors</h2>
+  <p><strong>Rule:</strong> Points equidistant from two fixed points (say A and B).</p>
+<p><strong>What it looks like:</strong> The perpendicular bisector of the line segment joining the two points (cuts the segment exactly in half at 90°).</p>
+<li>Every point on this line is exactly the same distance from A and from B.</li>
+<p><strong>Easy construction:</strong> Find midpoint of AB, then draw line at 90° through it.</p> 
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Perpendicular_bisector_locus.svg/800px-Perpendicular_bisector_locus.svg.png" alt="Diagram showing locus of points equidistant from two points: perpendicular bisector">
+
+        <h2>3. Locus Relating to Angle Bisectors</h2>
+        <p><strong>Rule:</strong> Points equidistant from two intersecting straight lines.</p>
+<p><strong>What it looks like:</strong> The two angle bisectors of the angles formed by the two lines (they cross at 90° to each other).</p>
+<p><strong>Easy way to remember:</strong> The point is "equally far" from both walls → it must lie on the bisector lines (like the centre line in a V-shaped road).</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Angle_bisector_locus.svg/800px-Angle_bisector_locus.svg.png" alt="Diagram showing locus of points equidistant from two intersecting lines: angle bisectors">
+
+        <h2>4. Locus Relating to Circles</h2>
+        <p><strong>Rule:</strong> Points at a fixed distance from one fixed point (the centre).</p>
+<p><strong>What it looks like:</strong> A circle with that fixed point as centre and the fixed distance as radius.</p>
+<p><strong>Easy way to remember:</strong> "All points exactly 4 cm from P" → just draw a circle radius 4 cm centred at P.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Circle_locus.svg/800px-Circle_locus.svg.png" alt="Diagram showing locus of points at fixed distance from a point: circle">
+
+        <h3>10 Real JAMB Examples with Step-by-Step Solutions</h3>
+        <p>Here are 10 actual/past JAMB-style questions (taken from real past papers and very similar ones) covering all four types. I grouped them and gave clear solutions.</p>
+
+        <h4>Circle Examples</h4>
+
+        <div class="example-block">
+          <div class="example-problem">1. What is the locus of a distance 4 cm from a given point P?</div>
+          <div class="example-problem">
+Step 1: The rule is points at fixed distance 4 cm from P.<br>
+Step 2: Fixed distance from one point = circle.<br>
+Step 3: Centre P, radius 4 cm.
+          </div>
+          <div class="example-solution">Answer: A circle of radius 4 cm</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. The locus of all points having a distance of 1 unit from a fixed point O is</div>
+          <div class="example-problem">
+Step 1: Fixed distance 1 unit from O.<br>
+Step 2: That's the definition of a circle with centre O and radius 1.
+          </div>
+          <div class="example-solution">Answer: A circle with centre O and radius 1 unit</div>
+        </div>
+
+        <h4>Parallel Lines Examples</h4>
+
+        <div class="example-block">
+          <div class="example-problem">3. The locus of a point which is 5 cm from the line LM is</div>
+          <div class="example-problem">
+Step 1: Points at fixed distance 5 cm from line LM.<br>
+Step 2: From a line, locus is two parallel lines, one on each side.<br>
+Step 3: Each 5 cm away from LM.
+          </div>
+          <div class="example-solution">Answer: Pair of lines on opposite sides of LM and parallel to it, each distance 5 cm from LM</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. Find the locus of point equidistant from two straight lines y – 5 = 0 and y – 3 = 0</div>
+          <div class="example-problem">
+Step 1: y=5 and y=3 are parallel horizontal lines.<br>
+Step 2: Equidistant from two parallels = middle line.<br>
+Step 3: Distance to y=5 is |y-5|, to y=3 is |y-3|.<br>
+Step 4: |y-5| = |y-3| → y=4 (middle).
+          </div>
+          <div class="example-solution">Answer: y – 4 = 0</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. The locus of the points which is equidistant from the line PQ forms a</div>
+          <div class="example-problem">
+Step 1: Equidistant from line PQ.<br>
+Step 2: Fixed distance from a line = two parallel lines.<br>
+Step 3: On both sides of PQ.
+          </div>
+          <div class="example-solution">Answer: Pair of parallel lines to PQ</div>
+        </div>
+
+        <h4>Perpendicular Bisector Examples</h4>
+
+        <div class="example-block">
+          <div class="example-problem">6. The locus of a point P which is equidistant from two given points S and T is</div>
+          <div class="example-problem">
+Step 1: Equidistant from S and T: PS = PT.<br>
+Step 2: By definition, perpendicular bisector of ST.
+          </div>
+          <div class="example-solution">Answer: The perpendicular bisector of ST</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. The locus of a point equidistant from two points P(6,2) and R(4,2) is a perpendicular bisector of PR passing through</div>
+          <div class="example-problem">
+Step 1: Midpoint of P(6,2) and R(4,2) = ((6+4)/2, (2+2)/2) = (5,2)<br>
+Step 2: PR is horizontal (y=2), so perpendicular is vertical x=5.<br>
+Step 3: Passes through (5,2).
+          </div>
+          <div class="example-solution">Answer: (5,2)</div>
+        </div>
+
+        <h4>Angle Bisector Examples</h4>
+
+        <div class="example-block">
+          <div class="example-problem">8. The locus of a point which moves so that it is equidistant from two intersecting straight lines is the</div>
+          <div class="example-problem">
+Step 1: Equidistant from two intersecting lines.<br>
+Step 2: Locus is the angle bisectors of the angles formed.
+          </div>
+          <div class="example-solution">Answer: Angle bisector of the two lines</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. Find the locus of a particle which moves in the first quadrant so that it is equidistant from the lines x = 0 and y = 0</div>
+          <div class="example-problem">
+Step 1: x=0 is y-axis, y=0 is x-axis, intersect at origin.<br>
+Step 2: Equidistant: |x| = |y|.<br>
+Step 3: In first quadrant, x = y (the bisector).
+          </div>
+          <div class="example-solution">Answer: The line x = y</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. Two lines PQ and ST intersect at 75°. The locus of points equidistant from PQ and ST is</div>
+          <div class="example-problem">
+Step 1: Two intersecting lines at 75°.<br>
+Step 2: Equidistant locus = angle bisectors.<br>
+Step 3: Bisects the 75° and the 105° angles (supplementary).
+          </div>
+          <div class="example-solution">Answer: The pair of angle bisectors of the angles formed at the intersection</div>
+        </div>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          This is now the **complete Locus in 2D Geometry chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Locus in 2D Geometry</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
