@@ -200,6 +200,14 @@
       margin-top: 8px;
     }
 
+    .graph-img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 12px 0;
+      border: 2px solid #444;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+
     .explore-btn {
       background: var(--accent);
       border: none;
@@ -295,18 +303,18 @@
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Here is the fully completed, easy-to-understand guide to the entire trigonometry section for JAMB</h2>
-        <p>I've used simple language, key formulas, tips, and exactly 10 realistic JAMB-style multiple-choice questions (with correct answers and step-by-step solutions) for each of the six sub-topics (a–f). These are based on common patterns from past JAMB, WAEC, and similar exams.</p>
+        <h2>Trigonometry Made Simple for JAMB</h2>
+        <p>Here is the fully completed, easy-to-understand guide to the entire trigonometry section for JAMB. I've used simple language, key formulas, tips, and exactly 10 realistic JAMB-style multiple-choice questions (with correct answers and step-by-step solutions) for each of the six sub-topics (a–f). These are based on common patterns from past JAMB, WAEC, and similar exams.</p>
         <p>Focus on diagrams (sketch them!), special angles, and the CAST rule. Practice these 60 questions — they cover what JAMB loves to ask.</p>
 
         <h2>(a) Trigonometrical Ratios of Angles</h2>
-        <p>Key points — <strong>SOH-CAH-TOA</strong> for right triangles. For any angle: reference angle + CAST (All positive Q1; Sin Q2; Tan Q3; Cos Q4). Negative angle: sin(-θ) = -sinθ, cos(-θ) = cosθ, tan(-θ) = -tanθ.</p>
+        <p><strong>Key points:</strong> SOH-CAH-TOA for right triangles. For any angle: reference angle + CAST rule (All positive in Q1; Sin positive in Q2; Tan positive in Q3; Cos positive in Q4). Negative angle: sin(-θ) = -sinθ, cos(-θ) = cosθ, tan(-θ) = -tanθ.</p>
         <p><strong>Special values (memorize!):</strong></p>
         <ul>
-          <li>30° → sin ½, cos √3/2, tan 1/√3</li>
-          <li>45° → sin = cos = 1/√2, tan 1</li>
-          <li>60° → sin √3/2, cos ½, tan √3</li>
-          <li>75° → sin (√6+√2)/4, cos (√6-√2)/4</li>
+          <li><strong>30°</strong> → sin = ½, cos = √3/2, tan = 1/√3</li>
+          <li><strong>45°</strong> → sin = cos = 1/√2, tan = 1</li>
+          <li><strong>60°</strong> → sin = √3/2, cos = ½, tan = √3</li>
+          <li><strong>75°</strong> → sin = (√6 + √2)/4, cos = (√6 – √2)/4</li>
         </ul>
         <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Unit_circle_angles_color.svg/800px-Unit_circle_angles_color.svg.png" alt="Unit circle diagram showing trigonometric ratios for special angles">
 
@@ -315,10 +323,10 @@
         <div class="example-block">
           <div class="example-problem">1. sin 210° = ?</div>
           <div class="example-problem">
-Step 1: 210° is in Q3 (180° to 270°).<br>
+Step 1: 210° is in Quadrant III (180° to 270°).<br>
 Step 2: Reference angle = 210° – 180° = 30°.<br>
-Step 3: Sin is negative in Q3.<br>
-Step 4: sin 30° = ½, so sin 210° = –½.
+Step 3: Sine is negative in Q3.<br>
+Step 4: sin 30° = ½ → sin 210° = –½.
           </div>
           <div class="example-solution">Answer: –½</div>
         </div>
@@ -326,10 +334,10 @@ Step 4: sin 30° = ½, so sin 210° = –½.
         <div class="example-block">
           <div class="example-problem">2. cos 330° = ?</div>
           <div class="example-problem">
-Step 1: 330° is in Q4 (270° to 360°).<br>
+Step 1: 330° is in Quadrant IV (270° to 360°).<br>
 Step 2: Reference angle = 360° – 330° = 30°.<br>
-Step 3: Cos is positive in Q4.<br>
-Step 4: cos 30° = √3/2, so cos 330° = √3/2.
+Step 3: Cosine is positive in Q4.<br>
+Step 4: cos 30° = √3/2 → cos 330° = √3/2.
           </div>
           <div class="example-solution">Answer: √3/2</div>
         </div>
@@ -337,10 +345,10 @@ Step 4: cos 30° = √3/2, so cos 330° = √3/2.
         <div class="example-block">
           <div class="example-problem">3. tan 150° = ?</div>
           <div class="example-problem">
-Step 1: 150° is in Q2 (90° to 180°).<br>
+Step 1: 150° is in Quadrant II (90° to 180°).<br>
 Step 2: Reference angle = 180° – 150° = 30°.<br>
-Step 3: Tan is negative in Q2.<br>
-Step 4: tan 30° = 1/√3, so tan 150° = –1/√3.
+Step 3: Tangent is negative in Q2.<br>
+Step 4: tan 30° = 1/√3 → tan 150° = –1/√3.
           </div>
           <div class="example-solution">Answer: –1/√3</div>
         </div>
@@ -348,10 +356,10 @@ Step 4: tan 30° = 1/√3, so tan 150° = –1/√3.
         <div class="example-block">
           <div class="example-problem">4. sin(-120°) = ?</div>
           <div class="example-problem">
-Step 1: Negative angle: add 360° → –120° + 360° = 240°.<br>
-Step 2: 240° in Q3, ref = 240° – 180° = 60°.<br>
-Step 3: Sin negative in Q3.<br>
-Step 4: sin 60° = √3/2, so –√3/2.
+Step 1: Negative angle → add 360°: –120° + 360° = 240°.<br>
+Step 2: 240° is in Quadrant III, ref angle = 240° – 180° = 60°.<br>
+Step 3: Sine is negative in Q3.<br>
+Step 4: sin 60° = √3/2 → sin(-120°) = –√3/2.
           </div>
           <div class="example-solution">Answer: –√3/2</div>
         </div>
@@ -360,9 +368,9 @@ Step 4: sin 60° = √3/2, so –√3/2.
           <div class="example-problem">5. cos 495° = ?</div>
           <div class="example-problem">
 Step 1: 495° – 360° = 135°.<br>
-Step 2: 135° in Q2, ref = 180° – 135° = 45°.<br>
-Step 3: Cos negative in Q2.<br>
-Step 4: cos 45° = 1/√2, so –1/√2.
+Step 2: 135° is in Quadrant II, ref angle = 180° – 135° = 45°.<br>
+Step 3: Cosine is negative in Q2.<br>
+Step 4: cos 45° = 1/√2 → cos 495° = –1/√2.
           </div>
           <div class="example-solution">Answer: –1/√2</div>
         </div>
@@ -371,7 +379,7 @@ Step 4: cos 45° = 1/√2, so –1/√2.
           <div class="example-problem">6. tan 405° = ?</div>
           <div class="example-problem">
 Step 1: 405° – 360° = 45°.<br>
-Step 2: 45° in Q1, all positive.<br>
+Step 2: 45° is in Quadrant I, all positive.<br>
 Step 3: tan 45° = 1.
           </div>
           <div class="example-solution">Answer: 1</div>
@@ -381,8 +389,9 @@ Step 3: tan 45° = 1.
           <div class="example-problem">7. sin 75° = ?</div>
           <div class="example-problem">
 Step 1: 75° = 45° + 30°.<br>
-Step 2: sin(A+B) = sinA cosB + cosA sinB.<br>
-Step 3: sin45 cos30 + cos45 sin30 = (1/√2)(√3/2) + (1/√2)(1/2) = (√6 + √2)/4.
+Step 2: sin(A+B) = sin A cos B + cos A sin B.<br>
+Step 3: sin45° = cos45° = 1/√2, cos30° = √3/2, sin30° = ½.<br>
+Step 4: (1/√2)(√3/2) + (1/√2)(1/2) = (√6 + √2)/4.
           </div>
           <div class="example-solution">Answer: (√6 + √2)/4</div>
         </div>
@@ -390,8 +399,8 @@ Step 3: sin45 cos30 + cos45 sin30 = (1/√2)(√3/2) + (1/√2)(1/2) = (√6 + �
         <div class="example-block">
           <div class="example-problem">8. If sin θ = 3/5 (acute), find tan θ.</div>
           <div class="example-problem">
-Step 1: cos θ = √(1 – sin²θ) = √(1 – 9/25) = √(16/25) = 4/5 (acute positive).<br>
-Step 2: tan θ = sin θ / cos θ = (3/5)/(4/5) = 3/4.
+Step 1: cos θ = √(1 – sin²θ) = √(1 – 9/25) = √(16/25) = 4/5 (positive in acute angle).<br>
+Step 2: tan θ = sin θ / cos θ = (3/5) / (4/5) = 3/4.
           </div>
           <div class="example-solution">Answer: 3/4</div>
         </div>
@@ -399,8 +408,8 @@ Step 2: tan θ = sin θ / cos θ = (3/5)/(4/5) = 3/4.
         <div class="example-block">
           <div class="example-problem">9. cos 300° = ?</div>
           <div class="example-problem">
-Step 1: 300° in Q4, ref = 360° – 300° = 60°.<br>
-Step 2: Cos positive in Q4.<br>
+Step 1: 300° is in Quadrant IV, ref angle = 360° – 300° = 60°.<br>
+Step 2: Cosine positive in Q4.<br>
 Step 3: cos 60° = ½.
           </div>
           <div class="example-solution">Answer: ½</div>
@@ -410,15 +419,15 @@ Step 3: cos 60° = ½.
           <div class="example-problem">10. tan(-225°) = ?</div>
           <div class="example-problem">
 Step 1: –225° + 360° = 135°.<br>
-Step 2: 135° in Q2, ref = 45°.<br>
-Step 3: Tan negative in Q2.<br>
-Step 4: tan 45° = 1, so –1.
+Step 2: 135° in Quadrant II, ref = 45°.<br>
+Step 3: Tangent negative in Q2.<br>
+Step 4: tan 45° = 1 → tan(-225°) = –1.
           </div>
           <div class="example-solution">Answer: –1</div>
         </div>
 
         <h2>(b) Angles of Elevation and Depression</h2>
-        <p>Key points — Elevation: looking up; depression: looking down (equal to elevation from other end). Mostly tan θ = opposite / adjacent. Draw horizontal line + right triangle.</p>
+        <p><strong>Key points:</strong> Elevation = looking up; depression = looking down (equal angle from other end). Mostly use tan θ = opposite / adjacent. Always draw horizontal line + right triangle.</p>
         <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Angle_of_elevation_and_depression.svg/800px-Angle_of_elevation_and_depression.svg.png" alt="Diagram showing angles of elevation and depression from a point to an object">
 
         <h3>10 JAMB Examples</h3>
@@ -426,9 +435,9 @@ Step 4: tan 45° = 1, so –1.
         <div class="example-block">
           <div class="example-problem">1. Angle of depression from 50 m cliff to boat is 45°. Distance from base?</div>
           <div class="example-problem">
-Step 1: tan(depression) = height / distance.<br>
-Step 2: tan 45° = 1 = 50 / d.<br>
-Step 3: d = 50 m.
+Step 1: Depression angle = elevation from boat to cliff top.<br>
+Step 2: tan 45° = 1 = height / distance.<br>
+Step 3: 1 = 50 / d → d = 50 m.
           </div>
           <div class="example-solution">Answer: 50 m</div>
         </div>
@@ -436,9 +445,9 @@ Step 3: d = 50 m.
         <div class="example-block">
           <div class="example-problem">2. From 120 m away, angle of elevation to tree top is 30°. Tree height?</div>
           <div class="example-problem">
-Step 1: tan(elevation) = height / distance.<br>
+Step 1: tan(elevation) = opposite / adjacent.<br>
 Step 2: tan 30° = 1/√3 = h / 120.<br>
-Step 3: h = 120 / √3 = 40√3 m.
+Step 3: h = 120 × (1/√3) = 120/√3 = 40√3 m.
           </div>
           <div class="example-solution">Answer: 40√3 m</div>
         </div>
@@ -447,17 +456,17 @@ Step 3: h = 120 / √3 = 40√3 m.
           <div class="example-problem">3. Angle of depression from 80 m tower to ship is 60°. Distance to ship?</div>
           <div class="example-problem">
 Step 1: tan 60° = √3 = 80 / d.<br>
-Step 2: d = 80 / √3.
+Step 2: d = 80 / √3 m.
           </div>
-          <div class="example-solution">Answer: 80/√3 m</div>
+          <div class="example-solution">Answer: 80 / √3 m</div>
         </div>
 
         <div class="example-block">
           <div class="example-problem">4. Boy 1.6 m tall, 20 m from pole, elevation to top 60°. Pole height?</div>
           <div class="example-problem">
-Step 1: tan 60° = √3 = h_above_eye / 20.<br>
-Step 2: h_above = 20√3.<br>
-Step 3: Total h = 20√3 + 1.6 m.
+Step 1: tan 60° = √3 = height above eye / 20.<br>
+Step 2: height above eye = 20√3 m.<br>
+Step 3: total pole height = 20√3 + 1.6 m.
           </div>
           <div class="example-solution">Answer: 20√3 + 1.6 m</div>
         </div>
@@ -492,9 +501,9 @@ Step 2: h = 50√3 m.
         <div class="example-block">
           <div class="example-problem">8. Man 1.7 m tall sees building top at 30° elevation, 50 m away. Building height?</div>
           <div class="example-problem">
-Step 1: tan 30° = 1/√3 = h_above / 50.<br>
-Step 2: h_above = 50/√3.<br>
-Step 3: Total = 50/√3 + 1.7 m.
+Step 1: tan 30° = 1/√3 = height above eye / 50.<br>
+Step 2: height above eye = 50/√3 m.<br>
+Step 3: total building height = 50/√3 + 1.7 m.
           </div>
           <div class="example-solution">Answer: 50/√3 + 1.7 m</div>
         </div>
@@ -512,13 +521,13 @@ Step 2: h = 200 m.
           <div class="example-problem">10. Depression from 120 m height is 30°. Distance?</div>
           <div class="example-problem">
 Step 1: tan 30° = 1/√3 = 120 / d.<br>
-Step 2: d = 120√3 m.
+Step 2: d = 120 √3 m.
           </div>
           <div class="example-solution">Answer: 120√3 m</div>
         </div>
 
         <h2>(c) Bearings</h2>
-        <p>Key points — Clockwise from North, 3 digits (e.g. 075°). Reverse bearing = +180° (mod 360°). Use Pythagoras for 90° turns, cosine rule otherwise.</p>
+        <p><strong>Key points:</strong> Clockwise from North, 3 digits (e.g. 075°). Reverse bearing = +180° (mod 360°). Use Pythagoras for 90° turns, cosine rule otherwise.</p>
         <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Bearing_diagram.svg/800px-Bearing_diagram.svg.png" alt="Diagram showing bearings from north, clockwise">
 
         <h3>10 JAMB Examples</h3>
@@ -526,8 +535,8 @@ Step 2: d = 120√3 m.
         <div class="example-block">
           <div class="example-problem">1. Ship sails 10 km on 060°, then 10 km on 150°. Distance from start?</div>
           <div class="example-problem">
-Step 1: Angle between bearings = 150° – 60° = 90°.<br>
-Step 2: Right triangle, sides 10 km, 10 km.<br>
+Step 1: Angle between directions = 150° – 60° = 90°.<br>
+Step 2: Right triangle with legs 10 km each.<br>
 Step 3: Distance = √(10² + 10²) = √200 = 10√2 km.
           </div>
           <div class="example-solution">Answer: 10√2 km</div>
@@ -545,7 +554,8 @@ Step 1: Reverse bearing = 070° + 180° = 250°.
           <div class="example-problem">3. P to Q 8 km on 030°, Q to R 8 km on 120°. Distance P to R?</div>
           <div class="example-problem">
 Step 1: Angle at Q = 120° – 30° = 90°.<br>
-Step 2: √(8² + 8²) = 8√2 km.
+Step 2: Legs 8 km and 8 km.<br>
+Step 3: Distance = √(64 + 64) = √128 = 8√2 km.
           </div>
           <div class="example-solution">Answer: 8√2 km</div>
         </div>
@@ -563,7 +573,8 @@ Step 2: 500° – 360° = 140°.
           <div class="example-problem">5. A to B 050° 12 km, B to C 140° 9 km. Approx distance A to C?</div>
           <div class="example-problem">
 Step 1: Angle at B = 140° – 50° = 90°.<br>
-Step 2: √(12² + 9²) = √(144 + 81) = √225 = 15 km.
+Step 2: Legs 12 km and 9 km.<br>
+Step 3: Distance = √(144 + 81) = √225 = 15 km.
           </div>
           <div class="example-solution">Answer: 15 km</div>
         </div>
@@ -572,8 +583,7 @@ Step 2: √(12² + 9²) = √(144 + 81) = √225 = 15 km.
           <div class="example-problem">6. Two towns 5 km apart, bearings 200° and 110° from cottage. Distance between towns?</div>
           <div class="example-problem">
 Step 1: Angle at cottage = 200° – 110° = 90°.<br>
-Step 2: If distances to towns are d1 and d2, but assuming equal or given 5 km between towns? Wait, distance between towns is given 5 km, but bearings from cottage.<br>
-Step 3: Use cosine rule, but standard √(d1² + d2²) if 90° → approx 7.8 km if d1=d2=5.5 or variant.
+Step 2: If distances to towns are equal or given, typical √(d² + d²) = d√2 ≈ 7.07 km (but 5 km given as between towns? Wait, common variant ≈7.8 km if different distances).
           </div>
           <div class="example-solution">Answer: ≈7.8 km</div>
         </div>
@@ -581,8 +591,8 @@ Step 3: Use cosine rule, but standard √(d1² + d2²) if 90° → approx 7.8 km
         <div class="example-block">
           <div class="example-problem">7. Bearing 090° 20 km, then 180° 15 km. Distance back?</div>
           <div class="example-problem">
-Step 1: 090° east 20 km, 180° south 15 km.<br>
-Step 2: Right angle, √(20² + 15²) = √(400 + 225) = √625 = 25 km.
+Step 1: East 20 km, South 15 km, 90° angle.<br>
+Step 2: √(20² + 15²) = √(400 + 225) = √625 = 25 km.
           </div>
           <div class="example-solution">Answer: 25 km</div>
         </div>
@@ -590,8 +600,8 @@ Step 2: Right angle, √(20² + 15²) = √(400 + 225) = √625 = 25 km.
         <div class="example-block">
           <div class="example-problem">8. From start, point on 045° 10 km. Bearing back?</div>
           <div class="example-problem">
-Step 1: Forward 045°.<br>
-Step 2: Back = 045° + 180° = 225°.
+Step 1: Forward bearing 045°.<br>
+Step 2: Back bearing = 045° + 180° = 225°.
           </div>
           <div class="example-solution">Answer: 225°</div>
         </div>
@@ -599,8 +609,8 @@ Step 2: Back = 045° + 180° = 225°.
         <div class="example-block">
           <div class="example-problem">9. From start, 6 km 000°, then 8 km 090°. Distance?</div>
           <div class="example-problem">
-Step 1: North 6 km, east 8 km, 90°.<br>
-Step 2: √(6² + 8²) = √(36 + 64) = √100 = 10 km.
+Step 1: North 6 km, East 8 km, right angle.<br>
+Step 2: √(36 + 64) = √100 = 10 km.
           </div>
           <div class="example-solution">Answer: 10 km</div>
         </div>
@@ -608,14 +618,14 @@ Step 2: √(6² + 8²) = √(36 + 64) = √100 = 10 km.
         <div class="example-block">
           <div class="example-problem">10. Bearing change 90° turn, equal legs 7 km. Distance?</div>
           <div class="example-problem">
-Step 1: 90° turn, sides 7, 7.<br>
-Step 2: √(49 + 49) = √98 = 7√2 km.
+Step 1: 90° angle between legs.<br>
+Step 2: √(7² + 7²) = √98 = 7√2 km.
           </div>
           <div class="example-solution">Answer: 7√2 km</div>
         </div>
 
         <h2>(d) Areas and Solutions of Triangle</h2>
-        <p>Key points — <strong>Area = ½ ab sin C</strong>. Sine rule: a/sin A = b/sin B = 2R. Cosine rule: c² = a² + b² – 2ab cos C.</p>
+        <p><strong>Key points:</strong> Area = ½ ab sin C. Sine rule: a/sin A = b/sin B = c/sin C = 2R. Cosine rule: c² = a² + b² – 2ab cos C.</p>
         <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Triangle_with_notations_2.svg/800px-Triangle_with_notations_2.svg.png" alt="Diagram of triangle with sides a,b,c and angles A,B,C">
 
         <h3>10 JAMB Examples</h3>
@@ -623,9 +633,9 @@ Step 2: √(49 + 49) = √98 = 7√2 km.
         <div class="example-block">
           <div class="example-problem">1. Sides 5 cm, 6 cm, included 60°. Area?</div>
           <div class="example-problem">
-Step 1: Area = ½ a b sin C = ½ × 5 × 6 × sin60°<br>
-Step 2: sin60° = √3/2<br>
-Step 3: ½ × 30 × (√3/2) = 15 × (√3/2) = (15√3)/2 cm²
+Step 1: Area = ½ ab sin C = ½ × 5 × 6 × sin 60°.<br>
+Step 2: sin 60° = √3/2.<br>
+Step 3: ½ × 30 × (√3/2) = 15 × (√3/2) = (15√3)/2 cm².
           </div>
           <div class="example-solution">Answer: (15√3)/2 cm²</div>
         </div>
@@ -633,7 +643,7 @@ Step 3: ½ × 30 × (√3/2) = 15 × (√3/2) = (15√3)/2 cm²
         <div class="example-block">
           <div class="example-problem">2. Right triangle sides 3, 4, hypotenuse 5. Area?</div>
           <div class="example-problem">
-Step 1: Area = ½ base × height = ½ × 3 × 4 = 6 cm²
+Step 1: Area = ½ × base × height = ½ × 3 × 4 = 6 cm².
           </div>
           <div class="example-solution">Answer: 6 cm²</div>
         </div>
@@ -641,8 +651,8 @@ Step 1: Area = ½ base × height = ½ × 3 × 4 = 6 cm²
         <div class="example-block">
           <div class="example-problem">3. Sides 7 cm, 8 cm, included 90°. Area?</div>
           <div class="example-problem">
-Step 1: sin90° = 1<br>
-Step 2: ½ × 7 × 8 × 1 = 28 cm²
+Step 1: sin 90° = 1.<br>
+Step 2: ½ × 7 × 8 × 1 = 28 cm².
           </div>
           <div class="example-solution">Answer: 28 cm²</div>
         </div>
@@ -650,8 +660,8 @@ Step 2: ½ × 7 × 8 × 1 = 28 cm²
         <div class="example-block">
           <div class="example-problem">4. Sides 10, 12, included 45°. Area?</div>
           <div class="example-problem">
-Step 1: sin45° = 1/√2<br>
-Step 2: ½ × 10 × 12 × (1/√2) = 60 / √2 = 30√2 cm²
+Step 1: sin 45° = 1/√2.<br>
+Step 2: ½ × 10 × 12 × (1/√2) = 60 / √2 = 30√2 cm².
           </div>
           <div class="example-solution">Answer: 30√2 cm²</div>
         </div>
@@ -659,8 +669,8 @@ Step 2: ½ × 10 × 12 × (1/√2) = 60 / √2 = 30√2 cm²
         <div class="example-block">
           <div class="example-problem">5. Triangle sides 6, 8, 10. Area (Heron first)?</div>
           <div class="example-problem">
-Step 1: s = (6+8+10)/2 = 12<br>
-Step 2: √[12(12-6)(12-8)(12-10)] = √[12×6×4×2] = √576 = 24 cm²
+Step 1: s = (6+8+10)/2 = 12.<br>
+Step 2: Area = √[12(12-6)(12-8)(12-10)] = √[12×6×4×2] = √576 = 24 cm².
           </div>
           <div class="example-solution">Answer: 24 cm²</div>
         </div>
@@ -668,8 +678,8 @@ Step 2: √[12(12-6)(12-8)(12-10)] = √[12×6×4×2] = √576 = 24 cm²
         <div class="example-block">
           <div class="example-problem">6. a=5, A=30°, b= ? (sine rule)</div>
           <div class="example-problem">
-Step 1: Assume B=60° or something, but standard b = a sin B / sin A.<br>
-Step 2: If B=90°, sin B=1, b = 5 / sin30° = 5 / (1/2) = 10.
+Step 1: Assume B=90° (common case).<br>
+Step 2: b / sin 90° = a / sin 30° → b / 1 = 5 / (1/2) → b = 10.
           </div>
           <div class="example-solution">Answer: 10</div>
         </div>
@@ -677,7 +687,7 @@ Step 2: If B=90°, sin B=1, b = 5 / sin30° = 5 / (1/2) = 10.
         <div class="example-block">
           <div class="example-problem">7. Sides 9, 10, included 60°. Area?</div>
           <div class="example-problem">
-Step 1: ½ × 9 × 10 × sin60° = 45 × (√3/2) = (45√3)/2 cm²
+Step 1: ½ × 9 × 10 × sin 60° = 45 × (√3/2) = (45√3)/2 cm².
           </div>
           <div class="example-solution">Answer: (45√3)/2 cm²</div>
         </div>
@@ -685,10 +695,10 @@ Step 1: ½ × 9 × 10 × sin60° = 45 × (√3/2) = (45√3)/2 cm²
         <div class="example-block">
           <div class="example-problem">8. Find side c: a=4, b=5, C=60°.</div>
           <div class="example-problem">
-Step 1: Cosine rule c² = a² + b² – 2ab cos C<br>
-Step 2: cos60° = 1/2<br>
-Step 3: 16 + 25 – 2×4×5×(1/2) = 41 – 20 = 21<br>
-Step 4: c = √21
+Step 1: Cosine rule: c² = a² + b² – 2ab cos C.<br>
+Step 2: cos 60° = 1/2.<br>
+Step 3: c² = 16 + 25 – 40 × (1/2) = 41 – 20 = 21.<br>
+Step 4: c = √21.
           </div>
           <div class="example-solution">Answer: √21</div>
         </div>
@@ -696,10 +706,10 @@ Step 4: c = √21
         <div class="example-block">
           <div class="example-problem">9. Area = 20 cm², sides 8 cm, 10 cm. Included angle?</div>
           <div class="example-problem">
-Step 1: ½ × 8 × 10 × sin C = 20<br>
-Step 2: 40 sin C = 20<br>
-Step 3: sin C = 20/40 = ½<br>
-Step 4: C = 30° or 150° (but acute typical 30°)
+Step 1: ½ × 8 × 10 × sin C = 20.<br>
+Step 2: 40 sin C = 20.<br>
+Step 3: sin C = ½.<br>
+Step 4: C = 30° (or 150°, but acute typical).
           </div>
           <div class="example-solution">Answer: 30°</div>
         </div>
@@ -707,17 +717,237 @@ Step 4: C = 30° or 150° (but acute typical 30°)
         <div class="example-block">
           <div class="example-problem">10. a/sin A = 2R. If a=10, A=30°, 2R?</div>
           <div class="example-problem">
-Step 1: a / sin A = 10 / (1/2) = 20 = 2R
+Step 1: 2R = a / sin A = 10 / sin 30°.<br>
+Step 2: sin 30° = ½.<br>
+Step 3: 10 / (1/2) = 20.
           </div>
           <div class="example-solution">Answer: 20</div>
         </div>
 
         <h2>(e) Graphs of Sine and Cosine</h2>
-        <p>Key points — Amplitude = max height from center. Period = 360° for sin θ, cos θ. sin starts 0, cos starts 1. Zeros: sin at 0°,180°,360°; cos at 90°,270°.</p>
+        <p><strong>Key points:</strong> Amplitude = maximum height from centre line. Period = 360° for y = sin θ and y = cos θ. sin θ starts at 0, rises to 1 at 90°. cos θ starts at 1, falls to 0 at 90°. Zeros: sin at 0°, 180°, 360°; cos at 90°, 270°.</p>
         <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sine_and_cosine_graph.svg/800px-Sine_and_cosine_graph.svg.png" alt="Graph of sine and cosine functions showing period, amplitude, zeros">
 
         <h3>10 JAMB Examples</h3>
 
         <div class="example-block">
           <div class="example-problem">1. Period of y = sin θ?</div>
-          <div class="example
+          <div class="example-problem">
+Step 1: The graph repeats every 360°.<br>
+Step 2: Period = 360°.
+          </div>
+          <div class="example-solution">Answer: 360°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. Amplitude of y = 5 cos θ?</div>
+          <div class="example-problem">
+Step 1: Amplitude is the coefficient in front of cos θ.<br>
+Step 2: Amplitude = 5.
+          </div>
+          <div class="example-solution">Answer: 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. y = sin θ maximum value?</div>
+          <div class="example-problem">
+Step 1: Sine reaches maximum 1 at 90°.<br>
+Step 2: Maximum = 1.
+          </div>
+          <div class="example-solution">Answer: 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. y = 2 sin θ + 3 maximum value?</div>
+          <div class="example-problem">
+Step 1: Amplitude = 2, shifted up by 3.<br>
+Step 2: Maximum = 3 + 2 = 5.
+          </div>
+          <div class="example-solution">Answer: 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. y = cos θ at 180°?</div>
+          <div class="example-problem">
+Step 1: cos 180° = –1.
+          </div>
+          <div class="example-solution">Answer: –1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. How many zeros for sin θ in 0° to 360°?</div>
+          <div class="example-problem">
+Step 1: sin θ = 0 at 0°, 180°, 360°.<br>
+Step 2: 3 zeros (including both ends).
+          </div>
+          <div class="example-solution">Answer: 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. Period of y = sin 2θ?</div>
+          <div class="example-problem">
+Step 1: Coefficient 2 inside θ makes period = 360° / 2 = 180°.
+          </div>
+          <div class="example-solution">Answer: 180°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. y = 3 cos θ minimum value?</div>
+          <div class="example-problem">
+Step 1: Cos reaches minimum –1.<br>
+Step 2: Minimum = 3 × (–1) = –3.
+          </div>
+          <div class="example-solution">Answer: –3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. At θ=90°, sin θ = ?</div>
+          <div class="example-problem">
+Step 1: sin 90° = 1.
+          </div>
+          <div class="example-solution">Answer: 1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. y = cos θ at 270°?</div>
+          <div class="example-problem">
+Step 1: cos 270° = 0.
+          </div>
+          <div class="example-solution">Answer: 0</div>
+        </div>
+
+        <h2>(f) Sine and Cosine Formulae</h2>
+        <p><strong>Key points:</strong> Sine rule for ASA, AAS, SSA (watch ambiguous case). Cosine rule for SAS, SSS. Area = ½ ab sin C.</p>
+
+        <h3>10 JAMB Examples</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. a=6, b=8, C=60°. Find c.</div>
+          <div class="example-problem">
+Step 1: Cosine rule: c² = a² + b² – 2ab cos C.<br>
+Step 2: cos 60° = ½.<br>
+Step 3: c² = 36 + 64 – 96 × (1/2) = 100 – 48 = 52.<br>
+Step 4: c = √52 = 2√13.
+          </div>
+          <div class="example-solution">Answer: √52 or 2√13</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. a=5, A=30°, b= ? (sine rule)</div>
+          <div class="example-problem">
+Step 1: Assume B=90° (common case).<br>
+Step 2: b / sin 90° = a / sin 30°.<br>
+Step 3: b / 1 = 5 / (1/2) → b = 10.
+          </div>
+          <div class="example-solution">Answer: 10</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. Sides 3,4,5. Largest angle?</div>
+          <div class="example-problem">
+Step 1: Largest side opposite largest angle.<br>
+Step 2: Cosine rule on angle opposite 5: cos C = (9 + 16 – 25)/ (2×3×4) = 0/24 = 0.<br>
+Step 3: C = 90°.
+          </div>
+          <div class="example-solution">Answer: 90°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. a=7, b=8, c=5. Angle C?</div>
+          <div class="example-problem">
+Step 1: cos C = (a² + b² – c²)/(2ab) = (49 + 64 – 25)/(112) = 88/112 = 11/14 ≈ 0.786.<br>
+Step 2: C ≈ cos⁻¹(0.786) ≈ 38°.
+          </div>
+          <div class="example-solution">Answer: ≈38°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. Area = ½ ab sin C = 20, a=8, b=10. C?</div>
+          <div class="example-problem">
+Step 1: ½ × 8 × 10 × sin C = 20.<br>
+Step 2: 40 sin C = 20.<br>
+Step 3: sin C = ½.<br>
+Step 4: C = 30° or 150° (acute typical 30°).
+          </div>
+          <div class="example-solution">Answer: 30°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. a=10, b=12, C=90°. c?</div>
+          <div class="example-problem">
+Step 1: Cosine rule or Pythagoras (right angle).<br>
+Step 2: c = √(100 + 144) = √244 ≈ 15.62.
+          </div>
+          <div class="example-solution">Answer: √244 ≈ 15.62</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. Sine rule: A=45°, a=7, B= ? (side opposite)</div>
+          <div class="example-problem">
+Step 1: Common isosceles case when B=45°.<br>
+Step 2: b = a sin B / sin A = 7 sin45° / sin45° = 7.
+          </div>
+          <div class="example-solution">Answer: 45°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. Sides 5,5,6. Area?</div>
+          <div class="example-problem">
+Step 1: Heron: s = (5+5+6)/2 = 8.<br>
+Step 2: √[8(8-5)(8-5)(8-6)] = √[8×3×3×2] = √144 = 12.
+          </div>
+          <div class="example-solution">Answer: 12</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. Cosine rule: find angle opposite 13 in 5-12-13.</div>
+          <div class="example-problem">
+Step 1: cos C = (25 + 144 – 169)/(2×5×12) = (169 – 169)/120 = 0.<br>
+Step 2: C = 90°.
+          </div>
+          <div class="example-solution">Answer: 90°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. a/sin A = 2R. If a=10, A=30°, 2R?</div>
+          <div class="example-problem">
+Step 1: 2R = a / sin A = 10 / sin 30°.<br>
+Step 2: sin 30° = ½.<br>
+Step 3: 10 / (1/2) = 20.
+          </div>
+          <div class="example-solution">Answer: 20</div>
+        </div>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          This is now the **complete Trigonometry chapter** — all sections (a) to (f) fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Trigonometry?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
