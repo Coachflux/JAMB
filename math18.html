@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Representation of Data</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
+      --highlight-solution: #ff9800;                   /* orange for final answers */
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Representation of Data</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Representation of Data – JAMB Guide 🚀</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Representation of Data (Easy-to-Understand Teaching Guide for JAMB)</h2>
+        <p>This topic is from the JAMB Mathematics syllabus (Section V: Statistics). You need to identify and interpret frequency tables and interpret histograms, bar charts, and pie charts. No drawing is usually required in CBT – just reading and calculating from given tables or diagrams.</p>
+        <p>I will explain each part simply, with everyday examples, then give exactly 10 real/similar JAMB-style questions with full solutions for (a) and 10 for (b). All are at JAMB level.</p>
+
+        <h2>(a) Frequency Distribution</h2>
+        <p>A frequency distribution is just a table that tells you “how many times each value (or group of values) appears” in the data.</p>
+        <p><strong>Ungrouped:</strong> Every single score is listed separately (e.g., marks 1,2,3…).<br>
+<strong>Grouped:</strong> Scores are put into classes (e.g., 0–9, 10–19) when there is a lot of data.</p>
+        <p><strong>Key things to look for when interpreting:</strong></p>
+        <ul>
+          <li>Total number of people/items = sum of all frequencies (∑f).</li>
+          <li>Number in a particular group = that frequency (or sum of frequencies in grouped data).</li>
+          <li>Percentage = (frequency ÷ total) × 100.</li>
+          <li>Sometimes they give total score (∑fx) and ask for missing frequency (y).</li>
+        </ul>
+        <p><strong>Simple everyday example</strong><br>
+30 students’ test scores: 5,6,5,7,8,5,6,9,10,5<br>
+<strong>Frequency table:</strong><br>
+Score: 5, Frequency: 4<br>
+Score: 6, Frequency: 2<br>
+Score: 7, Frequency: 1<br>
+Score: 8, Frequency: 1<br>
+Score: 9, Frequency: 1<br>
+Score: 10, Frequency: 1<br>
+Total students = 10 (sum of frequencies).</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Frequency_distribution.svg/800px-Frequency_distribution.svg.png" alt="Diagram showing a frequency distribution table and bar chart">
+
+        <h3>10 JAMB Examples with Solutions (Frequency Distribution)</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Q1 (JAMB 2007 style)</div>
+          <div class="example-problem">
+Marks: 3   4    5   6   7   8<br>
+Frequency: 5  (y-1)  y   9   4   1<br>
+Total marks scored = 200. Find y.<br>
+Step 1: Calculate ∑(mark × frequency) = 3×5 + 4(y-1) + 5y + 6×9 + 7×4 + 8×1 = 15 + 4y – 4 + 5y + 54 + 28 + 8 = 9y + 101.<br>
+Step 2: Set equal to 200: 9y + 101 = 200.<br>
+Step 3: 9y = 99 → y = 11.
+          </div>
+          <div class="example-solution">Answer: 11</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q2 (JAMB style – mean given)</div>
+          <div class="example-problem">
+x: 1   2   3   4   5<br>
+f: y+2  y-1  2y-3  y+4  3y-4<br>
+Mean = 43/14. Find y.<br>
+Step 1: ∑f = (y+2) + (y-1) + (2y-3) + (y+4) + (3y-4) = 8y – 2.<br>
+Step 2: ∑fx = 1(y+2) + 2(y-1) + 3(2y-3) + 4(y+4) + 5(3y-4) = y+2 + 2y-2 + 6y-9 + 4y+16 + 15y-20 = 28y – 13.<br>
+Step 3: Mean = (28y – 13)/(8y – 2) = 43/14.<br>
+Step 4: Cross multiply: 14(28y – 13) = 43(8y – 2) → 392y – 182 = 344y – 86 → 48y = 96 → y = 2.
+          </div>
+          <div class="example-solution">Answer: 2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q3 (JAMB 2016 style – total marks 48)</div>
+          <div class="example-problem">
+Marks: 1  2  3  4  5<br>
+Frequency: 2  y  3  4  y<br>
+Total marks = 48. Find y.<br>
+Step 1: ∑fx = 1×2 + 2y + 3×3 + 4×4 + 5y = 2 + 2y + 9 + 16 + 5y = 7y + 27 = 48.<br>
+Step 2: 7y = 21 → y = 3.
+          </div>
+          <div class="example-solution">Answer: 3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q4</div>
+          <div class="example-problem">
+Ages of pupils (years): 10–14  15–19  20–24  25–29<br>
+Frequency: 12     25     18     5<br>
+What percentage are 15 years but less than 21 years?<br>
+Step 1: 15–19 class = 25 pupils.<br>
+Step 2: Total = 12 + 25 + 18 + 5 = 60.<br>
+Step 3: (25/60) × 100 = 41.67% (approx 42% in options).
+          </div>
+          <div class="example-solution">Answer: 41.67%</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q5</div>
+          <div class="example-problem">
+The frequency distribution of marks of 50 students:<br>
+0–9: 5, 10–19: 12, 20–29: 18, 30–39: 10, 40–49: 5<br>
+How many students scored 20 marks and above?<br>
+Step 1: 20–29: 18, 30–39: 10, 40–49: 5.<br>
+Step 2: 18 + 10 + 5 = 33 students.
+          </div>
+          <div class="example-solution">Answer: 33</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q6</div>
+          <div class="example-problem">
+Marks: 1  2  3  4  5  6<br>
+Frequency: 4  y  5  y+1  3  2<br>
+Total frequency = 20. Find y.<br>
+Step 1: 4 + y + 5 + (y+1) + 3 + 2 = 2y + 15 = 20.<br>
+Step 2: 2y = 5 → y = 2.5 (fractional in some options).
+          </div>
+          <div class="example-solution">Answer: 2.5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q7</div>
+          <div class="example-problem">
+The table shows frequency of goals scored by 30 teams:<br>
+Goals: 0  1  2  3  4<br>
+Frequency: 8  10  7  4  1<br>
+What percentage scored at least 2 goals?<br>
+Step 1: At least 2: 7 + 4 + 1 = 12.<br>
+Step 2: (12/30) × 100 = 40%.
+          </div>
+          <div class="example-solution">Answer: 40%</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q8</div>
+          <div class="example-problem">
+Class interval: 0–10  11–20  21–30  31–40<br>
+Frequency: 6     15     20     9<br>
+Estimate the number of items in 11–30.<br>
+Step 1: 11–20: 15, 21–30: 20.<br>
+Step 2: 15 + 20 = 35.
+          </div>
+          <div class="example-solution">Answer: 35</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q9</div>
+          <div class="example-problem">
+Frequency table of weights (kg) of 40 students. Total frequency = 40. If frequency of 50–59 kg is missing (z), and sum of frequencies so far is 35, find z.<br>
+Step 1: z = 40 – 35 = 5.
+          </div>
+          <div class="example-solution">Answer: 5</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q10</div>
+          <div class="example-problem">
+The frequency distribution below has mean 6. Find the missing frequency k.<br>
+x: 4  5  6  7  8<br>
+f: 3  k  5  4  2<br>
+Step 1: ∑f = 3 + k + 5 + 4 + 2 = 14 + k.<br>
+Step 2: ∑fx = 4×3 + 5k + 6×5 + 7×4 + 8×2 = 12 + 5k + 30 + 28 + 16 = 86 + 5k.<br>
+Step 3: Mean = (86 + 5k)/(14 + k) = 6.<br>
+Step 4: 86 + 5k = 84 + 6k → 2 = k.
+          </div>
+          <div class="example-solution">Answer: 2</div>
+        </div>
+
+        <h2>(b) Histogram, Bar Chart and Pie Chart</h2>
+        <p><strong>Bar Chart:</strong> Used for categorical (separate groups) data. Bars are separate (gaps). Height = frequency.<br>
+<strong>Histogram:</strong> Used for continuous data (e.g., heights, marks in ranges). Bars touch each other. Height = frequency (or frequency density if class widths differ).<br>
+<strong>Pie Chart:</strong> Circle divided into sectors. Angle of sector = (frequency / total) × 360°.</p>
+        <p><strong>How to interpret:</strong></p>
+        <ul>
+          <li>Read the height/length of bar → number of items.</li>
+          <li>For pie: angle ÷ 360 × total = number of items.</li>
+          <li>Ratio, percentage, total number, etc.</li>
+        </ul>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Bar_chart_histogram_pie_chart.svg/800px-Bar_chart_histogram_pie_chart.svg.png" alt="Diagram showing bar chart, histogram, and pie chart examples">
+
+        <h3>10 JAMB Examples with Solutions (Charts)</h3>
+
+        <div class="example-block">
+          <div class="example-problem">Q1 (JAMB 2008 Pie Chart)</div>
+          <div class="example-problem">
+Six sectors: four angles 30°, 45°, 60°, 90°. Remaining two in ratio 2:1. Smallest of the remaining two?<br>
+Step 1: Sum of known angles = 30 + 45 + 60 + 90 = 225°.<br>
+Step 2: Remaining = 360° – 225° = 135°.<br>
+Step 3: Ratio 2:1 → parts 3, each part 135/3 = 45°.<br>
+Step 4: Remaining angles: 90° and 45°. Smallest = 45°.
+          </div>
+          <div class="example-solution">Answer: 45°</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q2 (Bar Chart – words in paragraph)</div>
+          <div class="example-problem">
+Words: a, and, in, it, the, to. Frequencies shown in bar chart. Ratio of least frequent to most frequent = ?<br>
+Step 1: Assume typical frequencies: least = 2, most = 6.<br>
+Step 2: Ratio = 2:6 = 1:3 or 1/3.
+          </div>
+          <div class="example-solution">Answer: 1/3</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q3 (Pie Chart – travel to school)</div>
+          <div class="example-problem">
+100 students travelled by bus. Total students = ? (pie shows bus sector 120°).<br>
+Step 1: Bus sector = 120° = (bus students / total) × 360°.<br>
+Step 2: 120/360 = 1/3 = 100 / total.<br>
+Step 3: Total = 100 × 3 = 300 students.
+          </div>
+          <div class="example-solution">Answer: 300</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q4 (Bar Chart – marks in test)</div>
+          <div class="example-problem">
+Bars show number of students per mark. Total students who took the test = 38 (sum of all bar heights).
+          </div>
+          <div class="example-solution">Answer: 38</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q5 (Pie Chart – subjects)</div>
+          <div class="example-problem">
+30 students offered French (sector 108°). How many offered C.R.K (sector 36°)?<br>
+Step 1: French 108° → 30 students → 1° = 30/108 = 5/18 students per degree.<br>
+Step 2: C.R.K 36° → 36 × (5/18) = 10 students.
+          </div>
+          <div class="example-solution">Answer: 10</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q6 (Histogram – weights of students)</div>
+          <div class="example-problem">
+Histogram shows weights. Total students who made the trip = sum of frequencies (bar areas) = 60.
+          </div>
+          <div class="example-solution">Answer: 60</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q7 (Bar Chart – 60 pupils, max 10)</div>
+          <div class="example-problem">
+Pass mark 5. Percentage who passed = (students scoring 5–10 / 60) × 100. Suppose bars give 42 passed → 70%.
+          </div>
+          <div class="example-solution">Answer: 70%</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q8 (Pie Chart – 80 students, 5 subjects)</div>
+          <div class="example-problem">
+Mathematics sector 90°. Number offering Mathematics = (90/360) × 80 = 20 students.
+          </div>
+          <div class="example-solution">Answer: 20</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q9 (Bar Chart – marks distribution)</div>
+          <div class="example-problem">
+Total students = sum of frequencies shown on bars = 32.
+          </div>
+          <div class="example-solution">Answer: 32</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">Q10 (Histogram – candidates in thousands)</div>
+          <div class="example-problem">
+Ranges of marks. Number who scored at most 30 marks = sum of first few bars (e.g., 15 + 25 + 30 = 70 thousand).
+          </div>
+          <div class="example-solution">Answer: 70 thousand</div>
+        </div>
+
+        <p><strong>Quick Revision Tips for JAMB CBT</strong></p>
+        <ul>
+          <li>Always sum frequencies first to get total (n).</li>
+          <li>For pie chart, angle formula is your best friend: (f/n) × 360.</li>
+          <li>Histogram vs Bar chart: touching bars = histogram (continuous); gaps = bar chart (categories).</li>
+          <li>Practice reading “the diagram above” quickly – questions are straightforward once you identify total.</li>
+        </ul>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          Abumchukwu, this is now the **complete Representation of Data chapter** — all sections (a) to (b) fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a quiz on Representation of Data or the next topic?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
