@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Gravitational Field</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);
+      --highlight-solution: #ff9800;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background: #3a3a5a;
+      color: var(--accent);
+    }
+
+    .graph-img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 12px 0;
+      border: 2px solid #444;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Gravitational Field</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Gravitational Field: Super Easy Guide for JAMB</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Gravitational Field: Step-by-Step Explanation</h2>
+        <p>The explanations are structured around the subtopics listed by JAMB Standard, with simple language, key formulas, and examples. We'll cover definitions, derivations where needed, and real-world applications. At the end, I'll provide 10 JAMB-style past questions with step-by-step solutions.</p>
+
+        <h3>(i) Newton’s Law of Universal Gravitation</h3>
+        <p>Newton's law states that every particle in the universe attracts every other particle with a force that is directly proportional to the product of their masses and inversely proportional to the square of the distance between their centers.</p>
+        <p><strong>Key Expression:</strong> The gravitational force <strong>F</strong> between two bodies of masses <strong>m₁</strong> and <strong>m₂</strong> separated by distance <strong>r</strong> is:<br>
+<strong>F = G (m₁ m₂) / r²</strong><br>
+where <strong>G</strong> is the universal gravitational constant (<strong>G = 6.67 × 10⁻¹¹ N m² kg⁻²</strong>).</p>
+        <p><strong>Step-by-Step Understanding:</strong></p>
+        <ul>
+          <li>The force is attractive and acts along the line joining the centers of the two masses.</li>
+          <li>It's a mutual force: the Earth pulls on an apple, and the apple pulls on the Earth with the same force.</li>
+          <li>If distance doubles, force becomes 1/4 (inverse square law). If masses double, force quadruples.</li>
+        </ul>
+        <p><strong>Application:</strong> Explains planetary motion, tides, and why objects fall to Earth.</p>
+        <p><strong>Dimensional Analysis of G:</strong> <strong>G</strong> has dimensions <strong>M⁻¹ L³ T⁻²</strong> (derived from <strong>F = ma</strong>, so <strong>G = F r² / (m₁ m₂)</strong>).</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Universal_gravitation.svg/800px-Universal_gravitation.svg.png" alt="Diagram illustrating Newton's law of universal gravitation between two masses">
+
+        <h3>(ii) Gravitational Potential</h3>
+        <p>Gravitational potential at a point is the work done per unit mass in bringing a small test mass from infinity to that point.</p>
+        <p><strong>Key Expression:</strong> For a point mass <strong>M</strong> at distance <strong>r</strong>:<br>
+<strong>V = - G M / r</strong><br>
+(Negative sign because work is done by the field, and potential at infinity is zero).</p>
+        <p><strong>Step-by-Step Understanding:</strong></p>
+        <ul>
+          <li>Potential is a scalar (no direction).</li>
+          <li>Gravitational potential energy for mass <strong>m</strong> is <strong>U = m V = - G M m / r</strong>.</li>
+          <li>Near Earth's surface, it approximates to <strong>m g h</strong> (where <strong>h</strong> is height, but this is for small distances).</li>
+        </ul>
+        <p><strong>Derivation:</strong> Work done <strong>W = ∫ from ∞ to r F dr = ∫ from ∞ to r (G M m / r²) dr = - G M m / r</strong>. So, <strong>V = W / m</strong>.</p>
+        <p><strong>Application:</strong> Used in calculating energy for satellites or escape from planets.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Gravitational_potential.svg/800px-Gravitational_potential.svg.png" alt="Diagram showing gravitational potential around a point mass">
+
+        <h3>(iii) Conservative and Non-Conservative Fields</h3>
+        <p>A field is a region where a force acts on an object without contact.</p>
+        <p><strong>Conservative Field:</strong> Work done by the force is independent of the path taken (depends only on start and end points). Energy is conserved.</p>
+        <p>Example: Gravitational field (e.g., lifting a book up stairs or ramp uses the same energy against gravity).</p>
+        <p><strong>Test:</strong> If work in a closed loop is zero, it's conservative.</p>
+        <p><strong>Non-Conservative Field:</strong> Work done depends on the path.</p>
+        <p>Examples: Frictional force (sliding a box along rough path uses more energy than smooth one), air resistance.</p>
+        <p><strong>Step-by-Step Understanding:</strong></p>
+        <ul>
+          <li>Gravitational fields are conservative because gravity is a central force.</li>
+          <li>In conservative fields, potential energy can be defined (like gravitational potential).</li>
+          <li>Non-conservative fields dissipate energy (e.g., as heat in friction).</li>
+        </ul>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Conservative_non_conservative_fields.svg/800px-Conservative_non_conservative_fields.svg.png" alt="Diagram comparing conservative and non-conservative fields with path independence">
+
+        <h3>(iv) Acceleration Due to Gravity</h3>
+        <p>Acceleration due to gravity (<strong>g</strong>) is the gravitational field strength—the force per unit mass.</p>
+        <p><strong>Key Expression:</strong> Near Earth's surface, <strong>g = G M / R² ≈ 9.8 m/s²</strong> (or 10 m/s² for calculations).</p>
+        <p>From Newton's law: <strong>F = m g</strong>, so <strong>g = F / m = G M / r²</strong>.</p>
+        <p><strong>Step-by-Step Understanding:</strong></p>
+        <ul>
+          <li>It's the acceleration of free-falling objects (ignoring air resistance).</li>
+          <li>All objects fall with the same <strong>g</strong> regardless of mass (Galileo's experiment).</li>
+        </ul>
+        <p><strong>Derivation:</strong> For Earth (mass <strong>M</strong>, radius <strong>R</strong>), weight <strong>m g = G (M m) / R²</strong>, so <strong>g = G M / R²</strong>.</p>
+        <p><strong>Application:</strong> Motion under gravity (e.g., equations: <strong>v = u + g t</strong>, <strong>s = u t + (1/2) g t²</strong>).</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Acceleration_due_to_gravity.svg/800px-Acceleration_due_to_gravity.svg.png" alt="Diagram showing acceleration due to gravity near Earth's surface">
+
+        <h3>(v) Variation of g on the Earth’s Surface</h3>
+        <p><strong>g</strong> is not constant everywhere on Earth.</p>
+        <p><strong>Causes of Variation:</strong></p>
+        <ul>
+          <li><strong>Earth's Shape:</strong> Earth is oblate (flattened at poles), so radius at equator > poles. <strong>g</strong> higher at poles (<strong>g_p ≈ 9.83 m/s²</strong>) than equator (<strong>g_e ≈ 9.78 m/s²</strong>).</li>
+          <li><strong>Rotation (Centrifugal Effect):</strong> At equator, centrifugal force opposes gravity, reducing effective <strong>g</strong>.</li>
+          <li><strong>Altitude/Depth:</strong> <strong>g</strong> decreases with height (e.g., on mountains) or inside Earth.</li>
+          <li><strong>Local Density Variations:</strong> Denser rocks increase <strong>g</strong>.</li>
+        </ul>
+        <p><strong>Step-by-Step Understanding:</strong></p>
+        <ul>
+          <li>Formula: Effective <strong>g' = g - ω² R cos² φ</strong> (where <strong>ω</strong> is angular velocity, <strong>φ</strong> latitude).</li>
+          <li>At poles (<strong>φ = 90°</strong>), no centrifugal; at equator (<strong>φ = 0°</strong>), maximum reduction.</li>
+        </ul>
+        <p><strong>Application:</strong> Weighing scales show slight differences at different locations.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Variation_g_with_latitude.svg/800px-Variation_g_with_latitude.svg.png" alt="Diagram showing variation of g with latitude on Earth's surface">
+
+        <h3>(vi) Distinction Between Mass and Weight; Escape Velocity</h3>
+        <p><strong>Mass vs. Weight:</strong></p>
+        <ul>
+          <li><strong>Mass (m):</strong> Amount of matter; scalar; constant; measured in kg; inertial property (resists motion).</li>
+          <li><strong>Weight (w):</strong> Force due to gravity (<strong>w = m g</strong>); vector (downward); varies with location; measured in N.</li>
+        </ul>
+        <p><strong>Key Difference:</strong> Mass is invariant; weight changes (e.g., zero in free fall, less on Moon).</p>
+        <p><strong>Escape Velocity:</strong> Minimum speed to escape a planet's gravitational pull without further propulsion.</p>
+        <p><strong>Expression:</strong> <strong>v_e = √(2 G M / R) = √(2 g R)</strong>.</p>
+        <p>For Earth (<strong>R = 6.4 × 10⁶ m</strong>, <strong>g = 10 m/s²</strong>): <strong>v_e ≈ 11.2 km/s</strong>.</p>
+        <p><strong>Step-by-Step Understanding:</strong></p>
+        <ul>
+          <li>Derivation: Kinetic energy = potential energy difference: <strong>(1/2) m v_e² = G M m / R</strong> → <strong>v_e = √(2 G M / R)</strong>.</li>
+        </ul>
+        <p><strong>Application:</strong> Rockets need this speed to leave Earth; black holes have <strong>v_e = c</strong> (speed of light).</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Escape_velocity.svg/800px-Escape_velocity.svg.png" alt="Diagram showing escape velocity from a planet's surface">
+
+        <h3>(vii) Parking Orbit and Weightlessness</h3>
+        <p><strong>Parking Orbit:</strong> A stable orbit where a satellite appears stationary relative to Earth (geostationary orbit).</p>
+        <p><strong>Conditions:</strong> Equatorial plane; period = 24 hours (matches Earth's rotation).</p>
+        <p><strong>Radius:</strong> From <strong>T = 2π √(r³ / G M)</strong>, <strong>r ≈ 42,000 km</strong>.</p>
+        <p><strong>Application:</strong> Communication satellites (e.g., for TV signals).</p>
+        <p><strong>Weightlessness:</strong> Apparent zero weight in free fall or orbit.</p>
+        <p><strong>Causes:</strong> In orbit, centrifugal force balances gravity, so net force feels zero.</p>
+        <p>Examples: Astronauts in space stations; objects in free-falling elevators.</p>
+        <p>Not true zero gravity—gravity still acts, but you're in perpetual free fall.</p>
+        <p><strong>Step-by-Step Understanding:</strong></p>
+        <ul>
+          <li>In orbit: Centripetal force = gravitational force: <strong>G M m / r² = m v² / r</strong>.</li>
+          <li>Weightlessness: Effective <strong>g = 0</strong>; scales read zero because everything accelerates together.</li>
+        </ul>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Geostationary_orbit.svg/800px-Geostationary_orbit.svg.png" alt="Diagram showing geostationary parking orbit and weightlessness in space">
+
+        <h3>10 JAMB-Style Examples with Step-by-Step Solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. (JAMB 2006): If the radius of the Earth is 6.4 × 10⁶ m, the escape velocity of a satellite from the Earth is? [g = 10 m/s²]</div>
+          <div class="example-problem">
+A. 1.13 × 10⁴ m/s B. 9.00 × 10³ m/s C. 8.00 × 10³ m/s D. 1.27 × 10⁴ m/s<br>
+Step 1: Escape velocity <strong>v_e = √(2 g R)</strong>.<br>
+Step 2: 2 × 10 × 6.4 × 10⁶ = 1.28 × 10⁸.<br>
+Step 3: √(1.28 × 10⁸) ≈ 1.13 × 10⁴ m/s.
+          </div>
+          <div class="example-solution">Answer: A. 1.13 × 10⁴ m/s</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. (Similar to JAMB 1995): What is the minimum escape velocity from Earth's surface? [R = 6.4 × 10³ km, g = 10 m/s²]</div>
+          <div class="example-problem">
+A. 14 km/s B. 13 km/s C. 12 km/s D. 11 km/s<br>
+Step 1: R = 6.4 × 10⁶ m.<br>
+Step 2: v_e = √(2 × 10 × 6.4 × 10⁶) = √(1.28 × 10⁸) ≈ 11,314 m/s ≈ 11 km/s.<br>
+Step 3: Matches option D.
+          </div>
+          <div class="example-solution">Answer: D. 11 km/s</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. (JAMB-style on Force): A force of 200 N acts between two objects at a certain distance apart. The value of the force when the distance is halved is?</div>
+          <div class="example-problem">
+A. 50 N B. 100 N C. 400 N D. 800 N<br>
+Step 1: F ∝ 1/r².<br>
+Step 2: r to r/2, F new = F × (r / (r/2))² = 200 × 4 = 800 N.<br>
+Step 3: Matches option D.
+          </div>
+          <div class="example-solution">Answer: D. 800 N</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. (JAMB 2009): The value of x, y, and z respectively in the expression M^x L^y T^z for the universal gravitational constant G are?</div>
+          <div class="example-problem">
+A. 2, -3, -2 B. -1, 3, -2 C. -1, 2, -3 D. -2, -1, 3<br>
+Step 1: G = F r² / (m₁ m₂).<br>
+Step 2: F = M L T⁻², so G = (M L T⁻²) L² / M² = M⁻¹ L³ T⁻².<br>
+Step 3: x = -1, y = 3, z = -2, matches option B.
+          </div>
+          <div class="example-solution">Answer: B. -1, 3, -2</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. (JAMB 2010): An object is weighed at different locations on the Earth. What will be the right observation?</div>
+          <div class="example-problem">
+A. Both mass and weight vary B. Weight constant, mass varies C. Mass constant, weight varies D. Both constant<br>
+Step 1: Mass is constant (amount of matter).<br>
+Step 2: Weight = m g, g varies with location.<br>
+Step 3: Matches option C.
+          </div>
+          <div class="example-solution">Answer: C. Mass constant, weight varies</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. (JAMB 2010): A stone and a feather are dropped from the same height above the earth surface. Ignoring air resistance, which is correct?</div>
+          <div class="example-problem">
+A. Feather blown away, stone steady B. Both reach ground same time C. Feather first D. Stone first<br>
+Step 1: g same for all masses.<br>
+Step 2: t = √(2h/g), same.<br>
+Step 3: Matches option B.
+          </div>
+          <div class="example-solution">Answer: B. Both reach ground same time</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. (Similar to JAMB): A satellite of mass 500 kg orbits where the gravitational field strength is 2.5 N/kg. What is the gravitational force on it?</div>
+          <div class="example-problem">
+A. 1250 N B. 200 N C. 1000 N D. 2500 N<br>
+Step 1: Field strength = g = F/m.<br>
+Step 2: F = m g = 500 × 2.5 = 1250 N.<br>
+Step 3: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 1250 N</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. (JAMB-style on Variation of g): The acceleration due to gravity is maximum at the?</div>
+          <div class="example-problem">
+A. Equator B. Poles C. Mountains D. Ocean<br>
+Step 1: Poles: smaller radius, no centrifugal.<br>
+Step 2: g higher at poles.<br>
+Step 3: Matches option B.
+          </div>
+          <div class="example-solution">Answer: B. Poles</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. (JAMB-style on Potential): The gravitational potential at a point due to Earth is -6.25 × 10⁷ J/kg. What is the potential energy of a 2 kg mass there?</div>
+          <div class="example-problem">
+A. -1.25 × 10⁸ J B. -3.125 × 10⁷ J C. 1.25 × 10⁸ J D. 3.125 × 10⁷ J<br>
+Step 1: U = m V.<br>
+Step 2: 2 × (-6.25 × 10⁷) = -1.25 × 10⁸ J.<br>
+Step 3: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. -1.25 × 10⁸ J</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. (JAMB-style on Weightlessness): Astronauts experience weightlessness in space because?</div>
+          <div class="example-problem">
+A. No gravity in space B. In free fall around Earth C. Mass is zero D. Air absence<br>
+Step 1: Orbit is free fall.<br>
+Step 2: Gravity provides centripetal, apparent weight zero.<br>
+Step 3: Matches option B.
+          </div>
+          <div class="example-solution">Answer: B. In free fall around Earth</div>
+        </div>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          This is now the **complete Gravitational Field chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Gravitational Field?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
