@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Introduction to Elasticity</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);
+      --highlight-solution: #ff9800;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .graph-img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 12px 0;
+      border: 2px solid #444;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Introduction to Elasticity</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Introduction to Elasticity – JAMB Guide 🚀</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Introduction to Elasticity</h2>
+        <p>Elasticity is the property of a material that allows it to return to its original shape and size after a deforming force is removed. Materials like rubber bands, springs, and metal wires exhibit elasticity up to a certain point. Beyond that, they may deform permanently or break. This topic covers how materials behave under stretching or compression, based on principles from physics textbooks like New School Physics by M.W. Anyakoha.</p>
+        <p>We'll break it down step by step for easy understanding, following the JAMB objectives: interpreting force-extension curves, Hooke's law and Young's modulus, using a spring balance, and calculating work done in springs and elastic strings.</p>
+
+        <h3>Step 1: Understanding Hooke's Law</h3>
+        <p>Hooke's law states that, provided the elastic limit is not exceeded, the extension (or compression) of an elastic material is directly proportional to the applied force.</p>
+        <p><strong>Mathematical Expression: F = k e</strong></p>
+        <ul>
+          <li><strong>F</strong> = applied force (in Newtons, N)</li>
+          <li><strong>e</strong> = extension (change in length, in meters, m)</li>
+          <li><strong>k</strong> = spring constant or force constant (in N/m), which measures the stiffness of the material. A higher <strong>k</strong> means the material is stiffer and harder to stretch.</li>
+        </ul>
+        <p><strong>Elastic Limit:</strong> This is the maximum force or stress beyond which the material does not return to its original shape when the force is removed. Up to this point, deformation is elastic (temporary); beyond it, it's plastic (permanent).</p>
+        <p><strong>Example in Everyday Life:</strong> When you pull a rubber band gently, it stretches and snaps back. If you pull too hard, it stays stretched or breaks.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Hookes_law.svg/800px-Hookes_law.svg.png" alt="Diagram showing Hooke's law: straight line up to elastic limit on force-extension graph">
+
+        <h3>Step 2: Young's Modulus</h3>
+        <p>Young's modulus (<strong>E</strong>) is a measure of the stiffness of a material. It tells us how much a material will stretch under a given force, independent of its size or shape.</p>
+        <p><strong>Definitions:</strong></p>
+        <ul>
+          <li><strong>Stress</strong> = Force per unit cross-sectional area = <strong>F / A</strong> (in N/m² or Pascals, Pa)</li>
+          <li><strong>Strain</strong> = Extension per unit original length = <strong>e / L</strong> (no units, it's a ratio)</li>
+          <li><strong>Young's Modulus:</strong> <strong>E = Stress / Strain = (F / A) / (e / L) = F L / (A e)</strong></li>
+        </ul>
+        <p>Units: N/m² or Pa.</p>
+        <p>It applies within the elastic limit and is constant for a given material (e.g., steel has a high E, rubber has a low E).</p>
+        <p><strong>Interpretation:</strong> A material with high Young's modulus (like diamond) resists deformation more than one with low modulus (like rubber).</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Young%27s_modulus.svg/800px-Young%27s_modulus.svg.png" alt="Diagram showing stress-strain curve with Young's modulus as the slope in elastic region">
+
+        <h3>Step 3: Force-Extension Curves</h3>
+        <p>A force-extension graph shows how a material responds to increasing force. Plot force (F) on the y-axis and extension (e) on the x-axis.</p>
+        <p><strong>Key Points on the Curve:</strong></p>
+        <ul>
+          <li><strong>Proportional Limit (P):</strong> Up to here, the graph is a straight line (obeys Hooke's law exactly). Slope = k = F/e.</li>
+          <li><strong>Elastic Limit (E):</strong> Slightly beyond P, the material still returns to original shape if force is removed.</li>
+          <li><strong>Yield Point (Y):</strong> Permanent deformation begins; the material "yields" and stretches more easily.</li>
+          <li><strong>Breaking Point (B):</strong> The material snaps or breaks under maximum stress.</li>
+        </ul>
+        <p><strong>Interpretation:</strong></p>
+        <ul>
+          <li>Straight line region: Elastic behavior.</li>
+          <li>Curved region: Plastic behavior.</li>
+          <li>Area under the curve represents work done (energy stored or dissipated).</li>
+        </ul>
+        <p>How to Interpret: If the curve is steep, the material is stiff (high k or E). If it has a long plastic region, the material is ductile (can be drawn into wires, like copper).</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Stress-strain_curve.svg/800px-Stress-strain_curve.svg.png" alt="Typical stress-strain (or force-extension) curve showing proportional limit, elastic limit, yield point, and breaking point">
+
+        <h3>Step 4: Spring Balance as a Device for Measuring Force</h3>
+        <p>A spring balance (or Newton meter) uses Hooke's law to measure force, like weight.</p>
+        <p><strong>How It Works:</strong></p>
+        <ul>
+          <li>A mass hangs on the spring, causing extension e.</li>
+          <li>The force (weight) = mg, where m = mass, g = 9.8 m/s² (or 10 m/s² in some problems).</li>
+          <li>From Hooke's law: mg = k e, so force is read from the scale calibrated to extension.</li>
+        </ul>
+        <p><strong>Usage:</strong> Hang the object, read the extension on the scale, which is marked in Newtons. It's accurate within the elastic limit.</p>
+        <p><strong>Tip:</strong> If two springs are in series (end-to-end), effective k = k₁ k₂ / (k₁ + k₂). In parallel (side-by-side), k = k₁ + k₂.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Spring_balance.svg/800px-Spring_balance.svg.png" alt="Diagram of a spring balance showing how extension measures force (weight)">
+
+        <h3>Step 5: Work Done in Springs and Elastic Strings</h3>
+        <p>When you stretch a spring or elastic string, you do work, which is stored as elastic potential energy.</p>
+        <p><strong>Work Done (W):</strong> Since force increases from 0 to F, average force = F/2.</p>
+        <p><strong>W = ½ F e</strong></p>
+        <p>Or, from Hooke's law (F = k e): <strong>W = ½ k e²</strong></p>
+        <p><strong>Work Done Per Unit Volume:</strong></p>
+        <ul>
+          <li>Volume of material = A L (cross-section A, length L).</li>
+          <li>Work per unit volume = <strong>W / (A L) = ½ × (F e) / (A L) = ½ × stress × strain</strong></li>
+        </ul>
+        <p><strong>Interpretation:</strong> This energy is released when the material snaps back (e.g., in a catapult). For strings, it's similar but often treated as 1D.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Elastic_potential_energy.svg/800px-Elastic_potential_energy.svg.png" alt="Diagram showing work done as area under force-extension curve for a spring">
+
+        <h3>10 JAMB-Style Examples with Step-by-Step Solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. A spring extends by 0.05 m when a force of 10 N is applied. What is the spring constant k?</div>
+          <div class="example-problem">
+A. 50 N/m B. 100 N/m C. 200 N/m D. 500 N/m<br>
+Step 1: Use Hooke's law: <strong>F = k e</strong>.<br>
+Step 2: Rearrange: k = F / e = 10 / 0.05 = 200 N/m.<br>
+Step 3: Matches option C.
+          </div>
+          <div class="example-solution">Answer: C. 200 N/m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. A wire of length 3 m and cross-sectional area 2 × 10⁻⁶ m² is extended by 0.003 m under a force of 50 N. Calculate Young's modulus.</div>
+          <div class="example-problem">
+A. 2.5 × 10¹⁰ Pa B. 5 × 10¹⁰ Pa C. 2.5 × 10⁹ Pa D. 5 × 10⁹ Pa<br>
+Step 1: <strong>E = (F L) / (A e)</strong>.<br>
+Step 2: F = 50 N, L = 3 m, A = 2 × 10⁻⁶ m², e = 0.003 m.<br>
+Step 3: E = (50 × 3) / (2 × 10⁻⁶ × 0.003) = 150 / (6 × 10⁻⁹) = 2.5 × 10¹⁰ Pa.<br>
+Step 4: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 2.5 × 10¹⁰ Pa</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. In a force-extension graph, the straight-line portion ends at F = 20 N and e = 0.02 m. What is the elastic limit if this is the proportional limit?</div>
+          <div class="example-problem">
+A. 20 N B. Slightly above 20 N C. 0.02 m D. Cannot determine<br>
+Step 1: Proportional limit is where the line is straight (Hooke's law holds).<br>
+Step 2: Elastic limit is slightly beyond this point, where material still returns to shape.<br>
+Step 3: Matches option B.
+          </div>
+          <div class="example-solution">Answer: B. Slightly above 20 N</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. A spring balance reads 5 N when a mass of 0.5 kg is hung on it. What is the extension if k = 100 N/m? (g = 10 m/s²)</div>
+          <div class="example-problem">
+A. 0.05 m B. 0.1 m C. 0.5 m D. 5 m<br>
+Step 1: Force = mg = 0.5 × 10 = 5 N (matches reading).<br>
+Step 2: e = F / k = 5 / 100 = 0.05 m.<br>
+Step 3: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 0.05 m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. Work done in stretching a spring by 0.1 m is 2 J. What is the spring constant k?</div>
+          <div class="example-problem">
+A. 200 N/m B. 400 N/m C. 40 N/m D. 20 N/m<br>
+Step 1: <strong>W = ½ k e²</strong>.<br>
+Step 2: 2 = ½ k (0.1)² → 2 = ½ k × 0.01 → 2 = 0.005 k.<br>
+Step 3: k = 2 / 0.005 = 400 N/m.<br>
+Step 4: Matches option B.
+          </div>
+          <div class="example-solution">Answer: B. 400 N/m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. A material breaks at a stress of 10⁸ Pa. If its Young's modulus is 2 × 10¹⁰ Pa, what is the strain at breaking point?</div>
+          <div class="example-problem">
+A. 0.005 B. 0.05 C. 0.5 D. 5<br>
+Step 1: <strong>E = stress / strain</strong>.<br>
+Step 2: strain = stress / E = 10⁸ / (2 × 10¹⁰) = 0.005.<br>
+Step 3: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 0.005</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. Two springs of constants 100 N/m and 200 N/m are connected in series. What is the effective k?</div>
+          <div class="example-problem">
+A. 66.7 N/m B. 150 N/m C. 300 N/m D. 50 N/m<br>
+Step 1: For series: <strong>1/k_eff = 1/k₁ + 1/k₂</strong>.<br>
+Step 2: 1/k_eff = 1/100 + 1/200 = 0.01 + 0.005 = 0.015.<br>
+Step 3: k_eff = 1 / 0.015 ≈ 66.7 N/m.<br>
+Step 4: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 66.7 N/m</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. The work done per unit volume in an elastic string stretched to strain 0.02 with stress 4 × 10⁶ Pa is:</div>
+          <div class="example-problem">
+A. 4 × 10⁴ J/m³ B. 8 × 10⁴ J/m³ C. 4 × 10⁶ J/m³ D. 2 × 10⁴ J/m³<br>
+Step 1: Work/volume = <strong>½ × stress × strain</strong>.<br>
+Step 2: ½ × 4 × 10⁶ × 0.02 = ½ × 8 × 10⁴ = 4 × 10⁴ J/m³.<br>
+Step 3: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 4 × 10⁴ J/m³</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. A yield point on a force-extension curve indicates:</div>
+          <div class="example-problem">
+A. Start of permanent deformation B. Breaking point C. Elastic limit D. Proportional limit<br>
+Step 1: Yield point is where material begins to deform plastically after elastic limit.<br>
+Step 2: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. Start of permanent deformation</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. A catapult stretches a rubber string by 0.08 m with average force 50 N. What is the work done? (Assume elastic.)</div>
+          <div class="example-problem">
+A. 2 J B. 4 J C. 8 J D. 16 J<br>
+Step 1: <strong>W = ½ F e</strong> (average force used in simple calculation).<br>
+Step 2: W = ½ × 50 × 0.08 = ½ × 4 = 2 J.<br>
+Step 3: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 2 J</div>
+        </div>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          This is now the **complete Introduction to Elasticity chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Elasticity?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
