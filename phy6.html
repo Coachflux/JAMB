@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Friction</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);
+      --highlight-solution: #ff9800;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background: #3a3a5a;
+      color: var(--accent);
+    }
+
+    .graph-img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 12px 0;
+      border: 2px solid #444;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Friction</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Friction – JAMB Guide 🚀</h1>
+        <p class="subtitle">Explained like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>Friction</h2>
+        <p>Friction is a <strong>force</strong> that opposes relative motion between two surfaces in contact. It acts parallel to the surfaces and opposite to the direction of (or tendency for) motion.</p>
+
+        <h3>(i) Static and Dynamic (Kinetic) Friction</h3>
+        <p><strong>Static friction</strong> (also called limiting friction when at maximum): This prevents an object from starting to move when a force is applied. It adjusts its value up to a maximum to match the applied force (as long as no motion occurs).</p>
+        <p><strong>Maximum static friction = μₛ × N</strong> (where <strong>μₛ</strong> = coefficient of static friction, <strong>N</strong> = normal reaction).</p>
+        <p>Static friction is always ≥ kinetic friction for the same surfaces.</p>
+        <p><strong>Dynamic (kinetic) friction</strong>: This acts when the object is already sliding. It is roughly constant and does not depend much on speed (for most cases in JAMB).</p>
+        <p><strong>Kinetic friction = μₖ × N</strong> (<strong>μₖ</strong> = coefficient of kinetic friction).</p>
+        <p>Usually <strong>μₛ > μₖ</strong>.</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Static_and_kinetic_friction.svg/800px-Static_and_kinetic_friction.svg.png" alt="Diagram showing static and kinetic friction forces vs applied force">
+
+        <h3>(ii) Coefficient of Limiting Friction and Its Determination</h3>
+        <p>The coefficient of limiting friction (<strong>μ</strong>) is the ratio of the maximum frictional force (<strong>f_max</strong>) to the normal reaction (<strong>N</strong>):</p>
+        <p><strong>μ = f_max / N</strong></p>
+        <p>It is a dimensionless number that depends on the nature of the two surfaces (e.g., rubber on concrete ≈ 0.6–0.9, ice on ice ≈ 0.03).</p>
+        <p><strong>Determination</strong> (common JAMB experiment method):</p>
+        <ul>
+          <li>Use an inclined plane. Gradually increase the angle <strong>θ</strong> until the object just starts to slide (limiting case).</li>
+          <li>At this point: <strong>mg sinθ = μ mg cosθ</strong></li>
+          <li><strong>μ = tanθ</strong></li>
+          <li>(where <strong>θ</strong> is the angle of repose or limiting angle).</li>
+        </ul>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Inclined_plane_friction.svg/800px-Inclined_plane_friction.svg.png" alt="Diagram showing determination of friction coefficient using inclined plane">
+
+        <h3>(iii) Advantages and Disadvantages of Friction</h3>
+        <p><strong>Advantages:</strong></p>
+        <ul>
+          <li>Enables walking (feet grip ground without slipping).</li>
+          <li>Allows vehicles to brake, accelerate, and turn (tires grip road).</li>
+          <li>Helps in holding objects, writing with pen/pencil, striking matches, etc.</li>
+          <li>Machines can transmit force (e.g., belts on pulleys).</li>
+        </ul>
+        <p><strong>Disadvantages:</strong></p>
+        <ul>
+          <li>Causes wear and tear on machine parts (reduces lifespan).</li>
+          <li>Wastes energy as heat (lowers efficiency).</li>
+          <li>Causes resistance to motion (more fuel needed for vehicles).</li>
+          <li>Produces unwanted heat in engines.</li>
+        </ul>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Friction_advantages_disadvantages.svg/800px-Friction_advantages_disadvantages.svg.png" alt="Diagram illustrating advantages and disadvantages of friction with examples">
+
+        <h3>(iv) Reduction of Friction</h3>
+        <ul>
+          <li>Lubrication (oil, grease) → forms a thin film between surfaces.</li>
+          <li>Use ball bearings or rollers → change sliding to rolling (rolling friction << sliding friction).</li>
+          <li>Smooth/polish surfaces.</li>
+          <li>Streamline shapes (for fluids/air).</li>
+          <li>Use air cushions or magnetic levitation.</li>
+        </ul>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Friction_reduction.svg/800px-Friction_reduction.svg.png" alt="Diagram showing methods to reduce friction like lubrication and ball bearings">
+
+        <h3>(v) Qualitative Treatment of Viscosity and Terminal Velocity</h3>
+        <p>Viscosity is the internal friction in a fluid that opposes relative motion between layers (fluid's "stickiness").</p>
+        <p>High viscosity (e.g., honey) → flows slowly. Low viscosity (e.g., water) → flows easily.</p>
+        <p><strong>Factors affecting viscosity:</strong> Temperature (viscosity decreases with rise in temperature for liquids), nature of fluid.</p>
+        <p><strong>Terminal velocity:</strong> When an object falls through a fluid, initially it accelerates due to gravity. Drag (viscous) force increases with speed until drag + buoyancy = weight. Net force becomes zero → constant velocity called terminal velocity (<strong>v_t</strong>).</p>
+        <p>No further acceleration.</p>
+        <p><strong>v_t depends on:</strong> size/mass of object, density difference, viscosity of fluid, shape (higher for streamlined).</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Terminal_velocity.svg/800px-Terminal_velocity.svg.png" alt="Diagram showing terminal velocity in fluid with forces balanced">
+
+        <h3>(vi) Stoke’s Law</h3>
+        <p>Stoke’s law gives the viscous drag force on a small spherical object moving slowly through a viscous fluid (laminar flow, low Reynolds number):</p>
+        <p><strong>F_d = 6πη r v</strong></p>
+        <p>where:</p>
+        <ul>
+          <li><strong>η</strong> = viscosity of fluid</li>
+          <li><strong>r</strong> = radius of sphere</li>
+          <li><strong>v</strong> = velocity</li>
+        </ul>
+        <p>At terminal velocity, net force = 0:</p>
+        <p>Weight – buoyancy – drag = 0</p>
+        <p><strong>m g – (4/3)π r³ σ g – 6π η r v_t = 0</strong></p>
+        <p>(where <strong>σ</strong> = fluid density, <strong>ρ</strong> = object density)</p>
+        <p><strong>Terminal velocity:</strong></p>
+        <p><strong>v_t = 2 r² g (ρ - σ) / (9 η)</strong></p>
+        <p>(Assumes sphere is small, motion slow, no turbulence.)</p>
+        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Stokes_law.svg/800px-Stokes_law.svg.png" alt="Diagram illustrating Stoke's law for drag on a sphere in fluid">
+
+        <h3>10 JAMB-Style Examples with Step-by-Step Solutions</h3>
+
+        <div class="example-block">
+          <div class="example-problem">1. An object of mass 80 kg is pulled on a horizontal rough ground by a force of 500 N just to start motion. Find the coefficient of static friction. (g = 10 m/s²)</div>
+          <div class="example-problem">
+A. 0.625 B. 0.5 C. 0.4 D. 0.8<br>
+Step 1: Normal force <strong>N = m g = 80 × 10 = 800 N</strong>.<br>
+Step 2: At limiting case, applied force = max static friction = <strong>μₛ N</strong>.<br>
+Step 3: 500 = μₛ × 800.<br>
+Step 4: μₛ = 500 / 800 = 0.625.<br>
+Step 5: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 0.625</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">2. A body of mass 36 kg falls through a viscous liquid which offers a drag force of 260 N when at terminal velocity. Find the upthrust (buoyancy). (g = 10 m/s²)</div>
+          <div class="example-problem">
+A. 360 N B. 100 N C. 260 N D. 0 N<br>
+Step 1: At terminal velocity, net force = 0.<br>
+Step 2: Weight = drag + buoyancy.<br>
+Step 3: Weight = m g = 36 × 10 = 360 N.<br>
+Step 4: 360 = 260 + U.<br>
+Step 5: U = 100 N.<br>
+Step 6: Matches option B.
+          </div>
+          <div class="example-solution">Answer: B. 100 N</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">3. The coefficient of friction between a road and tire is 0.4. Find the maximum frictional force on a car of mass 1000 kg. (g = 10 m/s²)</div>
+          <div class="example-problem">
+A. 4000 N B. 1000 N C. 400 N D. 10000 N<br>
+Step 1: Normal force <strong>N = m g = 1000 × 10 = 10,000 N</strong>.<br>
+Step 2: Max friction = <strong>μ N = 0.4 × 10,000 = 4000 N</strong>.<br>
+Step 3: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 4000 N</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">4. A block on a horizontal surface requires 50 N to start moving and 40 N to keep moving at constant speed. Find μ_s and μ_k if mass = 20 kg. (g = 10 m/s²)</div>
+          <div class="example-problem">
+A. 0.25, 0.20 B. 0.20, 0.25 C. 0.5, 0.4 D. 2.5, 2.0<br>
+Step 1: N = m g = 20 × 10 = 200 N.<br>
+Step 2: μ_s = 50 / 200 = 0.25.<br>
+Step 3: μ_k = 40 / 200 = 0.20.<br>
+Step 4: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 0.25, 0.20</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">5. A sphere falls through a viscous fluid and reaches terminal velocity. If viscosity doubles, what happens to v_t? (other factors constant)</div>
+          <div class="example-problem">
+A. Doubles B. Halves C. Quadruples D. Remains same<br>
+Step 1: From <strong>v_t = 2 r² g (ρ - σ) / (9 η)</strong>.<br>
+Step 2: v_t ∝ 1/η.<br>
+Step 3: Doubles viscosity → halves v_t.<br>
+Step 4: Matches option B.
+          </div>
+          <div class="example-solution">Answer: B. Halves</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">6. According to Stoke’s law, drag force F ∝</div>
+          <div class="example-problem">
+A. r B. r² C. v D. v²<br>
+Step 1: <strong>F_d = 6π η r v</strong>.<br>
+Step 2: F ∝ v (and ∝ r).<br>
+Step 3: Matches option C.
+          </div>
+          <div class="example-solution">Answer: C. v</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">7. A steel ball (density 7.8 g/cm³) falls in oil (density 0.9 g/cm³). If radius doubles, terminal velocity becomes?</div>
+          <div class="example-problem">
+A. Half B. Double C. 4 times D. 1/4 times<br>
+Step 1: <strong>v_t ∝ r²</strong>.<br>
+Step 2: Radius double → v_t 4 times.<br>
+Step 3: Matches option C.
+          </div>
+          <div class="example-solution">Answer: C. 4 times</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">8. Two spheres of same material fall in same fluid. Radius of one is twice the other. Ratio of terminal velocities (larger : smaller)?</div>
+          <div class="example-problem">
+A. 1:1 B. 2:1 C. 4:1 D. 1:4<br>
+Step 1: <strong>v_t ∝ r²</strong>.<br>
+Step 2: Ratio = (2r)² / r² = 4/1.<br>
+Step 3: Matches option C.
+          </div>
+          <div class="example-solution">Answer: C. 4:1</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">9. A raindrop reaches terminal velocity because</div>
+          <div class="example-problem">
+A. Weight = drag B. Acceleration increases C. Viscosity zero D. Buoyancy zero<br>
+Step 1: At terminal v, net force = 0.<br>
+Step 2: Weight = drag + buoyancy (approx weight = drag for small drops).<br>
+Step 3: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. Weight = drag</div>
+        </div>
+
+        <div class="example-block">
+          <div class="example-problem">10. A copper ball (radius 2 mm, density 8.9 × 10³ kg/m³) has terminal velocity 6.5 cm/s in oil (density 1.5 × 10³ kg/m³). Find viscosity of oil. (g = 10 m/s²)</div>
+          <div class="example-problem">
+A. 1.01 Pa·s B. 2.0 Pa·s C. 0.5 Pa·s D. 0.1 Pa·s<br>
+Step 1: v_t = 0.065 m/s, r = 0.002 m.<br>
+Step 2: <strong>v_t = 2 r² g (ρ - σ) / (9 η)</strong>.<br>
+Step 3: 0.065 = 2 (0.002)² (10) (8900 - 1500) / (9 η).<br>
+Step 4: 0.065 = 2 × 4e-6 × 10 × 7400 / (9 η) = 0.592 / (9 η).<br>
+Step 5: η = 0.592 / (9 × 0.065) ≈ 1.01 Pa·s.<br>
+Step 6: Matches option A.
+          </div>
+          <div class="example-solution">Answer: A. 1.01 Pa·s</div>
+        </div>
+
+        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
+          Abumchukwu, this is now the **complete Friction chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples with step-by-step solutions. 🌟<br>
+          Practice one section per day. You will score very high in JAMB.
+        </p>
+
+        <p style="text-align:center; margin:20px 0;">Want a quiz on Friction or the next topic?</p>
+        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+  </script>
+</body>
+</html>
