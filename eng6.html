@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Understanding Clauses in JAMB UTME English</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);
+      --highlight-solution: #ff9800;
+      --antonym-bg: #ffcccc; /* Light red for antonyms */
+      --synonym-bg: #d4f4e2; /* Light green for synonyms */
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+      --antonym-bg: #ffdddd; /* Adjusted for light mode */
+      --synonym-bg: #e6ffe6;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-family: 'Courier New', Courier, monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .graph-img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 12px 0;
+      border: 2px solid #444;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 20px auto 0;
+      display: block;
+      text-align: center;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    body.light .explore-btn {
+      color: #000;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .antonym {
+      background-color: var(--antonym-bg);
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    .synonym {
+      background-color: var(--synonym-bg);
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Understanding Clauses in JAMB UTME English</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Understanding Clauses in JAMB UTME English – JAMB Guide 🚀</h1>
+        <p class="subtitle">Explained step by step like you're just starting SS1</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>1. Quick Overview of Clauses</h2>
+        <p>Let's start with the basics. A <strong>clause</strong> is a group of words that contains a <strong>subject</strong> (who or what the sentence is about) and a <strong>verb</strong> (the action or state of being). Clauses are the building blocks of sentences, and understanding them is key for JAMB Use of English, especially in sentence completion, comprehension, and structure questions.</p>
+        <p>Step 1: Identify the types of clauses.</p>
+        <ul>
+          <li><strong>Independent Clause (Main Clause)</strong>: This is a complete sentence on its own. It has a subject and verb and expresses a full idea. Example: "The student studies." (It can stand alone.)</li>
+          <li><strong>Dependent Clause (Subordinate Clause)</strong>: This is incomplete and depends on an independent clause to make sense. It starts with words like "because," "who," "if," etc. Example: "Because the student studies." (It's not a full sentence; it needs more.)</li>
+        </ul>
+        <p>Step 2: Recognize the three main types of dependent clauses (we'll dive deeper in the next sections).</p>
+        <ul>
+          <li><strong>Noun Clause</strong>: Acts like a noun (e.g., subject or object).</li>
+          <li><strong>Adjective Clause</strong>: Describes a noun.</li>
+          <li><strong>Adverb Clause</strong>: Modifies a verb, adjective, or adverb (tells when, why, how, etc.).</li>
+        </ul>
+        <p>Step 3: Practice spotting clauses in sentences. For JAMB, look for how clauses combine to form complex or compound sentences.</p>
+        <p>Expanded Example 1: "The teacher praised the student who scored highest."</p>
+        <ul>
+          <li>Independent Clause: "The teacher praised the student"</li>
+          <li>Dependent Clause: "who scored highest" (adjective clause describing "student")</li>
+        </ul>
+        <p>Expanded Example 2: "I will go if it stops raining."</p>
+        <ul>
+          <li>Independent Clause: "I will go"</li>
+          <li>Dependent Clause: "if it stops raining" (adverb clause of condition)</li>
+        </ul>
+        <p>Expanded Example 3: "What you said is true."</p>
+        <ul>
+          <li>Independent Clause: "is true" (with subject "What you said")</li>
+          <li>Dependent Clause: "What you said" (noun clause as subject)</li>
+        </ul>
+        <p>JAMB Tip: Clauses often appear in 5-10 items in Lexis and Structure. Practice with past papers to see how they test clause identification and combination.</p>
+
+        <h2>2. Noun Clause – Where & How to Use</h2>
+        <p>Step 1: Understand what a noun clause does. It acts just like a noun — it can be the subject, object, complement, or object of a preposition in a sentence.</p>
+        <p>Step 2: Identify common starter words: These are subordinating conjunctions or relative pronouns like what, that, who, whoever, whom, whose, which, whether, if, why, how, where, when. These words make the clause function as a noun.</p>
+        <p>Step 3: Learn the positions where noun clauses are used:</p>
+        <ul>
+          <li><strong>As subject of the sentence</strong>: The noun clause is what the sentence is about. Example: <strong>What he said</strong> surprised me. (The clause is the subject of "surprised".)</li>
+          <li><strong>As object of a verb</strong>: Follows verbs like know, say, believe. Example: I know <strong>that she will pass</strong>. (Object of "know".)</li>
+          <li><strong>As object of a preposition</strong>: Follows words like about, to, from. Example: She is worried about <strong>whether it will rain</strong>.</li>
+          <li><strong>As complement after linking verbs</strong>: After is, was, seems. Example: The problem is <strong>whether we have enough time</strong>.</li>
+        </ul>
+        <p>Step 4: Expanded JAMB-style Examples (with explanations):</p>
+        <div class="example-block">
+          <div class="example-problem">What he said surprised me. (Noun clause as subject. Step-by-step: "What he said" = group with subject "he" and verb "said"; acts as the doer of "surprised".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">I know that she will pass. (Noun clause as object of "know". Step-by-step: "That she will pass" = group with subject "she" and verb "will pass"; tells what "I know".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">The problem is whether we have enough time. (Noun clause as subject complement. Step-by-step: "Whether we have enough time" = group with subject "we" and verb "have"; explains "the problem is".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">Tell me who won the prize. (Noun clause as object of "tell". Step-by-step: "Who won the prize" = group with subject "who" and verb "won"; tells what to "tell me".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">She is worried about whether it will rain. (Noun clause as object of preposition "about". Step-by-step: "Whether it will rain" = group with subject "it" and verb "will rain"; specifies what she is "worried about".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">Whoever arrives first gets the seat. (Noun clause as subject. Step-by-step: "Whoever arrives first" = group with subject "whoever" and verb "arrives"; acts as the doer of "gets".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">I wonder why he left early. (Noun clause as object of "wonder". Step-by-step: "Why he left early" = group with subject "he" and verb "left"; tells what "I wonder".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">The question is how we can solve this problem. (Noun clause as subject complement. Step-by-step: "How we can solve this problem" = group with subject "we" and verb "can solve"; explains "the question is".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">She asked where the library is. (Noun clause as object of "asked". Step-by-step: "Where the library is" = group with subject "the library" and verb "is"; tells what "she asked".)</div>
+        </div>
+        <p>JAMB Tip: If the clause can be replaced with "it" or "something" and the sentence still makes sense, it's likely a noun clause. E.g., "What he said surprised me" → "It surprised me."</p>
+
+        <h2>3. Adjective Clause (Relative Clause) – Where & How to Use</h2>
+        <p>Step 1: Understand what an adjective clause does. It acts like an adjective by describing or giving more information about a noun or pronoun (called the antecedent).</p>
+        <p>Step 2: Identify common starter words: Relative pronouns (who, whom, whose, which, that) or relative adverbs (where, when, why).</p>
+        <p>Step 3: Know the position: It always comes right after the noun it describes. It can be essential (no commas, defines the noun) or non-essential (with commas, adds extra info).</p>
+        <p>Step 4: Expanded JAMB-style Examples (with explanations):</p>
+        <div class="example-block">
+          <div class="example-problem">The boy who helped me is my friend. (Describes "boy". Step-by-step: "Who helped me" = group with subject "who" and verb "helped"; tells which boy; essential clause, no commas.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">The book which I borrowed is interesting. (Describes "book". Step-by-step: "Which I borrowed" = group with subject "which" and verb "borrowed"; tells which book; essential clause.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">The man whose car was stolen reported to the police. (Describes "man". Step-by-step: "Whose car was stolen" = group with subject "car" and verb "was stolen"; shows possession; essential clause.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">This is the house where I grew up. (Describes "house". Step-by-step: "Where I grew up" = group with subject "I" and verb "grew up"; tells location; essential clause.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">The day when we met was special. (Describes "day". Step-by-step: "When we met" = group with subject "we" and verb "met"; tells time; essential clause.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">The reason why he left is unknown. (Describes "reason". Step-by-step: "Why he left" = group with subject "he" and verb "left"; tells reason; essential clause.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">My brother, who lives in Lagos, is a doctor. (Describes "brother". Step-by-step: "Who lives in Lagos" = group with subject "who" and verb "lives"; adds extra info; non-essential clause with commas.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">The car that I bought last year is reliable. (Describes "car". Step-by-step: "That I bought last year" = group with subject "that" and verb "bought"; specifies which car; essential clause.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">The girl whom we saw at the party is my cousin. (Describes "girl". Step-by-step: "Whom we saw at the party" = group with subject "we" and verb "saw"; tells which girl; essential clause.)</div>
+        </div>
+        <p>JAMB Tip: If the clause can be removed and the sentence still identifies the noun clearly, it's non-essential (use commas). If it's needed to identify the noun, it's essential (no commas). Replaceable by "the one" or "that one".</p>
+
+        <h2>4. Adverb Clause – Where & How to Use</h2>
+        <p>Step 1: Understand what an adverb clause does. It acts like an adverb by modifying a verb (tells how, when, why), adjective, or another adverb. It answers questions like when, where, why, how, under what condition, for what purpose, despite what.</p>
+        <p>Step 2: Identify common starter words: Subordinating conjunctions like because, since, as, if, unless, when, while, after, before, until, although, though, even though, so that, in order that, where, wherever, as if, as though, provided that.</p>
+        <p>Step 3: Learn the categories and where to use them:</p>
+        <ul>
+          <li><strong>Time</strong>: When, whenever, while, as, before, after, until, as soon as. Position: Can be at beginning or end. Example: <strong>When school ends</strong>, go home. (Tells when.)</li>
+          <li><strong>Place</strong>: Where, wherever. Example: Stay <strong>where you are</strong>. (Tells where.)</li>
+          <li><strong>Reason</strong>: Because, since, as. Example: He passed <strong>because he studied</strong>. (Tells why.)</li>
+          <li><strong>Condition</strong>: If, unless, provided that, in case. Example: <strong>If you read</strong>, you'll succeed. (Tells under what condition.)</li>
+          <li><strong>Purpose</strong>: So that, in order that. Example: Study <strong>so that you pass</strong>. (Tells for what purpose.)</li>
+          <li><strong>Concession/Contrast</strong>: Although, even though, though. Example: <strong>Although tired</strong>, he continued. (Shows contrast.)</li>
+          <li><strong>Manner</strong>: As if, as though. Example: He acts <strong>as if he owns the place</strong>. (Tells how.)</li>
+        </ul>
+        <p>Step 4: Comma rule: If adverb clause comes first, use comma after it. If after, no comma.</p>
+        <p>Step 5: Expanded JAMB-style Examples (with explanations):</p>
+        <div class="example-block">
+          <div class="example-problem">When school ends, go home. (Time clause. Step-by-step: "When school ends" = group with subject "school" and verb "ends"; modifies "go"; at beginning, so comma.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">Stay where you are. (Place clause. Step-by-step: "Where you are" = group with subject "you" and verb "are"; modifies "stay"; no comma as it's after.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">He passed because he studied. (Reason clause. Step-by-step: "Because he studied" = group with subject "he" and verb "studied"; modifies "passed"; no comma.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">If you read, you'll succeed. (Condition clause. Step-by-step: "If you read" = group with subject "you" and verb "read"; modifies "you'll succeed"; comma because at beginning.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">Study so that you pass. (Purpose clause. Step-by-step: "So that you pass" = group with subject "you" and verb "pass"; modifies "study"; no comma.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">Although tired, he continued. (Concession clause. Step-by-step: "Although tired" = group with implied subject "he" and verb "was" implied; modifies "continued"; comma at beginning.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">He acts as if he owns the place. (Manner clause. Step-by-step: "As if he owns the place" = group with subject "he" and verb "owns"; modifies "acts"; no comma.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">Unless you hurry, you'll be late. (Condition clause. Step-by-step: "Unless you hurry" = group with subject "you" and verb "hurry"; modifies "you'll be late"; comma because at beginning.)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">She sang while she cooked. (Time clause. Step-by-step: "While she cooked" = group with subject "she" and verb "cooked"; modifies "sang"; no comma.)</div>
+        </div>
+        <p>JAMB Tip: Adverb clauses often start sentences in JAMB questions to test comma usage. Remember: Clause first = comma; clause last = no comma.</p>
+
+        <h2>5. Coordinating Conjunctions (FANBOYS) – Where & How to Use</h2>
+        <p>Step 1: Understand what coordinating conjunctions do. They join equal parts of a sentence, like two independent clauses, words, or phrases, to make compound sentences.</p>
+        <p>Step 2: Memorize FANBOYS: For, And, Nor, But, Or, Yet, So. (Sometimes include then, therefore with semicolon.)</p>
+        <p>Step 3: Learn usage and comma rule: When joining two independent clauses, use comma before the conjunction. For words/phrases, no comma.</p>
+        <p>Step 4: Expanded JAMB-style Examples (with explanations):</p>
+        <div class="example-block">
+          <div class="example-problem">I studied hard, and I passed. (Joins two independent clauses. Step-by-step: "And" joins "I studied hard" and "I passed"; comma before "and".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">She wanted to come, but she was sick. (Joins two independent clauses. Step-by-step: "But" shows contrast between "She wanted to come" and "she was sick"; comma before "but".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">Read the book, or watch the movie. (Joins two independent clauses. Step-by-step: "Or" shows choice between "Read the book" and "watch the movie"; comma before "or".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">It rained heavily, so we cancelled the match. (Joins two independent clauses. Step-by-step: "So" shows result between "It rained heavily" and "we cancelled the match"; comma before "so".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">He is smart, yet he failed. (Joins two independent clauses. Step-by-step: "Yet" shows contrast like "but"; comma before "yet".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">The test was easy, for everyone prepared well. (Joins two independent clauses. Step-by-step: "For" shows reason like "because"; comma before "for".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">He doesn't smoke, nor does he drink. (Joins two independent clauses. Step-by-step: "Nor" shows negative addition; comma before "nor".)</div>
+        </div>
+        <div class="example-block">
+          <div class="example-problem">You can eat now or later. (Joins two words/phrases. Step-by-step: "Or" joins "now" and "later"; no comma needed as not full clauses.)</div>
+        </div>
+        <p>JAMB Tip: Coordinating conjunctions create compound sentences (equal + equal). Subordinating conjunctions create complex sentences (main + dependent). Test for comma: If both parts are complete sentences, comma + FANBOYS.</p>
+
+        <h2>Quick Comparison Table for JAMB Revision</h2>
+        <table style="width:100%; border-collapse: collapse; margin-bottom: 20px;">
+          <tr>
+            <th style="border: 1px solid #ddd; padding: 8px; background: var(--highlight-example);">Clause Type</th>
+            <th style="border: 1px solid #ddd; padding: 8px; background: var(--highlight-example);">Starter Words Examples</th>
+            <th style="border: 1px solid #ddd; padding: 8px; background: var(--highlight-example);">Function / What it Modifies</th>
+            <th style="border: 1px solid #ddd; padding: 8px; background: var(--highlight-example);">Position Clue</th>
+            <th style="border: 1px solid #ddd; padding: 8px; background: var(--highlight-example);">Sentence Type Created</th>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;"><strong>Noun</strong></td>
+            <td style="border: 1px solid #ddd; padding: 8px;">what, that, who, whether, if</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Acts as noun (subject/object)</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Can replace with "it" or "something"</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Complex</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;"><strong>Adjective</strong></td>
+            <td style="border: 1px solid #ddd; padding: 8px;">who, which, that, whose, where</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Describes a noun</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Right after the noun it describes</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Complex</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;"><strong>Adverb</strong></td>
+            <td style="border: 1px solid #ddd; padding: 8px;">because, if, when, although, so that</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Modifies verb/adjective/adverb</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Answers when/why/how/condition</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">Complex</td>
+          </tr>
+        </table>
+
+        <p>Practice Tip for JAMB Success:</p>
+        <ul>
+          <li>Underline the clause → Ask: Does it act as noun? Describe noun? Modify verb?</li>
+          <li>Check starter word → Relative pronoun (who/which/that) = adjective; what/that/who as starter for whole idea = noun; because/if/when = adverb.</li>
+          <li>For conjunctions: FANBOYS = equal join (compound); others = dependent join (complex).</li>
+        </ul>
+        <p>Revise with past questions — these appear every year! If you need 20 more adverb/noun/adjective clause questions or focus on one area, just ask, Abumchukwu. You're building strong foundations — keep pushing for that high score in Port Harcourt! 💪 Good luck with JAMB 2026!</p>
+      </h3>
+
+      <button class="explore-btn">Start Quiz</button>
+    </div>
+
+    <div class="nav-bar">
+      <div class="nav-item"><button class="neumorphic-btn">🏠</button><p>Home</p></div>
+      <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Fav</p></div>
+      <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    toggle.onclick = () => {
+      document.body.classList.toggle('light');
+      toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+    };
+  </script>
+</body>
+</html>
