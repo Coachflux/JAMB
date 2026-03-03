@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - 200 Antonyms for JAMB UTME English</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);
+      --highlight-solution: #ff9800;
+      --antonym-bg: #ffcccc;
+      --synonym-bg: #ccffcc;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+      --antonym-bg: #ffdddd;
+      --synonym-bg: #e6ffe6;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      height: 100vh;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 0 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note p, .welcome-note ul {
+      margin-bottom: 16px;
+      font-size: 15px;
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .antonym {
+      background-color: var(--antonym-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .synonym {
+      background-color: var(--synonym-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: block;
+      margin: 40px auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-item {
+      text-align: center;
+    }
+
+    .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Antonyms for JAMB English</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Understanding Antonyms in JAMB UTME English</h1>
+        <p class="subtitle">200 high-frequency words with meanings, antonyms & synonyms</p>
+      </div>
+
+      <div class="welcome-note">
+        <h2>How to Score 9–10/10 in Antonyms</h2>
+        <ul>
+          <li>Read the full sentence — context changes meaning</li>
+          <li>Eliminate synonyms or neutral words first</li>
+          <li>Choose the <strong>strongest opposite</strong></li>
+          <li>Many words repeat year after year (benevolent, obsolete, lucid…)</li>
+          <li>Learn 20/day → make sentences → test yourself weekly</li>
+        </ul>
+        <p><strong>Goal:</strong> Master antonyms and boost your Use of English score!</p>
+      </div>
+
+      <h3>200 Antonyms – Complete List (A–Z)</h3>
+
+      <div class="example-block"><div>1. Abandon - Meaning: To leave completely. <span class="antonym">Antonym: Retain</span>. <span class="synonym">Associated: Desert, forsake, relinquish, quit, surrender, withdraw.</span></div></div>
+      <div class="example-block"><div>2. Abate - Meaning: To reduce in intensity. <span class="antonym">Antonym: Aggravate</span>. <span class="synonym">Associated: Decrease, lessen, moderate, subside, wane, diminish.</span></div></div>
+      <div class="example-block"><div>3. Abhor - Meaning: To hate intensely. <span class="antonym">Antonym: Love</span>. <span class="synonym">Associated: Detest, loathe, despise, abominate, execrate, scorn.</span></div></div>
+      <div class="example-block"><div>4. Abject - Meaning: Miserable or hopeless. <span class="antonym">Antonym: Praiseworthy</span>. <span class="synonym">Associated: Despicable, servile, wretched, base, contemptible, vile.</span></div></div>
+      <div class="example-block"><div>5. Abolish - Meaning: To end officially. <span class="antonym">Antonym: Establish</span>. <span class="synonym">Associated: Annul, abrogate, revoke, cancel, nullify, repeal.</span></div></div>
+      <div class="example-block"><div>6. Abound - Meaning: To exist in large numbers. <span class="antonym">Antonym: Deficient</span>. <span class="synonym">Associated: Flourish, proliferate, teem, swarm, overflow, brim.</span></div></div>
+      <div class="example-block"><div>7. Abrupt - Meaning: Sudden or unexpected. <span class="antonym">Antonym: Gradual</span>. <span class="synonym">Associated: Sudden, hasty, brusque, curt, precipitous, sharp.</span></div></div>
+      <div class="example-block"><div>8. Absolve - Meaning: To free from blame. <span class="antonym">Antonym: Accuse</span>. <span class="synonym">Associated: Pardon, forgive, exonerate, acquit, vindicate, remit.</span></div></div>
+      <div class="example-block"><div>9. Absurd - Meaning: Ridiculously unreasonable. <span class="antonym">Antonym: Sensible</span>. <span class="synonym">Associated: Ridiculous, nonsensical, preposterous, ludicrous, foolish, irrational.</span></div></div>
+      <div class="example-block"><div>10. Abundant - Meaning: Plentiful. <span class="antonym">Antonym: Scarce</span>. <span class="synonym">Associated: Ample, copious, profuse, bountiful, lavish, plentiful.</span></div></div>
+
+      <div class="example-block"><div>11. Accurate - Meaning: Correct in details. <span class="antonym">Antonym: Inaccurate</span>. <span class="synonym">Associated: Precise, exact, correct, true, right, meticulous.</span></div></div>
+      <div class="example-block"><div>12. Acrimony - Meaning: Bitterness in speech. <span class="antonym">Antonym: Benevolence</span>. <span class="synonym">Associated: Harshness, asperity, rancor, animosity, sharpness, virulence.</span></div></div>
+      <div class="example-block"><div>13. Adamant - Meaning: Unyielding. <span class="antonym">Antonym: Flexible</span>. <span class="synonym">Associated: Stubborn, inflexible, resolute, obdurate, unrelenting, firm.</span></div></div>
+      <div class="example-block"><div>14. Adhere - Meaning: To stick to. <span class="antonym">Antonym: Disjoin</span>. <span class="synonym">Associated: Comply, observe, cling, attach, bond, cohere.</span></div></div>
+      <div class="example-block"><div>15. Admonish - Meaning: To warn gently. <span class="antonym">Antonym: Applaud</span>. <span class="synonym">Associated: Reprove, counsel, caution, rebuke, chide, reprimand.</span></div></div>
+      <div class="example-block"><div>16. Adversity - Meaning: Hardship. <span class="antonym">Antonym: Prosperity</span>. <span class="synonym">Associated: Misfortune, calamity, distress, affliction, trouble, hardship.</span></div></div>
+      <div class="example-block"><div>17. Affluent - Meaning: Wealthy. <span class="antonym">Antonym: Destitute</span>. <span class="synonym">Associated: Rich, prosperous, opulent, wealthy, abundant, well-off.</span></div></div>
+      <div class="example-block"><div>18. Aggravate - Meaning: To make worse. <span class="antonym">Antonym: Alleviate</span>. <span class="synonym">Associated: Worsen, intensify, exacerbate, irritate, provoke, annoy.</span></div></div>
+      <div class="example-block"><div>19. Alien - Meaning: Foreign or strange. <span class="antonym">Antonym: Native</span>. <span class="synonym">Associated: Outsider, foreigner, stranger, extraneous, exotic, unfamiliar.</span></div></div>
+      <div class="example-block"><div>20. Allay - Meaning: To calm. <span class="antonym">Antonym: Excite</span>. <span class="synonym">Associated: Pacify, soothe, alleviate, assuage, relieve, mitigate.</span></div></div>
+
+      <div class="example-block"><div>21. Allure - Meaning: To attract. <span class="antonym">Antonym: Repel</span>. <span class="synonym">Associated: Entice, fascinate, tempt, seduce, charm, beguile.</span></div></div>
+      <div class="example-block"><div>22. Altruistic - Meaning: Selfless. <span class="antonym">Antonym: Selfish</span>. <span class="synonym">Associated: Benevolent, generous, unselfish, philanthropic, charitable, humanitarian.</span></div></div>
+      <div class="example-block"><div>23. Amateur - Meaning: Non-professional. <span class="antonym">Antonym: Professional</span>. <span class="synonym">Associated: Novice, beginner, dilettante, hobbyist, tyro, layperson.</span></div></div>
+      <div class="example-block"><div>24. Ambiguous - Meaning: Unclear. <span class="antonym">Antonym: Clear</span>. <span class="synonym">Associated: Vague, equivocal, obscure, cryptic, enigmatic, uncertain.</span></div></div>
+      <div class="example-block"><div>25. Ameliorate - Meaning: To improve. <span class="antonym">Antonym: Worsen</span>. <span class="synonym">Associated: Better, enhance, upgrade, refine, mend, rectify.</span></div></div>
+      <div class="example-block"><div>26. Amiable - Meaning: Friendly. <span class="antonym">Antonym: Hostile</span>. <span class="synonym">Associated: Affable, genial, cordial, pleasant, sociable, kind.</span></div></div>
+      <div class="example-block"><div>27. Ample - Meaning: Sufficient. <span class="antonym">Antonym: Insufficient</span>. <span class="synonym">Associated: Abundant, plentiful, copious, generous, spacious, enough.</span></div></div>
+      <div class="example-block"><div>28. Amplify - Meaning: To enlarge. <span class="antonym">Antonym: Contract</span>. <span class="synonym">Associated: Augment, intensify, expand, magnify, boost, escalate.</span></div></div>
+      <div class="example-block"><div>29. Ancient - Meaning: Very old. <span class="antonym">Antonym: Modern</span>. <span class="synonym">Associated: Antique, archaic, aged, primordial, venerable, obsolete.</span></div></div>
+      <div class="example-block"><div>30. Anguish - Meaning: Severe pain. <span class="antonym">Antonym: Joy</span>. <span class="synonym">Associated: Agony, torment, distress, suffering, misery, woe.</span></div></div>
+
+      <div class="example-block"><div>31. Animosity - Meaning: Hatred. <span class="antonym">Antonym: Friendship</span>. <span class="synonym">Associated: Hostility, enmity, antipathy, rancor, malice, resentment.</span></div></div>
+      <div class="example-block"><div>32. Anonymous - Meaning: Nameless. <span class="antonym">Antonym: Known</span>. <span class="synonym">Associated: Unnamed, incognito, unidentified, unsigned, unattributed, faceless.</span></div></div>
+      <div class="example-block"><div>33. Antique - Meaning: Old-fashioned. <span class="antonym">Antonym: Modern</span>. <span class="synonym">Associated: Vintage, ancient, relic, heirloom, classic, aged.</span></div></div>
+      <div class="example-block"><div>34. Apathetic - Meaning: Indifferent. <span class="antonym">Antonym: Enthusiastic</span>. <span class="synonym">Associated: Unconcerned, disinterested, impassive, listless, detached, blasé.</span></div></div>
+      <div class="example-block"><div>35. Apparent - Meaning: Obvious. <span class="antonym">Antonym: Hidden</span>. <span class="synonym">Associated: Evident, clear, manifest, visible, patent, conspicuous.</span></div></div>
+      <div class="example-block"><div>36. Apprehensive - Meaning: Anxious. <span class="antonym">Antonym: Confident</span>. <span class="synonym">Associated: Worried, fearful, uneasy, nervous, concerned, trepid.</span></div></div>
+      <div class="example-block"><div>37. Ardent - Meaning: Passionate. <span class="antonym">Antonym: Apathetic</span>. <span class="synonym">Associated: Fervent, zealous, enthusiastic, intense, eager, devoted.</span></div></div>
+      <div class="example-block"><div>38. Arduous - Meaning: Difficult. <span class="antonym">Antonym: Easy</span>. <span class="synonym">Associated: Strenuous, laborious, grueling, taxing, onerous, tough.</span></div></div>
+      <div class="example-block"><div>39. Arrogant - Meaning: Conceited. <span class="antonym">Antonym: Humble</span>. <span class="synonym">Associated: Haughty, proud, egotistical, supercilious, disdainful, overbearing.</span></div></div>
+      <div class="example-block"><div>40. Ascend - Meaning: To go up. <span class="antonym">Antonym: Descend</span>. <span class="synonym">Associated: Climb, rise, mount, escalate, soar, scale.</span></div></div>
+
+      <div class="example-block"><div>41. Assertive - Meaning: Confident. <span class="antonym">Antonym: Timid</span>. <span class="synonym">Associated: Bold, self-assured, forceful, decisive, dominant, pushy.</span></div></div>
+      <div class="example-block"><div>42. Astonish - Meaning: To surprise greatly. <span class="antonym">Antonym: Bore</span>. <span class="synonym">Associated: Amaze, astound, stun, flabbergast, dumbfound, bewilder.</span></div></div>
+      <div class="example-block"><div>43. Audacious - Meaning: Bold. <span class="antonym">Antonym: Timid</span>. <span class="synonym">Associated: Daring, reckless, intrepid, venturesome, fearless, brave.</span></div></div>
+      <div class="example-block"><div>44. Auspicious - Meaning: Favorable. <span class="antonym">Antonym: Ominous</span>. <span class="synonym">Associated: Propitious, promising, fortunate, opportune, lucky, felicitous.</span></div></div>
+      <div class="example-block"><div>45. Authentic - Meaning: Genuine. <span class="antonym">Antonym: Fake</span>. <span class="synonym">Associated: Real, legitimate, bona fide, veritable, true, original.</span></div></div>
+      <div class="example-block"><div>46. Avarice - Meaning: Greed. <span class="antonym">Antonym: Generosity</span>. <span class="synonym">Associated: Cupidity, rapacity, covetousness, miserliness, stinginess, acquisitiveness.</span></div></div>
+      <div class="example-block"><div>47. Awkward - Meaning: Clumsy. <span class="antonym">Antonym: Graceful</span>. <span class="synonym">Associated: Ungainly, inept, maladroit, bumbling, gauche, cumbersome.</span></div></div>
+      <div class="example-block"><div>48. Barbarous - Meaning: Uncivilized. <span class="antonym">Antonym: Civilized</span>. <span class="synonym">Associated: Savage, brutal, crude, primitive, ferocious, inhuman.</span></div></div>
+      <div class="example-block"><div>49. Barren - Meaning: Unproductive. <span class="antonym">Antonym: Fertile</span>. <span class="synonym">Associated: Sterile, desolate, infertile, arid, fruitless, empty.</span></div></div>
+      <div class="example-block"><div>50. Bawdy - Meaning: Indecent. <span class="antonym">Antonym: Decent</span>. <span class="synonym">Associated: Lewd, obscene, vulgar, ribald, coarse, raunchy.</span></div></div>
+
+      <div class="example-block"><div>51. Befogged - Meaning: Confused. <span class="antonym">Antonym: Clear-headed</span>. <span class="synonym">Associated: Beclouded, dim, obscured, muddled, hazy, foggy.</span></div></div>
+      <div class="example-block"><div>52. Belligerent - Meaning: Aggressive. <span class="antonym">Antonym: Peaceful</span>. <span class="synonym">Associated: Bellicose, combative, pugnacious, quarrelsome, hostile, warlike.</span></div></div>
+      <div class="example-block"><div>53. Benevolent - Meaning: Kind. <span class="antonym">Antonym: Malevolent</span>. <span class="synonym">Associated: Charitable, generous, kind-hearted, philanthropic, altruistic, benign.</span></div></div>
+      <div class="example-block"><div>54. Benign - Meaning: Harmless. <span class="antonym">Antonym: Malignant</span>. <span class="synonym">Associated: Kind, gentle, favorable, innocuous, mild, gracious.</span></div></div>
+      <div class="example-block"><div>55. Bewitching - Meaning: Enchanting. <span class="antonym">Antonym: Repugnant</span>. <span class="synonym">Associated: Alluring, captivating, charming, fascinating, mesmerizing, spellbinding.</span></div></div>
+      <div class="example-block"><div>56. Bigoted - Meaning: Prejudiced. <span class="antonym">Antonym: Tolerant</span>. <span class="synonym">Associated: Intolerant, narrow-minded, biased, fanatical, dogmatic, racist.</span></div></div>
+      <div class="example-block"><div>57. Bizarre - Meaning: Strange. <span class="antonym">Antonym: Normal</span>. <span class="synonym">Associated: Weird, odd, eccentric, outlandish, grotesque, freakish.</span></div></div>
+      <div class="example-block"><div>58. Bleak - Meaning: Dreary. <span class="antonym">Antonym: Bright</span>. <span class="synonym">Associated: Grim, desolate, cheerless, dismal, austere, forbidding.</span></div></div>
+      <div class="example-block"><div>59. Bliss - Meaning: Extreme happiness. <span class="antonym">Antonym: Misery</span>. <span class="synonym">Associated: Ecstasy, joy, rapture, elation, delight, euphoria.</span></div></div>
+      <div class="example-block"><div>60. Blunt - Meaning: Dull or straightforward. <span class="antonym">Antonym: Sharp</span>. <span class="synonym">Associated: Dull, obtuse, forthright, candid, brusque, insensitive.</span></div></div>
+
+      <div class="example-block"><div>61. Boisterous - Meaning: Noisy. <span class="antonym">Antonym: Calm</span>. <span class="synonym">Associated: Rowdy, clamorous, rambunctious, tumultuous, uproarious, vociferous.</span></div></div>
+      <div class="example-block"><div>62. Bold - Meaning: Courageous. <span class="antonym">Antonym: Timid</span>. <span class="synonym">Associated: Daring, fearless, audacious, intrepid, valiant, brave.</span></div></div>
+      <div class="example-block"><div>63. Brave - Meaning: Courageous. <span class="antonym">Antonym: Cowardly</span>. <span class="synonym">Associated: Valiant, heroic, plucky, gutsy, dauntless, fearless.</span></div></div>
+      <div class="example-block"><div>64. Brittle - Meaning: Fragile. <span class="antonym">Antonym: Tough</span>. <span class="synonym">Associated: Breakable, crisp, frail, delicate, frangible, splintery.</span></div></div>
+      <div class="example-block"><div>65. Busy - Meaning: Occupied. <span class="antonym">Antonym: Idle</span>. <span class="synonym">Associated: Active, engaged, industrious, bustling, diligent, assiduous.</span></div></div>
+      <div class="example-block"><div>66. Calamity - Meaning: Disaster. <span class="antonym">Antonym: Fortune</span>. <span class="synonym">Associated: Catastrophe, misfortune, tragedy, adversity, mishap, cataclysm.</span></div></div>
+      <div class="example-block"><div>67. Callous - Meaning: Insensitive. <span class="antonym">Antonym: Compassionate</span>. <span class="synonym">Associated: Unfeeling, heartless, indifferent, obdurate, hardened, cold.</span></div></div>
+      <div class="example-block"><div>68. Calm - Meaning: Peaceful. <span class="antonym">Antonym: Turbulent</span>. <span class="synonym">Associated: Serene, tranquil, placid, composed, unruffled, quiet.</span></div></div>
+      <div class="example-block"><div>69. Candid - Meaning: Honest. <span class="antonym">Antonym: Deceitful</span>. <span class="synonym">Associated: Frank, straightforward, open, sincere, blunt, truthful.</span></div></div>
+      <div class="example-block"><div>70. Capable - Meaning: Able. <span class="antonym">Antonym: Incapable</span>. <span class="synonym">Associated: Competent, proficient, skilled, adept, qualified, efficient.</span></div></div>
+
+      <div class="example-block"><div>71. Captivate - Meaning: To charm. <span class="antonym">Antonym: Repel</span>. <span class="synonym">Associated: Enchant, fascinate, mesmerize, enthrall, bewitch, allure.</span></div></div>
+      <div class="example-block"><div>72. Carnal - Meaning: Fleshly. <span class="antonym">Antonym: Spiritual</span>. <span class="synonym">Associated: Sensual, bodily, physical, earthly, lustful, animal.</span></div></div>
+      <div class="example-block"><div>73. Catholic - Meaning: Universal. <span class="antonym">Antonym: Narrow-minded</span>. <span class="synonym">Associated: Broad, liberal, inclusive, ecumenical, comprehensive, tolerant.</span></div></div>
+      <div class="example-block"><div>74. Cease - Meaning: To stop. <span class="antonym">Antonym: Begin</span>. <span class="synonym">Associated: Terminate, desist, halt, discontinue, end, quit.</span></div></div>
+      <div class="example-block"><div>75. Celebrated - Meaning: Famous. <span class="antonym">Antonym: Unknown</span>. <span class="synonym">Associated: Renowned, acclaimed, illustrious, famed, notable, distinguished.</span></div></div>
+      <div class="example-block"><div>76. Censure - Meaning: To criticize. <span class="antonym">Antonym: Praise</span>. <span class="synonym">Associated: Reprimand, rebuke, condemn, admonish, castigate, reprove.</span></div></div>
+      <div class="example-block"><div>77. Chaste - Meaning: Pure. <span class="antonym">Antonym: Lustful</span>. <span class="synonym">Associated: Virtuous, modest, celibate, innocent, undefiled, immaculate.</span></div></div>
+      <div class="example-block"><div>78. Cheap - Meaning: Inexpensive. <span class="antonym">Antonym: Expensive</span>. <span class="synonym">Associated: Inexpensive, low-cost, economical, bargain, affordable, tawdry.</span></div></div>
+      <div class="example-block"><div>79. Clandestine - Meaning: Secret. <span class="antonym">Antonym: Open</span>. <span class="synonym">Associated: Covert, furtive, surreptitious, stealthy, undercover, hidden.</span></div></div>
+      <div class="example-block"><div>80. Classic - Meaning: Timeless. <span class="antonym">Antonym: Unusual</span>. <span class="synonym">Associated: Traditional, exemplary, archetypal, quintessential, standard, vintage.</span></div></div>
+
+      <div class="example-block"><div>81. Coarse - Meaning: Rough. <span class="antonym">Antonym: Refined</span>. <span class="synonym">Associated: Crude, vulgar, rough, boorish, gross, uncouth.</span></div></div>
+      <div class="example-block"><div>82. Comic - Meaning: Humorous. <span class="antonym">Antonym: Tragic</span>. <span class="synonym">Associated: Funny, amusing, comical, droll, witty, humorous.</span></div></div>
+      <div class="example-block"><div>83. Compact - Meaning: Dense. <span class="antonym">Antonym: Loose</span>. <span class="synonym">Associated: Condensed, compressed, tight, concise, packed, dense.</span></div></div>
+      <div class="example-block"><div>84. Compassion - Meaning: Sympathy. <span class="antonym">Antonym: Cruelty</span>. <span class="synonym">Associated: Pity, empathy, kindness, mercy, tenderness, concern.</span></div></div>
+      <div class="example-block"><div>85. Compress - Meaning: To squeeze. <span class="antonym">Antonym: Expand</span>. <span class="synonym">Associated: Condense, shrink, abbreviate, contract, compact, shorten.</span></div></div>
+      <div class="example-block"><div>86. Conceal - Meaning: To hide. <span class="antonym">Antonym: Reveal</span>. <span class="synonym">Associated: Hide, disguise, mask, veil, obscure, cover.</span></div></div>
+      <div class="example-block"><div>87. Concede - Meaning: To admit. <span class="antonym">Antonym: Deny</span>. <span class="synonym">Associated: Yield, grant, acknowledge, surrender, accede, allow.</span></div></div>
+      <div class="example-block"><div>88. Conceit - Meaning: Vanity. <span class="antonym">Antonym: Modesty</span>. <span class="synonym">Associated: Egotism, arrogance, vanity, narcissism, pride, self-importance.</span></div></div>
+      <div class="example-block"><div>89. Concord - Meaning: Harmony. <span class="antonym">Antonym: Discord</span>. <span class="synonym">Associated: Agreement, accord, unity, consensus, amity, rapport.</span></div></div>
+      <div class="example-block"><div>90. Condemn - Meaning: To criticize. <span class="antonym">Antonym: Praise</span>. <span class="synonym">Associated: Denounce, censure, reprobate, decry, damn, execrate.</span></div></div>
+
+      <div class="example-block"><div>91. Confident - Meaning: Assured. <span class="antonym">Antonym: Diffident</span>. <span class="synonym">Associated: Self-assured, bold, certain, positive, sure, assertive.</span></div></div>
+      <div class="example-block"><div>92. Confuse - Meaning: To perplex. <span class="antonym">Antonym: Clarify</span>. <span class="synonym">Associated: Bewilder, confound, muddle, disorient, baffle, mystify.</span></div></div>
+      <div class="example-block"><div>93. Consolidate - Meaning: To strengthen. <span class="antonym">Antonym: Weaken</span>. <span class="synonym">Associated: Unite, merge, fortify, combine, solidify, integrate.</span></div></div>
+      <div class="example-block"><div>94. Conspicuous - Meaning: Obvious. <span class="antonym">Antonym: Hidden</span>. <span class="synonym">Associated: Prominent, noticeable, salient, striking, evident, blatant.</span></div></div>
+      <div class="example-block"><div>95. Contrary - Meaning: Opposite. <span class="antonym">Antonym: Similar</span>. <span class="synonym">Associated: Opposing, contradictory, antithetical, adverse, conflicting, reverse.</span></div></div>
+      <div class="example-block"><div>96. Creation - Meaning: Making. <span class="antonym">Antonym: Destruction</span>. <span class="synonym">Associated: Formation, invention, genesis, origination, fabrication, inception.</span></div></div>
+      <div class="example-block"><div>97. Cruel - Meaning: Brutal. <span class="antonym">Antonym: Kind</span>. <span class="synonym">Associated: Sadistic, merciless, ruthless, vicious, inhumane, heartless.</span></div></div>
+      <div class="example-block"><div>98. Cunning - Meaning: Sly. <span class="antonym">Antonym: Naive</span>. <span class="synonym">Associated: Crafty, shrewd, wily, sly, artful, guileful.</span></div></div>
+      <div class="example-block"><div>99. Cursory - Meaning: Superficial. <span class="antonym">Antonym: Thorough</span>. <span class="synonym">Associated: Hasty, perfunctory, casual, superficial, desultory, quick.</span></div></div>
+      <div class="example-block"><div>100. Decay - Meaning: To rot. <span class="antonym">Antonym: Flourish</span>. <span class="synonym">Associated: Decompose, deteriorate, decline, disintegrate, putrefy, spoil.</span></div></div>
+
+      <div class="example-block"><div>101. Deceit - Meaning: Dishonesty. <span class="antonym">Antonym: Sincerity</span>. <span class="synonym">Associated: Deception, fraud, duplicity, guile, trickery, mendacity.</span></div></div>
+      <div class="example-block"><div>102. Decipher - Meaning: To decode. <span class="antonym">Antonym: Misinterpret</span>. <span class="synonym">Associated: Interpret, decode, unravel, solve, construe, translate.</span></div></div>
+      <div class="example-block"><div>103. Defile - Meaning: To pollute. <span class="antonym">Antonym: Purify</span>. <span class="synonym">Associated: Contaminate, sully, taint, corrupt, desecrate, profane.</span></div></div>
+      <div class="example-block"><div>104. Dejected - Meaning: Depressed. <span class="antonym">Antonym: Elated</span>. <span class="synonym">Associated: Downcast, dispirited, discouraged, despondent, gloomy, saddened.</span></div></div>
+      <div class="example-block"><div>105. Deliberate - Meaning: Intentional. <span class="antonym">Antonym: Rash</span>. <span class="synonym">Associated: Purposeful, calculated, premeditated, willful, considered, thoughtful.</span></div></div>
+      <div class="example-block"><div>106. Demolish - Meaning: To destroy. <span class="antonym">Antonym: Construct</span>. <span class="synonym">Associated: Raze, wreck, dismantle, ruin, devastate, pulverize.</span></div></div>
+      <div class="example-block"><div>107. Dense - Meaning: Thick. <span class="antonym">Antonym: Sparse</span>. <span class="synonym">Associated: Compact, crowded, thickset, opaque, concentrated, impenetrable.</span></div></div>
+      <div class="example-block"><div>108. Denounce - Meaning: To condemn. <span class="antonym">Antonym: Praise</span>. <span class="synonym">Associated: Censure, criticize, decry, reprobate, vilify, castigate.</span></div></div>
+      <div class="example-block"><div>109. Deprive - Meaning: To take away. <span class="antonym">Antonym: Restore</span>. <span class="synonym">Associated: Dispossess, divest, strip, bereave, rob, deny.</span></div></div>
+      <div class="example-block"><div>110. Deride - Meaning: To mock. <span class="antonym">Antonym: Praise</span>. <span class="synonym">Associated: Ridicule, scoff, taunt, jeer, scorn, mock.</span></div></div>
+
+      <div class="example-block"><div>111. Derogatory - Meaning: Insulting. <span class="antonym">Antonym: Appreciative</span>. <span class="synonym">Associated: Disparaging, belittling, depreciatory, pejorative, defamatory, slanderous.</span></div></div>
+      <div class="example-block"><div>112. Despair - Meaning: Hopelessness. <span class="antonym">Antonym: Hope</span>. <span class="synonym">Associated: Despondency, discouragement, gloom, desperation, dejection, pessimism.</span></div></div>
+      <div class="example-block"><div>113. Destructive - Meaning: Harmful. <span class="antonym">Antonym: Constructive</span>. <span class="synonym">Associated: Ruinous, damaging, catastrophic, pernicious, devastating, deleterious.</span></div></div>
+      <div class="example-block"><div>114. Detest - Meaning: To hate. <span class="antonym">Antonym: Adore</span>. <span class="synonym">Associated: Abhor, loathe, despise, execrate, abominate, disdain.</span></div></div>
+      <div class="example-block"><div>115. Diffident - Meaning: Shy. <span class="antonym">Antonym: Confident</span>. <span class="synonym">Associated: Timid, bashful, hesitant, insecure, reserved, unassertive.</span></div></div>
+      <div class="example-block"><div>116. Diligent - Meaning: Hard-working. <span class="antonym">Antonym: Lazy</span>. <span class="synonym">Associated: Assiduous, industrious, conscientious, meticulous, persevering, sedulous.</span></div></div>
+      <div class="example-block"><div>117. Diminish - Meaning: To reduce. <span class="antonym">Antonym: Increase</span>. <span class="synonym">Associated: Lessen, decrease, dwindle, abate, shrink, subside.</span></div></div>
+      <div class="example-block"><div>118. Disdain - Meaning: Contempt. <span class="antonym">Antonym: Respect</span>. <span class="synonym">Associated: Scorn, despise, contemn, deride, spurn, snub.</span></div></div>
+      <div class="example-block"><div>119. Disparage - Meaning: To belittle. <span class="antonym">Antonym: Praise</span>. <span class="synonym">Associated: Deprecate, denigrate, derogate, deprecate, vilify, malign.</span></div></div>
+      <div class="example-block"><div>120. Dissuade - Meaning: To discourage. <span class="antonym">Antonym: Persuade</span>. <span class="synonym">Associated: Deter, discourage, remonstrate, divert, disincline, dehort.</span></div></div>
+
+      <div class="example-block"><div>121. Docile - Meaning: Obedient. <span class="antonym">Antonym: Obstinate</span>. <span class="synonym">Associated: Compliant, tractable, submissive, pliant, amenable, meek.</span></div></div>
+      <div class="example-block"><div>122. Doubtful - Meaning: Uncertain. <span class="antonym">Antonym: Certain</span>. <span class="synonym">Associated: Dubious, questionable, skeptical, hesitant, equivocal, indecisive.</span></div></div>
+      <div class="example-block"><div>123. Dull - Meaning: Boring. <span class="antonym">Antonym: Bright</span>. <span class="synonym">Associated: Tedious, monotonous, lackluster, insipid, drab, vapid.</span></div></div>
+      <div class="example-block"><div>124. Dwarf - Meaning: Small. <span class="antonym">Antonym: Giant</span>. <span class="synonym">Associated: Miniature, diminutive, pygmy, undersized, stunted, tiny.</span></div></div>
+      <div class="example-block"><div>125. Eager - Meaning: Enthusiastic. <span class="antonym">Antonym: Indifferent</span>. <span class="synonym">Associated: Keen, avid, zealous, ardent, fervent, impatient.</span></div></div>
+      <div class="example-block"><div>126. Eccentric - Meaning: Odd. <span class="antonym">Antonym: Conventional</span>. <span class="synonym">Associated: Quirky, peculiar, idiosyncratic, bizarre, unconventional, erratic.</span></div></div>
+      <div class="example-block"><div>127. Eclipse - Meaning: To obscure. <span class="antonym">Antonym: Shine</span>. <span class="synonym">Associated: Overshadow, surpass, outshine, dim, obfuscate, occult.</span></div></div>
+      <div class="example-block"><div>128. Ecstasy - Meaning: Joy. <span class="antonym">Antonym: Misery</span>. <span class="synonym">Associated: Rapture, bliss, elation, euphoria, delight, transport.</span></div></div>
+      <div class="example-block"><div>129. Efface - Meaning: To erase. <span class="antonym">Antonym: Preserve</span>. <span class="synonym">Associated: Obliterate, erase, expunge, delete, rub out, wipe out.</span></div></div>
+      <div class="example-block"><div>130. Eloquent - Meaning: Expressive. <span class="antonym">Antonym: Inarticulate</span>. <span class="synonym">Associated: Articulate, fluent, persuasive, silver-tongued, oratorical, expressive.</span></div></div>
+
+      <div class="example-block"><div>131. Elated - Meaning: Joyful. <span class="antonym">Antonym: Depressed</span>. <span class="synonym">Associated: Ecstatic, jubilant, overjoyed, thrilled, euphoric, exhilarated.</span></div></div>
+      <div class="example-block"><div>132. Encumbrance - Meaning: Burden. <span class="antonym">Antonym: Aid</span>. <span class="synonym">Associated: Hindrance, impediment, obstacle, load, liability, handicap.</span></div></div>
+      <div class="example-block"><div>133. Endeavour - Meaning: Effort. <span class="antonym">Antonym: Laziness</span>. <span class="synonym">Associated: Attempt, strive, aspire, undertake, try, venture.</span></div></div>
+      <div class="example-block"><div>134. Enormous - Meaning: Huge. <span class="antonym">Antonym: Tiny</span>. <span class="synonym">Associated: Immense, colossal, gigantic, mammoth, vast, prodigious.</span></div></div>
+      <div class="example-block"><div>135. Epitome - Meaning: Perfect example. <span class="antonym">Antonym: Expansion</span>. <span class="synonym">Associated: Embodiment, quintessence, archetype, paragon, model, exemplar.</span></div></div>
+      <div class="example-block"><div>136. Equivocal - Meaning: Ambiguous. <span class="antonym">Antonym: Clear</span>. <span class="synonym">Associated: Uncertain, dubious, vague, indecisive, ambivalent, obscure.</span></div></div>
+      <div class="example-block"><div>137. Eradicate - Meaning: To eliminate. <span class="antonym">Antonym: Implant</span>. <span class="synonym">Associated: Exterminate, uproot, abolish, annihilate, extirpate, destroy.</span></div></div>
+      <div class="example-block"><div>138. Evasive - Meaning: Avoiding. <span class="antonym">Antonym: Honest</span>. <span class="synonym">Associated: Elusive, equivocating, vague, shifty, indirect, prevaricating.</span></div></div>
+      <div class="example-block"><div>139. Exaggerate - Meaning: To overstate. <span class="antonym">Antonym: Understate</span>. <span class="synonym">Associated: Magnify, hyperbolize, embellish, amplify, inflate, overemphasize.</span></div></div>
+      <div class="example-block"><div>140. Exemplary - Meaning: Ideal. <span class="antonym">Antonym: Bad</span>. <span class="synonym">Associated: Model, paradigmatic, laudable, commendable, outstanding, praiseworthy.</span></div></div>
+
+      <div class="example-block"><div>141. Explicit - Meaning: Clear. <span class="antonym">Antonym: Ambiguous</span>. <span class="synonym">Associated: Definite, express, unambiguous, precise, overt, straightforward.</span></div></div>
+      <div class="example-block"><div>142. Fabricate - Meaning: To invent. <span class="antonym">Antonym: Destroy</span>. <span class="synonym">Associated: Construct, manufacture, concoct, forge, invent, make up.</span></div></div>
+      <div class="example-block"><div>143. Fallacy - Meaning: False idea. <span class="antonym">Antonym: Truth</span>. <span class="synonym">Associated: Delusion, misconception, error, sophism, misbelief, falsehood.</span></div></div>
+      <div class="example-block"><div>144. Fanatical - Meaning: Extreme. <span class="antonym">Antonym: Moderate</span>. <span class="synonym">Associated: Zealous, extremist, radical, fervent, obsessive, rabid.</span></div></div>
+      <div class="example-block"><div>145. Feeble - Meaning: Weak. <span class="antonym">Antonym: Strong</span>. <span class="synonym">Associated: Frail, debilitated, infirm, enervated, languid, puny.</span></div></div>
+      <div class="example-block"><div>146. Ferocious - Meaning: Fierce. <span class="antonym">Antonym: Gentle</span>. <span class="synonym">Associated: Savage, vicious, brutal, aggressive, ruthless, feral.</span></div></div>
+      <div class="example-block"><div>147. Fickle - Meaning: Changeable. <span class="antonym">Antonym: Constant</span>. <span class="synonym">Associated: Inconstant, capricious, mercurial, volatile, erratic, flighty.</span></div></div>
+      <div class="example-block"><div>148. Fluctuate - Meaning: To vary. <span class="antonym">Antonym: Stabilize</span>. <span class="synonym">Associated: Oscillate, waver, vacillate, undulate, alternate, seesaw.</span></div></div>
+      <div class="example-block"><div>149. Fragile - Meaning: Delicate. <span class="antonym">Antonym: Sturdy</span>. <span class="synonym">Associated: Brittle, frail, breakable, delicate, tenuous, vulnerable.</span></div></div>
+      <div class="example-block"><div>150. Frantic - Meaning: Frantic. <span class="antonym">Antonym: Calm</span>. <span class="synonym">Associated: Frenzied, agitated, hysterical, desperate, wild, distraught.</span></div></div>
+
+      <div class="example-block"><div>151. Frenzy - Meaning: Madness. <span class="antonym">Antonym: Calm</span>. <span class="synonym">Associated: Mania, delirium, fury, hysteria, rage, agitation.</span></div></div>
+      <div class="example-block"><div>152. Frugal - Meaning: Thrifty. <span class="antonym">Antonym: Extravagant</span>. <span class="synonym">Associated: Economical, parsimonious, sparing, prudent, stingy, scrimpy.</span></div></div>
+      <div class="example-block"><div>153. Frivolous - Meaning: Silly. <span class="antonym">Antonym: Serious</span>. <span class="synonym">Associated: Trivial, superficial, petty, flighty, giddy, inane.</span></div></div>
+      <div class="example-block"><div>154. Furious - Meaning: Angry. <span class="antonym">Antonym: Calm</span>. <span class="synonym">Associated: Enraged, incensed, irate, wrathful, livid, fuming.</span></div></div>
+      <div class="example-block"><div>155. Generous - Meaning: Giving. <span class="antonym">Antonym: Stingy</span>. <span class="synonym">Associated: Liberal, bountiful, magnanimous, munificent, openhanded, altruistic.</span></div></div>
+      <div class="example-block"><div>156. Genuine - Meaning: Real. <span class="antonym">Antonym: Fake</span>. <span class="synonym">Associated: Authentic, bona fide, legitimate, true, veritable, actual.</span></div></div>
+      <div class="example-block"><div>157. Gloomy - Meaning: Dark. <span class="antonym">Antonym: Cheerful</span>. <span class="synonym">Associated: Dismal, somber, morose, melancholy, sullen, depressing.</span></div></div>
+      <div class="example-block"><div>158. Gracious - Meaning: Courteous. <span class="antonym">Antonym: Rude</span>. <span class="synonym">Associated: Kind, benevolent, affable, elegant, merciful, polite.</span></div></div>
+      <div class="example-block"><div>159. Grudge - Meaning: Resentment. <span class="antonym">Antonym: Forgiveness</span>. <span class="synonym">Associated: Grievance, malice, spite, rancor, animosity, bitterness.</span></div></div>
+      <div class="example-block"><div>160. Guile - Meaning: Deceit. <span class="antonym">Antonym: Honesty</span>. <span class="synonym">Associated: Cunning, slyness, artifice, duplicity, wiliness, craftiness.</span></div></div>
+
+      <div class="example-block"><div>161. Hapless - Meaning: Unlucky. <span class="antonym">Antonym: Lucky</span>. <span class="synonym">Associated: Unfortunate, ill-fated, jinxed, luckless, wretched, doomed.</span></div></div>
+      <div class="example-block"><div>162. Harass - Meaning: To torment. <span class="antonym">Antonym: Assist</span>. <span class="synonym">Associated: Pester, bother, badger, vex, plague, molest.</span></div></div>
+      <div class="example-block"><div>163. Hasty - Meaning: Hurried. <span class="antonym">Antonym: Deliberate</span>. <span class="synonym">Associated: Rash, precipitate, impetuous, hurried, rushed, quick.</span></div></div>
+      <div class="example-block"><div>164. Haughty - Meaning: Arrogant. <span class="antonym">Antonym: Humble</span>. <span class="synonym">Associated: Proud, disdainful, supercilious, scornful, conceited, snooty.</span></div></div>
+      <div class="example-block"><div>165. Hazard - Meaning: Danger. <span class="antonym">Antonym: Safety</span>. <span class="synonym">Associated: Peril, risk, jeopardy, threat, venture, gamble.</span></div></div>
+      <div class="example-block"><div>166. Heinous - Meaning: Wicked. <span class="antonym">Antonym: Admirable</span>. <span class="synonym">Associated: Atrocious, monstrous, odious, abominable, vile, reprehensible.</span></div></div>
+      <div class="example-block"><div>167. Heretic - Meaning: Nonconformist. <span class="antonym">Antonym: Conformist</span>. <span class="synonym">Associated: Dissident, apostate, schismatic, iconoclast, rebel, maverick.</span></div></div>
+      <div class="example-block"><div>168. Hideous - Meaning: Ugly. <span class="antonym">Antonym: Beautiful</span>. <span class="synonym">Associated: Grotesque, repulsive, ghastly, monstrous, horrid, frightful.</span></div></div>
+      <div class="example-block"><div>169. Hostile - Meaning: Unfriendly. <span class="antonym">Antonym: Friendly</span>. <span class="synonym">Associated: Antagonistic, aggressive, belligerent, inimical, adverse, unfriendly.</span></div></div>
+      <div class="example-block"><div>170. Humble - Meaning: Modest. <span class="antonym">Antonym: Arrogant</span>. <span class="synonym">Associated: Meek, unassuming, lowly, deferential, submissive, modest.</span></div></div>
+
+      <div class="example-block"><div>171. Hypocritical - Meaning: Insincere. <span class="antonym">Antonym: Sincere</span>. <span class="synonym">Associated: Phony, sanctimonious, two-faced, dissembling, pietistic, unctuous.</span></div></div>
+      <div class="example-block"><div>172. Ignorant - Meaning: Uninformed. <span class="antonym">Antonym: Knowledgeable</span>. <span class="synonym">Associated: Uneducated, illiterate, unaware, unenlightened, benighted, oblivious.</span></div></div>
+      <div class="example-block"><div>173. Illustrious - Meaning: Famous. <span class="antonym">Antonym: Obscure</span>. <span class="synonym">Associated: Renowned, eminent, distinguished, celebrated, notable, glorious.</span></div></div>
+      <div class="example-block"><div>174. Immaculate - Meaning: Spotless. <span class="antonym">Antonym: Dirty</span>. <span class="synonym">Associated: Pristine, unsullied, flawless, unblemished, pure, clean.</span></div></div>
+      <div class="example-block"><div>175. Impartial - Meaning: Fair. <span class="antonym">Antonym: Biased</span>. <span class="synonym">Associated: Unbiased, neutral, objective, disinterested, equitable, evenhanded.</span></div></div>
+      <div class="example-block"><div>176. Impetuous - Meaning: Rash. <span class="antonym">Antonym: Cautious</span>. <span class="synonym">Associated: Impulsive, headlong, reckless, precipitate, hasty, heedless.</span></div></div>
+      <div class="example-block"><div>177. Implacable - Meaning: Unappeasable. <span class="antonym">Antonym: Placable</span>. <span class="synonym">Associated: Relentless, inexorable, unyielding, merciless, unforgiving, obdurate.</span></div></div>
+      <div class="example-block"><div>178. Incessant - Meaning: Continuous. <span class="antonym">Antonym: Intermittent</span>. <span class="synonym">Associated: Unceasing, constant, nonstop, perpetual, unending, relentless.</span></div></div>
+      <div class="example-block"><div>179. Indifferent - Meaning: Unconcerned. <span class="antonym">Antonym: Interested</span>. <span class="synonym">Associated: Apathetic, nonchalant, detached, blasé, insouciant, uninterested.</span></div></div>
+      <div class="example-block"><div>180. Indigent - Meaning: Poor. <span class="antonym">Antonym: Wealthy</span>. <span class="synonym">Associated: Destitute, needy, impoverished, penniless, impecunious, penurious.</span></div></div>
+
+      <div class="example-block"><div>181. Indolent - Meaning: Lazy. <span class="antonym">Antonym: Industrious</span>. <span class="synonym">Associated: Slothful, lethargic, idle, torpid, sluggish, listless.</span></div></div>
+      <div class="example-block"><div>182. Inexorable - Meaning: Relentless. <span class="antonym">Antonym: Yielding</span>. <span class="synonym">Associated: Implacable, unyielding, merciless, adamant, unbending, inflexible.</span></div></div>
+      <div class="example-block"><div>183. Infamous - Meaning: Notorious. <span class="antonym">Antonym: Reputable</span>. <span class="synonym">Associated: Disreputable, ignominious, scandalous, odious, villainous, nefarious.</span></div></div>
+      <div class="example-block"><div>184. Inferior - Meaning: Lower quality. <span class="antonym">Antonym: Superior</span>. <span class="synonym">Associated: Substandard, mediocre, second-rate, subpar, lesser, inadequate.</span></div></div>
+      <div class="example-block"><div>185. Ingenuous - Meaning: Naive. <span class="antonym">Antonym: Sophisticated</span>. <span class="synonym">Associated: Innocent, artless, guileless, candid, frank, naive.</span></div></div>
+      <div class="example-block"><div>186. Innocuous - Meaning: Harmless. <span class="antonym">Antonym: Harmful</span>. <span class="synonym">Associated: Benign, inoffensive, safe, anodyne, unobjectionable, innocent.</span></div></div>
+      <div class="example-block"><div>187. Insipid - Meaning: Bland. <span class="antonym">Antonym: Flavorful</span>. <span class="synonym">Associated: Tasteless, vapid, dull, flat, banal, lackluster.</span></div></div>
+      <div class="example-block"><div>188. Insolent - Meaning: Rude. <span class="antonym">Antonym: Respectful</span>. <span class="synonym">Associated: Impudent, audacious, cheeky, brazen, impertinent, saucy.</span></div></div>
+      <div class="example-block"><div>189. Integrity - Meaning: Honesty. <span class="antonym">Antonym: Dishonesty</span>. <span class="synonym">Associated: Probity, uprightness, rectitude, honor, virtue, incorruptibility.</span></div></div>
+      <div class="example-block"><div>190. Intermittent - Meaning: Sporadic. <span class="antonym">Antonym: Continuous</span>. <span class="synonym">Associated: Fitful, sporadic, occasional, periodic, irregular, episodic.</span></div></div>
+
+      <div class="example-block"><div>191. Intrepid - Meaning: Fearless. <span class="antonym">Antonym: Cowardly</span>. <span class="synonym">Associated: Dauntless, valiant, audacious, bold, courageous, undaunted.</span></div></div>
+      <div class="example-block"><div>192. Intricate - Meaning: Complex. <span class="antonym">Antonym: Simple</span>. <span class="synonym">Associated: Complicated, convoluted, elaborate, labyrinthine, knotty, tangled.</span></div></div>
+      <div class="example-block"><div>193. Irate - Meaning: Angry. <span class="antonym">Antonym: Calm</span>. <span class="synonym">Associated: Furious, enraged, incensed, wrathful, livid, choleric.</span></div></div>
+      <div class="example-block"><div>194. Jubilant - Meaning: Joyful. <span class="antonym">Antonym: Sorrowful</span>. <span class="synonym">Associated: Elated, exultant, triumphant, gleeful, euphoric, rejoicing.</span></div></div>
+      <div class="example-block"><div>195. Juvenile - Meaning: Youthful. <span class="antonym">Antonym: Mature</span>. <span class="synonym">Associated: Adolescent, immature, childish, puerile, young, callow.</span></div></div>
+      <div class="example-block"><div>196. Keen - Meaning: Sharp. <span class="antonym">Antonym: Dull</span>. <span class="synonym">Associated: Acute, perceptive, eager, astute, incisive, enthusiastic.</span></div></div>
+      <div class="example-block"><div>197. Kindle - Meaning: To ignite. <span class="antonym">Antonym: Extinguish</span>. <span class="synonym">Associated: Ignite, arouse, inflame, enkindle, spark, incite.</span></div></div>
+      <div class="example-block"><div>198. Languid - Meaning: Lacking energy. <span class="antonym">Antonym: Energetic</span>. <span class="synonym">Associated: Listless, lethargic, torpid, sluggish, enervated, indolent.</span></div></div>
+      <div class="example-block"><div>199. Lavish - Meaning: Extravagant. <span class="antonym">Antonym: Stingy</span>. <span class="synonym">Associated: Profuse, opulent, sumptuous, luxuriant, prodigal, bountiful.</span></div></div>
+      <div class="example-block"><div>200. Lethargic - Meaning: Sluggish. <span class="antonym">Antonym: Active</span>. <span class="synonym">Associated: Torpid, apathetic, indolent, listless, drowsy, inert.</span></div></div>
+
+      <p style="text-align:center; color:var(--accent); font-size:20px; margin:60px 0 40px;">
+        <strong>Finished – All 200 words complete!</strong><br>
+        Revise daily. You will score very high in Use of English! 🌟
+      </p>
+
+      <button class="explore-btn" onclick="alert('Great job! Now test yourself with 20 words.')">
+        I've Read All 200 → Start Self-Quiz
+      </button>
+
+    </div>
+
+    <div class="nav-bar">
+      <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+      <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+      <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    toggle.onclick = () => {
+      document.body.classList.toggle('light');
+      toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+    };
+  </script>
+</body>
+</html>
