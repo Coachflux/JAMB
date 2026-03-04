@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Word Classes and their Sentences</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);
+      --highlight-solution: #ff9800;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      height: 100vh;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: block;
+      margin: 40px auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-item {
+      text-align: center;
+    }
+
+    .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+      color: #000;
+    }
+
+    .nav-item p {
+      font-size: 12px;
+      margin-top: 4px;
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Word Classes & Sentences</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Word Classes and their Sentences</h1>
+        <p class="subtitle">JAMB Use of English – Step-by-step guide</p>
+      </div>
+
+      <div class="welcome-note">
+        <h2>Quick Overview</h2>
+        <p>Word classes (parts of speech) are the foundation of English grammar. JAMB tests them in:</p>
+        <ul>
+          <li>Lexis & Structure (sentence completion, error spotting)</li>
+          <li>Concord / subject-verb agreement</li>
+          <li>Phrasal verbs & idioms</li>
+          <li>Comprehension (understanding word function)</li>
+        </ul>
+        <p>There are 8 main word classes. Learn their definitions, common JAMB words, positions, and rules.</p>
+      </div>
+
+      <!-- 1. Nouns -->
+      <h2>1. Nouns</h2>
+      <p><strong>What it is:</strong> Names a person, place, thing, animal, idea or quality.</p>
+      <p><strong>Common JAMB collective / uncountable / always-plural nouns:</strong></p>
+      <ul>
+        <li>committee, family, police, luggage, furniture, information, news, mathematics, equipment, advice, baggage, stationery, poultry, cattle, people, scissors, trousers, glasses, economics, physics, measles, athletics, headquarters, government, audience, crowd, team, jury, staff, public, majority, minority, youth, offspring, aircraft, deer, sheep, series, species</li>
+      </ul>
+      <p><strong>Key rules for JAMB:</strong></p>
+      <ul>
+        <li>Collective nouns usually take <strong>singular verb</strong> (committee is…)</li>
+        <li>Uncountable nouns → no “a/an” and no plural “s” (information is…, not informations)</li>
+        <li>Some nouns always plural: police have…, scissors are…, trousers are…</li>
+      </ul>
+      <p><strong>5 JAMB-style examples with explanation:</strong></p>
+      <div class="example-block">
+        <div class="example-problem">The committee <strong>is</strong> meeting next week.</div>
+        <div class="example-solution">“Committee” = collective noun → treated as singular unit → verb <strong>is</strong></div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">All the <strong>information</strong> you need <strong>is</strong> on the website.</div>
+        <div class="example-solution">“Information” = uncountable → singular verb <strong>is</strong>, never “informations”</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">The <strong>police</strong> <strong>have</strong> arrested the suspect.</div>
+        <div class="example-solution">“Police” = always plural → verb <strong>have</strong>, never “the police has”</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">His <strong>luggage</strong> <strong>was</strong> lost at the airport.</div>
+        <div class="example-solution">“Luggage” = uncountable → singular verb <strong>was</strong>, never “luggages”</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem"><strong>Mathematics</strong> <strong>is</strong> my favourite subject.</div>
+        <div class="example-solution">“Mathematics” = uncountable subject → singular verb <strong>is</strong></div>
+      </div>
+
+      <!-- 2. Verbs -->
+      <h2>2. Verbs</h2>
+      <p><strong>What it is:</strong> Shows action, state or occurrence. Many JAMB questions test phrasal verbs (verb + particle = new meaning).</p>
+      <p><strong>Common high-frequency phrasal & single verbs in JAMB:</strong></p>
+      <ul>
+        <li>prefer, resemble, deliver (of a baby), circumvent, coax, coerce, cash in on, run on (petrol), postpone, break down, give up, look forward to, turn down, put up with, come across, call off, break into, look into, take after, bring about, put off, make up, fall out, get along, run out of, look up to, turn up, carry out, find out, pick up, set up, go on, come up with, back up</li>
+      </ul>
+      <p><strong>5 JAMB-style examples with explanation:</strong></p>
+      <div class="example-block">
+        <div class="example-problem">The thief tried to <strong>circumvent</strong> the security system.</div>
+        <div class="example-solution"><strong>circumvent</strong> = get round / avoid → correct formal verb for JAMB</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">Ayayi <strong>cashed in on</strong> our defensive error to score.</div>
+        <div class="example-solution"><strong>cash in on</strong> = take advantage of → very common JAMB phrasal verb</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">The car <strong>runs on</strong> petrol, not diesel.</div>
+        <div class="example-solution"><strong>run on</strong> = use as fuel → typical JAMB usage</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">She was <strong>delivered of</strong> a bouncing baby boy yesterday.</div>
+        <div class="example-solution"><strong>deliver of</strong> = give birth to (formal JAMB expression)</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">The match was <strong>called off</strong> because of rain.</div>
+        <div class="example-solution"><strong>call off</strong> = cancel → very frequent in JAMB</div>
+      </div>
+
+      <!-- 3. Adjectives -->
+      <h2>3. Adjectives</h2>
+      <p><strong>What it is:</strong> Describes or modifies a noun/pronoun.</p>
+      <p><strong>Common high-frequency adjectives in JAMB:</strong></p>
+      <ul>
+        <li>beautiful, repulsive, early, lovely, white, best, more expensive, little, few, affluent, benevolent, candid, frugal, elated, adamant, hostile, lucid, meticulous, sluggish, mischievous, phenomenal, bureaucratic, eccentric, exhilarating, unprecedented, connoisseur, unanimous, irresistible, immaculate, excruciating, inquisitive, unpredictable, sophisticated, obsolete, diligent, ambiguous, audible, skeptical, arrogant, malicious, conspicuous</li>
+      </ul>
+      <p><strong>Positions:</strong> Before noun OR after linking verb (is, seems, looks, feels…)</p>
+      <p><strong>5 JAMB-style examples with explanation:</strong></p>
+      <div class="example-block">
+        <div class="example-problem">She bought a <strong>beautiful</strong> dress for the party.</div>
+        <div class="example-solution">Before noun → correct position</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">Everybody hates him for his <strong>repulsive</strong> looks.</div>
+        <div class="example-solution">Before noun → correct</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">It is <strong>more expensive</strong> to travel on Friday.</div>
+        <div class="example-solution">Comparative form after linking verb “is” → correct</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">That was a <strong>lovely</strong> evening.</div>
+        <div class="example-solution">Before noun → correct</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">Jasmines are <strong>white</strong> in colour.</div>
+        <div class="example-solution">After linking verb “are” → correct</div>
+      </div>
+
+      <!-- 4. Adverbs -->
+      <h2>4. Adverbs</h2>
+      <p><strong>What it is:</strong> Modifies verb, adjective or another adverb (how, when, where, to what extent…).</p>
+      <p><strong>Common JAMB adverbs:</strong></p>
+      <ul>
+        <li>beautifully, pleasantly, quickly, later, early, more, slowly, very, quite, rather, too, extremely, frequently, seldom, always, never, soon, yesterday, here, there, everywhere, upstairs, downstairs, well, badly, hard, fast, almost, nearly, hardly, scarcely, fortunately, unfortunately, honestly, carefully, suddenly, immediately, eventually</li>
+      </ul>
+      <p><strong>5 JAMB-style examples with explanation:</strong></p>
+      <div class="example-block">
+        <div class="example-problem">She sang <strong>beautifully</strong> on stage.</div>
+        <div class="example-solution">Modifies verb “sang” → manner adverb</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">I was <strong>pleasantly</strong> surprised when she arrived.</div>
+        <div class="example-solution">Modifies adjective “surprised”</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">John came <strong>later</strong> than Peter.</div>
+        <div class="example-solution">Comparative adverb of time</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">If we finish our work <strong>quickly</strong>, we can go to the movies.</div>
+        <div class="example-solution">Modifies verb “finish” → manner</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">He runs <strong>more quickly</strong> than his brother.</div>
+        <div class="example-solution">Comparative form</div>
+      </div>
+
+      <!-- 5. Pronouns -->
+      <h2>5. Pronouns</h2>
+      <p><strong>What it is:</strong> Replaces a noun to avoid repetition.</p>
+      <p><strong>Common JAMB pronouns:</strong></p>
+      <ul>
+        <li>you, theirs, it, he, she, they, we, I, me, him, her, us, them, mine, yours, his, hers, its, ours, whose, who, whom, which, that, everyone, somebody, anybody, nobody, something, anything, this, that, these, those, one, each, either, neither</li>
+      </ul>
+      <p><strong>5 JAMB-style examples with explanation:</strong></p>
+      <div class="example-block">
+        <div class="example-problem">It happened that our dog is male but <strong>theirs</strong> are all females.</div>
+        <div class="example-solution"><strong>theirs</strong> replaces “their dogs” – plural possessive</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">Where are <strong>you</strong> going?</div>
+        <div class="example-solution"><strong>you</strong> = second person pronoun</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">Everyone has <strong>his</strong> own book.</div>
+        <div class="example-solution"><strong>his</strong> agrees with singular “everyone”</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">The book is <strong>mine</strong>, not <strong>yours</strong>.</div>
+        <div class="example-solution">Possessive pronouns – no noun after them</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem"><strong>Neither</strong> the teacher nor the students are ready.</div>
+        <div class="example-solution"><strong>Neither…nor</strong> construction – verb agrees with nearer subject</div>
+      </div>
+
+      <!-- 6. Prepositions -->
+      <h2>6. Prepositions</h2>
+      <p><strong>What it is:</strong> Shows relationship of noun/pronoun to other words (time, place, direction…).</p>
+      <p><strong>Common JAMB prepositions & phrases:</strong></p>
+      <ul>
+        <li>under, for, on (radio/petrol), in spite of, beneath, with, by, from, at, in, to, of, about, above, across, against, along, among, around, before, behind, below, beside, between, beyond, during, except, inside, into, near, off, onto, outside, over, since, through, throughout, toward, until, up, upon, within</li>
+      </ul>
+      <p><strong>5 JAMB-style examples with explanation:</strong></p>
+      <div class="example-block">
+        <div class="example-problem">I left my shoes <strong>under</strong> the kitchen table.</div>
+        <div class="example-solution"><strong>under</strong> = position below</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">We heard the news <strong>on</strong> the radio.</div>
+        <div class="example-solution"><strong>on</strong> = media (radio, TV)</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">The car runs <strong>on</strong> petrol, not diesel.</div>
+        <div class="example-solution"><strong>on</strong> = fuel source</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">We went out <strong>in spite of</strong> the rain.</div>
+        <div class="example-solution"><strong>in spite of</strong> = despite (prepositional phrase)</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">He is <strong>beneath</strong> his dignity to join the queue.</div>
+        <div class="example-solution"><strong>beneath</strong> = below (formal JAMB usage)</div>
+      </div>
+
+      <!-- 7. Conjunctions -->
+      <h2>7. Conjunctions</h2>
+      <p><strong>What it is:</strong> Joins words, phrases or clauses.</p>
+      <p><strong>Common JAMB conjunctions:</strong></p>
+      <ul>
+        <li>but, although, in spite of (phrase), rather than, because, since, for (because), and, or, yet, so, if, unless, while, whereas, even though, as, when, whenever, where, wherever, before, after, until, till, as soon as, provided that, in order that, so that</li>
+      </ul>
+      <p><strong>5 JAMB-style examples with explanation:</strong></p>
+      <div class="example-block">
+        <div class="example-problem"><strong>Although</strong> the problem was simple, few students solved it.</div>
+        <div class="example-solution"><strong>Although</strong> = subordinating conjunction (contrast) → comma after clause</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">I prefer tea <strong>rather than</strong> coffee.</div>
+        <div class="example-solution"><strong>rather than</strong> = preference</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">We went out <strong>although</strong> it was raining.</div>
+        <div class="example-solution"><strong>although</strong> = contrast</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem">He ran fast <strong>because</strong> he was late.</div>
+        <div class="example-solution"><strong>because</strong> = reason</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem"><strong>Since</strong> you are here, let us start the meeting.</div>
+        <div class="example-solution"><strong>Since</strong> = reason or time</div>
+      </div>
+
+      <!-- 8. Interjections -->
+      <h2>8. Interjections</h2>
+      <p><strong>What it is:</strong> Expresses sudden emotion or feeling.</p>
+      <p><strong>Common JAMB interjections:</strong></p>
+      <ul>
+        <li>Ouch, Wow, Ah, Oh, Hey, Alas, Hurray, Bravo, Oops, Aha, Eh, Well, Gosh, Gee, Yippee, Hurrah, Phew, Ugh, Yay, Boo</li>
+      </ul>
+      <p><strong>5 JAMB-style examples with explanation:</strong></p>
+      <div class="example-block">
+        <div class="example-problem"><strong>Ouch!</strong> That hurts.</div>
+        <div class="example-solution"><strong>Ouch</strong> = pain</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem"><strong>Wow!</strong> That is amazing.</div>
+        <div class="example-solution"><strong>Wow</strong> = surprise/admiration</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem"><strong>Alas!</strong> The team lost the match.</div>
+        <div class="example-solution"><strong>Alas</strong> = sorrow/regret</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem"><strong>Bravo!</strong> You have done well.</div>
+        <div class="example-solution"><strong>Bravo</strong> = praise/approval</div>
+      </div>
+      <div class="example-block">
+        <div class="example-problem"><strong>Phew!</strong> I finally finished the exam.</div>
+        <div class="example-solution"><strong>Phew</strong> = relief</div>
+      </div>
+
+      <h2>Rules of Concord (Subject-Verb Agreement) – JAMB Focus</h2>
+      <p>Concord = subject and verb must agree in number and person. JAMB loves testing tricky cases.</p>
+      <p><strong>15 Key Rules (with examples):</strong></p>
+      <ul>
+        <li>Basic: Singular subject → singular verb; plural → plural. <strong>The boy plays. / The boys play.</strong></li>
+        <li>Collective nouns: Usually singular. <strong>The committee is divided.</strong></li>
+        <li>As well as / with / together with / along with: Ignore extra words. <strong>The teacher, as well as students, is here.</strong></li>
+        <li>Either…or / Neither…nor: Agree with nearer subject. <strong>Neither boys nor teacher is coming.</strong></li>
+        <li>A number of (plural) vs The number of (singular). <strong>A number of students are absent.</strong></li>
+        <li>Indefinite pronouns (everyone, each, somebody…): Singular. <strong>Everyone has arrived.</strong></li>
+        <li>Uncountable & pluralia tantum: Singular for news/maths; plural for police/cattle. <strong>News is good. / Police have come.</strong></li>
+        <li>More than one: Singular. <strong>More than one student has failed.</strong></li>
+        <li>The + adjective (the poor, the rich): Plural. <strong>The poor are helped.</strong></li>
+        <li>Amounts / Time / Money / Titles: Singular. <strong>Ten thousand naira is enough.</strong></li>
+        <li>Not / Not only…but also: Agree before “not”. <strong>The man, not workers, is responsible.</strong></li>
+        <li>Relative pronouns (who/which/that): Agree with antecedent. <strong>Boys who play are here.</strong></li>
+        <li>One of / Each of: Singular. <strong>One of the boys has gone.</strong></li>
+        <li>None of: Often singular in JAMB. <strong>None of the food is left.</strong></li>
+        <li>And compounds: Plural unless one idea. <strong>Bread and butter is ready. / My friend and brother has arrived.</strong></li>
+      </ul>
+
+      <h3>20 JAMB-Style Concord Questions with Answers & Explanation</h3>
+
+      <div class="example-block">
+        <div class="example-problem">The teacher, as well as his students, ………… working very hard.<br>A. is B. have been C. are D. were<br><strong>Answer: A. is</strong><br>Explanation: Ignore “as well as” → main subject “teacher” singular → verb singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The farmer, with his sons, ………… millet.<br>A. grows B. grow C. were growing D. have been growing<br><strong>Answer: A. grows</strong><br>Explanation: Ignore “with his sons” → main subject “farmer” singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Chief Owonikoko as well as his men ………… arrived.<br>A. have B. has C. are D. were<br><strong>Answer: B. has</strong><br>Explanation: Main subject “Chief Owonikoko” singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The man with his wives ………… coming.<br>A. were B. are C. is D. been<br><strong>Answer: C. is</strong><br>Explanation: Main subject “man” singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Julius Berger and Associates ………… not employ technicians.<br>A. do B. does C. has D. have<br><strong>Answer: A. do</strong><br>Explanation: Compound subject with “and” → plural verb.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Either my friends or my brother ………… taken the car out.<br>A. have B. has C. was D. were<br><strong>Answer: B. has</strong><br>Explanation: Agree with nearer subject “brother” (singular).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">I was still sleeping when the national news ………… this morning.<br>A. were broadcasted B. was broadcasted C. was broadcast D. were broadcast<br><strong>Answer: C. was broadcast</strong><br>Explanation: “News” = uncountable singular → verb singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The man, not his workers, ………… to blame.<br>A. are B. is C. were D. them<br><strong>Answer: B. is</strong><br>Explanation: Ignore “not his workers” → main subject “man” singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The number of women ………… more than that of men in every society.<br>A. are B. is C. were D. been<br><strong>Answer: B. is</strong><br>Explanation: “The number of” = singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">It is on record that more than one person ………… in road accidents in Nigeria every day.<br>A. die B. dying C. dies D. dead<br><strong>Answer: C. dies</strong><br>Explanation: “More than one” = singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The committee ………… divided in their opinion.<br>A. are B. is C. were D. have<br><strong>Answer: B. is</strong><br>Explanation: Collective noun → singular verb.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Everyone in the class ………… submitted his assignment.<br>A. have B. has C. are D. is<br><strong>Answer: B. has</strong><br>Explanation: “Everyone” = singular indefinite pronoun.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">A number of students ………… absent today.<br>A. is B. are C. was D. were<br><strong>Answer: B. are</strong><br>Explanation: “A number of” = plural.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Neither the teacher nor the students ………… coming to the party.<br>A. is B. are C. was D. were<br><strong>Answer: B. are</strong><br>Explanation: Agree with nearer subject “students” (plural).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Twenty thousand naira ………… too much for the book.<br>A. are B. is C. were D. have<br><strong>Answer: B. is</strong><br>Explanation: Money amount = singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The police ………… arrested the suspect.<br>A. has B. have C. is D. are<br><strong>Answer: B. have</strong><br>Explanation: “Police” = always plural.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Mathematics ………… my favourite subject.<br>A. are B. is C. were D. have<br><strong>Answer: B. is</strong><br>Explanation: “Mathematics” = uncountable singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">One of the students ………… failed the examination.<br>A. have B. has C. are D. were<br><strong>Answer: B. has</strong><br>Explanation: “One of” = singular.</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The poor ………… always with us.<br>A. is B. are C. was D. were<br><strong>Answer: B. are</strong><br>Explanation: “The poor” = plural (the + adjective).</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">My wife and comforter ………… arrived.<br>A. have B. has C. are D. were<br><strong>Answer: B. has</strong><br>Explanation: One person (wife = comforter) → singular verb.</div>
+      </div>
+
+      <p style="text-align:center; color:var(--accent); font-size:20px; margin:60px 0;">
+        <strong>Finished – Complete Word Classes + Concord Chapter!</strong><br>
+        Revise one section daily. Attempt the 20 Concord questions timed (aim 100%). Then move to full past papers. You’re ready for a high score in Use of English, Abumchukwu! Keep the fire burning in Port Harcourt — JAMB is yours! 💪
+      </p>
+
+      <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">
+        Start Quiz on Word Classes
+      </button>
+
+    </div>
+
+    <div class="nav-bar">
+      <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+      <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+      <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    toggle.onclick = () => {
+      document.body.classList.toggle('light');
+      toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+    };
+  </script>
+</body>
+</html>
