@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - COMPLETE JAMB USE OF ENGLISH GRAMMAR NOTE</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);
+      --highlight-solution: #ff9800;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      height: 100vh;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 420px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .example-block {
+      background: rgba(0,0,0,0.15);
+      padding: 14px;
+      border-radius: 10px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .example-problem {
+      background: var(--highlight-example);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .example-solution {
+      background: var(--highlight-solution);
+      color: #000;
+      font-weight: bold;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--highlight-example);
+      color: var(--text-primary);
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: block;
+      margin: 40px auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 420px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-item {
+      text-align: center;
+    }
+
+    .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+      color: #000;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">COMPLETE JAMB GRAMMAR NOTE</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>COMPLETE JAMB USE OF ENGLISH GRAMMAR NOTE</h1>
+        <p class="subtitle">Step-by-step for easy understanding – JAMB 2026 ready</p>
+      </div>
+
+      <div class="welcome-note">
+        <h2>Quick Overview</h2>
+        <p>JAMB tests grammar heavily in Lexis & Structure. Master these 7 topics and you will score 9–10/10 every year.</p>
+        <ul>
+          <li>Mood (subjunctive is king)</li>
+          <li>Tense & Aspect</li>
+          <li>Number (Concord)</li>
+          <li>Degree (comparison)</li>
+          <li>Question Tags</li>
+          <li>Irregular Verbs (lie/lay especially)</li>
+        </ul>
+        <p>Read one section daily. Practice the 10 examples each time.</p>
+      </div>
+
+      <!-- 1. MOOD -->
+      <h2>1. MOOD</h2>
+      <p><strong>Rule (Step-by-step):</strong> Mood shows the speaker’s attitude.</p>
+      <ul>
+        <li>Indicative: facts/questions</li>
+        <li>Imperative: commands</li>
+        <li>Subjunctive (most tested): wishes, suggestions, “as if”, “it is time/high time”, “suggest/demand that” → uses base form of verb (be, go, have – no -s/-ed). “Were” for all subjects in unreal situations.</li>
+      </ul>
+      <p><strong>10 JAMB-style examples with step-by-step solutions:</strong></p>
+
+      <div class="example-block">
+        <div class="example-problem">The Principal suggested that the unruly student _______ expelled immediately.<br>A. is B. was C. be D. should be<br>
+Step 1: After “suggested that” we use subjunctive mood.<br>
+Step 2: Base form of the verb is required.<br>
+Step 3: “be” is the base form.<br>
+Answer: C. be</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Maryam treats people as if she _______ better than they are.<br>A. has B. were C. is D. was<br>
+Step 1: “as if” + unreal situation = subjunctive.<br>
+Step 2: Use “were” for all subjects in unreal condition.<br>
+Answer: B. were</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">It is high time we _______ the meeting.<br>A. have left B. leave C. left D. had left<br>
+Step 1: “It is high time” + past subjunctive.<br>
+Step 2: Past form of “leave” = left.<br>
+Answer: C. left</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">It is high time you _______ visiting that friend of yours.<br>A. stopped B. should stop C. stop D. must stop<br>
+Step 1: “high time” requires past subjunctive.<br>
+Step 2: “stopped” is the past form.<br>
+Answer: A. stopped</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">If I _______ you, I would forgive the boy.<br>A. am B. was C. were D. be<br>
+Step 1: Unreal conditional → subjunctive “were” for all subjects.<br>
+Answer: C. were</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The teacher demanded that every student _______ present at the meeting.<br>A. is B. was C. be D. should be<br>
+Step 1: After “demanded that” use subjunctive base form.<br>
+Answer: C. be</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">She wishes she _______ rich.<br>A. is B. was C. were D. be<br>
+Step 1: Wish + unreal situation = subjunctive “were”.<br>
+Answer: C. were</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">It is essential that he _______ on time.<br>A. is B. was C. be D. should be<br>
+Step 1: After “essential that” use subjunctive base form.<br>
+Answer: C. be</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The committee recommended that the report _______ before the decision.<br>A. is submitted B. was submitted C. be submitted D. should submit<br>
+Step 1: After “recommended that” use subjunctive.<br>
+Answer: C. be submitted</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">I would rather you _______ the truth now.<br>A. tell B. told C. tells D. have told<br>
+Step 1: “would rather” + past subjunctive.<br>
+Answer: B. told</div>
+      </div>
+
+      <!-- 2. TENSE -->
+      <h2>2. TENSE</h2>
+      <p><strong>Rule (Step-by-step):</strong> Tense shows time. Match with time words (yesterday = past, now = present, by tomorrow = future perfect). Sequence: past perfect before another past action.</p>
+      <p><strong>10 JAMB-style examples with step-by-step solutions:</strong></p>
+
+      <div class="example-block">
+        <div class="example-problem">I had hardly _______ down to sleep when I heard the gunshot.<br>A. lay B. lied C. lain D. laid<br>
+Step 1: “had hardly” = past perfect → past participle needed.<br>
+Step 2: Lie (recline) past participle = lain.<br>
+Answer: C. lain</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">By 11:00 a.m., I _______ writing the test for two hours.<br>A. will have been B. am C. shall have been D. have been<br>
+Step 1: “By 11:00 a.m.” + duration = future perfect continuous.<br>
+Answer: A. will have been</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">When I entered the room, they _______ dinner.<br>A. are eating B. were eating C. have eaten D. had eaten<br>
+Step 1: Past simple “entered” interrupted ongoing action → past continuous.<br>
+Answer: B. were eating</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">She _______ to school every day.<br>A. go B. goes C. going D. went<br>
+Step 1: Habit + 3rd person singular = “goes”.<br>
+Answer: B. goes</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Yesterday, he _______ to the market.<br>A. is going B. goes C. went D. has gone<br>
+Step 1: “Yesterday” = past simple.<br>
+Answer: C. went</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">They _______ the work before the teacher arrived.<br>A. finish B. finished C. had finished D. have finished<br>
+Step 1: Action completed before another past action → past perfect.<br>
+Answer: C. had finished</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">By next year, I _______ in this school for five years.<br>A. will be B. will have been C. am D. have been<br>
+Step 1: “By next year” + duration = future perfect.<br>
+Answer: B. will have been</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">We _______ anything to eat since morning.<br>A. didn’t eat B. haven’t eaten C. hadn’t eaten D. don’t eat<br>
+Step 1: “Since morning” to now = present perfect.<br>
+Answer: B. haven’t eaten</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Nowadays he _______ to work by bicycle.<br>A. was going B. is going C. goes D. went<br>
+Step 1: “Nowadays” = current habit = present simple.<br>
+Answer: C. goes</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The boys _______ when the bell rang.<br>A. play B. played C. were playing D. have played<br>
+Step 1: Interrupted ongoing action = past continuous.<br>
+Answer: C. were playing</div>
+      </div>
+
+      <!-- 3. ASPECT -->
+      <h2>3. ASPECT</h2>
+      <p><strong>Rule (Step-by-step):</strong> Aspect shows how the action is viewed (simple, continuous, perfect, perfect continuous). Combine with tense.</p>
+      <p><strong>10 JAMB-style examples with step-by-step solutions:</strong></p>
+
+      <div class="example-block">
+        <div class="example-problem">The students _______ the lesson for two hours before the break.<br>A. study B. studied C. have been studying D. had been studying<br>
+Step 1: Action ongoing up to a past point → past perfect continuous.<br>
+Answer: D. had been studying</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">She _______ the book since morning.<br>A. reads B. is reading C. has read D. has been reading<br>
+Step 1: Action started in past and still going = present perfect continuous.<br>
+Answer: D. has been reading</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">By the time we arrive, they _______ the match.<br>A. finish B. will finish C. will have finished D. are finishing<br>
+Step 1: Action completed before a future time = future perfect.<br>
+Answer: C. will have finished</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">While I _______ , the phone rang.<br>A. sleep B. slept C. was sleeping D. have slept<br>
+Step 1: Interrupted ongoing action = past continuous.<br>
+Answer: C. was sleeping</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">They _______ the project already.<br>A. complete B. completed C. have completed D. had completed<br>
+Step 1: Completed action with present result = present perfect.<br>
+Answer: C. have completed</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">He _______ in the rain for hours when we found him.<br>A. walks B. walked C. was walking D. had been walking<br>
+Step 1: Ongoing up to a past point = past perfect continuous.<br>
+Answer: D. had been walking</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">I _______ this song before.<br>A. hear B. heard C. have heard D. am hearing<br>
+Step 1: Experience up to now = present perfect.<br>
+Answer: C. have heard</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The team _______ hard these days.<br>A. trains B. is training C. has trained D. had trained<br>
+Step 1: Temporary action around now = present continuous.<br>
+Answer: B. is training</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">She _______ the letter by tomorrow.<br>A. writes B. will write C. will have written D. is writing<br>
+Step 1: Completed before a future time = future perfect.<br>
+Answer: C. will have written</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">We _______ the news when the announcement came.<br>A. hear B. heard C. were hearing D. had heard<br>
+Step 1: Action completed before another past action = past perfect.<br>
+Answer: D. had heard</div>
+      </div>
+
+      <!-- 4. NUMBER (Concord) -->
+      <h2>4. NUMBER (Subject-Verb Concord)</h2>
+      <p><strong>Rule (Step-by-step):</strong> Subject and verb must agree in number. Special cases tested heavily in JAMB.</p>
+      <p><strong>10 JAMB-style examples with step-by-step solutions:</strong></p>
+
+      <div class="example-block">
+        <div class="example-problem">The farmer, with his sons, _______ millet.<br>A. grows B. grow C. were growing D. have been growing<br>
+Step 1: Ignore “with his sons” – main subject “farmer” singular.<br>
+Step 2: Singular verb.<br>
+Answer: A. grows</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">One of the ladies who _______ in the premises _______ been asked to withdraw.<br>A. sells/have B. sell/have C. sells/has D. sell/has<br>
+Step 1: “ladies” plural → “sell”.<br>
+Step 2: “One” singular → “has”.<br>
+Answer: D. sell/has</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Either Ekaette or you _______ to go.<br>A. was B. are C. has D. is<br>
+Step 1: Agree with nearer subject “you” plural.<br>
+Answer: B. are</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The number of accidents _______ increasing.<br>A. is B. are C. have D. were<br>
+Step 1: “The number of” = singular.<br>
+Answer: A. is</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">A number of students _______ absent today.<br>A. is B. are C. has D. have<br>
+Step 1: “A number of” = plural.<br>
+Answer: B. are</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The committee _______ divided in their opinion.<br>A. is B. are C. was D. were<br>
+Step 1: Collective noun = singular.<br>
+Answer: A. is</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Neither the teacher nor the students _______ happy.<br>A. is B. are C. was D. were<br>
+Step 1: Agree with nearer plural “students”.<br>
+Answer: B. are</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Every boy and every girl _______ invited.<br>A. is B. are C. were D. have<br>
+Step 1: “Every” = singular.<br>
+Answer: A. is</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">The boys as well as their teacher _______ coming.<br>A. is B. are C. was D. were<br>
+Step 1: Agree with plural “boys”.<br>
+Answer: B. are</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">One of the schools of thought _______ selective marking.<br>A. suggest B. suggests C. have suggested D. are suggesting<br>
+Step 1: “One of” = singular.<br>
+Answer: B. suggests</div>
+      </div>
+
+      <!-- 5. DEGREE -->
+      <h2>5. DEGREE (Positive, Comparative, Superlative)</h2>
+      <p><strong>Rule (Step-by-step):</strong> Positive: as…as. Comparative: -er/more … than (two things). Superlative: -est/most … of/in/all (three or more). “Of the two” = comparative.</p>
+      <p><strong>10 JAMB-style examples with step-by-step solutions:</strong></p>
+
+      <div class="example-block">
+        <div class="example-problem">Which of the two questions is _______?<br>A. most difficult B. the much difficult C. the most difficult D. more difficult<br>
+Step 1: “Of the two” = comparative.<br>
+Answer: D. more difficult</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">This is the _______ movie I have ever watched.<br>A. good B. better C. best D. more good<br>
+Step 1: “Ever” = superlative.<br>
+Answer: C. best</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">No other city is _______ Mumbai.<br>A. as large as B. larger than C. the largest D. largest<br>
+Step 1: Positive degree comparison.<br>
+Answer: A. as large as</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">She is _______ than her sister.<br>A. tall B. taller C. tallest D. most tall<br>
+Step 1: Two people = comparative.<br>
+Answer: B. taller</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Mount Everest is the _______ mountain in the world.<br>A. high B. higher C. highest D. most high<br>
+Step 1: Superlative of all.<br>
+Answer: C. highest</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Gold is _______ than silver.<br>A. expensive B. more expensive C. expensiver D. most expensive<br>
+Step 1: Long adjective = more.<br>
+Answer: B. more expensive</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">This book is _______ interesting than that one.<br>A. as B. more C. most D. the most<br>
+Step 1: Comparative.<br>
+Answer: B. more</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">She is one of the _______ girls in the class.<br>A. intelligent B. more intelligent C. most intelligent D. intelligenter<br>
+Step 1: Superlative.<br>
+Answer: C. most intelligent</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">No other student is _______ Riya.<br>A. as intelligent as B. more intelligent than C. the most intelligent D. intelligenter<br>
+Step 1: Positive degree.<br>
+Answer: A. as intelligent as</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">He runs _______ than his friend.<br>A. fast B. faster C. fastest D. most fast<br>
+Step 1: Comparative.<br>
+Answer: B. faster</div>
+      </div>
+
+      <!-- 6. QUESTION TAGS -->
+      <h2>6. QUESTION TAGS</h2>
+      <p><strong>Rule (Step-by-step):</strong> Positive statement → negative tag; Negative → positive tag. Same auxiliary or “do/does/did”. Special: “I am” → aren’t I?; “let’s” → shall we?</p>
+      <p><strong>10 JAMB-style examples with step-by-step solutions:</strong></p>
+
+      <div class="example-block">
+        <div class="example-problem">You can travel on your own, _______?<br>A. can’t you B. can you C. don’t you D. won’t you<br>
+Step 1: Positive statement → negative tag.<br>
+Answer: A. can’t you</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">He does not seem to know how to solve the problem, _______?<br>A. does he B. doesn’t he C. did he D. didn’t he<br>
+Step 1: Negative statement → positive tag.<br>
+Answer: A. does he</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">He wrote to you, _______?<br>A. hadn’t he B. didn’t he C. did he D. hadn’t he<br>
+Step 1: Past simple → didn’t he.<br>
+Answer: B. didn’t he</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">You don’t like Mathematics, _______?<br>A. don’t you B. do you C. did you D. didn’t you<br>
+Step 1: Negative → positive tag.<br>
+Answer: B. do you</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Students will always blame their teachers when results are bad, _______?<br>A. will they B. won’t they C. do they D. don’t they<br>
+Step 1: Positive future → negative tag.<br>
+Answer: B. won’t they</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">We ought to have visited the Governor, _______?<br>A. oughtn’t we B. shouldn’t we C. did we D. didn’t we<br>
+Step 1: “ought to have” → shouldn’t we.<br>
+Answer: B. shouldn’t we</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">One can no longer take for granted what one enjoyed, _______?<br>A. can one B. can’t one C. could one D. couldn’t one<br>
+Step 1: Positive → negative tag.<br>
+Answer: A. can one</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">Let’s go home, _______?<br>A. shall we B. will we C. don’t we D. aren’t we<br>
+Step 1: Special “let’s” rule = shall we.<br>
+Answer: A. shall we</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">You are coming tomorrow, _______?<br>A. aren’t you B. are you C. isn’t it D. won’t you<br>
+Step 1: Positive → negative tag.<br>
+Answer: A. aren’t you</div>
+      </div>
+
+      <div class="example-block">
+        <div class="example-problem">She has finished the work, _______?<br>A. has she B. hasn’t she C. did she D. didn’t she<br>
+Step 1: Positive perfect → negative tag.<br>
+Answer: B. hasn’t she</div>
+      </div>
+
+      <!-- 7. 60 IRREGULAR VERBS -->
+      <h2>7. 60 IRREGULAR VERBS (with lie & lay)</h2>
+      <p><strong>Rule (Step-by-step):</strong> Future = will + base form. Past Participle used after have/has/had. JAMB loves “lie/lay” distinction.</p>
+      <p><strong>Key JAMB Tip:</strong> “has gone” not “went”; “had lain” not “laid”.</p>
+
+      <table>
+        <tr>
+          <th>No.</th>
+          <th>Base / Present</th>
+          <th>Past</th>
+          <th>Past Participle</th>
+          <th>Future</th>
+        </tr>
+        <tr><td>1</td><td>be</td><td>was/were</td><td>been</td><td>will be</td></tr>
+        <tr><td>2</td><td>become</td><td>became</td><td>become</td><td>will become</td></tr>
+        <tr><td>3</td><td>begin</td><td>began</td><td>begun</td><td>will begin</td></tr>
+        <tr><td>4</td><td>break</td><td>broke</td><td>broken</td><td>will break</td></tr>
+        <tr><td>5</td><td>bring</td><td>brought</td><td>brought</td><td>will bring</td></tr>
+        <tr><td>6</td><td>buy</td><td>bought</td><td>bought</td><td>will buy</td></tr>
+        <tr><td>7</td><td>catch</td><td>caught</td><td>caught</td><td>will catch</td></tr>
+        <tr><td>8</td><td>choose</td><td>chose</td><td>chosen</td><td>will choose</td></tr>
+        <tr><td>9</td><td>come</td><td>came</td><td>come</td><td>will come</td></tr>
+        <tr><td>10</td><td>cost</td><td>cost</td><td>cost</td><td>will cost</td></tr>
+        <tr><td>11</td><td>cut</td><td>cut</td><td>cut</td><td>will cut</td></tr>
+        <tr><td>12</td><td>do</td><td>did</td><td>done</td><td>will do</td></tr>
+        <tr><td>13</td><td>draw</td><td>drew</td><td>drawn</td><td>will draw</td></tr>
+        <tr><td>14</td><td>drink</td><td>drank</td><td>drunk</td><td>will drink</td></tr>
+        <tr><td>15</td><td>drive</td><td>drove</td><td>driven</td><td>will drive</td></tr>
+        <tr><td>16</td><td>eat</td><td>ate</td><td>eaten</td><td>will eat</td></tr>
+        <tr><td>17</td><td>fall</td><td>fell</td><td>fallen</td><td>will fall</td></tr>
+        <tr><td>18</td><td>feel</td><td>felt</td><td>felt</td><td>will feel</td></tr>
+        <tr><td>19</td><td>find</td><td>found</td><td>found</td><td>will find</td></tr>
+        <tr><td>20</td><td>fly</td><td>flew</td><td>flown</td><td>will fly</td></tr>
+        <tr><td>21</td><td>forget</td><td>forgot</td><td>forgotten</td><td>will forget</td></tr>
+        <tr><td>22</td><td>get</td><td>got</td><td>got / gotten</td><td>will get</td></tr>
+        <tr><td>23</td><td>give</td><td>gave</td><td>given</td><td>will give</td></tr>
+        <tr><td>24</td><td>go</td><td>went</td><td>gone</td><td>will go</td></tr>
+        <tr><td>25</td><td>grow</td><td>grew</td><td>grown</td><td>will grow</td></tr>
+        <tr><td>26</td><td>have</td><td>had</td><td>had</td><td>will have</td></tr>
+        <tr><td>27</td><td>hear</td><td>heard</td><td>heard</td><td>will hear</td></tr>
+        <tr><td>28</td><td>keep</td><td>kept</td><td>kept</td><td>will keep</td></tr>
+        <tr><td>29</td><td>know</td><td>knew</td><td>known</td><td>will know</td></tr>
+        <tr><td>30</td><td>leave</td><td>left</td><td>left</td><td>will leave</td></tr>
+        <tr><td>31</td><td>lend</td><td>lent</td><td>lent</td><td>will lend</td></tr>
+        <tr><td>32</td><td>let</td><td>let</td><td>let</td><td>will let</td></tr>
+        <tr><td>33</td><td>lose</td><td>lost</td><td>lost</td><td>will lose</td></tr>
+        <tr><td>34</td><td>make</td><td>made</td><td>made</td><td>will make</td></tr>
+        <tr><td>35</td><td>meet</td><td>met</td><td>met</td><td>will meet</td></tr>
+        <tr><td>36</td><td>pay</td><td>paid</td><td>paid</td><td>will pay</td></tr>
+        <tr><td>37</td><td>put</td><td>put</td><td>put</td><td>will put</td></tr>
+        <tr><td>38</td><td>read</td><td>read (red)</td><td>read (red)</td><td>will read</td></tr>
+        <tr><td>39</td><td>run</td><td>ran</td><td>run</td><td>will run</td></tr>
+        <tr><td>40</td><td>say</td><td>said</td><td>said</td><td>will say</td></tr>
+        <tr><td>41</td><td>see</td><td>saw</td><td>seen</td><td>will see</td></tr>
+        <tr><td>42</td><td>sell</td><td>sold</td><td>sold</td><td>will sell</td></tr>
+        <tr><td>43</td><td>send</td><td>sent</td><td>sent</td><td>will send</td></tr>
+        <tr><td>44</td><td>sing</td><td>sang</td><td>sung</td><td>will sing</td></tr>
+        <tr><td>45</td><td>sit</td><td>sat</td><td>sat</td><td>will sit</td></tr>
+        <tr><td>46</td><td>sleep</td><td>slept</td><td>slept</td><td>will sleep</td></tr>
+        <tr><td>47</td><td>speak</td><td>spoke</td><td>spoken</td><td>will speak</td></tr>
+        <tr><td>48</td><td>stand</td><td>stood</td><td>stood</td><td>will stand</td></tr>
+        <tr><td>49</td><td>take</td><td>took</td><td>taken</td><td>will take</td></tr>
+        <tr><td>50</td><td>teach</td><td>taught</td><td>taught</td><td>will teach</td></tr>
+        <tr><td>51</td><td>lie (recline)</td><td>lay</td><td>lain</td><td>will lie (down)</td></tr>
+        <tr><td>52</td><td>lay (put/place)</td><td>laid</td><td>laid</td><td>will lay</td></tr>
+        <tr><td>53</td><td>lie (tell lie)</td><td>lied</td><td>lied</td><td>will lie</td></tr>
+        <tr><td>54</td><td>rise</td><td>rose</td><td>risen</td><td>will rise</td></tr>
+        <tr><td>55</td><td>shine</td><td>shone</td><td>shone</td><td>will shine</td></tr>
+        <tr><td>56</td><td>shoot</td><td>shot</td><td>shot</td><td>will shoot</td></tr>
+        <tr><td>57</td><td>show</td><td>showed</td><td>shown</td><td>will show</td></tr>
+        <tr><td>58</td><td>swim</td><td>swam</td><td>swum</td><td>will swim</td></tr>
+        <tr><td>59</td><td>throw</td><td>threw</td><td>thrown</td><td>will throw</td></tr>
+        <tr><td>60</td><td>write</td><td>wrote</td><td>written</td><td>will write</td></tr>
+      </table>
+
+      <p style="text-align:center; color:var(--accent); font-size:18px; margin:40px 0;">
+        <strong>Finished – Full 60 Irregular Verbs Table Complete!</strong><br>
+        Revise this table daily. Focus especially on lie/lay/laid/lain, go/went/gone, come/came/come.
+      </p>
+
+      <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">
+        Start Quiz on Grammar
+      </button>
+
+    </div>
+
+    <div class="nav-bar">
+      <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+      <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+      <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    toggle.onclick = () => {
+      document.body.classList.toggle('light');
+      toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+    };
+  </script>
+</body>
+</html>
