@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Jamb Score - Oral English: Consonant Sounds (RP) COMPLETE GUIDE</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+      --highlight-example: rgba(29, 185, 84, 0.15);
+      --highlight-solution: #ff9800;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+      --highlight-example: rgba(29, 185, 84, 0.20);
+      --highlight-solution: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      height: 100vh;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 420px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .sound-section {
+      margin-bottom: 40px;
+    }
+
+    .sound-header {
+      background: rgba(0,0,0,0.15);
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .word-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 16px;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: block;
+      margin: 40px auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 420px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-item {
+      text-align: center;
+    }
+
+    .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+      color: #000;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">Oral English: Consonant Sounds (RP)</div>
+      <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Oral English: Consonant Sounds in Received Pronunciation (RP)</h1>
+        <p class="subtitle">COMPLETE JAMB GUIDE – 20 words per sound + step-by-step practice</p>
+      </div>
+
+      <div class="welcome-note">
+        <h2>Quick Overview</h2>
+        <p>JAMB Oral English tests your ability to identify and pronounce <strong>consonant sounds</strong> correctly in Received Pronunciation (RP – British standard).</p>
+        <p>English has <strong>24 consonant phonemes</strong>. JAMB often asks:</p>
+        <ul>
+          <li>“Which word has the same consonant sound as the underlined one?”</li>
+          <li>“Choose the word with the /k/ sound”</li>
+          <li>Minimal pairs (e.g., thin /θ/ vs tin /t/)</li>
+        </ul>
+        <p><strong>Step-by-step learning method:</strong></p>
+        <ol>
+          <li>Listen to the sound symbol (IPA)</li>
+          <li>Say the 20 example words slowly and clearly — feel where your tongue/teeth/lips are</li>
+          <li>Compare similar sounds (e.g. /s/ vs /z/, /θ/ vs /ð/)</li>
+          <li>Practice minimal pairs from past JAMB questions</li>
+        </ol>
+        <p>All words are common in JAMB. Practise aloud daily — this section gives easy marks if you master the distinctions!</p>
+      </div>
+
+      <h2>Consonant Sounds – 24 Phonemes (Grouped by Manner of Articulation)</h2>
+
+      <!-- Plosives / Stops -->
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/p/</strong> (voiceless – as in "pen")
+        </div>
+        <div class="word-list">
+          <div>pen</div><div>pin</div><div>pan</div><div>pet</div><div>pat</div>
+          <div>pit</div><div>pot</div><div>put</div><div>pay</div><div>pie</div>
+          <div>pack</div><div>park</div><div>part</div><div>peak</div><div>pick</div>
+          <div>pig</div><div>pile</div><div>pipe</div><div>pink</div><div>page</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/b/</strong> (voiced – as in "bed")
+        </div>
+        <div class="word-list">
+          <div>bed</div><div>bad</div><div>big</div><div>boy</div><div>bag</div>
+          <div>bat</div><div>bet</div><div>bit</div><div>but</div><div>buy</div>
+          <div>back</div><div>ball</div><div>band</div><div>bank</div><div>base</div>
+          <div>bear</div><div>beat</div><div>bell</div><div>best</div><div>bird</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/t/</strong> (voiceless – as in "ten")
+        </div>
+        <div class="word-list">
+          <div>ten</div><div>tin</div><div>top</div><div>tap</div><div>tip</div>
+          <div>tea</div><div>tie</div><div>toy</div><div>two</div><div>town</div>
+          <div>talk</div><div>tall</div><div>tank</div><div>tape</div><div>task</div>
+          <div>team</div><div>tear</div><div>teeth</div><div>time</div><div>tire</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/d/</strong> (voiced – as in "dog")
+        </div>
+        <div class="word-list">
+          <div>dog</div><div>day</div><div>die</div><div>do</div><div>dad</div>
+          <div>dark</div><div>date</div><div>deal</div><div>deep</div><div>desk</div>
+          <div>door</div><div>down</div><div>draw</div><div>dream</div><div>drink</div>
+          <div>drop</div><div>dry</div><div>dust</div><div>dance</div><div>danger</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/k/</strong> (voiceless – as in "cat")
+        </div>
+        <div class="word-list">
+          <div>cat</div><div>key</div><div>cake</div><div>kite</div><div>cup</div>
+          <div>cap</div><div>can</div><div>car</div><div>cut</div><div>keep</div>
+          <div>kick</div><div>kill</div><div>king</div><div>kind</div><div>kiss</div>
+          <div>kit</div><div>knee</div><div>know</div><div>knock</div><div>cool</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/g/</strong> (voiced – as in "go")
+        </div>
+        <div class="word-list">
+          <div>go</div><div>get</div><div>girl</div><div>give</div><div>good</div>
+          <div>game</div><div>gate</div><div>gift</div><div>glass</div><div>gold</div>
+          <div>great</div><div>green</div><div>grow</div><div>guess</div><div>guide</div>
+          <div>gun</div><div>gap</div><div>gas</div><div>glad</div><div>goal</div>
+        </div>
+      </div>
+
+      <!-- Fricatives -->
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/f/</strong> (voiceless – as in "fan")
+        </div>
+        <div class="word-list">
+          <div>fan</div><div>fat</div><div>far</div><div>face</div><div>fact</div>
+          <div>fall</div><div>feel</div><div>fill</div><div>find</div><div>fine</div>
+          <div>fire</div><div>fish</div><div>five</div><div>food</div><div>foot</div>
+          <div>four</div><div>free</div><div>from</div><div>full</div><div>fun</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/v/</strong> (voiced – as in "van")
+        </div>
+        <div class="word-list">
+          <div>van</div><div>very</div><div>voice</div><div>view</div><div>visit</div>
+          <div>value</div><div>vary</div><div>vast</div><div>verb</div><div>video</div>
+          <div>view</div><div>village</div><div>vine</div><div>vote</div><div>voyage</div>
+          <div>valid</div><div>valley</div><div>vapour</div><div>vegan</div><div>vendor</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/θ/</strong> (voiceless – as in "thin")
+        </div>
+        <div class="word-list">
+          <div>thin</div><div>think</div><div>thank</div><div>three</div><div>thing</div>
+          <div>thumb</div><div>throw</div><div>theme</div><div>thick</div><div>thief</div>
+          <div>thigh</div><div>thorn</div><div>thread</div><div>throat</div><div>throne</div>
+          <div>through</div><div>thumb</div><div>thunder</div><div>thirty</div><div>thousand</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/ð/</strong> (voiced – as in "this")
+        </div>
+        <div class="word-list">
+          <div>this</div><div>that</div><div>these</div><div>those</div><div>then</div>
+          <div>them</div><div>there</div><div>though</div><div>thus</div><div>brother</div>
+          <div>father</div><div>mother</div><div>other</div><div>rather</div><div>weather</div>
+          <div>feather</div><div>gather</div><div>leather</div><div>neither</div><div>either</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/s/</strong> (voiceless – as in "sit")
+        </div>
+        <div class="word-list">
+          <div>sit</div><div>see</div><div>say</div><div>sun</div><div>sea</div>
+          <div>song</div><div>some</div><div>same</div><div>send</div><div>side</div>
+          <div>six</div><div>soap</div><div>sock</div><div>soft</div><div>sold</div>
+          <div>song</div><div>soon</div><div>soup</div><div>speak</div><div>speed</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/z/</strong> (voiced – as in "zoo")
+        </div>
+        <div class="word-list">
+          <div>zoo</div><div>zip</div><div>zebra</div><div>zone</div><div>zero</div>
+          <div>zoom</div><div>zest</div><div>zinc</div><div>zany</div><div>zest</div>
+          <div>freeze</div><div>rose</div><div>nose</div><div>size</div><div>prize</div>
+          <div>cause</div><div>raise</div><div>noise</div><div>choose</div><div>use</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/ʃ/</strong> (voiceless – as in "ship")
+        </div>
+        <div class="word-list">
+          <div>ship</div><div>she</div><div>shoe</div><div>shop</div><div>show</div>
+          <div>shut</div><div>shine</div><div>sharp</div><div>short</div><div>shout</div>
+          <div>push</div><div>fish</div><div>wish</div><div>brush</div><div>cash</div>
+          <div>rush</div><div>fresh</div><div>crash</div><div>flash</div><div>trash</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/ʒ/</strong> (voiced – as in "measure")
+        </div>
+        <div class="word-list">
+          <div>measure</div><div>vision</div><div>television</div><div>pleasure</div><div>leisure</div>
+          <div>treasure</div><div>decision</div><div>division</div><div>collision</div><div>occasion</div>
+          <div>usual</div><div>casual</div><div>visual</div><div>garage</div><div>beige</div>
+          <div>rouge</div><div>genre</div><div>massage</div><div>mirage</div><div>prestige</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/h/</strong> (voiceless – as in "hat")
+        </div>
+        <div class="word-list">
+          <div>hat</div><div>hot</div><div>house</div><div>hand</div><div>head</div>
+          <div>hear</div><div>heart</div><div>help</div><div>high</div><div>hill</div>
+          <div>hold</div><div>home</div><div>hope</div><div>horse</div><div>hour</div>
+          <div>huge</div><div>hunt</div><div>hurt</div><div>happy</div><div>heavy</div>
+        </div>
+      </div>
+
+      <!-- Affricates -->
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/tʃ/</strong> (voiceless – as in "chair")
+        </div>
+        <div class="word-list">
+          <div>chair</div><div>church</div><div>cheese</div><div>chin</div><div>chip</div>
+          <div>chat</div><div>check</div><div>child</div><div>choose</div><div>cheap</div>
+          <div>chain</div><div>chance</div><div>change</div><div>charge</div><div>charm</div>
+          <div>chart</div><div>chase</div><div>chat</div><div>cheek</div><div>cheer</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/dʒ/</strong> (voiced – as in "judge")
+        </div>
+        <div class="word-list">
+          <div>judge</div><div>jam</div><div>jar</div><div>jeep</div><div>jet</div>
+          <div>joke</div><div>jump</div><div>just</div><div>giant</div><div>gym</div>
+          <div>gem</div><div>joy</div><div>join</div><div>juice</div><div>june</div>
+          <div>jazz</div><div>jeans</div><div>jelly</div><div>joke</div><div>jungle</div>
+        </div>
+      </div>
+
+      <!-- Nasals -->
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/m/</strong> (voiced – as in "man")
+        </div>
+        <div class="word-list">
+          <div>man</div><div>map</div><div>may</div><div>me</div><div>mine</div>
+          <div>moon</div><div>more</div><div>mother</div><div>much</div><div>music</div>
+          <div>make</div><div>many</div><div>mark</div><div>match</div><div>mean</div>
+          <div>meet</div><div>mind</div><div>money</div><div>morning</div><div>move</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/n/</strong> (voiced – as in "no")
+        </div>
+        <div class="word-list">
+          <div>no</div><div>now</div><div>new</div><div>night</div><div>name</div>
+          <div>nose</div><div>note</div><div>nurse</div><div>nice</div><div>next</div>
+          <div>near</div><div>need</div><div>news</div><div>nine</div><div>none</div>
+          <div>north</div><div>nothing</div><div>number</div><div>nation</div><div>never</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/ŋ/</strong> (voiced – as in "sing")
+        </div>
+        <div class="word-list">
+          <div>sing</div><div>ring</div><div>king</div><div>wing</div><div>long</div>
+          <div>song</div><div>bank</div><div>think</div><div>drink</div><div>thank</div>
+          <div>link</div><div>pink</div><div>sink</div><div>rank</div><div>strong</div>
+          <div>young</div><div>bring</div><div>hang</div><div>wrong</div><div>among</div>
+        </div>
+      </div>
+
+      <!-- Approximants / Semi-vowels -->
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/l/</strong> (voiced – as in "love")
+        </div>
+        <div class="word-list">
+          <div>love</div><div>light</div><div>look</div><div>like</div><div>land</div>
+          <div>last</div><div>late</div><div>left</div><div>life</div><div>line</div>
+          <div>list</div><div>live</div><div>long</div><div>lost</div><div>loud</div>
+          <div>low</div><div>lucky</div><div>large</div><div>laugh</div><div>learn</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/r/</strong> (voiced – as in "red") – note: RP often non-rhotic, but JAMB accepts linking /r/
+        </div>
+        <div class="word-list">
+          <div>red</div><div>run</div><div>right</div><div>road</div><div>room</div>
+          <div>rain</div><div>read</div><div>real</div><div>rest</div><div>rice</div>
+          <div>rich</div><div>ride</div><div>ring</div><div>rise</div><div>rock</div>
+          <div>roll</div><div>roof</div><div>rose</div><div>round</div><div>rule</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/j/</strong> (voiced – as in "yes")
+        </div>
+        <div class="word-list">
+          <div>yes</div><div>you</div><div>yellow</div><div>young</div><div>yesterday</div>
+          <div>yoga</div><div>yolk</div><div>youth</div><div>yard</div><div>year</div>
+          <div>yield</div><div>yell</div><div>yacht</div><div>yawn</div><div>yet</div>
+          <div>yummy</div><div>yoke</div><div>yule</div><div>yoga</div><div>youthful</div>
+        </div>
+      </div>
+
+      <div class="sound-section">
+        <div class="sound-header">
+          <strong>/w/</strong> (voiced – as in "wet")
+        </div>
+        <div class="word-list">
+          <div>wet</div><div>win</div><div>way</div><div>well</div><div>want</div>
+          <div>was</div><div>we</div><div>week</div><div>west</div><div>what</div>
+          <div>when</div><div>where</div><div>which</div><div>white</div><div>who</div>
+          <div>why</div><div>wide</div><div>wife</div><div>will</div><div>wind</div>
+        </div>
+      </div>
+
+      <h2>Quick JAMB Revision Tips for Consonants</h2>
+      <ul>
+        <li><strong>Focus on tricky pairs:</strong> /θ/ vs /t/ (thin vs tin), /ð/ vs /d/ (this vs dis), /ʃ/ vs /s/ (ship vs sip), /ʒ/ vs /z/ (measure vs measure)</li>
+        <li><strong>Minimal pairs are key:</strong> JAMB loves testing thin/tin, three/tree, very/berry, measure/mesher, etc.</li>
+        <li><strong>Practice aloud:</strong> Say the word lists slowly. Record yourself and compare with RP pronunciation (BBC, Cambridge dictionaries)</li>
+        <li><strong>Past questions:</strong> 2018–2025 often repeat /θ/, /ð/, /ʃ/, /ʒ/, /ŋ/, /r/ (non-rhotic linking)</li>
+      </ul>
+
+      <p style="text-align:center; color:var(--accent); font-size:20px; margin:60px 0;">
+        <strong>Finished – Complete Consonant Sounds Guide!</strong><br>
+        You now have EVERYTHING: 24 consonant phonemes + 20 words each (480+ words). Practise aloud daily — Oral English will be easy marks! 🌟
+      </p>
+
+      <button class="explore-btn" onclick="alert('Great job! Now test yourself.')">
+        → Start-Quiz
+      </button>
+
+    </div>
+
+    <div class="nav-bar">
+      <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+      <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
+      <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    toggle.onclick = () => {
+      document.body.classList.toggle('light');
+      toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+    };
+  </script>
+</body>
+</html>
