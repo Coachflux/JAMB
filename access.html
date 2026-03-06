@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enter Access Code - JAMB Quiz</title>
+  <title>JAMB Practice Quiz</title>
+
   <style>
     * {
       margin: 0;
@@ -35,13 +36,20 @@
     body {
       background: var(--background);
       color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── Access Screen ─────────────────────────────────────── */
+    #access-screen {
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      padding: 20px;
     }
 
-    .card {
+    .access-card {
       background: var(--background);
       padding: 40px 30px;
       border-radius: 20px;
@@ -51,17 +59,13 @@
       box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
     }
 
-    h1 {
+    .access-card h1 {
       color: var(--accent);
       margin-bottom: 25px;
       font-size: 26px;
     }
 
-    .input-group {
-      margin: 25px 0;
-    }
-
-    input {
+    .access-card input {
       width: 100%;
       padding: 16px;
       font-size: 22px;
@@ -71,13 +75,10 @@
       background: rgba(30,30,47,0.6);
       color: var(--text);
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+      margin: 20px 0;
     }
 
-    input::placeholder {
-      color: #777;
-    }
-
-    button {
+    .access-card button {
       width: 100%;
       padding: 16px;
       background: var(--accent);
@@ -88,17 +89,6 @@
       font-weight: bold;
       cursor: pointer;
       box-shadow: 0 0 15px rgba(29,185,84,0.4), 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
-      transition: all 0.2s;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px rgba(29,185,84,0.6);
-    }
-
-    button:active {
-      transform: translateY(1px);
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
     .message {
@@ -112,77 +102,242 @@
     .warning { color: var(--warning); }
     .success { color: var(--accent);   }
 
-    .device-info {
-      margin-top: 35px;
-      font-size: 13px;
-      color: #888;
-      word-break: break-all;
+    /* ─── Quiz Container ────────────────────────────────────── */
+    #quiz-container {
+      display: none;
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 0 10px;
     }
 
-    .theme-toggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0; right: 0;
+      max-width: 420px;
+      margin: 0 auto;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .neumorphic-btn {
       background: var(--background);
       border: none;
-      width: 44px;
-      height: 44px;
       border-radius: 50%;
-      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       cursor: pointer;
+      color: var(--text);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .question-container {
+      margin: 80px 0 100px 0;
+      padding: 20px;
+      background: var(--background);
+      border-radius: 15px;
       box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+    }
+
+    .timer { font-size: 14px; margin-bottom: 20px; }
+    .question-text { font-size: 16px; font-weight: bold; margin-bottom: 20px; }
+
+    .option {
+      background: var(--background);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+    }
+
+    .option.selected {
+      border: 2px solid var(--accent);
+    }
+
+    .option p {
+      font-size: 14px;
+      color: #b3b3b3;
+    }
+
+    body.light .option p { color: #666; }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin: 20px 0;
+      position: fixed;
+      bottom: 80px;
+      left: 0; right: 0;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+
+    .prev-btn, .next-btn {
+      background: var(--background);
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: var(--text);
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+    }
+
+    .prev-btn { border-radius: 20px 0 0 20px; }
+    .next-btn { border-radius: 0 20px 20px 0; }
+
+    .center-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* Popup, Results, Details - same as your original */
+    .popup, .results-popup, .details-page {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--background);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      z-index: 30;
+      max-width: 320px;
+      width: 90%;
+    }
+
+    .popup-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .popup-grid button {
+      background: var(--background);
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .popup-grid button.answered {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .details-page .correct   { color: var(--accent); }
+    .details-page .incorrect { color: var(--danger); }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      position: fixed;
+      top: 15px;
+      right: 70px;
+      z-index: 25;
     }
   </style>
 </head>
 <body class="dark">
 
-<button class="theme-toggle" onclick="toggleTheme()">☀️/🌙</button>
+<!-- Theme Toggle (visible always) -->
+<button class="theme-toggle neumorphic-btn" onclick="toggleTheme()">🌙</button>
 
-<div class="card">
-  <h1>🔐 Access JAMB Quiz</h1>
+<!-- ─── ACCESS SCREEN ─────────────────────────────────────────────── -->
+<div id="access-screen">
+  <div class="access-card">
+    <h1>🔐 JAMB Practice</h1>
+    <input type="text" id="codeInput" placeholder="Enter code (8 chars)" maxlength="8" autofocus>
+    <button onclick="tryUnlock()">Unlock Quiz</button>
+    <div id="accessMessage" class="message"></div>
+  </div>
+</div>
 
-  <div class="input-group">
-    <input type="text" id="codeInput" placeholder="XXXX-XXXX" maxlength="8" autofocus autocomplete="off">
+<!-- ─── QUIZ INTERFACE (hidden until unlocked) ────────────────────── -->
+<div id="quiz-container">
+
+  <!-- Top bar -->
+  <div class="top-bar neumorphic">
+    <button class="neumorphic-btn" id="back-btn">←</button>
+    <div class="header">JAMB Practice Quiz</div>
+    <div></div> <!-- placeholder for symmetry -->
   </div>
 
-  <button onclick="submitCode()">Unlock Quiz</button>
+  <!-- Question area -->
+  <div class="question-container">
+    <div class="timer" id="timer">Time: 15m:00s</div>
+    <div class="question-text" id="questionText">Question 1</div>
+    <div class="options" id="optionsContainer"></div>
+  </div>
 
-  <div id="message" class="message"></div>
+  <!-- Navigation -->
+  <div class="nav-buttons">
+    <button class="prev-btn neumorphic" id="prevBtn">Prev</button>
+    <button class="center-btn" id="jumpBtn">📋</button>
+    <button class="next-btn neumorphic" id="nextBtn">Next</button>
+  </div>
 
-  <div class="device-info">
-    Device ID: <span id="deviceIdDisplay"></span>
+  <!-- Popups / overlays (same as original) -->
+  <div class="popup" id="question-popup">
+    <div class="popup-grid" id="popupGrid"></div>
+    <button class="neumorphic-btn close-btn" onclick="closePopup()">X</button>
+  </div>
+
+  <div class="results-popup" id="resultsPopup">
+    <button class="close-btn" onclick="closeResults()">X</button>
+    <h2 id="scoreText">Your Score: 0/0</h2>
+    <h3 id="messageText">Good effort!</h3>
+    <button onclick="continueQuiz()">Continue</button>
+    <button onclick="showDetails()">View Details</button>
+  </div>
+
+  <div class="details-page" id="detailsPage">
+    <button class="neumorphic-btn" onclick="backToResults()">← Back</button>
+    <div id="detailsContent"></div>
   </div>
 </div>
 
 <script>
+// ─── Shared ───────────────────────────────────────────────────────
 const DB_KEY = 'quizCodesDB';
 
-// ─── Theme handling ────────────────────────────────────────
-function toggleTheme() {
-  document.body.classList.toggle('light');
-  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
-}
-
-function loadTheme() {
-  const saved = localStorage.getItem('theme') || 'dark';
-  if (saved === 'light') document.body.classList.add('light');
-}
-loadTheme();
-
-// ─── Device ID ─────────────────────────────────────────────
 function getDeviceId() {
   let id = localStorage.getItem('userDeviceId');
   if (!id) {
-    id = 'DEV-' + Math.random().toString(36).substring(2,15).toUpperCase() + 
-         Date.now().toString(36).toUpperCase();
+    id = 'DEV-' + Math.random().toString(36).substring(2,15).toUpperCase() + Date.now().toString(36).toUpperCase();
     localStorage.setItem('userDeviceId', id);
   }
   return id;
 }
 
-document.getElementById('deviceIdDisplay').textContent = getDeviceId().substring(0,20) + '...';
-
-// ─── Expiry helper ─────────────────────────────────────────
 function isExpired(createdDate) {
   if (!createdDate) return false;
   const expiry = new Date(createdDate);
@@ -190,59 +345,213 @@ function isExpired(createdDate) {
   return new Date() > expiry;
 }
 
-function showMessage(text, type = 'error') {
-  const msgEl = document.getElementById('message');
-  msgEl.textContent = text;
-  msgEl.className = 'message ' + type;
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
 }
 
-function submitCode() {
-  const input = document.getElementById('codeInput').value.trim().toUpperCase();
-  const msg = document.getElementById('message');
-  msg.textContent = '';
+(function loadTheme() {
+  const saved = localStorage.getItem('theme') || 'dark';
+  if (saved === 'light') document.body.classList.add('light');
+})();
 
-  if (input.length !== 8) {
-    showMessage('Please enter a valid 8-character code');
+// ─── Access Logic ─────────────────────────────────────────────────
+function tryUnlock() {
+  const code = document.getElementById('codeInput').value.trim().toUpperCase();
+  const msgEl = document.getElementById('accessMessage');
+  msgEl.className = 'message';
+
+  if (code.length !== 8) {
+    msgEl.textContent = 'Enter 8-character code';
+    msgEl.classList.add('error');
     return;
   }
 
-  let codesDB = JSON.parse(localStorage.getItem(DB_KEY)) || [];
-  const codeEntry = codesDB.find(c => c.code === input);
+  let db = JSON.parse(localStorage.getItem(DB_KEY)) || [];
+  const entry = db.find(c => c.code === code);
 
-  if (!codeEntry) {
-    showMessage('❌ Invalid or unknown code', 'error');
+  if (!entry) {
+    msgEl.textContent = 'Invalid code';
+    msgEl.classList.add('error');
     return;
   }
 
-  // Check expiry first
-  if (isExpired(codeEntry.createdAt)) {
-    showMessage('❌ This access code has expired (valid for 6 months from creation)', 'error');
+  if (isExpired(entry.createdAt)) {
+    msgEl.textContent = 'This code has expired (6 months validity)';
+    msgEl.classList.add('error');
     return;
   }
 
-  const currentDevice = getDeviceId();
-
-  // Already assigned to different device
-  if (codeEntry.deviceId && codeEntry.deviceId !== currentDevice) {
-    showMessage('❌ This code is assigned to a different device', 'error');
+  const dev = getDeviceId();
+  if (entry.deviceId && entry.deviceId !== dev) {
+    msgEl.textContent = 'Code is locked to another device';
+    msgEl.classList.add('error');
     return;
   }
 
-  // First use → bind device
-  if (!codeEntry.deviceId) {
-    codeEntry.deviceId = currentDevice;
-    codeEntry.assignedAt = new Date().toISOString();
-    localStorage.setItem(DB_KEY, JSON.stringify(codesDB));
+  // First use → lock to device
+  if (!entry.deviceId) {
+    entry.deviceId = dev;
+    entry.assignedAt = new Date().toISOString();
+    localStorage.setItem(DB_KEY, JSON.stringify(db));
   }
 
-  // Success
-  showMessage('✅ Access granted! Redirecting...', 'success');
-  localStorage.setItem('currentAccessCode', input);
+  // Success → show quiz
+  msgEl.textContent = 'Access granted...';
+  msgEl.classList.add('success');
 
   setTimeout(() => {
-    window.location.href = 'quiz.html';
-  }, 1400);
+    document.getElementById('access-screen').style.display = 'none';
+    document.getElementById('quiz-container').style.display = 'block';
+    initQuiz();
+  }, 1200);
 }
+
+// ─── Quiz Logic (your original logic adapted) ─────────────────────
+let quizData = [
+  // You will replace this array later
+  { question: "Sample Q1", options: ["A", "B", "C", "D"], correct: 1, reason: "Explanation coming..." },
+  // ...
+];
+
+let currentQuestion = 0;
+let answers = [];
+let timeLeft = 15 * 60;
+let timerInterval;
+
+function initQuiz() {
+  answers = Array(quizData.length).fill(null);
+  timeLeft = 15 * 60;
+  renderQuestion();
+  timerInterval = setInterval(updateTimer, 1000);
+  document.getElementById('jumpBtn').onclick = showQuestionPopup;
+  document.getElementById('prevBtn').onclick = prevQuestion;
+  document.getElementById('nextBtn').onclick = nextQuestion;
+}
+
+function updateTimer() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  document.getElementById('timer').textContent = `Time: \( {m}m: \){s.toString().padStart(2,'0')}s`;
+
+  if (timeLeft > 0) {
+    timeLeft--;
+  } else {
+    clearInterval(timerInterval);
+    submitQuiz(true); // auto-submit on timeout
+  }
+}
+
+function renderQuestion() {
+  const q = quizData[currentQuestion];
+  document.getElementById('questionText').textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+  const cont = document.getElementById('optionsContainer');
+  cont.innerHTML = '';
+
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    if (answers[currentQuestion] === i) div.classList.add('selected');
+    div.innerHTML = `<p>${opt}</p>`;
+    div.onclick = () => {
+      document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+      div.classList.add('selected');
+      answers[currentQuestion] = i;
+    };
+    cont.appendChild(div);
+  });
+
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+  document.getElementById('nextBtn').textContent = currentQuestion === quizData.length - 1 ? 'Submit' : 'Next';
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion();
+  }
+}
+
+function nextQuestion() {
+  if (currentQuestion < quizData.length - 1) {
+    currentQuestion++;
+    renderQuestion();
+  } else {
+    submitQuiz();
+  }
+}
+
+function submitQuiz(fromTimeout = false) {
+  clearInterval(timerInterval);
+  const score = answers.reduce((sum, ans, i) => sum + (ans === quizData[i].correct ? 1 : 0), 0);
+
+  document.getElementById('scoreText').textContent = `Your Score: \( {score}/ \){quizData.length}`;
+  document.getElementById('messageText').textContent = fromTimeout ? "Time's up!" : "Quiz completed!";
+
+  document.querySelector('.question-container').style.display = 'none';
+  document.querySelector('.nav-buttons').style.display = 'none';
+  document.getElementById('resultsPopup').style.display = 'block';
+}
+
+function showQuestionPopup() {
+  const grid = document.getElementById('popupGrid');
+  grid.innerHTML = '';
+  quizData.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = i + 1;
+    if (answers[i] !== null) btn.classList.add('answered');
+    btn.onclick = () => {
+      currentQuestion = i;
+      renderQuestion();
+      document.getElementById('question-popup').style.display = 'none';
+    };
+    grid.appendChild(btn);
+  });
+  document.getElementById('question-popup').style.display = 'block';
+}
+
+function closePopup() {
+  document.getElementById('question-popup').style.display = 'none';
+}
+
+function closeResults() {
+  document.getElementById('resultsPopup').style.display = 'none';
+}
+
+function continueQuiz() {
+  document.getElementById('resultsPopup').style.display = 'none';
+  document.querySelector('.question-container').style.display = 'block';
+  document.querySelector('.nav-buttons').style.display = 'flex';
+}
+
+function showDetails() {
+  document.getElementById('resultsPopup').style.display = 'none';
+  const cont = document.getElementById('detailsContent');
+  cont.innerHTML = '';
+
+  quizData.forEach((q, i) => {
+    const yourAns = answers[i] !== null ? q.options[answers[i]] : '—';
+    const isCorrect = answers[i] === q.correct;
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <h3>Question ${i+1}: ${q.question}</h3>
+      <p>Your answer: ${yourAns} ${isCorrect ? '<span class="correct">✓</span>' : '<span class="incorrect">✗</span>'}</p>
+      <p>Correct: <span class="correct">${q.options[q.correct]}</span></p>
+      <p>Explanation: ${q.reason || 'No explanation provided yet'}</p>
+      <hr style="border-color:rgba(255,255,255,0.1); margin:15px 0;">
+    `;
+    cont.appendChild(div);
+  });
+
+  document.getElementById('detailsPage').style.display = 'block';
+}
+
+function backToResults() {
+  document.getElementById('detailsPage').style.display = 'none';
+  document.getElementById('resultsPopup').style.display = 'block';
+}
+
+// Start – only access screen is visible
 </script>
 </body>
 </html>
