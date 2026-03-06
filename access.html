@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enter Access Code - JAMB Quiz</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text: #fff;
+      --accent: #1db954;
+      --danger: #ff4d4d;
+      --warning: #ff9800;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text: #333;
+      --accent: #1db954;
+      --danger: #d32f2f;
+      --warning: #f57c00;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: var(--background);
+      padding: 40px 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+    }
+
+    h1 {
+      color: var(--accent);
+      margin-bottom: 25px;
+      font-size: 26px;
+    }
+
+    .input-group {
+      margin: 25px 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px;
+      font-size: 22px;
+      text-align: center;
+      border-radius: 12px;
+      border: none;
+      background: rgba(30,30,47,0.6);
+      color: var(--text);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    input::placeholder {
+      color: #777;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(29,185,84,0.4), 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(29,185,84,0.6);
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 15px;
+      font-weight: 500;
+      min-height: 24px;
+    }
+
+    .error   { color: var(--danger);   }
+    .warning { color: var(--warning); }
+    .success { color: var(--accent);   }
+
+    .device-info {
+      margin-top: 35px;
+      font-size: 13px;
+      color: #888;
+      word-break: break-all;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--background);
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+    }
+  </style>
+</head>
+<body class="dark">
+
+<button class="theme-toggle" onclick="toggleTheme()">☀️/🌙</button>
+
+<div class="card">
+  <h1>🔐 Access JAMB Quiz</h1>
+
+  <div class="input-group">
+    <input type="text" id="codeInput" placeholder="XXXX-XXXX" maxlength="8" autofocus autocomplete="off">
+  </div>
+
+  <button onclick="submitCode()">Unlock Quiz</button>
+
+  <div id="message" class="message"></div>
+
+  <div class="device-info">
+    Device ID: <span id="deviceIdDisplay"></span>
+  </div>
+</div>
+
+<script>
+const DB_KEY = 'quizCodesDB';
+
+// ─── Theme handling ────────────────────────────────────────
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+}
+
+function loadTheme() {
+  const saved = localStorage.getItem('theme') || 'dark';
+  if (saved === 'light') document.body.classList.add('light');
+}
+loadTheme();
+
+// ─── Device ID ─────────────────────────────────────────────
+function getDeviceId() {
+  let id = localStorage.getItem('userDeviceId');
+  if (!id) {
+    id = 'DEV-' + Math.random().toString(36).substring(2,15).toUpperCase() + 
+         Date.now().toString(36).toUpperCase();
+    localStorage.setItem('userDeviceId', id);
+  }
+  return id;
+}
+
+document.getElementById('deviceIdDisplay').textContent = getDeviceId().substring(0,20) + '...';
+
+// ─── Expiry helper ─────────────────────────────────────────
+function isExpired(createdDate) {
+  if (!createdDate) return false;
+  const expiry = new Date(createdDate);
+  expiry.setMonth(expiry.getMonth() + 6);
+  return new Date() > expiry;
+}
+
+function showMessage(text, type = 'error') {
+  const msgEl = document.getElementById('message');
+  msgEl.textContent = text;
+  msgEl.className = 'message ' + type;
+}
+
+function submitCode() {
+  const input = document.getElementById('codeInput').value.trim().toUpperCase();
+  const msg = document.getElementById('message');
+  msg.textContent = '';
+
+  if (input.length !== 8) {
+    showMessage('Please enter a valid 8-character code');
+    return;
+  }
+
+  let codesDB = JSON.parse(localStorage.getItem(DB_KEY)) || [];
+  const codeEntry = codesDB.find(c => c.code === input);
+
+  if (!codeEntry) {
+    showMessage('❌ Invalid or unknown code', 'error');
+    return;
+  }
+
+  // Check expiry first
+  if (isExpired(codeEntry.createdAt)) {
+    showMessage('❌ This access code has expired (valid for 6 months from creation)', 'error');
+    return;
+  }
+
+  const currentDevice = getDeviceId();
+
+  // Already assigned to different device
+  if (codeEntry.deviceId && codeEntry.deviceId !== currentDevice) {
+    showMessage('❌ This code is assigned to a different device', 'error');
+    return;
+  }
+
+  // First use → bind device
+  if (!codeEntry.deviceId) {
+    codeEntry.deviceId = currentDevice;
+    codeEntry.assignedAt = new Date().toISOString();
+    localStorage.setItem(DB_KEY, JSON.stringify(codesDB));
+  }
+
+  // Success
+  showMessage('✅ Access granted! Redirecting...', 'success');
+  localStorage.setItem('currentAccessCode', input);
+
+  setTimeout(() => {
+    window.location.href = 'quiz.html';
+  }, 1400);
+}
+</script>
+</body>
+</html>
