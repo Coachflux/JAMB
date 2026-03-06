@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JAMB Comprehension Practice – 10 Passages</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif; }
+    :root {
+      --background:#1e1e2f; --shadow-in:#171723; --shadow-out:#25253b;
+      --text:#fff; --accent:#1db954; --danger:#ff4d4d; --warning:#ff9800;
+    }
+    body.light {
+      --background:#e0e0e0; --shadow-in:#bebebe; --shadow-out:#ffffff;
+      --text:#333; --accent:#1db954; --danger:#d32f2f; --warning:#f57c00;
+    }
+    body { background:var(--background); color:var(--text); min-height:100vh; overflow-x:hidden; }
+
+    #access-screen { display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px; }
+    .access-card {
+      background:var(--background); padding:40px 30px; border-radius:20px; width:90%; max-width:420px;
+      text-align:center; box-shadow:10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+    }
+    .access-card h1 { color:var(--accent); margin-bottom:25px; font-size:26px; }
+    .access-card input {
+      width:100%; padding:16px; font-size:22px; text-align:center; border-radius:12px; border:none;
+      background:rgba(30,30,47,0.6); color:var(--text);
+      box-shadow:inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out); margin:20px 0;
+    }
+    .access-card button {
+      width:100%; padding:16px; background:var(--accent); color:white; border:none; border-radius:12px;
+      font-size:18px; font-weight:bold; cursor:pointer;
+      box-shadow:0 0 15px rgba(29,185,84,0.4), 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+    }
+    .message { margin-top:20px; font-size:15px; font-weight:500; min-height:24px; }
+    .error { color:var(--danger); } .warning { color:var(--warning); } .success { color:var(--accent); }
+
+    #quiz-container { display:none; max-width:420px; margin:20px auto; padding:0 10px; }
+    .top-bar {
+      position:fixed; top:0; left:0; right:0; max-width:420px; margin:0 auto; background:var(--background);
+      padding:15px; display:flex; align-items:center; justify-content:space-between;
+      box-shadow:0 5px 10px var(--shadow-in); z-index:20;
+    }
+    .neumorphic-btn {
+      background:var(--background); border:none; border-radius:50%; width:40px; height:40px;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor:pointer; color:var(--text); font-size:18px;
+    }
+    .neumorphic-btn:active { box-shadow:inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out); }
+
+    .question-container {
+      margin:80px 0 140px 0; padding:20px; background:var(--background); border-radius:15px;
+      box-shadow:5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+    }
+    .timer { font-size:14px; margin-bottom:20px; color:#ff9800; font-weight:bold; }
+    .passage-text {
+      font-size:15px; line-height:1.6; margin-bottom:24px; padding:14px;
+      border-left:4px solid var(--accent); background:rgba(0,0,0,0.12); border-radius:8px;
+    }
+    .question-text { font-size:16px; font-weight:bold; margin-bottom:20px; line-height:1.5; }
+    .option {
+      background:var(--background); border-radius:10px; padding:15px; margin-bottom:12px;
+      box-shadow:3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out); cursor:pointer;
+    }
+    .option.selected { border:2px solid var(--accent); }
+    .option p { font-size:14px; color:#b3b3b3; margin:0; }
+    body.light .option p { color:#555; }
+
+    .nav-buttons {
+      display:flex; justify-content:center; gap:5px; margin:20px 0;
+      position:fixed; bottom:80px; left:0; right:0; max-width:420px; margin:0 auto; padding:0 10px;
+    }
+    .prev-btn, .next-btn {
+      background:var(--background); border:none; padding:12px 24px; font-size:15px; color:var(--text);
+      box-shadow:3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out); cursor:pointer;
+    }
+    .prev-btn { border-radius:20px 0 0 20px; }
+    .next-btn { border-radius:0 20px 20px 0; }
+    .center-btn {
+      background:var(--accent); border:none; border-radius:50%; width:54px; height:54px;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color:#fff; font-size:20px; cursor:pointer;
+    }
+
+    .popup, .results-popup, .details-page {
+      display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:var(--background); padding:24px; border-radius:16px;
+      box-shadow:8px 8px 20px var(--shadow-in), -8px -8px 20px var(--shadow-out);
+      z-index:30; max-width:360px; width:92%; max-height:85vh; overflow-y:auto;
+    }
+    .popup-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:20px; }
+    .popup-grid button {
+      background:var(--background); border:none; padding:12px; border-radius:10px;
+      box-shadow:3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor:pointer; color:var(--text); font-size:15px;
+    }
+    .popup-grid button.answered { background:var(--accent); color:#fff; }
+
+    .results-popup h2 { color:var(--accent); margin:16px 0; text-align:center; }
+    .results-popup h3 { color:#aaa; text-align:center; margin-bottom:24px; }
+    .results-popup button {
+      width:48%; padding:12px; margin:8px 1%; border:none; border-radius:10px; font-size:15px; cursor:pointer;
+    }
+    .results-popup button:first-child { background:#555; color:white; }
+    .results-popup button:last-child { background:var(--accent); color:white; }
+
+    .details-page .back-btn { margin-bottom:20px; }
+    .details-page h4 { color:#aaa; margin:28px 0 12px; font-size:17px; }
+    .details-item {
+      margin-bottom:20px; padding:14px; border-radius:10px; background:rgba(0,0,0,0.15);
+      font-size:14.5px; line-height:1.5;
+    }
+    .correct { color:var(--accent); font-weight:bold; }
+    .incorrect { color:var(--danger); font-weight:bold; }
+
+    .theme-toggle { position:fixed; top:15px; right:70px; z-index:25; }
+  </style>
+</head>
+<body class="dark">
+
+<button class="theme-toggle neumorphic-btn" onclick="toggleTheme()">🌙</button>
+
+<!-- Access Screen -->
+<div id="access-screen">
+  <div class="access-card">
+    <h1>🔐 JAMB English Practice</h1>
+    <input type="text" id="codeInput" placeholder="Enter 8-char code" maxlength="8" autofocus>
+    <button onclick="tryUnlock()">Start Quiz</button>
+    <div id="accessMessage" class="message"></div>
+  </div>
+</div>
+
+<!-- Quiz Interface -->
+<div id="quiz-container">
+
+  <div class="top-bar neumorphic">
+    <button class="neumorphic-btn">←</button>
+    <div class="header">Use of English – Comprehension (10 Passages)</div>
+    <div></div>
+  </div>
+
+  <div class="question-container">
+    <div class="timer" id="timer">Time: 30m:00s</div>
+    <div id="questionText" class="question-text"></div>
+    <div class="options" id="optionsContainer"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="prev-btn neumorphic" id="prevBtn">Prev</button>
+    <button class="center-btn" id="jumpBtn">📋</button>
+    <button class="next-btn neumorphic" id="nextBtn">Next</button>
+  </div>
+
+  <!-- Question Jump Popup -->
+  <div class="popup" id="question-popup">
+    <div class="popup-grid" id="popupGrid"></div>
+    <button class="neumorphic-btn close-btn" onclick="closePopup()">X</button>
+  </div>
+
+  <!-- Results Popup -->
+  <div class="results-popup" id="resultsPopup">
+    <h2 id="scoreText">Your Score: 0/50</h2>
+    <h3 id="messageText">Well done!</h3>
+    <button onclick="window.location.href='eng1.html'">Continue</button>
+    <button onclick="showDetails()">View Details</button>
+  </div>
+
+  <!-- Details Page -->
+  <div class="details-page" id="detailsPage">
+    <button class="neumorphic-btn back-btn" onclick="backToResults()">←</button>
+    <div id="detailsContent"></div>
+  </div>
+</div>
+
+<script>
+// ─── Shared ──────────────────────────────────────────────────────────
+const DB_KEY = 'quizCodesDB';
+
+function getDeviceId() {
+  let id = localStorage.getItem('userDeviceId');
+  if (!id) {
+    id = 'DEV-' + Math.random().toString(36).substring(2,15).toUpperCase() + Date.now().toString(36).toUpperCase();
+    localStorage.setItem('userDeviceId', id);
+  }
+  return id;
+}
+
+function isExpired(createdDate) {
+  if (!createdDate) return false;
+  const expiry = new Date(createdDate);
+  expiry.setMonth(expiry.getMonth() + 6);
+  return new Date() > expiry;
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+}
+
+(function loadTheme() {
+  const saved = localStorage.getItem('theme') || 'dark';
+  if (saved === 'light') document.body.classList.add('light');
+})();
+
+// ─── Access ──────────────────────────────────────────────────────────
+function tryUnlock() {
+  const code = document.getElementById('codeInput').value.trim().toUpperCase();
+  const msg = document.getElementById('accessMessage');
+  msg.className = 'message';
+
+  if (code.length !== 8) {
+    msg.textContent = 'Enter valid 8-character code';
+    msg.classList.add('error');
+    return;
+  }
+
+  let db = JSON.parse(localStorage.getItem(DB_KEY)) || [];
+  const entry = db.find(c => c.code === code);
+
+  if (!entry) { msg.textContent = '❌ Invalid code'; msg.classList.add('error'); return; }
+  if (isExpired(entry.createdAt)) { msg.textContent = '❌ Code expired'; msg.classList.add('error'); return; }
+
+  const dev = getDeviceId();
+  if (entry.deviceId && entry.deviceId !== dev) {
+    msg.textContent = '❌ Code used on another device'; msg.classList.add('error'); return;
+  }
+
+  if (!entry.deviceId) {
+    entry.deviceId = dev;
+    entry.assignedAt = new Date().toISOString();
+    localStorage.setItem(DB_KEY, JSON.stringify(db));
+  }
+
+  msg.textContent = '✅ Loading quiz...';
+  msg.classList.add('success');
+
+  setTimeout(() => {
+    document.getElementById('access-screen').style.display = 'none';
+    document.getElementById('quiz-container').style.display = 'block';
+    initQuiz();
+  }, 1200);
+}
+
+// ─── Quiz Data (10 passages – 50 questions) ──────────────────────────
+const quizData = [
+  {type:"Descriptive",passage:"The bustling Oshodi market in Lagos pulses with life from dawn to dusk. Hawkers shout their wares in rapid Yoruba and Pidgin, while the aroma of akara, suya, and fresh bread wafts through the crowded lanes. Yellow buses honk impatiently, and pedestrians weave between moving vehicles. Colourful umbrellas shield traders from the scorching sun, and the ground is littered with discarded nylon bags. Despite the chaos, the market thrives on relentless energy and human connection.",questions:[{q:"The writer's main purpose is to",o:["criticize market traders","describe the lively and chaotic atmosphere of Oshodi market","explain how to buy akara","argue for banning street trading"],correct:1,exp:"Sensory details portray vibrant chaos."},{q:"The word \"pulses\" as used means",o:["dies down","beats strongly with activity","remains silent","moves slowly"],correct:1,exp:"Strong, lively rhythm."},{q:"The writer's attitude is",o:["disapproving","neutral","appreciative of the energy","fearful"],correct:2,exp:"Positive words despite chaos."},{q:"From the passage, the market is",o:["quiet and empty","crowded and full of activity","only open at night","without any food sellers"],correct:1,exp:"Clear evidence of activity."},{q:"The phrase \"pulses with life\" is an example of",o:["simile","metaphor","personification","hyperbole"],correct:2,exp:"Market given human qualities."}]},
+  {type:"Descriptive",passage:"Harmattan sweeps across northern Nigeria, turning the sky hazy and the air dry and cool. Fine dust settles on everything, making eyes water and throats itch. Bare acacia trees stand like skeletons against the pale horizon. Yet children play happily, flying homemade kites, and the cool breeze brings relief after the rainy season heat.",questions:[{q:"The passage primarily describes",o:["only negative effects","appearance, feel and mixed atmosphere of harmattan","how to make kites","why dust is harmful"],correct:1,exp:"Balanced view of harshness and beauty."},{q:"The word \"sweeps\" suggests",o:["gentle arrival","forceful movement","slow disappearance","staying still"],correct:1,exp:"Strong, widespread movement."},{q:"The writer's tone is",o:["completely negative","balanced and realistic","angry","sarcastic"],correct:1,exp:"Harshness acknowledged but beauty noted."},{q:"It can be inferred that harmattan",o:["is hated by all children","has uncomfortable and enjoyable aspects","prevents all outdoor play","occurs only at night"],correct:1,exp:"Children play happily despite dust."},{q:"\"Stand like skeletons\" is",o:["metaphor","simile","personification","alliteration"],correct:1,exp:"Comparison using 'like'."}]},
+  {type:"Descriptive",passage:"Calabar Carnival streets explode in a riot of colour during December. Masquerades in elaborate costumes dance to highlife and Ekpe rhythms. The air is thick with the smell of afang soup and roasted plantain. Spectators cheer while drummers beat feverishly. The festival radiates joy, unity, and cultural pride.",questions:[{q:"The main focus is",o:["cost of costumes","vibrant and joyful atmosphere of Calabar Carnival","carnival history","noise pollution"],correct:1,exp:"Sensory & emotional vibrancy."},{q:"\"Explode in a riot of colour\" means",o:["become dull","suddenly fill with bright colours","remain plain","disappear"],correct:1,exp:"Intense burst of colour."},{q:"The writer's attitude is",o:["disapproving","enthusiastic and positive","indifferent","critical"],correct:1,exp:"Admiration through positive words."},{q:"The carnival is characterized by",o:["silence","music, dance, food, celebration","only masquerades","no spectators"],correct:1,exp:"Multiple celebratory elements."},{q:"\"Beat feverishly\" suggests",o:["play slowly","play with intense energy","stop playing","play quietly"],correct:1,exp:"High excitement."}]},
+  {type:"Narrative",passage:"Ibrahim failed his WAEC twice and felt like giving up. His uncle encouraged him to enrol in evening classes. He studied every night after farm work. On result day, he passed with credits in all subjects. His family celebrated, and Ibrahim decided to pursue teaching to help others.",questions:[{q:"The story is mainly about",o:["WAEC unfairness","perseverance leading to success","uncle's farm work","celebration parties"],correct:1,exp:"Failure → effort → success."},{q:"Why did Ibrahim study every night?",o:["to play games","to pass WAEC after failures","to avoid farm work","to impress friends"],correct:1,exp:"Motivation after failure."},{q:"\"Perseverance\" means",o:["quitting easily","continuing despite difficulties","cheating","celebrating early"],correct:1,exp:"Kept studying."},{q:"Ibrahim's success teaches that",o:["failure is final","hard work pays off","uncles unnecessary","teaching easy"],correct:1,exp:"Core moral."},{q:"The ending is",o:["sad","hopeful and positive","angry","confusing"],correct:1,exp:"Positive future goal."}]},
+  {type:"Narrative",passage:"During the flood in Lokoja, Fatima saw her elderly neighbour trapped on the roof. She tied a rope around her waist and swam through the strong current to reach her. With help, she pulled the woman to safety. The community hailed Fatima as a heroine.",questions:[{q:"The story is primarily about",o:["flood dangers","girl's bravery in rescue","how to swim in floods","Lokoja floods cause"],correct:1,exp:"Focus on courageous act."},{q:"Fatima tied a rope because",o:["wanted to play","to stay safe while rescuing","to tie neighbour","to escape"],correct:1,exp:"Safety during rescue."},{q:"\"Hailed\" means",o:["ignored","praised loudly","criticized","forgotten"],correct:1,exp:"Public praise."},{q:"Fatima can be described as",o:["selfish","courageous and selfless","fearful","careless"],correct:1,exp:"Risked life for another."},{q:"The narrative ends with",o:["tragedy","pride and community approval","regret","anger"],correct:1,exp:"Heroine status."}]},
+  {type:"Narrative",passage:"Kemi dreamed of becoming a doctor but her family could not afford fees. She applied for a scholarship and studied day and night. She won the award and is now in medical school. Determination turned her dream into reality.",questions:[{q:"The passage tells",o:["scholarships useless","hard work and opportunity led to success","doctor salary","family poverty"],correct:1,exp:"Effort → achievement."},{q:"Kemi studied day and night to",o:["waste time","win scholarship","avoid school","play"],correct:1,exp:"Preparation purpose."},{q:"\"Determination\" means",o:["laziness","strong resolve to succeed","giving up","dreaming only"],correct:1,exp:"Persistent effort."},{q:"The story shows that",o:["dreams impossible","determination overcomes obstacles","scholarships easy","medicine simple"],correct:1,exp:"Main lesson."},{q:"The tone is",o:["discouraging","inspiring","neutral","sad"],correct:1,exp:"Uplifting message."}]},
+  {type:"Expository",passage:"Online learning has grown rapidly in Nigeria since the pandemic. It allows remote students access via phones or laptops. However, poor internet and lack of devices limit reach. Schools should provide data subsidies and training. Supported online education can bridge urban-rural gap.",questions:[{q:"The passage explains",o:["why online failed","growth, benefits, challenges of online learning","how to buy laptops","pandemic history"],correct:1,exp:"Balanced overview."},{q:"Online learning helps",o:["only city students","remote students access education","increase illiteracy","destroy schools"],correct:1,exp:"Key benefit."},{q:"\"Bridge\" means",o:["destroy","connect or reduce gap","ignore","widen"],correct:1,exp:"Reduce divide."},{q:"Writer suggests schools should",o:["ban online","provide subsidies and training","ignore internet","stop phones"],correct:1,exp:"Practical recommendation."},{q:"Main idea is",o:["online useless","online has potential if supported","rural no phones","pandemic over"],correct:1,exp:"Positive with conditions."}]},
+  {type:"Expository",passage:"Recycling plastic waste reduces pollution in Nigerian cities. Collected plastics become chairs, tiles, bags. Communities should set up collection points and awareness. When recycling is a habit, streets will be cleaner and flooding reduced.",questions:[{q:"The passage explains",o:["plastic good","benefits of recycling and promotion","how to produce plastic","flooding causes"],correct:1,exp:"Benefits + methods."},{q:"Recycling helps by",o:["increasing waste","reducing pollution & reusing","blocking drains","dirtier streets"],correct:1,exp:"Environmental gain."},{q:"\"Habit\" means",o:["rare action","regular practice","one-time","impossible"],correct:1,exp:"Consistent behaviour."},{q:"Communities should",o:["ignore plastic","set up collection & awareness","burn plastic","throw more"],correct:1,exp:"Action steps."},{q:"Main message is",o:["recycling harmful","recycling solves waste if practised","no plastic in Nigeria","chairs useless"],correct:1,exp:"Positive potential."}]},
+  {type:"Argumentative",passage:"Some argue university degrees are worthless due to unemployment. I disagree. Degrees build critical thinking, discipline, networks needed for entrepreneurship. Many successful CEOs have degrees. Government should focus on quality education and jobs, not discourage learning.",questions:[{q:"Writer's position is",o:["degrees useless","university degrees valuable","drop out","unemployment permanent"],correct:1,exp:"Defends value."},{q:"Writer supports with",o:["failure stories","benefits & successful graduates","attacks on students","agreement with critics"],correct:1,exp:"Examples given."},{q:"\"Networks\" means",o:["isolation","connections","buildings","books"],correct:1,exp:"Useful contacts."},{q:"Government should",o:["close universities","improve education & create jobs","discourage degrees","increase unemployment"],correct:1,exp:"Positive suggestion."},{q:"Passage is",o:["descriptive","argumentative for university education","narrative","expository"],correct:1,exp:"Persuasive stance."}]},
+  {type:"Argumentative",passage:"Many claim corporal punishment necessary for discipline. I oppose it. It causes fear and resentment instead of respect. Positive reinforcement and counselling work better. Schools should adopt non-violent methods for lasting good behaviour.",questions:[{q:"Writer's position is",o:["for corporal punishment","against corporal punishment","neutral","unsure"],correct:1,exp:"Clear opposition."},{q:"Corporal punishment causes",o:["respect","fear and resentment","better learning","happiness"],correct:1,exp:"Negative effects."},{q:"\"Reinforcement\" means",o:["punishment","encouragement & reward","ignoring","beating"],correct:1,exp:"Positive approach."},{q:"Schools should use",o:["only beating","non-violent methods","no discipline","fear only"],correct:1,exp:"Recommended change."},{q:"Passage is",o:["descriptive","argumentative against corporal punishment","narrative","expository"],correct:1,exp:"Takes clear position."}]}
+];
+
+// ─── Quiz Logic ──────────────────────────────────────────────────────
+let currentPassage = 0;
+let currentQuestion = 0;
+let answers = Array(quizData.length).fill().map(() => Array(5).fill(null));
+let timeLeft = 1800; // 30 minutes
+let timerInterval;
+
+function initQuiz() {
+  answers = Array(quizData.length).fill().map(() => Array(5).fill(null));
+  timeLeft = 1800;
+  currentPassage = 0;
+  currentQuestion = 0;
+  renderQuestion();
+  timerInterval = setInterval(updateTimer, 1000);
+  document.getElementById('jumpBtn').onclick = showQuestionPopup;
+  document.getElementById('prevBtn').onclick = prevQuestion;
+  document.getElementById('nextBtn').onclick = nextQuestion;
+}
+
+function updateTimer() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  document.getElementById('timer').textContent = `Time: \( {m}m: \){s.toString().padStart(2,'0')}s`;
+  if (timeLeft > 0) timeLeft--;
+  else {
+    clearInterval(timerInterval);
+    submitQuiz(true);
+  }
+}
+
+function renderQuestion() {
+  const p = quizData[currentPassage];
+  const q = p.questions[currentQuestion];
+
+  let passageHtml = currentQuestion === 0 ? `<div class="passage-text">${p.passage}</div>` : '';
+
+  document.getElementById('questionText').innerHTML = `
+    ${passageHtml}
+    Question ${currentQuestion + 1} of 5 (Passage \( {currentPassage + 1}/ \){quizData.length})<br>
+    ${q.q}
+  `;
+
+  const cont = document.getElementById('optionsContainer');
+  cont.innerHTML = '';
+  q.o.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    if (answers[currentPassage][currentQuestion] === i) div.classList.add('selected');
+    div.innerHTML = `<p>${String.fromCharCode(65 + i)}. ${opt}</p>`;
+    div.onclick = () => {
+      document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+      div.classList.add('selected');
+      answers[currentPassage][currentQuestion] = i;
+    };
+    cont.appendChild(div);
+  });
+
+  document.getElementById('prevBtn').disabled = currentQuestion === 0 && currentPassage === 0;
+  document.getElementById('nextBtn').textContent = (currentQuestion === 4 && currentPassage === quizData.length - 1) ? 'Submit' : 'Next';
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) currentQuestion--;
+  else if (currentPassage > 0) { currentPassage--; currentQuestion = 4; }
+  renderQuestion();
+}
+
+function nextQuestion() {
+  if (currentQuestion < 4) currentQuestion++;
+  else if (currentPassage < quizData.length - 1) { currentPassage++; currentQuestion = 0; }
+  else submitQuiz();
+  renderQuestion();
+}
+
+function submitQuiz(fromTimeout = false) {
+  clearInterval(timerInterval);
+  let score = 0;
+  quizData.forEach((p, pi) => p.questions.forEach((q, qi) => {
+    if (answers[pi][qi] === q.correct) score++;
+  }));
+
+  document.getElementById('scoreText').textContent = `Your Score: ${score}/50`;
+  document.getElementById('messageText').textContent = fromTimeout ? "Time's up!" : "Quiz completed!";
+  document.querySelector('.question-container').style.display = 'none';
+  document.querySelector('.nav-buttons').style.display = 'none';
+  document.getElementById('resultsPopup').style.display = 'block';
+}
+
+function showQuestionPopup() {
+  const grid = document.getElementById('popupGrid');
+  grid.innerHTML = '';
+  let num = 1;
+  quizData.forEach((p, pi) => p.questions.forEach((_, qi) => {
+    const btn = document.createElement('button');
+    btn.textContent = num++;
+    if (answers[pi][qi] !== null) btn.classList.add('answered');
+    btn.onclick = () => {
+      currentPassage = pi; currentQuestion = qi;
+      renderQuestion(); document.getElementById('question-popup').style.display = 'none';
+    };
+    grid.appendChild(btn);
+  }));
+  document.getElementById('question-popup').style.display = 'block';
+}
+
+function closePopup() { document.getElementById('question-popup').style.display = 'none'; }
+
+function showDetails() {
+  document.getElementById('resultsPopup').style.display = 'none';
+  const cont = document.getElementById('detailsContent');
+  cont.innerHTML = '';
+
+  let global = 1;
+  quizData.forEach((p, pi) => {
+    cont.innerHTML += `<h4>Passage ${pi+1} – ${p.type}</h4>`;
+    p.questions.forEach((q, qi) => {
+      const ua = answers[pi][qi] !== null ? String.fromCharCode(65 + answers[pi][qi]) : '—';
+      const ca = String.fromCharCode(65 + q.correct);
+      const isCorrect = answers[pi][qi] === q.correct;
+      cont.innerHTML += `
+        <div class="details-item">
+          <strong>Question ${global++}:</strong> ${q.q}<br>
+          <strong>Your answer:</strong> ${ua} ${isCorrect ? '<span class="correct">✓ Correct</span>' : '<span class="incorrect">✗ Wrong</span>'}<br>
+          <strong>Correct answer:</strong> <span class="correct">${ca}</span><br>
+          <strong>Explanation:</strong> ${q.exp}
+        </div>`;
+    });
+  });
+  document.getElementById('detailsPage').style.display = 'block';
+}
+
+function backToResults() {
+  document.getElementById('detailsPage').style.display = 'none';
+  document.getElementById('resultsPopup').style.display = 'block';
+}
+</script>
+</body>
+</html>
