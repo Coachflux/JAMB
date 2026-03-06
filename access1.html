@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JAMB Comprehension Practice – 10 Passages</title>
+  <title>JAMB English Comprehension Practice – 10 Passages</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif; }
     :root {
@@ -53,7 +53,8 @@
       margin:80px 0 140px 0; padding:20px; background:var(--background); border-radius:15px;
       box-shadow:5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
     }
-    .timer { font-size:14px; margin-bottom:20px; color:#ff9800; font-weight:bold; }
+    .timer { font-size:15px; margin-bottom:20px; font-weight:bold; }
+    .timer.low { color:var(--danger); }
     .passage-text {
       font-size:15px; line-height:1.6; margin-bottom:24px; padding:14px;
       border-left:4px solid var(--accent); background:rgba(0,0,0,0.12); border-radius:8px;
@@ -142,7 +143,7 @@
   </div>
 
   <div class="question-container">
-    <div class="timer" id="timer">Time: 30m:00s</div>
+    <div class="timer" id="timer">Time: 30:00</div>
     <div id="questionText" class="question-text"></div>
     <div class="options" id="optionsContainer"></div>
   </div>
@@ -164,12 +165,12 @@
     <h2 id="scoreText">Your Score: 0/50</h2>
     <h3 id="messageText">Well done!</h3>
     <button onclick="window.location.href='eng1.html'">Continue</button>
-    <button onclick="showDetails()">View Details</button>
+    <button onclick="showDetails()">View Details & Explanations</button>
   </div>
 
-  <!-- Details Page -->
+  <!-- Details / Review Page -->
   <div class="details-page" id="detailsPage">
-    <button class="neumorphic-btn back-btn" onclick="backToResults()">←</button>
+    <button class="neumorphic-btn back-btn" onclick="backToResults()">← Back to Results</button>
     <div id="detailsContent"></div>
   </div>
 </div>
@@ -204,7 +205,7 @@ function toggleTheme() {
   if (saved === 'light') document.body.classList.add('light');
 })();
 
-// ─── Access ──────────────────────────────────────────────────────────
+// ─── Access Logic ────────────────────────────────────────────────────
 function tryUnlock() {
   const code = document.getElementById('codeInput').value.trim().toUpperCase();
   const msg = document.getElementById('accessMessage');
@@ -243,18 +244,97 @@ function tryUnlock() {
   }, 1200);
 }
 
-// ─── Quiz Data (10 passages – 50 questions) ──────────────────────────
+// ─── Full 10-Passage Quiz Data ───────────────────────────────────────
 const quizData = [
-  {type:"Descriptive",passage:"The bustling Oshodi market in Lagos pulses with life from dawn to dusk. Hawkers shout their wares in rapid Yoruba and Pidgin, while the aroma of akara, suya, and fresh bread wafts through the crowded lanes. Yellow buses honk impatiently, and pedestrians weave between moving vehicles. Colourful umbrellas shield traders from the scorching sun, and the ground is littered with discarded nylon bags. Despite the chaos, the market thrives on relentless energy and human connection.",questions:[{q:"The writer's main purpose is to",o:["criticize market traders","describe the lively and chaotic atmosphere of Oshodi market","explain how to buy akara","argue for banning street trading"],correct:1,exp:"Sensory details portray vibrant chaos."},{q:"The word \"pulses\" as used means",o:["dies down","beats strongly with activity","remains silent","moves slowly"],correct:1,exp:"Strong, lively rhythm."},{q:"The writer's attitude is",o:["disapproving","neutral","appreciative of the energy","fearful"],correct:2,exp:"Positive words despite chaos."},{q:"From the passage, the market is",o:["quiet and empty","crowded and full of activity","only open at night","without any food sellers"],correct:1,exp:"Clear evidence of activity."},{q:"The phrase \"pulses with life\" is an example of",o:["simile","metaphor","personification","hyperbole"],correct:2,exp:"Market given human qualities."}]},
-  {type:"Descriptive",passage:"Harmattan sweeps across northern Nigeria, turning the sky hazy and the air dry and cool. Fine dust settles on everything, making eyes water and throats itch. Bare acacia trees stand like skeletons against the pale horizon. Yet children play happily, flying homemade kites, and the cool breeze brings relief after the rainy season heat.",questions:[{q:"The passage primarily describes",o:["only negative effects","appearance, feel and mixed atmosphere of harmattan","how to make kites","why dust is harmful"],correct:1,exp:"Balanced view of harshness and beauty."},{q:"The word \"sweeps\" suggests",o:["gentle arrival","forceful movement","slow disappearance","staying still"],correct:1,exp:"Strong, widespread movement."},{q:"The writer's tone is",o:["completely negative","balanced and realistic","angry","sarcastic"],correct:1,exp:"Harshness acknowledged but beauty noted."},{q:"It can be inferred that harmattan",o:["is hated by all children","has uncomfortable and enjoyable aspects","prevents all outdoor play","occurs only at night"],correct:1,exp:"Children play happily despite dust."},{q:"\"Stand like skeletons\" is",o:["metaphor","simile","personification","alliteration"],correct:1,exp:"Comparison using 'like'."}]},
-  {type:"Descriptive",passage:"Calabar Carnival streets explode in a riot of colour during December. Masquerades in elaborate costumes dance to highlife and Ekpe rhythms. The air is thick with the smell of afang soup and roasted plantain. Spectators cheer while drummers beat feverishly. The festival radiates joy, unity, and cultural pride.",questions:[{q:"The main focus is",o:["cost of costumes","vibrant and joyful atmosphere of Calabar Carnival","carnival history","noise pollution"],correct:1,exp:"Sensory & emotional vibrancy."},{q:"\"Explode in a riot of colour\" means",o:["become dull","suddenly fill with bright colours","remain plain","disappear"],correct:1,exp:"Intense burst of colour."},{q:"The writer's attitude is",o:["disapproving","enthusiastic and positive","indifferent","critical"],correct:1,exp:"Admiration through positive words."},{q:"The carnival is characterized by",o:["silence","music, dance, food, celebration","only masquerades","no spectators"],correct:1,exp:"Multiple celebratory elements."},{q:"\"Beat feverishly\" suggests",o:["play slowly","play with intense energy","stop playing","play quietly"],correct:1,exp:"High excitement."}]},
-  {type:"Narrative",passage:"Ibrahim failed his WAEC twice and felt like giving up. His uncle encouraged him to enrol in evening classes. He studied every night after farm work. On result day, he passed with credits in all subjects. His family celebrated, and Ibrahim decided to pursue teaching to help others.",questions:[{q:"The story is mainly about",o:["WAEC unfairness","perseverance leading to success","uncle's farm work","celebration parties"],correct:1,exp:"Failure → effort → success."},{q:"Why did Ibrahim study every night?",o:["to play games","to pass WAEC after failures","to avoid farm work","to impress friends"],correct:1,exp:"Motivation after failure."},{q:"\"Perseverance\" means",o:["quitting easily","continuing despite difficulties","cheating","celebrating early"],correct:1,exp:"Kept studying."},{q:"Ibrahim's success teaches that",o:["failure is final","hard work pays off","uncles unnecessary","teaching easy"],correct:1,exp:"Core moral."},{q:"The ending is",o:["sad","hopeful and positive","angry","confusing"],correct:1,exp:"Positive future goal."}]},
-  {type:"Narrative",passage:"During the flood in Lokoja, Fatima saw her elderly neighbour trapped on the roof. She tied a rope around her waist and swam through the strong current to reach her. With help, she pulled the woman to safety. The community hailed Fatima as a heroine.",questions:[{q:"The story is primarily about",o:["flood dangers","girl's bravery in rescue","how to swim in floods","Lokoja floods cause"],correct:1,exp:"Focus on courageous act."},{q:"Fatima tied a rope because",o:["wanted to play","to stay safe while rescuing","to tie neighbour","to escape"],correct:1,exp:"Safety during rescue."},{q:"\"Hailed\" means",o:["ignored","praised loudly","criticized","forgotten"],correct:1,exp:"Public praise."},{q:"Fatima can be described as",o:["selfish","courageous and selfless","fearful","careless"],correct:1,exp:"Risked life for another."},{q:"The narrative ends with",o:["tragedy","pride and community approval","regret","anger"],correct:1,exp:"Heroine status."}]},
-  {type:"Narrative",passage:"Kemi dreamed of becoming a doctor but her family could not afford fees. She applied for a scholarship and studied day and night. She won the award and is now in medical school. Determination turned her dream into reality.",questions:[{q:"The passage tells",o:["scholarships useless","hard work and opportunity led to success","doctor salary","family poverty"],correct:1,exp:"Effort → achievement."},{q:"Kemi studied day and night to",o:["waste time","win scholarship","avoid school","play"],correct:1,exp:"Preparation purpose."},{q:"\"Determination\" means",o:["laziness","strong resolve to succeed","giving up","dreaming only"],correct:1,exp:"Persistent effort."},{q:"The story shows that",o:["dreams impossible","determination overcomes obstacles","scholarships easy","medicine simple"],correct:1,exp:"Main lesson."},{q:"The tone is",o:["discouraging","inspiring","neutral","sad"],correct:1,exp:"Uplifting message."}]},
-  {type:"Expository",passage:"Online learning has grown rapidly in Nigeria since the pandemic. It allows remote students access via phones or laptops. However, poor internet and lack of devices limit reach. Schools should provide data subsidies and training. Supported online education can bridge urban-rural gap.",questions:[{q:"The passage explains",o:["why online failed","growth, benefits, challenges of online learning","how to buy laptops","pandemic history"],correct:1,exp:"Balanced overview."},{q:"Online learning helps",o:["only city students","remote students access education","increase illiteracy","destroy schools"],correct:1,exp:"Key benefit."},{q:"\"Bridge\" means",o:["destroy","connect or reduce gap","ignore","widen"],correct:1,exp:"Reduce divide."},{q:"Writer suggests schools should",o:["ban online","provide subsidies and training","ignore internet","stop phones"],correct:1,exp:"Practical recommendation."},{q:"Main idea is",o:["online useless","online has potential if supported","rural no phones","pandemic over"],correct:1,exp:"Positive with conditions."}]},
-  {type:"Expository",passage:"Recycling plastic waste reduces pollution in Nigerian cities. Collected plastics become chairs, tiles, bags. Communities should set up collection points and awareness. When recycling is a habit, streets will be cleaner and flooding reduced.",questions:[{q:"The passage explains",o:["plastic good","benefits of recycling and promotion","how to produce plastic","flooding causes"],correct:1,exp:"Benefits + methods."},{q:"Recycling helps by",o:["increasing waste","reducing pollution & reusing","blocking drains","dirtier streets"],correct:1,exp:"Environmental gain."},{q:"\"Habit\" means",o:["rare action","regular practice","one-time","impossible"],correct:1,exp:"Consistent behaviour."},{q:"Communities should",o:["ignore plastic","set up collection & awareness","burn plastic","throw more"],correct:1,exp:"Action steps."},{q:"Main message is",o:["recycling harmful","recycling solves waste if practised","no plastic in Nigeria","chairs useless"],correct:1,exp:"Positive potential."}]},
-  {type:"Argumentative",passage:"Some argue university degrees are worthless due to unemployment. I disagree. Degrees build critical thinking, discipline, networks needed for entrepreneurship. Many successful CEOs have degrees. Government should focus on quality education and jobs, not discourage learning.",questions:[{q:"Writer's position is",o:["degrees useless","university degrees valuable","drop out","unemployment permanent"],correct:1,exp:"Defends value."},{q:"Writer supports with",o:["failure stories","benefits & successful graduates","attacks on students","agreement with critics"],correct:1,exp:"Examples given."},{q:"\"Networks\" means",o:["isolation","connections","buildings","books"],correct:1,exp:"Useful contacts."},{q:"Government should",o:["close universities","improve education & create jobs","discourage degrees","increase unemployment"],correct:1,exp:"Positive suggestion."},{q:"Passage is",o:["descriptive","argumentative for university education","narrative","expository"],correct:1,exp:"Persuasive stance."}]},
-  {type:"Argumentative",passage:"Many claim corporal punishment necessary for discipline. I oppose it. It causes fear and resentment instead of respect. Positive reinforcement and counselling work better. Schools should adopt non-violent methods for lasting good behaviour.",questions:[{q:"Writer's position is",o:["for corporal punishment","against corporal punishment","neutral","unsure"],correct:1,exp:"Clear opposition."},{q:"Corporal punishment causes",o:["respect","fear and resentment","better learning","happiness"],correct:1,exp:"Negative effects."},{q:"\"Reinforcement\" means",o:["punishment","encouragement & reward","ignoring","beating"],correct:1,exp:"Positive approach."},{q:"Schools should use",o:["only beating","non-violent methods","no discipline","fear only"],correct:1,exp:"Recommended change."},{q:"Passage is",o:["descriptive","argumentative against corporal punishment","narrative","expository"],correct:1,exp:"Takes clear position."}]}
+  // 1. Descriptive – Oshodi Market
+  {type:"Descriptive", passage:"The bustling Oshodi market in Lagos pulses with life from dawn to dusk. Hawkers shout their wares in rapid Yoruba and Pidgin, while the aroma of akara, suya, and fresh bread wafts through the crowded lanes. Yellow buses honk impatiently, and pedestrians weave between moving vehicles. Colourful umbrellas shield traders from the scorching sun, and the ground is littered with discarded nylon bags. Despite the chaos, the market thrives on relentless energy and human connection.", questions:[
+    {q:"The writer's main purpose is to", o:["criticize market traders","describe the lively and chaotic atmosphere of Oshodi market","explain how to buy akara","argue for banning street trading"], correct:1, exp:"The passage focuses on sensory details to portray the market's vibrant chaos."},
+    {q:"The word \"pulses\" as used means", o:["dies down","beats strongly with activity","remains silent","moves slowly"], correct:1, exp:"It conveys the strong, lively rhythm of the market."},
+    {q:"The writer's attitude is", o:["disapproving","neutral","appreciative of the energy","fearful"], correct:2, exp:"Words like \"thrives\", \"relentless energy\", and \"human connection\" show positive recognition despite chaos."},
+    {q:"From the passage, the market is", o:["quiet and empty","crowded and full of activity","only open at night","without any food sellers"], correct:1, exp:"Evidence of shouting, honking, weaving pedestrians, and thriving trade."},
+    {q:"The phrase \"pulses with life\" is an example of", o:["simile","metaphor","personification","hyperbole"], correct:2, exp:"The market is given human qualities (pulsing like a living heart)."}
+  ]},
+
+  // 2. Descriptive – Harmattan
+  {type:"Descriptive", passage:"Harmattan sweeps across northern Nigeria, turning the sky hazy and the air dry and cool. Fine dust settles on everything, making eyes water and throats itch. Bare acacia trees stand like skeletons against the pale horizon. Yet children play happily, flying homemade kites, and the cool breeze brings relief after the rainy season heat. The season carries a quiet beauty amid its harshness.", questions:[
+    {q:"The passage primarily describes", o:["only the negative effects of harmattan","the appearance, feel, and mixed atmosphere of harmattan season","how to make kites","why dust is harmful"], correct:1, exp:"Balanced description of visuals, sensations, activities, and both harsh and pleasant sides."},
+    {q:"The word \"sweeps\" suggests", o:["gentle arrival","forceful movement across the region","slow disappearance","staying still"], correct:1, exp:"Harmattan moves strongly and widely."},
+    {q:"The writer's tone is", o:["completely negative","balanced and realistic","angry","sarcastic"], correct:1, exp:"Acknowledges harshness but notes \"quiet beauty\" and \"relief\"."},
+    {q:"It can be inferred that harmattan", o:["is hated by all children","has both uncomfortable and enjoyable aspects","prevents all outdoor play","occurs only at night"], correct:1, exp:"Children play happily despite dust."},
+    {q:"The phrase \"stand like skeletons\" is", o:["metaphor","simile","personification","alliteration"], correct:1, exp:"Uses \"like\" for comparison."}
+  ]},
+
+  // 3. Descriptive – Calabar Carnival
+  {type:"Descriptive", passage:"Calabar Carnival streets explode in a riot of colour during December. Masquerades in elaborate costumes dance to highlife and Ekpe rhythms. The air is thick with the smell of afang soup and roasted plantain from roadside vendors. Spectators cheer from balconies while drummers beat feverishly. The festival radiates joy, unity, and cultural pride.", questions:[
+    {q:"The main focus is", o:["the cost of carnival costumes","describing the vibrant and joyful atmosphere of Calabar Carnival","explaining carnival history","criticizing noise pollution"], correct:1, exp:"Sensory and emotional details highlight vibrancy and joy."},
+    {q:"\"Explode in a riot of colour\" means", o:["become dull","suddenly fill with bright, chaotic colours","remain plain","disappear"], correct:1, exp:"Sudden, intense burst of colours."},
+    {q:"The writer's attitude is", o:["disapproving","enthusiastic and positive","indifferent","critical"], correct:1, exp:"Words like \"joy\", \"unity\", \"pride\" show admiration."},
+    {q:"The carnival is characterized by", o:["silence and boredom","music, dance, food, and celebration","only masquerades","no spectators"], correct:1, exp:"Dancing, rhythms, vendors, cheering."},
+    {q:"\"Beat feverishly\" suggests the drummers", o:["play slowly","play with intense energy","stop playing","play quietly"], correct:1, exp:"High energy and excitement."}
+  ]},
+
+  // 4. Narrative – Ibrahim
+  {type:"Narrative", passage:"Ibrahim failed his WAEC twice and felt like giving up. His uncle encouraged him to enrol in evening classes. He studied every night after farm work. On result day, he passed with credits in all subjects. His family celebrated, and Ibrahim decided to pursue teaching to help others.", questions:[
+    {q:"The story is mainly about", o:["why WAEC is unfair","a boy's perseverance leading to success","uncle's farm work","celebration parties"], correct:1, exp:"Failure → effort → success → future goal."},
+    {q:"Why did Ibrahim study every night?", o:["to play games","to pass WAEC after failures","to avoid farm work","to impress friends"], correct:1, exp:"Direct motivation."},
+    {q:"The word \"perseverance\" means", o:["quitting easily","continuing despite difficulties","cheating","celebrating early"], correct:1, exp:"Continued studying after failures."},
+    {q:"Ibrahim's success teaches that", o:["failure is final","hard work pays off","uncles are unnecessary","teaching is easy"], correct:1, exp:"Moral from story."},
+    {q:"The ending is", o:["sad","hopeful and positive","angry","confusing"], correct:1, exp:"Celebration + decision to help others."}
+  ]},
+
+  // 5. Narrative – Fatima
+  {type:"Narrative", passage:"During the flood in Lokoja, Fatima saw her elderly neighbour trapped on the roof. She tied a rope around her waist and swam through the strong current to reach her. With help from others, she pulled the woman to safety. The community hailed Fatima as a heroine, and she felt proud of her courage.", questions:[
+    {q:"The story is primarily about", o:["dangers of floods only","a girl's bravery in rescuing a neighbour","how to swim in floods","why Lokoja floods"], correct:1, exp:"Rescue act + recognition."},
+    {q:"Fatima tied a rope because", o:["she wanted to play","to stay safe while rescuing","to tie the neighbour","to escape"], correct:1, exp:"Safety measure during rescue."},
+    {q:"The word \"hailed\" means", o:["ignored","praised loudly","criticized","forgotten"], correct:1, exp:"Community praise."},
+    {q:"Fatima can be described as", o:["selfish","courageous and selfless","fearful","careless"], correct:1, exp:"Risked herself for another."},
+    {q:"The narrative ends with", o:["tragedy","pride and community approval","regret","anger"], correct:1, exp:"Hailed as heroine + pride."}
+  ]},
+
+  // 6. Narrative – Kemi
+  {type:"Narrative", passage:"Kemi dreamed of becoming a doctor but her family could not afford university fees. She applied for a scholarship and studied day and night. She won the award and is now in medical school. Kemi says determination turned her dream into reality.", questions:[
+    {q:"The passage tells", o:["why scholarships are useless","how hard work and opportunity led to success","doctor's salary","family poverty"], correct:1, exp:"Dream → effort → scholarship → success."},
+    {q:"Kemi studied day and night to", o:["waste time","win the scholarship","avoid school","play"], correct:1, exp:"Preparation for scholarship."},
+    {q:"\"Determination\" means", o:["laziness","strong resolve to succeed","giving up","dreaming only"], correct:1, exp:"Persistent effort."},
+    {q:"The story shows that", o:["dreams are impossible","determination can overcome obstacles","scholarships are easy","medicine is simple"], correct:1, exp:"Moral."},
+    {q:"The tone is", o:["discouraging","inspiring","neutral","sad"], correct:1, exp:"Positive outcome and message."}
+  ]},
+
+  // 7. Expository – Online Learning
+  {type:"Expository", passage:"Online learning has grown rapidly in Nigeria since the pandemic. It allows students in remote areas to access lectures via phones or laptops. However, poor internet and lack of devices limit its reach. Schools should provide data subsidies and training. When properly supported, online education can bridge the urban-rural gap.", questions:[
+    {q:"The passage explains", o:["why online learning failed","the growth, benefits, and challenges of online learning in Nigeria","how to buy laptops","pandemic history"], correct:1, exp:"Growth + advantages + problems + solutions."},
+    {q:"Online learning helps", o:["only city students","remote students access education","increase illiteracy","destroy schools"], correct:1, exp:"Direct benefit."},
+    {q:"The word \"bridge\" means", o:["destroy","connect or reduce gap","ignore","widen"], correct:1, exp:"Reduce urban-rural divide."},
+    {q:"The writer suggests schools should", o:["ban online classes","provide subsidies and training","ignore internet problems","stop using phones"], correct:1, exp:"Recommendations."},
+    {q:"The main idea is", o:["online learning is useless","online learning has potential if challenges are addressed","rural areas have no phones","pandemic is over"], correct:1, exp:"Balanced view with support needed."}
+  ]},
+
+  // 8. Expository – Recycling
+  {type:"Expository", passage:"Recycling plastic waste reduces environmental pollution in Nigerian cities. Collected plastics can be turned into chairs, tiles, and bags. Communities should set up collection points and awareness campaigns. When recycling becomes a habit, Nigeria will have cleaner streets and less flooding from blocked drains.", questions:[
+    {q:"The passage explains", o:["why plastic is good","benefits of recycling and how to promote it","how to produce plastic","flooding causes only"], correct:1, exp:"Advantages + methods."},
+    {q:"Recycling helps by", o:["increasing waste","reducing pollution and reusing materials","blocking drains","making streets dirtier"], correct:1, exp:"Cleaner environment."},
+    {q:"\"Habit\" means", o:["rare action","regular practice","one-time event","impossible task"], correct:1, exp:"Regular behaviour."},
+    {q:"Communities should", o:["ignore plastic","set up collection and awareness","burn plastic","throw more waste"], correct:1, exp:"Suggested steps."},
+    {q:"The main message is", o:["recycling is harmful","recycling can solve waste problems if practised widely","Nigeria has no plastic","chairs are useless"], correct:1, exp:"Positive potential with action."}
+  ]},
+
+  // 9. Argumentative – University Degrees
+  {type:"Argumentative", passage:"Some argue that university degrees are worthless because of unemployment. I disagree. A degree builds critical thinking, discipline, and networks that entrepreneurship needs. Many successful Nigerian CEOs hold degrees. Government should focus on quality education and job creation, not discourage higher learning.", questions:[
+    {q:"The writer's position is", o:["degrees are useless","university degrees remain valuable","everyone should drop out","unemployment is permanent"], correct:1, exp:"Disagrees + defends value."},
+    {q:"The writer supports argument with", o:["personal failure stories","benefits and examples of successful graduates","attacks on students","agreement with critics"], correct:1, exp:"Critical thinking, CEOs."},
+    {q:"\"Networks\" means", o:["isolation","connections and relationships","buildings","books"], correct:1, exp:"Useful contacts."},
+    {q:"Government should", o:["close universities","improve education and create jobs","discourage degrees","increase unemployment"], correct:1, exp:"Suggested."},
+    {q:"The passage is", o:["descriptive","argumentative in favour of university education","narrative","expository only"], correct:1, exp:"Takes side and persuades."}
+  ]},
+
+  // 10. Argumentative – Corporal Punishment
+  {type:"Argumentative", passage:"Many claim corporal punishment is necessary for discipline. I oppose it. It causes fear and resentment instead of respect. Positive reinforcement and counselling work better. Schools should adopt non-violent methods for lasting good behaviour.", questions:[
+    {q:"The writer's position is", o:["for corporal punishment","against corporal punishment","neutral","unsure"], correct:1, exp:"Opposes + alternatives."},
+    {q:"Corporal punishment causes", o:["respect","fear and resentment","better learning","happiness"], correct:1, exp:"Negative effects."},
+    {q:"\"Reinforcement\" means", o:["punishment","encouragement and reward","ignoring","beating"], correct:1, exp:"Positive approach."},
+    {q:"Schools should use", o:["only beating","non-violent methods","no discipline","fear only"], correct:1, exp:"Recommended."},
+    {q:"The passage is", o:["descriptive","argumentative against corporal punishment","narrative","expository only"], correct:1, exp:"Takes position against."}
+  ]}
 ];
 
 // ─── Quiz Logic ──────────────────────────────────────────────────────
@@ -279,9 +359,15 @@ function initQuiz() {
 function updateTimer() {
   const m = Math.floor(timeLeft / 60);
   const s = timeLeft % 60;
-  document.getElementById('timer').textContent = `Time: \( {m}m: \){s.toString().padStart(2,'0')}s`;
-  if (timeLeft > 0) timeLeft--;
-  else {
+  const timerEl = document.getElementById('timer');
+  timerEl.textContent = `Time: \( {m}: \){s.toString().padStart(2,'0')}`;
+
+  if (timeLeft <= 300) timerEl.classList.add('low');
+  else timerEl.classList.remove('low');
+
+  if (timeLeft > 0) {
+    timeLeft--;
+  } else {
     clearInterval(timerInterval);
     submitQuiz(true);
   }
@@ -319,15 +405,24 @@ function renderQuestion() {
 }
 
 function prevQuestion() {
-  if (currentQuestion > 0) currentQuestion--;
-  else if (currentPassage > 0) { currentPassage--; currentQuestion = 4; }
+  if (currentQuestion > 0) {
+    currentQuestion--;
+  } else if (currentPassage > 0) {
+    currentPassage--;
+    currentQuestion = 4;
+  }
   renderQuestion();
 }
 
 function nextQuestion() {
-  if (currentQuestion < 4) currentQuestion++;
-  else if (currentPassage < quizData.length - 1) { currentPassage++; currentQuestion = 0; }
-  else submitQuiz();
+  if (currentQuestion < 4) {
+    currentQuestion++;
+  } else if (currentPassage < quizData.length - 1) {
+    currentPassage++;
+    currentQuestion = 0;
+  } else {
+    submitQuiz();
+  }
   renderQuestion();
 }
 
@@ -354,8 +449,10 @@ function showQuestionPopup() {
     btn.textContent = num++;
     if (answers[pi][qi] !== null) btn.classList.add('answered');
     btn.onclick = () => {
-      currentPassage = pi; currentQuestion = qi;
-      renderQuestion(); document.getElementById('question-popup').style.display = 'none';
+      currentPassage = pi;
+      currentQuestion = qi;
+      renderQuestion();
+      document.getElementById('question-popup').style.display = 'none';
     };
     grid.appendChild(btn);
   }));
