@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology – Natural Habitats</title>
+
+<style>
+
+/* RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+/* VARIABLES */
+
+:root{
+--background:#1e1e2f;
+--shadow-in:#171723;
+--shadow-out:#25253b;
+--text-primary:#f0f0ff;
+--text-secondary:#c0c0e0;
+--accent:#1db954;
+--card-bg:#2a2a3f;
+}
+
+body.light{
+--background:#e0e0e0;
+--shadow-in:#bebebe;
+--shadow-out:#ffffff;
+--text-primary:#1a1a1a;
+--text-secondary:#444;
+--card-bg:#f8f8f8;
+}
+
+body{
+background:var(--background);
+color:var(--text-primary);
+display:flex;
+justify-content:center;
+min-height:100vh;
+padding:10px;
+}
+
+/* CONTAINER */
+
+.container{
+width:100%;
+max-width:420px;
+height:720px;
+overflow-y:auto;
+border-radius:20px;
+background:var(--background);
+box-shadow:10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+padding-top:70px;
+padding-bottom:70px;
+}
+
+/* TOP BAR */
+
+.top-bar{
+position:fixed;
+top:10px;
+width:100%;
+max-width:420px;
+background:var(--background);
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-radius:15px;
+box-shadow:5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+z-index:100;
+}
+
+.btn{
+border:none;
+border-radius:50%;
+width:40px;
+height:40px;
+background:var(--background);
+box-shadow:3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+cursor:pointer;
+font-size:18px;
+}
+
+.header{
+font-weight:bold;
+}
+
+/* CONTENT */
+
+.content{
+padding:20px;
+line-height:1.6;
+}
+
+.card{
+background:var(--card-bg);
+padding:20px;
+border-radius:20px;
+box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+}
+
+h2{
+color:var(--accent);
+margin:20px 0 10px;
+}
+
+h3{
+color:var(--accent);
+margin:15px 0 10px;
+}
+
+/* TABLE */
+
+.table-container{
+overflow-x:auto;
+margin:15px 0;
+}
+
+table{
+border-collapse:collapse;
+min-width:500px;
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid rgba(255,255,255,0.1);
+white-space:nowrap;
+}
+
+th{
+color:var(--accent);
+}
+
+/* ANIMATED AQUATIC DIAGRAM */
+
+.aquatic-diagram{
+height:180px;
+background:linear-gradient(#4fc3f7,#0288d1);
+border-radius:15px;
+position:relative;
+overflow:hidden;
+margin:15px 0;
+}
+
+.fish{
+position:absolute;
+left:-50px;
+top:80px;
+font-size:30px;
+animation:swim 10s linear infinite;
+}
+
+.lily{
+position:absolute;
+top:20px;
+left:40%;
+font-size:28px;
+animation:float 4s ease-in-out infinite;
+}
+
+@keyframes swim{
+0%{left:-50px}
+100%{left:110%}
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-6px)}
+100%{transform:translateY(0)}
+}
+
+/* TERRESTRIAL DIAGRAM */
+
+.land-diagram{
+height:180px;
+background:linear-gradient(#87ceeb 40%, #4caf50 40%);
+border-radius:15px;
+position:relative;
+overflow:hidden;
+margin:15px 0;
+}
+
+.antelope{
+position:absolute;
+bottom:40px;
+left:-40px;
+font-size:30px;
+animation:run 8s linear infinite;
+}
+
+.grass{
+position:absolute;
+bottom:40px;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-around;
+font-size:22px;
+animation:sway 3s ease-in-out infinite;
+}
+
+@keyframes run{
+0%{left:-40px}
+100%{left:110%}
+}
+
+@keyframes sway{
+0%{transform:rotate(0deg)}
+50%{transform:rotate(2deg)}
+100%{transform:rotate(0deg)}
+}
+
+/* BUTTON */
+
+.quiz-btn{
+background:var(--accent);
+border:none;
+padding:12px 25px;
+border-radius:25px;
+display:block;
+margin:20px auto;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* NAVBAR */
+
+.nav-bar{
+position:fixed;
+bottom:10px;
+width:100%;
+max-width:420px;
+display:flex;
+justify-content:space-around;
+background:var(--background);
+padding:10px;
+border-radius:15px;
+box-shadow:0 -5px 10px var(--shadow-in);
+}
+
+.center{
+background:var(--accent);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="top-bar">
+<button class="btn">←</button>
+<div class="header">BIOLOGY</div>
+<button class="btn" id="theme">🌙</button>
+</div>
+
+<div class="content">
+
+<div class="card">
+
+<h2>Aquatic Habitat</h2>
+
+<div class="aquatic-diagram">
+<div class="fish">🐟</div>
+<div class="lily">🌸</div>
+</div>
+
+<p>
+Aquatic habitats include ponds, lakes and rivers where organisms live in water.
+</p>
+
+<h3>Examples & Adaptations</h3>
+
+<div class="table-container">
+<table>
+
+<tr>
+<th>Organism</th>
+<th>Adaptation</th>
+</tr>
+
+<tr>
+<td>Fish</td>
+<td>Gills for breathing</td>
+</tr>
+
+<tr>
+<td>Water Lily</td>
+<td>Floating leaves</td>
+</tr>
+
+<tr>
+<td>Crab</td>
+<td>Strong legs for mud</td>
+</tr>
+
+</table>
+</div>
+
+<h2>Terrestrial Habitat</h2>
+
+<div class="land-diagram">
+
+<div class="grass">
+<span>🌿</span>
+<span>🌿</span>
+<span>🌿</span>
+<span>🌿</span>
+</div>
+
+<div class="antelope">🦌</div>
+
+</div>
+
+<p>
+Terrestrial habitats include forests, savannas and burrows where organisms live on land.
+</p>
+
+<div class="table-container">
+<table>
+
+<tr>
+<th>Organism</th>
+<th>Adaptation</th>
+</tr>
+
+<tr>
+<td>Monkey</td>
+<td>Grasping limbs</td>
+</tr>
+
+<tr>
+<td>Antelope</td>
+<td>Fast running</td>
+</tr>
+
+<tr>
+<td>Earthworm</td>
+<td>Moist skin</td>
+</tr>
+
+</table>
+</div>
+
+<button class="quiz-btn">
+Start JAMB Quiz
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="nav-bar">
+<button class="btn">🔍</button>
+<button class="btn center">⭐</button>
+<button class="btn">📚</button>
+</div>
+
+<script>
+
+/* THEME TOGGLE */
+
+const themeBtn=document.getElementById("theme")
+
+function setTheme(theme){
+document.body.className=theme
+themeBtn.textContent=theme==="light"?"🌙":"☀️"
+localStorage.setItem("theme",theme)
+}
+
+const savedTheme=localStorage.getItem("theme") || "dark"
+setTheme(savedTheme)
+
+themeBtn.onclick=()=>{
+const newTheme=document.body.classList.contains("light")?"dark":"light"
+setTheme(newTheme)
+}
+
+</script>
+
+</body>
+</html>
