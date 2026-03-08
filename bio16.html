@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Biology – Natural Habitats</title>
+<title>BIOLOGY - Natural Habitats</title>
 
 <style>
-
-/* RESET */
 
 *{
 margin:0;
@@ -15,8 +13,6 @@ padding:0;
 box-sizing:border-box;
 font-family:Arial, sans-serif;
 }
-
-/* VARIABLES */
 
 :root{
 --background:#1e1e2f;
@@ -42,349 +38,458 @@ background:var(--background);
 color:var(--text-primary);
 display:flex;
 justify-content:center;
+align-items:center;
 min-height:100vh;
-padding:10px;
+overflow-x:hidden;
 }
 
-/* CONTAINER */
+/* Container */
 
 .container{
 width:100%;
-max-width:420px;
-height:720px;
-overflow-y:auto;
-border-radius:20px;
+max-width:400px;
 background:var(--background);
+border-radius:20px;
 box-shadow:10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+height:700px;
+overflow-y:auto;
+position:relative;
 padding-top:70px;
 padding-bottom:70px;
 }
 
-/* TOP BAR */
+/* Neumorphism */
 
-.top-bar{
-position:fixed;
-top:10px;
-width:100%;
-max-width:420px;
+.neumorphic{
 background:var(--background);
-padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-border-radius:15px;
 box-shadow:5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
-z-index:100;
+border-radius:15px;
 }
 
-.btn{
+.neumorphic-btn{
+background:var(--background);
 border:none;
 border-radius:50%;
 width:40px;
 height:40px;
-background:var(--background);
+display:flex;
+align-items:center;
+justify-content:center;
 box-shadow:3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
 cursor:pointer;
+color:var(--text-primary);
 font-size:18px;
 }
 
+.neumorphic-btn:active{
+box-shadow:inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+}
+
+/* Top bar */
+
+.top-bar{
+position:fixed;
+top:0;
+width:100%;
+max-width:400px;
+background:var(--background);
+padding:15px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 5px 10px var(--shadow-in);
+z-index:20;
+}
+
 .header{
+font-size:18px;
 font-weight:bold;
 }
 
-/* CONTENT */
+.right-icons{
+display:flex;
+gap:10px;
+}
+
+.profile-upload{
+position:relative;
+}
+
+.profile-upload input{
+opacity:0;
+position:absolute;
+width:40px;
+height:40px;
+cursor:pointer;
+}
+
+/* Content */
 
 .content{
-padding:20px;
+padding:20px 16px;
 line-height:1.6;
 }
 
-.card{
+.main-header{
+text-align:center;
+margin-bottom:32px;
+}
+
+.main-header h1{
+font-size:28px;
+margin-bottom:8px;
+color:var(--accent);
+font-weight:800;
+}
+
+.subtitle{
+font-size:16px;
+color:var(--text-secondary);
+}
+
+.welcome-note{
 background:var(--card-bg);
-padding:20px;
+padding:28px 20px;
 border-radius:20px;
-box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+box-shadow:inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+margin-bottom:30px;
 }
 
-h2{
+.welcome-note h2{
+font-size:22px;
+margin:32px 0 16px;
 color:var(--accent);
-margin:20px 0 10px;
 }
 
-h3{
+.welcome-note h3{
+font-size:18px;
+margin:24px 0 12px;
 color:var(--accent);
-margin:15px 0 10px;
 }
 
-/* TABLE */
+.welcome-note p{
+margin-bottom:16px;
+font-size:15px;
+}
+
+.welcome-note ul,
+.welcome-note ol{
+padding-left:24px;
+margin:16px 0;
+}
+
+.welcome-note li{
+margin-bottom:10px;
+}
+
+/* Diagram */
+
+.diagram-img{
+width:100%;
+border-radius:12px;
+margin:16px 0;
+box-shadow:3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+background:#111;
+color:#0f0;
+font-family:monospace;
+white-space:pre;
+padding:10px;
+overflow-x:auto;
+font-size:13px;
+}
+
+/* Sliding Tables */
 
 .table-container{
-overflow-x:auto;
-margin:15px 0;
-}
-
-table{
-border-collapse:collapse;
-min-width:500px;
-}
-
-th,td{
-padding:10px;
-border-bottom:1px solid rgba(255,255,255,0.1);
-white-space:nowrap;
-}
-
-th{
-color:var(--accent);
-}
-
-/* ANIMATED AQUATIC DIAGRAM */
-
-.aquatic-diagram{
-height:180px;
-background:linear-gradient(#4fc3f7,#0288d1);
-border-radius:15px;
-position:relative;
-overflow:hidden;
-margin:15px 0;
-}
-
-.fish{
-position:absolute;
-left:-50px;
-top:80px;
-font-size:30px;
-animation:swim 10s linear infinite;
-}
-
-.lily{
-position:absolute;
-top:20px;
-left:40%;
-font-size:28px;
-animation:float 4s ease-in-out infinite;
-}
-
-@keyframes swim{
-0%{left:-50px}
-100%{left:110%}
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-6px)}
-100%{transform:translateY(0)}
-}
-
-/* TERRESTRIAL DIAGRAM */
-
-.land-diagram{
-height:180px;
-background:linear-gradient(#87ceeb 40%, #4caf50 40%);
-border-radius:15px;
-position:relative;
-overflow:hidden;
-margin:15px 0;
-}
-
-.antelope{
-position:absolute;
-bottom:40px;
-left:-40px;
-font-size:30px;
-animation:run 8s linear infinite;
-}
-
-.grass{
-position:absolute;
-bottom:40px;
-left:0;
 width:100%;
-display:flex;
-justify-content:space-around;
-font-size:22px;
-animation:sway 3s ease-in-out infinite;
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
+margin:16px 0;
 }
 
-@keyframes run{
-0%{left:-40px}
-100%{left:110%}
+.table-container table{
+min-width:650px;
 }
 
-@keyframes sway{
-0%{transform:rotate(0deg)}
-50%{transform:rotate(2deg)}
-100%{transform:rotate(0deg)}
+.welcome-note table{
+border-collapse:collapse;
+background:var(--card-bg);
+border-radius:12px;
+overflow:hidden;
+box-shadow:3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
 }
 
-/* BUTTON */
+.welcome-note th,
+.welcome-note td{
+padding:12px 15px;
+text-align:left;
+border-bottom:1px solid rgba(255,255,255,0.1);
+font-size:14px;
+}
 
-.quiz-btn{
-background:var(--accent);
-border:none;
-padding:12px 25px;
-border-radius:25px;
-display:block;
-margin:20px auto;
-cursor:pointer;
+.welcome-note th{
+background:rgba(29,185,84,0.2);
+color:var(--accent);
 font-weight:bold;
 }
 
-/* NAVBAR */
+.welcome-note tr:last-child td{
+border-bottom:none;
+}
+
+/* Button */
+
+.explore-btn{
+background:var(--accent);
+border:none;
+padding:10px 20px;
+border-radius:20px;
+color:#000;
+cursor:pointer;
+font-size:16px;
+margin:24px auto 0;
+display:block;
+font-weight:bold;
+}
+
+/* Bottom nav */
 
 .nav-bar{
 position:fixed;
-bottom:10px;
+bottom:0;
 width:100%;
-max-width:420px;
-display:flex;
-justify-content:space-around;
+max-width:400px;
 background:var(--background);
 padding:10px;
-border-radius:15px;
+display:flex;
+justify-content:space-around;
 box-shadow:0 -5px 10px var(--shadow-in);
+z-index:20;
 }
 
-.center{
+.nav-item{
+text-align:center;
+}
+
+.nav-item.center button{
+width:50px;
+height:50px;
+font-size:24px;
 background:var(--accent);
+color:#000;
+}
+
+.nav-item p{
+display:none;
+font-size:12px;
+margin-top:5px;
+}
+
+.nav-item.active p{
+display:block;
 }
 
 </style>
 </head>
 
-<body>
+<body class="dark">
 
 <div class="container">
 
-<div class="top-bar">
-<button class="btn">←</button>
+<!-- Top Bar -->
+
+<div class="top-bar neumorphic">
+
+<button class="neumorphic-btn">←</button>
+
 <div class="header">BIOLOGY</div>
-<button class="btn" id="theme">🌙</button>
+
+<div class="right-icons">
+
+<button class="neumorphic-btn" id="theme-toggle">🌙</button>
+
+<button class="neumorphic-btn profile-upload">
+📷
+<input type="file" accept="image/*" id="profile-upload">
+</button>
+
 </div>
+</div>
+
+<!-- Content -->
 
 <div class="content">
 
-<div class="card">
-
-<h2>Aquatic Habitat</h2>
-
-<div class="aquatic-diagram">
-<div class="fish">🐟</div>
-<div class="lily">🌸</div>
+<div class="main-header">
+<h1>Level Up Your Biology Knowledge! 🚀</h1>
+<p class="subtitle">– JAMB Topic 3: Natural Habitats Made Super Easy</p>
 </div>
 
-<p>
-Aquatic habitats include ponds, lakes and rivers where organisms live in water.
-</p>
+<div class="welcome-note neumorphic">
 
-<h3>Examples & Adaptations</h3>
+<h2>1. What are Natural Habitats?</h2>
+
+<p>A <strong>habitat</strong> is the natural home or environment where an organism lives and obtains everything it needs.</p>
+
+<ul>
+<li><strong>Aquatic</strong> (water-based)</li>
+<li><strong>Terrestrial / Arboreal</strong> (land-based or tree-based)</li>
+</ul>
+
+<h2>2. Aquatic Habitats</h2>
+
+<h3>Common Organisms & Their Adaptations</h3>
 
 <div class="table-container">
 <table>
 
 <tr>
 <th>Organism</th>
-<th>Adaptation</th>
+<th>Habitat</th>
+<th>Key Adaptive Features</th>
 </tr>
 
 <tr>
-<td>Fish</td>
-<td>Gills for breathing</td>
+<td>Water lily</td>
+<td>Ponds</td>
+<td>Floating leaves with air spaces</td>
 </tr>
 
 <tr>
-<td>Water Lily</td>
-<td>Floating leaves</td>
+<td>Tilapia</td>
+<td>Lakes</td>
+<td>Gills and streamlined body</td>
 </tr>
 
 <tr>
-<td>Crab</td>
-<td>Strong legs for mud</td>
+<td>Crabs</td>
+<td>Mangrove</td>
+<td>Strong walking legs</td>
 </tr>
 
 </table>
 </div>
 
-<h2>Terrestrial Habitat</h2>
+<div class="diagram-img">
 
-<div class="land-diagram">
+Aquatic habitat – pond view
 
-<div class="grass">
-<span>🌿</span>
-<span>🌿</span>
-<span>🌿</span>
-<span>🌿</span>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Sky
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+🌸 Water lily
+🐟 Fish
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bottom mud
 </div>
 
-<div class="antelope">🦌</div>
-
-</div>
-
-<p>
-Terrestrial habitats include forests, savannas and burrows where organisms live on land.
-</p>
+<h2>3. Terrestrial Habitats</h2>
 
 <div class="table-container">
+
 <table>
 
 <tr>
 <th>Organism</th>
+<th>Habitat</th>
 <th>Adaptation</th>
 </tr>
 
 <tr>
 <td>Monkey</td>
-<td>Grasping limbs</td>
+<td>Tree tops</td>
+<td>Strong grasping limbs</td>
 </tr>
 
 <tr>
 <td>Antelope</td>
+<td>Savanna</td>
 <td>Fast running</td>
 </tr>
 
 <tr>
 <td>Earthworm</td>
-<td>Moist skin</td>
+<td>Soil</td>
+<td>Moist skin breathing</td>
 </tr>
 
 </table>
+
 </div>
 
-<button class="quiz-btn">
-Start JAMB Quiz
+<p style="text-align:center;font-size:17px;margin:30px 0;font-weight:bold;">
+Great job 🌟 You now master Natural Habitats!
+</p>
+
+<button class="explore-btn" onclick="window.location.href='question.html'">
+Start JAMB Quiz Now!
 </button>
 
 </div>
-
+</div>
 </div>
 
-</div>
+<!-- Bottom Nav -->
 
 <div class="nav-bar">
-<button class="btn">🔍</button>
-<button class="btn center">⭐</button>
-<button class="btn">📚</button>
+
+<div class="nav-item">
+<button class="neumorphic-btn">🔍</button>
+<p>Search</p>
+</div>
+
+<div class="nav-item center">
+<button class="neumorphic-btn">⭐</button>
+<p>Favorite</p>
+</div>
+
+<div class="nav-item">
+<button class="neumorphic-btn">📚</button>
+<p>Library</p>
+</div>
+
 </div>
 
 <script>
 
-/* THEME TOGGLE */
+/* Theme Toggle */
 
-const themeBtn=document.getElementById("theme")
+const themeToggle=document.getElementById("theme-toggle")
+const body=document.body
 
 function setTheme(theme){
-document.body.className=theme
-themeBtn.textContent=theme==="light"?"🌙":"☀️"
+
+body.className=theme
+
+themeToggle.textContent=theme==="light"?"🌙":"☀️"
+
 localStorage.setItem("theme",theme)
+
 }
 
-const savedTheme=localStorage.getItem("theme") || "dark"
+const savedTheme=localStorage.getItem("theme")||"dark"
+
 setTheme(savedTheme)
 
-themeBtn.onclick=()=>{
-const newTheme=document.body.classList.contains("light")?"dark":"light"
+themeToggle.onclick=()=>{
+
+const newTheme=body.classList.contains("light")?"dark":"light"
+
 setTheme(newTheme)
+
 }
+
+/* Profile upload */
+
+document.getElementById("profile-upload").addEventListener("change",e=>{
+
+if(e.target.files[0]){
+
+console.log("Profile image selected")
+
+}
+
+})
 
 </script>
 
