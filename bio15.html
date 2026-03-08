@@ -188,18 +188,19 @@
       border-radius: 12px;
       margin: 16px 0 8px;
       box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
-      background: #111;
-      color: #0f0;
-      font-family: monospace;
-      white-space: pre;
-      padding: 10px;
+    }
+
+    /* ─── Sliding tables ─── */
+    .table-wrapper {
       overflow-x: auto;
+      margin: 16px 0;
+      -webkit-overflow-scrolling: touch; /* smooth on iOS */
     }
 
     .welcome-note table {
       width: 100%;
+      min-width: 580px;               /* forces horizontal scroll on phones */
       border-collapse: collapse;
-      margin: 16px 0;
       background: var(--card-bg);
       border-radius: 12px;
       overflow: hidden;
@@ -212,6 +213,7 @@
       text-align: left;
       border-bottom: 1px solid rgba(255,255,255,0.1);
       font-size: 14px;
+      white-space: nowrap;            /* prevents ugly wrapping inside cells */
     }
 
     .welcome-note th {
@@ -313,7 +315,7 @@
     <div class="content">
       <div class="main-header">
         <h1>Level Up Your Biology Knowledge! 🚀</h1>
-        <p class="subtitle">– JAMB Topic 3: Natural Habitats Made Super Easy</p>
+        <p class="subtitle">– JAMB Topic 3: Natural Habitats</p>
       </div>
 
       <div class="welcome-note neumorphic">
@@ -321,171 +323,152 @@
         <p>A <strong>habitat</strong> is the natural home or environment where an organism lives and obtains everything it needs (food, water, shelter, mates).</p>
         <p>JAMB divides habitats into two main types:</p>
         <ul>
-          <li><strong>Aquatic</strong> (water-based)</li>
-          <li><strong>Terrestrial / Arboreal</strong> (land-based or tree-based)</li>
+          <li><strong>Aquatic</strong> (water-based): ponds, streams, lakes, seashores, mangrove swamps</li>
+          <li><strong>Terrestrial / Arboreal</strong> (land/tree-based): tree-tops, abandoned farmland, dry grassy savanna field, burrow or hole</li>
         </ul>
-        <p>Candidates must know <strong>plants and animals</strong> that live in each habitat and their <strong>adaptive features</strong>.</p>
+        <p>You must know:</p>
+        <ul>
+          <li>Typical plants and animals in each habitat</li>
+          <li><strong>Adaptive features</strong> that help them survive there</li>
+        </ul>
 
         <h2>2. Aquatic Habitats</h2>
 
-        <h3>Types of Aquatic Habitats</h3>
+        <h3>Types & Examples</h3>
         <ul>
           <li>Freshwater: ponds, streams, lakes</li>
-          <li>Marine / Brackish: seashores, mangrove swamps</li>
+          <li>Brackish / Marine: seashores, mangrove swamps</li>
         </ul>
 
-        <h3>Common Organisms & Their Adaptations</h3>
-        <table>
-          <tr>
-            <th>Organism</th>
-            <th>Habitat</th>
-            <th>Key Adaptive Features</th>
-          </tr>
-          <tr>
-            <td>Water lily / Water hyacinth</td>
-            <td>Ponds, lakes</td>
-            <td>Floating leaves with air spaces, stomata on upper surface, flexible petioles</td>
-          </tr>
-          <tr>
-            <td>Tilapia / Catfish</td>
-            <td>Streams, ponds, lakes</td>
-            <td>Gills for oxygen extraction, streamlined body, lateral line for detecting movement</td>
-          </tr>
-          <tr>
-            <td>Crabs / Mudskippers</td>
-            <td>Mangrove swamps</td>
-            <td>Strong legs for walking on mud, gills + skin breathing, burrowing ability</td>
-          </tr>
-          <tr>
-            <td>Red mangrove</td>
-            <td>Mangrove swamps</td>
-            <td><strong>Prop roots / pneumatophores</strong> for support and oxygen intake in salty, muddy soil</td>
-          </tr>
-        </table>
-
-        <div class="diagram-img">
-          Aquatic habitat – 3D style view (pond/lake edge)
-
-          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-          Sky / Air
-          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-               ☁ ☁ ☁
-          ──────────────────────────────────────── Water surface
-               🌸 Water lily (floating leaves)
-               🐟 Tilapia (gills + fins)
-          ────────────────────────────────────────
-               🌿 Submerged plants (flexible stems)
-               🐌 Snails (slime + shell)
-          ──────────────────────────────────────── Bottom (mud)
+        <h3>Organisms & Adaptive Features</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Organism</th>
+              <th>Typical Habitat</th>
+              <th>Key Adaptive Features</th>
+            </tr>
+            <tr>
+              <td>Water lily / Water lettuce</td>
+              <td>Ponds, lakes</td>
+              <td>Floating leaves with air-filled tissues, stomata on upper surface, flexible petioles</td>
+            </tr>
+            <tr>
+              <td>Tilapia, Catfish</td>
+              <td>Streams, ponds, lakes</td>
+              <td>Gills with large surface area, streamlined body, lateral line system</td>
+            </tr>
+            <tr>
+              <td>Red mangrove</td>
+              <td>Mangrove swamps</td>
+              <td><strong>Prop roots & pneumatophores</strong> for support & oxygen in anaerobic mud, salt glands</td>
+            </tr>
+            <tr>
+              <td>Mudskipper, Fiddler crab</td>
+              <td>Mangrove swamps / seashores</td>
+              <td>Modified gills + skin breathing, strong pectoral fins for walking, burrowing</td>
+            </tr>
+          </table>
         </div>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Mangrove_swamp.jpg/800px-Mangrove_swamp.jpg" alt="Mangrove swamp habitat – shows prop roots and muddy environment" class="diagram-img">
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Nymphaea.jpg/800px-Nymphaea.jpg" alt="Water lily – floating leaves with air spaces" class="diagram-img">
 
         <h2>3. Terrestrial / Arboreal Habitats</h2>
 
-        <h3>Types</h3>
+        <h3>Types & Examples</h3>
         <ul>
           <li>Tree-tops (arboreal)</li>
-          <li>Abandoned farmland / dry grassy field (savanna)</li>
-          <li>Burrow / hole</li>
+          <li>Abandoned farmland / dry grassy savanna field</li>
+          <li>Burrow or hole in soil</li>
         </ul>
 
-        <h3>Common Organisms & Their Adaptations</h3>
-        <table>
-          <tr>
-            <th>Organism</th>
-            <th>Habitat</th>
-            <th>Key Adaptive Features</th>
-          </tr>
-          <tr>
-            <td>Oil palm / Iroko tree</td>
-            <td>Tree-tops / forest</td>
-            <td>Tall trunk, broad leaves for light capture, deep roots</td>
-          </tr>
-          <tr>
-            <td>Monkey / Parrot</td>
-            <td>Tree-tops</td>
-            <td>Grasping hands/feet, strong tail, sharp claws, excellent vision</td>
-          </tr>
-          <tr>
-            <td>Elephant grass / Guinea grass</td>
-            <td>Dry grassy field (savanna)</td>
-            <td>Deep fibrous roots, fire-resistant base, fast growth after burning</td>
-          </tr>
-          <tr>
-            <td>Grasshopper / Antelope</td>
-            <td>Savanna field</td>
-            <td>Camouflage colour, long legs for jumping/running, large eyes</td>
-          </tr>
-          <tr>
-            <td>Earthworm / Termite</td>
-            <td>Burrow / soil</td>
-            <td>Moist skin for breathing, segmented body, strong setae for movement</td>
-          </tr>
-          <tr>
-            <td>Rodent (rat, rabbit)</td>
-            <td>Burrow / hole</td>
-            <td>Sharp incisors for digging, nocturnal activity, keen smell/hearing</td>
-          </tr>
-        </table>
-
-        <div class="diagram-img">
-          Terrestrial habitat – 3D style view (savanna + burrow)
-
-          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-          Sky / Air
-          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-               ☀ Sun
-          ──────────────────────────────────────── Ground level
-               🌾 Tall elephant grass (deep roots)
-               🦌 Antelope (speed + camouflage)
-          ────────────────────────────────────────
-               🕳 Burrow entrance
-               🐀 Rat inside (sharp teeth + whiskers)
-          ──────────────────────────────────────── Soil
+        <h3>Organisms & Adaptive Features</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Organism</th>
+              <th>Typical Habitat</th>
+              <th>Key Adaptive Features</th>
+            </tr>
+            <tr>
+              <td>Oil palm, Iroko, Mahogany</td>
+              <td>Tree-tops / forest</td>
+              <td>Tall straight trunk, broad leaves for light capture, deep tap roots</td>
+            </tr>
+            <tr>
+              <td>Monkey, Parrot, Chameleon</td>
+              <td>Tree-tops</td>
+              <td>Prehensile tail / grasping hands/feet, strong claws, binocular vision</td>
+            </tr>
+            <tr>
+              <td>Elephant grass, Guinea grass</td>
+              <td>Savanna field / abandoned farmland</td>
+              <td>Deep fibrous roots, fire-resistant base, rapid regrowth after burning</td>
+            </tr>
+            <tr>
+              <td>Antelope, Grasshopper, Lizard</td>
+              <td>Dry grassy savanna</td>
+              <td>Camouflage colour, long legs for speed/jumping, large eyes for spotting predators</td>
+            </tr>
+            <tr>
+              <td>Earthworm, Termite, Burrowing rodent (rat)</td>
+              <td>Burrow / soil hole</td>
+              <td>Moist permeable skin, strong setae/claws for digging, nocturnal activity</td>
+            </tr>
+          </table>
         </div>
 
-        <h2>4. Quick JAMB Summary Table – Habitats vs Adaptations</h2>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Savanna_in_Nigeria.jpg/800px-Savanna_in_Nigeria.jpg" alt="Dry grassy savanna field with scattered trees – typical Nigerian savanna" class="diagram-img">
 
-        <table>
-          <tr>
-            <th>Habitat</th>
-            <th>Typical Plants</th>
-            <th>Typical Animals</th>
-            <th>Most Important Adaptation</th>
-          </tr>
-          <tr>
-            <td>Ponds / Lakes</td>
-            <td>Water lily, Water hyacinth</td>
-            <td>Tilapia, Frogs</td>
-            <td>Floating leaves, Gills</td>
-          </tr>
-          <tr>
-            <td>Mangrove swamps</td>
-            <td>Red mangrove</td>
-            <td>Crabs, Mudskippers</td>
-            <td>Pneumatophores, Air-breathing</td>
-          </tr>
-          <tr>
-            <td>Tree-tops</td>
-            <td>Oil palm, Iroko</td>
-            <td>Monkeys, Parrots</td>
-            <td>Grasping limbs/tail</td>
-          </tr>
-          <tr>
-            <td>Savanna field</td>
-            <td>Elephant grass</td>
-            <td>Antelope, Grasshoppers</td>
-            <td>Speed / camouflage</td>
-          </tr>
-          <tr>
-            <td>Burrow / hole</td>
-            <td>—</td>
-            <td>Rats, Earthworms</td>
-            <td>Digging claws, Moist skin</td>
-          </tr>
-        </table>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Monkey_in_tree.jpg/800px-Monkey_in_tree.jpg" alt="Monkey in tree-top habitat – shows arboreal adaptations" class="diagram-img">
+
+        <h2>4. Quick Comparison Table – Habitats & Adaptations (JAMB Favourite)</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Habitat</th>
+              <th>Typical Plants</th>
+              <th>Typical Animals</th>
+              <th>Most Important Adaptation</th>
+            </tr>
+            <tr>
+              <td>Freshwater (ponds/lakes)</td>
+              <td>Water lily, Water hyacinth</td>
+              <td>Tilapia, Frogs</td>
+              <td>Floating leaves / gills</td>
+            </tr>
+            <tr>
+              <td>Mangrove swamp</td>
+              <td>Red mangrove</td>
+              <td>Mudskipper, Crabs</td>
+              <td>Pneumatophores / air-breathing</td>
+            </tr>
+            <tr>
+              <td>Tree-tops</td>
+              <td>Oil palm, Iroko</td>
+              <td>Monkey, Parrot</td>
+              <td>Grasping limbs / prehensile tail</td>
+            </tr>
+            <tr>
+              <td>Savanna field</td>
+              <td>Elephant grass</td>
+              <td>Antelope, Grasshopper</td>
+              <td>Speed / camouflage</td>
+            </tr>
+            <tr>
+              <td>Burrow / hole</td>
+              <td>—</td>
+              <td>Rat, Earthworm</td>
+              <td>Digging claws / moist skin</td>
+            </tr>
+          </table>
+        </div>
 
         <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
-          Great job 🌟 You now master JAMB Topic: Natural Habitats!
+          Great job 🌟 You now master JAMB Topic 3: Natural Habitats!
         </p>
 
         <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this passage</p>
