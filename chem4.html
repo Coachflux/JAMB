@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHEMISTRY - Atomic Structure and Bonding (JAMB 2026)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      background: var(--card-bg);
+      padding: 24px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      margin: 0 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .section p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .section ul, .section ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .section li {
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .section .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 16px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .section table {
+      width: 100%;
+      min-width: 580px;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .section th,
+    .section td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .section th {
+      background: rgba(29, 185, 84, 0.2);
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section tr:last-child td {
+      border-bottom: none;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">BIOLOGY</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Level Up Your Chemistry Knowledge! 🚀</h1>
+        <p class="subtitle">– JAMB Topic: Atomic Structure and Bonding</p>
+      </div>
+
+      <div class="section">
+        
+        <h2>Concepts of Atoms, Molecules, and Ions</h2>
+        <p><strong>Atom:</strong> The smallest particle of an element that can take part in a chemical reaction. It's neutral and consists of a nucleus (protons + neutrons) surrounded by electrons.</p>
+        <p><strong>Molecule:</strong> Two or more atoms bonded together, e.g., H₂ (hydrogen molecule) or CO₂.</p>
+        <p><strong>Ion:</strong> A charged atom or molecule formed by gaining or losing electrons. Cations are positive (e.g., Na⁺), anions are negative (e.g., Cl⁻).</p>
+        <p>Key skill: Distinguish them—atoms are neutral and single; molecules are neutral groups; ions are charged.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Atom.svg/800px-Atom.svg.png" alt="Basic structure of an atom" class="diagram-img">
+
+        <h2>Step 1: Historical Development – Works of Key Scientists</h2>
+        <p>These scientists built the modern atomic model through experiments:</p>
+        <ul>
+          <li><strong>Dalton (1808):</strong> Proposed atoms as indivisible, solid spheres; all atoms of an element are identical; compounds form by combining atoms in fixed ratios.</li>
+          <li><strong>Thompson (1897):</strong> Discovered electrons using cathode ray tubes; proposed "plum pudding" model (positive sphere with embedded negative electrons).</li>
+          <li><strong>Rutherford (1911):</strong> Gold foil experiment showed atoms have a small, dense positive nucleus; most space is empty.</li>
+          <li><strong>Millikan (1909):</strong> Oil drop experiment measured electron charge (1.6 × 10⁻¹⁹ C).</li>
+          <li><strong>Moseley (1913):</strong> X-ray studies established atomic number as number of protons, organizing the periodic table.</li>
+          <li><strong>Bohr (1913):</strong> Electrons orbit nucleus in fixed energy levels (shells); explained hydrogen spectrum.</li>
+        </ul>
+        <p>Key skill: Identify their contributions—e.g., Rutherford disproved Thompson's model.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Rutherford_gold_foil_experiment.svg/800px-Rutherford_gold_foil_experiment.svg.png" alt="Rutherford gold foil experiment" class="diagram-img">
+
+        <h2>Step 2: Atomic Structure, Numbers, and Isotopes</h2>
+        <p><strong>Structure:</strong> Nucleus (protons: positive, neutrons: neutral) with electrons in orbitals around it.</p>
+        <p><strong>Atomic number (Z):</strong> Number of protons (equals electrons in neutral atom).</p>
+        <p><strong>Mass number (A):</strong> Protons + neutrons.</p>
+        <p>To find neutrons: A - Z.</p>
+        <p><strong>Isotopes:</strong> Atoms of same element (same Z) but different A (different neutrons). They have identical chemical properties but different physical ones (e.g., density).</p>
+        <p><strong>Examples (elements 1-20):</strong> Hydrogen (¹H, ²H); Carbon (¹²C, ¹³C, ¹⁴C); Oxygen (¹⁶O, ¹⁸O). Common isotopes: Cl (³⁵Cl, ³⁷Cl).</p>
+        <p><strong>Calculations:</strong> Average atomic mass = (abundance1 × mass1 + abundance2 × mass2) / 100. E.g., For Cl (75% ³⁵Cl, 25% ³⁷Cl): (75×35 + 25×37)/100 = 35.5.</p>
+        <p>Key skill: Deduce protons/neutrons/electrons from Z and A; relate isotopy to mass number; calculate averages.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Isotopes_of_carbon.svg/800px-Isotopes_of_carbon.svg.png" alt="Carbon isotopes" class="diagram-img">
+
+        <h2>Step 3: Quantum Numbers, Orbitals, and Electron Configuration</h2>
+        <p><strong>Four quantum numbers govern electron position:</strong></p>
+        <ul>
+          <li>Principal (n): Energy level (1, 2, 3...).</li>
+          <li>Azimuthal (l): Subshell (0=s, 1=p, 2=d, 3=f).</li>
+          <li>Magnetic (m_l): Orbital orientation (-l to +l).</li>
+          <li>Spin (m_s): +½ or -½.</li>
+        </ul>
+        <p><strong>Principles for arrangement:</strong></p>
+        <ul>
+          <li>Aufbau: Fill lowest energy first (order: 1s, 2s, 2p, 3s, 3p, 4s, 3d...).</li>
+          <li>Pauli exclusion: Max 2 electrons per orbital, opposite spins.</li>
+          <li>Hund's rule: Fill orbitals singly before pairing.</li>
+        </ul>
+        <p><strong>Electron configuration (elements 1-20):</strong> E.g., H: 1s¹; He: 1s²; Li: 1s²2s¹; C: 1s²2s²2p²; Na: 1s²2s²2p⁶3s¹; Ca: 1s²2s²2p⁶3s²3p⁶4s².</p>
+        <p>Key skill: Apply rules to write configurations; note elements aim for noble gas structure (stable octet).</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Aufbau_principle.svg/800px-Aufbau_principle.svg.png" alt="Aufbau principle diagram" class="diagram-img">
+
+        <h2>Step 4: Shapes of s and p Orbitals</h2>
+        <p><strong>s orbital:</strong> Spherical, symmetric around nucleus. Holds 2 electrons.</p>
+        <p><strong>p orbitals:</strong> Dumbbell-shaped, three orientations (p_x, p_y, p_z) along axes. Each holds 2 electrons; total 6 for p subshell.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Atomic_orbitals.png/800px-Atomic_orbitals.png" alt="Shapes of s and p orbitals" class="diagram-img">
+
+        <h2>Step 5: Periodic Table and Periodicity</h2>
+        <p>Arranged by increasing atomic number. Rows (periods), columns (groups).</p>
+        <p><strong>Families:</strong></p>
+        <ul>
+          <li>Group 1 (alkali metals: reactive, e.g., Na)</li>
+          <li>Group 2 (alkaline-earth: less reactive, e.g., Ca)</li>
+          <li>Group 17 (halogens: nonmetals, e.g., Cl)</li>
+          <li>Group 18 (noble gases: inert, e.g., He)</li>
+          <li>Groups 3-12 (transition metals: variable valency, e.g., Fe)</li>
+        </ul>
+        <p><strong>Trends (variations):</strong></p>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Property</th>
+              <th>Across Period (left to right)</th>
+              <th>Down Group</th>
+            </tr>
+            <tr>
+              <td>Ionization energy</td>
+              <td>Increases (smaller size, stronger pull)</td>
+              <td>Decreases (larger size)</td>
+            </tr>
+            <tr>
+              <td>Ionic radii</td>
+              <td>Decreases (more protons pull electrons closer)</td>
+              <td>Increases (more shells)</td>
+            </tr>
+            <tr>
+              <td>Electron affinity</td>
+              <td>Increases</td>
+              <td>Decreases</td>
+            </tr>
+            <tr>
+              <td>Electronegativity</td>
+              <td>Increases</td>
+              <td>Decreases</td>
+            </tr>
+            <tr>
+              <td>Conductivity</td>
+              <td>Decreases (metals to nonmetals)</td>
+              <td>Variable</td>
+            </tr>
+          </table>
+        </div>
+        <p>Key skill: Relate position to properties; explain trends (e.g., Na has lower ionization energy than Cl).</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Periodic_trends.svg/800px-Periodic_trends.svg.png" alt="Periodic table trends" class="diagram-img">
+
+        <h2>Step 6: Chemical Bonding</h2>
+        <p>Elements bond to achieve noble gas configuration (stable octet).</p>
+        <ul>
+          <li><strong>Electrovalent (ionic):</strong> Electron transfer from metal to nonmetal, e.g., Na (loses e⁻ to form Na⁺) + Cl (gains to Cl⁻) → NaCl. Results in high MP, conductive in solution.</li>
+          <li><strong>Covalent:</strong> Electron sharing, e.g., H₂, Cl₂. Can be polar (unequal share) or nonpolar.</li>
+          <li><strong>Hydrogen bonding:</strong> Strong dipole-dipole in H-F, H-O, H-N, e.g., H₂O (high BP).</li>
+          <li><strong>Metallic:</strong> Delocalized electrons in metals, e.g., Cu; explains conductivity.</li>
+          <li><strong>Coordinate (dative covalent):</strong> One atom donates pair, e.g., [Cu(NH₃)₄]²⁺, [Fe(CN)₆]³⁻.</li>
+          <li><strong>Van der Waals:</strong> Weak attractions between molecules, e.g., noble gases.</li>
+        </ul>
+        <p>Key skill: Deduce bond type from configurations (e.g., large electronegativity difference = ionic); relate to properties (ionic: brittle solids; covalent: gases/liquids).</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Ionic_bonding.svg/800px-Ionic_bonding.svg.png" alt="Ionic bonding example (NaCl)" class="diagram-img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Covalent_bond.svg/800px-Covalent_bond.svg.png" alt="Covalent bonding example" class="diagram-img">
+
+        <h2>Step 7: Shapes of Simple Molecules (VSEPR Theory)</h2>
+        <p>Shapes depend on electron pairs around central atom (repel to minimize energy).</p>
+        <ul>
+          <li><strong>Linear:</strong> 2 bonding pairs, no lone pairs, e.g., H₂, O₂, Cl₂, HCl, CO₂ (bond angle 180°).</li>
+          <li><strong>Non-linear (bent):</strong> 2 bonding + 2 lone pairs, e.g., H₂O (104.5°).</li>
+          <li><strong>Tetrahedral:</strong> 4 bonding pairs, no lone, e.g., CH₄ (109.5°).</li>
+          <li><strong>Pyramidal:</strong> 3 bonding + 1 lone pair, e.g., NH₃ (107°).</li>
+        </ul>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Molecule</th>
+              <th>Electron Pairs</th>
+              <th>Shape</th>
+              <th>Bond Angle</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td>BeCl₂, CO₂</td>
+              <td>2 bonding, 0 lone</td>
+              <td>Linear</td>
+              <td>180°</td>
+              <td>CO₂</td>
+            </tr>
+            <tr>
+              <td>H₂O</td>
+              <td>2 bonding, 2 lone</td>
+              <td>Bent</td>
+              <td>104.5°</td>
+              <td>Water</td>
+            </tr>
+            <tr>
+              <td>CH₄</td>
+              <td>4 bonding, 0 lone</td>
+              <td>Tetrahedral</td>
+              <td>109.5°</td>
+              <td>Methane</td>
+            </tr>
+            <tr>
+              <td>NH₃</td>
+              <td>3 bonding, 1 lone</td>
+              <td>Pyramidal</td>
+              <td>107°</td>
+              <td>Ammonia</td>
+            </tr>
+          </table>
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/VSEPR_shapes.svg/800px-VSEPR_shapes.svg.png" alt="VSEPR molecular shapes" class="diagram-img">
+
+        <h2>3 JAMB-Style Examples & Explanations</h2>
+
+        <h3>Example 1: Atomic Structure</h3>
+        <p><strong>JAMB Question Type:</strong> An atom has atomic number 11 and mass number 23. How many protons, neutrons, and electrons does it have?</p>
+        <p><strong>Explanation:</strong> Protons = Z = 11; Electrons = 11 (neutral atom); Neutrons = A - Z = 23 - 11 = 12. This is sodium (Na). JAMB tests basic calculations from Z and A.</p>
+
+        <h3>Example 2: Isotopes & Average Atomic Mass</h3>
+        <p><strong>JAMB Question Type:</strong> Chlorine has two isotopes: ³⁵Cl (75%) and ³⁷Cl (25%). Calculate the relative atomic mass.</p>
+        <p><strong>Explanation:</strong> Average = (75 × 35 + 25 × 37) / 100 = (2625 + 925) / 100 = 3525 / 100 = 35.25. JAMB often asks for average mass from isotopes and abundances.</p>
+
+        <h3>Example 3: Electron Configuration & Periodic Table</h3>
+        <p><strong>JAMB Question Type:</strong> Write the electron configuration of element with atomic number 20. In which period and group is it?</p>
+        <p><strong>Explanation:</strong> Ca (Z=20): 1s² 2s² 2p⁶ 3s² 3p⁶ 4s². Period 4 (highest n=4), Group 2 (valence electrons in s subshell = 2). JAMB tests Aufbau rule and periodic trends.</p>
+
+        <h2>Final Tips for JAMB</h2>
+        <ul>
+          <li>Memorize: 1-20 configurations, bond types, VSEPR shapes, periodic trends.</li>
+          <li>Practice: Calculate neutrons, average mass, draw orbital shapes, predict molecule shapes.</li>
+          <li>Key phrase: "Atoms bond to achieve stable octet." Relate everything to electron configuration.</li>
+        </ul>
+        <p>Revise with diagrams — sketch them daily for retention. You've covered the full topic. Aim for TopScore! 🚀</p>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="nav-bar">
+      <div class="nav-item">
+        <button class="neumorphic-btn">🔍</button>
+        <p>Search</p>
+      </div>
+      <div class="nav-item center">
+        <button class="neumorphic-btn">⭐</button>
+        <p>Favorite</p>
+      </div>
+      <div class="nav-item">
+        <button class="neumorphic-btn">📚</button>
+        <p>Library</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) console.log('Profile picture selected!');
+    });
+  </script>
+</body>
+</html>
