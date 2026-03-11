@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHEMISTRY - Nuclear Chemistry (JAMB 2026)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      background: var(--card-bg);
+      padding: 24px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      margin: 0 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .section p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .section ul, .section ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .section li {
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .section .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 16px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .section table {
+      width: 100%;
+      min-width: 580px;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .section th,
+    .section td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .section th {
+      background: rgba(29, 185, 84, 0.2);
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section tr:last-child td {
+      border-bottom: none;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">CHEMISTRY</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Nuclear Chemistry 🚀</h1>
+        <p class="subtitle">JAMB 2026 – New School Chemistry</p>
+      </div>
+
+      <div class="section">
+        <p>Hello TopScore! In Benin City, nuclear chemistry explains energy sources and medical tools used locally. We'll teach this JAMB topic step by step for easy reading and learning, exactly as in New School Chemistry by Osei Yaw Ababio. Use <strong>bold</strong> for keys, <li> lists, images, and tables for clarity. Read one step at a time.</p>
+
+        <h2>Step 1: Difference Between Ordinary Chemical Reaction and Nuclear Reaction</h2>
+        <p>JAMB objective (i)</p>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Ordinary Chemical Reaction</th>
+              <th>Nuclear Reaction</th>
+            </tr>
+            <tr>
+              <td>What changes</td>
+              <td>Only electrons (outer shells)</td>
+              <td>Protons and neutrons in the nucleus</td>
+            </tr>
+            <tr>
+              <td>Element changes?</td>
+              <td>No (same element)</td>
+              <td>Yes (transmutation – new element formed)</td>
+            </tr>
+            <tr>
+              <td>Mass change</td>
+              <td>Very tiny (not measurable)</td>
+              <td>Huge (measurable)</td>
+            </tr>
+            <tr>
+              <td>Energy released</td>
+              <td>Small (e.g. burning fuel)</td>
+              <td>Extremely large (millions of times bigger)</td>
+            </tr>
+            <tr>
+              <td>Example</td>
+              <td>2H₂ + O₂ → 2H₂O</td>
+              <td><sup>235</sup><sub>92</sub>U + <sup>1</sup><sub>0</sub>n → fission products + energy</td>
+            </tr>
+          </table>
+        </div>
+        <p>Key point to remember: In chemical reactions the nucleus stays the same. In nuclear reactions the nucleus itself breaks or changes.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Nuclear_reaction_vs_chemical_reaction.svg/800px-Nuclear_reaction_vs_chemical_reaction.svg.png" alt="Nuclear vs chemical reaction comparison" class="diagram-img">
+
+        <h2>Step 2: Radioactivity – Types, Properties and Detection of Radiations</h2>
+        <p>JAMB objective (i) & (iii)</p>
+        <p><strong>What is radioactivity?</strong> Unstable nuclei spontaneously emit radiation to become stable.</p>
+        <p><strong>Three main types of radiation (you MUST know all three):</strong></p>
+        <ul>
+          <li><strong>α-particles (Alpha)</strong> – Helium nucleus. Symbol: <sup>4</sup><sub>2</sub>He or α</li>
+          <li><strong>β-particles (Beta)</strong> – High-speed electron. Symbol: <sup>0</sup><sub>-1</sub>e (beta-minus) or β⁻</li>
+          <li><strong>γ-rays (Gamma)</strong> – Electromagnetic waves. Symbol: γ</li>
+        </ul>
+        <p><strong>Comparison of properties (memorise this table – it appears every year)</strong></p>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Property</th>
+              <th>Alpha (α)</th>
+              <th>Beta (β)</th>
+              <th>Gamma (γ)</th>
+            </tr>
+            <tr>
+              <td>Charge</td>
+              <td>+2</td>
+              <td>–1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Mass</td>
+              <td>4 u</td>
+              <td>Almost 0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Speed</td>
+              <td>\~10 % of light</td>
+              <td>\~90 % of light</td>
+              <td>Speed of light</td>
+            </tr>
+            <tr>
+              <td>Penetrating power</td>
+              <td>Very low (stopped by paper/skin)</td>
+              <td>Medium (stopped by 1 mm aluminium)</td>
+              <td>Very high (needs lead or concrete)</td>
+            </tr>
+            <tr>
+              <td>Ionising power</td>
+              <td>Very high</td>
+              <td>Medium</td>
+              <td>Very low</td>
+            </tr>
+            <tr>
+              <td>Deflection in magnetic field</td>
+              <td>Deflected (positive)</td>
+              <td>Deflected (opposite to α)</td>
+              <td>Not deflected</td>
+            </tr>
+          </table>
+        </div>
+        <p><strong>Detection of radiations</strong></p>
+        <ul>
+          <li>Photographic film (blackens)</li>
+          <li>Cloud chamber (shows tracks)</li>
+          <li>Scintillation counter</li>
+          <li>Geiger-Muller (G-M) counter – most important for JAMB (clicks or counts rate)</li>
+        </ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Alpha_beta_gamma_penetration.svg/800px-Alpha_beta_gamma_penetration.svg.png" alt="Penetration power of alpha, beta, gamma" class="diagram-img">
+
+        <h2>Step 3: Natural and Artificial Radioactivity</h2>
+        <p>JAMB objective (ii)</p>
+        <p><strong>Natural radioactivity</strong>: Happens by itself in nature. No human help. Example: Uranium-238 in rocks decays slowly to lead.</p>
+        <p><strong>Artificial (induced) radioactivity</strong>: Man-made. Stable nucleus is bombarded with particles in a reactor or cyclotron. Example: <sup>14</sup><sub>7</sub>N + <sup>4</sup><sub>2</sub>He → <sup>17</sup><sub>8</sub>O + <sup>1</sup><sub>1</sub>H</p>
+        <p>Easy way to remember: Natural = spontaneous + occurs in nature. Artificial = caused by man + needs particle accelerator/reactor.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Natural_vs_artificial_radioactivity.svg/800px-Natural_vs_artificial_radioactivity.svg.png" alt="Natural vs artificial radioactivity" class="diagram-img">
+
+        <h2>Step 4: Nuclear Stability and Radioactive Decay</h2>
+        <p>JAMB objective (iii)</p>
+        <p>Stability depends on neutron/proton (n/p) ratio. If wrong, nucleus decays.</p>
+        <p><strong>Main types of decay (with equations):</strong></p>
+        <ul>
+          <li><strong>Alpha decay</strong> (heavy elements): <sup>226</sup><sub>88</sub>Ra → <sup>222</sup><sub>86</sub>Rn + <sup>4</sup><sub>2</sub>He</li>
+          <li><strong>Beta-minus decay</strong> (too many neutrons): <sup>14</sup><sub>6</sub>C → <sup>14</sup><sub>7</sub>N + <sup>0</sup><sub>-1</sub>e</li>
+          <li><strong>Gamma emission</strong>: No change in mass or atomic number. Just energy released.</li>
+        </ul>
+
+        <h2>Step 5: Nuclear Reactions – Fission and Fusion</h2>
+        <p>JAMB objective (iv) part of (v)</p>
+        <p><strong>Nuclear fission (splitting)</strong>: Heavy nucleus splits. Example: <sup>235</sup><sub>92</sub>U + <sup>1</sup><sub>0</sub>n → fission products + 3 neutrons + energy. Used in power stations.</p>
+        <p><strong>Nuclear fusion (joining)</strong>: Light nuclei combine. Example: <sup>2</sup><sub>1</sub>H + <sup>3</sup><sub>1</sub>H → <sup>4</sup><sub>2</sub>He + neutron + energy. Happens in the sun.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Nuclear_fission_vs_fusion.svg/800px-Nuclear_fission_vs_fusion.svg.png" alt="Fission vs fusion comparison" class="diagram-img">
+
+        <h2>Step 6: Half-Life Calculations</h2>
+        <p>JAMB objective (iv)</p>
+        <p><strong>Half-life (T½)</strong> = time taken for half the radioactive atoms to decay.</p>
+        <p>Formula: Fraction remaining = (1/2)<sup>n</sup> where n = number of half-lives.</p>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Example</th>
+              <th>Calculation</th>
+              <th>Result</th>
+            </tr>
+            <tr>
+              <td>T½ = 4 days, after 12 days</td>
+              <td>n = 12/4 = 3</td>
+              <td>Fraction left = 1/8</td>
+            </tr>
+            <tr>
+              <td>16 g I-131, T½ = 8 days, after 24 days</td>
+              <td>n = 3</td>
+              <td>Mass left = 2 g</td>
+            </tr>
+          </table>
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Half-life_graph.svg/800px-Half-life_graph.svg.png" alt="Radioactive decay half-life graph" class="diagram-img">
+
+        <h2>Step 7: Balancing Simple Nuclear Equations</h2>
+        <p>JAMB objective (v)</p>
+        <p>Rules: Mass numbers and atomic numbers must balance.</p>
+        <ul>
+          <li><sup>238</sup><sub>92</sub>U → <sup>234</sup><sub>90</sub>Th + <sup>4</sup><sub>2</sub>He</li>
+          <li><sup>14</sup><sub>6</sub>C → <sup>14</sup><sub>7</sub>N + <sup>0</sup><sub>-1</sub>e</li>
+        </ul>
+
+        <h2>Step 8: Applications of Radioactivity</h2>
+        <p>JAMB objective (vi)</p>
+        <ul>
+          <li><strong>Medicine</strong>: I-131 (thyroid scan), Co-60 (cancer radiotherapy)</li>
+          <li><strong>Industry</strong>: Thickness gauges, sterilisation</li>
+          <li><strong>Dating</strong>: Carbon-14 (archaeology), Uranium-lead (rocks)</li>
+          <li><strong>Energy</strong>: Nuclear power stations</li>
+          <li><strong>Agriculture</strong>: Tracers for fertilisers, mutation breeding</li>
+        </ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Radioisotope_applications.svg/800px-Radioisotope_applications.svg.png" alt="Applications of radioactivity" class="diagram-img">
+
+        <h2>3 JAMB Examples & Explanations</h2>
+
+        <h3>JAMB Example 1: Half-Life Calculation</h3>
+        <p><strong>Question:</strong> A radioactive sample has a half-life of 5 days. What fraction remains after 20 days?</p>
+        <p><strong>Explanation:</strong> n = 20/5 = 4 half-lives. Fraction left = (1/2)<sup>4</sup> = 1/16. JAMB loves this exact calculation style.</p>
+
+        <h3>JAMB Example 2: Balancing Nuclear Equation</h3>
+        <p><strong>Question:</strong> Complete: <sup>226</sup><sub>88</sub>Ra → ? + <sup>4</sup><sub>2</sub>He</p>
+        <p><strong>Explanation:</strong> Mass: 226 = x + 4 → x=222. Atomic: 88 = y + 2 → y=86. So <sup>222</sup><sub>86</sub>Rn. JAMB always tests mass/atomic balance.</p>
+
+        <h3>JAMB Example 3: Applications</h3>
+        <p><strong>Question:</strong> Which radioisotope is used for cancer treatment?</p>
+        <p><strong>Explanation:</strong> Cobalt-60 (γ-rays). JAMB asks applications in medicine, industry, dating – know the common ones.</p>
+
+        <h2>Quick Revision Checklist</h2>
+        <ul>
+          <li>Difference chemical vs nuclear reaction</li>
+          <li>α, β, γ properties table</li>
+          <li>Natural vs artificial</li>
+          <li>Decay equations</li>
+          <li>Fission & fusion</li>
+          <li>Half-life formula + calculations</li>
+          <li>Balancing equations</li>
+          <li>6 major applications</li>
+        </ul>
+        <p>You have now covered 100 % of the JAMB Nuclear Chemistry topic. Revise by writing the table and equations 3 times. You will score full marks! Aim for TopScore! 🚀</p>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="nav-bar">
+      <div class="nav-item">
+        <button class="neumorphic-btn">🔍</button>
+        <p>Search</p>
+      </div>
+      <div class="nav-item center">
+        <button class="neumorphic-btn">⭐</button>
+        <p>Favorite</p>
+      </div>
+      <div class="nav-item">
+        <button class="neumorphic-btn">📚</button>
+        <p>Library</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) console.log('Profile picture selected!');
+    });
+  </script>
+</body>
+</html>
