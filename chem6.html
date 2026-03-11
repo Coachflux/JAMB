@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHEMISTRY - Solubility (JAMB 2026)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      background: var(--card-bg);
+      padding: 24px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      margin: 0 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .section p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .section ul, .section ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .section li {
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .section .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 16px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .section table {
+      width: 100%;
+      min-width: 580px;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .section th,
+    .section td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .section th {
+      background: rgba(29, 185, 84, 0.2);
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section tr:last-child td {
+      border-bottom: none;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">CHEMISTRY</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Solubility 🚀</h1>
+        <p class="subtitle">JAMB 2026 – New School Chemistry</p>
+      </div>
+
+      <div class="section">
+        <p>Hello TopScore! In Benin City, solubility explains why sugar dissolves in water but oil does not – very useful for everyday science. We'll teach this JAMB topic step by step for easy reading and learning, exactly as in New School Chemistry by Osei Yaw Ababio. Use <strong>bold</strong> for keys, <li> lists, images, and tables for clarity. Read one step at a time.</p>
+
+        <h2>Step 1: What is Solubility? (Definition you MUST know)</h2>
+        <p><strong>Solubility</strong> is the maximum amount of solute that can dissolve in 1 dm³ (1000 cm³) of solvent at a given temperature to form a saturated solution.</p>
+        <p>It is expressed in mol/dm³ (moles per cubic decimetre) – exactly as the JAMB syllabus and New School Chemistry require.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Solubility_curve_example.svg/800px-Solubility_curve_example.svg.png" alt="Typical solubility curve" class="diagram-img">
+
+        <h2>Step 2: Types of Solutions</h2>
+        <p>The book classifies solutions into three types based on how much solute is dissolved:</p>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Meaning</th>
+              <th>Can more solute dissolve?</th>
+              <th>Stability</th>
+            </tr>
+            <tr>
+              <td>Unsaturated</td>
+              <td>Less solute than the maximum possible at that temperature</td>
+              <td>Yes</td>
+              <td>Stable</td>
+            </tr>
+            <tr>
+              <td>Saturated</td>
+              <td>Exactly the maximum amount of solute that can dissolve at that temperature</td>
+              <td>No</td>
+              <td>Stable</td>
+            </tr>
+            <tr>
+              <td>Supersaturated</td>
+              <td>More solute than the saturated amount (usually made by cooling a hot saturated solution slowly without disturbance)</td>
+              <td>No (but unstable)</td>
+              <td>Unstable – crystals separate easily on shaking or adding a crystal</td>
+            </tr>
+          </table>
+        </div>
+        <p>Easy way to remember: Unsaturated = “room for more”, Saturated = “full”, Supersaturated = “over-full and nervous” (it will crash out crystals).</p>
+
+        <h2>Step 3: Solubility Curves</h2>
+        <p>New School Chemistry shows solubility curves as graphs of solubility (mol/dm³) on the y-axis against temperature (°C) on the x-axis.</p>
+        <ul>
+          <li>If the curve slopes upwards (e.g., KNO₃, NaNO₃): solubility increases with temperature → dissolution is endothermic.</li>
+          <li>If the curve slopes downwards (e.g., CaSO₄, Li₂CO₃): solubility decreases with temperature → dissolution is exothermic.</li>
+          <li>If almost flat (e.g., NaCl): solubility changes very little with temperature.</li>
+        </ul>
+        <p>Simple deductions you can make (JAMB loves these):</p>
+        <ul>
+          <li>Solubility is temperature-dependent.</li>
+          <li>To recrystallise a substance, dissolve it in minimum hot solvent and cool.</li>
+          <li>You can compare solubilities of different substances at the same temperature.</li>
+        </ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Solubility_curve_example.svg/800px-Solubility_curve_example.svg.png" alt="Solubility curves for different salts" class="diagram-img">
+
+        <h2>Step 4: Simple Calculations</h2>
+        <p><strong>Solubility (mol/dm³) = moles of solute / volume of solution in dm³</strong></p>
+        <p><strong>Example 1 (Mass → mol/dm³)</strong></p>
+        <p>At 40 °C, 20.0 g of potassium nitrate (KNO₃, molar mass = 101 g/mol) dissolves in 250 cm³ of water. Calculate solubility.</p>
+        <p>Moles = 20.0 / 101 = 0.198 mol<br>Volume = 0.250 dm³<br>Solubility = 0.198 / 0.250 = 0.792 mol/dm³</p>
+        <p><strong>Example 2 (Finding mass)</strong></p>
+        <p>Solubility of NaCl at 25 °C is 6.15 mol/dm³. What mass dissolves in 400 cm³? (Molar mass = 58.5 g/mol)</p>
+        <p>Moles = 6.15 × 0.400 = 2.46 mol<br>Mass = 2.46 × 58.5 = 143.91 g</p>
+
+        <h2>Step 5: Solvents for Fats, Oils, Perspiration and Paints + Stain Removal</h2>
+        <p><strong>“Like dissolves like”</strong></p>
+        <ul>
+          <li>Fats and oils (non-polar) → petrol, kerosene, tetrachloromethane (CCl₄), dry-cleaning fluid.</li>
+          <li>Perspiration stains → water + detergent or alcohol.</li>
+          <li>Oil-based paints → turpentine, white spirit or xylene.</li>
+        </ul>
+        <p><strong>Stain removal tips (JAMB favourite):</strong></p>
+        <ul>
+          <li>Grease/oil stains → petrol or dry-cleaning solvent, then wash with detergent.</li>
+          <li>Paint stains → turpentine or white spirit (never water).</li>
+          <li>Ball-point pen ink → methylated spirit.</li>
+        </ul>
+
+        <h2>Step 6: True Solutions vs False Solutions (Suspensions & Colloids)</h2>
+        <p>New School Chemistry separates them by particle size:</p>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Property</th>
+              <th>True Solution</th>
+              <th>Suspension (False)</th>
+              <th>Colloid (False)</th>
+            </tr>
+            <tr>
+              <td>Particle size</td>
+              <td>&lt; 1 nm</td>
+              <td>&gt; 1000 nm</td>
+              <td>1 nm – 1000 nm</td>
+            </tr>
+            <tr>
+              <td>Appearance</td>
+              <td>Clear, transparent</td>
+              <td>Cloudy, opaque</td>
+              <td>Usually clear but scatters light</td>
+            </tr>
+            <tr>
+              <td>Tyndall effect</td>
+              <td>No</td>
+              <td>No</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Settling on standing</td>
+              <td>Never</td>
+              <td>Yes</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Pass through filter paper</td>
+              <td>Yes</td>
+              <td>No</td>
+              <td>Yes</td>
+            </tr>
+          </table>
+        </div>
+        <p><strong>Examples:</strong></p>
+        <ul>
+          <li><strong>Suspensions:</strong> Harmattan haze, water paints.</li>
+          <li><strong>Colloids:</strong> Fog (aerosol), milk (emulsion), blood, emulsion paints, rubber solution.</li>
+        </ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Tyndall_effect_diagram.svg/800px-Tyndall_effect_diagram.svg.png" alt="Tyndall effect in colloid" class="diagram-img">
+
+        <h2>Quick Revision Checklist</h2>
+        <ul>
+          <li>Define solubility in mol/dm³</li>
+          <li>Give one example each of unsaturated, saturated and supersaturated solution</li>
+          <li>State what a solubility curve tells you about temperature effect</li>
+          <li>Do one calculation (mass ↔ mol/dm³)</li>
+          <li>“Like dissolves like” + solvents for fats/oils/paints</li>
+          <li>Particle size comparison table</li>
+          <li>Name one suspension and four colloids</li>
+        </ul>
+        <p>You have now covered every single point in the JAMB syllabus for Solubility. Read this note 3 times, do the calculations again, and you will score full marks! Aim for TopScore! 🚀</p>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="nav-bar">
+      <div class="nav-item">
+        <button class="neumorphic-btn">🔍</button>
+        <p>Search</p>
+      </div>
+      <div class="nav-item center">
+        <button class="neumorphic-btn">⭐</button>
+        <p>Favorite</p>
+      </div>
+      <div class="nav-item">
+        <button class="neumorphic-btn">📚</button>
+        <p>Library</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) console.log('Profile picture selected!');
+    });
+  </script>
+</body>
+</html>
