@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHEMISTRY - Acids, Bases and Salts (JAMB 2026)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      background: var(--card-bg);
+      padding: 24px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      margin: 0 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .section p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .section ul, .section ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .section li {
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .section .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 16px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .section table {
+      width: 100%;
+      min-width: 580px;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .section th,
+    .section td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .section th {
+      background: rgba(29, 185, 84, 0.2);
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section tr:last-child td {
+      border-bottom: none;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">CHEMISTRY</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Acids, Bases and Salts 🚀</h1>
+        <p class="subtitle">JAMB 2026 – New School Chemistry</p>
+      </div>
+
+      <div class="section">
+        
+        <h2>(a) General Characteristics, Properties and Uses</h2>
+
+        <h3>Definition of Acids</h3>
+        <p>An <strong>acid</strong> is a substance whose aqueous solution furnishes H₃O⁺ (hydronium) ions OR a proton (H⁺) donor.</p>
+
+        <h3>Properties of Acids (learn these 7 points)</h3>
+        <ul>
+          <li>Sour taste (e.g. lemon)</li>
+          <li>Turn blue litmus paper red</li>
+          <li>Corrosive (burn skin)</li>
+          <li>Conduct electricity (because they produce ions)</li>
+          <li>React with metals to give H₂ gas</li>
+          <li>React with bases to form salt + water (neutralisation)</li>
+          <li>React with trioxocarbonate(IV) salts to give CO₂</li>
+        </ul>
+
+        <h3>Examples</h3>
+        <ul>
+          <li>Inorganic: HCl, H₂SO₄, HNO₃</li>
+          <li>Organic: CH₃COOH (vinegar), citric acid (oranges), tartaric acid (grapes)</li>
+        </ul>
+
+        <h3>Basicity of an acid</h3>
+        <p>Basicity = number of replaceable H⁺ ions per molecule</p>
+        <div class="table-wrapper">
+          <table>
+            <tr><th>Type</th><th>Examples</th><th>Basicity</th></tr>
+            <tr><td>Monobasic</td><td>HCl, HNO₃, CH₃COOH</td><td>1</td></tr>
+            <tr><td>Dibasic</td><td>H₂SO₄, H₂CO₃</td><td>2</td></tr>
+            <tr><td>Tribasic</td><td>H₃PO₄</td><td>3</td></tr>
+          </table>
+        </div>
+
+        <h3>Definition of Bases</h3>
+        <p>A <strong>base</strong> is a substance that furnishes OH⁻ ions in water OR a proton acceptor.</p>
+
+        <h3>Properties of Bases</h3>
+        <ul>
+          <li>Bitter taste</li>
+          <li>Soapy/slippery feel</li>
+          <li>Turn red litmus paper blue</li>
+          <li>Corrosive (strong ones like NaOH)</li>
+          <li>Conduct electricity</li>
+        </ul>
+        <p>Alkalis = soluble bases (NaOH, KOH, NH₃(aq), Ca(OH)₂)</p>
+
+        <h3>Acid/Base Indicators</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Indicator</th>
+              <th>Colour in Acid</th>
+              <th>Colour in Base</th>
+              <th>Colour in Neutral</th>
+            </tr>
+            <tr><td>Litmus</td><td>Red</td><td>Blue</td><td>Purple</td></tr>
+            <tr><td>Methyl orange</td><td>Red</td><td>Yellow</td><td>Orange</td></tr>
+            <tr><td>Phenolphthalein</td><td>Colourless</td><td>Pink</td><td>Colourless</td></tr>
+            <tr><td>Bromothymol blue</td><td>Yellow</td><td>Blue</td><td>Green</td></tr>
+          </table>
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Acid-base_indicators.svg/800px-Acid-base_indicators.svg.png" alt="Acid-base indicators colour chart" class="diagram-img">
+
+        <h3>Salts</h3>
+        <p>A <strong>salt</strong> is an ionic compound formed when the H⁺ of an acid is replaced by a metal ion or ammonium ion.</p>
+        <p><strong>Types of Salts:</strong></p>
+        <ul>
+          <li>Normal salts: NaCl, K₂SO₄</li>
+          <li>Acid salts: NaHSO₄, NaHCO₃</li>
+          <li>Basic salts: Mg(OH)Cl, Pb(OH)NO₃</li>
+          <li>Double salts: potash alum K₂SO₄·Al₂(SO₄)₃·24H₂O</li>
+        </ul>
+
+        <h3>Methods of Preparing Salts</h3>
+        <ul>
+          <li>Neutralisation: HCl + NaOH → NaCl + H₂O</li>
+          <li>Acid + metal: Zn + H₂SO₄ → ZnSO₄ + H₂</li>
+          <li>Acid + trioxocarbonate: 2HCl + Na₂CO₃ → 2NaCl + H₂O + CO₂</li>
+          <li>Acid + basic oxide: 2HCl + CuO → CuCl₂ + H₂O</li>
+          <li>Precipitation: AgNO₃ + NaCl → AgCl↓ + NaNO₃</li>
+        </ul>
+
+        <h2>(b) Qualitative Comparison of Conductance</h2>
+        <p>Strong acids/bases (HCl, H₂SO₄, NaOH, KOH) → completely ionise → high conductance.</p>
+        <p>Weak acids/bases (CH₃COOH, NH₃(aq)) → partially ionise → low conductance.</p>
+        <p>At same concentration, conductance of strong >> weak.</p>
+
+        <h2>(c) pH and pOH Scale</h2>
+        <p>pH = –log₁₀[H₃O⁺]  pOH = –log₁₀[OH⁻]  At 25 °C: pH + pOH = 14</p>
+
+        <h2>6 JAMB Calculation Examples with Step-by-Step Solutions</h2>
+
+        <h3>Example 1: pH of Strong Acid</h3>
+        <p><strong>JAMB Question:</strong> Calculate the pH of 0.01 M HCl solution.</p>
+        <p><strong>Solution:</strong><br>
+        HCl is strong acid → [H⁺] = 0.01 mol/dm³ = 10⁻² mol/dm³<br>
+        pH = –log(10⁻²) = 2<br>
+        <strong>Answer:</strong> pH = 2 (acidic)</p>
+
+        <h3>Example 2: pH of Strong Base</h3>
+        <p><strong>JAMB Question:</strong> Calculate the pH of 0.001 M NaOH solution.</p>
+        <p><strong>Solution:</strong><br>
+        NaOH is strong base → [OH⁻] = 0.001 = 10⁻³ mol/dm³<br>
+        pOH = –log(10⁻³) = 3<br>
+        pH = 14 – 3 = 11<br>
+        <strong>Answer:</strong> pH = 11 (alkaline)</p>
+
+        <h3>Example 3: pH of Weak Acid</h3>
+        <p><strong>JAMB Question:</strong> Calculate the pH of 0.1 M CH₃COOH (Ka = 1.8 × 10⁻⁵).</p>
+        <p><strong>Solution:</strong><br>
+        For weak acid: [H⁺] = √(Ka × C) = √(1.8×10⁻⁵ × 0.1) = √(1.8×10⁻⁶) ≈ 1.34 × 10⁻³<br>
+        pH = –log(1.34×10⁻³) ≈ 2.87<br>
+        <strong>Answer:</strong> pH ≈ 2.87</p>
+
+        <h3>Example 4: Titration (Find Concentration)</h3>
+        <p><strong>JAMB Question:</strong> 25 cm³ of 0.1 M HCl neutralises 20 cm³ of NaOH. Find concentration of NaOH.</p>
+        <p><strong>Solution:</strong><br>
+        HCl + NaOH → NaCl + H₂O (1:1 ratio)<br>
+        Moles HCl = 0.1 × 25/1000 = 0.0025 mol<br>
+        Moles NaOH = 0.0025 mol<br>
+        Conc. NaOH = 0.0025 × 1000/20 = 0.125 M<br>
+        <strong>Answer:</strong> 0.125 M</p>
+
+        <h3>Example 5: Titration (Volume Calculation)</h3>
+        <p><strong>JAMB Question:</strong> What volume of 0.2 M NaOH will neutralise 30 cm³ of 0.15 M H₂SO₄?</p>
+        <p><strong>Solution:</strong><br>
+        H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O (1:2 ratio)<br>
+        Moles H₂SO₄ = 0.15 × 30/1000 = 0.0045 mol<br>
+        Moles NaOH = 2 × 0.0045 = 0.009 mol<br>
+        Volume NaOH = 0.009 × 1000/0.2 = 45 cm³<br>
+        <strong>Answer:</strong> 45 cm³</p>
+
+        <h3>Example 6: Hydrolysis pH Prediction</h3>
+        <p><strong>JAMB Question:</strong> Predict whether 0.1 M NH₄Cl solution is acidic, basic or neutral.</p>
+        <p><strong>Solution:</strong><br>
+        NH₄Cl is salt of strong acid (HCl) + weak base (NH₃)<br>
+        NH₄⁺ hydrolyses: NH₄⁺ + H₂O ⇌ NH₃ + H₃O⁺<br>
+        Produces H₃O⁺ → solution is acidic (pH < 7)<br>
+        <strong>Answer:</strong> Acidic</p>
+
+        <h2>(d) Acid/Base Titrations</h2>
+        <p>Appropriate indicators:</p>
+        <ul>
+          <li>Strong acid + strong base → phenolphthalein or methyl orange</li>
+          <li>Strong acid + weak base → methyl orange</li>
+          <li>Weak acid + strong base → phenolphthalein</li>
+        </ul>
+
+        <h2>(e) Hydrolysis of Salts</h2>
+        <p>Rules:</p>
+        <ul>
+          <li>Strong acid + strong base → neutral (pH = 7)</li>
+          <li>Strong acid + weak base → acidic</li>
+          <li>Weak acid + strong base → basic</li>
+        </ul>
+        <p>Examples:</p>
+        <ul>
+          <li>NH₄Cl → acidic (NH₄⁺ + H₂O ⇌ NH₃ + H₃O⁺)</li>
+          <li>Na₂CO₃ → basic (CO₃²⁻ + H₂O ⇌ HCO₃⁻ + OH⁻)</li>
+        </ul>
+
+        <h2>Quick Revision Checklist</h2>
+        <ul>
+          <li>Properties of acids & bases</li>
+          <li>Indicators table</li>
+          <li>Methods of salt preparation</li>
+          <li>Strong vs weak conductance</li>
+          <li>pH calculations (6 examples above)</li>
+          <li>Hydrolysis rules & equations</li>
+        </ul>
+        <p>You have now covered the entire topic exactly as it is in New School Chemistry. Practise the 6 calculations daily and you will score full marks! Aim for TopScore! 🚀</p>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="nav-bar">
+      <div class="nav-item">
+        <button class="neumorphic-btn">🔍</button>
+        <p>Search</p>
+      </div>
+      <div class="nav-item center">
+        <button class="neumorphic-btn">⭐</button>
+        <p>Favorite</p>
+      </div>
+      <div class="nav-item">
+        <button class="neumorphic-btn">📚</button>
+        <p>Library</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) console.log('Profile picture selected!');
+    });
+  </script>
+</body>
+</html>
