@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAMB Chemistry 2026 - Ultimate CBT</title>
+<style>
+/* ===== General Reset ===== */
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
+body { background:#e0e5ec; color:#222; transition: 0.3s; }
+.dark-mode { background:#1e1e1e; color:#f0f0f0; }
+
+/* ===== Container ===== */
+.container { display:flex; min-height:100vh; }
+.sidebar { width:250px; background:#e0e5ec; padding:20px; border-right: 2px solid #cfd8e3; transition:0.3s; overflow-y:auto; }
+.dark-mode .sidebar { background:#2a2a2a; border-color:#333; }
+.content { flex:1; padding:30px; overflow-y:auto; }
+
+/* ===== Sidebar ===== */
+.sidebar h2 { font-size:1.4rem; margin-bottom:20px; text-align:center; }
+.sidebar button { width:100%; padding:10px; margin:5px 0; border:none; border-radius:12px; cursor:pointer; background:#e0e5ec; box-shadow: 8px 8px 15px #babecc, -8px -8px 15px #ffffff; transition:0.2s; }
+.sidebar button:hover { box-shadow: inset 8px 8px 15px #babecc, inset -8px -8px 15px #ffffff; }
+.dark-mode .sidebar button { background:#2a2a2a; box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #3a3a3a; }
+
+/* ===== Neumorphic Section ===== */
+.section { background:#e0e5ec; padding:20px; border-radius:20px; box-shadow: 8px 8px 15px #babecc, -8px -8px 15px #ffffff; margin-bottom:30px; }
+.dark-mode .section { background:#2a2a2a; box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #3a3a3a; }
+
+/* ===== Tables ===== */
+.table-wrapper { overflow-x:auto; margin:15px 0; }
+table { border-collapse: collapse; width:100%; min-width:400px; }
+th, td { border:1px solid #aaa; padding:8px 12px; text-align:left; }
+th { background:#cfd8e3; }
+.dark-mode th { background:#3a3a3a; }
+
+/* ===== Flashcards Modal ===== */
+#flashcards { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content:center; align-items:center; }
+#flashcards .card-container { background:#e0e5ec; padding:30px; border-radius:20px; width:90%; max-width:500px; text-align:center; box-shadow: 8px 8px 15px #babecc, -8px -8px 15px #ffffff; }
+.dark-mode #flashcards .card-container { background:#2a2a2a; box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #3a3a3a; }
+#flashcards button { margin-top:20px; padding:10px 20px; border:none; border-radius:12px; cursor:pointer; background:#e0e5ec; box-shadow: 8px 8px 15px #babecc, -8px -8px 15px #ffffff; }
+.dark-mode #flashcards button { background:#2a2a2a; box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #3a3a3a; }
+
+/* ===== Search Bar ===== */
+#searchInput { width:100%; padding:8px; margin-bottom:20px; border-radius:12px; border:none; box-shadow: inset 3px 3px 5px #babecc, inset -3px -3px 5px #ffffff; }
+.dark-mode #searchInput { box-shadow: inset 3px 3px 5px #1a1a1a, inset -3px -3px 5px #3a3a3a; background:#2a2a2a; color:#f0f0f0; }
+
+/* ===== Dark Mode Button ===== */
+#darkModeBtn { position:fixed; top:10px; right:10px; padding:10px; border:none; border-radius:12px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- Sidebar -->
+<div class="sidebar">
+<h2>JAMB Chemistry</h2>
+<input type="text" id="searchInput" placeholder="Search lessons...">
+<button onclick="showLesson('hydrogen')">Hydrogen & Non-metals</button>
+<button onclick="showLesson('metals')">Metals & Compounds</button>
+<button onclick="showLesson('organic')">Organic Compounds</button>
+<button onclick="openFlashcards()">Flashcards</button>
+</div>
+
+<!-- Content -->
+<div class="content" id="lessonContent">
+<div class="section" id="welcome">
+<h2>Welcome to JAMB Chemistry 2026 CBT</h2>
+<p>Select a topic from the sidebar to start learning!</p>
+</div>
+</div>
+
+</div>
+
+<!-- Flashcards Modal -->
+<div id="flashcards">
+<div class="card-container">
+<h3 id="cardTitle">Flashcard</h3>
+<p id="cardContent">Content here</p>
+<button onclick="nextFlashcard()">Next</button>
+<button onclick="closeFlashcards()">Close</button>
+</div>
+</div>
+
+<!-- Dark Mode Button -->
+<button id="darkModeBtn" onclick="toggleDarkMode()">🌙</button>
+
+<script>
+// ===== Topics Lessons =====
+const lessons = {
+'hydrogen': `
+<div class="section">
+<h2>Non-metals & Hydrogen</h2>
+<p>Hydrogen is the lightest element...</p>
+<ul>
+<li>Preparation: Zinc + HCl</li>
+<li>Properties: Colourless, Odourless, Light</li>
+<li>Uses: Ammonia production, Fuel</li>
+</ul>
+</div>
+`,
+'metals': `
+<div class="section">
+<h2>Metals & Their Compounds</h2>
+<p>Metals lose electrons to form cations.</p>
+<ul>
+<li>Physical: Lustrous, Conductive, Malleable</li>
+<li>Chemical: React with oxygen, water, acids</li>
+</ul>
+<h3>Alkali Metals</h3>
+<p>Soft, reactive, stored in oil.</p>
+<h3>Sodium Hydroxide</h3>
+<p>Produced by electrolysis of brine. Uses: Soap, Paper, Textile.</p>
+<h3>Calcium Compounds</h3>
+<p>Quicklime, Slaked lime, Cement composition</p>
+<h3>Aluminium</h3>
+<p>Bayer Process → Hall-Héroult → Uses in aircraft, utensils</p>
+<h3>Transition Metals</h3>
+<p>Iron, Copper, Nickel with variable oxidation states</p>
+<h3>Alloys</h3>
+<p>Steel, Stainless steel, Brass, Bronze</p>
+</div>
+`,
+'organic': `
+<div class="section">
+<h2>Organic Compounds</h2>
+<p>Organic compounds contain carbon (except CO₂, CO, carbonates).</p>
+<ul>
+<li>Methane</li>
+<li>Ethanol</li>
+<li>Benzene</li>
+<li>Glucose</li>
+<li>Proteins</li>
+</ul>
+<h3>Tetravalency & Catenation</h3>
+<p>Carbon forms 4 bonds and chains/rings.</p>
+<h3>Classification</h3>
+<div class="table-wrapper"><table>
+<tr><th>Class</th><th>Functional Group</th><th>Example</th></tr>
+<tr><td>Hydrocarbons</td><td>C & H</td><td>Methane</td></tr>
+<tr><td>Alkanols</td><td>-OH</td><td>Ethanol</td></tr>
+<tr><td>Alkanals</td><td>-CHO</td><td>Ethanal</td></tr>
+<tr><td>Alkanones</td><td>-CO-</td><td>Propanone</td></tr>
+<tr><td>Alkanoic acids</td><td>-COOH</td><td>Ethanoic acid</td></tr>
+<tr><td>Amines</td><td>-NH₂</td><td>Methylamine</td></tr>
+</table></div>
+<h3>Alkanes & Alkenes</h3>
+<p>Alkanes: CnH2n+2 (Saturated)</p>
+<p>Alkenes: CnH2n (Unsaturated)</p>
+<h3>Alkynes</h3>
+<p>Triple bond, e.g., Ethyne C₂H₂</p>
+<h3>Benzene</h3>
+<p>Aromatic, stable, substitution reactions</p>
+<h3>Alkanols (Alcohols)</h3>
+<p>–OH group, e.g., Ethanol, Fuel, Solvent</p>
+<h3>Alkanoic Acids & Esters</h3>
+<p>–COOH group, reacts with alcohol → ester + water</p>
+<h3>Soap Production</h3>
+<p>Saponification of fats/oils with NaOH → Soap + Glycerol</p>
+<h3>Carbohydrates & Proteins</h3>
+<p>Carbs: Glucose, Starch. Proteins: amino acids, biuret test</p>
+<h3>Polymers</h3>
+<p>Natural (Rubber, Starch) & Synthetic (Nylon, PVC)</p>
+</div>
+`
+};
+
+// ===== Show Lessons =====
+function showLesson(topic){
+    document.getElementById('lessonContent').innerHTML = lessons[topic];
+}
+
+// ===== Flashcards =====
+const flashcardsData = [
+{title:'Hydrogen Test', content:'Squeaky pop with lighted splint'},
+{title:'Na⁺ Test', content:'Bright yellow flame'},
+{title:'Ca²⁺ Test', content:'Brick-red flame'},
+{title:'CO₂ Test', content:'Turns limewater milky'},
+{title:'NH₃ Test', content:'Turns red litmus blue'},
+{title:'H₂S Test', content:'Blackens lead acetate'},
+{title:'Cl⁻ Test', content:'White ppt with AgNO₃'},
+];
+
+let cardIndex = 0;
+
+function openFlashcards(){
+    cardIndex=0;
+    document.getElementById('flashcards').style.display='flex';
+    showCard();
+}
+function showCard(){
+    const card = flashcardsData[cardIndex];
+    document.getElementById('cardTitle').innerText = card.title;
+    document.getElementById('cardContent').innerText = card.content;
+}
+function nextFlashcard(){
+    cardIndex = (cardIndex+1)%flashcardsData.length;
+    showCard();
+}
+function closeFlashcards(){
+    document.getElementById('flashcards').style.display='none';
+}
+
+// ===== Dark Mode =====
+function toggleDarkMode(){
+    document.body.classList.toggle('dark-mode');
+}
+
+// ===== Search Lessons =====
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function(){
+    const value = this.value.toLowerCase();
+    const buttons = document.querySelectorAll('.sidebar button');
+    buttons.forEach(btn=>{
+        if(btn.innerText.toLowerCase().includes(value) || btn.innerText=='Flashcards'){
+            btn.style.display='block';
+        } else btn.style.display='none';
+    });
+});
+</script>
+
+</body>
+</html>
