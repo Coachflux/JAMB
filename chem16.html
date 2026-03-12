@@ -3,128 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JAMB Chemistry 2026 - Ultimate CBT</title>
+<title>CHEMISTRY - Organic Compounds (JAMB 2026)</title>
+
 <style>
-/* ===== General Reset ===== */
-* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
-body { background:#e0e5ec; color:#222; transition: 0.3s; }
-.dark-mode { background:#1e1e1e; color:#f0f0f0; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Arial',sans-serif;}
 
-/* ===== Container ===== */
-.container { display:flex; min-height:100vh; }
-.sidebar { width:250px; background:#e0e5ec; padding:20px; border-right: 2px solid #cfd8e3; transition:0.3s; overflow-y:auto; }
-.dark-mode .sidebar { background:#2a2a2a; border-color:#333; }
-.content { flex:1; padding:30px; overflow-y:auto; }
+:root{
+--background:#1e1e2f;
+--shadow-in:#171723;
+--shadow-out:#25253b;
+--text-primary:#f0f0ff;
+--text-secondary:#c0c0e0;
+--accent:#1db954;
+--card-bg:#2a2a3f;
+}
 
-/* ===== Sidebar ===== */
-.sidebar h2 { font-size:1.4rem; margin-bottom:20px; text-align:center; }
-.sidebar button { width:100%; padding:10px; margin:5px 0; border:none; border-radius:12px; cursor:pointer; background:#e0e5ec; box-shadow: 8px 8px 15px #babecc, -8px -8px 15px #ffffff; transition:0.2s; }
-.sidebar button:hover { box-shadow: inset 8px 8px 15px #babecc, inset -8px -8px 15px #ffffff; }
-.dark-mode .sidebar button { background:#2a2a2a; box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #3a3a3a; }
+body.light{
+--background:#e0e0e0;
+--shadow-in:#bebebe;
+--shadow-out:#ffffff;
+--text-primary:#1a1a1a;
+--text-secondary:#444;
+--accent:#1db954;
+--card-bg:#f8f8f8;
+}
 
-/* ===== Neumorphic Section ===== */
-.section { background:#e0e5ec; padding:20px; border-radius:20px; box-shadow: 8px 8px 15px #babecc, -8px -8px 15px #ffffff; margin-bottom:30px; }
-.dark-mode .section { background:#2a2a2a; box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #3a3a3a; }
+body{
+background:var(--background);
+color:var(--text-primary);
+min-height:100vh;
+overflow-x:hidden;
+}
 
-/* ===== Tables ===== */
-.table-wrapper { overflow-x:auto; margin:15px 0; }
-table { border-collapse: collapse; width:100%; min-width:400px; }
-th, td { border:1px solid #aaa; padding:8px 12px; text-align:left; }
-th { background:#cfd8e3; }
-.dark-mode th { background:#3a3a3a; }
+.container{
+width:100%;
+max-width:400px;
+margin:0 auto;
+background:var(--background);
+border-radius:20px;
+box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out);
+overflow:hidden;
+min-height:100vh;
+position:relative;
+padding-top:70px;
+padding-bottom:80px;
+}
 
-/* ===== Flashcards Modal ===== */
-#flashcards { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content:center; align-items:center; }
-#flashcards .card-container { background:#e0e5ec; padding:30px; border-radius:20px; width:90%; max-width:500px; text-align:center; box-shadow: 8px 8px 15px #babecc, -8px -8px 15px #ffffff; }
-.dark-mode #flashcards .card-container { background:#2a2a2a; box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #3a3a3a; }
-#flashcards button { margin-top:20px; padding:10px 20px; border:none; border-radius:12px; cursor:pointer; background:#e0e5ec; box-shadow: 8px 8px 15px #babecc, -8px -8px 15px #ffffff; }
-.dark-mode #flashcards button { background:#2a2a2a; box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #3a3a3a; }
+.neumorphic{
+background:var(--background);
+box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out);
+border-radius:15px;
+}
 
-/* ===== Search Bar ===== */
-#searchInput { width:100%; padding:8px; margin-bottom:20px; border-radius:12px; border:none; box-shadow: inset 3px 3px 5px #babecc, inset -3px -3px 5px #ffffff; }
-.dark-mode #searchInput { box-shadow: inset 3px 3px 5px #1a1a1a, inset -3px -3px 5px #3a3a3a; background:#2a2a2a; color:#f0f0f0; }
+.neumorphic-btn{
+background:var(--background);
+border:none;
+border-radius:50%;
+width:40px;
+height:40px;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+cursor:pointer;
+color:var(--text-primary);
+font-size:18px;
+}
 
-/* ===== Dark Mode Button ===== */
-#darkModeBtn { position:fixed; top:10px; right:10px; padding:10px; border:none; border-radius:12px; cursor:pointer; }
+.top-bar{
+position:fixed;
+top:0;
+width:100%;
+max-width:400px;
+background:var(--background);
+padding:15px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 5px 10px var(--shadow-in);
+z-index:20;
+left:50%;
+transform:translateX(-50%);
+}
+
+.top-bar .header{
+font-size:18px;
+font-weight:bold;
+}
+
+.content{
+padding:20px 16px;
+line-height:1.6;
+}
+
+.main-header{
+text-align:center;
+margin-bottom:32px;
+}
+
+.main-header h1{
+font-size:28px;
+margin-bottom:8px;
+color:var(--accent);
+font-weight:800;
+}
+
+.main-header p.subtitle{
+font-size:16px;
+color:var(--text-secondary);
+}
+
+.section{
+background:var(--card-bg);
+padding:24px 20px;
+border-radius:20px;
+box-shadow:inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+margin-bottom:30px;
+}
+
+.section h2{
+font-size:22px;
+margin-bottom:16px;
+color:var(--accent);
+}
+
+.section h3{
+font-size:18px;
+margin:20px 0 10px;
+color:var(--accent);
+}
+
+.section ul{
+padding-left:24px;
+margin:10px 0;
+}
+
+.section li{
+margin-bottom:8px;
+}
+
+.diagram-img{
+width:100%;
+border-radius:12px;
+margin:16px 0;
+box-shadow:3px 3px 8px var(--shadow-in),-3px -3px 8px var(--shadow-out);
+}
+
+.table-wrapper{
+overflow-x:auto;
+margin:16px 0;
+}
+
+.section table{
+width:100%;
+min-width:550px;
+border-collapse:collapse;
+}
+
+.section th,.section td{
+padding:12px;
+border-bottom:1px solid rgba(255,255,255,0.1);
+white-space:nowrap;
+}
+
+.section th{
+background:rgba(29,185,84,0.2);
+color:var(--accent);
+}
+
+.nav-bar{
+position:fixed;
+bottom:0;
+width:100%;
+max-width:400px;
+background:var(--background);
+padding:10px;
+display:flex;
+justify-content:space-around;
+box-shadow:0 -5px 10px var(--shadow-in);
+left:50%;
+transform:translateX(-50%);
+}
+
+.nav-bar .nav-item.center button{
+width:50px;
+height:50px;
+font-size:24px;
+background:var(--accent);
+}
 </style>
 </head>
-<body>
+
+<body class="dark">
 
 <div class="container">
 
-<!-- Sidebar -->
-<div class="sidebar">
-<h2>JAMB Chemistry</h2>
-<input type="text" id="searchInput" placeholder="Search lessons...">
-<button onclick="showLesson('hydrogen')">Hydrogen & Non-metals</button>
-<button onclick="showLesson('metals')">Metals & Compounds</button>
-<button onclick="showLesson('organic')">Organic Compounds</button>
-<button onclick="openFlashcards()">Flashcards</button>
+<div class="top-bar neumorphic">
+<button class="neumorphic-btn">←</button>
+<div class="header">CHEMISTRY</div>
+<button class="neumorphic-btn" id="theme-toggle">🌙</button>
 </div>
 
-<!-- Content -->
-<div class="content" id="lessonContent">
-<div class="section" id="welcome">
-<h2>Welcome to JAMB Chemistry 2026 CBT</h2>
-<p>Select a topic from the sidebar to start learning!</p>
-</div>
+<div class="content">
+
+<div class="main-header">
+<h1>Organic Compounds</h1>
+<p class="subtitle">JAMB 2026 – New School Chemistry</p>
 </div>
 
-</div>
-
-<!-- Flashcards Modal -->
-<div id="flashcards">
-<div class="card-container">
-<h3 id="cardTitle">Flashcard</h3>
-<p id="cardContent">Content here</p>
-<button onclick="nextFlashcard()">Next</button>
-<button onclick="closeFlashcards()">Close</button>
-</div>
-</div>
-
-<!-- Dark Mode Button -->
-<button id="darkModeBtn" onclick="toggleDarkMode()">🌙</button>
-
-<script>
-// ===== Topics Lessons =====
-const lessons = {
-'hydrogen': `
 <div class="section">
-<h2>Non-metals & Hydrogen</h2>
-<p>Hydrogen is the lightest element...</p>
-<ul>
-<li>Preparation: Zinc + HCl</li>
-<li>Properties: Colourless, Odourless, Light</li>
-<li>Uses: Ammonia production, Fuel</li>
-</ul>
-</div>
-`,
-'metals': `
-<div class="section">
-<h2>Metals & Their Compounds</h2>
-<p>Metals lose electrons to form cations.</p>
-<ul>
-<li>Physical: Lustrous, Conductive, Malleable</li>
-<li>Chemical: React with oxygen, water, acids</li>
-</ul>
-<h3>Alkali Metals</h3>
-<p>Soft, reactive, stored in oil.</p>
-<h3>Sodium Hydroxide</h3>
-<p>Produced by electrolysis of brine. Uses: Soap, Paper, Textile.</p>
-<h3>Calcium Compounds</h3>
-<p>Quicklime, Slaked lime, Cement composition</p>
-<h3>Aluminium</h3>
-<p>Bayer Process → Hall-Héroult → Uses in aircraft, utensils</p>
-<h3>Transition Metals</h3>
-<p>Iron, Copper, Nickel with variable oxidation states</p>
-<h3>Alloys</h3>
-<p>Steel, Stainless steel, Brass, Bronze</p>
-</div>
-`,
-'organic': `
-<div class="section">
-<h2>Organic Compounds</h2>
-<p>Organic compounds contain carbon (except CO₂, CO, carbonates).</p>
+
+<h2>1. What Are Organic Compounds?</h2>
+<p>Organic compounds are compounds of carbon (except a few like CO₂, CO, carbonates).</p>
+
+<h3>Examples</h3>
 <ul>
 <li>Methane</li>
 <li>Ethanol</li>
@@ -132,90 +224,230 @@ const lessons = {
 <li>Glucose</li>
 <li>Proteins</li>
 </ul>
-<h3>Tetravalency & Catenation</h3>
-<p>Carbon forms 4 bonds and chains/rings.</p>
-<h3>Classification</h3>
-<div class="table-wrapper"><table>
+
+<h3>Why Carbon Forms Many Compounds</h3>
+<p>Carbon forms millions of compounds because of:</p>
+<ul>
+<li><strong>Tetravalency:</strong> Carbon forms 4 covalent bonds. Example: CH₄</li>
+<li><strong>Catenation:</strong> Carbon atoms form chains or rings. Example: Straight, branched, ring structures</li>
+</ul>
+
+<h2>2. Classification of Organic Compounds</h2>
+<div class="table-wrapper">
+<table>
 <tr><th>Class</th><th>Functional Group</th><th>Example</th></tr>
-<tr><td>Hydrocarbons</td><td>C & H</td><td>Methane</td></tr>
+<tr><td>Hydrocarbons</td><td>C and H only</td><td>Methane</td></tr>
 <tr><td>Alkanols</td><td>-OH</td><td>Ethanol</td></tr>
 <tr><td>Alkanals</td><td>-CHO</td><td>Ethanal</td></tr>
 <tr><td>Alkanones</td><td>-CO-</td><td>Propanone</td></tr>
 <tr><td>Alkanoic acids</td><td>-COOH</td><td>Ethanoic acid</td></tr>
 <tr><td>Amines</td><td>-NH₂</td><td>Methylamine</td></tr>
-</table></div>
-<h3>Alkanes & Alkenes</h3>
-<p>Alkanes: CnH2n+2 (Saturated)</p>
-<p>Alkenes: CnH2n (Unsaturated)</p>
-<h3>Alkynes</h3>
-<p>Triple bond, e.g., Ethyne C₂H₂</p>
-<h3>Benzene</h3>
-<p>Aromatic, stable, substitution reactions</p>
-<h3>Alkanols (Alcohols)</h3>
-<p>–OH group, e.g., Ethanol, Fuel, Solvent</p>
-<h3>Alkanoic Acids & Esters</h3>
-<p>–COOH group, reacts with alcohol → ester + water</p>
-<h3>Soap Production</h3>
-<p>Saponification of fats/oils with NaOH → Soap + Glycerol</p>
-<h3>Carbohydrates & Proteins</h3>
-<p>Carbs: Glucose, Starch. Proteins: amino acids, biuret test</p>
-<h3>Polymers</h3>
-<p>Natural (Rubber, Starch) & Synthetic (Nylon, PVC)</p>
+</table>
 </div>
-`
-};
 
-// ===== Show Lessons =====
-function showLesson(topic){
-    document.getElementById('lessonContent').innerHTML = lessons[topic];
+<h2>3. General Formula</h2>
+<div class="table-wrapper">
+<table>
+<tr><th>Class</th><th>General Formula</th></tr>
+<tr><td>Alkanes</td><td>CₙH₂ₙ₊₂</td></tr>
+<tr><td>Alkenes</td><td>CₙH₂ₙ</td></tr>
+<tr><td>Alkynes</td><td>CₙH₂ₙ₋₂</td></tr>
+<tr><td>Alkanols</td><td>CₙH₂ₙ₊₁OH</td></tr>
+<tr><td>Alkanoic acids</td><td>CₙH₂ₙ₊₁COOH</td></tr>
+</table>
+</div>
+
+<h2>4. IUPAC Nomenclature</h2>
+<ul>
+<li>Identify longest carbon chain</li>
+<li>Identify functional group</li>
+<li>Add correct suffix</li>
+</ul>
+
+<div class="table-wrapper">
+<table>
+<tr><th>Carbons</th><th>Prefix</th></tr>
+<tr><td>1</td><td>Meth</td></tr>
+<tr><td>2</td><td>Eth</td></tr>
+<tr><td>3</td><td>Prop</td></tr>
+<tr><td>4</td><td>But</td></tr>
+<tr><td>5</td><td>Pent</td></tr>
+<tr><td>6</td><td>Hex</td></tr>
+</table>
+</div>
+
+<div class="table-wrapper">
+<table>
+<tr><th>Formula</th><th>Name</th></tr>
+<tr><td>CH₄</td><td>Methane</td></tr>
+<tr><td>C₂H₆</td><td>Ethane</td></tr>
+<tr><td>C₃H₈</td><td>Propane</td></tr>
+<tr><td>C₂H₄</td><td>Ethene</td></tr>
+<tr><td>C₂H₂</td><td>Ethyne</td></tr>
+</table>
+</div>
+
+<h2>5. Empirical & Molecular Formula</h2>
+<p>Empirical formula: simplest atom ratio. Example: CH₂O</p>
+<p>Molecular formula = Empirical × n. Example: (CH₂O) × 6 = C₆H₁₂O₆</p>
+
+<h2>6. Aliphatic Hydrocarbons</h2>
+<p>Open-chain hydrocarbons: Alkanes, Alkenes, Alkynes.</p>
+
+<h3>Alkanes</h3>
+<ul>
+<li>Saturated hydrocarbons</li>
+<li>General formula: CₙH₂ₙ₊₂</li>
+<li>Examples: CH₄, C₂H₆, C₃H₈, C₄H₁₀</li>
+</ul>
+
+<h3>Properties & Reactions</h3>
+<ul>
+<li>Physical: low members → gases, medium → liquids, high → solids</li>
+<li>Insoluble in water, low melting/boiling points</li>
+<li>Chemical: Substitution (e.g., CH₄ + Cl₂ → CH₃Cl)</li>
+<li>Isomerism: structural isomers up to 6 carbons</li>
+</ul>
+
+<h3>Petroleum & Petrochemicals</h3>
+<ul>
+<li>Fractional distillation products: Gas, Petrol, Kerosene, Diesel, Lubricating oil, Bitumen</li>
+<li>Cracking: heavy → light hydrocarbons</li>
+<li>Reforming: straight → branched chains</li>
+<li>Petrochemicals: Plastics, Fertilizers, Detergents, Synthetic fibres</li>
+<li>Octane number: fuel quality indicator</li>
+</ul>
+
+<h3>Alkenes</h3>
+<ul>
+<li>Unsaturated, double bond, CₙH₂ₙ</li>
+<li>Addition reactions, polymerization (plastic bags, bottles)</li>
+<li>Test: decolourize bromine water</li>
+<li>Synthetic rubber: vulcanization improves elasticity & heat resistance</li>
+</ul>
+
+<h3>Alkynes</h3>
+<ul>
+<li>Triple bond, CₙH₂ₙ₋₂</li>
+<li>Ethyne from CaC₂ + H₂O → C₂H₂ + Ca(OH)₂</li>
+<li>Burns with luminous flame, used in oxy-acetylene welding</li>
+</ul>
+
+<h3>Aromatic Hydrocarbons</h3>
+<ul>
+<li>Benzene (C₆H₆): stable, aromatic smell</li>
+<li>Substitution reactions, uses: plastics, dyes, drugs, detergents</li>
+</ul>
+
+<h3>Alkanols (Alcohols)</h3>
+<ul>
+<li>Contain –OH, example: Ethanol</li>
+<li>Types: Primary, Secondary, Tertiary</li>
+<li>Production: fermentation or hydration of ethene</li>
+<li>Uses: fuel, solvent, antiseptic, drinks</li>
+<li>Lucas test distinguishes types</li>
+</ul>
+
+<h3>Alkanals & Alkanones</h3>
+<ul>
+<li>Alkanals: –CHO (Ethanal)</li>
+<li>Alkanones: –CO– (Propanone)</li>
+<li>Tollens test: aldehydes → silver mirror, ketones → no reaction</li>
+</ul>
+
+<h3>Alkanoic Acids & Esters</h3>
+<ul>
+<li>–COOH group, e.g., Ethanoic acid</li>
+<li>Neutralization: Acid + Base → Salt + Water</li>
+<li>Esterification: Acid + Alcohol → Ester + Water (Ethyl ethanoate)</li>
+<li>Natural esters → fats/oils; saponification → soap & glycerol</li>
+<li>Margarine: hydrogenated vegetable oils</li>
+</ul>
+
+<h3>Amines</h3>
+<ul>
+<li>–NH₂ group, primary: CH₃NH₂, secondary: (CH₃)₂NH, tertiary: (CH₃)₃N</li>
+<li>Uses: drugs, dyes, plastics</li>
+</ul>
+
+<h3>Carbohydrates</h3>
+<ul>
+<li>General formula: Cₙ(H₂O)ₙ</li>
+<li>Monosaccharides: Glucose, Fructose</li>
+<li>Disaccharides: Sucrose, Maltose</li>
+<li>Polysaccharides: Starch, Cellulose</li>
+<li>Tests: Benedict's → red precipitate, Fehling's → brick red</li>
+<li>Hydrolysis: Starch → Glucose</li>
+<li>Uses: alcohol, pharmaceuticals, textiles</li>
+</ul>
+
+<h3>Proteins</h3>
+<ul>
+<li>Made from amino acids</li>
+<li>Hydrolysis → amino acids</li>
+<li>Tests: Biuret → purple, Ninhydrin → blue/purple, Millon → red, Xanthoproteic → yellow</li>
+<li>Enzymes: catalysts (Amylase, Pepsin)</li>
+</ul>
+
+<h3>Polymers</h3>
+<ul>
+<li>Natural: rubber, starch, cellulose, proteins</li>
+<li>Synthetic: Nylon, Polythene, PVC</li>
+<li>Polymerization: Addition (Ethene → Polythene), Condensation (Nylon formation)</li>
+<li>Thermoplastics: remouldable (PVC), Thermosetting: cannot remould (Bakelite)</li>
+</ul>
+
+<h3>JAMB Summary</h3>
+<ul>
+<li>Hydrocarbon classes</li>
+<li>General formula</li>
+<li>Isomerism</li>
+<li>Petroleum fractions</li>
+<li>Polymerization</li>
+<li>Alcohol types</li>
+<li>Esterification</li>
+<li>Soap production</li>
+<li>Tests for sugars and proteins</li>
+</ul>
+
+</div>
+</div>
+
+<div class="nav-bar">
+<div class="nav-item">
+<button class="neumorphic-btn">🔍</button>
+
+</div>
+
+<div class="nav-item center">
+<button class="neumorphic-btn">⭐</button>
+
+</div>
+
+<div class="nav-item">
+<button class="neumorphic-btn">📚</button>
+
+</div>
+</div>
+
+</div>
+
+<script>
+const themeToggle=document.getElementById('theme-toggle');
+const body=document.body;
+
+function setTheme(theme){
+body.className=theme;
+themeToggle.textContent=theme==='light'?'🌙':'☀️';
+localStorage.setItem('theme',theme);
 }
 
-// ===== Flashcards =====
-const flashcardsData = [
-{title:'Hydrogen Test', content:'Squeaky pop with lighted splint'},
-{title:'Na⁺ Test', content:'Bright yellow flame'},
-{title:'Ca²⁺ Test', content:'Brick-red flame'},
-{title:'CO₂ Test', content:'Turns limewater milky'},
-{title:'NH₃ Test', content:'Turns red litmus blue'},
-{title:'H₂S Test', content:'Blackens lead acetate'},
-{title:'Cl⁻ Test', content:'White ppt with AgNO₃'},
-];
+const savedTheme=localStorage.getItem('theme')||'dark';
+setTheme(savedTheme);
 
-let cardIndex = 0;
-
-function openFlashcards(){
-    cardIndex=0;
-    document.getElementById('flashcards').style.display='flex';
-    showCard();
-}
-function showCard(){
-    const card = flashcardsData[cardIndex];
-    document.getElementById('cardTitle').innerText = card.title;
-    document.getElementById('cardContent').innerText = card.content;
-}
-function nextFlashcard(){
-    cardIndex = (cardIndex+1)%flashcardsData.length;
-    showCard();
-}
-function closeFlashcards(){
-    document.getElementById('flashcards').style.display='none';
-}
-
-// ===== Dark Mode =====
-function toggleDarkMode(){
-    document.body.classList.toggle('dark-mode');
-}
-
-// ===== Search Lessons =====
-const searchInput = document.getElementById('searchInput');
-searchInput.addEventListener('input', function(){
-    const value = this.value.toLowerCase();
-    const buttons = document.querySelectorAll('.sidebar button');
-    buttons.forEach(btn=>{
-        if(btn.innerText.toLowerCase().includes(value) || btn.innerText=='Flashcards'){
-            btn.style.display='block';
-        } else btn.style.display='none';
-    });
+themeToggle.addEventListener('click',()=>{
+const newTheme=body.classList.contains('light')?'dark':'light';
+setTheme(newTheme);
 });
 </script>
 
