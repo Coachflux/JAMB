@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHEMISTRY - Metals and their Compounds (JAMB 2026)</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Arial',sans-serif;}
+
+:root{
+--background:#1e1e2f;
+--shadow-in:#171723;
+--shadow-out:#25253b;
+--text-primary:#f0f0ff;
+--text-secondary:#c0c0e0;
+--accent:#1db954;
+--card-bg:#2a2a3f;
+}
+
+body.light{
+--background:#e0e0e0;
+--shadow-in:#bebebe;
+--shadow-out:#ffffff;
+--text-primary:#1a1a1a;
+--text-secondary:#444;
+--accent:#1db954;
+--card-bg:#f8f8f8;
+}
+
+body{
+background:var(--background);
+color:var(--text-primary);
+min-height:100vh;
+overflow-x:hidden;
+}
+
+.container{
+width:100%;
+max-width:400px;
+margin:0 auto;
+background:var(--background);
+border-radius:20px;
+box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out);
+overflow:hidden;
+min-height:100vh;
+position:relative;
+padding-top:70px;
+padding-bottom:80px;
+}
+
+.neumorphic{
+background:var(--background);
+box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out);
+border-radius:15px;
+}
+
+.neumorphic-btn{
+background:var(--background);
+border:none;
+border-radius:50%;
+width:40px;
+height:40px;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+cursor:pointer;
+color:var(--text-primary);
+font-size:18px;
+}
+
+.top-bar{
+position:fixed;
+top:0;
+width:100%;
+max-width:400px;
+background:var(--background);
+padding:15px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 5px 10px var(--shadow-in);
+z-index:20;
+left:50%;
+transform:translateX(-50%);
+}
+
+.top-bar .header{
+font-size:18px;
+font-weight:bold;
+}
+
+.content{
+padding:20px 16px;
+line-height:1.6;
+}
+
+.main-header{
+text-align:center;
+margin-bottom:32px;
+}
+
+.main-header h1{
+font-size:28px;
+margin-bottom:8px;
+color:var(--accent);
+font-weight:800;
+}
+
+.main-header p.subtitle{
+font-size:16px;
+color:var(--text-secondary);
+}
+
+.section{
+background:var(--card-bg);
+padding:24px 20px;
+border-radius:20px;
+box-shadow:inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+margin-bottom:30px;
+}
+
+.section h2{
+font-size:22px;
+margin-bottom:16px;
+color:var(--accent);
+}
+
+.section h3{
+font-size:18px;
+margin:20px 0 10px;
+color:var(--accent);
+}
+
+.section ul{
+padding-left:24px;
+margin:10px 0;
+}
+
+.section li{
+margin-bottom:8px;
+}
+
+.diagram-img{
+width:100%;
+border-radius:12px;
+margin:16px 0;
+box-shadow:3px 3px 8px var(--shadow-in),-3px -3px 8px var(--shadow-out);
+}
+
+.table-wrapper{
+overflow-x:auto;
+margin:16px 0;
+}
+
+.section table{
+width:100%;
+min-width:550px;
+border-collapse:collapse;
+}
+
+.section th,.section td{
+padding:12px;
+border-bottom:1px solid rgba(255,255,255,0.1);
+white-space:nowrap;
+}
+
+.section th{
+background:rgba(29,185,84,0.2);
+color:var(--accent);
+}
+
+.nav-bar{
+position:fixed;
+bottom:0;
+width:100%;
+max-width:400px;
+background:var(--background);
+padding:10px;
+display:flex;
+justify-content:space-around;
+box-shadow:0 -5px 10px var(--shadow-in);
+left:50%;
+transform:translateX(-50%);
+}
+
+.nav-bar .nav-item.center button{
+width:50px;
+height:50px;
+font-size:24px;
+background:var(--accent);
+}
+</style>
+</head>
+
+<body class="dark">
+
+<div class="container">
+
+<div class="top-bar neumorphic">
+<button class="neumorphic-btn">←</button>
+<div class="header">CHEMISTRY</div>
+<button class="neumorphic-btn" id="theme-toggle">🌙</button>
+</div>
+
+<div class="content">
+
+<div class="main-header">
+<h1>Metals & Their Compounds</h1>
+<p class="subtitle">JAMB 2026 – New School Chemistry</p>
+</div>
+
+<div class="section">
+
+<h2>1. General Properties of Metals</h2>
+
+<p><strong>Metals</strong> are elements that lose electrons easily to form positive ions called <strong>cations</strong>.</p>
+
+<h3>Physical Properties</h3>
+
+<ul>
+<li>Shiny (lustrous)</li>
+<li>Good conductors of heat and electricity</li>
+<li>Malleable (can be beaten into sheets)</li>
+<li>Ductile (drawn into wires)</li>
+<li>High melting and boiling points</li>
+<li>Mostly solid at room temperature (except mercury)</li>
+</ul>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Metal_crystals.jpg" class="diagram-img">
+
+<h3>Chemical Properties</h3>
+
+<ul>
+<li>React with oxygen to form metal oxides</li>
+<li>React with water to produce hydroxides and hydrogen</li>
+<li>React with acids to produce salt + hydrogen gas</li>
+<li>More reactive metals displace less reactive metals</li>
+</ul>
+
+<h2>2. Alkali Metals (Group 1)</h2>
+
+<ul>
+<li>Lithium (Li)</li>
+<li>Sodium (Na)</li>
+<li>Potassium (K)</li>
+</ul>
+
+<p>Characteristics:</p>
+
+<ul>
+<li>Very reactive</li>
+<li>Soft metals</li>
+<li>Low density</li>
+<li>React violently with water</li>
+<li>Stored in oil or kerosene</li>
+</ul>
+
+<h2>3. Sodium Hydroxide (NaOH)</h2>
+
+<p>Also called <strong>Caustic soda</strong>.</p>
+
+<h3>Production</h3>
+
+<p>Produced by <strong>electrolysis of brine (NaCl solution)</strong>.</p>
+
+<ul>
+<li>Sodium hydroxide</li>
+<li>Hydrogen gas</li>
+<li>Chlorine gas</li>
+</ul>
+
+<h3>Uses</h3>
+
+<ul>
+<li>Soap manufacture</li>
+<li>Paper production</li>
+<li>Textile processing</li>
+<li>Petroleum refining</li>
+</ul>
+
+<h2>4. Sodium Trioxocarbonate (IV) – Na₂CO₃</h2>
+
+<p>Common name: <strong>Washing soda</strong>.</p>
+
+<h3>Production (Solvay Process)</h3>
+
+<ul>
+<li>Sodium chloride</li>
+<li>Ammonia</li>
+<li>Carbon dioxide</li>
+<li>Limestone</li>
+</ul>
+
+<h3>Uses</h3>
+
+<ul>
+<li>Glass manufacture</li>
+<li>Soap production</li>
+<li>Water softening</li>
+<li>Paper manufacture</li>
+</ul>
+
+<h2>5. Sodium Hydrogen Trioxocarbonate (Baking Soda)</h2>
+
+<ul>
+<li>White crystalline powder</li>
+<li>Releases CO₂ when heated</li>
+</ul>
+
+<h3>Uses</h3>
+
+<ul>
+<li>Baking powder</li>
+<li>Fire extinguishers</li>
+<li>Medicine (antacid)</li>
+</ul>
+
+<h2>6. Sodium Chloride (NaCl)</h2>
+
+<p>Common salt obtained from <strong>sea water or rock salt</strong>.</p>
+
+<h3>Uses</h3>
+
+<ul>
+<li>Food seasoning</li>
+<li>Food preservation</li>
+<li>Raw material for chemicals</li>
+</ul>
+
+<h3>Test for Sodium Ion</h3>
+
+<p><strong>Flame test → Bright yellow flame</strong></p>
+
+<h2>7. Alkaline Earth Metals (Group 2)</h2>
+
+<ul>
+<li>Calcium</li>
+<li>Magnesium</li>
+<li>Barium</li>
+</ul>
+
+<h2>8. Calcium Compounds</h2>
+
+<h3>Calcium Oxide (Quicklime)</h3>
+
+<ul>
+<li>Prepared by heating limestone</li>
+<li>White solid</li>
+<li>Reacts with water vigorously</li>
+</ul>
+
+<h3>Calcium Hydroxide (Slaked Lime)</h3>
+
+<ul>
+<li>Used in whitewashing</li>
+<li>Water treatment</li>
+<li>Bleaching powder manufacture</li>
+</ul>
+
+<h3>Calcium Carbonate</h3>
+
+<p>Found in:</p>
+
+<ul>
+<li>Limestone</li>
+<li>Chalk</li>
+<li>Marble</li>
+</ul>
+
+<h2>9. Aluminium</h2>
+
+<h3>Extraction</h3>
+
+<p>Obtained from <strong>bauxite ore</strong> using:</p>
+
+<ul>
+<li>Bayer Process (purification)</li>
+<li>Hall-Héroult Process (electrolysis)</li>
+</ul>
+
+<h3>Properties</h3>
+
+<ul>
+<li>Light metal</li>
+<li>Corrosion resistant</li>
+<li>Good conductor</li>
+</ul>
+
+<h3>Uses</h3>
+
+<ul>
+<li>Aircraft manufacture</li>
+<li>Cooking utensils</li>
+<li>Electrical cables</li>
+<li>Packaging foil</li>
+</ul>
+
+<h2>10. Tin (Sn)</h2>
+
+<p>Main ore: <strong>Cassiterite (SnO₂)</strong></p>
+
+<h3>Uses</h3>
+
+<ul>
+<li>Tin plating</li>
+<li>Food cans</li>
+<li>Alloy manufacture</li>
+</ul>
+
+<h2>11. Transition Metals</h2>
+
+<p>Examples: Iron, Copper, Nickel.</p>
+
+<h3>Characteristics</h3>
+
+<ul>
+<li>Variable oxidation states</li>
+<li>Form coloured ions</li>
+<li>Form complex ions</li>
+<li>Act as catalysts</li>
+</ul>
+
+<h2>12. Iron</h2>
+
+<p>Ores:</p>
+
+<ul>
+<li>Haematite (Fe₂O₃)</li>
+<li>Magnetite (Fe₃O₄)</li>
+<li>Siderite (FeCO₃)</li>
+</ul>
+
+<p>Extracted in the <strong>Blast Furnace</strong>.</p>
+
+<h3>Forms of Iron</h3>
+
+<ul>
+<li>Cast iron</li>
+<li>Wrought iron</li>
+<li>Steel</li>
+</ul>
+
+<h2>13. Copper</h2>
+
+<p>Important ore: <strong>Copper pyrites (CuFeS₂)</strong></p>
+
+<h3>Properties</h3>
+
+<ul>
+<li>Reddish metal</li>
+<li>Good conductor</li>
+<li>Malleable</li>
+</ul>
+
+<h3>Uses</h3>
+
+<ul>
+<li>Electrical wiring</li>
+<li>Water pipes</li>
+<li>Alloy production</li>
+</ul>
+
+<h2>14. Alloys</h2>
+
+<p>An <strong>alloy</strong> is a mixture of two or more metals.</p>
+
+<div class="table-wrapper">
+
+<table>
+
+<tr>
+<th>Alloy</th>
+<th>Composition</th>
+<th>Uses</th>
+</tr>
+
+<tr>
+<td>Steel</td>
+<td>Iron + Carbon</td>
+<td>Construction</td>
+</tr>
+
+<tr>
+<td>Stainless Steel</td>
+<td>Iron + Chromium + Nickel</td>
+<td>Kitchen utensils</td>
+</tr>
+
+<tr>
+<td>Brass</td>
+<td>Copper + Zinc</td>
+<td>Musical instruments</td>
+</tr>
+
+<tr>
+<td>Bronze</td>
+<td>Copper + Tin</td>
+<td>Statues and medals</td>
+</tr>
+
+<tr>
+<td>Duralumin</td>
+<td>Aluminium + Copper + Magnesium</td>
+<td>Aircraft</td>
+</tr>
+
+</table>
+
+</div>
+
+<p><strong>Advantages of Alloys</strong></p>
+
+<ul>
+<li>Stronger</li>
+<li>Harder</li>
+<li>More corrosion resistant</li>
+<li>More durable</li>
+</ul>
+
+</div>
+</div>
+
+<div class="nav-bar">
+
+<div class="nav-item">
+<button class="neumorphic-btn">🔍</button>
+</div>
+
+<div class="nav-item center">
+<button class="neumorphic-btn">⭐</button>
+</div>
+
+<div class="nav-item">
+<button class="neumorphic-btn">📚</button>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const themeToggle=document.getElementById('theme-toggle');
+const body=document.body;
+
+function setTheme(theme){
+body.className=theme;
+themeToggle.textContent=theme==='light'?'🌙':'☀️';
+localStorage.setItem('theme',theme);
+}
+
+const savedTheme=localStorage.getItem('theme')||'dark';
+setTheme(savedTheme);
+
+themeToggle.addEventListener('click',()=>{
+const newTheme=body.classList.contains('light')?'dark':'light';
+setTheme(newTheme);
+});
+</script>
+
+</body>
+</html>
