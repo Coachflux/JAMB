@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHEMISTRY - Electrolysis (JAMB 2026)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      background: var(--card-bg);
+      padding: 24px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      margin: 0 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .section p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .section ul, .section ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .section li {
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .section .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 16px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .section table {
+      width: 100%;
+      min-width: 580px;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .section th,
+    .section td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .section th {
+      background: rgba(29, 185, 84, 0.2);
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section tr:last-child td {
+      border-bottom: none;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">CHEMISTRY</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Electrolysis 🚀</h1>
+        <p class="subtitle">JAMB 2026 – New School Chemistry</p>
+      </div>
+
+      <div class="section">
+      
+        <h2>Definition of Electrolysis</h2>
+        <p><strong>Electrolysis</strong> is the process by which an electric current is passed through an electrolyte (molten or aqueous) causing chemical decomposition (breakdown) of the electrolyte into its constituent elements or compounds at the electrodes.</p>
+
+        <h2>Step 1: Electrolytes and Non-Electrolytes</h2>
+        <p><strong>Electrolyte</strong> = substance that conducts electricity when molten or dissolved in water and is decomposed by the current.</p>
+        <p><strong>Non-electrolyte</strong> = substance that does not conduct electricity or get decomposed.</p>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Examples</th>
+            </tr>
+            <tr>
+              <td>Strong electrolytes</td>
+              <td>NaCl, HCl, H₂SO₄, NaOH (complete ionisation)</td>
+            </tr>
+            <tr>
+              <td>Weak electrolytes</td>
+              <td>CH₃COOH, NH₃(aq) (partial ionisation)</td>
+            </tr>
+            <tr>
+              <td>Non-electrolytes</td>
+              <td>Sugar, ethanol, urea, kerosene</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>Step 2: Faraday’s Laws of Electrolysis</h2>
+        <p><strong>Faraday’s 1st Law</strong>: Mass liberated (m) ∝ quantity of electricity (Q = I × t).</p>
+        <p>Formula: <strong>m = (M × I × t) / (n × F)</strong> where F = 96 500 C mol⁻¹.</p>
+        <p><strong>Faraday’s 2nd Law</strong>: For same Q, masses ∝ chemical equivalents.</p>
+
+        <h2>Step 3: Electrolysis of Specific Solutions</h2>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Solution</th>
+              <th>Cathode Product</th>
+              <th>Anode Product</th>
+            </tr>
+            <tr>
+              <td>Dilute H₂SO₄ (inert electrodes)</td>
+              <td>H₂ gas</td>
+              <td>O₂ gas (ratio 2:1)</td>
+            </tr>
+            <tr>
+              <td>Aqueous CuSO₄ (inert)</td>
+              <td>Cu metal</td>
+              <td>O₂ gas</td>
+            </tr>
+            <tr>
+              <td>Conc. NaCl (brine)</td>
+              <td>H₂ gas</td>
+              <td>Cl₂ gas</td>
+            </tr>
+            <tr>
+              <td>Molten NaCl</td>
+              <td>Na metal</td>
+              <td>Cl₂ gas</td>
+            </tr>
+          </table>
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Electrolysis_setup.svg/800px-Electrolysis_setup.svg.png" alt="Electrolysis setup diagram" class="diagram-img">
+
+        <h2>Step 4: Factors Affecting Discharge of Ions</h2>
+        <ul>
+          <li>Position in electrochemical series</li>
+          <li>Concentration of ions</li>
+          <li>Nature of electrode</li>
+        </ul>
+
+        <h2>Step 5: Uses of Electrolysis</h2>
+        <ul>
+          <li>Purification of copper</li>
+          <li>Extraction of aluminium (Hall-Héroult process)</li>
+          <li>Production of NaOH, Cl₂, H₂ (chlor-alkali)</li>
+          <li>Electroplating</li>
+        </ul>
+
+        <h2>Step 6: Electrochemical Cells & Series</h2>
+        <p>Electrochemical series: K > Na > Ca > Mg > Al > Zn > Fe > Sn > Pb > H > Cu > Ag > Au</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Electrochemical_series.svg/800px-Electrochemical_series.svg.png" alt="Electrochemical series" class="diagram-img">
+
+        <h2>Step 7: Corrosion & Prevention</h2>
+        <p>Corrosion of iron is an electrolytic process.</p>
+        <p>Prevention: painting, galvanising, cathodic protection (Mg/Zn sacrificial anode).</p>
+
+        <h2>6 JAMB Calculation Examples with Step-by-Step Solutions</h2>
+
+        <h3>Example 1: Mass Deposited (Faraday 1st Law)</h3>
+        <p><strong>Question:</strong> Calculate mass of Cu deposited by 0.5 A for 30 min in CuSO₄ (M = 63.5, n=2).</p>
+        <p><strong>Formula:</strong> m = (M × I × t) / (n × F)</p>
+        <p><strong>Step 1:</strong> Q = 0.5 × (30×60) = 900 C<br>
+        <strong>Step 2:</strong> m = (63.5 × 900) / (2 × 96500) = 0.296 g<br>
+        <strong>Answer:</strong> 0.296 g</p>
+
+        <h3>Example 2: Time Required</h3>
+        <p><strong>Question:</strong> How long will 2 A deposit 0.635 g Cu? (M=63.5, n=2)</p>
+        <p><strong>Formula:</strong> t = (m × n × F) / (M × I)</p>
+        <p><strong>Step 1:</strong> t = (0.635 × 2 × 96500) / (63.5 × 2) = 965 s<br>
+        <strong>Answer:</strong> 965 s (16.08 min)</p>
+
+        <h3>Example 3: Volume of Gas (H₂)</h3>
+        <p><strong>Question:</strong> Volume of H₂ at STP liberated by 96500 C (1 mole e⁻ = 11.2 dm³ H₂).</p>
+        <p><strong>Formula:</strong> Volume = (Q × 11.2) / (n × F) for H₂ (n=2)</p>
+        <p><strong>Step 1:</strong> For 96500 C, moles e⁻ = 1<br>
+        <strong>Step 2:</strong> Moles H₂ = 0.5, Volume = 0.5 × 22.4 = 11.2 dm³<br>
+        <strong>Answer:</strong> 11.2 dm³</p>
+
+        <h3>Example 4: E°_cell Calculation</h3>
+        <p><strong>Question:</strong> Calculate E°_cell for Zn | Zn²⁺ || Cu²⁺ | Cu (E°_Cu = +0.34 V, E°_Zn = –0.76 V).</p>
+        <p><strong>Formula:</strong> E°_cell = E°_cathode – E°_anode</p>
+        <p><strong>Step 1:</strong> Cathode Cu (+0.34), Anode Zn (–0.76)<br>
+        <strong>Step 2:</strong> E°_cell = 0.34 – (–0.76) = 1.10 V<br>
+        <strong>Answer:</strong> 1.10 V</p>
+
+        <h3>Example 5: Equivalent Mass</h3>
+        <p><strong>Question:</strong> Equivalent mass of Al in Al₂O₃ electrolysis (M=27, n=3).</p>
+        <p><strong>Formula:</strong> Eq. mass = M / n</p>
+        <p><strong>Step 1:</strong> n=3 for Al³⁺<br>
+        <strong>Step 2:</strong> Eq. mass = 27 / 3 = 9 g<br>
+        <strong>Answer:</strong> 9 g</p>
+
+        <h3>Example 6: Faraday’s 2nd Law</h3>
+        <p><strong>Question:</strong> Same Q deposits 1.08 g Ag (Eq=108) and x g Cu (Eq=31.75). Find x.</p>
+        <p><strong>Formula:</strong> m₁ / Eq₁ = m₂ / Eq₂</p>
+        <p><strong>Step 1:</strong> 1.08 / 108 = x / 31.75<br>
+        <strong>Step 2:</strong> x = 0.3175 g<br>
+        <strong>Answer:</strong> 0.3175 g</p>
+
+        <h2>Quick Revision Checklist</h2>
+        <ul>
+          <li>Definition of electrolysis</li>
+          <li>Products for 7 common solutions</li>
+          <li>Faraday’s laws formulas</li>
+          <li>Electrochemical series order</li>
+          <li>Corrosion & prevention</li>
+        </ul>
+        <p>You have now covered the entire topic exactly as in New School Chemistry. Practise the 6 calculations daily and you will score full marks! Aim for TopScore! 🚀</p>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="nav-bar">
+      <div class="nav-item">
+        <button class="neumorphic-btn">🔍</button>
+        <p>Search</p>
+      </div>
+      <div class="nav-item center">
+        <button class="neumorphic-btn">⭐</button>
+        <p>Favorite</p>
+      </div>
+      <div class="nav-item">
+        <button class="neumorphic-btn">📚</button>
+        <p>Library</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) console.log('Profile picture selected!');
+    });
+  </script>
+</body>
+</html>
