@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHEMISTRY - Environmental Pollution (JAMB 2026)</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      background: var(--card-bg);
+      padding: 24px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      font-size: 22px;
+      margin: 0 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .section p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .section ul, .section ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .section li {
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .section .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 16px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .section table {
+      width: 100%;
+      min-width: 580px;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .section th,
+    .section td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .section th {
+      background: rgba(29, 185, 84, 0.2);
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .section tr:last-child td {
+      border-bottom: none;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">CHEMISTRY</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Environmental Pollution 🚀</h1>
+        <p class="subtitle">JAMB 2026 – New School Chemistry</p>
+      </div>
+
+      <div class="section">
+        
+        <h2>Definition of Environmental Pollution</h2>
+        <p><strong>Environmental pollution</strong> is the introduction of harmful substances or energy into the environment by human activities, causing adverse effects on living organisms and the ecosystem.</p>
+
+        <h2>Step 1: Air – Natural Gaseous Constituents and Proportions</h2>
+        <p>Air is not a compound — it is a mixture of gases.</p>
+        <p>The natural (dry) air composition by volume is:</p>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Gas</th>
+              <th>Chemical Formula</th>
+              <th>Approximate Percentage (%)</th>
+            </tr>
+            <tr>
+              <td>Nitrogen</td>
+              <td>N₂</td>
+              <td>78.0</td>
+            </tr>
+            <tr>
+              <td>Oxygen</td>
+              <td>O₂</td>
+              <td>21.0</td>
+            </tr>
+            <tr>
+              <td>Argon (noble gas)</td>
+              <td>Ar</td>
+              <td>0.93</td>
+            </tr>
+            <tr>
+              <td>Carbon(IV) oxide</td>
+              <td>CO₂</td>
+              <td>0.03 – 0.04</td>
+            </tr>
+            <tr>
+              <td>Neon (noble gas)</td>
+              <td>Ne</td>
+              <td>0.0018</td>
+            </tr>
+            <tr>
+              <td>Other noble gases</td>
+              <td>—</td>
+              <td>traces</td>
+            </tr>
+            <tr>
+              <td>Water vapour</td>
+              <td>H₂O(g)</td>
+              <td>0 – 4 (variable)</td>
+            </tr>
+          </table>
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Composition_of_air.svg/800px-Composition_of_air.svg.png" alt="Composition of air pie chart" class="diagram-img">
+
+        <h2>Step 2: Factors Responsible for Variation of Components of Air</h2>
+        <ul>
+          <li>Respiration (by humans, animals and plants): consumes O₂, produces CO₂</li>
+          <li>Photosynthesis (by green plants): consumes CO₂, releases O₂</li>
+          <li>Combustion (burning fuels, bush burning): consumes O₂, produces CO₂, CO, smoke</li>
+          <li>Industrial activities and vehicles: add CO₂, oxides of nitrogen, dust</li>
+          <li>Volcanic eruptions and decay of organic matter: increase CO₂, H₂S</li>
+          <li>Location: air near sea has more water vapour; industrial areas have more pollutants</li>
+        </ul>
+
+        <h2>Step 3: Air as a Mixture + Separation + Uses of Noble Gases</h2>
+        <p><strong>Why air is a mixture:</strong></p>
+        <ul>
+          <li>Its composition varies from place to place and time to time</li>
+          <li>Components can be separated by physical methods only</li>
+          <li>The properties of air are the average of the properties of its constituents</li>
+        </ul>
+        <p><strong>Principle of separation:</strong> Fractional distillation of liquid air.</p>
+        <p><strong>Uses of noble gases:</strong></p>
+        <ul>
+          <li><strong>Argon:</strong> used to fill electric bulbs and fluorescent tubes (inert, prevents filament from burning)</li>
+          <li><strong>Neon:</strong> used in advertising signs and glow lamps (gives red-orange light)</li>
+        </ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Fractional_distillation_of_air.svg/800px-Fractional_distillation_of_air.svg.png" alt="Fractional distillation of liquid air" class="diagram-img">
+
+        <h2>Step 4: Air Pollution</h2>
+        <p><strong>Examples of air pollutants:</strong> H₂S, CO, SO₂, NOₓ, CFCs, dust/particulates.</p>
+        <p><strong>Sources and effects of pollutants:</strong></p>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Pollutant</th>
+              <th>Main Sources</th>
+              <th>Harmful Effects</th>
+            </tr>
+            <tr>
+              <td>Carbon monoxide (CO)</td>
+              <td>Incomplete combustion of petrol/diesel, car exhaust</td>
+              <td>Combines with haemoglobin → reduces O₂ transport → headache, dizziness, death</td>
+            </tr>
+            <tr>
+              <td>Sulphur dioxide (SO₂)</td>
+              <td>Burning coal, fuel oil, volcanic eruptions</td>
+              <td>Acid rain (corrodes buildings), respiratory diseases</td>
+            </tr>
+            <tr>
+              <td>Oxides of nitrogen (NOₓ)</td>
+              <td>Car engines, power stations</td>
+              <td>Acid rain, photochemical smog, lung irritation</td>
+            </tr>
+            <tr>
+              <td>Hydrogen sulphide (H₂S)</td>
+              <td>Decay of organic matter, oil refineries</td>
+              <td>Rotten-egg smell, poisonous, damages respiratory system</td>
+            </tr>
+            <tr>
+              <td>Chlorofluorocarbons (CFCs)</td>
+              <td>Old refrigerators, aerosols, foams</td>
+              <td>Depletes ozone layer → more UV radiation → skin cancer</td>
+            </tr>
+            <tr>
+              <td>Dust/particulates</td>
+              <td>Construction, bush burning, factories</td>
+              <td>Causes respiratory diseases, reduces visibility</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>Step 5: Water Pollution</h2>
+        <ul>
+          <li><strong>Sewage pollution:</strong> human waste, industrial waste, detergents → increases BOD, eutrophication, spreads diseases (cholera, typhoid)</li>
+          <li><strong>Oil pollution:</strong> oil tanker accidents, pipeline leaks → forms layer on water surface, kills fish and birds</li>
+        </ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Oil_spill_in_Gulf_of_Mexico_2010.jpg/800px-Oil_spill_in_Gulf_of_Mexico_2010.jpg" alt="Oil spill water pollution" class="diagram-img">
+
+        <h2>Step 6: Soil Pollution</h2>
+        <p><strong>Oil spillage:</strong> pipeline vandalism, tanker accidents (very common in Nigeria) → kills soil microorganisms, destroys crops, contaminates underground water.</p>
+        <p><strong>Biodegradable vs Non-biodegradable pollutants:</strong></p>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Can be broken down by microbes?</th>
+              <th>Examples</th>
+            </tr>
+            <tr>
+              <td>Biodegradable</td>
+              <td>Yes</td>
+              <td>Sewage, animal dung, dead plants, paper</td>
+            </tr>
+            <tr>
+              <td>Non-biodegradable</td>
+              <td>No</td>
+              <td>Plastics, metal cans, pesticides, oil, glass</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>Step 7: Measures for Control of Environmental Pollution</h2>
+        <ul>
+          <li>Use catalytic converters in cars</li>
+          <li>Use unleaded petrol and CNG</li>
+          <li>Plant trees (afforestation)</li>
+          <li>Treat sewage before discharge</li>
+          <li>Proper disposal of plastics and oil</li>
+          <li>Government laws (NESREA in Nigeria)</li>
+        </ul>
+
+        <h2>3 JAMB-Style Examples & Explanations</h2>
+
+        <h3>Example 1: Air Composition</h3>
+        <p><strong>JAMB Question:</strong> Which gas makes up about 78% of dry air?</p>
+        <p><strong>Explanation:</strong> Nitrogen (N₂). JAMB always tests the exact percentages from the table.</p>
+
+        <h3>Example 2: Sources & Effects</h3>
+        <p><strong>JAMB Question:</strong> Which pollutant causes acid rain and is produced by burning coal?</p>
+        <p><strong>Explanation:</strong> Sulphur dioxide (SO₂). Know the table — it appears every year.</p>
+
+        <h3>Example 3: Biodegradable vs Non-biodegradable</h3>
+        <p><strong>JAMB Question:</strong> Classify plastics and sewage as biodegradable or non-biodegradable.</p>
+        <p><strong>Explanation:</strong> Plastics = non-biodegradable; sewage = biodegradable. JAMB tests this classification directly.</p>
+
+        <h2>Quick Revision Checklist</h2>
+        <ul>
+          <li>Definition of environmental pollution</li>
+          <li>Air composition table (percentages)</li>
+          <li>Sources & effects of air pollutants table</li>
+          <li>Biodegradable vs non-biodegradable</li>
+          <li>Control measures (catalytic converter, afforestation, etc.)</li>
+        </ul>
+        <p>You have now covered the entire topic exactly as it is taught in New School Chemistry. Revise the tables 3 times and you will score full marks! Aim for TopScore! 🚀</p>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="nav-bar">
+      <div class="nav-item">
+        <button class="neumorphic-btn">🔍</button>
+        <p>Search</p>
+      </div>
+      <div class="nav-item center">
+        <button class="neumorphic-btn">⭐</button>
+        <p>Favorite</p>
+      </div>
+      <div class="nav-item">
+        <button class="neumorphic-btn">📚</button>
+        <p>Library</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) console.log('Profile picture selected!');
+    });
+  </script>
+</body>
+</html>
