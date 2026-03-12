@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHEMISTRY - Non-metals and their Compounds (JAMB 2026)</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Arial',sans-serif;}
+
+:root{
+--background:#1e1e2f;
+--shadow-in:#171723;
+--shadow-out:#25253b;
+--text-primary:#f0f0ff;
+--text-secondary:#c0c0e0;
+--accent:#1db954;
+--card-bg:#2a2a3f;
+}
+
+body.light{
+--background:#e0e0e0;
+--shadow-in:#bebebe;
+--shadow-out:#ffffff;
+--text-primary:#1a1a1a;
+--text-secondary:#444;
+--accent:#1db954;
+--card-bg:#f8f8f8;
+}
+
+body{
+background:var(--background);
+color:var(--text-primary);
+min-height:100vh;
+overflow-x:hidden;
+}
+
+.container{
+width:100%;
+max-width:400px;
+margin:0 auto;
+background:var(--background);
+border-radius:20px;
+box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out);
+overflow:hidden;
+min-height:100vh;
+position:relative;
+padding-top:70px;
+padding-bottom:80px;
+}
+
+.neumorphic{
+background:var(--background);
+box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out);
+border-radius:15px;
+}
+
+.neumorphic-btn{
+background:var(--background);
+border:none;
+border-radius:50%;
+width:40px;
+height:40px;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+cursor:pointer;
+color:var(--text-primary);
+font-size:18px;
+}
+
+.neumorphic-btn:active{
+box-shadow:inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+}
+
+.top-bar{
+position:fixed;
+top:0;
+width:100%;
+max-width:400px;
+background:var(--background);
+padding:15px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 5px 10px var(--shadow-in);
+z-index:20;
+left:50%;
+transform:translateX(-50%);
+}
+
+.top-bar .header{
+font-size:18px;
+font-weight:bold;
+color:var(--text-primary);
+}
+
+.top-bar .right-icons{
+display:flex;
+gap:10px;
+}
+
+.top-bar .profile-upload{
+position:relative;
+}
+
+.top-bar .profile-upload input{
+opacity:0;
+position:absolute;
+width:40px;
+height:40px;
+cursor:pointer;
+}
+
+.content{
+padding:20px 16px;
+line-height:1.6;
+}
+
+.main-header{
+text-align:center;
+margin-bottom:32px;
+}
+
+.main-header h1{
+font-size:28px;
+margin-bottom:8px;
+color:var(--accent);
+font-weight:800;
+}
+
+.main-header p.subtitle{
+font-size:16px;
+color:var(--text-secondary);
+}
+
+.section{
+background:var(--card-bg);
+padding:24px 20px;
+border-radius:20px;
+box-shadow:inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+margin-bottom:30px;
+}
+
+.section h2{
+font-size:22px;
+margin:0 0 16px;
+color:var(--accent);
+font-weight:bold;
+}
+
+.section h3{
+font-size:18px;
+margin:24px 0 12px;
+color:var(--accent);
+}
+
+.section p{
+margin-bottom:16px;
+font-size:15px;
+color:var(--text-primary);
+}
+
+.section ul,.section ol{
+padding-left:24px;
+margin:16px 0;
+}
+
+.section li{
+margin-bottom:10px;
+font-size:15px;
+}
+
+.diagram-img{
+width:100%;
+border-radius:12px;
+margin:16px 0 8px;
+box-shadow:3px 3px 8px var(--shadow-in),-3px -3px 8px var(--shadow-out);
+}
+
+.table-wrapper{
+overflow-x:auto;
+margin:16px 0;
+-webkit-overflow-scrolling:touch;
+}
+
+.section table{
+width:100%;
+min-width:580px;
+border-collapse:collapse;
+background:var(--card-bg);
+border-radius:12px;
+overflow:hidden;
+box-shadow:3px 3px 8px var(--shadow-in),-3px -3px 8px var(--shadow-out);
+}
+
+.section th,.section td{
+padding:12px 15px;
+text-align:left;
+border-bottom:1px solid rgba(255,255,255,0.1);
+font-size:14px;
+white-space:nowrap;
+}
+
+.section th{
+background:rgba(29,185,84,0.2);
+color:var(--accent);
+font-weight:bold;
+}
+
+.nav-bar{
+position:fixed;
+bottom:0;
+width:100%;
+max-width:400px;
+background:var(--background);
+padding:10px;
+display:flex;
+justify-content:space-around;
+box-shadow:0 -5px 10px var(--shadow-in);
+z-index:20;
+left:50%;
+transform:translateX(-50%);
+}
+
+.nav-bar .nav-item{
+text-align:center;
+}
+
+.nav-bar .nav-item.center button{
+width:50px;
+height:50px;
+font-size:24px;
+background:var(--accent);
+box-shadow:0 0 15px var(--accent),3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+color:#000;
+}
+</style>
+</head>
+
+<body class="dark">
+
+<div class="container">
+
+<div class="top-bar neumorphic">
+<button class="neumorphic-btn">←</button>
+<div class="header">CHEMISTRY</div>
+<div class="right-icons">
+<button class="neumorphic-btn" id="theme-toggle">🌙</button>
+<button class="neumorphic-btn profile-upload">📷
+<input type="file" accept="image/*" id="profile-upload">
+</button>
+</div>
+</div>
+
+<div class="content">
+
+<div class="main-header">
+<h1>Non-metals & Their Compounds</h1>
+<p class="subtitle">JAMB 2026 – New School Chemistry</p>
+</div>
+
+<div class="section">
+
+<h2>Introduction to Non-metals</h2>
+
+<p><strong>Non-metals</strong> are elements that do not easily form positive ions and are poor conductors of heat and electricity.</p>
+
+<h3>Examples of Non-metals</h3>
+
+<ul>
+<li>Hydrogen (H)</li>
+<li>Oxygen (O)</li>
+<li>Nitrogen (N)</li>
+<li>Carbon (C)</li>
+<li>Sulphur (S)</li>
+<li>Halogens (F, Cl, Br, I)</li>
+</ul>
+
+<h3>General Properties of Non-metals</h3>
+
+<ul>
+<li>Usually gases or brittle solids</li>
+<li>Low melting and boiling points</li>
+<li>Poor conductors of heat and electricity</li>
+<li>Tend to gain electrons</li>
+<li>Form acidic oxides</li>
+</ul>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Periodic_table_nonmetals.png" class="diagram-img">
+
+<h2>(A) Hydrogen</h2>
+
+<p><strong>Hydrogen</strong> is the lightest element and the most abundant element in the universe.</p>
+
+<h3>Laboratory Preparation</h3>
+
+<p>Hydrogen is prepared by reacting metals with dilute acids.</p>
+
+<ul>
+<li>Zinc + Dilute HCl → Hydrogen</li>
+<li>Zinc + Dilute H₂SO₄ → Hydrogen</li>
+</ul>
+
+<p>Hydrogen is collected over water because it is <strong>insoluble in water</strong>.</p>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Hydrogen_preparation_lab.png" class="diagram-img">
+
+<h3>Commercial Production</h3>
+
+<ul>
+<li><strong>Water Gas Method</strong> – Steam passed over hot coke.</li>
+<li><strong>Cracking of Petroleum</strong> – Hydrogen produced during petroleum refining.</li>
+</ul>
+
+<h3>Properties of Hydrogen</h3>
+
+<ul>
+<li>Colourless gas</li>
+<li>Odourless</li>
+<li>Very light</li>
+<li>Slightly soluble in water</li>
+<li>Burns in air</li>
+<li>Acts as a reducing agent</li>
+</ul>
+
+<h3>Uses of Hydrogen</h3>
+
+<ul>
+<li>Manufacture of ammonia</li>
+<li>Hydrogenation of vegetable oils</li>
+<li>Rocket fuel</li>
+<li>Production of methanol</li>
+</ul>
+
+<h3>Test for Hydrogen</h3>
+
+<p>Bring a <strong>lighted splint</strong> near the gas.</p>
+
+<p><strong>Observation:</strong> Squeaky pop sound.</p>
+
+<h2>(B) Halogens</h2>
+
+<p>Halogens are elements in <strong>Group 17</strong> of the periodic table.</p>
+
+<ul>
+<li>Fluorine</li>
+<li>Chlorine</li>
+<li>Bromine</li>
+<li>Iodine</li>
+</ul>
+
+<h3>Chlorine (Cl₂)</h3>
+
+<p>Chlorine is a <strong>greenish-yellow poisonous gas</strong>.</p>
+
+<h3>Laboratory Preparation</h3>
+
+<p>Heating manganese (IV) oxide with concentrated HCl.</p>
+
+<h3>Industrial Preparation</h3>
+
+<p>Chlorine is produced by <strong>electrolysis of brine (NaCl solution)</strong>.</p>
+
+<h3>Products Produced</h3>
+
+<ul>
+<li>Chlorine gas</li>
+<li>Hydrogen gas</li>
+<li>Sodium hydroxide</li>
+</ul>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Chlorine_gas.jpg" class="diagram-img">
+
+<h3>Uses of Chlorine</h3>
+
+<ul>
+<li>Water sterilization</li>
+<li>Bleaching agent</li>
+<li>Manufacture of plastics (PVC)</li>
+<li>Production of hydrochloric acid</li>
+<li>Insecticides</li>
+</ul>
+
+<h3>Test for Chloride Ion</h3>
+
+<p>Add <strong>Silver Nitrate (AgNO₃)</strong></p>
+
+<p>Result: <strong>White precipitate</strong></p>
+
+<h2>(C) Oxygen</h2>
+
+<p>Oxygen supports <strong>combustion and respiration</strong>.</p>
+
+<h3>Laboratory Preparation</h3>
+
+<p>Heating potassium chlorate with MnO₂ catalyst.</p>
+
+<h3>Commercial Production</h3>
+
+<p>Obtained from <strong>fractional distillation of liquid air</strong>.</p>
+
+<h3>Uses</h3>
+
+<ul>
+<li>Respiration</li>
+<li>Welding</li>
+<li>Steel manufacture</li>
+<li>Medical oxygen</li>
+</ul>
+
+<h3>Types of Oxides</h3>
+
+<div class="table-wrapper">
+<table>
+<tr>
+<th>Type</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>Acidic</td>
+<td>CO₂</td>
+</tr>
+
+<tr>
+<td>Basic</td>
+<td>CaO</td>
+</tr>
+
+<tr>
+<td>Amphoteric</td>
+<td>Al₂O₃</td>
+</tr>
+
+<tr>
+<td>Neutral</td>
+<td>CO</td>
+</tr>
+
+</table>
+</div>
+
+<h2>Water</h2>
+
+<p>Water forms when hydrogen burns in oxygen.</p>
+
+<p><strong>Composition by volume:</strong></p>
+
+<p>Hydrogen : Oxygen = <strong>2 : 1</strong></p>
+
+<h3>Hard and Soft Water</h3>
+
+<div class="table-wrapper">
+
+<table>
+
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Soft Water</td>
+<td>Lathers easily with soap</td>
+</tr>
+
+<tr>
+<td>Hard Water</td>
+<td>Does not lather easily</td>
+</tr>
+
+</table>
+
+</div>
+
+<h2>(D) Nitrogen</h2>
+
+<p>Nitrogen makes about <strong>78% of air</strong>.</p>
+
+<h3>Ammonia (NH₃)</h3>
+
+<p>Prepared industrially using the <strong>Haber Process</strong>.</p>
+
+<ul>
+<li>Nitrogen + Hydrogen → Ammonia</li>
+<li>High pressure and temperature</li>
+</ul>
+
+<h3>Uses</h3>
+
+<ul>
+<li>Fertilizer production</li>
+<li>Manufacture of nitric acid</li>
+<li>Refrigeration</li>
+</ul>
+
+<h3>Test for Ammonia</h3>
+
+<p>Turns <strong>moist red litmus paper blue</strong>.</p>
+
+<h2>(E) Carbon</h2>
+
+<h3>Allotropes of Carbon</h3>
+
+<ul>
+<li>Diamond</li>
+<li>Graphite</li>
+<li>Charcoal</li>
+<li>Coke</li>
+</ul>
+
+<h3>Carbon (IV) Oxide</h3>
+
+<p>CO₂ turns <strong>limewater milky</strong>.</p>
+
+<h3>Carbon (II) Oxide</h3>
+
+<p>CO is <strong>colourless, odourless and poisonous</strong>.</p>
+
+<h2>Important JAMB Tests</h2>
+
+<div class="table-wrapper">
+
+<table>
+
+<tr>
+<th>Substance</th>
+<th>Test</th>
+</tr>
+
+<tr>
+<td>Hydrogen</td>
+<td>Pop sound</td>
+</tr>
+
+<tr>
+<td>CO₂</td>
+<td>Limewater turns milky</td>
+</tr>
+
+<tr>
+<td>NH₃</td>
+<td>Turns red litmus blue</td>
+</tr>
+
+<tr>
+<td>H₂S</td>
+<td>Blackens lead acetate paper</td>
+</tr>
+
+<tr>
+<td>Cl⁻</td>
+<td>White ppt with AgNO₃</td>
+</tr>
+
+<tr>
+<td>SO₄²⁻</td>
+<td>White ppt with BaCl₂</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+</div>
+
+<div class="nav-bar">
+<div class="nav-item">
+<button class="neumorphic-btn">🔍</button>
+<p>Search</p>
+</div>
+
+<div class="nav-item center">
+<button class="neumorphic-btn">⭐</button>
+<p>Favorite</p>
+</div>
+
+<div class="nav-item">
+<button class="neumorphic-btn">📚</button>
+<p>Library</p>
+</div>
+</div>
+
+</div>
+
+<script>
+const themeToggle=document.getElementById('theme-toggle');
+const body=document.body;
+
+function setTheme(theme){
+body.className=theme;
+themeToggle.textContent=theme==='light'?'🌙':'☀️';
+localStorage.setItem('theme',theme);
+}
+
+const savedTheme=localStorage.getItem('theme')||'dark';
+setTheme(savedTheme);
+
+themeToggle.addEventListener('click',()=>{
+const newTheme=body.classList.contains('light')?'dark':'light';
+setTheme(newTheme);
+});
+
+document.getElementById('profile-upload').addEventListener('change',(e)=>{
+if(e.target.files[0]) console.log('Profile picture selected!');
+});
+</script>
+
+</body>
+</html>
