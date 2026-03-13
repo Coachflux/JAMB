@@ -3,21 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fast Quiz Platform</title>
+  <title>Complete Quiz Platform</title>
   <style>
-    /* Critical CSS - inline for fast paint */
     *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
-    :root{--bg:#1e1e2f;--si:#171723;--so:#25253b;--t:#fff;--a:#1db954;--d:#ff4d4d;--w:#ff9800}
-    body.light{--bg:#e0e5ec;--si:#a3b1c6;--so:#ffffff;--t:#2d3748;--a:#48bb78;--d:#e53e3e;--w:#dd6b20}
+    :root{--bg:#1e1e2f;--si:#171723;--so:#25253b;--t:#fff;--a:#1db954;--d:#ff4d4d;--w:#ff9800;--info:#2196f3}
+    body.light{--bg:#e0e5ec;--si:#a3b1c6;--so:#ffffff;--t:#2d3748;--a:#48bb78;--d:#e53e3e;--w:#dd6b20;--info:#1976d2}
     body{background:var(--bg);color:var(--t);min-height:100vh;line-height:1.6}
     
-    /* Loading - minimal, fast */
     #load{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
     #load.hide{opacity:0;pointer-events:none}
     .spinner{width:40px;height:40px;border:3px solid var(--si);border-top-color:var(--a);border-radius:50%;animation:spin 1s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     
-    /* Access screen */
     #access{display:none;min-height:100vh;padding:20px;align-items:center;justify-content:center}
     .card{background:var(--bg);padding:32px;border-radius:16px;width:100%;max-width:400px;box-shadow:8px 8px 16px var(--si),-8px -8px 16px var(--so)}
     .card h1{color:var(--a);margin-bottom:8px;font-size:24px}
@@ -32,31 +29,26 @@
     .msg.err{background:rgba(255,77,77,.1);color:var(--d)}
     .msg.ok{background:rgba(29,185,84,.1);color:var(--a)}
     
-    /* Quiz container */
-    #quiz{display:none;max-width:800px;margin:0 auto;padding:72px 12px 80px}
+    #quiz{display:none;max-width:800px;margin:0 auto;padding:80px 12px 100px}
     
-    /* Fixed top bar - minimal */
     .top{position:fixed;top:0;left:0;right:0;height:56px;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:0 12px;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.1)}
     .top h1{font-size:15px;font-weight:600;flex:1;text-align:center}
     .btn{width:36px;height:36px;border-radius:50%;background:var(--bg);border:none;color:var(--t);cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so);display:flex;align-items:center;justify-content:center;font-size:16px}
     .btn:active{box-shadow:inset 2px 2px 4px var(--si),inset -2px -2px 4px var(--so)}
     
-    /* Progress bar */
     .prog{position:fixed;top:56px;left:0;right:0;height:3px;background:var(--si);z-index:99}
     .prog-bar{height:100%;background:var(--a);width:0%;transition:width .2s}
     .prog-text{position:fixed;top:62px;right:12px;font-size:11px;background:var(--bg);padding:2px 8px;border-radius:10px;box-shadow:1px 1px 2px var(--si)}
     
-    /* Question area - optimized */
     .q-cont{background:var(--bg);border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:4px 4px 8px var(--si),-4px -4px 8px var(--so)}
     .timer{font-size:13px;margin-bottom:12px;color:#888;display:flex;align-items:center;gap:6px}
     .timer.warn{color:var(--w);font-weight:600}
     .timer.danger{color:var(--d);font-weight:600;animation:pulse 1s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
     .passage-type{display:inline-block;padding:4px 12px;background:var(--a);color:#fff;font-size:11px;border-radius:20px;margin-bottom:10px;font-weight:600}
-    .passage{font-size:14px;line-height:1.8;margin-bottom:16px;padding:16px;background:rgba(0,0,0,.03);border-radius:8px;border-left:4px solid var(--a);max-height:300px;overflow-y:auto;white-space:pre-wrap}
+    .passage{font-size:14px;line-height:1.8;margin-bottom:16px;padding:16px;background:rgba(0,0,0,.03);border-radius:8px;border-left:4px solid var(--a);max-height:350px;overflow-y:auto;white-space:pre-wrap}
     .question{font-size:15px;font-weight:600;margin-bottom:14px;padding:12px;background:rgba(0,0,0,.03);border-radius:8px}
     
-    /* Options - flat design for speed */
     .opts{display:flex;flex-direction:column;gap:10px}
     .opt{padding:14px 16px;background:var(--bg);border-radius:10px;cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so);display:flex;align-items:center;gap:12px;transition:all .15s;border:2px solid transparent}
     .opt:hover{border-color:rgba(29,185,84,.3)}
@@ -65,17 +57,15 @@
     .opt.sel .opt-mark{background:var(--a);color:#fff}
     .opt p{font-size:14px;flex:1}
     
-    /* Navigation */
-    .nav{position:relative;bottom:0;left:0;right:0;height:64px;background:var(--bg);display:flex;align-items:center;justify-content:center;gap:12px;padding:0 12px;box-shadow:0 -2px 8px rgba(0,0,0,.1);z-index:100}
-    .nav-btn{padding:10px 20px;border-radius:8px;border:none;background:var(--bg);color:var(--t);font-size:14px;font-weight:600;cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so)}
+    .nav{position:fixed;bottom:0;left:0;right:0;height:70px;background:var(--bg);display:flex;align-items:center;justify-content:center;gap:12px;padding:0 12px;box-shadow:0 -2px 8px rgba(0,0,0,.1);z-index:100}
+    .nav-btn{padding:12px 24px;border-radius:8px;border:none;background:var(--bg);color:var(--t);font-size:14px;font-weight:600;cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so)}
     .nav-btn:disabled{opacity:.4;cursor:not-allowed}
     .nav-btn.primary{background:var(--a);color:#fff}
-    .nav-center{width:44px;height:44px;border-radius:50%;background:var(--a);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(29,185,84,.3)}
+    .nav-center{width:48px;height:48px;border-radius:50%;background:var(--a);color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(29,185,84,.3)}
     
-    /* Popup - simplified */
     .pop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px}
     .pop.show{display:flex}
-    .pop-box{background:var(--bg);border-radius:16px;padding:20px;width:100%;max-width:360px;max-height:70vh;overflow-y:auto}
+    .pop-box{background:var(--bg);border-radius:16px;padding:20px;width:100%;max-width:360px;max-height:80vh;overflow-y:auto}
     .pop-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
     .pop h3{font-size:16px}
     .pop-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
@@ -83,42 +73,52 @@
     .pop-grid button.ans{background:var(--a);color:#fff}
     .pop-grid button.cur{border:2px solid var(--a)}
     
-    /* Results */
-    .res{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+    /* Results Screen - Fixed */
+    .res{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;overflow-y:auto}
     .res.show{display:flex}
-    .res-circle{width:120px;height:120px;border-radius:50%;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:6px 6px 12px var(--si),-6px -6px 12px var(--so)}
-    .res-score{font-size:32px;font-weight:800;color:var(--a)}
-    .res-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888}
-    .res h2{font-size:22px;margin-bottom:8px}
-    .res p{color:#888;margin-bottom:24px;font-size:14px}
-    .res-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+    .res-box{background:var(--bg);padding:32px;border-radius:24px;box-shadow:8px 8px 16px var(--si),-8px -8px 16px var(--so);max-width:400px;width:100%}
+    .res-circle{width:140px;height:140px;border-radius:50%;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:6px 6px 12px var(--si),-6px -6px 12px var(--so)}
+    .res-score{font-size:36px;font-weight:800;color:var(--a)}
+    .res-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:4px}
+    .res h2{font-size:24px;margin-bottom:8px}
+    .res p{color:#888;margin-bottom:24px;font-size:15px;line-height:1.5}
+    .res-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+    .res-btns button{min-width:120px}
     
-    /* Details */
-    .det{display:none;position:fixed;inset:0;background:var(--bg);z-index:250;overflow-y:auto;padding:60px 12px 20px}
-    .det-head{position:fixed;top:0;left:0;right:0;height:56px;background:var(--bg);display:flex;align-items:center;gap:12px;padding:0 12px;box-shadow:0 2px 8px rgba(0,0,0,.1);z-index:251}
-    .det h3{flex:1;font-size:15px}
-    .det-item{margin-bottom:12px;padding:14px;background:rgba(0,0,0,.03);border-radius:10px;border-left:3px solid var(--d)}
+    .det{display:none;position:fixed;inset:0;background:var(--bg);z-index:250;overflow-y:auto;padding:80px 16px 24px}
+    .det-head{position:fixed;top:0;left:0;right:0;height:56px;background:var(--bg);display:flex;align-items:center;gap:12px;padding:0 16px;box-shadow:0 2px 8px rgba(0,0,0,.1);z-index:251}
+    .det h3{flex:1;font-size:16px}
+    .det-summary{background:var(--bg);padding:20px;border-radius:16px;margin-bottom:20px;box-shadow:4px 4px 8px var(--si),-4px -4px 8px var(--so);text-align:center}
+    .det-summary .big{font-size:48px;font-weight:800;color:var(--a)}
+    .det-item{margin-bottom:16px;padding:16px;background:rgba(0,0,0,.03);border-radius:12px;border-left:4px solid var(--d)}
     .det-item.ok{border-left-color:var(--a)}
-    .det-item h4{font-size:13px;color:#888;margin-bottom:6px}
-    .det-item p{font-size:14px;margin-bottom:4px}
-    .det-item .exp{font-size:13px;color:#666;margin-top:8px;padding:10px;background:var(--bg);border-radius:6px;box-shadow:inset 2px 2px 4px var(--si)}
+    .det-item h4{font-size:13px;color:#888;margin-bottom:8px}
+    .det-item .q-text{font-size:15px;font-weight:600;margin-bottom:10px;padding:10px;background:var(--bg);border-radius:8px}
+    .det-item .ans-row{display:flex;gap:16px;margin-bottom:6px;font-size:14px}
+    .det-item .ans-row strong{min-width:80px}
+    .det-item .exp{font-size:13px;color:#666;margin-top:10px;padding:12px;background:var(--bg);border-radius:8px;box-shadow:inset 2px 2px 4px var(--si);line-height:1.6}
     
-    /* Utilities */
     .hide{display:none!important}
-    @media(max-width:400px){.passage{max-height:250px;font-size:13px}.opt{padding:12px}}
+    @media(max-width:400px){
+      .passage{max-height:280px;font-size:13px}
+      .opt{padding:12px}
+      .res-box{padding:24px}
+      .res-circle{width:120px;height:120px}
+      .res-score{font-size:32px}
+    }
   </style>
 </head>
 <body>
-  <!-- Fast loading screen -->
+  <!-- Loading -->
   <div id="load"><div class="spinner"></div></div>
 
-  <!-- Access Screen -->
+  <!-- Access -->
   <div id="access">
     <div class="card">
       <h1>🔐 Quiz Access</h1>
-      <p>Enter code to begin</p>
-      <input type="text" id="code" placeholder="8-char code" maxlength="8" autocomplete="off">
-      <button class="primary" id="unlockBtn" onclick="unlock()">Start</button>
+      <p>Enter your 8-character access code</p>
+      <input type="text" id="code" placeholder="XXXXXXXX" maxlength="8" autocomplete="off">
+      <button class="primary" id="unlockBtn" onclick="unlock()">Start Quiz</button>
       <div class="msg" id="msg"></div>
     </div>
   </div>
@@ -127,7 +127,7 @@
   <div id="quiz">
     <div class="top">
       <button class="btn" onclick="exit()">←</button>
-      <h1>Comprehension Quiz</h1>
+      <h1>Use of English – Comprehension</h1>
       <button class="btn" onclick="toggleTheme()">🌙</button>
     </div>
     
@@ -137,64 +137,67 @@
     <div class="q-cont">
       <div class="timer" id="timer">⏱️ 30:00</div>
       <div class="passage-type" id="ptype">Passage 1</div>
-      <!-- Passage container - ALWAYS VISIBLE -->
       <div class="passage" id="passage"></div>
       <div class="question" id="question"></div>
       <div class="opts" id="opts"></div>
     </div>
     
     <div class="nav">
-      <button class="nav-btn" id="prev" onclick="prev()">← Prev</button>
+      <button class="nav-btn" id="prevBtn" onclick="prev()">← Prev</button>
       <button class="nav-center" onclick="showPop()">📋</button>
-      <button class="nav-btn primary" id="next" onclick="next()">Next →</button>
+      <button class="nav-btn primary" id="nextBtn" onclick="next()">Next →</button>
     </div>
   </div>
 
-  <!-- Navigator Popup -->
+  <!-- Navigator -->
   <div class="pop" id="pop" onclick="hidePop(event)">
     <div class="pop-box" onclick="event.stopPropagation()">
       <div class="pop-head">
-        <h3>Jump to Question</h3>
+        <h3>Question Navigator</h3>
         <button class="btn" onclick="hidePop()">✕</button>
       </div>
       <div class="pop-grid" id="pgrid"></div>
-      <div style="font-size:12px;color:#888;text-align:center">
+      <div style="font-size:12px;color:#888;text-align:center;margin-top:8px">
         <span style="color:var(--a)">●</span> Answered &nbsp;
-        <span style="color:var(--t)">●</span> Current
+        <span style="color:var(--t)">●</span> Current &nbsp;
+        <span style="color:#666">●</span> Unanswered
       </div>
     </div>
   </div>
 
-  <!-- Results -->
+  <!-- Results - Fixed Structure -->
   <div class="res" id="res">
-    <div class="res-circle">
-      <div class="res-score" id="rscore">0%</div>
-      <div class="res-label">Score</div>
-    </div>
-    <h2 id="rtitle">Done!</h2>
-    <p id="rmsg">Completed</p>
-    <div class="res-btns">
-      <button class="primary" onclick="showDet()" style="width:auto;padding:12px 24px">Details</button>
-      <button class="nav-btn" onclick="restart()">Restart</button>
+    <div class="res-box">
+      <div class="res-circle">
+        <div class="res-score" id="rscore">0%</div>
+        <div class="res-label">Score</div>
+      </div>
+      <h2 id="rtitle">Quiz Complete!</h2>
+      <p id="rmsg">You completed the quiz</p>
+      <div class="res-btns">
+        <button class="primary" onclick="showDet()">📊 View Details</button>
+        <button class="nav-btn" onclick="continueQuiz()">↩ Continue</button>
+        <button class="nav-btn" onclick="restart()" style="background:var(--d);color:#fff">🔄 Restart</button>
+      </div>
     </div>
   </div>
 
   <!-- Details -->
   <div class="det" id="det">
     <div class="det-head">
-      <button class="btn" onclick="hideDet()">←</button>
+      <button class="btn" onclick="hideDet()">← Back</button>
       <h3>Detailed Results</h3>
-      <button class="btn" onclick="print()">🖨️</button>
+      <button class="btn" onclick="window.print()">🖨️ Print</button>
     </div>
     <div id="dcont"></div>
   </div>
 
 <script>
-// Minimal, fast JavaScript
-const CONFIG={TIME:1800,PASS:60,DB:'quiz_db'};
-let state={data:[],ans:[],p:0,q:0,time:CONFIG.TIME,timer:null};
+// Configuration
+const CONFIG={TIME:1800,PASS:60};
+let state={data:[],ans:[],p:0,q:0,time:CONFIG.TIME,timer:null,submitted:false};
 
-// COMPLETE PASSAGE DATA - Full text for users to read
+// Complete Quiz Data - 10 Passages, 50 Questions
 const QUIZ_DATA=[
   {
     t:"Descriptive",
@@ -208,17 +211,6 @@ const QUIZ_DATA=[
     ]
   },
   {
-    t:"Narrative",
-    pass:"Ibrahim failed his WAEC twice and felt like giving up. His uncle encouraged him to enrol in evening classes. He studied every night after farm work, often falling asleep over his books. On result day, he trembled as he checked his grades. He passed with credits in all subjects. His family celebrated with jollof rice and music. Ibrahim decided to pursue teaching to help others overcome similar challenges.",
-    qs:[
-      {q:"The story is mainly about",o:["why WAEC is unfair","a boy's perseverance leading to success","uncle's farm work","celebration parties"],a:1,e:"Failure → effort → success → future goal."},
-      {q:"Why did Ibrahim study every night?",o:["to play games","to pass WAEC after failures","to avoid farm work","to impress friends"],a:1,e:"Direct motivation from the passage."},
-      {q:"The word 'perseverance' means",o:["quitting easily","continuing despite difficulties","cheating","celebrating early"],a:1,e:"Continued studying after failures."},
-      {q:"Ibrahim's success teaches that",o:["failure is final","hard work pays off","uncles are unnecessary","teaching is easy"],a:1,e:"Moral from story."},
-      {q:"The ending is",o:["sad","hopeful and positive","angry","confusing"],a:1,e:"Celebration + decision to help others."}
-    ]
-  },
-  {
     t:"Descriptive",
     pass:"Harmattan sweeps across northern Nigeria, turning the sky hazy and the air dry and cool. Fine dust settles on everything—cars, windows, and even inside locked cupboards. Bare acacia trees stand like skeletons against the pale horizon. Yet children play happily outdoors, flying homemade kites from dry grass. The cool breeze brings relief after the rainy season heat. The season carries a quiet beauty amid its harshness.",
     qs:[
@@ -228,52 +220,134 @@ const QUIZ_DATA=[
       {q:"It can be inferred that harmattan",o:["is hated by all children","has both uncomfortable and enjoyable aspects","prevents all outdoor play","occurs only at night"],a:1,e:"Children play happily despite dust."},
       {q:"The phrase 'stand like skeletons' is",o:["metaphor","simile","personification","alliteration"],a:1,e:"Uses 'like' for comparison."}
     ]
+  },
+  {
+    t:"Descriptive",
+    pass:"Calabar Carnival streets explode in a riot of colour during December. Masquerades in elaborate costumes dance to highlife and Ekpe rhythms. The air is thick with the smell of afang soup and roasted plantain from roadside vendors. Spectators cheer from balconies while drummers beat feverishly. The festival radiates joy, unity, and cultural pride.",
+    qs:[
+      {q:"The main focus is",o:["the cost of carnival costumes","describing the vibrant and joyful atmosphere of Calabar Carnival","explaining carnival history","criticizing noise pollution"],a:1,e:"Sensory and emotional details highlight vibrancy and joy."},
+      {q:"'Explode in a riot of colour' means",o:["become dull","suddenly fill with bright, chaotic colours","remain plain","disappear"],a:1,e:"Sudden, intense burst of colours."},
+      {q:"The writer's attitude is",o:["disapproving","enthusiastic and positive","indifferent","critical"],a:1,e:"Words like 'joy', 'unity', 'pride' show admiration."},
+      {q:"The carnival is characterized by",o:["silence and boredom","music, dance, food, and celebration","only masquerades","no spectators"],a:1,e:"Dancing, rhythms, vendors, cheering."},
+      {q:"'Beat feverishly' suggests the drummers",o:["play slowly","play with intense energy","stop playing","play quietly"],a:1,e:"High energy and excitement."}
+    ]
+  },
+  {
+    t:"Narrative",
+    pass:"Ibrahim failed his WAEC twice and felt like giving up. His uncle encouraged him to enrol in evening classes. He studied every night after farm work. On result day, he passed with credits in all subjects. His family celebrated, and Ibrahim decided to pursue teaching to help others.",
+    qs:[
+      {q:"The story is mainly about",o:["why WAEC is unfair","a boy's perseverance leading to success","uncle's farm work","celebration parties"],a:1,e:"Failure → effort → success → future goal."},
+      {q:"Why did Ibrahim study every night?",o:["to play games","to pass WAEC after failures","to avoid farm work","to impress friends"],a:1,e:"Direct motivation."},
+      {q:"The word 'perseverance' means",o:["quitting easily","continuing despite difficulties","cheating","celebrating early"],a:1,e:"Continued studying after failures."},
+      {q:"Ibrahim's success teaches that",o:["failure is final","hard work pays off","uncles are unnecessary","teaching is easy"],a:1,e:"Moral from story."},
+      {q:"The ending is",o:["sad","hopeful and positive","angry","confusing"],a:1,e:"Celebration + decision to help others."}
+    ]
+  },
+  {
+    t:"Narrative",
+    pass:"During the flood in Lokoja, Fatima saw her elderly neighbour trapped on the roof. She tied a rope around her waist and swam through the strong current to reach her. With help from others, she pulled the woman to safety. The community hailed Fatima as a heroine, and she felt proud of her courage.",
+    qs:[
+      {q:"The story is primarily about",o:["dangers of floods only","a girl's bravery in rescuing a neighbour","how to swim in floods","why Lokoja floods"],a:1,e:"Rescue act + recognition."},
+      {q:"Fatima tied a rope because",o:["she wanted to play","to stay safe while rescuing","to tie the neighbour","to escape"],a:1,e:"Safety measure during rescue."},
+      {q:"The word 'hailed' means",o:["ignored","praised loudly","criticized","forgotten"],a:1,e:"Community praise."},
+      {q:"Fatima can be described as",o:["selfish","courageous and selfless","fearful","careless"],a:1,e:"Risked herself for another."},
+      {q:"The narrative ends with",o:["tragedy","pride and community approval","regret","anger"],a:1,e:"Hailed as heroine + pride."}
+    ]
+  },
+  {
+    t:"Narrative",
+    pass:"Kemi dreamed of becoming a doctor but her family could not afford university fees. She applied for a scholarship and studied day and night. She won the award and is now in medical school. Kemi says determination turned her dream into reality.",
+    qs:[
+      {q:"The passage tells",o:["why scholarships are useless","how hard work and opportunity led to success","doctor's salary","family poverty"],a:1,e:"Dream → effort → scholarship → success."},
+      {q:"Kemi studied day and night to",o:["waste time","win the scholarship","avoid school","play"],a:1,e:"Preparation for scholarship."},
+      {q:"'Determination' means",o:["laziness","strong resolve to succeed","giving up","dreaming only"],a:1,e:"Persistent effort."},
+      {q:"The story shows that",o:["dreams are impossible","determination can overcome obstacles","scholarships are easy","medicine is simple"],a:1,e:"Moral."},
+      {q:"The tone is",o:["discouraging","inspiring","neutral","sad"],a:1,e:"Positive outcome and message."}
+    ]
+  },
+  {
+    t:"Expository",
+    pass:"Online learning has grown rapidly in Nigeria since the pandemic. It allows students in remote areas to access lectures via phones or laptops. However, poor internet and lack of devices limit its reach. Schools should provide data subsidies and training. When properly supported, online education can bridge the urban-rural gap.",
+    qs:[
+      {q:"The passage explains",o:["why online learning failed","the growth, benefits, and challenges of online learning in Nigeria","how to buy laptops","pandemic history"],a:1,e:"Growth + advantages + problems + solutions."},
+      {q:"Online learning helps",o:["only city students","remote students access education","increase illiteracy","destroy schools"],a:1,e:"Direct benefit."},
+      {q:"The word 'bridge' means",o:["destroy","connect or reduce gap","ignore","widen"],a:1,e:"Reduce urban-rural divide."},
+      {q:"The writer suggests schools should",o:["ban online classes","provide subsidies and training","ignore internet problems","stop using phones"],a:1,e:"Recommendations."},
+      {q:"The main idea is",o:["online learning is useless","online learning has potential if challenges are addressed","rural areas have no phones","pandemic is over"],a:1,e:"Balanced view with support needed."}
+    ]
+  },
+  {
+    t:"Expository",
+    pass:"Recycling plastic waste reduces environmental pollution in Nigerian cities. Collected plastics can be turned into chairs, tiles, and bags. Communities should set up collection points and awareness campaigns. When recycling becomes a habit, Nigeria will have cleaner streets and less flooding from blocked drains.",
+    qs:[
+      {q:"The passage explains",o:["why plastic is good","benefits of recycling and how to promote it","how to produce plastic","flooding causes only"],a:1,e:"Advantages + methods."},
+      {q:"Recycling helps by",o:["increasing waste","reducing pollution and reusing materials","blocking drains","making streets dirtier"],a:1,e:"Cleaner environment."},
+      {q:"'Habit' means",o:["rare action","regular practice","one-time event","impossible task"],a:1,e:"Regular behaviour."},
+      {q:"Communities should",o:["ignore plastic","set up collection and awareness","burn plastic","throw more waste"],a:1,e:"Suggested steps."},
+      {q:"The main message is",o:["recycling is harmful","recycling can solve waste problems if practised widely","Nigeria has no plastic","chairs are useless"],a:1,e:"Positive potential with action."}
+    ]
+  },
+  {
+    t:"Argumentative",
+    pass:"Some argue that university degrees are worthless because of unemployment. I disagree. A degree builds critical thinking, discipline, and networks that entrepreneurship needs. Many successful Nigerian CEOs hold degrees. Government should focus on quality education and job creation, not discourage higher learning.",
+    qs:[
+      {q:"The writer's position is",o:["degrees are useless","university degrees remain valuable","everyone should drop out","unemployment is permanent"],a:1,e:"Disagrees + defends value."},
+      {q:"The writer supports argument with",o:["personal failure stories","benefits and examples of successful graduates","attacks on students","agreement with critics"],a:1,e:"Critical thinking, CEOs."},
+      {q:"'Networks' means",o:["isolation","connections and relationships","buildings","books"],a:1,e:"Useful contacts."},
+      {q:"Government should",o:["close universities","improve education and create jobs","discourage degrees","increase unemployment"],a:1,e:"Suggested."},
+      {q:"The passage is",o:["descriptive","argumentative in favour of university education","narrative","expository only"],a:1,e:"Takes side and persuades."}
+    ]
+  },
+  {
+    t:"Argumentative",
+    pass:"Many claim corporal punishment is necessary for discipline. I oppose it. It causes fear and resentment instead of respect. Positive reinforcement and counselling work better. Schools should adopt non-violent methods for lasting good behaviour.",
+    qs:[
+      {q:"The writer's position is",o:["for corporal punishment","against corporal punishment","neutral","unsure"],a:1,e:"Opposes + alternatives."},
+      {q:"Corporal punishment causes",o:["respect","fear and resentment","better learning","happiness"],a:1,e:"Negative effects."},
+      {q:"'Reinforcement' means",o:["punishment","encouragement and reward","ignoring","beating"],a:1,e:"Positive approach."},
+      {q:"Schools should use",o:["only beating","non-violent methods","no discipline","fear only"],a:1,e:"Recommended."},
+      {q:"The passage is",o:["descriptive","argumentative against corporal punishment","narrative","expository only"],a:1,e:"Takes position against."}
+    ]
   }
 ];
 
-// Fast initialization
+// Initialize
 function init(){
   state.data=QUIZ_DATA;
   state.ans=state.data.map(p=>Array(p.qs.length).fill(null));
-  state.p=0;state.q=0;state.time=CONFIG.TIME;
+  state.p=0;state.q=0;state.time=CONFIG.TIME;state.submitted=false;
   
-  // Check saved
-  const saved=sessionStorage.getItem('q');
+  const saved=sessionStorage.getItem('quiz_progress');
   if(saved){
     const d=JSON.parse(saved);
-    if(Date.now()-d.ts<86400000&&confirm('Resume previous session?')){
+    if(Date.now()-d.ts<86400000&&!d.submitted&&confirm('Resume previous session?')){
       state.p=d.p;state.q=d.q;state.ans=d.ans;state.time=d.time;
     }
   }
   
-  // Show access or quiz
   document.getElementById('load').classList.add('hide');
-  if(localStorage.getItem('auth')) showQuiz();
-  else document.getElementById('access').style.display='flex';
+  document.getElementById('access').style.display='flex';
 }
 
 function unlock(){
   const c=document.getElementById('code').value.trim().toUpperCase();
   const btn=document.getElementById('unlockBtn');
-  const msg=document.getElementById('msg');
   
-  if(c.length!==8){showMsg('Enter 8 characters','err');return;}
+  if(c.length!==8){showMsg('Enter 8-character code','err');return;}
   
-  btn.disabled=true;
-  // Simulate check
+  btn.disabled=true;btn.textContent='Checking...';
+  
   setTimeout(()=>{
-    if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid code format','err');btn.disabled=false;return;}
-    localStorage.setItem('auth',c);
+    if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid code format','err');btn.disabled=false;btn.textContent='Start Quiz';return;}
+    localStorage.setItem('quiz_auth',c);
     showMsg('Access granted!','ok');
-    setTimeout(showQuiz,400);
-  },200);
-}
-
-function showQuiz(){
-  document.getElementById('access').style.display='none';
-  document.getElementById('quiz').style.display='block';
-  startTimer();
-  render();
+    setTimeout(()=>{
+      document.getElementById('access').style.display='none';
+      document.getElementById('quiz').style.display='block';
+      startTimer();
+      render();
+    },400);
+  },300);
 }
 
 function showMsg(t,type){
@@ -287,8 +361,10 @@ function startTimer(){
     if(state.time>0){
       state.time--;
       updateTimer();
-      if(state.time%10===0)save();
-    }else submit(true);
+      if(state.time%10===0)saveProgress();
+    }else{
+      submit(true);
+    }
   },1000);
 }
 
@@ -303,25 +379,21 @@ function render(){
   const p=state.data[state.p];
   const q=p.qs[state.q];
   
-  // Update progress
+  // Progress
   const total=state.data.reduce((s,d)=>s+d.qs.length,0);
   const done=state.ans.flat().filter(x=>x!==null).length;
   document.getElementById('pbar').style.width=(done/total*100)+'%';
   document.getElementById('ptxt').textContent=`${done}/${total}`;
   
-  // ALWAYS show passage type and passage text
-  document.getElementById('ptype').textContent=`${p.t} Passage ${state.p+1}/${state.data.length}`;
-  
-  // FIX: Always show passage, not just on first question
-  const passEl=document.getElementById('passage');
-  passEl.style.display='block';
-  passEl.textContent=p.pass; // Full passage text
+  // Passage (ALWAYS SHOW)
+  document.getElementById('ptype').textContent=`${p.t} • Passage ${state.p+1}/${state.data.length}`;
+  document.getElementById('passage').textContent=p.pass;
   
   // Question
   const global=state.data.slice(0,state.p).reduce((s,d)=>s+d.qs.length,0)+state.q+1;
   document.getElementById('question').textContent=`Question ${global}: ${q.q}`;
   
-  // Options - fast DOM
+  // Options (FIXED)
   const opts=document.getElementById('opts');
   opts.innerHTML='';
   q.o.forEach((o,i)=>{
@@ -332,11 +404,12 @@ function render(){
     opts.appendChild(d);
   });
   
-  // Buttons
-  const isFirstQ=state.p===0&&state.q===0;
+  // Navigation buttons
+  const isFirst=state.p===0&&state.q===0;
   const isLast=state.p===state.data.length-1&&state.q===p.qs.length-1;
-  document.getElementById('prev').disabled=isFirstQ;
-  document.getElementById('next').textContent=isLast?'Submit ✓':'Next →';
+  document.getElementById('prevBtn').disabled=isFirst;
+  document.getElementById('nextBtn').textContent=isLast?'Submit Quiz ✓':'Next →';
+  document.getElementById('nextBtn').className=isLast?'nav-btn primary':'nav-btn primary';
 }
 
 function select(i){
@@ -344,7 +417,7 @@ function select(i){
   document.querySelectorAll('.opt').forEach((el,idx)=>{
     el.classList.toggle('sel',idx===i);
   });
-  save();
+  saveProgress();
 }
 
 function next(){
@@ -353,39 +426,33 @@ function next(){
   
   if(isLast){
     const unans=state.ans.flat().filter(x=>x===null).length;
-    if(unans&&!confirm(`${unans} unanswered. Submit anyway?`)){showPop();return;}
-    submit();
-    return;
+    if(unans>0&&!confirm(`${unans} question(s) unanswered. Submit anyway?`)){
+      showPop();return;
+    }
+    submit(false);return;
   }
   
-  if(state.q<p.qs.length-1){
-    state.q++;
-  }else{
-    state.p++;
-    state.q=0;
-  }
+  if(state.q<p.qs.length-1){state.q++;}
+  else{state.p++;state.q=0;}
   render();
 }
 
 function prev(){
-  if(state.q>0){
-    state.q--;
-  }else if(state.p>0){
-    state.p--;
-    state.q=state.data[state.p].qs.length-1;
-  }
+  if(state.q>0){state.q--;}
+  else if(state.p>0){state.p--;state.q=state.data[state.p].qs.length-1;}
   render();
 }
 
-function save(){
-  sessionStorage.setItem('q',JSON.stringify({
-    p:state.p,q:state.q,ans:state.ans,time:state.time,ts:Date.now()
+function saveProgress(){
+  sessionStorage.setItem('quiz_progress',JSON.stringify({
+    p:state.p,q:state.q,ans:state.ans,time:state.time,submitted:state.submitted,ts:Date.now()
   }));
 }
 
-function submit(timeout=false){
+function submit(timeout){
   clearInterval(state.timer);
-  sessionStorage.removeItem('q');
+  state.submitted=true;
+  saveProgress();
   
   let correct=0,total=0;
   state.data.forEach((p,pi)=>{
@@ -395,13 +462,22 @@ function submit(timeout=false){
     });
   });
   
-  const pct=Math.round(correct/total*100);
-  document.getElementById('rscore').textContent=pct+'%';
-  document.getElementById('rtitle').textContent=pct>=CONFIG.PASS?'🎉 Excellent!':timeout?'⏰ Time Up':'Quiz Complete';
-  document.getElementById('rmsg').textContent=`You scored ${correct}/${total} (${pct}%)${pct>=CONFIG.PASS?' - Pass mark achieved!':''}`;
+  const pct=Math.round((correct/total)*100);
   
+  // Show results (FIXED)
   document.getElementById('quiz').style.display='none';
+  document.getElementById('res').style.display='flex';
   document.getElementById('res').classList.add('show');
+  
+  document.getElementById('rscore').textContent=pct+'%';
+  document.getElementById('rtitle').textContent=pct>=CONFIG.PASS?'🎉 Excellent!':timeout?'⏰ Time Up!':'Quiz Complete';
+  document.getElementById('rmsg').innerHTML=`You scored <strong>${correct}/${total}</strong> (${pct}%)<br>${pct>=CONFIG.PASS?'✓ Pass mark achieved!':'Keep practicing!'}`;
+}
+
+function continueQuiz(){
+  document.getElementById('res').classList.remove('show');
+  document.getElementById('res').style.display='none';
+  document.getElementById('quiz').style.display='block';
 }
 
 function showPop(){
@@ -410,12 +486,13 @@ function showPop(){
   let n=0;
   state.data.forEach((p,pi)=>{
     p.qs.forEach((_,qi)=>{
+      n++;
       const b=document.createElement('button');
-      b.textContent=++n;
+      b.textContent=n;
       const ans=state.ans[pi][qi]!==null;
       const cur=pi===state.p&&qi===state.q;
       if(ans)b.className='ans';
-      if(cur)b.className+=' cur';
+      if(cur)b.style.border='2px solid var(--a)';
       b.onclick=()=>{state.p=pi;state.q=qi;hidePop();render();};
       g.appendChild(b);
     });
@@ -430,13 +507,28 @@ function hidePop(e){
 function showDet(){
   const c=document.getElementById('dcont');
   c.innerHTML='';
-  let n=0;
   
+  // Summary
+  let correct=0,total=0;
   state.data.forEach((p,pi)=>{
-    // Passage header in details
+    p.qs.forEach((q,qi)=>{
+      total++;
+      if(state.ans[pi][qi]===q.a)correct++;
+    });
+  });
+  const pct=Math.round((correct/total)*100);
+  
+  const sum=document.createElement('div');
+  sum.className='det-summary';
+  sum.innerHTML=`<div class="big">${pct}%</div><div>${correct}/${total} correct</div>`;
+  c.appendChild(sum);
+  
+  // Details
+  let n=0;
+  state.data.forEach((p,pi)=>{
     const ph=document.createElement('div');
     ph.style.cssText='margin:20px 0 12px;padding:12px;background:var(--a);color:#fff;border-radius:8px;font-size:14px';
-    ph.innerHTML=`<strong>${p.t} Passage ${pi+1}</strong><br><small>${p.pass.substring(0,100)}...</small>`;
+    ph.innerHTML=`<strong>${p.t} Passage ${pi+1}</strong>`;
     c.appendChild(ph);
     
     p.qs.forEach((q,qi)=>{
@@ -447,9 +539,9 @@ function showDet(){
       d.className='det-item'+(ok?' ok':'');
       d.innerHTML=`
         <h4>Question ${n}</h4>
-        <p><strong>${q.q}</strong></p>
-        <p>Your answer: ${ans!==null?String.fromCharCode(65+ans)+') '+q.o[ans]:'Not answered'}</p>
-        <p>Correct: ${String.fromCharCode(65+q.a)+') '+q.o[q.a]}</p>
+        <div class="q-text">${q.q}</div>
+        <div class="ans-row"><strong>Your answer:</strong> ${ans!==null?String.fromCharCode(65+ans)+') '+q.o[ans]:'Not answered'}</div>
+        <div class="ans-row"><strong>Correct:</strong> ${String.fromCharCode(65+q.a)+') '+q.o[q.a]}</div>
         <div class="exp">${q.e}</div>
       `;
       c.appendChild(d);
@@ -457,34 +549,35 @@ function showDet(){
   });
   
   document.getElementById('res').classList.remove('show');
+  document.getElementById('res').style.display='none';
   document.getElementById('det').style.display='block';
 }
 
 function hideDet(){
   document.getElementById('det').style.display='none';
+  document.getElementById('res').style.display='flex';
   document.getElementById('res').classList.add('show');
 }
 
 function restart(){
-  if(!confirm('Start a new quiz? Current progress will be lost.'))return;
-  localStorage.removeItem('auth');
-  sessionStorage.removeItem('q');
+  if(!confirm('Start a new quiz? All progress will be reset.'))return;
+  localStorage.removeItem('quiz_auth');
+  sessionStorage.removeItem('quiz_progress');
   location.reload();
 }
 
 function exit(){
-  if(confirm('Exit quiz? Your progress is saved and you can resume later.')){save();location.reload();}
+  if(confirm('Exit quiz? Your progress is saved.')){saveProgress();location.reload();}
 }
 
 function toggleTheme(){
   document.body.classList.toggle('light');
-  localStorage.setItem('th',document.body.classList.contains('light')?'l':'d');
+  localStorage.setItem('quiz_theme',document.body.classList.contains('light')?'light':'dark');
 }
 
-// Fast start
 document.addEventListener('DOMContentLoaded',()=>{
-  if(localStorage.getItem('th')==='l')document.body.classList.add('light');
-  document.getElementById('code').addEventListener('keypress',e=>e.key==='Enter'&&unlock());
+  if(localStorage.getItem('quiz_theme')==='light')document.body.classList.add('light');
+  document.getElementById('code').addEventListener('keypress',e=>{if(e.key==='Enter')unlock();});
   init();
 });
 </script>
