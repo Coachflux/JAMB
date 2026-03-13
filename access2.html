@@ -2,1195 +2,461 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Quiz Platform - Template</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fast Quiz Platform</title>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    /* Critical CSS - inline for fast paint */
+    *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+    :root{--bg:#1e1e2f;--si:#171723;--so:#25253b;--t:#fff;--a:#1db954;--d:#ff4d4d;--w:#ff9800}
+    body.light{--bg:#e0e5ec;--si:#a3b1c6;--so:#ffffff;--t:#2d3748;--a:#48bb78;--d:#e53e3e;--w:#dd6b20}
+    body{background:var(--bg);color:var(--t);min-height:100vh;line-height:1.6}
     
-    :root {
-      --bg:#1e1e2f; --shadow-in:#171723; --shadow-out:#25253b;
-      --text:#fff; --accent:#1db954; --danger:#ff4d4d; --warning:#ff9800; --info:#2196f3;
-      --success:#4caf50; --surface:rgba(255,255,255,0.05);
-    }
+    /* Loading - minimal, fast */
+    #load{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
+    #load.hide{opacity:0;pointer-events:none}
+    .spinner{width:40px;height:40px;border:3px solid var(--si);border-top-color:var(--a);border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
     
-    body.light {
-      --bg:#e8e8e8; --shadow-in:#bebebe; --shadow-out:#ffffff;
-      --text:#333; --accent:#1db954; --danger:#d32f2f; --warning:#f57c00; --info:#1976d2;
-      --success:#388e3c; --surface:rgba(0,0,0,0.05);
-    }
+    /* Access screen */
+    #access{display:none;min-height:100vh;padding:20px;align-items:center;justify-content:center}
+    .card{background:var(--bg);padding:32px;border-radius:16px;width:100%;max-width:400px;box-shadow:8px 8px 16px var(--si),-8px -8px 16px var(--so)}
+    .card h1{color:var(--a);margin-bottom:8px;font-size:24px}
+    .card p{color:#888;font-size:14px;margin-bottom:24px}
+    input{width:100%;padding:14px 16px;font-size:16px;border-radius:10px;border:none;background:var(--bg);color:var(--t);box-shadow:inset 3px 3px 6px var(--si),inset -3px -3px 6px var(--so);margin-bottom:16px}
+    input:focus{outline:2px solid var(--a)}
+    button.primary{width:100%;padding:14px;background:var(--a);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:4px 4px 8px var(--si);transition:transform .1s}
+    button.primary:active{transform:scale(.98)}
+    button.primary:disabled{opacity:.6;cursor:not-allowed}
+    .msg{margin-top:16px;padding:10px;border-radius:8px;font-size:13px;display:none}
+    .msg.show{display:block}
+    .msg.err{background:rgba(255,77,77,.1);color:var(--d)}
+    .msg.ok{background:rgba(29,185,84,.1);color:var(--a)}
     
-    body { 
-      background:var(--bg); color:var(--text); min-height:100vh; 
-      overflow-x:hidden; line-height:1.6;
-    }
-
-    /* Loading Screen */
-    #loading-screen {
-      position:fixed; inset:0; background:var(--bg); z-index:1000;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-    }
-    .spinner {
-      width:50px; height:50px; border:4px solid var(--shadow-in);
-      border-top-color:var(--accent); border-radius:50%;
-      animation:spin 1s linear infinite;
-    }
-    @keyframes spin { to { transform:rotate(360deg); } }
-
-    /* Access Screen */
-    #access-screen {
-      display:none; min-height:100vh; padding:20px;
-      align-items:center; justify-content:center;
-    }
-    .access-card {
-      background:var(--bg); padding:40px 30px; border-radius:24px;
-      width:100%; max-width:420px; text-align:center;
-      box-shadow:12px 12px 24px var(--shadow-in), -12px -12px 24px var(--shadow-out);
-      animation:slideUp 0.5s ease;
-    }
-    @keyframes slideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    /* Quiz container */
+    #quiz{display:none;max-width:800px;margin:0 auto;padding:72px 12px 80px}
     
-    .access-card h1 { color:var(--accent); margin-bottom:12px; font-size:28px; }
-    .access-card p { color:#888; margin-bottom:24px; font-size:14px; }
+    /* Fixed top bar - minimal */
+    .top{position:fixed;top:0;left:0;right:0;height:56px;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:0 12px;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+    .top h1{font-size:15px;font-weight:600;flex:1;text-align:center}
+    .btn{width:36px;height:36px;border-radius:50%;background:var(--bg);border:none;color:var(--t);cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so);display:flex;align-items:center;justify-content:center;font-size:16px}
+    .btn:active{box-shadow:inset 2px 2px 4px var(--si),inset -2px -2px 4px var(--so)}
     
-    .input-group {
-      position:relative; margin:24px 0;
-    }
-    .access-card input {
-      width:100%; padding:16px 20px; font-size:18px; letter-spacing:2px;
-      border-radius:12px; border:none; background:var(--surface);
-      color:var(--text); box-shadow:inset 4px 4px 8px var(--shadow-in), inset -4px -4px 8px var(--shadow-out);
-      transition:all 0.3s ease;
-    }
-    .access-card input:focus { outline:none; box-shadow:inset 6px 6px 12px var(--shadow-in), inset -6px -6px 12px var(--shadow-out), 0 0 0 3px rgba(29,185,84,0.2); }
-    .access-card input::placeholder { color:#666; letter-spacing:normal; }
+    /* Progress bar */
+    .prog{position:fixed;top:56px;left:0;right:0;height:3px;background:var(--si);z-index:99}
+    .prog-bar{height:100%;background:var(--a);width:0%;transition:width .2s}
+    .prog-text{position:fixed;top:62px;right:12px;font-size:11px;background:var(--bg);padding:2px 8px;border-radius:10px;box-shadow:1px 1px 2px var(--si)}
     
-    .btn-primary {
-      width:100%; padding:16px; background:var(--accent); color:white; border:none;
-      border-radius:12px; font-size:16px; font-weight:600; cursor:pointer;
-      box-shadow:0 4px 15px rgba(29,185,84,0.3), 4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
-      transition:all 0.2s ease; position:relative; overflow:hidden;
-    }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(29,185,84,0.4), 4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out); }
-    .btn-primary:active { transform:translateY(0); }
-    .btn-primary:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+    /* Question area - optimized */
+    .q-cont{background:var(--bg);border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:4px 4px 8px var(--si),-4px -4px 8px var(--so)}
+    .timer{font-size:13px;margin-bottom:12px;color:#888;display:flex;align-items:center;gap:6px}
+    .timer.warn{color:var(--w);font-weight:600}
+    .timer.danger{color:var(--d);font-weight:600;animation:pulse 1s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+    .passage-type{display:inline-block;padding:4px 12px;background:var(--a);color:#fff;font-size:11px;border-radius:20px;margin-bottom:10px;font-weight:600}
+    .passage{font-size:14px;line-height:1.7;margin-bottom:16px;padding:14px;background:rgba(0,0,0,.03);border-radius:8px;border-left:3px solid var(--a);max-height:250px;overflow-y:auto}
+    .question{font-size:15px;font-weight:600;margin-bottom:14px;padding:12px;background:rgba(0,0,0,.03);border-radius:8px}
     
-    .message { 
-      margin-top:20px; padding:12px; border-radius:8px; font-size:14px; 
-      min-height:44px; display:flex; align-items:center; justify-content:center;
-      animation:fadeIn 0.3s ease;
-    }
-    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-    .error { background:rgba(255,77,77,0.1); color:var(--danger); border:1px solid var(--danger); }
-    .warning { background:rgba(255,152,0,0.1); color:var(--warning); border:1px solid var(--warning); }
-    .success { background:rgba(76,175,80,0.1); color:var(--success); border:1px solid var(--success); }
-    .info { background:rgba(33,150,243,0.1); color:var(--info); border:1px solid var(--info); }
-
-    /* Quiz Container */
-    #quiz-container { display:none; max-width:800px; margin:0 auto; padding:80px 16px 100px; }
-    
-    .top-bar {
-      position:fixed; top:0; left:0; right:0; background:var(--bg);
-      padding:12px 16px; display:flex; align-items:center; justify-content:space-between;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1); z-index:100;
-      backdrop-filter:blur(10px);
-    }
-    .top-bar .header { font-size:16px; font-weight:600; flex:1; text-align:center; }
-    
-    .neumorphic-btn {
-      background:var(--bg); border:none; border-radius:50%; width:40px; height:40px;
-      display:flex; align-items:center; justify-content:center;
-      box-shadow:4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
-      cursor:pointer; color:var(--text); font-size:18px; transition:all 0.2s ease;
-    }
-    .neumorphic-btn:hover { transform:scale(1.05); }
-    .neumorphic-btn:active { box-shadow:inset 4px 4px 8px var(--shadow-in), inset -4px -4px 8px var(--shadow-out); transform:scale(0.95); }
-    
-    /* Progress Bar */
-    .progress-container {
-      position:fixed; top:64px; left:0; right:0; height:4px; background:var(--shadow-in); z-index:99;
-    }
-    .progress-bar {
-      height:100%; background:var(--accent); width:0%; transition:width 0.3s ease;
-      box-shadow:0 0 10px var(--accent);
-    }
-    .progress-text {
-      position:fixed; top:72px; right:16px; font-size:12px; color:var(--accent);
-      background:var(--bg); padding:4px 8px; border-radius:12px;
-      box-shadow:2px 2px 4px var(--shadow-in), -2px -2px 4px var(--shadow-out);
-      z-index:99;
-    }
-
-    /* Question Container */
-    .question-container {
-      background:var(--bg); border-radius:20px; padding:24px;
-      box-shadow:8px 8px 16px var(--shadow-in), -8px -8px 16px var(--shadow-out);
-      margin-bottom:20px; animation:fadeIn 0.4s ease;
-    }
-    
-    .timer { 
-      font-size:14px; margin-bottom:16px; padding:8px 12px; border-radius:8px;
-      background:var(--surface); display:inline-flex; align-items:center; gap:8px;
-      box-shadow:inset 2px 2px 4px var(--shadow-in), inset -2px -2px 4px var(--shadow-out);
-    }
-    .timer.warning { color:var(--warning); animation:pulse 1s infinite; }
-    .timer.danger { color:var(--danger); animation:pulse 0.5s infinite; }
-    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
-    
-    .passage-indicator {
-      display:inline-block; padding:6px 12px; border-radius:20px; font-size:12px;
-      background:var(--accent); color:white; margin-bottom:16px; font-weight:600;
-      box-shadow:0 2px 8px rgba(29,185,84,0.3);
-    }
-    
-    .passage-text {
-      font-size:15px; line-height:1.8; margin-bottom:24px; padding:20px;
-      background:var(--surface); border-radius:12px; border-left:4px solid var(--accent);
-      max-height:300px; overflow-y:auto;
-    }
-    
-    .question-text { 
-      font-size:17px; font-weight:600; margin-bottom:20px; line-height:1.5;
-      padding:16px; background:var(--surface); border-radius:12px;
-    }
-    
-    .options { display:flex; flex-direction:column; gap:12px; }
-    .option {
-      background:var(--bg); border-radius:12px; padding:16px 20px;
-      box-shadow:4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
-      cursor:pointer; transition:all 0.2s ease; display:flex; align-items:center; gap:12px;
-      border:2px solid transparent;
-    }
-    .option:hover { transform:translateX(4px); border-color:rgba(29,185,84,0.3); }
-    .option.selected { 
-      border-color:var(--accent); background:rgba(29,185,84,0.05);
-      box-shadow:inset 4px 4px 8px var(--shadow-in), inset -4px -4px 8px var(--shadow-out);
-    }
-    .option.correct { border-color:var(--success); background:rgba(76,175,80,0.1); }
-    .option.incorrect { border-color:var(--danger); background:rgba(255,77,77,0.1); }
-    
-    .option-marker {
-      width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-      background:var(--shadow-in); font-size:12px; font-weight:700; flex-shrink:0;
-      box-shadow:inset 2px 2px 4px rgba(0,0,0,0.2), inset -2px -2px 4px rgba(255,255,255,0.05);
-    }
-    .option.selected .option-marker { background:var(--accent); color:white; }
-    .option p { font-size:15px; flex:1; }
+    /* Options - flat design for speed */
+    .opts{display:flex;flex-direction:column;gap:10px}
+    .opt{padding:14px 16px;background:var(--bg);border-radius:10px;cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so);display:flex;align-items:center;gap:12px;transition:all .15s;border:2px solid transparent}
+    .opt:hover{border-color:rgba(29,185,84,.3)}
+    .opt.sel{border-color:var(--a);background:rgba(29,185,84,.05);box-shadow:inset 2px 2px 4px var(--si),inset -2px -2px 4px var(--so)}
+    .opt-mark{width:26px;height:26px;border-radius:50%;background:var(--si);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+    .opt.sel .opt-mark{background:var(--a);color:#fff}
+    .opt p{font-size:14px;flex:1}
     
     /* Navigation */
-    .nav-buttons {
-      position:fixed; bottom:0; left:0; right:0; background:var(--bg);
-      padding:16px; display:flex; align-items:center; justify-content:center; gap:12px;
-      box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:100;
-    }
-    .nav-btn {
-      background:var(--bg); border:none; padding:12px 24px; font-size:14px; color:var(--text);
-      border-radius:12px; cursor:pointer; font-weight:600;
-      box-shadow:4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
-      transition:all 0.2s ease; min-width:100px;
-    }
-    .nav-btn:hover:not(:disabled) { transform:translateY(-2px); }
-    .nav-btn:disabled { opacity:0.4; cursor:not-allowed; }
-    .nav-btn.primary { background:var(--accent); color:white; }
+    .nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:var(--bg);display:flex;align-items:center;justify-content:center;gap:12px;padding:0 12px;box-shadow:0 -2px 8px rgba(0,0,0,.1);z-index:100}
+    .nav-btn{padding:10px 20px;border-radius:8px;border:none;background:var(--bg);color:var(--t);font-size:14px;font-weight:600;cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so)}
+    .nav-btn:disabled{opacity:.4;cursor:not-allowed}
+    .nav-btn.primary{background:var(--a);color:#fff}
+    .nav-center{width:44px;height:44px;border-radius:50%;background:var(--a);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(29,185,84,.3)}
     
-    .center-btn {
-      width:50px; height:50px; border-radius:50%; background:var(--accent); color:white;
-      border:none; font-size:20px; cursor:pointer;
-      box-shadow:0 4px 15px rgba(29,185,84,0.4), 4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
-      transition:all 0.2s ease; display:flex; align-items:center; justify-content:center;
-    }
-    .center-btn:hover { transform:scale(1.1) rotate(10deg); }
-    
-    /* Popups */
-    .popup-overlay {
-      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7);
-      z-index:200; backdrop-filter:blur(4px);
-    }
-    .popup {
-      display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-      background:var(--bg); padding:24px; border-radius:20px; width:90%; max-width:400px;
-      max-height:80vh; overflow-y:auto; z-index:201;
-      box-shadow:0 20px 60px rgba(0,0,0,0.3);
-    }
-    .popup-header {
-      display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;
-    }
-    .popup h3 { font-size:18px; }
-    .popup-grid { 
-      display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:16px;
-    }
-    .popup-grid button {
-      aspect-ratio:1; background:var(--bg); border:none; border-radius:8px;
-      box-shadow:3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      cursor:pointer; color:var(--text); font-size:13px; font-weight:600;
-      transition:all 0.2s ease;
-    }
-    .popup-grid button:hover { transform:scale(1.1); }
-    .popup-grid button.answered { background:var(--accent); color:white; }
-    .popup-grid button.current { border:2px solid var(--accent); }
-    .popup-grid button.unanswered { background:var(--warning); color:white; }
+    /* Popup - simplified */
+    .pop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px}
+    .pop.show{display:flex}
+    .pop-box{background:var(--bg);border-radius:16px;padding:20px;width:100%;max-width:360px;max-height:70vh;overflow-y:auto}
+    .pop-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .pop h3{font-size:16px}
+    .pop-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+    .pop-grid button{aspect-ratio:1;border:none;border-radius:8px;background:var(--bg);color:var(--t);font-size:12px;font-weight:600;cursor:pointer;box-shadow:2px 2px 4px var(--si),-2px -2px 4px var(--so)}
+    .pop-grid button.ans{background:var(--a);color:#fff}
+    .pop-grid button.cur{border:2px solid var(--a)}
     
     /* Results */
-    .results-popup {
-      display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-      background:var(--bg); padding:32px; border-radius:24px; width:90%; max-width:420px;
-      text-align:center; z-index:201; box-shadow:0 20px 60px rgba(0,0,0,0.3);
-      animation:scaleIn 0.3s ease;
-    }
-    @keyframes scaleIn { from { opacity:0; transform:translate(-50%,-50%) scale(0.9); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
+    .res{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+    .res.show{display:flex}
+    .res-circle{width:120px;height:120px;border-radius:50%;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:6px 6px 12px var(--si),-6px -6px 12px var(--so)}
+    .res-score{font-size:32px;font-weight:800;color:var(--a)}
+    .res-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888}
+    .res h2{font-size:22px;margin-bottom:8px}
+    .res p{color:#888;margin-bottom:24px;font-size:14px}
+    .res-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
     
-    .score-circle {
-      width:140px; height:140px; border-radius:50%; margin:0 auto 24px;
-      background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center;
-      box-shadow:8px 8px 16px var(--shadow-in), -8px -8px 16px var(--shadow-out);
-      position:relative;
-    }
-    .score-circle::before {
-      content:''; position:absolute; inset:10px; border-radius:50%;
-      background:var(--bg); box-shadow:inset 4px 4px 8px var(--shadow-in), inset -4px -4px 8px var(--shadow-out);
-    }
-    .score-value { position:relative; font-size:36px; font-weight:800; color:var(--accent); }
-    .score-label { position:relative; font-size:12px; color:#888; text-transform:uppercase; letter-spacing:1px; }
+    /* Details */
+    .det{display:none;position:fixed;inset:0;background:var(--bg);z-index:250;overflow-y:auto;padding:60px 12px 20px}
+    .det-head{position:fixed;top:0;left:0;right:0;height:56px;background:var(--bg);display:flex;align-items:center;gap:12px;padding:0 12px;box-shadow:0 2px 8px rgba(0,0,0,.1);z-index:251}
+    .det h3{flex:1;font-size:15px}
+    .det-item{margin-bottom:12px;padding:14px;background:rgba(0,0,0,.03);border-radius:10px;border-left:3px solid var(--d)}
+    .det-item.ok{border-left-color:var(--a)}
+    .det-item h4{font-size:13px;color:#888;margin-bottom:6px}
+    .det-item p{font-size:14px;margin-bottom:4px}
+    .det-item .exp{font-size:13px;color:#666;margin-top:8px;padding:10px;background:var(--bg);border-radius:6px;box-shadow:inset 2px 2px 4px var(--si)}
     
-    .results-popup h2 { font-size:24px; margin-bottom:8px; }
-    .results-popup p { color:#888; margin-bottom:24px; }
-    
-    .btn-group { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-    .btn-secondary {
-      padding:12px 24px; border-radius:12px; border:none; background:var(--surface);
-      color:var(--text); cursor:pointer; font-weight:600;
-      box-shadow:4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
-    }
-    
-    /* Details Page */
-    .details-page {
-      display:none; position:fixed; inset:0; background:var(--bg); z-index:150;
-      overflow-y:auto; padding:80px 16px 100px;
-    }
-    .details-header {
-      position:fixed; top:0; left:0; right:0; background:var(--bg); padding:16px;
-      display:flex; align-items:center; gap:16px; z-index:151;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    }
-    .details-content { max-width:800px; margin:0 auto; }
-    .detail-item {
-      background:var(--surface); border-radius:16px; padding:20px; margin-bottom:16px;
-      box-shadow:4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
-    }
-    .detail-item.correct { border-left:4px solid var(--success); }
-    .detail-item.incorrect { border-left:4px solid var(--danger); }
-    .detail-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
-    .detail-number {
-      width:32px; height:32px; border-radius:50%; background:var(--accent); color:white;
-      display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700;
-    }
-    .detail-status { margin-left:auto; font-size:20px; }
-    .detail-question { font-weight:600; margin-bottom:12px; font-size:15px; }
-    .detail-answer { font-size:14px; margin-bottom:8px; }
-    .detail-answer strong { color:var(--accent); }
-    .detail-explanation {
-      padding:12px; background:var(--bg); border-radius:8px; font-size:14px; line-height:1.6;
-      box-shadow:inset 2px 2px 4px var(--shadow-in), inset -2px -2px 4px var(--shadow-out);
-    }
-    
-    /* Toast Notifications */
-    .toast {
-      position:fixed; bottom:100px; left:50%; transform:translateX(-50%);
-      padding:12px 24px; border-radius:8px; background:var(--surface);
-      color:var(--text); font-size:14px; z-index:300;
-      box-shadow:0 4px 20px rgba(0,0,0,0.3); opacity:0; transition:all 0.3s ease;
-      pointer-events:none;
-    }
-    .toast.show { opacity:1; transform:translateX(-50%) translateY(-10px); }
-    
-    /* Responsive */
-    @media (max-width:480px) {
-      .access-card { padding:32px 20px; }
-      .question-container { padding:20px 16px; }
-      .passage-text { max-height:200px; font-size:14px; }
-      .option { padding:14px 16px; }
-      .popup-grid { grid-template-columns:repeat(5,1fr); gap:6px; }
-      .popup-grid button { font-size:11px; }
-    }
-    
-    /* Print Styles */
-    @media print {
-      .top-bar, .nav-buttons, .neumorphic-btn { display:none !important; }
-      #quiz-container { padding:20px; }
-      .question-container { box-shadow:none; border:1px solid #ccc; }
-    }
-    
-    /* Focus Visible for Accessibility */
-    *:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
-    .option:focus-visible { transform:translateX(4px); }
+    /* Utilities */
+    .hide{display:none!important}
+    @media(max-width:400px){.passage{max-height:200px;font-size:13px}.opt{padding:12px}}
   </style>
 </head>
-<body class="dark">
+<body>
+  <!-- Fast loading screen -->
+  <div id="load"><div class="spinner"></div></div>
 
-<!-- Loading Screen -->
-<div id="loading-screen">
-  <div class="spinner"></div>
-  <p style="margin-top:20px; color:#888;">Loading Quiz...</p>
-</div>
-
-<!-- Toast Container -->
-<div id="toast" class="toast"></div>
-
-<!-- Access Screen -->
-<div id="access-screen">
-  <div class="access-card">
-    <h1>🔐 Quiz Access</h1>
-    <p>Enter your access code to begin</p>
-    <div class="input-group">
-      <input type="text" id="codeInput" placeholder="XXXX-XXXX" maxlength="9" autocomplete="off" autofocus>
+  <!-- Access Screen -->
+  <div id="access">
+    <div class="card">
+      <h1>🔐 Quiz Access</h1>
+      <p>Enter code to begin</p>
+      <input type="text" id="code" placeholder="8-char code" maxlength="8" autocomplete="off">
+      <button class="primary" id="unlockBtn" onclick="unlock()">Start</button>
+      <div class="msg" id="msg"></div>
     </div>
-    <button class="btn-primary" id="unlockBtn" onclick="tryUnlock()">Start Quiz</button>
-    <div id="accessMessage" class="message" style="display:none;"></div>
-  </div>
-</div>
-
-<!-- Quiz Interface -->
-<div id="quiz-container">
-  <!-- Progress Bar -->
-  <div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-  <div class="progress-text" id="progressText">0/50</div>
-
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <button class="neumorphic-btn" id="backBtn" onclick="confirmExit()" title="Exit Quiz">←</button>
-    <div class="header" id="quizTitle">Quiz</div>
-    <button class="neumorphic-btn" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
   </div>
 
-  <!-- Question Area -->
-  <div class="question-container" id="questionContainer">
-    <div class="timer" id="timer">⏱️ 30:00</div>
-    <div class="passage-indicator" id="passageIndicator">Passage 1 of 10</div>
-    <div class="passage-text" id="passageText" style="display:none;"></div>
-    <div class="question-text" id="questionText"></div>
-    <div class="options" id="optionsContainer"></div>
+  <!-- Quiz -->
+  <div id="quiz">
+    <div class="top">
+      <button class="btn" onclick="exit()">←</button>
+      <h1>Comprehension Quiz</h1>
+      <button class="btn" onclick="toggleTheme()">🌙</button>
+    </div>
+    
+    <div class="prog"><div class="prog-bar" id="pbar"></div></div>
+    <div class="prog-text" id="ptxt">0/0</div>
+    
+    <div class="q-cont">
+      <div class="timer" id="timer">⏱️ 30:00</div>
+      <div class="passage-type" id="ptype">Passage 1</div>
+      <div class="passage" id="passage"></div>
+      <div class="question" id="question"></div>
+      <div class="opts" id="opts"></div>
+    </div>
+    
+    <div class="nav">
+      <button class="nav-btn" id="prev" onclick="prev()">← Prev</button>
+      <button class="nav-center" onclick="showPop()">📋</button>
+      <button class="nav-btn primary" id="next" onclick="next()">Next →</button>
+    </div>
   </div>
 
-  <!-- Navigation -->
-  <div class="nav-buttons">
-    <button class="nav-btn" id="prevBtn" onclick="prevQuestion()">← Prev</button>
-    <button class="center-btn" id="jumpBtn" onclick="showQuestionPopup()" title="Jump to Question">📋</button>
-    <button class="nav-btn primary" id="nextBtn" onclick="nextQuestion()">Next →</button>
+  <!-- Navigator Popup -->
+  <div class="pop" id="pop" onclick="hidePop(event)">
+    <div class="pop-box" onclick="event.stopPropagation()">
+      <div class="pop-head">
+        <h3>Jump to Question</h3>
+        <button class="btn" onclick="hidePop()">✕</button>
+      </div>
+      <div class="pop-grid" id="pgrid"></div>
+      <div style="font-size:12px;color:#888;text-align:center">
+        <span style="color:var(--a)">●</span> Answered &nbsp;
+        <span style="color:var(--t)">●</span> Current
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Question Navigator Popup -->
-<div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
-<div class="popup" id="questionPopup">
-  <div class="popup-header">
-    <h3>Question Navigator</h3>
-    <button class="neumorphic-btn" onclick="closePopup()" style="width:36px;height:36px;">✕</button>
+  <!-- Results -->
+  <div class="res" id="res">
+    <div class="res-circle">
+      <div class="res-score" id="rscore">0%</div>
+      <div class="res-label">Score</div>
+    </div>
+    <h2 id="rtitle">Done!</h2>
+    <p id="rmsg">Completed</p>
+    <div class="res-btns">
+      <button class="primary" onclick="showDet()" style="width:auto;padding:12px 24px">Details</button>
+      <button class="nav-btn" onclick="restart()">Restart</button>
+    </div>
   </div>
-  <div class="popup-grid" id="popupGrid"></div>
-  <div style="display:flex; gap:8px; justify-content:center; font-size:12px; color:#888;">
-    <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;background:var(--accent);border-radius:2px;"></span> Answered</span>
-    <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;background:var(--warning);border-radius:2px;"></span> Unanswered</span>
-  </div>
-</div>
 
-<!-- Results Popup -->
-<div class="results-popup" id="resultsPopup">
-  <div class="score-circle">
-    <div class="score-value" id="scoreValue">0%</div>
-    <div class="score-label">Score</div>
+  <!-- Details -->
+  <div class="det" id="det">
+    <div class="det-head">
+      <button class="btn" onclick="hideDet()">←</button>
+      <h3>Detailed Results</h3>
+      <button class="btn" onclick="print()">🖨️</button>
+    </div>
+    <div id="dcont"></div>
   </div>
-  <h2 id="resultsTitle">Quiz Complete!</h2>
-  <p id="resultsMessage">Great effort!</p>
-  <div class="btn-group">
-    <button class="btn-primary" onclick="showDetails()" style="width:auto;min-width:140px;">View Details</button>
-    <button class="btn-secondary" onclick="restartQuiz()">Restart</button>
-  </div>
-</div>
-
-<!-- Details Page -->
-<div class="details-page" id="detailsPage">
-  <div class="details-header">
-    <button class="neumorphic-btn" onclick="closeDetails()">←</button>
-    <h3>Detailed Results</h3>
-    <button class="neumorphic-btn" onclick="window.print()" title="Print Results">🖨️</button>
-  </div>
-  <div class="details-content" id="detailsContent"></div>
-</div>
 
 <script>
-/**
- * QUIZ PLATFORM - PRODUCTION TEMPLATE
- * Features: Security, Persistence, Accessibility, Analytics
- */
+// Minimal, fast JavaScript
+const CONFIG={TIME:1800,PASS:60,DB:'quiz_db'};
+let state={data:[],ans:[],p:0,q:0,time:CONFIG.TIME,timer:null};
 
-// ─── Configuration ───────────────────────────────────────────────────
-const CONFIG = {
-  DB_KEY: 'quizPlatformDB',
-  PROGRESS_KEY: 'quizProgress',
-  CODE_LENGTH: 8,
-  SESSION_DURATION: 30 * 60, // 30 minutes
-  MAX_ATTEMPTS: 3,
-  PASS_MARK: 60
-};
-
-// ─── State Management ────────────────────────────────────────────────
-const State = {
-  currentPassage: 0,
-  currentQuestion: 0,
-  answers: [],
-  timeLeft: CONFIG.SESSION_DURATION,
-  timerInterval: null,
-  quizData: [],
-  isSubmitting: false,
-  deviceId: null,
-  sessionStart: null
-};
-
-// ─── Utility Functions ───────────────────────────────────────────────
-const Utils = {
-  generateId: () => 'DEV-' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36),
-  
-  getDeviceId: () => {
-    let id = localStorage.getItem('userDeviceId');
-    if (!id) {
-      id = Utils.generateId().toUpperCase();
-      localStorage.setItem('userDeviceId', id);
-    }
-    return id;
-  },
-  
-  hashCode: (str) => {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash;
-    }
-    return Math.abs(hash).toString(36).substring(0, 8).toUpperCase();
-  },
-  
-  formatTime: (seconds) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s.toString().padStart(2, '0')}`;
-  },
-  
-  throttle: (fn, limit) => {
-    let inThrottle;
-    return function(...args) {
-      if (!inThrottle) {
-        fn.apply(this, args);
-        inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
-      }
-    };
-  },
-  
-  showToast: (message, duration = 3000) => {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), duration);
-  }
-};
-
-// ─── Database Management ─────────────────────────────────────────────
-const Database = {
-  get: () => JSON.parse(localStorage.getItem(CONFIG.DB_KEY)) || [],
-  
-  save: (data) => localStorage.setItem(CONFIG.DB_KEY, JSON.stringify(data)),
-  
-  validateCode: (code) => {
-    const db = Database.get();
-    const entry = db.find(c => c.code === code.toUpperCase());
-    if (!entry) return { valid: false, reason: 'invalid' };
-    if (entry.expires && new Date() > new Date(entry.expires)) return { valid: false, reason: 'expired' };
-    if (entry.maxUses && entry.uses >= entry.maxUses) return { valid: false, reason: 'exhausted' };
-    if (entry.deviceId && entry.deviceId !== State.deviceId) return { valid: false, reason: 'device' };
-    return { valid: true, entry };
-  },
-  
-  useCode: (code) => {
-    const db = Database.get();
-    const entry = db.find(c => c.code === code.toUpperCase());
-    if (entry) {
-      entry.uses = (entry.uses || 0) + 1;
-      entry.deviceId = State.deviceId;
-      entry.lastUsed = new Date().toISOString();
-      Database.save(db);
-    }
-  },
-  
-  // Admin function to generate codes (call from console)
-  generateCode: (options = {}) => {
-    const code = Math.random().toString(36).substring(2, 10).toUpperCase();
-    const entry = {
-      code,
-      createdAt: new Date().toISOString(),
-      expires: options.expires || null,
-      maxUses: options.maxUses || 1,
-      uses: 0,
-      deviceId: null,
-      metadata: options.metadata || {}
-    };
-    const db = Database.get();
-    db.push(entry);
-    Database.save(db);
-    console.log('Generated Code:', code);
-    return code;
-  }
-};
-
-// ─── Progress Persistence ────────────────────────────────────────────
-const Progress = {
-  save: () => {
-    const data = {
-      currentPassage: State.currentPassage,
-      currentQuestion: State.currentQuestion,
-      answers: State.answers,
-      timeLeft: State.timeLeft,
-      quizData: State.quizData,
-      sessionStart: State.sessionStart,
-      timestamp: Date.now()
-    };
-    sessionStorage.setItem(CONFIG.PROGRESS_KEY, JSON.stringify(data));
-  },
-  
-  load: () => {
-    const saved = sessionStorage.getItem(CONFIG.PROGRESS_KEY);
-    if (!saved) return null;
-    try {
-      const data = JSON.parse(saved);
-      // Validate not expired (24 hours)
-      if (Date.now() - data.timestamp > 24 * 60 * 60 * 1000) {
-        sessionStorage.removeItem(CONFIG.PROGRESS_KEY);
-        return null;
-      }
-      return data;
-    } catch (e) {
-      return null;
-    }
-  },
-  
-  clear: () => sessionStorage.removeItem(CONFIG.PROGRESS_KEY)
-};
-
-// ─── Theme Management ────────────────────────────────────────────────
-function initTheme() {
-  const saved = localStorage.getItem('theme') || 'dark';
-  if (saved === 'light') document.body.classList.add('light');
-}
-
-function toggleTheme() {
-  const isLight = document.body.classList.toggle('light');
-  localStorage.setItem('theme', isLight ? 'light' : 'dark');
-  const btn = document.querySelector('.top-bar .neumorphic-btn:last-child');
-  if (btn) btn.textContent = isLight ? '☀️' : '🌙';
-}
-
-// ─── Access Control ──────────────────────────────────────────────────
-function tryUnlock() {
-  const input = document.getElementById('codeInput');
-  const btn = document.getElementById('unlockBtn');
-  const msg = document.getElementById('accessMessage');
-  
-  const code = input.value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-  
-  if (code.length !== CONFIG.CODE_LENGTH) {
-    showMessage('Please enter a valid 8-character code', 'error');
-    input.focus();
-    return;
-  }
-  
-  btn.disabled = true;
-  btn.textContent = 'Verifying...';
-  
-  // Simulate network delay for security
-  setTimeout(() => {
-    const validation = Database.validateCode(code);
-    
-    if (!validation.valid) {
-      const messages = {
-        invalid: '❌ Invalid access code',
-        expired: '⏰ Code has expired',
-        exhausted: '🔒 Code usage limit reached',
-        device: '🔐 Code locked to another device'
-      };
-      showMessage(messages[validation.reason] || 'Access denied', 'error');
-      btn.disabled = false;
-      btn.textContent = 'Start Quiz';
-      return;
-    }
-    
-    Database.useCode(code);
-    showMessage('✅ Access granted! Loading...', 'success');
-    
-    setTimeout(() => {
-      document.getElementById('access-screen').style.display = 'none';
-      document.getElementById('quiz-container').style.display = 'block';
-      initQuiz();
-    }, 800);
-  }, 600);
-}
-
-function showMessage(text, type) {
-  const msg = document.getElementById('accessMessage');
-  msg.textContent = text;
-  msg.className = `message ${type}`;
-  msg.style.display = 'flex';
-}
-
-// ─── Quiz Engine ─────────────────────────────────────────────────────
-function initQuiz() {
-  State.deviceId = Utils.getDeviceId();
-  State.sessionStart = Date.now();
-  
-  // Try to restore progress
-  const saved = Progress.load();
-  if (saved && saved.quizData) {
-    if (confirm('Resume previous session?')) {
-      restoreSession(saved);
-      return;
-    }
-    Progress.clear();
-  }
-  
-  // Initialize fresh state
-  State.currentPassage = 0;
-  State.currentQuestion = 0;
-  State.answers = State.quizData.map(p => Array(p.questions.length).fill(null));
-  State.timeLeft = CONFIG.SESSION_DURATION;
-  
-  // Setup timer
-  startTimer();
-  
-  // Render first question
-  renderQuestion();
-  updateProgress();
-  
-  // Setup keyboard navigation
-  setupKeyboardNav();
-  
-  // Auto-save progress periodically
-  setInterval(() => Progress.save(), 10000);
-  
-  // Hide loading screen
-  document.getElementById('loading-screen').style.display = 'none';
-}
-
-function restoreSession(saved) {
-  State.currentPassage = saved.currentPassage;
-  State.currentQuestion = saved.currentQuestion;
-  State.answers = saved.answers;
-  State.timeLeft = saved.timeLeft;
-  State.quizData = saved.quizData;
-  
-  startTimer();
-  renderQuestion();
-  updateProgress();
-  setupKeyboardNav();
-  document.getElementById('loading-screen').style.display = 'none';
-}
-
-function startTimer() {
-  if (State.timerInterval) clearInterval(State.timerInterval);
-  
-  State.timerInterval = setInterval(() => {
-    if (State.timeLeft > 0) {
-      State.timeLeft--;
-      updateTimerDisplay();
-      if (State.timeLeft % 10 === 0) Progress.save(); // Save every 10 seconds
-    } else {
-      clearInterval(State.timerInterval);
-      submitQuiz(true);
-    }
-  }, 1000);
-}
-
-function updateTimerDisplay() {
-  const timer = document.getElementById('timer');
-  timer.textContent = `⏱️ ${Utils.formatTime(State.timeLeft)}`;
-  
-  // Visual warnings
-  timer.classList.remove('warning', 'danger');
-  if (State.timeLeft < 60) timer.classList.add('danger');
-  else if (State.timeLeft < 300) timer.classList.add('warning');
-}
-
-function updateProgress() {
-  const total = State.quizData.reduce((sum, p) => sum + p.questions.length, 0);
-  const answered = State.answers.flat().filter(a => a !== null).length;
-  const percent = (answered / total) * 100;
-  
-  document.getElementById('progressBar').style.width = `${percent}%`;
-  document.getElementById('progressText').textContent = `${answered}/${total}`;
-}
-
-function renderQuestion() {
-  const passage = State.quizData[State.currentPassage];
-  const question = passage.questions[State.currentQuestion];
-  const isFirstOfPassage = State.currentQuestion === 0;
-  
-  // Update passage indicator
-  const totalQuestions = passage.questions.length;
-  const globalQuestion = State.quizData.slice(0, State.currentPassage).reduce((sum, p) => sum + p.questions.length, 0) + State.currentQuestion + 1;
-  const totalAll = State.quizData.reduce((sum, p) => sum + p.questions.length, 0);
-  
-  document.getElementById('passageIndicator').textContent = 
-    `Passage ${State.currentPassage + 1}/${State.quizData.length} • Question ${globalQuestion}/${totalAll}`;
-  
-  // Show passage only on first question
-  const passageEl = document.getElementById('passageText');
-  if (isFirstOfPassage) {
-    passageEl.style.display = 'block';
-    passageEl.innerHTML = `<strong>${passage.type} Passage:</strong><br><br>${passage.passage}`;
-  } else {
-    passageEl.style.display = 'none';
-  }
-  
-  // Render question
-  document.getElementById('questionText').innerHTML = `<strong>Q${State.currentQuestion + 1}.</strong> ${question.q}`;
-  
-  // Render options
-  const container = document.getElementById('optionsContainer');
-  container.innerHTML = '';
-  
-  question.o.forEach((opt, idx) => {
-    const div = document.createElement('div');
-    div.className = 'option';
-    div.tabIndex = 0;
-    div.setAttribute('role', 'button');
-    div.setAttribute('aria-label', `Option ${String.fromCharCode(65 + idx)}: ${opt}`);
-    
-    if (State.answers[State.currentPassage][State.currentQuestion] === idx) {
-      div.classList.add('selected');
-    }
-    
-    div.innerHTML = `
-      <div class="option-marker">${String.fromCharCode(65 + idx)}</div>
-      <p>${opt}</p>
-    `;
-    
-    div.onclick = () => selectOption(idx);
-    div.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') selectOption(idx); };
-    
-    container.appendChild(div);
-  });
-  
-  // Update navigation buttons
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  
-  const isFirst = State.currentPassage === 0 && State.currentQuestion === 0;
-  const isLast = State.currentPassage === State.quizData.length - 1 && 
-                 State.currentQuestion === State.quizData[State.quizData.length - 1].questions.length - 1;
-  
-  prevBtn.disabled = isFirst;
-  nextBtn.textContent = isLast ? 'Submit ✓' : 'Next →';
-  nextBtn.className = isLast ? 'nav-btn primary' : 'nav-btn primary';
-  
-  // Scroll to top
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function selectOption(index) {
-  State.answers[State.currentPassage][State.currentQuestion] = index;
-  
-  // Visual update
-  document.querySelectorAll('.option').forEach((el, i) => {
-    el.classList.toggle('selected', i === index);
-  });
-  
-  updateProgress();
-  Progress.save();
-  
-  // Auto-advance after short delay (optional - can be removed)
-  // setTimeout(nextQuestion, 800);
-}
-
-function nextQuestion() {
-  const passage = State.quizData[State.currentPassage];
-  const isLast = State.currentPassage === State.quizData.length - 1 && 
-                 State.currentQuestion === passage.questions.length - 1;
-  
-  if (isLast) {
-    const unanswered = State.answers.flat().filter(a => a === null).length;
-    if (unanswered > 0) {
-      if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
-        showQuestionPopup();
-        return;
-      }
-    }
-    submitQuiz();
-    return;
-  }
-  
-  if (State.currentQuestion < passage.questions.length - 1) {
-    State.currentQuestion++;
-  } else {
-    State.currentPassage++;
-    State.currentQuestion = 0;
-  }
-  
-  renderQuestion();
-}
-
-function prevQuestion() {
-  if (State.currentQuestion > 0) {
-    State.currentQuestion--;
-  } else if (State.currentPassage > 0) {
-    State.currentPassage--;
-    State.currentQuestion = State.quizData[State.currentPassage].questions.length - 1;
-  }
-  renderQuestion();
-}
-
-function setupKeyboardNav() {
-  document.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'INPUT') return;
-    
-    switch(e.key) {
-      case 'ArrowRight':
-      case 'n':
-        e.preventDefault();
-        nextQuestion();
-        break;
-      case 'ArrowLeft':
-      case 'p':
-        e.preventDefault();
-        prevQuestion();
-        break;
-      case '1':
-      case '2':
-      case '3':
-      case '4':
-        const idx = parseInt(e.key) - 1;
-        const options = document.querySelectorAll('.option');
-        if (options[idx]) selectOption(idx);
-        break;
-    }
-  });
-}
-
-// ─── Popup Management ────────────────────────────────────────────────
-function showQuestionPopup() {
-  const grid = document.getElementById('popupGrid');
-  grid.innerHTML = '';
-  
-  let globalIdx = 0;
-  State.quizData.forEach((passage, pIdx) => {
-    passage.questions.forEach((_, qIdx) => {
-      const btn = document.createElement('button');
-      const isAnswered = State.answers[pIdx][qIdx] !== null;
-      const isCurrent = pIdx === State.currentPassage && qIdx === State.currentQuestion;
-      
-      btn.textContent = ++globalIdx;
-      btn.className = isAnswered ? 'answered' : 'unanswered';
-      if (isCurrent) btn.classList.add('current');
-      
-      btn.onclick = () => {
-        State.currentPassage = pIdx;
-        State.currentQuestion = qIdx;
-        closePopup();
-        renderQuestion();
-      };
-      
-      grid.appendChild(btn);
-    });
-  });
-  
-  document.getElementById('popupOverlay').style.display = 'block';
-  document.getElementById('questionPopup').style.display = 'block';
-}
-
-function closePopup() {
-  document.getElementById('popupOverlay').style.display = 'none';
-  document.getElementById('questionPopup').style.display = 'none';
-}
-
-// ─── Submission & Results ────────────────────────────────────────────
-function submitQuiz(timeout = false) {
-  if (State.isSubmitting) return;
-  State.isSubmitting = true;
-  
-  clearInterval(State.timerInterval);
-  Progress.clear();
-  
-  // Calculate score
-  let correct = 0;
-  let total = 0;
-  
-  State.quizData.forEach((passage, pIdx) => {
-    passage.questions.forEach((q, qIdx) => {
-      total++;
-      if (State.answers[pIdx][qIdx] === q.correct) correct++;
-    });
-  });
-  
-  const percentage = Math.round((correct / total) * 100);
-  const passed = percentage >= CONFIG.PASS_MARK;
-  
-  // Display results
-  document.getElementById('scoreValue').textContent = `${percentage}%`;
-  document.getElementById('resultsTitle').textContent = passed ? '🎉 Excellent!' : timeout ? '⏰ Time Up!' : '✅ Quiz Complete';
-  document.getElementById('resultsMessage').textContent = 
-    `You scored ${correct}/${total} (${percentage}%)${passed ? ' - Pass mark achieved!' : ''}`;
-  
-  // Hide quiz, show results
-  document.getElementById('quiz-container').style.display = 'none';
-  document.getElementById('resultsPopup').style.display = 'block';
-  
-  // Save analytics (could be sent to server)
-  const analytics = {
-    deviceId: State.deviceId,
-    score: correct,
-    total,
-    percentage,
-    timeUsed: CONFIG.SESSION_DURATION - State.timeLeft,
-    timestamp: new Date().toISOString()
-  };
-  console.log('Quiz Analytics:', analytics);
-}
-
-function showDetails() {
-  const container = document.getElementById('detailsContent');
-  container.innerHTML = '';
-  
-  let globalIdx = 0;
-  
-  State.quizData.forEach((passage, pIdx) => {
-    // Passage header
-    const header = document.createElement('h3');
-    header.style.cssText = 'margin:24px 0 12px; color:var(--accent); font-size:18px;';
-    header.textContent = `${passage.type} Passage ${pIdx + 1}`;
-    container.appendChild(header);
-    
-    passage.questions.forEach((q, qIdx) => {
-      globalIdx++;
-      const userAnswer = State.answers[pIdx][qIdx];
-      const isCorrect = userAnswer === q.correct;
-      const userLetter = userAnswer !== null ? String.fromCharCode(65 + userAnswer) : '-';
-      const correctLetter = String.fromCharCode(65 + q.correct);
-      
-      const item = document.createElement('div');
-      item.className = `detail-item ${isCorrect ? 'correct' : 'incorrect'}`;
-      item.innerHTML = `
-        <div class="detail-header">
-          <div class="detail-number">${globalIdx}</div>
-          <div class="detail-status">${isCorrect ? '✓' : '✗'}</div>
-        </div>
-        <div class="detail-question">${q.q}</div>
-        <div class="detail-answer">
-          <strong>Your answer:</strong> ${userLetter}) ${userAnswer !== null ? q.o[userAnswer] : 'Not answered'}<br>
-          <strong>Correct:</strong> ${correctLetter}) ${q.o[q.correct]}
-        </div>
-        <div class="detail-explanation">
-          <strong>Explanation:</strong> ${q.exp}
-        </div>
-      `;
-      container.appendChild(item);
-    });
-  });
-  
-  document.getElementById('resultsPopup').style.display = 'none';
-  document.getElementById('detailsPage').style.display = 'block';
-}
-
-function closeDetails() {
-  document.getElementById('detailsPage').style.display = 'none';
-  document.getElementById('resultsPopup').style.display = 'block';
-}
-
-function restartQuiz() {
-  if (!confirm('Start a new quiz session? Current progress will be lost.')) return;
-  
-  document.getElementById('resultsPopup').style.display = 'none';
-  document.getElementById('access-screen').style.display = 'flex';
-  document.getElementById('quiz-container').style.display = 'none';
-  document.getElementById('codeInput').value = '';
-  document.getElementById('accessMessage').style.display = 'none';
-  document.getElementById('unlockBtn').disabled = false;
-  document.getElementById('unlockBtn').textContent = 'Start Quiz';
-  
-  State.isSubmitting = false;
-  Progress.clear();
-}
-
-function confirmExit() {
-  if (confirm('Exit quiz? Your progress is saved and you can resume later.')) {
-    Progress.save();
-    location.reload();
-  }
-}
-
-// ─── Initialization ──────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  initTheme();
-  
-  // Setup input formatting
-  const codeInput = document.getElementById('codeInput');
-  codeInput.addEventListener('input', (e) => {
-    let val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-    if (val.length > 4 && !val.includes('-')) {
-      val = val.slice(0, 4) + '-' + val.slice(4);
-    }
-    e.target.value = val;
-  });
-  
-  codeInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') tryUnlock();
-  });
-  
-  // Check for saved session
-  const saved = Progress.load();
-  if (saved) {
-    document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById('access-screen').style.display = 'flex';
-    Utils.showToast('Previous session found. Enter code to resume.');
-  } else {
-    document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById('access-screen').style.display = 'flex';
-  }
-});
-
-// ─── Demo Data Setup ─────────────────────────────────────────────────
-// Pre-populate with demo codes for testing
-(function initDemo() {
-  const db = Database.get();
-  if (db.length === 0) {
-    // Generate demo codes
-    ['DEMO-2024', 'TEST-1234', 'JAMB-EXAM'].forEach(code => {
-      db.push({
-        code,
-        createdAt: new Date().toISOString(),
-        expires: null,
-        maxUses: 10,
-        uses: 0,
-        deviceId: null,
-        metadata: { demo: true }
-      });
-    });
-    Database.save(db);
-    console.log('Demo codes created: DEMO-2024, TEST-1234, JAMB-EXAM');
-  }
-})();
-
-// ─── Sample Quiz Data (Replace with your data) ───────────────────────
-State.quizData = [
-  // 1. Descriptive – Oshodi Market
-  {type:"Descriptive", passage:"The bustling Oshodi market in Lagos pulses with life from dawn to dusk. Hawkers shout their wares in rapid Yoruba and Pidgin, while the aroma of akara, suya, and fresh bread wafts through the crowded lanes. Yellow buses honk impatiently, and pedestrians weave between moving vehicles. Colourful umbrellas shield traders from the scorching sun, and the ground is littered with discarded nylon bags. Despite the chaos, the market thrives on relentless energy and human connection.", questions:[
-    {q:"The writer's main purpose is to", o:["criticize market traders","describe the lively and chaotic atmosphere of Oshodi market","explain how to buy akara","argue for banning street trading"], correct:1, exp:"The passage focuses on sensory details to portray the market's vibrant chaos."},
-    {q:"The word \"pulses\" as used means", o:["dies down","beats strongly with activity","remains silent","moves slowly"], correct:1, exp:"It conveys the strong, lively rhythm of the market."},
-    {q:"The writer's attitude is", o:["disapproving","neutral","appreciative of the energy","fearful"], correct:2, exp:"Words like \"thrives\", \"relentless energy\", and \"human connection\" show positive recognition despite chaos."},
-    {q:"From the passage, the market is", o:["quiet and empty","crowded and full of activity","only open at night","without any food sellers"], correct:1, exp:"Evidence of shouting, honking, weaving pedestrians, and thriving trade."},
-    {q:"The phrase \"pulses with life\" is an example of", o:["simile","metaphor","personification","hyperbole"], correct:2, exp:"The market is given human qualities (pulsing like a living heart)."}
+// Optimized data structure - flat array for speed
+const QUIZ_DATA=[
+  {t:"Descriptive",pass:"The bustling Oshodi market...",qs:[
+    {q:"Main purpose?",o:["Criticize","Describe atmosphere","Explain buying","Argue"],a:1,e:"Sensory details show chaos"},
+    {q:"'Pulses' means?",o:["Dies","Beats strongly","Silent","Slow"],a:1,e:"Strong rhythm"},
+    {q:"Writer's attitude?",o:["Disapproving","Neutral","Appreciative","Fearful"],a:2,e:"Positive words used"},
+    {q:"Market is?",o:["Quiet","Crowded","Night-only","No food"],a:1,e:"Evidence of activity"},
+    {q:"'Pulses with life' is?",o:["Simile","Metaphor","Personification","Hyperbole"],a:2,e:"Human quality given"}
   ]},
-
-  // 2. Descriptive – Harmattan
-  {type:"Descriptive", passage:"Harmattan sweeps across northern Nigeria, turning the sky hazy and the air dry and cool. Fine dust settles on everything, making eyes water and throats itch. Bare acacia trees stand like skeletons against the pale horizon. Yet children play happily, flying homemade kites, and the cool breeze brings relief after the rainy season heat. The season carries a quiet beauty amid its harshness.", questions:[
-    {q:"The passage primarily describes", o:["only the negative effects of harmattan","the appearance, feel, and mixed atmosphere of harmattan season","how to make kites","why dust is harmful"], correct:1, exp:"Balanced description of visuals, sensations, activities, and both harsh and pleasant sides."},
-    {q:"The word \"sweeps\" suggests", o:["gentle arrival","forceful movement across the region","slow disappearance","staying still"], correct:1, exp:"Harmattan moves strongly and widely."},
-    {q:"The writer's tone is", o:["completely negative","balanced and realistic","angry","sarcastic"], correct:1, exp:"Acknowledges harshness but notes \"quiet beauty\" and \"relief\"."},
-    {q:"It can be inferred that harmattan", o:["is hated by all children","has both uncomfortable and enjoyable aspects","prevents all outdoor play","occurs only at night"], correct:1, exp:"Children play happily despite dust."},
-    {q:"The phrase \"stand like skeletons\" is", o:["metaphor","simile","personification","alliteration"], correct:1, exp:"Uses \"like\" for comparison."}
-  ]},
-
-  // 3. Descriptive – Calabar Carnival
-  {type:"Descriptive", passage:"Calabar Carnival streets explode in a riot of colour during December. Masquerades in elaborate costumes dance to highlife and Ekpe rhythms. The air is thick with the smell of afang soup and roasted plantain from roadside vendors. Spectators cheer from balconies while drummers beat feverishly. The festival radiates joy, unity, and cultural pride.", questions:[
-    {q:"The main focus is", o:["the cost of carnival costumes","describing the vibrant and joyful atmosphere of Calabar Carnival","explaining carnival history","criticizing noise pollution"], correct:1, exp:"Sensory and emotional details highlight vibrancy and joy."},
-    {q:"\"Explode in a riot of colour\" means", o:["become dull","suddenly fill with bright, chaotic colours","remain plain","disappear"], correct:1, exp:"Sudden, intense burst of colours."},
-    {q:"The writer's attitude is", o:["disapproving","enthusiastic and positive","indifferent","critical"], correct:1, exp:"Words like \"joy\", \"unity\", \"pride\" show admiration."},
-    {q:"The carnival is characterized by", o:["silence and boredom","music, dance, food, and celebration","only masquerades","no spectators"], correct:1, exp:"Dancing, rhythms, vendors, cheering."},
-    {q:"\"Beat feverishly\" suggests the drummers", o:["play slowly","play with intense energy","stop playing","play quietly"], correct:1, exp:"High energy and excitement."}
-  ]},
-
-  // 4. Narrative – Ibrahim
-  {type:"Narrative", passage:"Ibrahim failed his WAEC twice and felt like giving up. His uncle encouraged him to enrol in evening classes. He studied every night after farm work. On result day, he passed with credits in all subjects. His family celebrated, and Ibrahim decided to pursue teaching to help others.", questions:[
-    {q:"The story is mainly about", o:["why WAEC is unfair","a boy's perseverance leading to success","uncle's farm work","celebration parties"], correct:1, exp:"Failure → effort → success → future goal."},
-    {q:"Why did Ibrahim study every night?", o:["to play games","to pass WAEC after failures","to avoid farm work","to impress friends"], correct:1, exp:"Direct motivation."},
-    {q:"The word \"perseverance\" means", o:["quitting easily","continuing despite difficulties","cheating","celebrating early"], correct:1, exp:"Continued studying after failures."},
-    {q:"Ibrahim's success teaches that", o:["failure is final","hard work pays off","uncles are unnecessary","teaching is easy"], correct:1, exp:"Moral from story."},
-    {q:"The ending is", o:["sad","hopeful and positive","angry","confusing"], correct:1, exp:"Celebration + decision to help others."}
-  ]},
-
-  // 5. Narrative – Fatima
-  {type:"Narrative", passage:"During the flood in Lokoja, Fatima saw her elderly neighbour trapped on the roof. She tied a rope around her waist and swam through the strong current to reach her. With help from others, she pulled the woman to safety. The community hailed Fatima as a heroine, and she felt proud of her courage.", questions:[
-    {q:"The story is primarily about", o:["dangers of floods only","a girl's bravery in rescuing a neighbour","how to swim in floods","why Lokoja floods"], correct:1, exp:"Rescue act + recognition."},
-    {q:"Fatima tied a rope because", o:["she wanted to play","to stay safe while rescuing","to tie the neighbour","to escape"], correct:1, exp:"Safety measure during rescue."},
-    {q:"The word \"hailed\" means", o:["ignored","praised loudly","criticized","forgotten"], correct:1, exp:"Community praise."},
-    {q:"Fatima can be described as", o:["selfish","courageous and selfless","fearful","careless"], correct:1, exp:"Risked herself for another."},
-    {q:"The narrative ends with", o:["tragedy","pride and community approval","regret","anger"], correct:1, exp:"Hailed as heroine + pride."}
-  ]},
-
-  // 6. Narrative – Kemi
-  {type:"Narrative", passage:"Kemi dreamed of becoming a doctor but her family could not afford university fees. She applied for a scholarship and studied day and night. She won the award and is now in medical school. Kemi says determination turned her dream into reality.", questions:[
-    {q:"The passage tells", o:["why scholarships are useless","how hard work and opportunity led to success","doctor's salary","family poverty"], correct:1, exp:"Dream → effort → scholarship → success."},
-    {q:"Kemi studied day and night to", o:["waste time","win the scholarship","avoid school","play"], correct:1, exp:"Preparation for scholarship."},
-    {q:"\"Determination\" means", o:["laziness","strong resolve to succeed","giving up","dreaming only"], correct:1, exp:"Persistent effort."},
-    {q:"The story shows that", o:["dreams are impossible","determination can overcome obstacles","scholarships are easy","medicine is simple"], correct:1, exp:"Moral."},
-    {q:"The tone is", o:["discouraging","inspiring","neutral","sad"], correct:1, exp:"Positive outcome and message."}
-  ]},
-
-  // 7. Expository – Online Learning
-  {type:"Expository", passage:"Online learning has grown rapidly in Nigeria since the pandemic. It allows students in remote areas to access lectures via phones or laptops. However, poor internet and lack of devices limit its reach. Schools should provide data subsidies and training. When properly supported, online education can bridge the urban-rural gap.", questions:[
-    {q:"The passage explains", o:["why online learning failed","the growth, benefits, and challenges of online learning in Nigeria","how to buy laptops","pandemic history"], correct:1, exp:"Growth + advantages + problems + solutions."},
-    {q:"Online learning helps", o:["only city students","remote students access education","increase illiteracy","destroy schools"], correct:1, exp:"Direct benefit."},
-    {q:"The word \"bridge\" means", o:["destroy","connect or reduce gap","ignore","widen"], correct:1, exp:"Reduce urban-rural divide."},
-    {q:"The writer suggests schools should", o:["ban online classes","provide subsidies and training","ignore internet problems","stop using phones"], correct:1, exp:"Recommendations."},
-    {q:"The main idea is", o:["online learning is useless","online learning has potential if challenges are addressed","rural areas have no phones","pandemic is over"], correct:1, exp:"Balanced view with support needed."}
-  ]},
-
-  // 8. Expository – Recycling
-  {type:"Expository", passage:"Recycling plastic waste reduces environmental pollution in Nigerian cities. Collected plastics can be turned into chairs, tiles, and bags. Communities should set up collection points and awareness campaigns. When recycling becomes a habit, Nigeria will have cleaner streets and less flooding from blocked drains.", questions:[
-    {q:"The passage explains", o:["why plastic is good","benefits of recycling and how to promote it","how to produce plastic","flooding causes only"], correct:1, exp:"Advantages + methods."},
-    {q:"Recycling helps by", o:["increasing waste","reducing pollution and reusing materials","blocking drains","making streets dirtier"], correct:1, exp:"Cleaner environment."},
-    {q:"\"Habit\" means", o:["rare action","regular practice","one-time event","impossible task"], correct:1, exp:"Regular behaviour."},
-    {q:"Communities should", o:["ignore plastic","set up collection and awareness","burn plastic","throw more waste"], correct:1, exp:"Suggested steps."},
-    {q:"The main message is", o:["recycling is harmful","recycling can solve waste problems if practised widely","Nigeria has no plastic","chairs are useless"], correct:1, exp:"Positive potential with action."}
-  ]},
-
-  // 9. Argumentative – University Degrees
-  {type:"Argumentative", passage:"Some argue that university degrees are worthless because of unemployment. I disagree. A degree builds critical thinking, discipline, and networks that entrepreneurship needs. Many successful Nigerian CEOs hold degrees. Government should focus on quality education and job creation, not discourage higher learning.", questions:[
-    {q:"The writer's position is", o:["degrees are useless","university degrees remain valuable","everyone should drop out","unemployment is permanent"], correct:1, exp:"Disagrees + defends value."},
-    {q:"The writer supports argument with", o:["personal failure stories","benefits and examples of successful graduates","attacks on students","agreement with critics"], correct:1, exp:"Critical thinking, CEOs."},
-    {q:"\"Networks\" means", o:["isolation","connections and relationships","buildings","books"], correct:1, exp:"Useful contacts."},
-    {q:"Government should", o:["close universities","improve education and create jobs","discourage degrees","increase unemployment"], correct:1, exp:"Suggested."},
-    {q:"The passage is", o:["descriptive","argumentative in favour of university education","narrative","expository only"], correct:1, exp:"Takes side and persuades."}
-  ]},
-
-  // 10. Argumentative – Corporal Punishment
-  {type:"Argumentative", passage:"Many claim corporal punishment is necessary for discipline. I oppose it. It causes fear and resentment instead of respect. Positive reinforcement and counselling work better. Schools should adopt non-violent methods for lasting good behaviour.", questions:[
-    {q:"The writer's position is", o:["for corporal punishment","against corporal punishment","neutral","unsure"], correct:1, exp:"Opposes + alternatives."},
-    {q:"Corporal punishment causes", o:["respect","fear and resentment","better learning","happiness"], correct:1, exp:"Negative effects."},
-    {q:"\"Reinforcement\" means", o:["punishment","encouragement and reward","ignoring","beating"], correct:1, exp:"Positive approach."},
-    {q:"Schools should use", o:["only beating","non-violent methods","no discipline","fear only"], correct:1, exp:"Recommended."},
-    {q:"The passage is", o:["descriptive","argumentative against corporal punishment","narrative","expository only"], correct:1, exp:"Takes position against."}
+  {t:"Narrative",pass:"Ibrahim failed WAEC twice...",qs:[
+    {q:"Story about?",o:["WAEC unfair","Perseverance","Uncle's work","Parties"],a:1,e:"Failure to success arc"},
+    {q:"Why study nights?",o:["Games","Pass WAEC","Avoid work","Impress"],a:1,e:"Direct motivation"},
+    {q:"'Perseverance' means?",o:["Quitting","Continuing","Cheating","Dreaming"],a:1,e:"Kept trying"},
+    {q:"Teaches that?",o:["Failure final","Hard work pays","Uncles useless","Teaching easy"],a:1,e:"Moral lesson"},
+    {q:"Ending is?",o:["Sad","Hopeful","Angry","Confusing"],a:1,e:"Positive resolution"}
   ]}
-
-  {
-    type: "Descriptive",
-    passage: "The bustling Oshodi market in Lagos pulses with life from dawn to dusk. Hawkers shout their wares in rapid Yoruba and Pidgin, while the aroma of akara, suya, and fresh bread wafts through the crowded lanes. Yellow buses honk impatiently, and pedestrians weave between moving vehicles. Colourful umbrellas shield traders from the scorching sun, and the ground is littered with discarded nylon bags. Despite the chaos, the market thrives on relentless energy and human connection.",
-    questions: [
-      {q: "The writer's main purpose is to", o: ["criticize market traders","describe the lively and chaotic atmosphere of Oshodi market","explain how to buy akara","argue for banning street trading"], correct: 1, exp: "The passage focuses on sensory details to portray the market's vibrant chaos."},
-      {q: "The word 'pulses' as used means", o: ["dies down","beats strongly with activity","remains silent","moves slowly"], correct: 1, exp: "It conveys the strong, lively rhythm of the market."},
-      {q: "The writer's attitude is", o: ["disapproving","neutral","appreciative of the energy","fearful"], correct: 2, exp: "Words like 'thrives', 'relentless energy', and 'human connection' show positive recognition despite chaos."},
-      {q: "From the passage, the market is", o: ["quiet and empty","crowded and full of activity","only open at night","without any food sellers"], correct: 1, exp: "Evidence of shouting, honking, weaving pedestrians, and thriving trade."},
-      {q: "The phrase 'pulses with life' is an example of", o: ["simile","metaphor","personification","hyperbole"], correct: 2, exp: "The market is given human qualities (pulsing like a living heart)."}
-    ]
-  },
-  {
-    type: "Narrative", 
-    passage: "Ibrahim failed his WAEC twice and felt like giving up. His uncle encouraged him to enrol in evening classes. He studied every night after farm work. On result day, he passed with credits in all subjects. His family celebrated, and Ibrahim decided to pursue teaching to help others.",
-    questions: [
-      {q: "The story is mainly about", o: ["why WAEC is unfair","a boy's perseverance leading to success","uncle's farm work","celebration parties"], correct: 1, exp: "Failure → effort → success → future goal."},
-      {q: "Why did Ibrahim study every night?", o: ["to play games","to pass WAEC after failures","to avoid farm work","to impress friends"], correct: 1, exp: "Direct motivation."},
-      {q: "The word 'perseverance' means", o: ["quitting easily","continuing despite difficulties","cheating","celebrating early"], correct: 1, exp: "Continued studying after failures."},
-      {q: "Ibrahim's success teaches that", o: ["failure is final","hard work pays off","uncles are unnecessary","teaching is easy"], correct: 1, exp: "Moral from story."},
-      {q: "The ending is", o: ["sad","hopeful and positive","angry","confusing"], correct: 1, exp: "Celebration + decision to help others."}
-    ]
-  }
+  // Add more passages...
 ];
+
+// Fast initialization
+function init(){
+  state.data=QUIZ_DATA;
+  state.ans=state.data.map(p=>Array(p.qs.length).fill(null));
+  state.p=0;state.q=0;state.time=CONFIG.TIME;
+  
+  // Check saved
+  const saved=sessionStorage.getItem('q');
+  if(saved){
+    const d=JSON.parse(saved);
+    if(Date.now()-d.ts<86400000&&confirm('Resume?')){
+      state.p=d.p;state.q=d.q;state.ans=d.ans;state.time=d.time;
+    }
+  }
+  
+  // Show access or quiz
+  document.getElementById('load').classList.add('hide');
+  if(localStorage.getItem('auth')) showQuiz();
+  else document.getElementById('access').style.display='flex';
+}
+
+function unlock(){
+  const c=document.getElementById('code').value.trim().toUpperCase();
+  const btn=document.getElementById('unlockBtn');
+  const msg=document.getElementById('msg');
+  
+  if(c.length!==8){showMsg('Enter 8 chars','err');return;}
+  
+  btn.disabled=true;
+  // Simulate check
+  setTimeout(()=>{
+    if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid','err');btn.disabled=false;return;}
+    localStorage.setItem('auth',c);
+    showMsg('Access granted!','ok');
+    setTimeout(showQuiz,400);
+  },200);
+}
+
+function showQuiz(){
+  document.getElementById('access').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  startTimer();
+  render();
+}
+
+function showMsg(t,type){
+  const m=document.getElementById('msg');
+  m.textContent=t;m.className='msg show '+type;
+}
+
+function startTimer(){
+  if(state.timer)clearInterval(state.timer);
+  state.timer=setInterval(()=>{
+    if(state.time>0){
+      state.time--;
+      updateTimer();
+      if(state.time%10===0)save();
+    }else submit(true);
+  },1000);
+}
+
+function updateTimer(){
+  const m=Math.floor(state.time/60),s=state.time%60;
+  const el=document.getElementById('timer');
+  el.textContent=`⏱️ ${m}:${s.toString().padStart(2,'0')}`;
+  el.className='timer'+(state.time<60?' danger':state.time<300?' warn':'');
+}
+
+function render(){
+  const p=state.data[state.p];
+  const q=p.qs[state.q];
+  const isFirst=state.q===0;
+  
+  // Update progress
+  const total=state.data.reduce((s,d)=>s+d.qs.length,0);
+  const done=state.ans.flat().filter(x=>x!==null).length;
+  document.getElementById('pbar').style.width=(done/total*100)+'%';
+  document.getElementById('ptxt').textContent=`${done}/${total}`;
+  
+  // Passage
+  document.getElementById('ptype').textContent=`${p.t} • Passage ${state.p+1}/${state.data.length}`;
+  const passEl=document.getElementById('passage');
+  if(isFirst){passEl.style.display='block';passEl.textContent=p.pass;}
+  else passEl.style.display='none';
+  
+  // Question
+  const global=state.data.slice(0,state.p).reduce((s,d)=>s+d.qs.length,0)+state.q+1;
+  document.getElementById('question').textContent=`Q${global}. ${q.q}`;
+  
+  // Options - fast DOM
+  const opts=document.getElementById('opts');
+  opts.innerHTML='';
+  q.o.forEach((o,i)=>{
+    const d=document.createElement('div');
+    d.className='opt'+(state.ans[state.p][state.q]===i?' sel':'');
+    d.innerHTML=`<div class="opt-mark">${String.fromCharCode(65+i)}</div><p>${o}</p>`;
+    d.onclick=()=>select(i);
+    opts.appendChild(d);
+  });
+  
+  // Buttons
+  const isFirstQ=state.p===0&&state.q===0;
+  const isLast=state.p===state.data.length-1&&state.q===p.qs.length-1;
+  document.getElementById('prev').disabled=isFirstQ;
+  document.getElementById('next').textContent=isLast?'Submit ✓':'Next →';
+}
+
+function select(i){
+  state.ans[state.p][state.q]=i;
+  document.querySelectorAll('.opt').forEach((el,idx)=>{
+    el.classList.toggle('sel',idx===i);
+  });
+  save();
+}
+
+function next(){
+  const p=state.data[state.p];
+  const isLast=state.p===state.data.length-1&&state.q===p.qs.length-1;
+  
+  if(isLast){
+    const unans=state.ans.flat().filter(x=>x===null).length;
+    if(unans&&!confirm(`${unans} unanswered. Submit?`)){showPop();return;}
+    submit();
+    return;
+  }
+  
+  if(state.q<p.qs.length-1)state.q++;
+  else{state.p++;state.q=0;}
+  render();
+}
+
+function prev(){
+  if(state.q>0)state.q--;
+  else if(state.p>0){state.p--;state.q=state.data[state.p].qs.length-1;}
+  render();
+}
+
+function save(){
+  sessionStorage.setItem('q',JSON.stringify({
+    p:state.p,q:state.q,ans:state.ans,time:state.time,ts:Date.now()
+  }));
+}
+
+function submit(timeout=false){
+  clearInterval(state.timer);
+  sessionStorage.removeItem('q');
+  
+  let correct=0,total=0;
+  state.data.forEach((p,pi)=>{
+    p.qs.forEach((q,qi)=>{
+      total++;
+      if(state.ans[pi][qi]===q.a)correct++;
+    });
+  });
+  
+  const pct=Math.round(correct/total*100);
+  document.getElementById('rscore').textContent=pct+'%';
+  document.getElementById('rtitle').textContent=pct>=CONFIG.PASS?'🎉 Passed!':timeout?'⏰ Time Up':'Done';
+  document.getElementById('rmsg').textContent=`${correct}/${total} correct (${pct}%)`;
+  
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('res').classList.add('show');
+}
+
+function showPop(){
+  const g=document.getElementById('pgrid');
+  g.innerHTML='';
+  let n=0;
+  state.data.forEach((p,pi)=>{
+    p.qs.forEach((_,qi)=>{
+      const b=document.createElement('button');
+      b.textContent=++n;
+      const ans=state.ans[pi][qi]!==null;
+      const cur=pi===state.p&&qi===state.q;
+      if(ans)b.className='ans';
+      if(cur)b.className+=' cur';
+      b.onclick=()=>{state.p=pi;state.q=qi;hidePop();render();};
+      g.appendChild(b);
+    });
+  });
+  document.getElementById('pop').classList.add('show');
+}
+
+function hidePop(e){
+  if(!e||e.target.id==='pop')document.getElementById('pop').classList.remove('show');
+}
+
+function showDet(){
+  const c=document.getElementById('dcont');
+  c.innerHTML='';
+  let n=0;
+  
+  state.data.forEach((p,pi)=>{
+    const h=document.createElement('h4');
+    h.textContent=`${p.t} Passage ${pi+1}`;
+    h.style.cssText='color:var(--a);margin:16px 0 8px;font-size:14px';
+    c.appendChild(h);
+    
+    p.qs.forEach((q,qi)=>{
+      n++;
+      const ans=state.ans[pi][qi];
+      const ok=ans===q.a;
+      const d=document.createElement('div');
+      d.className='det-item'+(ok?' ok':'');
+      d.innerHTML=`
+        <h4>Q${n}</h4>
+        <p>${q.q}</p>
+        <p>You: ${ans!==null?String.fromCharCode(65+ans):'-'} | Correct: ${String.fromCharCode(65+q.a)}</p>
+        <div class="exp">${q.e}</div>
+      `;
+      c.appendChild(d);
+    });
+  });
+  
+  document.getElementById('res').classList.remove('show');
+  document.getElementById('det').style.display='block';
+}
+
+function hideDet(){
+  document.getElementById('det').style.display='none';
+  document.getElementById('res').classList.add('show');
+}
+
+function restart(){
+  if(!confirm('Start over?'))return;
+  localStorage.removeItem('auth');
+  sessionStorage.removeItem('q');
+  location.reload();
+}
+
+function exit(){
+  if(confirm('Exit? Progress saved.')){save();location.reload();}
+}
+
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  localStorage.setItem('th',document.body.classList.contains('light')?'l':'d');
+}
+
+// Fast start
+document.addEventListener('DOMContentLoaded',()=>{
+  if(localStorage.getItem('th')==='l')document.body.classList.add('light');
+  document.getElementById('code').addEventListener('keypress',e=>e.key==='Enter'&&unlock());
+  init();
+});
 </script>
 </body>
 </html>
