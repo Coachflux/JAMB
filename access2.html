@@ -53,7 +53,7 @@
     .timer.danger{color:var(--d);font-weight:600;animation:pulse 1s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
     .passage-type{display:inline-block;padding:4px 12px;background:var(--a);color:#fff;font-size:11px;border-radius:20px;margin-bottom:10px;font-weight:600}
-    .passage{font-size:14px;line-height:1.7;margin-bottom:16px;padding:14px;background:rgba(0,0,0,.03);border-radius:8px;border-left:3px solid var(--a);max-height:250px;overflow-y:auto}
+    .passage{font-size:14px;line-height:1.8;margin-bottom:16px;padding:16px;background:rgba(0,0,0,.03);border-radius:8px;border-left:4px solid var(--a);max-height:300px;overflow-y:auto;white-space:pre-wrap}
     .question{font-size:15px;font-weight:600;margin-bottom:14px;padding:12px;background:rgba(0,0,0,.03);border-radius:8px}
     
     /* Options - flat design for speed */
@@ -66,7 +66,7 @@
     .opt p{font-size:14px;flex:1}
     
     /* Navigation */
-    .nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:var(--bg);display:flex;align-items:center;justify-content:center;gap:12px;padding:0 12px;box-shadow:0 -2px 8px rgba(0,0,0,.1);z-index:100}
+    .nav{position:relative;bottom:0;left:0;right:0;height:64px;background:var(--bg);display:flex;align-items:center;justify-content:center;gap:12px;padding:0 12px;box-shadow:0 -2px 8px rgba(0,0,0,.1);z-index:100}
     .nav-btn{padding:10px 20px;border-radius:8px;border:none;background:var(--bg);color:var(--t);font-size:14px;font-weight:600;cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so)}
     .nav-btn:disabled{opacity:.4;cursor:not-allowed}
     .nav-btn.primary{background:var(--a);color:#fff}
@@ -105,7 +105,7 @@
     
     /* Utilities */
     .hide{display:none!important}
-    @media(max-width:400px){.passage{max-height:200px;font-size:13px}.opt{padding:12px}}
+    @media(max-width:400px){.passage{max-height:250px;font-size:13px}.opt{padding:12px}}
   </style>
 </head>
 <body>
@@ -137,6 +137,7 @@
     <div class="q-cont">
       <div class="timer" id="timer">⏱️ 30:00</div>
       <div class="passage-type" id="ptype">Passage 1</div>
+      <!-- Passage container - ALWAYS VISIBLE -->
       <div class="passage" id="passage"></div>
       <div class="question" id="question"></div>
       <div class="opts" id="opts"></div>
@@ -193,23 +194,41 @@
 const CONFIG={TIME:1800,PASS:60,DB:'quiz_db'};
 let state={data:[],ans:[],p:0,q:0,time:CONFIG.TIME,timer:null};
 
-// Optimized data structure - flat array for speed
+// COMPLETE PASSAGE DATA - Full text for users to read
 const QUIZ_DATA=[
-  {t:"Descriptive",pass:"The bustling Oshodi market...",qs:[
-    {q:"Main purpose?",o:["Criticize","Describe atmosphere","Explain buying","Argue"],a:1,e:"Sensory details show chaos"},
-    {q:"'Pulses' means?",o:["Dies","Beats strongly","Silent","Slow"],a:1,e:"Strong rhythm"},
-    {q:"Writer's attitude?",o:["Disapproving","Neutral","Appreciative","Fearful"],a:2,e:"Positive words used"},
-    {q:"Market is?",o:["Quiet","Crowded","Night-only","No food"],a:1,e:"Evidence of activity"},
-    {q:"'Pulses with life' is?",o:["Simile","Metaphor","Personification","Hyperbole"],a:2,e:"Human quality given"}
-  ]},
-  {t:"Narrative",pass:"Ibrahim failed WAEC twice...",qs:[
-    {q:"Story about?",o:["WAEC unfair","Perseverance","Uncle's work","Parties"],a:1,e:"Failure to success arc"},
-    {q:"Why study nights?",o:["Games","Pass WAEC","Avoid work","Impress"],a:1,e:"Direct motivation"},
-    {q:"'Perseverance' means?",o:["Quitting","Continuing","Cheating","Dreaming"],a:1,e:"Kept trying"},
-    {q:"Teaches that?",o:["Failure final","Hard work pays","Uncles useless","Teaching easy"],a:1,e:"Moral lesson"},
-    {q:"Ending is?",o:["Sad","Hopeful","Angry","Confusing"],a:1,e:"Positive resolution"}
-  ]}
-  // Add more passages...
+  {
+    t:"Descriptive",
+    pass:"The bustling Oshodi market in Lagos pulses with life from dawn to dusk. Hawkers shout their wares in rapid Yoruba and Pidgin, while the aroma of akara, suya, and fresh bread wafts through the crowded lanes. Yellow buses honk impatiently, and pedestrians weave between moving vehicles. Colourful umbrellas shield traders from the scorching sun, and the ground is littered with discarded nylon bags. Despite the chaos, the market thrives on relentless energy and human connection.",
+    qs:[
+      {q:"The writer's main purpose is to",o:["criticize market traders","describe the lively and chaotic atmosphere of Oshodi market","explain how to buy akara","argue for banning street trading"],a:1,e:"The passage focuses on sensory details to portray the market's vibrant chaos."},
+      {q:"The word 'pulses' as used means",o:["dies down","beats strongly with activity","remains silent","moves slowly"],a:1,e:"It conveys the strong, lively rhythm of the market."},
+      {q:"The writer's attitude is",o:["disapproving","neutral","appreciative of the energy","fearful"],a:2,e:"Words like 'thrives', 'relentless energy', and 'human connection' show positive recognition despite chaos."},
+      {q:"From the passage, the market is",o:["quiet and empty","crowded and full of activity","only open at night","without any food sellers"],a:1,e:"Evidence of shouting, honking, weaving pedestrians, and thriving trade."},
+      {q:"The phrase 'pulses with life' is an example of",o:["simile","metaphor","personification","hyperbole"],a:2,e:"The market is given human qualities (pulsing like a living heart)."}
+    ]
+  },
+  {
+    t:"Narrative",
+    pass:"Ibrahim failed his WAEC twice and felt like giving up. His uncle encouraged him to enrol in evening classes. He studied every night after farm work, often falling asleep over his books. On result day, he trembled as he checked his grades. He passed with credits in all subjects. His family celebrated with jollof rice and music. Ibrahim decided to pursue teaching to help others overcome similar challenges.",
+    qs:[
+      {q:"The story is mainly about",o:["why WAEC is unfair","a boy's perseverance leading to success","uncle's farm work","celebration parties"],a:1,e:"Failure → effort → success → future goal."},
+      {q:"Why did Ibrahim study every night?",o:["to play games","to pass WAEC after failures","to avoid farm work","to impress friends"],a:1,e:"Direct motivation from the passage."},
+      {q:"The word 'perseverance' means",o:["quitting easily","continuing despite difficulties","cheating","celebrating early"],a:1,e:"Continued studying after failures."},
+      {q:"Ibrahim's success teaches that",o:["failure is final","hard work pays off","uncles are unnecessary","teaching is easy"],a:1,e:"Moral from story."},
+      {q:"The ending is",o:["sad","hopeful and positive","angry","confusing"],a:1,e:"Celebration + decision to help others."}
+    ]
+  },
+  {
+    t:"Descriptive",
+    pass:"Harmattan sweeps across northern Nigeria, turning the sky hazy and the air dry and cool. Fine dust settles on everything—cars, windows, and even inside locked cupboards. Bare acacia trees stand like skeletons against the pale horizon. Yet children play happily outdoors, flying homemade kites from dry grass. The cool breeze brings relief after the rainy season heat. The season carries a quiet beauty amid its harshness.",
+    qs:[
+      {q:"The passage primarily describes",o:["only the negative effects of harmattan","the appearance, feel, and mixed atmosphere of harmattan season","how to make kites","why dust is harmful"],a:1,e:"Balanced description of visuals, sensations, activities, and both harsh and pleasant sides."},
+      {q:"The word 'sweeps' suggests",o:["gentle arrival","forceful movement across the region","slow disappearance","staying still"],a:1,e:"Harmattan moves strongly and widely."},
+      {q:"The writer's tone is",o:["completely negative","balanced and realistic","angry","sarcastic"],a:1,e:"Acknowledges harshness but notes 'quiet beauty' and 'relief'."},
+      {q:"It can be inferred that harmattan",o:["is hated by all children","has both uncomfortable and enjoyable aspects","prevents all outdoor play","occurs only at night"],a:1,e:"Children play happily despite dust."},
+      {q:"The phrase 'stand like skeletons' is",o:["metaphor","simile","personification","alliteration"],a:1,e:"Uses 'like' for comparison."}
+    ]
+  }
 ];
 
 // Fast initialization
@@ -222,7 +241,7 @@ function init(){
   const saved=sessionStorage.getItem('q');
   if(saved){
     const d=JSON.parse(saved);
-    if(Date.now()-d.ts<86400000&&confirm('Resume?')){
+    if(Date.now()-d.ts<86400000&&confirm('Resume previous session?')){
       state.p=d.p;state.q=d.q;state.ans=d.ans;state.time=d.time;
     }
   }
@@ -238,12 +257,12 @@ function unlock(){
   const btn=document.getElementById('unlockBtn');
   const msg=document.getElementById('msg');
   
-  if(c.length!==8){showMsg('Enter 8 chars','err');return;}
+  if(c.length!==8){showMsg('Enter 8 characters','err');return;}
   
   btn.disabled=true;
   // Simulate check
   setTimeout(()=>{
-    if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid','err');btn.disabled=false;return;}
+    if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid code format','err');btn.disabled=false;return;}
     localStorage.setItem('auth',c);
     showMsg('Access granted!','ok');
     setTimeout(showQuiz,400);
@@ -283,7 +302,6 @@ function updateTimer(){
 function render(){
   const p=state.data[state.p];
   const q=p.qs[state.q];
-  const isFirst=state.q===0;
   
   // Update progress
   const total=state.data.reduce((s,d)=>s+d.qs.length,0);
@@ -291,15 +309,17 @@ function render(){
   document.getElementById('pbar').style.width=(done/total*100)+'%';
   document.getElementById('ptxt').textContent=`${done}/${total}`;
   
-  // Passage
-  document.getElementById('ptype').textContent=`${p.t} • Passage ${state.p+1}/${state.data.length}`;
+  // ALWAYS show passage type and passage text
+  document.getElementById('ptype').textContent=`${p.t} Passage ${state.p+1}/${state.data.length}`;
+  
+  // FIX: Always show passage, not just on first question
   const passEl=document.getElementById('passage');
-  if(isFirst){passEl.style.display='block';passEl.textContent=p.pass;}
-  else passEl.style.display='none';
+  passEl.style.display='block';
+  passEl.textContent=p.pass; // Full passage text
   
   // Question
   const global=state.data.slice(0,state.p).reduce((s,d)=>s+d.qs.length,0)+state.q+1;
-  document.getElementById('question').textContent=`Q${global}. ${q.q}`;
+  document.getElementById('question').textContent=`Question ${global}: ${q.q}`;
   
   // Options - fast DOM
   const opts=document.getElementById('opts');
@@ -333,19 +353,27 @@ function next(){
   
   if(isLast){
     const unans=state.ans.flat().filter(x=>x===null).length;
-    if(unans&&!confirm(`${unans} unanswered. Submit?`)){showPop();return;}
+    if(unans&&!confirm(`${unans} unanswered. Submit anyway?`)){showPop();return;}
     submit();
     return;
   }
   
-  if(state.q<p.qs.length-1)state.q++;
-  else{state.p++;state.q=0;}
+  if(state.q<p.qs.length-1){
+    state.q++;
+  }else{
+    state.p++;
+    state.q=0;
+  }
   render();
 }
 
 function prev(){
-  if(state.q>0)state.q--;
-  else if(state.p>0){state.p--;state.q=state.data[state.p].qs.length-1;}
+  if(state.q>0){
+    state.q--;
+  }else if(state.p>0){
+    state.p--;
+    state.q=state.data[state.p].qs.length-1;
+  }
   render();
 }
 
@@ -369,8 +397,8 @@ function submit(timeout=false){
   
   const pct=Math.round(correct/total*100);
   document.getElementById('rscore').textContent=pct+'%';
-  document.getElementById('rtitle').textContent=pct>=CONFIG.PASS?'🎉 Passed!':timeout?'⏰ Time Up':'Done';
-  document.getElementById('rmsg').textContent=`${correct}/${total} correct (${pct}%)`;
+  document.getElementById('rtitle').textContent=pct>=CONFIG.PASS?'🎉 Excellent!':timeout?'⏰ Time Up':'Quiz Complete';
+  document.getElementById('rmsg').textContent=`You scored ${correct}/${total} (${pct}%)${pct>=CONFIG.PASS?' - Pass mark achieved!':''}`;
   
   document.getElementById('quiz').style.display='none';
   document.getElementById('res').classList.add('show');
@@ -405,10 +433,11 @@ function showDet(){
   let n=0;
   
   state.data.forEach((p,pi)=>{
-    const h=document.createElement('h4');
-    h.textContent=`${p.t} Passage ${pi+1}`;
-    h.style.cssText='color:var(--a);margin:16px 0 8px;font-size:14px';
-    c.appendChild(h);
+    // Passage header in details
+    const ph=document.createElement('div');
+    ph.style.cssText='margin:20px 0 12px;padding:12px;background:var(--a);color:#fff;border-radius:8px;font-size:14px';
+    ph.innerHTML=`<strong>${p.t} Passage ${pi+1}</strong><br><small>${p.pass.substring(0,100)}...</small>`;
+    c.appendChild(ph);
     
     p.qs.forEach((q,qi)=>{
       n++;
@@ -417,9 +446,10 @@ function showDet(){
       const d=document.createElement('div');
       d.className='det-item'+(ok?' ok':'');
       d.innerHTML=`
-        <h4>Q${n}</h4>
-        <p>${q.q}</p>
-        <p>You: ${ans!==null?String.fromCharCode(65+ans):'-'} | Correct: ${String.fromCharCode(65+q.a)}</p>
+        <h4>Question ${n}</h4>
+        <p><strong>${q.q}</strong></p>
+        <p>Your answer: ${ans!==null?String.fromCharCode(65+ans)+') '+q.o[ans]:'Not answered'}</p>
+        <p>Correct: ${String.fromCharCode(65+q.a)+') '+q.o[q.a]}</p>
         <div class="exp">${q.e}</div>
       `;
       c.appendChild(d);
@@ -436,14 +466,14 @@ function hideDet(){
 }
 
 function restart(){
-  if(!confirm('Start over?'))return;
+  if(!confirm('Start a new quiz? Current progress will be lost.'))return;
   localStorage.removeItem('auth');
   sessionStorage.removeItem('q');
   location.reload();
 }
 
 function exit(){
-  if(confirm('Exit? Progress saved.')){save();location.reload();}
+  if(confirm('Exit quiz? Your progress is saved and you can resume later.')){save();location.reload();}
 }
 
 function toggleTheme(){
