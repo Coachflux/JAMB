@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Change of State</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Change of State! 🚀</h1>
+        <p class="subtitle">– JAMB Chapter 14 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 14: Change of State</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Differentiate between latent heat and specific latent heats of fusion and vaporization, differentiate between melting/evaporation/boiling, examine effects of pressure and dissolved substances on boiling/melting points, solve numerical problems involving latent heat.</p>
+
+        <h2>🔥 1. Understanding Change of State</h2>
+        
+        <p>Change of state (phase change) is the physical transformation of matter:</p>
+        <p style="text-align: center; font-size: 18px; margin: 16px 0;"><strong>Solid ↔ Liquid ↔ Gas</strong></p>
+
+        <div class="organelle-list">
+          <p><strong>Key Concept:</strong> During change of state, <span class="highlight">temperature remains constant</span> even though heat is being added or removed. The heat energy breaks or forms molecular bonds, not to increase kinetic energy.</p>
+        </div>
+
+        <div class="tips-box">
+          <strong>Remember:</strong> When ice melts at 0°C, it stays at 0°C until all ice turns to water. The heat supplied is "hidden" (latent) and doesn't raise temperature!
+        </div>
+
+        <h2>🧊 2. Types of Changes of State</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Process</th>
+              <th>Change</th>
+              <th>Description</th>
+              <th>Energy</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td>Melting</td>
+              <td>Solid → Liquid</td>
+              <td>Ice turning to water</td>
+              <td>Absorbed (Endothermic)</td>
+              <td>Ice cubes melting</td>
+            </tr>
+            <tr>
+              <td>Freezing</td>
+              <td>Liquid → Solid</td>
+              <td>Water turning to ice</td>
+              <td>Released (Exothermic)</td>
+              <td>Water in freezer</td>
+            </tr>
+            <tr>
+              <td>Vaporization</td>
+              <td>Liquid → Gas</td>
+              <td>Water turning to steam</td>
+              <td>Absorbed (Endothermic)</td>
+              <td>Boiling water</td>
+            </tr>
+            <tr>
+              <td>Condensation</td>
+              <td>Gas → Liquid</td>
+              <td>Steam turning to water</td>
+              <td>Released (Exothermic)</td>
+              <td>Dew on grass</td>
+            </tr>
+            <tr>
+              <td>Sublimation</td>
+              <td>Solid → Gas</td>
+              <td>Dry ice (CO₂) to gas</td>
+              <td>Absorbed (Endothermic)</td>
+              <td>Mothballs, dry ice</td>
+            </tr>
+            <tr>
+              <td>Deposition</td>
+              <td>Gas → Solid</td>
+              <td>Frost forming on windows</td>
+              <td>Released (Exothermic)</td>
+              <td>Snowflakes forming</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <strong>JAMB Tip:</strong> Sublimation skips the liquid phase (solid → gas directly). Common examples: Dry ice, iodine crystals, naphthalene balls!
+        </div>
+
+        <h2>⚡ 3. Latent Heat</h2>
+        
+        <p>Latent heat is heat energy absorbed or released <span class="highlight">during change of state at constant temperature</span>.</p>
+        <p>The word "latent" means <strong>hidden</strong> because this heat doesn't cause temperature change—it only changes the state.</p>
+
+        <h3>Types of Specific Latent Heat</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Symbol</th>
+              <th>Definition</th>
+              <th>Value for Water</th>
+              <th>Comparison</th>
+            </tr>
+            <tr>
+              <td>Specific Latent Heat of Fusion</td>
+              <td>L_f</td>
+              <td>Heat to change 1kg solid to liquid at melting point</td>
+              <td>334 kJ/kg or 336,000 J/kg</td>
+              <td>Lower value</td>
+            </tr>
+            <tr>
+              <td>Specific Latent Heat of Vaporization</td>
+              <td>L_v</td>
+              <td>Heat to change 1kg liquid to gas at boiling point</td>
+              <td>2,260 kJ/kg or 2,260,000 J/kg</td>
+              <td>Much higher (~7×)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>MASTER FORMULAS:</strong><br><br>
+          Q = m × L_f (for melting/freezing)<br><br>
+          Q = m × L_v (for boiling/condensation)<br><br>
+          Where:<br>
+          Q = Heat energy (Joules, J)<br>
+          m = Mass (kg)<br>
+          L_f or L_v = Specific latent heat (J/kg)
+        </div>
+
+        <h2>🌡️ 4. Melting, Evaporation & Boiling</h2>
+
+        <h3>Melting vs. Freezing</h3>
+        <ul>
+          <li><strong>Melting Point:</strong> Temperature where solid changes to liquid</li>
+          <li><strong>Freezing Point:</strong> Temperature where liquid changes to solid</li>
+          <li>For pure substances: <span class="highlight">Melting point = Freezing point</span></li>
+        </ul>
+
+        <h3>Evaporation vs. Boiling</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Evaporation</th>
+              <th>Boiling</th>
+            </tr>
+            <tr>
+              <td>Temperature</td>
+              <td>Occurs at <strong>any</strong> temperature</td>
+              <td>Occurs at <strong>specific</strong> temperature (boiling point)</td>
+            </tr>
+            <tr>
+              <td>Location</td>
+              <td>Only at the <strong>surface</strong></td>
+              <td>Throughout the <strong>entire liquid</strong></td>
+            </tr>
+            <tr>
+              <td>Bubbles</td>
+              <td>No bubbles formed</td>
+              <td>Bubbles formed throughout</td>
+            </tr>
+            <tr>
+              <td>Rate</td>
+              <td>Slow and gradual</td>
+              <td>Rapid and vigorous</td>
+            </tr>
+            <tr>
+              <td>Energy source</td>
+              <td>Any heat source</td>
+              <td>Heat until vapor pressure = atmospheric pressure</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <strong>Remember:</strong> Boiling is rapid evaporation when vapor pressure equals atmospheric pressure!
+        </div>
+
+        <h2>🔬 5. Factors Affecting Boiling & Melting Points</h2>
+
+        <h3>A. Effect of Pressure</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Pressure Change</th>
+              <th>Boiling Point</th>
+              <th>Melting Point</th>
+              <th>Practical Example</th>
+            </tr>
+            <tr>
+              <td>Increased pressure</td>
+              <td>Increases ⬆️</td>
+              <td>Decreases ⬇️ (most substances)</td>
+              <td>Pressure cooker cooks faster</td>
+            </tr>
+            <tr>
+              <td>Decreased pressure</td>
+              <td>Decreases ⬇️</td>
+              <td>Increases ⬆️ (most substances)</td>
+              <td>High altitude cooking takes longer</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="organelle-list">
+          <p><strong>Practical Examples:</strong></p>
+          <ul>
+            <li><strong>Pressure cooker:</strong> Increases pressure → raises boiling point → food cooks faster</li>
+            <li><strong>High altitudes:</strong> Lower atmospheric pressure → water boils at lower temperature → food takes longer to cook</li>
+          </ul>
+        </div>
+
+        <h3>B. Effect of Dissolved Substances (Impurities)</h3>
+        <ul>
+          <li>Adding salt or sugar to water <strong>raises</strong> the boiling point</li>
+          <li>Adding impurities <strong>lowers</strong> the melting point (freezing point depression)</li>
+          <li>This is why salt is spread on icy roads—it lowers the melting point of ice!</li>
+        </ul>
+
+        <h2>🏠 6. Applications in Appliances</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Appliance</th>
+              <th>Principle</th>
+              <th>Key Process</th>
+            </tr>
+            <tr>
+              <td>Refrigerator</td>
+              <td>Evaporation of refrigerant absorbs heat from inside</td>
+              <td>Evaporation (endothermic)</td>
+            </tr>
+            <tr>
+              <td>Pressure Cooker</td>
+              <td>Increased pressure raises boiling point</td>
+              <td>Higher pressure = higher boiling point</td>
+            </tr>
+            <tr>
+              <td>Freezer</td>
+              <td>Compression and expansion of refrigerant</td>
+              <td>Compression releases heat, expansion absorbs</td>
+            </tr>
+            <tr>
+              <td>Electric Kettle</td>
+              <td>Heating element provides latent heat for boiling</td>
+              <td>Vaporization at 100°C</td>
+            </tr>
+            <tr>
+              <td>Air Conditioner</td>
+              <td>Refrigerant evaporates indoors, condenses outdoors</td>
+              <td>Evaporation cools, condensation releases heat</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>📝 7. Solved Examples (JAMB Style)</h2>
+
+        <h3>Example 1: Calculating Latent Heat of Fusion</h3>
+        <p><strong>Question:</strong> Calculate heat required to melt 0.5 kg ice at 0°C. (L_f = 336,000 J/kg)</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Q = m × L_f<br>
+          Q = 0.5 × 336,000<br>
+          Q = 168,000 J or 168 kJ
+        </div>
+        <div class="answer-box">Answer: 168,000 J or 168 kJ</div>
+
+        <h3>Example 2: Calculating Mass from Latent Heat</h3>
+        <p><strong>Question:</strong> How much steam at 100°C is produced when 11,300 J of heat is supplied to boiling water? (L_v = 2,260,000 J/kg)</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Q = m × L_v<br>
+          m = Q/L_v = 11,300/2,260,000<br>
+          m = 0.005 kg or 5 g
+        </div>
+        <div class="answer-box">Answer: 0.005 kg or 5 g</div>
+
+        <h3>Example 3: Combined Heating (Ice to Steam)</h3>
+        <p><strong>Question:</strong> Calculate total heat required to change 2 kg ice at 0°C to steam at 100°C.<br>
+        [L_f = 336,000 J/kg, L_v = 2,260,000 J/kg, c_water = 4,200 J/kg·K]</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Stage 1: Melting ice at 0°C<br>
+          Q₁ = 2 × 336,000 = 672,000 J<br><br>
+          
+          Stage 2: Heating water 0°C → 100°C<br>
+          Q₂ = mcΔT = 2 × 4,200 × 100 = 840,000 J<br><br>
+          
+          Stage 3: Boiling water at 100°C<br>
+          Q₃ = 2 × 2,260,000 = 4,520,000 J<br><br>
+          
+          Total heat: Q = 672,000 + 840,000 + 4,520,000<br>
+          Q = 6,032,000 J
+        </div>
+        <div class="answer-box">Answer: 6,032,000 J or 6.032 MJ</div>
+
+        <h3>Example 4: Cooling Condensation</h3>
+        <p><strong>Question:</strong> Calculate heat released when 10 g of steam at 100°C condenses to water at 100°C. (L_v = 2,260,000 J/kg)</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          m = 10 g = 0.01 kg<br>
+          Q = m × L_v (condensation releases same amount)<br>
+          Q = 0.01 × 2,260,000<br>
+          Q = 22,600 J
+        </div>
+        <div class="answer-box">Answer: 22,600 J or 22.6 kJ</div>
+
+        <h2>🎯 8. Key Points to Remember for JAMB</h2>
+        
+        <div class="organelle-list">
+          <ol>
+            <li><strong>Temperature is constant</strong> during change of state</li>
+            <li><strong>L_v > L_f:</strong> Specific latent heat of vaporization always greater than fusion for same substance</li>
+            <li><strong>Water is special:</strong> Unusually high specific latent heats, excellent for cooling systems</li>
+            <li><strong>Sublimation:</strong> Skips the liquid phase (solid → gas)</li>
+            <li><strong>Pressure cookers:</strong> Increase pressure to raise boiling point</li>
+            <li><strong>Impurities:</strong> Raise boiling point but lower melting point</li>
+            <li><strong>Heat required:</strong> Vaporization needs ~7× more heat than melting for water</li>
+          </ol>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Recommended Textbooks (JAMB Syllabus)</th>
+              <th>Author(s)</th>
+              <th>Edition</th>
+            </tr>
+            <tr>
+              <td>Essential Principles of Physics</td>
+              <td>Ike E.E</td>
+              <td>2014</td>
+            </tr>
+            <tr>
+              <td>Advanced Level Physics</td>
+              <td>Nelson M. & Parker</td>
+              <td>6th Edition</td>
+            </tr>
+            <tr>
+              <td>Senior Secondary School Physics</td>
+              <td>Okeke P.N & Anyakoha M.W.</td>
+              <td>2000</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎓 Chapter Connections</h3>
+          <ul>
+            <li><strong>Chapter 13:</strong> Quantity of Heat (Q = mcΔT for temperature changes)</li>
+            <li><strong>Chapter 12:</strong> Temperature (temperature remains constant during phase change)</li>
+            <li><strong>Chapter 17:</strong> Gases (vapor pressure concepts)</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Change of State!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Focus on understanding concepts and practicing latent heat calculations!</p>
+        <button class="explore-btn" onclick="window.location.href='latent-heat-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
