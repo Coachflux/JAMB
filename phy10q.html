@@ -1,8 +1,4 @@
-
-# Transform the JAMB Physics Pressure questions into the exact HTML structure
-# maintaining the same neumorphic design, state management, and functionality
-
-physics_html = '''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -531,15 +527,4 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 </body>
-</html>'''
-
-# Save to output file
-output_path = '/mnt/kimi/output/jamb_physics_pressure_quiz.html'
-with open(output_path, 'w', encoding='utf-8') as f:
-    f.write(physics_html)
-
-print(f"✅ Physics Pressure Quiz saved to: {output_path}")
-print(f"📊 Total questions: 50")
-print(f"⏱️  Time allocated: 50 minutes (3000 seconds)")
-print(f"🎯 Pass mark: 60%")
-print(f"📚 Sections: 8 (A-H)")
+</html>
