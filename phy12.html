@@ -254,22 +254,52 @@
       margin: 16px 0;
     }
 
+    /* Sliding Table Styles */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
     table {
       width: 100%;
+      min-width: 500px;
       border-collapse: collapse;
-      margin: 16px 0;
       font-size: 14px;
     }
 
     th, td {
-      padding: 12px;
+      padding: 12px 16px;
       text-align: left;
       border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
     }
 
     th {
       color: var(--accent);
       font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -387,36 +417,52 @@
         
         <p>A <strong>thermometric property</strong> is any physical property that changes measurably with temperature.</p>
 
-        <table>
-          <tr>
-            <th>Property</th>
-            <th>Examples</th>
-          </tr>
-          <tr>
-            <td>Expansion of liquids</td>
-            <td>Mercury, alcohol thermometers</td>
-          </tr>
-          <tr>
-            <td>Expansion of solids</td>
-            <td>Bimetallic strips</td>
-          </tr>
-          <tr>
-            <td>Expansion of gases</td>
-            <td>Constant volume gas thermometer</td>
-          </tr>
-          <tr>
-            <td>Electrical resistance</td>
-            <td>Platinum resistance thermometer</td>
-          </tr>
-          <tr>
-            <td>Thermoelectric e.m.f</td>
-            <td>Thermocouple</td>
-          </tr>
-          <tr>
-            <td>Radiation</td>
-            <td>Pyrometer</td>
-          </tr>
-        </table>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Property</th>
+              <th>Examples</th>
+              <th>Used In</th>
+              <th>Range</th>
+            </tr>
+            <tr>
+              <td>Expansion of liquids</td>
+              <td>Mercury, alcohol</td>
+              <td>Laboratory thermometers</td>
+              <td>-39°C to 357°C</td>
+            </tr>
+            <tr>
+              <td>Expansion of solids</td>
+              <td>Bimetallic strips</td>
+              <td>Thermostats, switches</td>
+              <td>Limited range</td>
+            </tr>
+            <tr>
+              <td>Expansion of gases</td>
+              <td>Constant volume gas</td>
+              <td>Standard thermometer</td>
+              <td>-270°C to 1500°C</td>
+            </tr>
+            <tr>
+              <td>Electrical resistance</td>
+              <td>Platinum wire</td>
+              <td>Precision measurements</td>
+              <td>-200°C to 1000°C</td>
+            </tr>
+            <tr>
+              <td>Thermoelectric e.m.f</td>
+              <td>Two dissimilar metals</td>
+              <td>Thermocouples, industrial</td>
+              <td>-250°C to 1500°C</td>
+            </tr>
+            <tr>
+              <td>Radiation</td>
+              <td>Infrared emissions</td>
+              <td>Pyrometers</td>
+              <td>1000°C and above</td>
+            </tr>
+          </table>
+        </div>
 
         <div class="tips-box">
           <h3>✅ Good Thermometric Properties Must:</h3>
@@ -458,44 +504,74 @@
 
         <h2>4️⃣ Types of Thermometers 🌡️</h2>
 
-        <table>
-          <tr>
-            <th>Type</th>
-            <th>Property</th>
-            <th>Range</th>
-            <th>Uses</th>
-          </tr>
-          <tr>
-            <td>Liquid-in-glass</td>
-            <td>Volume</td>
-            <td>-39°C to 357°C</td>
-            <td>Laboratory, weather</td>
-          </tr>
-          <tr>
-            <td>Gas thermometer</td>
-            <td>Pressure</td>
-            <td>-270°C to 1500°C</td>
-            <td>Standard thermometer</td>
-          </tr>
-          <tr>
-            <td>Thermocouple</td>
-            <td>E.m.f</td>
-            <td>-250°C to 1500°C</td>
-            <td>Industrial, furnaces</td>
-          </tr>
-          <tr>
-            <td>Resistance</td>
-            <td>Resistance</td>
-            <td>-200°C to 1000°C</td>
-            <td>Precise measurements</td>
-          </tr>
-          <tr>
-            <td>Pyrometer</td>
-            <td>Radiation</td>
-            <td>1000°C+</td>
-            <td>Very high temperatures</td>
-          </tr>
-        </table>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Thermometric Property</th>
+              <th>Range</th>
+              <th>Advantages</th>
+              <th>Disadvantages</th>
+              <th>Primary Uses</th>
+            </tr>
+            <tr>
+              <td>Liquid-in-glass (mercury)</td>
+              <td>Volume expansion</td>
+              <td>-39°C to 357°C</td>
+              <td>Simple, cheap, direct reading</td>
+              <td>Fragile, limited range, slow response</td>
+              <td>Laboratory, weather stations</td>
+            </tr>
+            <tr>
+              <td>Liquid-in-glass (alcohol)</td>
+              <td>Volume expansion</td>
+              <td>-115°C to 78°C</td>
+              <td>Lower freezing point than mercury</td>
+              <td>Less accurate, wets glass</td>
+              <td>Very low temperatures</td>
+            </tr>
+            <tr>
+              <td>Gas thermometer (constant volume)</td>
+              <td>Pressure of gas</td>
+              <td>-270°C to 1500°C</td>
+              <td>Most accurate, wide range, used as standard</td>
+              <td>Bulky, slow, complex operation</td>
+              <td>Calibrating other thermometers</td>
+            </tr>
+            <tr>
+              <td>Thermocouple</td>
+              <td>Electromotive force (e.m.f)</td>
+              <td>-250°C to 1500°C</td>
+              <td>Wide range, fast response, remote reading</td>
+              <td>Requires reference junction, less accurate</td>
+              <td>Industrial, furnaces, engines</td>
+            </tr>
+            <tr>
+              <td>Resistance thermometer</td>
+              <td>Electrical resistance</td>
+              <td>-200°C to 1000°C</td>
+              <td>Very precise, stable, remote reading</td>
+              <td>Expensive, slow response, needs bridge circuit</td>
+              <td>Scientific, industrial precision</td>
+            </tr>
+            <tr>
+              <td>Thermistor</td>
+              <td>Resistance (semiconductor)</td>
+              <td>-100°C to 150°C</td>
+              <td>Very sensitive, fast response, small size</td>
+              <td>Non-linear, limited range</td>
+              <td>Electronic circuits, medical</td>
+            </tr>
+            <tr>
+              <td>Pyrometer (radiation)</td>
+              <td>Thermal radiation</td>
+              <td>1000°C+</td>
+              <td>No contact needed, very high temperatures</td>
+              <td>Expensive, affected by emissivity</td>
+              <td>Metallurgy, kilns, stars</td>
+            </tr>
+          </table>
+        </div>
 
         <h2>5️⃣ Calibration of Thermometers ⚙️</h2>
         
@@ -591,6 +667,43 @@
           T = 0.7 × 100 = 70°C
         </div>
         <div class="answer-box">Answer: 70°C</div>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quick Reference</th>
+              <th>Absolute Zero</th>
+              <th>Ice Point</th>
+              <th>Steam Point</th>
+              <th>Body Temp</th>
+              <th>Room Temp</th>
+            </tr>
+            <tr>
+              <td>Celsius (°C)</td>
+              <td>-273.15°C</td>
+              <td>0°C</td>
+              <td>100°C</td>
+              <td>37°C</td>
+              <td>25°C</td>
+            </tr>
+            <tr>
+              <td>Kelvin (K)</td>
+              <td>0 K</td>
+              <td>273.15 K</td>
+              <td>373.15 K</td>
+              <td>310.15 K</td>
+              <td>298.15 K</td>
+            </tr>
+            <tr>
+              <td>Fahrenheit (°F)</td>
+              <td>-459.67°F</td>
+              <td>32°F</td>
+              <td>212°F</td>
+              <td>98.6°F</td>
+              <td>77°F</td>
+            </tr>
+          </table>
+        </div>
 
         <div class="tips-box">
           <h3>📝 Quick Revision Tips for JAMB</h3>
