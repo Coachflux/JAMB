@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Pressure</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Pressure Calculations! 🚀</h1>
+        <p class="subtitle">– JAMB Chapter 10 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📘 Chapter 10: Pressure</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> By the end of this chapter, you should be able to recognize the SI unit of pressure (Pascal), identify pressure-measuring instruments, relate pressure variation to height, use a barometer as an altimeter, determine the relationship between pressure, depth, and density (P = ρgh), apply Pascal's principle, and solve problems involving pressure in liquids.</p>
+
+        <h2>Part A: Atmospheric Pressure 🌤️</h2>
+        
+        <h3>1. Definition</h3>
+        <p>Atmospheric pressure is the <span class="highlight">pressure exerted by the weight of air</span> in the atmosphere acting upon any surface in contact with it.</p>
+
+        <h3>2. SI Unit</h3>
+        <ul>
+          <li><strong>Pascal (Pa)</strong> — the standard unit of pressure</li>
+          <li>Other common units: mmHg, atm, bar</li>
+        </ul>
+
+        <h3>3. Measuring Instruments</h3>
+        <table>
+          <tr>
+            <th>Instrument</th>
+            <th>How It Works</th>
+          </tr>
+          <tr>
+            <td><strong>Simple Mercury Barometer</strong></td>
+            <td>Glass tube filled with mercury inverted in a dish. Measures atmospheric pressure by the height of mercury column</td>
+          </tr>
+          <tr>
+            <td><strong>Aneroid Barometer</strong></td>
+            <td>Sealed, evacuated metal box with flexible lid. Uses mechanical expansion/contraction to measure pressure changes</td>
+          </tr>
+          <tr>
+            <td><strong>Manometer</strong></td>
+            <td>U-shaped tube containing liquid. Measures pressure difference between two points</td>
+          </tr>
+        </table>
+
+        <h3>4. Variation with Height</h3>
+        <ul>
+          <li>Atmospheric pressure <strong>decreases</strong> with increasing altitude</li>
+          <li>The higher you go, the less air above you → <span class="highlight">lower pressure</span></li>
+        </ul>
+
+        <h3>5. Barometer as Altimeter</h3>
+        <p>Since pressure decreases predictably with height, barometers can measure altitude. Used in <strong>aircraft</strong> and <strong>mountaineering</strong> to determine height above sea level.</p>
+
+        <h2>Part B: Pressure in Liquids 💧</h2>
+
+        <h3>1. Fundamental Relationship</h3>
+        <div class="formula-box">
+          <strong>P = ρgh</strong><br><br>
+          Where:<br>
+          P = Pressure (Pa)<br>
+          ρ (rho) = Density of liquid (kg/m³)<br>
+          g = Acceleration due to gravity (9.8 or 10 m/s²)<br>
+          h = Depth/height of liquid column (m)
+        </div>
+
+        <h3>2. Key Properties of Liquid Pressure</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Increases with depth</strong>: The deeper you go, the greater the pressure</li>
+            <li><strong>Independent of container shape</strong>: Same depth = same pressure in any container</li>
+            <li><strong>Acts equally in all directions</strong>: Pressure is transmitted uniformly</li>
+            <li><strong>Depends on liquid density</strong>: Denser liquids exert more pressure at same depth</li>
+          </ul>
+        </div>
+
+        <h3>3. Pascal's Principle</h3>
+        <p><em>"Pressure applied to an enclosed fluid is transmitted undiminished to every portion of the fluid and the walls of the containing vessel."</em></p>
+        
+        <p><strong>Applications:</strong></p>
+        <ul>
+          <li><strong>Hydraulic presses</strong> — used in car jacks, braking systems</li>
+          <li><strong>Hydraulic lifts</strong> — lifting heavy vehicles in garages</li>
+          <li><strong>Brake systems</strong> — force multiplication in vehicle brakes</li>
+        </ul>
+
+        <h2>🧮 7 Essential Calculations for JAMB</h2>
+
+        <h3>Calculation 1: Absolute Pressure at Depth</h3>
+        <p><strong>Question:</strong> Calculate the absolute pressure at the bottom of a lake at a depth of 32.8 m. Assume density of water = 1000 kg/m³, g = 10 m/s², Atmospheric pressure = 1.01 × 10⁵ Pa.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Absolute Pressure = Atmospheric Pressure + Liquid Pressure<br>
+          P_absolute = P_atm + ρgh<br><br>
+          
+          P_atm = 1.01 × 10⁵ Pa<br>
+          ρgh = 1000 × 10 × 32.8 = 3.28 × 10⁵ Pa<br><br>
+          
+          P_absolute = 1.01 × 10⁵ + 3.28 × 10⁵<br>
+          = 4.29 × 10⁵ Pa
+        </div>
+        <div class="answer-box">Answer: 4.29 × 10⁵ Pa</div>
+
+        <h3>Calculation 2: Total Pressure in Ocean</h3>
+        <p><strong>Question:</strong> The atmospheric pressure due to water is 1.3 × 10⁶ N/m². What is the total pressure at the bottom of an ocean 10m deep? [Density of water = 1000 kg/m³, g = 10 m/s²]</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          P_total = P_atm + ρgh<br><br>
+          
+          P_atm = 1.3 × 10⁶ N/m²<br>
+          ρgh = 1000 × 10 × 10 = 1.0 × 10⁵ N/m²<br><br>
+          
+          P_total = 1.3 × 10⁶ + 0.1 × 10⁶<br>
+          = 1.4 × 10⁶ N/m²
+        </div>
+        <div class="answer-box">Answer: 1.4 × 10⁶ N/m²</div>
+
+        <h3>Calculation 3: Depth for One Atmosphere Change</h3>
+        <p><strong>Question:</strong> At what depth below sea-level would one experience a change of pressure equal to one atmosphere? [Density of sea water = 1013 kg/m³, 1 atm = 1.01 × 10⁵ N/m², g = 10 m/s²]</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          P = ρgh<br>
+          h = P / (ρg)<br><br>
+          
+          h = (1.01 × 10⁵) / (1013 × 10)<br>
+          h = 101000 / 10130<br>
+          h ≈ 9.97 m ≈ 10.0 m
+        </div>
+        <div class="answer-box">Answer: 10.0 m</div>
+
+        <h3>Calculation 4: Hydraulic Press (Pascal's Principle)</h3>
+        <p><strong>Question:</strong> In a hydraulic press, the pump piston exerts a pressure of 100 Pa on the liquid. What force is exerted on the second piston of cross-sectional area 3 m²?</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          According to Pascal's Principle: P₁ = P₂<br><br>
+          
+          P₁ = 100 Pa<br>
+          A₂ = 3 m²<br><br>
+          
+          P₂ = F₂ / A₂<br>
+          F₂ = P₂ × A₂ = 100 × 3 = 300 N
+        </div>
+        <div class="answer-box">Answer: 300 N</div>
+
+        <h3>Calculation 5: Hydraulic Car Lift</h3>
+        <p><strong>Question:</strong> A hydraulic lift has a small piston with radius 0.05 m and a large piston with radius 0.25 m. If a force of 100 N is applied to the small piston, what load can be lifted by the large piston?</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Pascal's Principle: P₁ = P₂<br>
+          F₁/A₁ = F₂/A₂<br><br>
+          
+          A₁ = πr₁² = π × (0.05)² = 0.007854 m²<br>
+          A₂ = πr₂² = π × (0.25)² = 0.19635 m²<br><br>
+          
+          F₂ = F₁ × (A₂/A₁)<br>
+          F₂ = 100 × (0.19635 / 0.007854)<br>
+          F₂ = 100 × 25 = 2500 N
+        </div>
+        <div class="answer-box">Answer: 2500 N (or 2.5 kN)</div>
+
+        <h3>Calculation 6: Pressure in a Mercury Column</h3>
+        <p><strong>Question:</strong> Calculate the pressure at the bottom of a mercury column 760 mm high. [Density of mercury = 13600 kg/m³, g = 9.8 m/s²]</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          P = ρgh<br>
+          h = 760 mm = 0.760 m<br><br>
+          
+          P = 13600 × 9.8 × 0.760<br>
+          P = 101292.8 Pa<br>
+          P ≈ 1.013 × 10⁵ Pa
+        </div>
+        <div class="answer-box">Answer: 1.013 × 10⁵ Pa (or 101.3 kPa, equivalent to 1 atm)</div>
+
+        <h3>Calculation 7: Comparing Pressures in Different Liquids</h3>
+        <p><strong>Question:</strong> Two liquids X and Y have densities of 800 kg/m³ and 1200 kg/m³ respectively. At what depth in liquid X will the pressure be equal to the pressure at a depth of 0.6 m in liquid Y?</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          For equal pressures: P_X = P_Y<br>
+          ρ_X × g × h_X = ρ_Y × g × h_Y<br><br>
+          
+          800 × h_X = 1200 × 0.6<br>
+          h_X = (1200 × 0.6) / 800<br>
+          h_X = 720 / 800<br>
+          h_X = 0.9 m
+        </div>
+        <div class="answer-box">Answer: 0.9 m (or 90 cm)</div>
+
+        <h2>🔑 Key Formulas Summary</h2>
+        <table>
+          <tr>
+            <th>Formula</th>
+            <th>Use</th>
+          </tr>
+          <tr>
+            <td><strong>P = ρgh</strong></td>
+            <td>Calculate pressure in a liquid</td>
+          </tr>
+          <tr>
+            <td><strong>P = F/A</strong></td>
+            <td>Basic pressure definition</td>
+          </tr>
+          <tr>
+            <td><strong>P₁ = P₂</strong></td>
+            <td>Hydraulic systems (Pascal's)</td>
+          </tr>
+          <tr>
+            <td><strong>P_absolute = P_atm + ρgh</strong></td>
+            <td>Total pressure at depth</td>
+          </tr>
+          <tr>
+            <td><strong>h = P/(ρg)</strong></td>
+            <td>Finding depth from pressure</td>
+          </tr>
+        </table>
+
+        <div class="tips-box">
+          <h3>💡 Quick Study Tips</h3>
+          <ul>
+            <li><strong>Remember the units:</strong> Always use SI units (Pa, kg/m³, m, m/s²)</li>
+            <li><strong>Draw diagrams:</strong> Sketch containers with liquid levels to visualize depth (h)</li>
+            <li><strong>Practice conversions:</strong> Know how to convert between mmHg, cmH₂O, and Pascals</li>
+            <li><strong>Real-world connections:</strong> Think about hydraulic systems, diving, and weather</li>
+            <li><strong>Solve past questions:</strong> JAMB frequently tests pressure calculations</li>
+          </ul>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Common Mistakes to Avoid</h3>
+          <ul>
+            <li>Confusing atmospheric pressure (air) with liquid pressure (water/fluids)</li>
+            <li>Forgetting that h is the <strong>vertical depth</strong>, not slant height</li>
+            <li>Mixing up density values — water = 1000 kg/m³, mercury = 13600 kg/m³</li>
+            <li>Not recognizing pressure acts equally in all directions</li>
+            <li>Forgetting to add atmospheric pressure when calculating absolute pressure</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Pressure calculations!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Access JAMB questions related to this chapter</p>
+        <button class="explore-btn" onclick="window.location.href='pressure-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
