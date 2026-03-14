@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Quantity of Heat</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Heat Calculations! 🚀</h1>
+        <p class="subtitle">– JAMB Chapter 13 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 13: Quantity of Heat</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Differentiate between heat capacity and specific heat capacity, determine both using simple methods, and solve numerical problems involving heat calculations.</p>
+
+        <h2>🔑 Core Concepts 🔥</h2>
+
+        <h3>1. Heat as a Form of Energy</h3>
+        <ul>
+          <li>Heat is energy transferred due to temperature difference</li>
+          <li>Measured in <strong>Joules (J)</strong> or calories (cal)</li>
+          <li><span class="highlight">1 calorie = 4.2 J</span> (approximately)</li>
+        </ul>
+
+        <h3>2. Heat Capacity (C)</h3>
+        <p>Quantity of heat required to raise the temperature of a <strong>whole body</strong> by 1 Kelvin.</p>
+        
+        <div class="formula-box">
+          C = Q/ΔT<br><br>
+          Where:<br>
+          C = Heat capacity (J/K or J/°C)<br>
+          Q = Quantity of heat energy (J)<br>
+          ΔT = Temperature change (K or °C)
+        </div>
+
+        <h3>3. Specific Heat Capacity (c)</h3>
+        <p>Quantity of heat required to raise <strong>unit mass (1 kg)</strong> of a substance by 1 Kelvin.</p>
+        
+        <div class="formula-box">
+          <strong>MASTER FORMULA:</strong><br>
+          c = Q/(mΔT)<br><br>
+          OR<br><br>
+          <strong>Q = mcΔT</strong><br><br>
+          Where:<br>
+          c = Specific heat capacity (J kg⁻¹ K⁻¹)<br>
+          m = Mass (kg)<br>
+          Q = Heat energy (J)<br>
+          ΔT = Temperature change (K or °C)
+        </div>
+
+        <h3>4. Relationship Between C and c</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Property</th>
+              <th>Heat Capacity (C)</th>
+              <th>Specific Heat Capacity (c)</th>
+            </tr>
+            <tr>
+              <td>Definition</td>
+              <td>Heat to raise whole object by 1K</td>
+              <td>Heat to raise 1kg by 1K</td>
+            </tr>
+            <tr>
+              <td>Property of</td>
+              <td>The whole object</td>
+              <td>The material itself</td>
+            </tr>
+            <tr>
+              <td>Mass dependence</td>
+              <td>Depends on mass AND material</td>
+              <td>Independent of mass</td>
+            </tr>
+            <tr>
+              <td>Unit</td>
+              <td>J K⁻¹ or J °C⁻¹</td>
+              <td>J kg⁻¹ K⁻¹</td>
+            </tr>
+            <tr>
+              <td>Formula link</td>
+              <td colspan="2">C = mc or c = C/m</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>🧪 Methods of Determination 🔬</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Method</th>
+              <th>Principle</th>
+              <th>Formula/Approach</th>
+              <th>Best For</th>
+            </tr>
+            <tr>
+              <td>Method of Mixtures</td>
+              <td>Heat lost by hot body = Heat gained by cold body</td>
+              <td>Q_lost = Q_gained</td>
+              <td>Solids and liquids</td>
+            </tr>
+            <tr>
+              <td>Electrical Method</td>
+              <td>Electrical energy converts to heat</td>
+              <td>Q = IVt = I²Rt = V²t/R</td>
+              <td>Liquids, precise measurements</td>
+            </tr>
+            <tr>
+              <td>Newton's Law of Cooling</td>
+              <td>Rate of heat loss ∝ temperature difference</td>
+              <td>dQ/dt ∝ (θ - θ₀)</td>
+              <td>High temperature measurements</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>🔢 7 Essential Calculations for JAMB</h2>
+
+        <h3>Example 1: Basic Specific Heat Capacity</h3>
+        <p><strong>Question:</strong> Calculate temperature change when 500 J heat is supplied to 100 g water. [c_water = 4200 J kg⁻¹ K⁻¹]</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Given: Q = 500 J, m = 100 g = 0.1 kg, c = 4200 J kg⁻¹ K⁻¹<br><br>
+          
+          Using Q = mcΔT:<br>
+          ΔT = Q/(mc) = 500/(0.1 × 4200)<br>
+          ΔT = 500/420 = 1.19 ≈ 1.2°C
+        </div>
+        <div class="answer-box">Answer: 1.2°C (or 1.2 K, same interval)</div>
+        <div class="tips-box">
+          <strong>JAMB Tip:</strong> Always convert mass to kg first!
+        </div>
+
+        <h3>Example 2: Heat Capacity of a Calorimeter</h3>
+        <p><strong>Question:</strong> Aluminium block heated by 30 W heater. Temperature rises 100°C in 5 minutes. Find heat capacity.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Given: P = 30 W, t = 5 min = 300 s, ΔT = 100 K<br><br>
+          
+          Heat supplied: Q = Pt = 30 × 300 = 9000 J<br><br>
+          
+          Using Q = CΔT:<br>
+          C = Q/ΔT = 9000/100 = 90 J K⁻¹
+        </div>
+        <div class="answer-box">Answer: 90 J K⁻¹</div>
+
+        <h3>Example 3: Method of Mixtures (Equilibrium Temperature)</h3>
+        <p><strong>Question:</strong> Metal mass 0.5 kg at 100°C transferred to calorimeter (C = 80 J K⁻¹) containing water (C = 420 J K⁻¹) at 20°C. Find equilibrium temperature. [c_metal = 400 J kg⁻¹ K⁻¹]</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Let final temperature = θ<br><br>
+          
+          Heat lost by metal:<br>
+          Q_lost = mc(100 - θ) = 0.5 × 400 × (100 - θ) = 200(100 - θ)<br><br>
+          
+          Heat gained by calorimeter + water:<br>
+          Q_gained = 80(θ - 20) + 420(θ - 20) = 500(θ - 20)<br><br>
+          
+          Setting equal: 200(100 - θ) = 500(θ - 20)<br>
+          20000 - 200θ = 500θ - 10000<br>
+          30000 = 700θ<br>
+          θ = 30000/700 = 42.9°C ≈ 43°C
+        </div>
+        <div class="answer-box">Answer: Approximately 43°C</div>
+
+        <h3>Example 4: Finding Specific Heat Capacity</h3>
+        <p><strong>Question:</strong> Metal mass 0.5 kg at 100°C transferred to calorimeter (C = 80 J K⁻¹) with water (C = 420 J K⁻¹) at 20°C. Equilibrium temperature is 44°C. Find specific heat capacity of metal.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Given: m_metal = 0.5 kg, T_metal = 100°C, T_initial = 20°C, T_final = 44°C<br>
+          C_cal = 80 J K⁻¹, C_water = 420 J K⁻¹<br><br>
+          
+          Heat lost by metal: Q_lost = 0.5 × c × (100 - 44) = 28c<br><br>
+          
+          Heat gained: Q_gained = 80(44-20) + 420(44-20) = 80(24) + 420(24)<br>
+          Q_gained = 1920 + 10080 = 12000 J<br><br>
+          
+          Equating: 28c = 12000<br>
+          c = 12000/28 = 428.6 ≈ 429 J kg⁻¹ K⁻¹
+        </div>
+        <div class="answer-box">Answer: Approximately 430 J kg⁻¹ K⁻¹</div>
+
+        <h3>Example 5: Electrical Heating Method</h3>
+        <p><strong>Question:</strong> Electric heater rated 50 W immersed in liquid (m = 0.5 kg). Temperature rises from 25°C to 75°C in 210 s. Calculate specific heat capacity. Neglect heat losses.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Given: P = 50 W, m = 0.5 kg, ΔT = 50°C, t = 210 s<br><br>
+          
+          Heat supplied: Q = Pt = 50 × 210 = 10500 J<br><br>
+          
+          Using Q = mcΔT:<br>
+          c = Q/(mΔT) = 10500/(0.5 × 50) = 10500/25<br>
+          c = 420 J kg⁻¹ K⁻¹
+        </div>
+        <div class="answer-box">Answer: 420 J kg⁻¹ K⁻¹</div>
+
+        <h3>Example 6: Comparing Two Substances</h3>
+        <p><strong>Question:</strong> Two liquids X and Y with same mass receive same quantity of heat. Temperature rise in X is twice that of Y. Find ratio c_X : c_Y.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Given: m_X = m_Y = m, Q_X = Q_Y = Q, ΔT_X = 2ΔT_Y<br><br>
+          
+          For liquid X: Q = m c_X ΔT_X = m c_X (2ΔT_Y)<br>
+          For liquid Y: Q = m c_Y ΔT_Y<br><br>
+          
+          Equating: m c_X (2ΔT_Y) = m c_Y ΔT_Y<br>
+          2c_X = c_Y<br>
+          c_X/c_Y = 1/2
+        </div>
+        <div class="answer-box">Answer: 1:2 (or c_X : c_Y = 1:2)</div>
+
+        <h3>Example 7: Heat with Change of State (Combined)</h3>
+        <p><strong>Question:</strong> Calculate heat required to melt completely 1 kg ice at -30°C. [L_fusion = 3.5 × 10⁵ J kg⁻¹, c_ice = 2.1 × 10³ J kg⁻¹ K⁻¹]</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Stage 1: Heat ice from -30°C to 0°C<br>
+          Q₁ = mcΔT = 1 × 2100 × 30 = 63000 J<br><br>
+          
+          Stage 2: Melt ice at 0°C<br>
+          Q₂ = mL = 1 × 3.5 × 10⁵ = 350000 J<br><br>
+          
+          Total heat: Q_total = 63000 + 350000<br>
+          Q_total = 413000 J = 4.13 × 10⁵ J
+        </div>
+        <div class="answer-box">Answer: 4.13 × 10⁵ J (or 413 kJ)</div>
+
+        <h2>📝 Quick Reference: Common Specific Heat Capacities</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Substance</th>
+              <th>Specific Heat Capacity (J kg⁻¹ K⁻¹)</th>
+              <th>Notes</th>
+            </tr>
+            <tr>
+              <td>Water</td>
+              <td>4200</td>
+              <td>Highest of common substances</td>
+            </tr>
+            <tr>
+              <td>Ice</td>
+              <td>2100</td>
+              <td>Half of liquid water</td>
+            </tr>
+            <tr>
+              <td>Aluminium</td>
+              <td>900</td>
+              <td>Relatively high for metal</td>
+            </tr>
+            <tr>
+              <td>Copper</td>
+              <td>390</td>
+              <td>Good conductor, lower c</td>
+            </tr>
+            <tr>
+              <td>Iron/Steel</td>
+              <td>450</td>
+              <td>Common structural metal</td>
+            </tr>
+            <tr>
+              <td>Lead</td>
+              <td>130</td>
+              <td>Very low, heats quickly</td>
+            </tr>
+            <tr>
+              <td>Mercury</td>
+              <td>140</td>
+              <td>Liquid metal, low c</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Common Mistakes to Avoid</h3>
+          <ul>
+            <li><strong>Unit conversion errors:</strong> Always convert mass to kg, time to seconds</li>
+            <li><strong>Temperature vs Heat:</strong> Temperature is hotness, heat is energy transferred</li>
+            <li><strong>C vs c:</strong> Remember which depends on mass</li>
+            <li><strong>Sign conventions:</strong> Heat lost = negative, heat gained = positive</li>
+            <li><strong>Equilibrium:</strong> Identify which bodies lose heat and which gain</li>
+          </ul>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎓 JAMB Exam Tips</h3>
+          <ul>
+            <li><strong>Convert units first</strong> before plugging into formulas</li>
+            <li><strong>Check magnitude:</strong> Water = 4200, metals = 400-900 J kg⁻¹ K⁻¹</li>
+            <li><strong>Method of mixtures:</strong> Q_lost = Q_gained</li>
+            <li><strong>Electrical method:</strong> Q = IVt (power × time)</li>
+            <li><strong>Latent heat:</strong> Break into stages (heating + change of state)</li>
+          </ul>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Chapter</th>
+              <th>Connection</th>
+            </tr>
+            <tr>
+              <td>Chapter 16: Change of State</td>
+              <td>Latent heat calculations (Example 7)</td>
+            </tr>
+            <tr>
+              <td>Chapter 12: Temperature</td>
+              <td>Temperature changes drive heat flow</td>
+            </tr>
+            <tr>
+              <td>Chapter 14: Gas Laws</td>
+              <td>Heat capacity of gases differs from solids/liquids</td>
+            </tr>
+          </table>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Quantity of Heat!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Practice past questions 1985-2024 to see JAMB patterns!</p>
+        <button class="explore-btn" onclick="window.location.href='heat-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
