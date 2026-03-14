@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Temperature</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    /* Footer Nav Bar */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Temperature & Scales! 🚀</h1>
+        <p class="subtitle">– JAMB Chapter 12 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 12: Temperature and Its Measurement</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Identify thermometric properties, calibrate thermometers, differentiate between temperature scales (Celsius and Kelvin), compare thermometer types, and convert between scales.</p>
+
+        <h2>1️⃣ Concept of Temperature 🌡️</h2>
+        
+        <p>Temperature is the <span class="highlight">degree of hotness or coldness</span> of a body. It measures the average kinetic energy of molecules in a substance.</p>
+
+        <div class="organelle-list">
+          <ul>
+            <li>Heat flows from <strong>higher</strong> to <strong>lower</strong> temperature</li>
+            <li>Temperature determines direction of heat flow</li>
+            <li>SI unit: <strong>Kelvin (K)</strong></li>
+            <li>Common unit: Degree Celsius (°C)</li>
+          </ul>
+        </div>
+
+        <h2>2️⃣ Thermometric Properties 🔬</h2>
+        
+        <p>A <strong>thermometric property</strong> is any physical property that changes measurably with temperature.</p>
+
+        <table>
+          <tr>
+            <th>Property</th>
+            <th>Examples</th>
+          </tr>
+          <tr>
+            <td>Expansion of liquids</td>
+            <td>Mercury, alcohol thermometers</td>
+          </tr>
+          <tr>
+            <td>Expansion of solids</td>
+            <td>Bimetallic strips</td>
+          </tr>
+          <tr>
+            <td>Expansion of gases</td>
+            <td>Constant volume gas thermometer</td>
+          </tr>
+          <tr>
+            <td>Electrical resistance</td>
+            <td>Platinum resistance thermometer</td>
+          </tr>
+          <tr>
+            <td>Thermoelectric e.m.f</td>
+            <td>Thermocouple</td>
+          </tr>
+          <tr>
+            <td>Radiation</td>
+            <td>Pyrometer</td>
+          </tr>
+        </table>
+
+        <div class="tips-box">
+          <h3>✅ Good Thermometric Properties Must:</h3>
+          <ul>
+            <li>Change <strong>uniformly</strong> with temperature</li>
+            <li>Be <strong>easily measurable</strong></li>
+            <li>Have a <strong>wide range</strong></li>
+            <li>Be <strong>reproducible</strong></li>
+          </ul>
+        </div>
+
+        <h2>3️⃣ Temperature Scales 🌡️</h2>
+
+        <h3>Celsius Scale (°C)</h3>
+        <ul>
+          <li><strong>0°C</strong> = Ice point (melting ice)</li>
+          <li><strong>100°C</strong> = Steam point (boiling water)</li>
+          <li>Divided into 100 equal parts</li>
+        </ul>
+
+        <h3>Kelvin Scale (K) - Absolute Scale</h3>
+        <ul>
+          <li><strong>0 K</strong> = Absolute zero (-273.15°C)</li>
+          <li><strong>273.15 K</strong> = Ice point</li>
+          <li><strong>373.15 K</strong> = Steam point</li>
+          <li>No negative values!</li>
+        </ul>
+
+        <h3>Conversion Formulas</h3>
+        <div class="formula-box">
+          <strong>Master Formula:</strong><br>
+          T_C/100 = (T_K - 273)/100 = (T_F - 32)/180<br><br>
+          
+          <strong>Quick Conversions:</strong><br>
+          • °C to K: T_K = T_C + 273<br>
+          • K to °C: T_C = T_K - 273<br>
+          • °C to °F: T_F = (9/5)T_C + 32
+        </div>
+
+        <h2>4️⃣ Types of Thermometers 🌡️</h2>
+
+        <table>
+          <tr>
+            <th>Type</th>
+            <th>Property</th>
+            <th>Range</th>
+            <th>Uses</th>
+          </tr>
+          <tr>
+            <td>Liquid-in-glass</td>
+            <td>Volume</td>
+            <td>-39°C to 357°C</td>
+            <td>Laboratory, weather</td>
+          </tr>
+          <tr>
+            <td>Gas thermometer</td>
+            <td>Pressure</td>
+            <td>-270°C to 1500°C</td>
+            <td>Standard thermometer</td>
+          </tr>
+          <tr>
+            <td>Thermocouple</td>
+            <td>E.m.f</td>
+            <td>-250°C to 1500°C</td>
+            <td>Industrial, furnaces</td>
+          </tr>
+          <tr>
+            <td>Resistance</td>
+            <td>Resistance</td>
+            <td>-200°C to 1000°C</td>
+            <td>Precise measurements</td>
+          </tr>
+          <tr>
+            <td>Pyrometer</td>
+            <td>Radiation</td>
+            <td>1000°C+</td>
+            <td>Very high temperatures</td>
+          </tr>
+        </table>
+
+        <h2>5️⃣ Calibration of Thermometers ⚙️</h2>
+        
+        <p>Calibration is marking a scale using fixed points.</p>
+
+        <h3>Steps:</h3>
+        <ol>
+          <li>Place in melting ice (0°C) → mark level</li>
+          <li>Place in steam (100°C) → mark level</li>
+          <li>Divide distance into 100 equal parts</li>
+        </ol>
+
+        <div class="formula-box">
+          <strong>Linear Scale Formula:</strong><br>
+          (T - T_lower)/(T_upper - T_lower) = (X - X_lower)/(X_upper - X_lower)<br><br>
+          Where X = thermometric property (length, resistance, pressure, etc.)
+        </div>
+
+        <h2>🔢 7 Essential Calculations for JAMB</h2>
+
+        <h3>Calculation 1: Celsius to Kelvin</h3>
+        <p><strong>Question:</strong> Convert 27°C to Kelvin.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          T_K = T_C + 273<br>
+          T_K = 27 + 273 = 300 K
+        </div>
+        <div class="answer-box">Answer: 300 K</div>
+
+        <h3>Calculation 2: Kelvin to Celsius</h3>
+        <p><strong>Question:</strong> Furnace temperature is 1273 K. What is this in Celsius?</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          T_C = T_K - 273<br>
+          T_C = 1273 - 273 = 1000°C
+        </div>
+        <div class="answer-box">Answer: 1000°C</div>
+
+        <h3>Calculation 3: Fahrenheit Conversion</h3>
+        <p><strong>Question:</strong> Convert 37°C (body temperature) to Fahrenheit.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          T_F = (9/5)T_C + 32<br>
+          T_F = (9/5)(37) + 32<br>
+          T_F = 66.6 + 32 = 98.6°F
+        </div>
+        <div class="answer-box">Answer: 98.6°F</div>
+
+        <h3>Calculation 4: Thermometer Calibration (Length)</h3>
+        <p><strong>Question:</strong> Mercury thread is 4.0 cm at 0°C and 24.0 cm at 100°C. Find temperature when length is 14.0 cm.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          (T - 0)/(100 - 0) = (14.0 - 4.0)/(24.0 - 4.0)<br>
+          T/100 = 10/20 = 0.5<br>
+          T = 0.5 × 100 = 50°C
+        </div>
+        <div class="answer-box">Answer: 50°C</div>
+
+        <h3>Calculation 5: Resistance Thermometer</h3>
+        <p><strong>Question:</strong> Platinum thermometer has resistance 5.0 Ω at ice point and 7.0 Ω at steam point. Find temperature at 6.4 Ω.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          T/100 = (R - R_0)/(R_100 - R_0)<br>
+          T/100 = (6.4 - 5.0)/(7.0 - 5.0) = 1.4/2.0 = 0.7<br>
+          T = 0.7 × 100 = 70°C
+        </div>
+        <div class="answer-box">Answer: 70°C</div>
+
+        <h3>Calculation 6: Gas Thermometer</h3>
+        <p><strong>Question:</strong> Constant volume gas thermometer records 80 cmHg at 0°C and 110 cmHg at 100°C. Find temperature at 95 cmHg.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          T/100 = (P - P_0)/(P_100 - P_0)<br>
+          T/100 = (95 - 80)/(110 - 80) = 15/30 = 0.5<br>
+          T = 0.5 × 100 = 50°C<br>
+          Or in Kelvin: 50 + 273 = 323 K
+        </div>
+        <div class="answer-box">Answer: 50°C (323 K)</div>
+
+        <h3>Calculation 7: Thermocouple E.m.f</h3>
+        <p><strong>Question:</strong> Thermocouple produces 0.0 mV at 0°C and 5.0 mV at 100°C. Find temperature at 3.5 mV.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          T/100 = (E - E_0)/(E_100 - E_0)<br>
+          T/100 = (3.5 - 0)/(5.0 - 0) = 3.5/5.0 = 0.7<br>
+          T = 0.7 × 100 = 70°C
+        </div>
+        <div class="answer-box">Answer: 70°C</div>
+
+        <div class="tips-box">
+          <h3>📝 Quick Revision Tips for JAMB</h3>
+          <ul>
+            <li><strong>Remember 273</strong> — Always add/subtract for K ↔ °C</li>
+            <li><strong>Linear relationship</strong> — All calibrations assume linearity</li>
+            <li><strong>Absolute zero</strong> — 0 K = -273°C (theoretical limit)</li>
+            <li><strong>Triple point</strong> — 273.16 K (modern precise standard)</li>
+            <li><strong>Gas thermometers</strong> — Most accurate, used as standard</li>
+          </ul>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Common Mistakes to Avoid</h3>
+          <ul>
+            <li>❌ Using 273.15 vs 273 — For JAMB, use <strong>273</strong> unless specified</li>
+            <li>❌ Confusing temperature with heat — Temperature is intensity, heat is energy</li>
+            <li>❌ Negative Celsius to Kelvin — e.g., -40°C = 233 K (not negative!)</li>
+            <li>❌ Wrong calibration formula — Always use: T/100 = (X - X_0)/(X_100 - X_0)</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Temperature & Measurement!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 13 (Thermal Expansion) & Chapter 14 (Gas Laws)</p>
+        <button class="explore-btn" onclick="window.location.href='temperature-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // Profile Upload placeholder
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
