@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Capacitors</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Capacitors! 🔋</h1>
+        <p class="subtitle">– JAMB Chapter 29 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 29: Capacitors</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Determine uses of capacitors, analyze parallel plate capacitors, calculate capacitance, understand factors affecting capacitance, solve series/parallel arrangements, and calculate energy stored.</p>
+
+        <h2>1️⃣ What is a Capacitor? 🔋</h2>
+        
+        <p>A <span class="highlight">capacitor</span> is a device that stores electric charge and electrical energy in an electric field.</p>
+
+        <h3>Basic Structure</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Two conducting plates</strong> (electrodes)</li>
+            <li><strong>Dielectric:</strong> Insulating material between plates (air, paper, mica, ceramic, etc.)</li>
+            <li>When connected to a battery: one plate becomes positive (+Q), the other negative (−Q)</li>
+          </ul>
+        </div>
+
+        <div class="formula-box">
+          Symbol:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;│ │<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;│ │<br>
+          &nbsp;&nbsp;──┴─┴──
+        </div>
+
+        <h2>2️⃣ Capacitance (C) 📐</h2>
+
+        <h3>Definition</h3>
+        <p>Capacitance is the ability of a capacitor to store charge. It measures how much charge a capacitor can hold per unit voltage.</p>
+        
+        <div class="formula-box">
+          <strong>C = Q/V</strong><br><br>
+          Where:<br>
+          • C = Capacitance (Farads, F)<br>
+          • Q = Charge stored (Coulombs, C)<br>
+          • V = Potential difference/Voltage (Volts, V)
+        </div>
+
+        <div class="formula-box">
+          <strong>Units:</strong><br>
+          • Farad (F) – SI unit<br>
+          • μF (microfarad, 10⁻⁶ F)<br>
+          • nF (nanofarad, 10⁻⁹ F)<br>
+          • pF (picofarad, 10⁻¹² F)<br><br>
+          
+          💡 1 Farad is huge! Most capacitors are μF or pF range.
+        </div>
+
+        <h2>3️⃣ Parallel Plate Capacitor ⚡</h2>
+        
+        <p>This is the most important type for JAMB. It consists of two parallel metal plates separated by distance d.</p>
+
+        <div class="formula-box">
+          <strong>The Magic Formula:</strong><br>
+          C = εA/d<br><br>
+          
+          Where:<br>
+          • ε = Permittivity = ε₀ × εᵣ<br>
+          • ε₀ = 8.85 × 10⁻¹² F/m (permittivity of free space)<br>
+          • εᵣ = Relative permittivity/dielectric constant (dimensionless)<br>
+          • A = Area of one plate (m²)<br>
+          • d = Separation between plates (m)
+        </div>
+
+        <h3>Special Cases</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Medium</th>
+              <th>Formula</th>
+              <th>Notes</th>
+            </tr>
+            <tr>
+              <td><strong>Air/Vacuum</strong></td>
+              <td>C = ε₀A/d</td>
+              <td>εᵣ = 1</td>
+            </tr>
+            <tr>
+              <td><strong>With dielectric</strong></td>
+              <td>C = ε₀εᵣA/d</td>
+              <td>εᵣ > 1</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Factors Affecting Capacitance</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Factor</th>
+              <th>Relationship</th>
+              <th>Effect</th>
+            </tr>
+            <tr>
+              <td><strong>Area (A)</strong></td>
+              <td>C ∝ A</td>
+              <td>Larger area = Larger C</td>
+            </tr>
+            <tr>
+              <td><strong>Separation (d)</strong></td>
+              <td>C ∝ 1/d</td>
+              <td>Closer plates = Larger C</td>
+            </tr>
+            <tr>
+              <td><strong>Dielectric (εᵣ)</strong></td>
+              <td>C ∝ εᵣ</td>
+              <td>Higher εᵣ = Larger C</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>🔢 Calculation 1: Basic Capacitance</h2>
+        <p><strong>Question:</strong> A parallel plate capacitor has plates of area 0.04 m² separated by 2 mm in air. Calculate its capacitance.</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong> A = 0.04 m², d = 2 mm = 0.002 m, ε₀ = 8.85 × 10⁻¹² F/m<br><br>
+          
+          C = ε₀A/d<br>
+          C = (8.85 × 10⁻¹² × 0.04)/0.002<br>
+          C = (3.54 × 10⁻¹³)/0.002<br>
+          C = 1.77 × 10⁻¹⁰ F = 177 pF
+        </div>
+        <div class="answer-box">Answer: 177 pF (or 1.77 × 10⁻¹⁰ F)</div>
+
+        <h2>🔢 Calculation 2: Effect of Dielectric</h2>
+        <p><strong>Question:</strong> A capacitor has capacitance 50 pF in air. What is its capacitance when a wax dielectric (εᵣ = 2.2) fills the space between plates?</p>
+        
+        <div class="calculation-box">
+          <strong>C<sub>new</sub> = C<sub>air</sub> × εᵣ</strong><br>
+          C<sub>new</sub> = 50 pF × 2.2<br>
+          C<sub>new</sub> = 110 pF
+        </div>
+        <div class="answer-box">Answer: 110 pF</div>
+
+        <h2>4️⃣ Capacitors in Series and Parallel 🔗</h2>
+
+        <h3>A. Series Connection</h3>
+        <div class="formula-box">
+          &nbsp;&nbsp;┌─────┬─────┬─────┐<br>
+          &nbsp;&nbsp;│ C₁  │ C₂  │ C₃  │<br>
+          &nbsp;&nbsp;└──┬──┴──┬──┴──┬──┘<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─────┴─────┘
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Same charge on all capacitors:</strong> Q = Q₁ = Q₂ = Q₃</li>
+            <li><strong>Total voltage adds up:</strong> V = V₁ + V₂ + V₃</li>
+          </ul>
+        </div>
+
+        <div class="formula-box">
+          <strong>1/C<sub>eq</sub> = 1/C₁ + 1/C₂ + 1/C₃ + ...</strong><br><br>
+          
+          ⚠️ Result is LESS than the smallest individual capacitor!
+        </div>
+
+        <h3>B. Parallel Connection</h3>
+        <div class="formula-box">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌─────────┐<br>
+          &nbsp;&nbsp;&nbsp;───┤&nbsp;&nbsp;&nbsp;C₁&nbsp;&nbsp;&nbsp;├───<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─────────┤<br>
+          &nbsp;&nbsp;&nbsp;───┤&nbsp;&nbsp;&nbsp;C₂&nbsp;&nbsp;&nbsp;├───<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─────────┤<br>
+          &nbsp;&nbsp;&nbsp;───┤&nbsp;&nbsp;&nbsp;C₃&nbsp;&nbsp;&nbsp;├───<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─────────┘
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Same voltage across all:</strong> V = V₁ = V₂ = V₃</li>
+            <li><strong>Total charge adds up:</strong> Q = Q₁ + Q₂ + Q₃</li>
+          </ul>
+        </div>
+
+        <div class="formula-box">
+          <strong>C<sub>eq</sub> = C₁ + C₂ + C₃ + ...</strong><br><br>
+          
+          ✅ Result is the SUM – always larger than any individual capacitor!
+        </div>
+
+        <h2>🔢 Calculation 3: Series Combination</h2>
+        <p><strong>Question:</strong> Three capacitors (2μF, 4μF, and 6μF) are connected in series to a 12V battery. Find the equivalent capacitance and charge on the 4μF capacitor.</p>
+        
+        <div class="calculation-box">
+          <strong>1/C<sub>eq</sub> = 1/2 + 1/4 + 1/6 = (6+3+2)/12 = 11/12</strong><br>
+          C<sub>eq</sub> = 12/11 ≈ 1.09 μF<br><br>
+          
+          Total charge: Q = C<sub>eq</sub> × V = 1.09 × 10⁻⁶ × 12<br>
+          Q = 13.09 μC<br><br>
+          
+          In series, all capacitors have the same charge!
+        </div>
+        <div class="answer-box">Answer: C<sub>eq</sub> = 1.09 μF, Charge = 13.09 μC</div>
+
+        <h2>🔢 Calculation 4: Parallel Combination</h2>
+        <p><strong>Question:</strong> Two capacitors (3μF and 6μF) are in parallel across a 9V supply. Calculate the total energy stored.</p>
+        
+        <div class="calculation-box">
+          <strong>C<sub>eq</sub> = 3 + 6 = 9 μF</strong><br><br>
+          
+          E = ½C<sub>eq</sub>V²<br>
+          E = 0.5 × 9 × 10⁻⁶ × 9²<br>
+          E = 0.5 × 9 × 10⁻⁶ × 81<br>
+          E = 364.5 × 10⁻⁶ J = 364.5 μJ
+        </div>
+        <div class="answer-box">Answer: 364.5 μJ</div>
+
+        <h2>🔢 Calculation 5: Complex Circuit</h2>
+        <p><strong>Question:</strong> In the circuit below, find the equivalent capacitance between points X and Y: C₁ = 6μF and C₂ = 3μF in series, with this combination in parallel with C₃ = 4μF.</p>
+        
+        <div class="calculation-box">
+          <strong>First, series combination of C₁ and C₂:</strong><br>
+          1/C<sub>series</sub> = 1/6 + 1/3 = (1+2)/6 = 3/6 = 1/2<br>
+          C<sub>series</sub> = 2 μF<br><br>
+          
+          <strong>Now parallel with C₃:</strong><br>
+          C<sub>eq</sub> = 2 + 4 = 6 μF
+        </div>
+        <div class="answer-box">Answer: 6 μF</div>
+
+        <h2>5️⃣ Energy Stored in a Capacitor 💾</h2>
+        
+        <p>A charged capacitor stores electrical potential energy in its electric field.</p>
+
+        <div class="formula-box">
+          <strong>Three Equivalent Formulas:</strong><br><br>
+          
+          E = ½QV = ½CV² = Q²/2C<br><br>
+          
+          Where E = Energy stored (Joules, J)<br><br>
+          
+          💡 Use the version that matches the given variables!
+        </div>
+
+        <h2>6️⃣ Types and Uses of Capacitors 🔧</h2>
+
+        <h3>Common Types</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Dielectric</th>
+              <th>Features</th>
+              <th>Uses</th>
+            </tr>
+            <tr>
+              <td><strong>Paper</strong></td>
+              <td>Oiled paper</td>
+              <td>Cheap, general purpose</td>
+              <td>Coupling circuits</td>
+            </tr>
+            <tr>
+              <td><strong>Mica</strong></td>
+              <td>Mica mineral</td>
+              <td>Stable, high voltage</td>
+              <td>Radio frequency</td>
+            </tr>
+            <tr>
+              <td><strong>Ceramic</strong></td>
+              <td>Ceramic material</td>
+              <td>Small size, cheap</td>
+              <td>High frequency, bypass</td>
+            </tr>
+            <tr>
+              <td><strong>Electrolytic</strong></td>
+              <td>Electrolyte</td>
+              <td>High capacitance, polarized</td>
+              <td>Power supply filtering</td>
+            </tr>
+            <tr>
+              <td><strong>Variable</strong></td>
+              <td>Air/plastic</td>
+              <td>Adjustable capacitance</td>
+              <td>Tuning radios</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Key Functions/Uses</h3>
+        <div class="organelle-list">
+          <ol>
+            <li><strong>Energy storage</strong> (camera flashes, defibrillators)</li>
+            <li><strong>Smoothing/filtering</strong> (removing ripples in power supplies)</li>
+            <li><strong>Coupling</strong> (allowing AC but blocking DC between circuits)</li>
+            <li><strong>Tuning</strong> (radio frequency selection)</li>
+            <li><strong>Timing circuits</strong> (with resistors in RC circuits)</li>
+            <li><strong>Power factor correction</strong> (in electrical motors)</li>
+          </ol>
+        </div>
+
+        <h2>📋 Master Formula Table</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Formula</th>
+              <th>Units</th>
+            </tr>
+            <tr>
+              <td>Basic Capacitance</td>
+              <td>C = Q/V</td>
+              <td>Farad (F)</td>
+            </tr>
+            <tr>
+              <td>Parallel Plate</td>
+              <td>C = ε₀εᵣA/d</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>Permittivity</td>
+              <td>ε = ε₀εᵣ</td>
+              <td>F/m</td>
+            </tr>
+            <tr>
+              <td>Series</td>
+              <td>1/C<sub>eq</sub> = Σ1/Cᵢ</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>Parallel</td>
+              <td>C<sub>eq</sub> = ΣCᵢ</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>Energy Stored</td>
+              <td>E = ½QV = ½CV² = Q²/2C</td>
+              <td>Joule (J)</td>
+            </tr>
+            <tr>
+              <td>Voltage Division</td>
+              <td>Vᵢ = Q/Cᵢ</td>
+              <td>Volt (V)</td>
+            </tr>
+            <tr>
+              <td>Charge Division</td>
+              <td>Qᵢ = CᵢV</td>
+              <td>Coulomb (C)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Series:</strong> 1/C = 1/C₁ + 1/C₂ → Result is smaller than smallest</li>
+            <br>
+            <li><strong>Parallel:</strong> C = C₁ + C₂ → Result is larger than largest</li>
+            <br>
+            <li><strong>Energy:</strong> Always positive, stored in the electric field</li>
+            <br>
+            <li><strong>Dielectric insertion:</strong> Increases capacitance by factor εᵣ</li>
+            <br>
+            <li><strong>Disconnected battery:</strong> Charge Q remains constant if dielectric changed</li>
+            <br>
+            <li><strong>Connected battery:</strong> Voltage V remains constant if dielectric changed</li>
+            <br>
+            <li><strong>Quick Check:</strong> If plate separation increases while connected to battery:
+              <ul>
+                <li>C decreases (C ∝ 1/d)</li>
+                <li>Q decreases (Q = CV, V constant)</li>
+                <li>E decreases (E = ½CV²)</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Common Mistakes to Avoid</h3>
+          <ul>
+            <li>❌ Forgetting <strong>units conversion</strong> (mm to m, μF to F)</li>
+            <li>❌ Confusing <strong>series</strong> (reciprocal sum) with <strong>parallel</strong> (direct sum)</li>
+            <li>❌ Using <strong>wrong energy formula</strong> for given variables</li>
+            <li>❌ Forgetting that <strong>series capacitors have same charge</strong></li>
+            <li>❌ Forgetting that <strong>parallel capacitors have same voltage</strong></li>
+            <li>❌ Mixing up <strong>disconnected</strong> vs <strong>connected</strong> battery scenarios</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Capacitors!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 28 (Electrostatics) & Chapter 30 (Current Electricity)</p>
+        <button class="explore-btn" onclick="window.location.href='capacitors-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
