@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Current Electricity</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Current Electricity! ⚡</h1>
+        <p class="subtitle">– JAMB Chapter 31 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 31: Current Electricity</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Master electric current, potential difference, Ohm's law, resistance, electrical energy and power, circuit analysis, EMF, internal resistance, and electrical measurements for JAMB success.</p>
+
+        <h2>1️⃣ Electric Current ⚡</h2>
+        
+        <h3>Definition</h3>
+        <p><span class="highlight">Electric current (I)</span> is the rate of flow of electric charge through a conductor.</p>
+        
+        <div class="formula-box">
+          <strong>I = Q/t</strong><br><br>
+          Where:<br>
+          • I = Current (Amperes, A)<br>
+          • Q = Charge (Coulombs, C)<br>
+          • t = Time (seconds, s)
+        </div>
+
+        <h3>Types of Current</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td><strong>Direct Current (DC)</strong></td>
+              <td>Flows in one direction only</td>
+              <td>Battery-powered devices</td>
+            </tr>
+            <tr>
+              <td><strong>Alternating Current (AC)</strong></td>
+              <td>Changes direction periodically</td>
+              <td>Mains electricity (50Hz in Nigeria)</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>🔢 Calculation 1: Calculating Current</h2>
+        <p><strong>Question:</strong> A charge of 120 C flows through a conductor in 2 minutes. Calculate the current.</p>
+        
+        <div class="calculation-box">
+          <strong>I = Q/t = 120 C / (2 × 60 s) = 120/120 = 1 A</strong>
+        </div>
+        <div class="answer-box">Answer: 1 A</div>
+
+        <h2>2️⃣ Potential Difference (Voltage) 🔌</h2>
+
+        <h3>Definition</h3>
+        <p>Potential difference (V) is the work done in moving a unit charge from one point to another.</p>
+        
+        <div class="formula-box">
+          <strong>V = W/Q</strong><br><br>
+          Where:<br>
+          • V = Potential difference (Volts, V)<br>
+          • W = Work done (Joules, J)<br>
+          • Q = Charge (Coulombs, C)
+        </div>
+
+        <h2>🔢 Calculation 2: Calculating Voltage</h2>
+        <p><strong>Question:</strong> Calculate the potential difference when 500 J of work is done to move 25 C of charge.</p>
+        
+        <div class="calculation-box">
+          <strong>V = W/Q = 500 J / 25 C = 20 V</strong>
+        </div>
+        <div class="answer-box">Answer: 20 V</div>
+
+        <h2>3️⃣ Ohm's Law 📐</h2>
+
+        <h3>Statement</h3>
+        <p>The current flowing through a metallic conductor at constant temperature is directly proportional to the potential difference across its ends.</p>
+        
+        <div class="formula-box">
+          <strong>V = IR</strong><br><br>
+          Where:<br>
+          • V = Potential difference (Volts, V)<br>
+          • I = Current (Amperes, A)<br>
+          • R = Resistance (Ohms, Ω)
+        </div>
+
+        <h2>🔢 Calculation 3: Ohm's Law Application</h2>
+        <p><strong>Question:</strong> A resistor has a potential difference of 12 V across it when the current is 3 A. Calculate its resistance.</p>
+        
+        <div class="calculation-box">
+          <strong>R = V/I = 12 V / 3 A = 4 Ω</strong>
+        </div>
+        <div class="answer-box">Answer: 4 Ω</div>
+
+        <h2>4️⃣ Electrical Resistance ⚡</h2>
+
+        <h3>Definition</h3>
+        <p>Resistance is the opposition to the flow of electric current through a conductor.</p>
+
+        <h3>Factors Affecting Resistance</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Factor</th>
+              <th>Relationship</th>
+              <th>Explanation</th>
+            </tr>
+            <tr>
+              <td><strong>Length (L)</strong></td>
+              <td>R ∝ L</td>
+              <td>Longer wire = more resistance</td>
+            </tr>
+            <tr>
+              <td><strong>Cross-sectional area (A)</strong></td>
+              <td>R ∝ 1/A</td>
+              <td>Thicker wire = less resistance</td>
+            </tr>
+            <tr>
+              <td><strong>Resistivity (ρ)</strong></td>
+              <td>R ∝ ρ</td>
+              <td>Material property</td>
+            </tr>
+            <tr>
+              <td><strong>Temperature</strong></td>
+              <td>Metals: increases; Semiconductors: decreases</td>
+              <td>Increased vibration impedes flow</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>R = ρL/A</strong><br><br>
+          Where:<br>
+          • R = Resistance (Ω)<br>
+          • ρ = Resistivity (Ωm)<br>
+          • L = Length (m)<br>
+          • A = Cross-sectional area (m²)
+        </div>
+
+        <h2>🔢 Calculation 4: Resistance Calculation</h2>
+        <p><strong>Question:</strong> A wire of length 2 m and cross-sectional area 5 × 10⁻⁶ m² has resistivity 1.1 × 10⁻⁶ Ωm. Calculate its resistance.</p>
+        
+        <div class="calculation-box">
+          <strong>R = ρL/A = (1.1 × 10⁻⁶ × 2) / (5 × 10⁻⁶)</strong><br>
+          <strong>R = (2.2 × 10⁻⁶) / (5 × 10⁻⁶) = 0.44 Ω</strong>
+        </div>
+        <div class="answer-box">Answer: 0.44 Ω</div>
+
+        <h2>5️⃣ Resistivity and Conductivity 🔬</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quantity</th>
+              <th>Symbol</th>
+              <th>Unit</th>
+              <th>Relationship</th>
+            </tr>
+            <tr>
+              <td><strong>Resistivity</strong></td>
+              <td>ρ</td>
+              <td>Ωm</td>
+              <td>ρ = RA/L</td>
+            </tr>
+            <tr>
+              <td><strong>Conductivity</strong></td>
+              <td>σ</td>
+              <td>(Ωm)⁻¹ or S/m</td>
+              <td>σ = 1/ρ</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>6️⃣ Electrical Energy and Power 💡</h2>
+
+        <h3>Electrical Energy</h3>
+        <div class="formula-box">
+          <strong>E = VIt = I²Rt = V²t/R</strong><br><br>
+          Unit: Joules (J) or kilowatt-hours (kWh)<br><br>
+          1 kWh = 3.6 × 10⁶ J
+        </div>
+
+        <h3>Electrical Power</h3>
+        <div class="formula-box">
+          <strong>P = VI = I²R = V²/R</strong><br><br>
+          Unit: Watts (W)
+        </div>
+
+        <h2>🔢 Calculation 5: Energy Consumption</h2>
+        <p><strong>Question:</strong> An electric heater rated 2000 W operates for 3 hours. Calculate: (a) Energy consumed in kWh, (b) Cost at ₦50 per kWh.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>Energy = Power × Time = 2 kW × 3 h = 6 kWh</strong><br><br>
+          (b) <strong>Cost = 6 kWh × ₦50/kWh = ₦300</strong>
+        </div>
+        <div class="answer-box">Answer: (a) 6 kWh, (b) ₦300</div>
+
+        <h2>🔢 Calculation 6: Power Calculation</h2>
+        <p><strong>Question:</strong> A 60 W bulb operates on 240 V. Calculate: (a) Current drawn, (b) Resistance of the filament.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>I = P/V = 60/240 = 0.25 A</strong><br><br>
+          (b) <strong>R = V/I = 240/0.25 = 960 Ω</strong>
+        </div>
+        <div class="answer-box">Answer: (a) 0.25 A, (b) 960 Ω</div>
+
+        <h2>7️⃣ Resistors in Circuits 🔗</h2>
+
+        <h3>Series Connection</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Characteristics:</strong> Same current flows through all resistors; Total voltage = sum of individual voltages</li>
+            <li><strong>Formula:</strong> R<sub>total</sub> = R₁ + R₂ + R₃ + ...</li>
+          </ul>
+        </div>
+
+        <h3>Parallel Connection</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Characteristics:</strong> Same voltage across all resistors; Total current = sum of individual currents</li>
+            <li><strong>Formula:</strong> 1/R<sub>total</sub> = 1/R₁ + 1/R₂ + 1/R₃ + ...</li>
+            <li><strong>For two resistors:</strong> R<sub>total</sub> = R₁R₂/(R₁ + R₂)</li>
+          </ul>
+        </div>
+
+        <h2>🔢 Calculation 7: Series Circuit</h2>
+        <p><strong>Question:</strong> Three resistors of 2 Ω, 4 Ω, and 6 Ω are connected in series across a 12 V battery. Calculate: (a) Total resistance, (b) Circuit current, (c) Voltage across the 4 Ω resistor.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>R<sub>total</sub> = 2 + 4 + 6 = 12 Ω</strong><br><br>
+          (b) <strong>I = V/R = 12/12 = 1 A</strong><br><br>
+          (c) <strong>V₄ = IR = 1 × 4 = 4 V</strong>
+        </div>
+        <div class="answer-box">Answer: (a) 12 Ω, (b) 1 A, (c) 4 V</div>
+
+        <h2>🔢 Calculation 8: Parallel Circuit</h2>
+        <p><strong>Question:</strong> Two resistors of 6 Ω and 12 Ω are connected in parallel across a 12 V battery. Calculate: (a) Total resistance, (b) Current through each resistor, (c) Total current.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>1/R = 1/6 + 1/12 = (2+1)/12 = 3/12 = 1/4</strong><br>
+          <strong>R = 4 Ω</strong><br><br>
+          (b) <strong>I₆ = 12/6 = 2 A; I₁₂ = 12/12 = 1 A</strong><br><br>
+          (c) <strong>I<sub>total</sub> = 2 + 1 = 3 A</strong>
+        </div>
+        <div class="answer-box">Answer: (a) 4 Ω, (b) 2 A and 1 A, (c) 3 A</div>
+
+        <h2>🔢 Calculation 9: Combined Circuit</h2>
+        <p><strong>Question:</strong> Calculate total resistance: 4 Ω and 6 Ω in series, then in parallel with 12 Ω.</p>
+        
+        <div class="calculation-box">
+          <strong>Series combination:</strong> R<sub>s</sub> = 4 + 6 = 10 Ω<br><br>
+          <strong>Parallel with 12 Ω:</strong><br>
+          1/R<sub>total</sub> = 1/10 + 1/12 = (6+5)/60 = 11/60<br>
+          <strong>R<sub>total</sub> = 60/11 = 5.45 Ω</strong>
+        </div>
+        <div class="answer-box">Answer: 5.45 Ω</div>
+
+        <h2>8️⃣ Electromotive Force (EMF) and Internal Resistance 🔋</h2>
+
+        <h3>Definitions</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>EMF (E):</strong> Total energy supplied per coulomb by a cell (open circuit voltage)</li>
+            <li><strong>Terminal Potential Difference (V):</strong> Voltage available at the terminals when current flows</li>
+            <li><strong>Internal Resistance (r):</strong> Resistance within the cell itself</li>
+          </ul>
+        </div>
+
+        <div class="formula-box">
+          <strong>E = V + Ir = I(R + r)</strong><br><br>
+          Where:<br>
+          • E = EMF (V)<br>
+          • V = Terminal p.d. = IR (V)<br>
+          • I = Current (A)<br>
+          • r = Internal resistance (Ω)<br>
+          • R = External resistance (Ω)
+        </div>
+
+        <h2>🔢 Calculation 10: Internal Resistance</h2>
+        <p><strong>Question:</strong> A cell of EMF 12 V and internal resistance 2 Ω is connected to a 10 Ω resistor. Calculate: (a) Circuit current, (b) Terminal potential difference.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>I = E/(R + r) = 12/(10 + 2) = 12/12 = 1 A</strong><br><br>
+          (b) <strong>V = IR = 1 × 10 = 10 V</strong><br>
+          Or: V = E - Ir = 12 - (1 × 2) = 10 V
+        </div>
+        <div class="answer-box">Answer: (a) 1 A, (b) 10 V</div>
+
+        <h2>9️⃣ Cells in Combination 🔗</h2>
+
+        <h3>Series Connection</h3>
+        <div class="formula-box">
+          <strong>E<sub>total</sub> = E₁ + E₂ + E₃ + ...</strong><br>
+          <strong>r<sub>total</sub> = r₁ + r₂ + r₃ + ...</strong>
+        </div>
+
+        <h3>Parallel Connection (Identical Cells)</h3>
+        <div class="formula-box">
+          <strong>E<sub>total</sub> = E</strong><br>
+          <strong>r<sub>total</sub> = r/n</strong> (where n = number of cells)
+        </div>
+
+        <h2>🔢 Calculation 11: Cells in Series</h2>
+        <p><strong>Question:</strong> Three identical cells, each of EMF 1.5 V and internal resistance 0.5 Ω, are connected in series to a 4 Ω resistor. Calculate the current.</p>
+        
+        <div class="calculation-box">
+          <strong>E<sub>total</sub> = 1.5 × 3 = 4.5 V</strong><br>
+          <strong>r<sub>total</sub> = 0.5 × 3 = 1.5 Ω</strong><br><br>
+          <strong>I = E<sub>total</sub>/(R + r<sub>total</sub>) = 4.5/(4 + 1.5) = 4.5/5.5 = 0.818 A</strong>
+        </div>
+        <div class="answer-box">Answer: 0.818 A</div>
+
+        <h2>🔟 Electrical Measuring Instruments 🧪</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Instrument</th>
+              <th>Measures</th>
+              <th>Connection</th>
+              <th>Ideal Property</th>
+            </tr>
+            <tr>
+              <td><strong>Ammeter</strong></td>
+              <td>Current</td>
+              <td>Series</td>
+              <td>Zero resistance</td>
+            </tr>
+            <tr>
+              <td><strong>Voltmeter</strong></td>
+              <td>Voltage</td>
+              <td>Parallel</td>
+              <td>Infinite resistance</td>
+            </tr>
+            <tr>
+              <td><strong>Galvanometer</strong></td>
+              <td>Small currents</td>
+              <td>Series</td>
+              <td>Moderate resistance</td>
+            </tr>
+            <tr>
+              <td><strong>Ohmmeter</strong></td>
+              <td>Resistance</td>
+              <td>Across component</td>
+              <td>Internal battery</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>To ammeter:</strong> Add low resistance (shunt) in parallel</li>
+            <li><strong>To voltmeter:</strong> Add high resistance (multiplier) in series</li>
+          </ul>
+        </div>
+
+        <h2>1️⃣1️⃣ Kirchhoff's Laws 📐</h2>
+
+        <h3>First Law (Junction/Current Law)</h3>
+        <p>At any junction, the sum of currents entering equals the sum leaving:</p>
+        <div class="formula-box">
+          <strong>ΣI<sub>in</sub> = ΣI<sub>out</sub></strong>
+        </div>
+
+        <h3>Second Law (Loop/Voltage Law)</h3>
+        <p>Around any closed loop, the sum of EMFs equals the sum of potential drops:</p>
+        <div class="formula-box">
+          <strong>ΣE = ΣIR</strong>
+        </div>
+
+        <h2>1️⃣2️⃣ Wheatstone Bridge ⚖️</h2>
+
+        <h3>Principle</h3>
+        <p>When balanced (no current through galvanometer):</p>
+        <div class="formula-box">
+          <strong>P/Q = R/S</strong>
+        </div>
+
+        <h3>Meter Bridge</h3>
+        <p>Uses uniform resistance wire:</p>
+        <div class="formula-box">
+          <strong>R₁/R₂ = l₁/l₂</strong><br><br>
+          Where l₁ and l₂ are balancing lengths from either end.
+        </div>
+
+        <h2>🔢 Calculation 13: Meter Bridge</h2>
+        <p><strong>Question:</strong> In a meter bridge experiment, the balance point is at 40 cm from the left end when R₁ = 6 Ω. Calculate R₂.</p>
+        
+        <div class="calculation-box">
+          <strong>R₁/R₂ = l₁/l₂</strong><br>
+          <strong>6/R₂ = 40/60 = 2/3</strong><br>
+          <strong>R₂ = 6 × 3/2 = 9 Ω</strong>
+        </div>
+        <div class="answer-box">Answer: 9 Ω</div>
+
+        <h2>1️⃣3️⃣ Potentiometer 📏</h2>
+
+        <h3>Principle</h3>
+        <p>Compares potential differences without drawing current from the source.</p>
+
+        <h3>Applications</h3>
+        <div class="organelle-list">
+          <ol>
+            <li>Comparing EMFs of two cells</li>
+            <li>Measuring internal resistance of a cell</li>
+            <li>Measuring small EMFs</li>
+          </ol>
+        </div>
+
+        <div class="formula-box">
+          <strong>E₁/E₂ = l₁/l₂</strong><br><br>
+          Where l₁ and l₂ are balancing lengths.
+        </div>
+
+        <h2>📋 Complete Formula Summary Table</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Formula</th>
+              <th>Unit</th>
+            </tr>
+            <tr>
+              <td>Current</td>
+              <td>I = Q/t</td>
+              <td>A</td>
+            </tr>
+            <tr>
+              <td>Voltage</td>
+              <td>V = W/Q</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>Ohm's Law</td>
+              <td>V = IR</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>Resistance</td>
+              <td>R = ρL/A</td>
+              <td>Ω</td>
+            </tr>
+            <tr>
+              <td>Conductivity</td>
+              <td>σ = 1/ρ</td>
+              <td>(Ωm)⁻¹</td>
+            </tr>
+            <tr>
+              <td>Power</td>
+              <td>P = VI = I²R = V²/R</td>
+              <td>W</td>
+            </tr>
+            <tr>
+              <td>Energy</td>
+              <td>E = Pt = VIt = I²Rt</td>
+              <td>J or kWh</td>
+            </tr>
+            <tr>
+              <td>Series R</td>
+              <td>R<sub>total</sub> = R₁ + R₂ + R₃</td>
+              <td>Ω</td>
+            </tr>
+            <tr>
+              <td>Parallel R</td>
+              <td>1/R = 1/R₁ + 1/R₂ + ...</td>
+              <td>Ω</td>
+            </tr>
+            <tr>
+              <td>Two parallel</td>
+              <td>R = R₁R₂/(R₁+R₂)</td>
+              <td>Ω</td>
+            </tr>
+            <tr>
+              <td>EMF</td>
+              <td>E = V + Ir = I(R+r)</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>Cells series</td>
+              <td>E<sub>total</sub> = nE, r<sub>total</sub> = nr</td>
+              <td>V, Ω</td>
+            </tr>
+            <tr>
+              <td>Cells parallel</td>
+              <td>E<sub>total</sub> = E, r<sub>total</sub> = r/n</td>
+              <td>V, Ω</td>
+            </tr>
+            <tr>
+              <td>Wheatstone</td>
+              <td>P/Q = R/S</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Meter bridge</td>
+              <td>R₁/R₂ = l₁/l₂</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Potentiometer</td>
+              <td>E₁/E₂ = l₁/l₂</td>
+              <td>-</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Always convert units:</strong> Change minutes to seconds, cm to m, etc.</li>
+            <br>
+            <li><strong>Temperature effect:</strong> Remember resistance of metals increases with temperature</li>
+            <br>
+            <li><strong>Short circuit:</strong> When R = 0, current is maximum (I = E/r)</li>
+            <br>
+            <li><strong>Power rating:</strong> Devices are rated at their operating voltage</li>
+            <br>
+            <li><strong>Maximum power transfer:</strong> Occurs when external R = internal r</li>
+            <br>
+            <li><strong>Efficiency:</strong> η = [R/(R+r)] × 100%</li>
+          </ol>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Quick Revision Checklist</h3>
+          <ul>
+            <li>✅ Understand difference between EMF and terminal p.d.</li>
+            <li>✅ Know how to combine resistors in series and parallel</li>
+            <li>✅ Can calculate power and energy consumption</li>
+            <li>✅ Understand internal resistance calculations</li>
+            <li>✅ Can apply Kirchhoff's laws to simple circuits</li>
+            <li>✅ Know meter bridge and potentiometer principles</li>
+            <li>✅ Remember: ammeters have low resistance, voltmeters have high resistance</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Current Electricity!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 30 (Electric Cells) & Chapter 32 (Heating Effect)</p>
+        <button class="explore-btn" onclick="window.location.href='current-electricity-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
