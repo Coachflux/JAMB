@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Reflection of Light</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Reflection of Light! 🚀</h1>
+        <p class="subtitle">– JAMB Chapter 24 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 24: Reflection of Light at Plane and Curved Surfaces</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Interpret the laws of reflection, illustrate image formation by plane, concave and convex mirrors, apply the mirror formula, determine linear magnification, and apply laws to instruments like periscope, kaleidoscope, and sextant.</p>
+
+        <h2>1️⃣ Laws of Reflection 🔬</h2>
+        
+        <h3>What is Reflection?</h3>
+        <p>Reflection is the <span class="highlight">bouncing back of light rays</span> when they hit a smooth surface (mirror). The surface that reflects light is called a <strong>mirror</strong>.</p>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/reflection.gif" alt="Animation showing incident ray reflecting off mirror surface with angle of incidence equals angle of reflection" class="diagram-img">
+
+        <h3>The Two Laws of Reflection</h3>
+        
+        <div class="organelle-list">
+          <ol>
+            <li><strong>First Law:</strong> The incident ray, the reflected ray, and the normal all lie in the same plane.</li>
+            <br>
+            <li><strong>Second Law:</strong> The angle of incidence (i) equals the angle of reflection (r).
+            <br><strong>i = r</strong></li>
+          </ol>
+        </div>
+
+        <h3>Key Terms</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Incident Ray:</strong> The light ray approaching the mirror</li>
+            <li><strong>Reflected Ray:</strong> The light ray bouncing off the mirror</li>
+            <li><strong>Normal:</strong> Imaginary line perpendicular to the mirror surface at the point where light hits</li>
+            <li><strong>Angle of Incidence (i):</strong> Angle between incident ray and normal</li>
+            <li><strong>Angle of Reflection (r):</strong> Angle between reflected ray and normal</li>
+          </ul>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Reflection_angles.svg/1200px-Reflection_angles.svg.png" alt="Diagram showing incident ray, reflected ray, normal, angle of incidence and angle of reflection" class="diagram-img">
+
+        <h2>2️⃣ Plane Mirrors (Flat Mirrors) 🪞</h2>
+
+        <h3>Characteristics of Images in Plane Mirrors</h3>
+        <div class="organelle-list">
+          <ol>
+            <li><strong>Virtual</strong> (cannot be projected on a screen)</li>
+            <li><strong>Erect/Upright</strong> (not inverted)</li>
+            <li><strong>Same size</strong> as the object</li>
+            <li><strong>Laterally inverted</strong> (left appears right, right appears left)</li>
+            <li><strong>Image distance = Object distance</strong> from mirror</li>
+          </ol>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/planemirror.gif" alt="Diagram showing image formation in plane mirror with virtual erect same size laterally inverted image" class="diagram-img">
+
+        <h3>Lateral Inversion Explained</h3>
+        <div class="tips-box">
+          When you look in a mirror, your right hand appears as the left hand of your image. This is why <strong>"AMBULANCE"</strong> is written in reverse on emergency vehicles—drivers see it correctly in their rear-view mirrors.
+        </div>
+
+        <h3>Multiple Reflections</h3>
+        <p>When two plane mirrors are placed at an angle θ to each other:</p>
+        
+        <div class="formula-box">
+          <strong>n = (360°/θ) - 1</strong><br><br>
+          Where n = number of images formed
+        </div>
+
+        <h3>Special Cases</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Angle (θ)</th>
+              <th>Number of Images (n)</th>
+            </tr>
+            <tr>
+              <td>Parallel (0°)</td>
+              <td>Infinite images</td>
+            </tr>
+            <tr>
+              <td>Perpendicular (90°)</td>
+              <td>n = (360/90) - 1 = 3 images</td>
+            </tr>
+            <tr>
+              <td>60°</td>
+              <td>n = (360/60) - 1 = 5 images</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>🔢 Calculation 1: Multiple Images</h2>
+        <p><strong>Question:</strong> Two plane mirrors are inclined at 72°. Calculate the number of images formed.</p>
+        
+        <div class="calculation-box">
+          <strong>Using n = (360°/θ) - 1:</strong><br>
+          n = (360°/72°) - 1<br>
+          n = 5 - 1 = 4 images
+        </div>
+        <div class="answer-box">Answer: 4 images</div>
+
+        <h2>🔢 Calculation 2: Distance in Plane Mirror</h2>
+        <p><strong>Question:</strong> A man stands 2m from a plane mirror. He walks 0.5m towards the mirror. Calculate: (a) Initial distance between man and image, (b) New distance after walking.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>Initial:</strong><br>
+          • Object distance = 2m<br>
+          • Image distance = 2m (behind mirror)<br>
+          • Distance between man and image = 2 + 2 = 4m<br><br>
+          
+          (b) <strong>After walking 0.5m:</strong><br>
+          • New object distance = 2 - 0.5 = 1.5m<br>
+          • New image distance = 1.5m<br>
+          • Distance between man and image = 1.5 + 1.5 = 3m
+        </div>
+        <div class="answer-box">Answer: (a) 4m, (b) 3m</div>
+
+        <h2>🔢 Calculation 3: Minimum Mirror Height</h2>
+        <p><strong>Question:</strong> A man is 1.8m tall with eyes 10cm below the top of his head. Calculate the minimum mirror length required to see his full image.</p>
+        
+        <div class="calculation-box">
+          • Distance from eyes to top = 10cm = 0.1m<br>
+          • Distance from eyes to feet = 1.8 - 0.1 = 1.7m<br><br>
+          
+          Mirror must cover:<br>
+          • From: 0.1/2 = 0.05m above eye level<br>
+          • To: 1.7/2 = 0.85m below eye level<br><br>
+          
+          Minimum mirror height = 0.05 + 0.85 = 0.9m<br><br>
+          
+          <em>Alternative: Height/2 = 1.8/2 = 0.9m</em>
+        </div>
+        <div class="answer-box">Answer: 90 cm (or 0.9 m)</div>
+
+        <h2>3️⃣ Curved Mirrors (Spherical Mirrors) 🔭</h2>
+
+        <h3>Types of Curved Mirrors</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concave Mirror (Converging)</th>
+              <th>Convex Mirror (Diverging)</th>
+            </tr>
+            <tr>
+              <td>Caved inward (inside of spoon)</td>
+              <td>Curved outward (back of spoon)</td>
+            </tr>
+            <tr>
+              <td>Reflecting surface: Inner/concave side</td>
+              <td>Reflecting surface: Outer/convex side</td>
+            </tr>
+            <tr>
+              <td>Converges parallel rays to focus</td>
+              <td>Diverges parallel rays from focus behind</td>
+            </tr>
+            <tr>
+              <td>Uses: Shaving mirrors, headlights, telescopes</td>
+              <td>Uses: Rear-view mirrors, security mirrors</td>
+            </tr>
+          </table>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/concaveconvex.gif" alt="Diagram showing concave mirror converging rays and convex mirror diverging rays" class="diagram-img">
+
+        <h3>Key Terms for Curved Mirrors</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Term</th>
+              <th>Symbol</th>
+              <th>Definition</th>
+            </tr>
+            <tr>
+              <td>Pole (Vertex)</td>
+              <td>P</td>
+              <td>Center point
