@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Sound Characteristics</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Sound Characteristics! 🚀</h1>
+        <p class="subtitle">– JAMB Chapter 22 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 22: Characteristics of Sound Waves</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Understand the nature of sound waves, distinguish between pitch, loudness and quality, calculate speed of sound in different media, apply echo formulas, analyze Doppler effect, understand resonance in pipes, and solve beat frequency problems.</p>
+
+        <h2>1️⃣ Nature of Sound Waves 🔊</h2>
+        
+        <p>Sound is a <span class="highlight">longitudinal mechanical wave</span> that requires a medium to travel. It consists of:</p>
+        
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Compressions (C):</strong> Regions of high pressure/density</li>
+            <li><strong>Rarefactions (R):</strong> Regions of low pressure/density</li>
+          </ul>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/cdn1.byjus.com/213d3f2a8e4d4b5e5f3e2d1c0b9a8f7e6d5c4b3a2109876543210abcdef.jpg" alt="Sound wave longitudinal compression and rarefaction diagram" class="diagram-img">
+
+        <h3>Key Properties</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>❌ <strong>Cannot travel through a vacuum</strong></li>
+            <li>✅ Travels fastest through <strong>solids</strong>, then <strong>liquids</strong>, then <strong>gases</strong></li>
+            <li>📏 Speed in air at 20°C ≈ <strong>343 m/s</strong> (or ~330 m/s for JAMB)</li>
+          </ul>
+        </div>
+
+        <h2>2️⃣ Characteristics of Sound Waves 🎵</h2>
+
+        <h3>A. Pitch</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Determined by <strong>frequency</strong> of the sound wave</li>
+            <li>Higher frequency = <strong>higher pitch</strong></li>
+            <li>Lower frequency = <strong>lower pitch</strong></li>
+            <li>Human hearing range: <strong>20 Hz – 20,000 Hz</strong></li>
+          </ul>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/waves/soundfrequency.gif" alt="Diagram showing high frequency high pitch vs low frequency low pitch sound waves" class="diagram-img">
+
+        <h3>B. Loudness (Intensity)</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Determined by <strong>amplitude</strong> of the wave</li>
+            <li>Greater amplitude = <strong>louder sound</strong></li>
+            <li>Measured in <strong>decibels (dB)</strong></li>
+          </ul>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/waves/soundamplitude.gif" alt="Diagram showing high amplitude loud sound vs low amplitude quiet sound waves" class="diagram-img">
+
+        <h3>C. Quality (Timbre)</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Allows us to <strong>distinguish between sounds</strong> of same pitch and loudness</li>
+            <li>Depends on number and relative intensity of <strong>overtones/harmonics</strong></li>
+            <li>Example: Piano vs. violin playing same note at same volume sound different</li>
+          </ul>
+        </div>
+
+        <h2>3️⃣ Speed of Sound ⚡</h2>
+        
+        <p>The speed of sound depends on:</p>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Medium</strong> (solid, liquid, gas)</li>
+            <li><strong>Temperature</strong> (in gases)</li>
+          </ul>
+        </div>
+
+        <div class="formula-box">
+          <strong>Formula for speed in gases:</strong><br>
+          v = √(γRT/M)<br><br>
+          Where:<br>
+          • γ = ratio of specific heats (≈1.4 for air)<br>
+          • R = gas constant<br>
+          • T = absolute temperature (K)<br>
+          • M = molar mass<br><br>
+          
+          <strong>Simplified relationship:</strong><br>
+          v ∝ √T<br><br>
+          
+          <strong>If v₁ at T₁ and v₂ at T₂:</strong><br>
+          v₁/v₂ = √(T₁/T₂)
+        </div>
+
+        <h2>4️⃣ Echo and Reverberation 🔁</h2>
+
+        <h3>Echo</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Reflection</strong> of sound from a distant surface</li>
+            <li>Heard as <strong>distinct repetition</strong></li>
+            <li><strong>Minimum distance for echo: 17 m</strong> (time delay > 0.1s)</li>
+          </ul>
+        </div>
+
+        <div class="formula-box">
+          <strong>Distance calculation:</strong><br>
+          d = (v × t)/2<br><br>
+          <em>The factor of 2 accounts for the round trip (to surface and back)</em>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/www.soundproofcow.com/wp-content/uploads/2020/06/echo-sound-wave-diagram.jpg" alt="Diagram showing sound wave reflection creating an echo" class="diagram-img">
+
+        <h3>Reverberation</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Multiple reflections</strong> causing prolonged sound</li>
+            <li>Desirable in <strong>concert halls</strong> (to some extent)</li>
+            <li>Too much reverberation causes sound to become "muddy"</li>
+          </ul>
+        </div>
+
+        <h2>5️⃣ Doppler Effect 🚗🔊</h2>
+        
+        <p>Change in frequency due to <strong>relative motion</strong> between source and observer.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Scenario</th>
+              <th>Observed Frequency</th>
+            </tr>
+            <tr>
+              <td><strong>Approaching source</strong></td>
+              <td>Higher frequency (higher pitch)</td>
+            </tr>
+            <tr>
+              <td><strong>Receding source</strong></td>
+              <td>Lower frequency (lower pitch)</td>
+            </tr>
+          </table>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/waves/doppler.gif" alt="Animation showing Doppler effect with approaching and receding sound source" class="diagram-img">
+
+        <div class="formula-box">
+          <strong>Formula when source moves:</strong><br>
+          f' = f[v/(v ± vₛ)]<br><br>
+          
+          <strong>Formula when observer moves:</strong><br>
+          f' = f[(v ± v₀)/v]<br><br>
+          
+          Where:<br>
+          • f' = observed frequency<br>
+          • f = source frequency<br>
+          • v = speed of sound<br>
+          • vₛ = speed of source (+ if receding, – if approaching)<br>
+          • v₀ = speed of observer (+ if approaching, – if receding)
+        </div>
+
+        <h2>6️⃣ Resonance and Stationary Waves in Pipes 🎺</h2>
+
+        <h3>Open Pipes (Both Ends Open)</h3>
+        <div class="formula-box">
+          <strong>Fundamental:</strong> f₀ = v/2L<br>
+          <strong>Harmonics:</strong> fₙ = nf₀ (n = 1, 2, 3, ...)<br>
+          <strong>All harmonics present</strong>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/waves/openpipe.gif" alt="Diagram showing standing wave patterns in an open pipe with all harmonics" class="diagram-img">
+
+        <h3>Closed Pipes (One End Closed)</h3>
+        <div class="formula-box">
+          <strong>Fundamental:</strong> f₀ = v/4L<br>
+          <strong>Harmonics:</strong> fₙ = nf₀ (n = 1, 3, 5, ...)<br>
+          <strong>Only odd harmonics present</strong>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/waves/closedpipe.gif" alt="Diagram showing standing wave patterns in a closed pipe with only odd harmonics" class="diagram-img">
+
+        <h2>7️⃣ Beats 🥁</h2>
+        
+        <p>When two sounds of slightly different frequencies are heard together:</p>
+
+        <div class="formula-box">
+          <strong>Beat frequency:</strong><br>
+          f_beat = |f₁ - f₂|<br><br>
+          <strong>Number of beats per second = difference in frequencies</strong>
+        </div>
+
+        <div class="tips-box">
+          <h3>✅ Applications of Beats</h3>
+          <ul>
+            <li>Tuning musical instruments</li>
+            <li>Detecting frequency differences</li>
+            <li>Police radar (indirectly related principle)</li>
+          </ul>
+        </div>
+
+        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/waves/beats.gif" alt="Animation showing wave interference creating beats pattern" class="diagram-img">
+
+        <h2>🔢 7 Essential Calculations for JAMB</h2>
+
+        <h3>Calculation 1: Speed and Wavelength</h3>
+        <p><strong>Question:</strong> A sound wave of frequency 500 Hz travels through air at 340 m/s. Calculate: (a) The wavelength, (b) The period.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>Using v = fλ:</strong><br>
+          λ = v/f = 340/500 = 0.68 m<br><br>
+          
+          (b) <strong>Period T = 1/f:</strong><br>
+          T = 1/500 = 0.002 s = 2 ms
+        </div>
+        <div class="answer-box">Answer: (a) 0.68 m, (b) 2 ms</div>
+
+        <h3>Calculation 2: Echo Calculation</h3>
+        <p><strong>Question:</strong> A man stands 510 m from a cliff and fires a gun. How long to hear the echo? (v = 340 m/s)</p>
+        
+        <div class="calculation-box">
+          <strong>Total distance = 2 × 510 = 1,020 m</strong><br><br>
+          <strong>Using t = distance/speed:</strong><br>
+          t = 1,020/340 = 3 seconds
+        </div>
+        <div class="answer-box">Answer: 3 seconds</div>
+
+        <h3>Calculation 3: Temperature Effect on Speed</h3>
+        <p><strong>Question:</strong> Speed of sound is 330 m/s at 0°C (273 K). What is the speed at 27°C (300 K)?</p>
+        
+        <div class="calculation-box">
+          <strong>Using v₁/v₂ = √(T₁/T₂):</strong><br>
+          330/v₂ = √(273/300) = √0.91 = 0.954<br>
+          v₂ = 330/0.954 = 346 m/s
+        </div>
+        <div class="answer-box">Answer: 346 m/s</div>
+
+        <h3>Calculation 4: Doppler Effect</h3>
+        <p><strong>Question:</strong> A train moving at 30 m/s sounds a whistle of frequency 500 Hz. What frequency is heard by a stationary observer as the train approaches? (v = 340 m/s)</p>
+        
+        <div class="calculation-box">
+          <strong>Using f' = f[v/(v - vₛ)]:</strong><br>
+          f' = 500 × [340/(340 - 30)]<br>
+          f' = 500 × (340/310)<br>
+          f' = 500 × 1.097 = 548.4 Hz
+        </div>
+        <div class="answer-box">Answer: 548.4 Hz</div>
+
+        <h3>Calculation 5: Resonance in Open Pipe</h3>
+        <p><strong>Question:</strong> An open pipe is 0.5 m long. Calculate the fundamental frequency. (v = 340 m/s)</p>
+        
+        <div class="calculation-box">
+          <strong>Using f₀ = v/2L:</strong><br>
+          f₀ = 340/(2 × 0.5) = 340/1 = 340 Hz
+        </div>
+        <div class="answer-box">Answer: 340 Hz</div>
+
+        <h3>Calculation 6: Beats</h3>
+        <p><strong>Question:</strong> Two tuning forks produce 5 beats per second. One fork has frequency 256 Hz. What are the possible frequencies of the second fork?</p>
+        
+        <div class="calculation-box">
+          <strong>Using f_beat = |f₁ - f₂|:</strong><br>
+          5 = |256 - f₂|<br><br>
+          Therefore:<br>
+          f₂ = 256 + 5 = 261 Hz<br>
+          OR<br>
+          f₂ = 256 - 5 = 251 Hz
+        </div>
+        <div class="answer-box">Answer: 261 Hz or 251 Hz</div>
+
+        <h3>Calculation 7: Closed Pipe</h3>
+        <p><strong>Question:</strong> A closed pipe of length 0.4 m resonates at its fundamental frequency. Calculate this frequency. (v = 320 m/s)</p>
+        
+        <div class="calculation-box">
+          <strong>Using f₀ = v/4L:</strong><br>
+          f₀ = 320/(4 × 0.4) = 320/1.6 = 200 Hz
+        </div>
+        <div class="answer-box">Answer: 200 Hz</div>
+
+        <h2>📋 Summary Table: Key Formulas</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Formula</th>
+            </tr>
+            <tr>
+              <td>Wave speed</td>
+              <td>v = fλ</td>
+            </tr>
+            <tr>
+              <td>Echo distance</td>
+              <td>d = (vt)/2</td>
+            </tr>
+            <tr>
+              <td>Open pipe fundamental</td>
+              <td>f = v/2L</td>
+            </tr>
+            <tr>
+              <td>Closed pipe fundamental</td>
+              <td>f = v/4L</td>
+            </tr>
+            <tr>
+              <td>Beat frequency</td>
+              <td>f_beat = |f₁ - f₂|</td>
+            </tr>
+            <tr>
+              <td>Doppler effect (moving source)</td>
+              <td>f' = f[v/(v ± vₛ)]</td>
+            </tr>
+            <tr>
+              <td>Temperature relationship</td>
+              <td>v₁/v₂ = √(T₁/T₂)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Remember standard values:</strong><br>
+            • Speed of sound in air ≈ 330-340 m/s<br>
+            • Speed of light = 3 × 10⁸ m/s (much faster!)</li>
+            <br>
+            <li><strong>For echo problems:</strong> Always remember sound travels to obstacle AND back (factor of 2)</li>
+            <br>
+            <li><strong>Doppler effect:</strong><br>
+            • Approaching = higher frequency (use minus in denominator)<br>
+            • Receding = lower frequency (use plus in denominator)</li>
+            <br>
+            <li><strong>Pipes:</strong><br>
+            • Open pipes: all harmonics present<br>
+            • Closed pipes: only odd harmonics</li>
+            <br>
+            <li><strong>Units:</strong> Always convert to SI units (meters, seconds, Hz) before calculating</li>
+          </ol>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Common Mistakes to Avoid</h3>
+          <ul>
+            <li>❌ Forgetting the <strong>factor of 2</strong> in echo calculations</li>
+            <li>❌ Using Celsius instead of <strong>Kelvin</strong> in temperature ratio formulas</li>
+            <li>❌ Confusing <strong>open pipe</strong> formula (v/2L) with <strong>closed pipe</strong> (v/4L)</li>
+            <li>❌ Getting the <strong>signs wrong</strong> in Doppler effect (approaching vs. receding)</li>
+            <li>❌ Thinking beat frequency is the <strong>average</strong> of two frequencies (it's the <strong>difference</strong>)</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Sound Characteristics!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 21 (Propagation of Sound) & Chapter 23 (Light)</p>
+        <button class="explore-btn" onclick="window.location.href='sound-characteristics-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
