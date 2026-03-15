@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Structure of Matter</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Structure of Matter! 🚀</h1>
+        <p class="subtitle">– JAMB Chapter 18 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 18: Structure of Matter and Kinetic Theory</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Differentiate atoms and molecules, use molecular theory to explain Brownian motion, diffusion, surface tension, capillarity, adhesion, cohesion, and angle of contact, examine kinetic theory assumptions, interpret kinetic theory to explain gas laws and phase changes.</p>
+
+        <h2>1️⃣ Atoms and Molecules ⚛️</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Term</th>
+              <th>Definition</th>
+              <th>Key Points</th>
+            </tr>
+            <tr>
+              <td><strong>Atom</strong></td>
+              <td>Smallest particle of an element that can take part in a chemical reaction</td>
+              <td>Cannot be divided by chemical means; consists of protons, neutrons, electrons</td>
+            </tr>
+            <tr>
+              <td><strong>Molecule</strong></td>
+              <td>Smallest particle of a substance that can exist independently and retain chemical properties</td>
+              <td>Monoatomic (He), diatomic (O₂), or polyatomic (H₂O)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <strong>💡 Memory Tip:</strong> Atom = single unit; Molecule = group of atoms bonded together
+        </div>
+
+        <h2>2️⃣ Molecular Theory (Kinetic Molecular Theory) 🔬</h2>
+        
+        <p>This theory explains how tiny, invisible particles (molecules) behave and cause observable phenomena.</p>
+
+        <h3>a) Brownian Motion</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>What it is:</strong> Random, zigzag movement of tiny particles suspended in a fluid</li>
+            <li><strong>Explanation:</strong> Molecules of fluid are in constant, random motion and collide with suspended particles</li>
+            <li><strong>Evidence for:</strong> Molecules are in continuous motion</li>
+            <li><strong>Discovered by:</strong> Robert Brown (botanist) in 1827</li>
+          </ul>
+        </div>
+
+        <h3>b) Diffusion</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>What it is:</strong> Spreading of molecules from high concentration to low concentration until uniform distribution</li>
+            <li><strong>Examples:</strong> Perfume smell spreading, ink in water, aroma of food cooking</li>
+            <li><strong>Factors affecting:</strong> Temperature (higher = faster), molecular mass (lighter = faster), medium (gas > liquid > solid)</li>
+          </ul>
+        </div>
+
+        <h3>c) Surface Tension</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>What it is:</strong> Force acting per unit length at right angles to an imaginary line on liquid surface</li>
+            <li><strong>Explanation:</strong> Molecules at surface are pulled inward by cohesive forces, creating a "skin" effect</li>
+            <li><strong>Applications:</strong> Insects walking on water, droplets forming spheres, capillary action</li>
+          </ul>
+        </div>
+
+        <h3>d) Capillarity (Capillary Action)</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>What it is:</strong> Rise or fall of liquids in narrow tubes</li>
+            <li><strong>Explanation:</strong> Balance between cohesive forces (liquid-liquid) and adhesive forces (liquid-solid)</li>
+            <li><strong>Examples:</strong> Water rising in glass tube (adhesion > cohesion), mercury falling in glass (cohesion > adhesion), water in plant stems, blotting paper</li>
+          </ul>
+        </div>
+
+        <h3>e) Adhesion vs. Cohesion</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Property</th>
+              <th>Definition</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td><strong>Adhesion</strong></td>
+              <td>Attraction between molecules of <strong>different</strong> substances</td>
+              <td>Water sticking to glass; glue on paper</td>
+            </tr>
+            <tr>
+              <td><strong>Cohesion</strong></td>
+              <td>Attraction between molecules of <strong>same</strong> substance</td>
+              <td>Water droplets forming spheres; mercury globules</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>f) Angle of Contact</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Definition:</strong> Angle between tangent to liquid surface and solid surface, measured inside the liquid</li>
+            <li><strong>Water-glass:</strong> Acute angle (&lt; 90°) — liquid <strong>wets</strong> the surface</li>
+            <li><strong>Mercury-glass:</strong> Obtuse angle (&gt; 90°) — liquid <strong>doesn't wet</strong> the surface</li>
+          </ul>
+        </div>
+
+        <h2>3️⃣ Real-Life Applications 🌍</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Real-Life Application</th>
+            </tr>
+            <tr>
+              <td>Surface tension</td>
+              <td>Detergents reducing surface tension to clean; waterproofing materials</td>
+            </tr>
+            <tr>
+              <td>Capillarity</td>
+              <td>Oil rising in lamp wicks; water absorption by towels</td>
+            </tr>
+            <tr>
+              <td>Diffusion</td>
+              <td>Exchange of gases in lungs; making tea</td>
+            </tr>
+            <tr>
+              <td>Adhesion</td>
+              <td>Painting walls; sticking tape; welding</td>
+            </tr>
+            <tr>
+              <td>Cohesion</td>
+              <td>Formation of water streams; droplet formation</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>4️⃣ Kinetic Theory of Gases 🎲</h2>
+
+        <h3>Assumptions of Kinetic Theory</h3>
+        <div class="organelle-list">
+          <ol>
+            <li>Gases consist of tiny particles in continuous, random motion</li>
+            <li>Volume of molecules is negligible compared to container volume</li>
+            <li>No intermolecular forces except during collisions</li>
+            <li>Collisions are perfectly elastic (no kinetic energy lost)</li>
+            <li>Average kinetic energy is directly proportional to absolute temperature</li>
+          </ol>
+        </div>
+
+        <h2>5️⃣ Explaining Physical Phenomena 🌡️</h2>
+
+        <h3>a) Pressure Exerted by a Gas</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Explanation:</strong> Gas pressure results from molecules colliding with container walls</li>
+            <li><strong>Formula:</strong> P = ⅓ρc² where ρ = density, c = root mean square velocity</li>
+            <li><strong>Factors increasing pressure:</strong> More molecules, higher temperature, smaller volume</li>
+          </ul>
+        </div>
+
+        <h3>b) Boyle's Law (Kinetic Theory Explanation)</h3>
+        <div class="formula-box">
+          <strong>Statement:</strong> For fixed mass of gas at constant temperature, pressure is inversely proportional to volume<br>
+          <strong>Formula:</strong> P₁V₁ = P₂V₂ or P ∝ 1/V<br><br>
+          <strong>Kinetic theory explanation:</strong> When volume decreases, molecules hit walls more frequently, increasing pressure
+        </div>
+
+        <h3>c) Charles's Law (Kinetic Theory Explanation)</h3>
+        <div class="formula-box">
+          <strong>Statement:</strong> For fixed mass of gas at constant pressure, volume is directly proportional to absolute temperature<br>
+          <strong>Formula:</strong> V₁/T₁ = V₂/T₂ or V ∝ T<br><br>
+          <strong>Kinetic theory explanation:</strong> Higher temperature = faster molecular motion = molecules push harder on walls = volume expands to maintain constant pressure
+        </div>
+
+        <h3>d) Melting (Solid → Liquid)</h3>
+        <p>When heated, molecules vibrate more vigorously until they break free from fixed positions but remain close together.</p>
+
+        <h3>e) Boiling (Liquid → Gas)</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Occurs throughout the liquid at boiling point</li>
+            <li>Molecules gain enough energy to overcome atmospheric pressure and intermolecular forces</li>
+            <li>Forms bubbles of vapor throughout the liquid</li>
+          </ul>
+        </div>
+
+        <h3>f) Vaporization/Evaporation</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Occurs at the surface at any temperature</li>
+            <li>Fast-moving molecules at surface escape into the air</li>
+            <li><strong>Cooling effect:</strong> Escaping molecules take away heat energy, lowering temperature of remaining liquid (why sweating cools you down)</li>
+          </ul>
+        </div>
+
+        <h3>g) Temperature Changes</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Temperature</strong> is a measure of average kinetic energy of molecules</li>
+            <li>Increase in temperature = molecules move faster (higher kinetic energy)</li>
+            <li>Decrease in temperature = molecules move slower (lower kinetic energy)</li>
+          </ul>
+        </div>
+
+        <h2>🔢 Sample Calculation</h2>
+
+        <h3>Charles's Law Application</h3>
+        <p><strong>Question:</strong> A gas occupies 300 cm³ at 27°C. What is its volume at 127°C if pressure is constant?</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Convert to Kelvin: T₁ = 27 + 273 = 300 K, T₂ = 127 + 273 = 400 K<br>
+          Using Charles's Law: V₁/T₁ = V₂/T₂<br>
+          300/300 = V₂/400<br>
+          V₂ = 400 cm³
+        </div>
+        <div class="answer-box">Answer: 400 cm³</div>
+
+        <h2>📋 Quick Revision Summary</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Key Idea</th>
+            </tr>
+            <tr>
+              <td>Atoms</td>
+              <td>Smallest unit of an element</td>
+            </tr>
+            <tr>
+              <td>Molecules</td>
+              <td>Group of atoms; smallest independent unit of a compound</td>
+            </tr>
+            <tr>
+              <td>Brownian motion</td>
+              <td>Random motion proves molecules exist and move</td>
+            </tr>
+            <tr>
+              <td>Diffusion</td>
+              <td>Spreading due to molecular motion; high → low concentration</td>
+            </tr>
+            <tr>
+              <td>Surface tension</td>
+              <td>Surface behaves like elastic skin due to inward molecular pull</td>
+            </tr>
+            <tr>
+              <td>Capillarity</td>
+              <td>Rise/fall of liquid in tubes due to adhesive vs. cohesive forces</td>
+            </tr>
+            <tr>
+              <td>Adhesion</td>
+              <td>Different molecules attract</td>
+            </tr>
+            <tr>
+              <td>Cohesion</td>
+              <td>Same molecules attract</td>
+            </tr>
+            <tr>
+              <td>Boyle's Law</td>
+              <td>P ∝ 1/V (constant T)</td>
+            </tr>
+            <tr>
+              <td>Charles's Law</td>
+              <td>V ∝ T (constant P)</td>
+            </tr>
+            <tr>
+              <td>Evaporation</td>
+              <td>Surface phenomenon; causes cooling</td>
+            </tr>
+            <tr>
+              <td>Boiling</td>
+              <td>Bulk phenomenon; occurs at fixed temperature</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Common JAMB Exam Traps</h3>
+          <ul>
+            <li>❌ Confusing atoms and molecules: O₂ is a molecule (two atoms), O is an atom</li>
+            <li>❌ Diffusion vs. Osmosis: Diffusion is general molecular spreading; osmosis is specific to water through semi-permeable membrane</li>
+            <li>❌ Evaporation vs. Boiling: Evaporation happens at any temperature at surface; boiling at specific temperature throughout liquid</li>
+            <li>❌ Adhesion vs. Cohesion: Adhesion = different substances; Cohesion = same substance</li>
+            <li>❌ Assumptions of kinetic theory: Remember molecules have negligible volume and no intermolecular forces (in ideal gases)</li>
+          </ul>
+        </div>
+
+        <div class="tips-box">
+          <h3>📝 Recommended Study Strategy</h3>
+          <ul>
+            <li>Understand concepts first — don't just memorize definitions</li>
+            <li>Draw diagrams — sketch molecular arrangements in solids, liquids, and gases</li>
+            <li>Watch demonstrations — Brownian motion and diffusion are best understood visually</li>
+            <li>Practice past questions — JAMB often repeats question patterns on this topic</li>
+            <li>Link to real life — relate every concept to everyday observations</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Structure of Matter!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 16 (Gas Laws) & Chapter 19 (Heat Transfer)</p>
+        <button class="explore-btn" onclick="window.location.href='structure-of-matter-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
