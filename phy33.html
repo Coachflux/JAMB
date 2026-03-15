@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Magnets and Magnetic Fields</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Magnets & Fields! 🧲</h1>
+        <p class="subtitle">– JAMB Chapter 33 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 33: Magnets and Magnetic Fields</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Identify natural and artificial magnets, differentiate magnetic properties of soft iron and steel, understand methods of making and demagnetizing magnets, determine flux patterns for magnets and current-carrying conductors, identify Earth's magnetic elements, and examine applications of Earth's magnetic field.</p>
+
+        <h2>1️⃣ Natural and Artificial Magnets 🧲</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Examples</th>
+            </tr>
+            <tr>
+              <td><strong>Natural Magnets</strong></td>
+              <td>Found in nature; magnetized by Earth's magnetic field over time</td>
+              <td>Magnetite (lodestone) - iron oxide mineral</td>
+            </tr>
+            <tr>
+              <td><strong>Artificial Magnets</strong></td>
+              <td>Man-made through industrial processes</td>
+              <td>Bar magnets, horseshoe magnets, electromagnets</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Key Points:</strong> Natural magnets are weak compared to artificial ones; All magnets have two poles: North (N) and South (S); Like poles repel, unlike poles attract; Magnetic poles always exist in pairs - no magnetic monopoles exist</li>
+          </ul>
+        </div>
+
+        <h2>2️⃣ Magnetic Properties of Soft Iron and Steel ⚙️</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Property</th>
+              <th>Soft Iron</th>
+              <th>Steel</th>
+            </tr>
+            <tr>
+              <td><strong>Magnetization</strong></td>
+              <td>Easy to magnetize</td>
+              <td>Harder to magnetize</td>
+            </tr>
+            <tr>
+              <td><strong>Demagnetization</strong></td>
+              <td>Easy to demagnetize</td>
+              <td>Hard to demagnetize</td>
+            </tr>
+            <tr>
+              <td><strong>Retentivity</strong></td>
+              <td>Low (loses magnetism quickly)</td>
+              <td>High (retains magnetism)</td>
+            </tr>
+            <tr>
+              <td><strong>Coercivity</strong></td>
+              <td>Low</td>
+              <td>High</td>
+            </tr>
+            <tr>
+              <td><strong>Use</strong></td>
+              <td>Temporary magnets, electromagnets</td>
+              <td>Permanent magnets</td>
+            </tr>
+            <tr>
+              <td><strong>Applications</strong></td>
+              <td>Transformers, relays, electric bells</td>
+              <td>Compasses, loudspeakers, generators</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <strong>Memory Tip:</strong> "Soft iron is soft on keeping magnetism - it lets it go easily. Steel is steely determined to stay magnetized!"
+        </div>
+
+        <h2>3️⃣ Methods of Making Magnets and Demagnetization 🔧</h2>
+
+        <h3>Methods of Making Magnets</h3>
+        <div class="organelle-list">
+          <ol>
+            <li><strong>Stroking Method (Single Touch):</strong> Stroke steel/iron with one pole of a strong magnet repeatedly in one direction. The material becomes magnetized with polarity opposite to the stroking pole at the starting end.</li>
+            <li><strong>Divided Touch Method:</strong> Use two magnets with like poles stroking from the center outward.</li>
+            <li><strong>Electrical Method (Most Important for JAMB):</strong> Place material inside a solenoid (coil of wire), pass direct current (DC) through the coil. Strength depends on: current magnitude, number of turns, and duration.</li>
+            <li><strong>Induction:</strong> Place unmagnetized iron near a strong magnet without touching. Temporary magnetism is induced.</li>
+          </ol>
+        </div>
+
+        <h3>Methods of Demagnetization</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Method</th>
+              <th>How It Works</th>
+            </tr>
+            <tr>
+              <td><strong>Heating</strong></td>
+              <td>Heat magnet to red hot, then cool while lying East-West</td>
+            </tr>
+            <tr>
+              <td><strong>Hammering</strong></td>
+              <td>Hammer magnet vigorously while lying East-West</td>
+            </tr>
+            <tr>
+              <td><strong>AC Solenoid Method</strong></td>
+              <td>Place in solenoid with alternating current, then slowly withdraw</td>
+            </tr>
+            <tr>
+              <td><strong>Rough Handling</strong></td>
+              <td>Dropping or rough treatment disrupts domain alignment</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Important:</strong> To preserve a magnet, store it with keepers (soft iron bars across poles) in a dry place, lying in North-South direction.</li>
+          </ul>
+        </div>
+
+        <h2>4️⃣ Concept of Magnetic Field 🌐</h2>
+
+        <p>A <span class="highlight">magnetic field</span> is a region of space around a magnet or current-carrying conductor where magnetic forces can be detected.</p>
+
+        <div class="organelle-list">
+          <ul>
+            <li>It is a vector quantity (has magnitude and direction)</li>
+            <li>Represented by magnetic field lines (lines of force)</li>
+            <li>Direction: North to South externally, South to North internally (closed loops)</li>
+          </ul>
+        </div>
+
+        <h3>Properties of Magnetic Field Lines</h3>
+        <div class="organelle-list">
+          <ol>
+            <li>Never cross each other</li>
+            <li>Crowded near poles (stronger field)</li>
+            <li>Form continuous closed loops</li>
+            <li>Tangent to line gives direction of field</li>
+          </ol>
+        </div>
+
+        <h2>5️⃣ Magnetic Field of a Permanent Magnet 🧭</h2>
+
+        <h3>Bar Magnet</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Lines emerge from North pole, enter South pole</li>
+            <li>Strongest at the poles</li>
+            <li>Neutral point exists where Earth's field cancels magnet's field</li>
+          </ul>
+        </div>
+
+        <h3>Two Magnets - Different Configurations</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Arrangement</th>
+              <th>Pattern Description</th>
+            </tr>
+            <tr>
+              <td><strong>N-N or S-S (Like poles facing)</strong></td>
+              <td>Repulsion - lines bend away from each other; neutral point between them</td>
+            </tr>
+            <tr>
+              <td><strong>N-S (Unlike poles facing)</strong></td>
+              <td>Attraction - lines go from N to S directly; no neutral point between</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <strong>Practical Tip:</strong> Use iron filings or plotting compass to visualize field patterns experimentally.
+        </div>
+
+        <h2>6️⃣ Magnetic Field Around Current-Carrying Conductors ⚡</h2>
+
+        <h3>A. Straight Current-Carrying Conductor</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Pattern:</strong> Concentric circles around the wire</li>
+            <li><strong>Direction:</strong> Determined by Right-Hand Grip Rule
+              <ul>
+                <li>Thumb points in current direction</li>
+                <li>Fingers curl in field direction</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <h3>B. Circular Coil (Loop)</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Pattern: Similar to short bar magnet</li>
+            <li>One face acts as North pole, opposite face as South pole</li>
+            <li>Field is stronger at the center</li>
+          </ul>
+        </div>
+
+        <h3>C. Solenoid (Long Coil)</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Pattern: Similar to bar magnet</li>
+            <li><strong>Polarity Rule:</strong> Current clockwise at one end = South pole; Current anticlockwise = North pole</li>
+            <li><strong>Right-Hand Grip Rule for Solenoids:</strong> Fingers follow current, thumb points to North pole</li>
+          </ul>
+        </div>
+
+        <h3>Field Strength Factors</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Number of turns per unit length</li>
+            <li>Current magnitude</li>
+            <li>Presence of iron core (increases field dramatically)</li>
+          </ul>
+        </div>
+
+        <h2>7️⃣ Earth's Magnetic Field 🌍</h2>
+
+        <p>The Earth behaves like a giant magnet with:</p>
+        <div class="organelle-list">
+          <ul>
+            <li>Magnetic North Pole near geographic South Pole</li>
+            <li>Magnetic South Pole near geographic North Pole</li>
+          </ul>
+        </div>
+
+        <h3>Key Elements</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Element</th>
+              <th>Definition</th>
+              <th>Symbol</th>
+            </tr>
+            <tr>
+              <td><strong>Magnetic Meridian</strong></td>
+              <td>Vertical plane containing Earth's magnetic axis</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><strong>Geographic Meridian</strong></td>
+              <td>Vertical plane containing geographic axis</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><strong>Angle of Declination</strong></td>
+              <td>Angle between magnetic meridian and geographic meridian</td>
+              <td>α</td>
+            </tr>
+            <tr>
+              <td><strong>Angle of Dip (Inclination)</strong></td>
+              <td>Angle Earth's field makes with horizontal</td>
+              <td>δ</td>
+            </tr>
+            <tr>
+              <td><strong>Horizontal Component</strong></td>
+              <td>Component of Earth's field parallel to surface</td>
+              <td>Bₕ = B cos δ</td>
+            </tr>
+            <tr>
+              <td><strong>Vertical Component</strong></td>
+              <td>Component perpendicular to surface</td>
+              <td>Bᵥ = B sin δ</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>Relationship:</strong> B² = Bₕ² + Bᵥ² and tan δ = Bᵥ/Bₕ
+        </div>
+
+        <h2>8️⃣ Flux and Flux Density 📊</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quantity</th>
+              <th>Symbol</th>
+              <th>Definition</th>
+              <th>Unit</th>
+              <th>Formula</th>
+            </tr>
+            <tr>
+              <td><strong>Magnetic Flux</strong></td>
+              <td>Φ</td>
+              <td>Total magnetic field passing through an area</td>
+              <td>Weber (Wb)</td>
+              <td>Φ = BA (when B⊥A)</td>
+            </tr>
+            <tr>
+              <td><strong>Magnetic Flux Density</strong></td>
+              <td>B</td>
+              <td>Force per unit length on conductor carrying 1A current</td>
+              <td>Tesla (T)</td>
+              <td>B = Φ/A or B = F/IL</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>Important:</strong> 1 T = 1 Wb/m² = 1 N/(A·m)<br>
+          Flux density is what we commonly call "magnetic field strength" or "magnetic induction."
+        </div>
+
+        <h2>🔢 Calculation 1: Magnetic Flux Calculation</h2>
+        <p><strong>Question:</strong> A rectangular coil of dimensions 20 cm × 15 cm is placed perpendicular to a uniform magnetic field of flux density 0.4 T. Calculate the magnetic flux through the coil.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert dimensions:</strong> 20 cm = 0.20 m, 15 cm = 0.15 m<br>
+          <strong>Area A = 0.20 × 0.15 = 0.03 m²</strong><br><br>
+          
+          Using Φ = BA (since perpendicular, θ = 0°)<br>
+          <strong>Φ = 0.4 T × 0.03 m² = 0.012 Wb = 12 mWb</strong>
+        </div>
+        <div class="answer-box">Answer: 0.012 Wb (or 12 mWb)</div>
+
+        <h2>🔢 Calculation 2: Force on Current-Carrying Conductor</h2>
+        <p><strong>Question:</strong> A wire of length 50 cm carries a current of 4.0 A. It is placed perpendicular to a magnetic field of flux density 0.60 T. Calculate the force on the wire.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert length:</strong> L = 50 cm = 0.50 m<br>
+          Since perpendicular, θ = 90°, sin 90° = 1<br><br>
+          
+          Using F = BIL sin θ<br>
+          <strong>F = 0.60 T × 4.0 A × 0.50 m × 1 = 1.2 N</strong>
+        </div>
+        <div class="answer-box">Answer: 1.2 N</div>
+
+        <h2>🔢 Calculation 3: Force at an Angle</h2>
+        <p><strong>Question:</strong> A conductor of length 1.4 m carrying a current of 0.87 A is placed at 30° to a magnetic field of flux density 80 mT. Calculate the force on the conductor.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert units:</strong> B = 80 mT = 80 × 10⁻³ T = 0.080 T<br><br>
+          
+          Using F = BIL sin θ<br>
+          F = 0.080 × 0.87 × 1.4 × sin 30°<br>
+          F = 0.080 × 0.87 × 1.4 × 0.5<br>
+          <strong>F = 0.04872 N ≈ 0.049 N or 4.9 × 10⁻² N</strong>
+        </div>
+        <div class="answer-box">Answer: 0.049 N (or 4.9 × 10⁻² N)</div>
+
+        <h2>🔢 Calculation 4: Earth's Magnetic Field Components</h2>
+        <p><strong>Question:</strong> At a certain location, the Earth's total magnetic flux density is 5.0 × 10⁻⁵ T and the angle of dip is 60°. Calculate: (a) The horizontal component, (b) The vertical component.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>Horizontal Component:</strong><br>
+          Bₕ = B cos δ = 5.0 × 10⁻⁵ × cos 60°<br>
+          Bₕ = 5.0 × 10⁻⁵ × 0.5 = <strong>2.5 × 10⁻⁵ T</strong><br><br>
+          
+          (b) <strong>Vertical Component:</strong><br>
+          Bᵥ = B sin δ = 5.0 × 10⁻⁵ × sin 60°<br>
+          Bᵥ = 5.0 × 10⁻⁵ × 0.866 = <strong>4.33 × 10⁻⁵ T</strong><br><br>
+          
+          <strong>Check:</strong> B² = Bₕ² + Bᵥ²<br>
+          (5.0 × 10⁻⁵)² = (2.5 × 10⁻⁵)² + (4.33 × 10⁻⁵)²<br>
+          25 × 10⁻¹⁰ = 6.25 × 10⁻¹⁰ + 18.75 × 10⁻¹⁰ ✓
+        </div>
+        <div class="answer-box">Answer: (a) 2.5 × 10⁻⁵ T, (b) 4.33 × 10⁻⁵ T</div>
+
+        <h2>🔢 Calculation 5: Flux Linkage in a Solenoid</h2>
+        <p><strong>Question:</strong> A solenoid has 300 turns, circular cross-section of radius 0.40 m, and is placed perpendicular to a magnetic field of flux density 5.1 mT. Calculate the magnetic flux linkage.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert B:</strong> 5.1 mT = 5.1 × 10⁻³ T<br>
+          <strong>Area A = πr² = π × (0.40)² = 0.503 m²</strong><br><br>
+          
+          Flux per turn Φ = BA = 5.1 × 10⁻³ × 0.503 = 2.565 × 10⁻³ Wb<br><br>
+          
+          <strong>Flux linkage = NΦ = 300 × 2.565 × 10⁻³ = 0.77 Wb turns</strong><br>
+          (or 0.8 Wb turns to 2 s.f.)
+        </div>
+        <div class="answer-box">Answer: 0.77 Wb turns (or 0.8 Wb turns)</div>
+
+        <h2>🔢 Calculation 6: Finding Flux Density from Force</h2>
+        <p><strong>Question:</strong> A 25 cm wire carrying a current of 8.0 A experiences a force of 0.40 N when placed perpendicular to a uniform magnetic field. Calculate the flux density.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert length:</strong> L = 25 cm = 0.25 m<br><br>
+          
+          Rearrange F = BIL to get B = F/(IL)<br>
+          <strong>B = 0.40 / (8.0 × 0.25) = 0.40 / 2.0 = 0.20 T</strong>
+        </div>
+        <div class="answer-box">Answer: 0.20 T</div>
+
+        <h2>📋 Complete Formula Summary Table</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Formula</th>
+              <th>Units</th>
+              <th>When to Use</th>
+            </tr>
+            <tr>
+              <td>Magnetic Flux</td>
+              <td>Φ = BA cos θ</td>
+              <td>Wb, T, m²</td>
+              <td>Calculating total magnetic field through a surface</td>
+            </tr>
+            <tr>
+              <td>Magnetic Flux (perpendicular)</td>
+              <td>Φ = BA</td>
+              <td>Wb, T, m²</td>
+              <td>When field is perpendicular to surface (θ = 0°)</td>
+            </tr>
+            <tr>
+              <td>Flux Density</td>
+              <td>B = Φ/A</td>
+              <td>T, Wb, m²</td>
+              <td>Finding field strength from flux</td>
+            </tr>
+            <tr>
+              <td>Flux Density (from force)</td>
+              <td>B = F/(IL sin θ)</td>
+              <td>T, N, A, m</td>
+              <td>When force on conductor is known</td>
+            </tr>
+            <tr>
+              <td>Force on Conductor</td>
+              <td>F = BIL sin θ</td>
+              <td>N, T, A, m</td>
+              <td>Calculating force on current-carrying wire</td>
+            </tr>
+            <tr>
+              <td>Maximum Force</td>
+              <td>F = BIL</td>
+              <td>N, T, A, m</td>
+              <td>When conductor is perpendicular to field (θ = 90°)</td>
+            </tr>
+            <tr>
+              <td>Horizontal Component (Earth)</td>
+              <td>Bₕ = B cos δ</td>
+              <td>T, T, degrees</td>
+              <td>Resolving Earth's field horizontally</td>
+            </tr>
+            <tr>
+              <td>Vertical Component (Earth)</td>
+              <td>Bᵥ = B sin δ</td>
+              <td>T, T, degrees</td>
+              <td>Resolving Earth's field vertically</td>
+            </tr>
+            <tr>
+              <td>Resultant Field</td>
+              <td>B = √(Bₕ² + Bᵥ²)</td>
+              <td>T, T, T</td>
+              <td>Finding total field from components</td>
+            </tr>
+            <tr>
+              <td>Tangent of Dip</td>
+              <td>tan δ = Bᵥ/Bₕ</td>
+              <td>degrees, T, T</td>
+              <td>Relating dip angle to field components</td>
+            </tr>
+            <tr>
+              <td>Flux Linkage</td>
+              <td>NΦ = BAN</td>
+              <td>Wb-turns, T, m²</td>
+              <td>For coils with multiple turns</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>9️⃣ Variation of Magnetic Field Intensity 📈</h2>
+
+        <p>Earth's magnetic field varies:</p>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>With Location:</strong> Stronger near poles, weaker near equator</li>
+            <li><strong>With Time:</strong> Slow secular changes over years</li>
+            <li><strong>With Altitude:</strong> Decreases with height above surface</li>
+            <li><strong>Local Anomalies:</strong> Deposits of magnetic minerals cause local variations</li>
+          </ul>
+        </div>
+
+        <h3>At Magnetic Poles</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Dip angle = 90° (field is vertical)</li>
+            <li>Horizontal component = 0</li>
+          </ul>
+        </div>
+
+        <h3>At Magnetic Equator</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Dip angle = 0° (field is horizontal)</li>
+            <li>Vertical component = 0</li>
+          </ul>
+        </div>
+
+        <h2>🔟 Applications 🧭</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Application</th>
+              <th>How Earth's Field is Used</th>
+            </tr>
+            <tr>
+              <td><strong>Navigation</strong></td>
+              <td>Compass needles align with magnetic meridian; mariners use magnetic compasses corrected for declination</td>
+            </tr>
+            <tr>
+              <td><strong>Mineral Exploration</strong></td>
+              <td>Magnetic surveys detect iron ore deposits and other magnetic minerals by measuring local field variations</td>
+            </tr>
+            <tr>
+              <td><strong>Geological Surveying</strong></td>
+              <td>Mapping subsurface geology through magnetic anomalies</td>
+            </tr>
+            <tr>
+              <td><strong>Bird/Animal Migration</strong></td>
+              <td>Some species use Earth's field for orientation</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Diagrams are crucial</strong> - Practice drawing field patterns for all configurations</li>
+            <br>
+            <li><strong>Remember the rules</strong> - Right-hand grip rule, polarity rules</li>
+            <br>
+            <li><strong>Distinguish carefully</strong> - Between geographic and magnetic poles (they're opposite!)</li>
+            <br>
+            <li><strong>Units matter</strong> - Know Weber, Tesla, and their relationships; convert cm to m, mT to T</li>
+            <br>
+            <li><strong>Trigonometry</strong> - Remember sin 90° = 1 (maximum force), sin 0° = 0 (no force)</li>
+            <br>
+            <li><strong>Applications</strong> - Always link theory to practical uses in navigation and exploration</li>
+            <br>
+            <li><strong>Formula selection</strong> - Identify what is given and what is required before choosing a formula</li>
+          </ol>
+        </div>
+
+        <div class="warning-box">
+          <h3>📝 Quick Revision Checklist</h3>
+          <ul>
+            <li>✅ Magnetite is the only natural magnet</li>
+            <li>✅ Soft iron = temporary, Steel = permanent</li>
+            <li>✅ Like poles repel, unlike attract</li>
+            <li>✅ Right-hand grip rule for current direction vs. field direction</li>
+            <li>✅ Solenoid polarity: Clockwise = South, Anticlockwise = North</li>
+            <li>✅ Earth's magnetic poles are opposite to geographic poles</li>
+            <li>✅ Angle of dip varies from 0° (equator) to 90° (poles)</li>
+            <li>✅ Flux Φ = BA, Flux density B = Φ/A</li>
+            <li>✅ Unit of flux: Weber; Unit of flux density: Tesla</li>
+            <li>✅ Force F = BIL sin θ (maximum when θ = 90°)</li>
+            <li>✅ Earth's field components: Bₕ = B cos δ, Bᵥ = B sin δ</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Magnets and Magnetic Fields!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 32 (Electrical Energy) & Chapter 34 (Electromagnetic Induction)</p>
+        <button class="explore-btn" onclick="window.location.href='magnets-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
