@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Heat Transfer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Heat Transfer! 🚀</h1>
+        <p class="subtitle">– JAMB Chapter 19 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 19: Heat Transfer</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Differentiate between conduction, convection, and radiation; solve numerical problems on thermal conductivity; understand surface effects on radiation; compare material conductivities; explain thermos flask operation; differentiate land/sea breezes; analyze engine principles.</p>
+
+        <h2>1️⃣ Three Modes of Heat Transfer 🔥</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Mode</th>
+              <th>Mechanism</th>
+              <th>Medium Required</th>
+              <th>Examples</th>
+            </tr>
+            <tr>
+              <td><strong>Conduction</strong></td>
+              <td>Heat flows through direct molecular contact (vibrations passed molecule to molecule)</td>
+              <td>Solids (best), liquids, gases</td>
+              <td>Metal spoon in hot soup, iron rod in fire</td>
+            </tr>
+            <tr>
+              <td><strong>Convection</strong></td>
+              <td>Heat transfer by actual movement of fluid particles (currents)</td>
+              <td>Fluids only (liquids & gases)</td>
+              <td>Boiling water, sea breeze, hot air rising</td>
+            </tr>
+            <tr>
+              <td><strong>Radiation</strong></td>
+              <td>Heat transfer through electromagnetic waves (infrared)</td>
+              <td>No medium needed (vacuum OK)</td>
+              <td>Sun's heat reaching Earth, warmth from fire</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>✅ Key Differences to Remember</h3>
+          <ul>
+            <li><strong>Conduction:</strong> Molecules stay in place, just vibrate more</li>
+            <li><strong>Convection:</strong> Molecules themselves move, carrying heat</li>
+            <li><strong>Radiation:</strong> Travels at speed of light; can pass through vacuum</li>
+          </ul>
+        </div>
+
+        <h2>2️⃣ Temperature Gradient, Conductivity & Heat Flux 📏</h2>
+
+        <h3>Temperature Gradient</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Definition:</strong> Rate of change of temperature with distance</li>
+            <li><strong>Formula:</strong> ΔT/Δx or dT/dx (°C/m or K/m)</li>
+            <li><strong>Concept:</strong> Heat flows hot→cold. Steeper gradient = faster heat flow</li>
+          </ul>
+        </div>
+
+        <h3>Thermal Conductivity (k)</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Definition:</strong> Measure of how well a material conducts heat</li>
+            <li><strong>Symbol:</strong> k (or λ)</li>
+            <li><strong>Unit:</strong> W m⁻¹ K⁻¹</li>
+            <li><strong>High k:</strong> Good conductors (copper: 400 W m⁻¹ K⁻¹)</li>
+            <li><strong>Low k:</strong> Insulators (wood, air: 0.02-0.1 W m⁻¹ K⁻¹)</li>
+          </ul>
+        </div>
+
+        <h3>Heat Flux (q)</h3>
+        <div class="formula-box">
+          <strong>Fourier's Law:</strong><br>
+          q = Q/A = -k(dT/dx)<br><br>
+          <strong>Unit:</strong> W m⁻² (watts per square meter)<br><br>
+          <strong>Total Heat Flow Rate:</strong><br>
+          Q/t = kA(T₁ - T₂)/d<br><br>
+          Where:<br>
+          • Q/t = heat flow rate (W)<br>
+          • A = cross-sectional area (m²)<br>
+          • (T₁ - T₂) = temperature difference (K)<br>
+          • d = thickness/distance (m)
+        </div>
+
+        <div class="tips-box">
+          <strong>💡 JAMB Tip:</strong> Remember the formula Q/t = kAΔT/d! Questions often ask you to calculate heat flow through a slab.
+        </div>
+
+        <h2>3️⃣ Effect of Surface Nature on Radiation 🎨</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Surface Type</th>
+              <th>Absorption</th>
+              <th>Emission</th>
+              <th>Examples</th>
+            </tr>
+            <tr>
+              <td><strong>Black/Dull/Matte</strong></td>
+              <td>Good absorber</td>
+              <td>Good emitter</td>
+              <td>Black car gets hotter; black radiator emits efficiently</td>
+            </tr>
+            <tr>
+              <td><strong>White/Shiny/Polished</strong></td>
+              <td>Poor absorber (reflects)</td>
+              <td>Poor emitter</td>
+              <td>White clothes in summer; polished kettle stays hot</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>✅ Practical Applications</h3>
+          <ul>
+            <li><strong>Solar collectors:</strong> Black surfaces absorb maximum solar energy</li>
+            <li><strong>Thermos flask:</strong> Silvered surfaces minimize heat loss by radiation</li>
+            <li><strong>Firefighters' suits:</strong> Shiny/reflective to reflect radiant heat</li>
+          </ul>
+          <p><strong>Key Principle:</strong> Good absorbers are good emitters; poor absorbers are poor emitters (Kirchhoff's law)</p>
+        </div>
+
+        <h2>4️⃣ Conductivities of Common Materials 📊</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Material</th>
+              <th>Thermal Conductivity (W m⁻¹ K⁻¹)</th>
+              <th>Classification</th>
+            </tr>
+            <tr>
+              <td>Silver</td>
+              <td>430</td>
+              <td>Excellent conductor</td>
+            </tr>
+            <tr>
+              <td>Copper</td>
+              <td>400</td>
+              <td>Excellent conductor</td>
+            </tr>
+            <tr>
+              <td>Aluminum</td>
+              <td>237</td>
+              <td>Good conductor</td>
+            </tr>
+            <tr>
+              <td>Iron/Steel</td>
+              <td>50-80</td>
+              <td>Moderate conductor</td>
+            </tr>
+            <tr>
+              <td>Glass</td>
+              <td>1</td>
+              <td>Poor conductor</td>
+            </tr>
+            <tr>
+              <td>Water</td>
+              <td>0.6</td>
+              <td>Poor conductor</td>
+            </tr>
+            <tr>
+              <td>Wood</td>
+              <td>0.1-0.2</td>
+              <td>Insulator</td>
+            </tr>
+            <tr>
+              <td>Air</td>
+              <td>0.026</td>
+              <td>Excellent insulator</td>
+            </tr>
+            <tr>
+              <td>Styrofoam</td>
+              <td>0.03</td>
+              <td>Excellent insulator</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <strong>💡 Memory Trick:</strong> Metals conduct well; non-metals (especially gases) are good insulators.
+        </div>
+
+        <h2>5️⃣ The Thermos Flask (Vacuum Flask) 🧴</h2>
+        
+        <p>The thermos minimizes heat transfer by all three modes:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Component</th>
+              <th>Function</th>
+              <th>Prevents</th>
+            </tr>
+            <tr>
+              <td>Double-walled glass with vacuum</td>
+              <td>No air molecules = no conduction or convection</td>
+              <td>Conduction & Convection</td>
+            </tr>
+            <tr>
+              <td>Silvered surfaces (inside walls)</td>
+              <td>Reflects infrared radiation back</td>
+              <td>Radiation</td>
+            </tr>
+            <tr>
+              <td>Cork/Plastic stopper</td>
+              <td>Poor conductor, seals tightly</td>
+              <td>Conduction & Convection</td>
+            </tr>
+            <tr>
+              <td>Plastic/Metal outer case</td>
+              <td>Protects glass, provides insulation</td>
+              <td>Mechanical damage</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Hot liquids:</strong> Vacuum prevents heat escaping; silvering reflects radiant heat back</li>
+            <li><strong>Cold liquids:</strong> Vacuum prevents heat entering; silvering reflects external radiation away</li>
+          </ul>
+        </div>
+
+        <div class="tips-box">
+          <strong>💡 JAMB Objective:</strong> You must relate each component to the mode of heat transfer it prevents.
+        </div>
+
+        <h2>6️⃣ Land and Sea Breeze 🌊</h2>
+        
+        <p>Natural convection currents caused by different specific heat capacities of land and water.</p>
+
+        <h3>Sea Breeze (Daytime)</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>When:</strong> Day (sunny)</li>
+            <li><strong>Why:</strong> Land heats faster than sea (lower specific heat capacity)</li>
+            <li><strong>Result:</strong> Air over land → warm → rises → low pressure; Air over sea → cool → sinks → high pressure; Wind blows from sea to land</li>
+          </ul>
+        </div>
+
+        <h3>Land Breeze (Nighttime)</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>When:</strong> Night</li>
+            <li><strong>Why:</strong> Land cools faster than sea</li>
+            <li><strong>Result:</strong> Air over sea → relatively warmer → rises → low pressure; Air over land → cool → sinks → high pressure; Wind blows from land to sea</li>
+          </ul>
+        </div>
+
+        <div class="tips-box">
+          <strong>💡 Memory Aid:</strong> "Sea by day, Land by night"
+        </div>
+
+        <h2>7️⃣ Engines 🚀</h2>
+
+        <h3>Internal Combustion Engines</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Principle:</strong> Burns fuel inside engine cylinder</li>
+            <li><strong>Heat transfer:</strong> Conduction through engine block (needs coolant), convection in coolant circulation, radiation from hot surfaces</li>
+          </ul>
+        </div>
+
+        <h3>Jet Engines</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Principle:</strong> Air compressed, mixed with fuel, ignited; hot gases expelled backward (Newton's 3rd law)</li>
+            <li><strong>Heat transfer:</strong> Intense radiation and convection from combustion chamber</li>
+          </ul>
+        </div>
+
+        <h3>Rockets</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Principle:</strong> Carries own oxidizer; works in vacuum</li>
+            <li><strong>Heat transfer:</strong> Conduction through nozzle walls, radiation in space (no convection/conduction in vacuum), convection inside combustion chamber</li>
+          </ul>
+        </div>
+
+        <div class="tips-box">
+          <strong>💡 JAMB Focus:</strong> Understand that engines convert heat energy to mechanical work, and heat transfer principles are used in cooling systems.
+        </div>
+
+        <h2>🔢 7 Essential Calculations for JAMB</h2>
+
+        <h3>Calculation 1: Basic Heat Conduction</h3>
+        <p><strong>Question:</strong> Calculate heat flow rate through a brick wall (area 20 m², thickness 0.3 m) when temperatures are 35°C and 15°C. k = 0.6 W m⁻¹ K⁻¹.</p>
+        
+        <div class="calculation-box">
+          <strong>Using Q/t = kA(T₁ - T₂)/d:</strong><br>
+          k = 0.6 W m⁻¹ K⁻¹<br>
+          A = 20 m²<br>
+          ΔT = 35 - 15 = 20 K<br>
+          d = 0.3 m<br><br>
+          Q/t = (0.6 × 20 × 20)/0.3<br>
+          Q/t = 240/0.3 = 800 W
+        </div>
+        <div class="answer-box">Answer: 800 W (or 800 J/s)</div>
+
+        <h3>Calculation 2: Finding Temperature Difference</h3>
+        <p><strong>Question:</strong> A copper rod (length 2 m, area 0.5 cm²) conducts heat at 100 W. k = 400 W m⁻¹ K⁻¹. Find temperature difference.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert area:</strong> 0.5 cm² = 0.5 × 10⁻⁴ m² = 5 × 10⁻⁵ m²<br><br>
+          <strong>Rearranging:</strong> ΔT = (Q/t × d)/(k × A)<br>
+          ΔT = (100 × 2)/(400 × 5 × 10⁻⁵)<br>
+          ΔT = 200/0.02 = 10,000 K
+        </div>
+        <div class="answer-box">Answer: 10,000 K (or 10,000°C)</div>
+
+        <h3>Calculation 3: Heat Flux</h3>
+        <p><strong>Question:</strong> A metal plate has temperature gradient of 50°C per cm. k = 200 W m⁻¹ K⁻¹. Calculate heat flux.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert gradient:</strong> 50°C/cm = 50 × 100 = 5000 K/m<br><br>
+          <strong>Using q = k × temperature gradient:</strong><br>
+          q = 200 × 5000 = 1,000,000 W m⁻²
+        </div>
+        <div class="answer-box">Answer: 10⁶ W m⁻² (or 1 MW/m²)</div>
+
+        <h3>Calculation 4: Comparing Materials</h3>
+        <p><strong>Question:</strong> Two identical rods: copper (k=400) and iron (k=80). Length 1 m, area 2 cm², ΔT = 50°C. Find ratio of heat flow rates.</p>
+        
+        <div class="calculation-box">
+          <strong>Since A, d, and ΔT are same:</strong><br>
+          (Q/t)copper/(Q/t)iron = kcopper/kiron<br>
+          Ratio = 400/80 = 5
+        </div>
+        <div class="answer-box">Answer: 5:1 (copper conducts 5× faster)</div>
+
+        <h3>Calculation 5: Composite Wall (Series)</h3>
+        <p><strong>Question:</strong> Wall has brick (0.2 m, k=0.6) and plaster (0.05 m, k=0.3). Outer brick at 30°C, outer plaster at 10°C. Find heat flux.</p>
+        
+        <div class="calculation-box">
+          <strong>Total thermal resistance R = R₁ + R₂:</strong><br>
+          R = d₁/k₁ + d₂/k₂ = 0.2/0.6 + 0.05/0.3<br>
+          R = 0.333 + 0.167 = 0.5 m² K W⁻¹<br><br>
+          <strong>Heat flux:</strong> q = ΔT/R = (30-10)/0.5 = 20/0.5
+        </div>
+        <div class="answer-box">Answer: 40 W m⁻²</div>
+
+        <h3>Calculation 6: Time to Transfer Energy</h3>
+        <p><strong>Question:</strong> How long for 5000 J to pass through aluminum window (1.5 m², 4 mm thick, ΔT=25°C)? k = 237 W m⁻¹ K⁻¹.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert thickness:</strong> 4 mm = 0.004 m<br><br>
+          <strong>Heat flow rate:</strong><br>
+          Q/t = kAΔT/d = (237 × 1.5 × 25)/0.004<br>
+          Q/t = 8887.5/0.004 = 2,221,875 W<br><br>
+          <strong>Time:</strong> t = Q/(Q/t) = 5000/2,221,875
+        </div>
+        <div class="answer-box">Answer: ≈ 0.00225 s (or 2.25 ms)</div>
+
+        <h3>Calculation 7: Finding Thickness</h3>
+        <p><strong>Question:</strong> Freezer wall must limit heat gain to 50 W. External 25°C, internal -5°C. Area 4 m², k = 0.04 W m⁻¹ K⁻¹. What thickness?</p>
+        
+        <div class="calculation-box">
+          <strong>ΔT = 25 - (-5) = 30 K</strong><br><br>
+          <strong>Rearranging:</strong> d = kAΔT/(Q/t)<br>
+          d = (0.04 × 4 × 30)/50<br>
+          d = 4.8/50 = 0.096 m
+        </div>
+        <div class="answer-box">Answer: 9.6 cm (or approximately 10 cm)</div>
+
+        <h2>📋 Quick Revision Checklist</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Must Know</th>
+            </tr>
+            <tr>
+              <td>Modes of transfer</td>
+              <td>Definitions + examples + medium requirements</td>
+            </tr>
+            <tr>
+              <td>Temperature gradient</td>
+              <td>Formula + direction (hot→cold)</td>
+            </tr>
+            <tr>
+              <td>Thermal conductivity</td>
+              <td>Symbol (k), units, what affects it</td>
+            </tr>
+            <tr>
+              <td>Heat flux</td>
+              <td>Fourier's Law formula</td>
+            </tr>
+            <tr>
+              <td>Surface effects</td>
+              <td>Black=good absorber/emitter; White=bad absorber/emitter</td>
+            </tr>
+            <tr>
+              <td>Materials</td>
+              <td>Metals conduct; gases insulate</td>
+            </tr>
+            <tr>
+              <td>Thermos flask</td>
+              <td>4 components + which mode each prevents</td>
+            </tr>
+            <tr>
+              <td>Land/Sea breeze</td>
+              <td>Day vs. Night wind direction + why</td>
+            </tr>
+            <tr>
+              <td>Engines</td>
+              <td>Basic principles + heat transfer in cooling</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Common JAMB Question Patterns</h3>
+          <ul>
+            <li>❌ "Which material is best conductor?" → Look for metal with highest k (silver/copper)</li>
+            <li>❌ "Why does thermos have silvered surfaces?" → To prevent radiation</li>
+            <li>❌ "Calculate heat flow through wall..." → Use Q/t = kAΔT/d</li>
+            <li>❌ "Wind direction at noon near coast?" → Sea breeze (sea to land)</li>
+            <li>❌ "Why are solar panels black?" → Good absorbers of radiation</li>
+          </ul>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 Final Tips for Success</h3>
+          <ul>
+            <li>Master the formula: <strong>Q/t = kAΔT/d</strong> — appears frequently</li>
+            <li>Understand the thermos: Classic JAMB question about minimizing all three heat transfer modes</li>
+            <li>Visualize convection: Hot air/water rises, cool sinks — explains breezes and heating systems</li>
+            <li>Distinguish carefully: Conduction needs contact, convection needs fluid movement, radiation needs nothing</li>
+            <li><strong>Watch units:</strong> Convert cm² to m² (×10⁻⁴), mm to m (×10⁻³), cm to m (×10⁻²) before calculating</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Heat Transfer!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 18 (Structure of Matter) & Chapter 20 (Waves)</p>
+        <button class="explore-btn" onclick="window.location.href='heat-transfer-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
