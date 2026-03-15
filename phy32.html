@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Electrical Energy and Power</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Electrical Energy! ⚡</h1>
+        <p class="subtitle">– JAMB Chapter 32 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 32: Electrical Energy and Power</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Apply expressions for electrical energy and power, understand commercial units (kWh), analyze electric power transmission, identify heating effects, understand domestic wiring, and determine fuse ratings.</p>
+
+        <h2>1️⃣ Core Concepts: Electrical Energy & Power ⚡</h2>
+
+        <h3>Electrical Energy (E)</h3>
+        <p>Energy is the capacity to do work. In electrical terms, it's the work done by electric current.</p>
+        
+        <div class="formula-box">
+          <strong>E = I²Rt = (V²/R)t = VIt = Pt</strong><br><br>
+          Where:<br>
+          • E = Electrical energy (Joules, J)<br>
+          • I = Current (Amperes, A)<br>
+          • V = Potential difference (Volts, V)<br>
+          • R = Resistance (Ohms, Ω)<br>
+          • t = Time (seconds, s)
+        </div>
+
+        <h3>Electrical Power (P)</h3>
+        <p>Power is the rate of energy consumption or work done per unit time.</p>
+        
+        <div class="formula-box">
+          <strong>P = E/t = I²R = V²/R = VI</strong><br><br>
+          Where:<br>
+          • P = Power (Watts, W)<br>
+          • 1 Watt = 1 Joule/second
+        </div>
+
+        <div class="tips-box">
+          <strong>🧠 Quick Memory Aid:</strong><br>
+          "Power is NOW, Energy is TOTAL"<br>
+          • Power = how fast energy is used (instantaneous)<br>
+          • Energy = total work done over time
+        </div>
+
+        <h2>🔢 Calculation 1: Calculating Power</h2>
+        <p><strong>Question:</strong> A 240V electric kettle draws a current of 5A. Calculate its power rating.</p>
+        
+        <div class="calculation-box">
+          <strong>P = VI = 240V × 5A = 1200W = 1.2kW</strong>
+        </div>
+        <div class="answer-box">Answer: 1.2 kW</div>
+
+        <h2>🔢 Calculation 2: Calculating Energy in Joules</h2>
+        <p><strong>Question:</strong> A 60W bulb is switched on for 8 hours. Calculate the energy consumed in joules.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert time:</strong> t = 8 × 3600 = 28,800 seconds<br><br>
+          <strong>E = Pt = 60W × 28,800s = 1,728,000J = 1.728 × 10⁶ J</strong>
+        </div>
+        <div class="answer-box">Answer: 1.728 × 10⁶ J</div>
+
+        <h2>🔢 Calculation 3: Finding Resistance from Power</h2>
+        <p><strong>Question:</strong> An electric heater is rated 2000W, 240V. Calculate its resistance.</p>
+        
+        <div class="calculation-box">
+          <strong>P = V²/R → R = V²/P</strong><br>
+          <strong>R = 240²/2000 = 57,600/2000 = 28.8Ω</strong>
+        </div>
+        <div class="answer-box">Answer: 28.8 Ω</div>
+
+        <h2>🔢 Calculation 4: Using Alternative Power Formula</h2>
+        <p><strong>Question:</strong> A current of 4A flows through a 10Ω resistor. Calculate the power dissipated.</p>
+        
+        <div class="calculation-box">
+          <strong>P = I²R = (4)² × 10 = 16 × 10 = 160W</strong>
+        </div>
+        <div class="answer-box">Answer: 160 W</div>
+
+        <h2>2️⃣ Commercial Units 💰</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Unit</th>
+              <th>Definition</th>
+              <th>Conversion</th>
+            </tr>
+            <tr>
+              <td><strong>Kilowatt-hour (kWh)</strong></td>
+              <td>Energy consumed by 1 kW appliance in 1 hour</td>
+              <td>1 kWh = 3.6 × 10⁶ J</td>
+            </tr>
+            <tr>
+              <td><strong>Watt-hour (Wh)</strong></td>
+              <td>Smaller unit for small devices</td>
+              <td>1 Wh = 3600 J</td>
+            </tr>
+            <tr>
+              <td><strong>Horsepower (hp)</strong></td>
+              <td>Mechanical power unit</td>
+              <td>1 hp = 746 W</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Why kWh?</strong> Electricity companies bill in kWh (not Joules) because Joules are too small for practical billing, and kWh is convenient for household consumption</li>
+          </ul>
+        </div>
+
+        <h2>🔢 Calculation 5: Basic kWh Calculation</h2>
+        <p><strong>Question:</strong> A 100W bulb is used for 10 hours. Calculate energy consumed in kWh.</p>
+        
+        <div class="calculation-box">
+          <strong>E = (100W × 10h)/1000 = 1000Wh/1000 = 1kWh</strong>
+        </div>
+        <div class="answer-box">Answer: 1 kWh</div>
+
+        <h2>🔢 Calculation 6: Electricity Bill Calculation</h2>
+        <p><strong>Question:</strong> A household uses daily: 5 bulbs (60W each) for 6h, TV (150W) for 4h, Refrigerator (200W) for 24h, Electric iron (1000W) for 30 min. Calculate total kWh in 30 days and bill at ₦50 per kWh.</p>
+        
+        <div class="calculation-box">
+          <strong>Daily consumption:</strong><br>
+          • Bulbs: 5 × 60W × 6h = 1800Wh = 1.8kWh<br>
+          • TV: 150W × 4h = 600Wh = 0.6kWh<br>
+          • Refrigerator: 200W × 24h = 4800Wh = 4.8kWh<br>
+          • Iron: 1000W × 0.5h = 500Wh = 0.5kWh<br><br>
+          
+          <strong>Total daily = 1.8 + 0.6 + 4.8 + 0.5 = 7.7kWh</strong><br><br>
+          
+          <strong>Monthly = 7.7 × 30 = 231kWh</strong><br>
+          <strong>Bill = 231 × ₦50 = ₦11,550</strong>
+        </div>
+        <div class="answer-box">Answer: 231 kWh, Bill = ₦11,550</div>
+
+        <h2>🔢 Calculation 7: Converting kWh to Joules</h2>
+        <p><strong>Question:</strong> Calculate the energy in joules for 5 kWh.</p>
+        
+        <div class="calculation-box">
+          <strong>E = 5 × 3.6 × 10⁶ = 18 × 10⁶ J = 1.8 × 10⁷ J</strong>
+        </div>
+        <div class="answer-box">Answer: 1.8 × 10⁷ J</div>
+
+        <h2>🔢 Calculation 8: Finding Operating Hours</h2>
+        <p><strong>Question:</strong> How long will a 2kW heater take to consume 10 kWh?</p>
+        
+        <div class="calculation-box">
+          <strong>t = E/P = 10kWh/2kW = 5 hours</strong>
+        </div>
+        <div class="answer-box">Answer: 5 hours</div>
+
+        <h2>3️⃣ Electric Power Transmission 🏭</h2>
+
+        <h3>The Journey: Power Station → Consumer</h3>
+        <div class="formula-box">
+          Power Station → Step-Up Transformer → Transmission Lines →<br>
+          Step-Down Transformer → Distribution → Consumer
+        </div>
+
+        <h3>Why High Voltage Transmission?</h3>
+        <p>To minimize power loss in transmission lines!</p>
+        
+        <div class="formula-box">
+          <strong>Power Loss in Cables: P<sub>loss</sub> = I²R<sub>cable</sub></strong><br><br>
+          
+          <strong>Strategy:</strong><br>
+          1. Step-up transformer increases voltage to 132kV - 330kV<br>
+          2. Current decreases (since P = VI, if V↑ then I↓)<br>
+          3. Since P<sub>loss</sub> = I²R, lower current = much lower heat loss<br>
+          4. Step-down transformer reduces voltage for safe home use (240V)
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Key Points:</strong> Transmission at high voltage, low current; Transformers work on AC only; DC cannot be easily transformed</li>
+          </ul>
+        </div>
+
+        <h2>🔢 Calculation 9: Calculating Transmission Current</h2>
+        <p><strong>Question:</strong> A power station generates 100MW at 25kV. Calculate the current.</p>
+        
+        <div class="calculation-box">
+          <strong>P = VI → I = P/V = (100 × 10⁶)/(25 × 10³) = 4000A</strong>
+        </div>
+        <div class="answer-box">Answer: 4000 A</div>
+
+        <h2>🔢 Calculation 10: Power Loss in Transmission</h2>
+        <p><strong>Question:</strong> This 100MW power is stepped up to 330kV. The transmission line has resistance of 5Ω. Calculate: (a) The new current, (b) Power loss, (c) Efficiency.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>New current:</strong> I = (100 × 10⁶)/(330 × 10³) = 303.03A<br><br>
+          
+          (b) <strong>Power loss:</strong> P<sub>loss</sub> = I²R = (303.03)² × 5 = 459,136W ≈ 459kW<br><br>
+          
+          (c) <strong>Efficiency:</strong> η = [(100,000 - 459)/100,000] × 100 = 99.54%
+        </div>
+        <div class="answer-box">Answer: (a) 303.03 A, (b) 459 kW, (c) 99.54%</div>
+
+        <h2>🔢 Calculation 11: Comparing Transmission Voltages</h2>
+        <p><strong>Question:</strong> Compare power loss when transmitting 50MW through a cable with 2Ω resistance at: (a) 50kV, (b) 200kV.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>At 50kV:</strong> I = (50 × 10⁶)/(50 × 10³) = 1000A<br>
+          P<sub>loss</sub> = (1000)² × 2 = 2,000,000W = 2MW (4% loss)<br><br>
+          
+          (b) <strong>At 200kV:</strong> I = (50 × 10⁶)/(200 × 10³) = 250A<br>
+          P<sub>loss</sub> = (250)² × 2 = 125,000W = 125kW (0.25% loss)<br><br>
+          
+          <strong>Conclusion:</strong> Higher voltage reduces power loss significantly!
+        </div>
+        <div class="answer-box">Answer: (a) 2 MW loss (4%), (b) 125 kW loss (0.25%)</div>
+
+        <h2>4️⃣ Heating Effects of Electric Current (Joule's Law) 🔥</h2>
+
+        <h3>Joule's Law of Heating</h3>
+        <p>When current flows through a conductor, heat is produced:</p>
+        
+        <div class="formula-box">
+          <strong>H = I²Rt</strong>
+        </div>
+
+        <h3>Principle Behind Appliances</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Appliance</th>
+              <th>Heating Element</th>
+              <th>Application</th>
+            </tr>
+            <tr>
+              <td><strong>Electric iron</strong></td>
+              <td>Nichrome wire</td>
+              <td>Pressing clothes</td>
+            </tr>
+            <tr>
+              <td><strong>Electric kettle</strong></td>
+              <td>Heating coil</td>
+              <td>Boiling water</td>
+            </tr>
+            <tr>
+              <td><strong>Electric heater</strong></td>
+              <td>Resistance wire</td>
+              <td>Room heating</td>
+            </tr>
+            <tr>
+              <td><strong>Electric bulb</strong></td>
+              <td>Tungsten filament</td>
+              <td>Light (and heat)</td>
+            </tr>
+            <tr>
+              <td><strong>Fuse wire</strong></td>
+              <td>Thin lead/tin wire</td>
+              <td>Circuit protection</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Why Nichrome?</strong> High resistivity (produces more heat), high melting point (doesn't burn out), oxidizes slowly (long-lasting)</li>
+          </ul>
+        </div>
+
+        <h2>🔢 Calculation 12: Basic Joule's Law</h2>
+        <p><strong>Question:</strong> Calculate the heat produced when 3A flows through a 20Ω resistor for 5 minutes.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert time:</strong> t = 5 × 60 = 300s<br><br>
+          <strong>H = I²Rt = (3)² × 20 × 300 = 9 × 20 × 300 = 54,000J</strong>
+        </div>
+        <div class="answer-box">Answer: 54,000 J</div>
+
+        <h2>🔢 Calculation 13: Calculating Water Heating Time</h2>
+        <p><strong>Question:</strong> An electric kettle (2000W, 240V) heats 2kg of water from 20°C to 100°C. Calculate time required. (Specific heat capacity of water = 4200 J/kg·K)</p>
+        
+        <div class="calculation-box">
+          <strong>Heat required:</strong> Q = mcΔT = 2 × 4200 × (100-20) = 672,000J<br><br>
+          
+          Assuming all electrical energy converts to heat: E = Q = 672,000J<br><br>
+          
+          <strong>Time:</strong> t = E/P = 672,000/2000 = 336s = 5.6 minutes
+        </div>
+        <div class="answer-box">Answer: 5.6 minutes</div>
+
+        <h2>🔢 Calculation 14: Finding Resistance of Heating Element</h2>
+        <p><strong>Question:</strong> An electric iron draws 4A from 240V mains. Calculate: (a) Its resistance, (b) Heat produced in 10 minutes.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>R = V/I = 240/4 = 60Ω</strong><br><br>
+          
+          (b) <strong>t = 10 × 60 = 600s</strong><br>
+          <strong>H = I²Rt = (4)² × 60 × 600 = 16 × 60 × 600 = 576,000J</strong>
+        </div>
+        <div class="answer-box">Answer: (a) 60 Ω, (b) 576,000 J</div>
+
+        <h2>5️⃣ Electrical Wiring of Houses 🏠</h2>
+
+        <h3>Domestic Circuit Layout</h3>
+        <div class="formula-box">
+          Main Supply (240V) → Fuse/Consumer Unit →<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;├── Lighting Circuit (5A)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;├── Power Circuit (15A/30A)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;└── Heavy Appliances (Cooker, AC)
+        </div>
+
+        <h3>Key Features</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Purpose</th>
+            </tr>
+            <tr>
+              <td><strong>Parallel connection</strong></td>
+              <td>Each device gets full voltage; independent operation</td>
+            </tr>
+            <tr>
+              <td><strong>Live wire (Brown/Red)</strong></td>
+              <td>Carries current to appliance (240V potential)</td>
+            </tr>
+            <tr>
+              <td><strong>Neutral wire (Blue/Black)</strong></td>
+              <td>Completes circuit (0V, grounded)</td>
+            </tr>
+            <tr>
+              <td><strong>Earth wire (Green/Yellow)</strong></td>
+              <td>Safety - directs leakage current to ground</td>
+            </tr>
+            <tr>
+              <td><strong>Switches</strong></td>
+              <td>Connected to live wire (not neutral)</td>
+            </tr>
+            <tr>
+              <td><strong>Fuses/Circuit breakers</strong></td>
+              <td>Overcurrent protection</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Why Parallel > Series for Homes?</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Parallel</th>
+              <th>Series</th>
+            </tr>
+            <tr>
+              <td>Same voltage across all devices</td>
+              <td>Voltage divides</td>
+            </tr>
+            <tr>
+              <td>Devices work independently</td>
+              <td>One fails = all fail</td>
+            </tr>
+            <tr>
+              <td>Can add more devices easily</td>
+              <td>Adding devices reduces brightness</td>
+            </tr>
+            <tr>
+              <td>Safer and more practical</td>
+              <td>Impractical for homes</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>🔢 Calculation 15: Parallel Circuit Analysis</h2>
+        <p><strong>Question:</strong> Three bulbs (60W, 100W, and 40W) are connected in parallel to 240V. Calculate: (a) Current through each bulb, (b) Total current, (c) Total resistance.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>Using P = VI → I = P/V:</strong><br>
+          • I₁ = 60/240 = 0.25A<br>
+          • I₂ = 100/240 = 0.417A<br>
+          • I₃ = 40/240 = 0.167A<br><br>
+          
+          (b) <strong>Total current:</strong> I<sub>total</sub> = 0.25 + 0.417 + 0.167 = 0.834A<br><br>
+          
+          (c) <strong>Total resistance:</strong> R<sub>total</sub> = V/I<sub>total</sub> = 240/0.834 = 287.8Ω
+        </div>
+        <div class="answer-box">Answer: (a) 0.25A, 0.417A, 0.167A (b) 0.834A (c) 287.8 Ω</div>
+
+        <h2>🔢 Calculation 16: Circuit Load Calculation</h2>
+        <p><strong>Question:</strong> A 240V lighting circuit has a 5A fuse. Calculate the maximum power it can safely handle.</p>
+        
+        <div class="calculation-box">
+          <strong>P<sub>max</sub> = VI = 240 × 5 = 1200W</strong><br><br>
+          
+          Therefore, you can safely connect up to 1200W of lighting (e.g., twenty 60W bulbs).
+        </div>
+        <div class="answer-box">Answer: 1200 W</div>
+
+        <h2>6️⃣ Use of Fuses 🔒</h2>
+
+        <h3>What is a Fuse?</h3>
+        <p>A safety device containing a thin metal wire that melts when current exceeds a safe limit, breaking the circuit.</p>
+
+        <h3>How to Choose Fuse Rating</h3>
+        <div class="formula-box">
+          <strong>Fuse Rating = Total Power/Voltage</strong><br><br>
+          Or slightly higher than operating current.
+        </div>
+
+        <h3>Types of Fuses</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Rating</th>
+              <th>Use</th>
+            </tr>
+            <tr>
+              <td><strong>Cartridge fuse</strong></td>
+              <td>3A, 5A, 13A</td>
+              <td>Plugs, small appliances</td>
+            </tr>
+            <tr>
+              <td><strong>Circuit breaker (MCB)</strong></td>
+              <td>5A, 15A, 30A, 45A</td>
+              <td>Modern consumer units</td>
+            </tr>
+            <tr>
+              <td><strong>Rewirable fuse</strong></td>
+              <td>Various</td>
+              <td>Older installations</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="warning-box">
+          <strong>Important:</strong><br>
+          • Always connect fuse to the live wire<br>
+          • Never use a higher-rated fuse than recommended (fire risk!)<br>
+          • Never bypass a fuse with wire/coin
+        </div>
+
+        <h2>🔢 Calculation 17: Basic Fuse Rating</h2>
+        <p><strong>Question:</strong> An electric kettle is rated 2000W, 240V. Determine the appropriate fuse rating.</p>
+        
+        <div class="calculation-box">
+          <strong>I = P/V = 2000/240 = 8.33A</strong><br><br>
+          
+          Standard fuse ratings: 3A, 5A, 10A, 13A<br><br>
+          
+          <strong>Select 10A or 13A fuse</strong> (next standard rating above 8.33A)
+        </div>
+        <div class="answer-box">Answer: 10A or 13A fuse</div>
+
+        <h2>🔢 Calculation 18: Multiple Appliances on One Circuit</h2>
+        <p><strong>Question:</strong> A 240V power circuit has four appliances: TV (200W), Fridge (150W), Fan (80W), Computer (300W). Calculate the minimum fuse rating.</p>
+        
+        <div class="calculation-box">
+          <strong>Total power = 200 + 150 + 80 + 300 = 730W</strong><br><br>
+          
+          <strong>Current:</strong> I = 730/240 = 3.04A<br><br>
+          
+          <strong>Use 5A fuse</strong> (next standard rating)
+        </div>
+        <div class="answer-box">Answer: 5A fuse</div>
+
+        <h2>🔢 Calculation 19: Checking Circuit Safety</h2>
+        <p><strong>Question:</strong> A 240V, 15A circuit already has a water heater (3000W). Can a 2000W electric iron be added safely?</p>
+        
+        <div class="calculation-box">
+          <strong>Existing current:</strong> I = 3000/240 = 12.5A<br><br>
+          
+          <strong>Additional current:</strong> I<sub>iron</sub> = 2000/240 = 8.33A<br><br>
+          
+          <strong>Total current = 12.5 + 8.33 = 20.83A</strong><br><br>
+          
+          This exceeds 15A! The iron cannot be safely added without upgrading the fuse or creating a separate circuit.
+        </div>
+        <div class="answer-box">Answer: No, cannot be added safely (20.83A > 15A)</div>
+
+        <h2>🔢 Calculation 20: Fuse Wire Properties</h2>
+        <p><strong>Question:</strong> Explain why fuse wire should have: (a) Low melting point, (b) High resistance.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>Low melting point:</strong> So it melts quickly when current exceeds safe limits, breaking the circuit before damage occurs.<br><br>
+          
+          (b) <strong>High resistance:</strong> To ensure significant heat is generated (H = I²Rt) when overcurrent flows, causing the wire to melt.
+        </div>
+        <div class="answer-box">Answer: See explanation above</div>
+
+        <h2>📋 Summary Formula Sheet</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quantity</th>
+              <th>Formula</th>
+              <th>Units</th>
+            </tr>
+            <tr>
+              <td>Energy</td>
+              <td>E = VIt = I²Rt = (V²/R)t = Pt</td>
+              <td>Joules (J)</td>
+            </tr>
+            <tr>
+              <td>Power</td>
+              <td>P = VI = I²R = V²/R = E/t</td>
+              <td>Watts (W)</td>
+            </tr>
+            <tr>
+              <td>Commercial Energy</td>
+              <td>E = Pt (in kWh)</td>
+              <td>kWh</td>
+            </tr>
+            <tr>
+              <td>Power Loss</td>
+              <td>P<sub>loss</sub> = I²R</td>
+              <td>Watts (W)</td>
+            </tr>
+            <tr>
+              <td>Heat (Joule's Law)</td>
+              <td>H = I²Rt</td>
+              <td>Joules (J)</td>
+            </tr>
+            <tr>
+              <td>Fuse Rating</td>
+              <td>I = P/V</td>
+              <td>Amperes (A)</td>
+            </tr>
+            <tr>
+              <td>Efficiency</td>
+              <td>η = (P<sub>output</sub>/P<sub>input</sub>) × 100</td>
+              <td>Percentage (%)</td>
+            </tr>
+            <tr>
+              <td>Conversion</td>
+              <td>1 kWh = 3.6 × 10⁶ J</td>
+              <td>Joules (J)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Remember conversions:</strong> 1 kWh = 3.6 × 10⁶ J (common calculation!)</li>
+            <br>
+            <li><strong>Power transmission:</strong> Always mention P<sub>loss</sub> = I²R and why high voltage is used</li>
+            <br>
+            <li><strong>Parallel circuits:</strong> Emphasize independent operation and same voltage</li>
+            <br>
+            <li><strong>Fuse calculations:</strong> Show working: I = P/V, then round up to standard rating</li>
+            <br>
+            <li><strong>Heating effects:</strong> Know practical applications (iron, kettle, bulb, fuse)</li>
+            <br>
+            <li><strong>Unit consistency:</strong> Always convert time to seconds for energy in joules, keep hours for kWh</li>
+            <br>
+            <li><strong>Standard fuse ratings:</strong> 3A, 5A, 10A, 13A, 15A, 30A (always choose the next higher standard rating)</li>
+          </ol>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Electrical Energy and Power!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 31 (Current Electricity) & Chapter 33 (Magnets)</p>
+        <button class="explore-btn" onclick="window.location.href='electrical-energy-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
