@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Electromagnetic Induction</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Electromagnetic Induction! ⚡</h1>
+        <p class="subtitle">– JAMB Chapter 35 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 35: Electromagnetic Induction</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Master Faraday's Law, Lenz's Law, induced e.m.f calculations, transformers, self and mutual inductance, and applications of electromagnetic induction for JAMB success.</p>
+
+        <h2>1️⃣ Introduction to Electromagnetic Induction 🔄</h2>
+
+        <p><span class="highlight">Electromagnetic Induction</span> is the process by which an electromotive force (e.m.f) is induced in a conductor when there is a change in magnetic flux linking the conductor.</p>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Key Principle:</strong> Discovered by Michael Faraday (1831) - A changing magnetic field induces an electric current.</li>
+          </ul>
+        </div>
+
+        <h2>2️⃣ Faraday's Law of Electromagnetic Induction 📐</h2>
+
+        <h3>Statement</h3>
+        <p>The magnitude of the induced e.m.f is directly proportional to the rate of change of magnetic flux linking the circuit.</p>
+        
+        <div class="formula-box">
+          <strong>ℰ = -N(dΦ/dt)</strong><br><br>
+          Where:<br>
+          • ℰ = Induced e.m.f (volts)<br>
+          • N = Number of turns in the coil<br>
+          • dΦ/dt = Rate of change of magnetic flux<br>
+          • The negative sign indicates direction (Lenz's Law)
+        </div>
+
+        <h3>Magnetic Flux (Φ)</h3>
+        <div class="formula-box">
+          <strong>Φ = BA cos θ</strong><br><br>
+          Where:<br>
+          • B = Magnetic flux density (Tesla, T)<br>
+          • A = Area of the coil (m²)<br>
+          • θ = Angle between magnetic field and normal to the plane
+        </div>
+
+        <h2>3️⃣ Lenz's Law 🔄</h2>
+
+        <h3>Statement</h3>
+        <p>The direction of the induced current is such that it opposes the change producing it.</p>
+
+        <div class="organelle-list">
+          <ul>
+            <li>If magnetic flux increases → Induced current creates opposing field</li>
+            <li>If magnetic flux decreases → Induced current creates supporting field</li>
+            <li>This is the Law of Conservation of Energy in action</li>
+          </ul>
+        </div>
+
+        <h2>🔢 Calculation 1: Basic Faraday's Law</h2>
+        <p><strong>Question:</strong> A coil of 50 turns and area 0.02 m² is placed perpendicular to a magnetic field. If the magnetic flux density changes from 0.1 T to 0.4 T in 0.5 seconds, calculate the induced e.m.f.</p>
+        
+        <div class="calculation-box">
+          <strong>ℰ = -N(ΔΦ/Δt) = -N[Δ(BA)/Δt]</strong><br>
+          = -50 × [(0.4 - 0.1) × 0.02]/0.5<br>
+          = -50 × [0.3 × 0.02]/0.5<br>
+          = -50 × 0.006/0.5<br>
+          = -50 × 0.012 = -0.6 V<br><br>
+          
+          The magnitude is 0.6 V (negative sign shows direction per Lenz's Law)
+        </div>
+        <div class="answer-box">Answer: 0.6 V</div>
+
+        <h2>🔢 Calculation 2: Rotating Coil (AC Generator)</h2>
+        <p><strong>Question:</strong> A rectangular coil of 100 turns, dimensions 0.1 m × 0.05 m, rotates at 50 rev/s in a uniform magnetic field of 0.2 T. Calculate the maximum e.m.f induced.</p>
+        
+        <div class="calculation-box">
+          <strong>Maximum e.m.f occurs when coil is parallel to field:</strong><br>
+          ℰ<sub>max</sub> = NBAω<br><br>
+          
+          Where ω = 2πf = 2π × 50 = 100π rad/s<br>
+          Area A = 0.1 × 0.05 = 0.005 m²<br><br>
+          
+          ℰ<sub>max</sub> = 100 × 0.2 × 0.005 × 100π<br>
+          = 100 × 0.2 × 0.005 × 314.16<br>
+          = 31.4 V
+        </div>
+        <div class="answer-box">Answer: 31.4 V</div>
+
+        <h2>🔢 Calculation 3: Moving Conductor</h2>
+        <p><strong>Question:</strong> A conductor of length 0.5 m moves at 20 m/s perpendicular to a magnetic field of 0.4 T. Calculate the induced e.m.f.</p>
+        
+        <div class="calculation-box">
+          <strong>ℰ = Blv</strong><br>
+          = 0.4 × 0.5 × 20<br>
+          = 4.0 V
+        </div>
+        <div class="answer-box">Answer: 4.0 V</div>
+
+        <h2>🔢 Calculation 4: Mutual Inductance</h2>
+        <p><strong>Question:</strong> Two coils have a mutual inductance of 0.5 H. If the current in the primary coil changes from 2 A to 8 A in 0.2 s, calculate the induced e.m.f in the secondary coil.</p>
+        
+        <div class="calculation-box">
+          <strong>ℰ<sub>s</sub> = -M(dI<sub>p</sub>/dt)</strong><br>
+          = -0.5 × [(8-2)/0.2]<br>
+          = -0.5 × (6/0.2)<br>
+          = -0.5 × 30<br>
+          = -15 V<br><br>
+          
+          Magnitude = 15 V
+        </div>
+        <div class="answer-box">Answer: 15 V</div>
+
+        <h2>🔢 Calculation 5: Self-Inductance</h2>
+        <p><strong>Question:</strong> A coil with self-inductance 0.4 H carries a current that changes at 5 A/s. Calculate the back e.m.f.</p>
+        
+        <div class="calculation-box">
+          <strong>ℰ = -L(dI/dt)</strong><br>
+          = -0.4 × 5<br>
+          = -2.0 V<br><br>
+          
+          Magnitude = 2.0 V
+        </div>
+        <div class="answer-box">Answer: 2.0 V</div>
+
+        <h2>4️⃣ Applications of Electromagnetic Induction 🏭</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Application</th>
+              <th>How It Works</th>
+            </tr>
+            <tr>
+              <td><strong>AC Generator/Dynamo</strong></td>
+              <td>Coil rotates in magnetic field → alternating e.m.f</td>
+            </tr>
+            <tr>
+              <td><strong>DC Generator</strong></td>
+              <td>Split-ring commutator converts AC to DC</td>
+            </tr>
+            <tr>
+              <td><strong>Transformer</strong></td>
+              <td>Changing current in primary induces e.m.f in secondary</td>
+            </tr>
+            <tr>
+              <td><strong>Induction Coil</strong></td>
+              <td>Interrupted DC produces high voltage spikes</td>
+            </tr>
+            <tr>
+              <td><strong>Moving Coil Microphone</strong></td>
+              <td>Sound waves move coil in magnetic field</td>
+            </tr>
+            <tr>
+              <td><strong>Eddy Current Brake</strong></td>
+              <td>Induced currents oppose motion (Lenz's Law)</td>
+            </tr>
+            <tr>
+              <td><strong>Induction Cooking</strong></td>
+              <td>Changing magnetic field induces currents in pot</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>5️⃣ Transformers 🔌</h2>
+
+        <h3>Principle</h3>
+        <p>Mutual induction between two coils wound on the same iron core.</p>
+
+        <div class="formula-box">
+          <strong>Voltage Ratio:</strong><br>
+          V<sub>s</sub>/V<sub>p</sub> = N<sub>s</sub>/N<sub>p</sub><br><br>
+          
+          <strong>Current Ratio (Ideal):</strong><br>
+          I<sub>s</sub>/I<sub>p</sub> = N<sub>p</sub>/N<sub>s</sub> = V<sub>p</sub>/V<sub>s</sub><br><br>
+          
+          <strong>Efficiency:</strong><br>
+          η = (Output Power/Input Power) × 100%<br>
+          = (V<sub>s</sub>I<sub>s</sub>)/(V<sub>p</sub>I<sub>p</sub>) × 100%
+        </div>
+
+        <h2>🔢 Calculation 6: Transformer</h2>
+        <p><strong>Question:</strong> A transformer has 1000 turns in the primary and 200 turns in the secondary. If the primary voltage is 240 V and current is 2 A, calculate: (a) Secondary voltage, (b) Secondary current (assuming 100% efficiency).</p>
+        
+        <div class="calculation-box">
+          (a) <strong>V<sub>s</sub>/240 = 200/1000</strong><br>
+          V<sub>s</sub> = 240 × 0.2 = 48 V<br><br>
+          
+          (b) <strong>V<sub>p</sub>I<sub>p</sub> = V<sub>s</sub>I<sub>s</sub></strong><br>
+          240 × 2 = 48 × I<sub>s</sub><br>
+          I<sub>s</sub> = 480/48 = 10 A
+        </div>
+        <div class="answer-box">Answer: (a) 48 V, (b) 10 A</div>
+
+        <h2>6️⃣ Energy Losses in Transformers ⚡</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Loss Type</th>
+              <th>Cause</th>
+              <th>Reduction Method</th>
+            </tr>
+            <tr>
+              <td><strong>Copper Loss</strong></td>
+              <td>Resistance of windings</td>
+              <td>Use thick copper wires</td>
+            </tr>
+            <tr>
+              <td><strong>Iron/Eddy Current Loss</strong></td>
+              <td>Induced currents in core</td>
+              <td>Laminated core</td>
+            </tr>
+            <tr>
+              <td><strong>Hysteresis Loss</strong></td>
+              <td>Repeated magnetization</td>
+              <td>Soft iron core</td>
+            </tr>
+            <tr>
+              <td><strong>Flux Leakage</strong></td>
+              <td>Not all flux links secondary</td>
+              <td>Proper core design</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>📋 Summary Table of Formulas</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Formula</th>
+              <th>Variables</th>
+              <th>When to Use</th>
+            </tr>
+            <tr>
+              <td><strong>ℰ = -N(ΔΦ/Δt)</strong></td>
+              <td>N=turns, Φ=flux, t=time</td>
+              <td>General Faraday's Law</td>
+            </tr>
+            <tr>
+              <td><strong>Φ = BA cos θ</strong></td>
+              <td>B=flux density, A=area, θ=angle</td>
+              <td>Calculating magnetic flux</td>
+            </tr>
+            <tr>
+              <td><strong>ℰ = Blv sin θ</strong></td>
+              <td>B=field, l=length, v=velocity</td>
+              <td>Moving conductor in field</td>
+            </tr>
+            <tr>
+              <td><strong>ℰ<sub>max</sub> = NBAω</strong></td>
+              <td>ω=angular velocity</td>
+              <td>Rotating coil (generator)</td>
+            </tr>
+            <tr>
+              <td><strong>ℰ = -L(dI/dt)</strong></td>
+              <td>L=self-inductance, I=current</td>
+              <td>Self-induction</td>
+            </tr>
+            <tr>
+              <td><strong>ℰ<sub>s</sub> = -M(dI<sub>p</sub>/dt)</strong></td>
+              <td>M=mutual inductance</td>
+              <td>Mutual induction</td>
+            </tr>
+            <tr>
+              <td><strong>L = (μ₀N²A)/l</strong></td>
+              <td>μ₀=permeability, l=coil length</td>
+              <td>Inductance of solenoid</td>
+            </tr>
+            <tr>
+              <td><strong>V<sub>s</sub>/V<sub>p</sub> = N<sub>s</sub>/N<sub>p</sub></strong></td>
+              <td>V=voltage, N=turns</td>
+              <td>Transformer voltage</td>
+            </tr>
+            <tr>
+              <td><strong>I<sub>s</sub>/I<sub>p</sub> = N<sub>p</sub>/N<sub>s</sub></strong></td>
+              <td>I=current</td>
+              <td>Transformer current (ideal)</td>
+            </tr>
+            <tr>
+              <td><strong>E = ½LI²</strong></td>
+              <td>L=inductance, I=current</td>
+              <td>Energy stored in inductor</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Remember the negative sign</strong> in Faraday's Law indicates Lenz's Law direction</li>
+            <br>
+            <li><strong>Maximum e.m.f</strong> occurs when coil is parallel to magnetic field (sinθ = 1 or cosθ = 0 depending on orientation)</li>
+            <br>
+            <li><strong>Zero e.m.f</strong> occurs when coil is perpendicular to field</li>
+            <br>
+            <li><strong>Step-up transformer:</strong> N<sub>s</sub> > N<sub>p</sub>, V<sub>s</sub> > V<sub>p</sub>, I<sub>s</sub> < I<sub>p</sub></li>
+            <br>
+            <li><strong>Step-down transformer:</strong> N<sub>s</sub> < N<sub>p</sub>, V<sub>s</sub> < V<sub>p</sub>, I<sub>s</sub> > I<sub>p</sub></li>
+            <br>
+            <li><strong>DC cannot be transformed</strong> - transformers work only with changing current</li>
+          </ol>
+        </div>
+
+        <h2>📝 Quick Practice Questions</h2>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Q1.</strong> A coil of area 0.05 m² with 200 turns is placed perpendicular to a magnetic field of 0.3 T. Calculate the magnetic flux linkage.<br>
+            <strong>Answer:</strong> 3.0 Wb-turns</li>
+            <br>
+            <li><strong>Q2.</strong> An e.m.f of 12 V is induced in a coil when the magnetic flux changes at 0.6 Wb/s. How many turns are in the coil?<br>
+            <strong>Answer:</strong> 20 turns</li>
+            <br>
+            <li><strong>Q3.</strong> A transformer is 80% efficient. If input power is 1000 W and output voltage is 200 V, find the output current.<br>
+            <strong>Answer:</strong> 4 A</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Electromagnetic Induction!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 34 (Magnetic Forces) & Chapter 36 (AC Circuits)</p>
+        <button class="explore-btn" onclick="window.location.href='electromagnetic-induction-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
