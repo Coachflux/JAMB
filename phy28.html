@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Electrostatics</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Electrostatics! ⚡</h1>
+        <p class="subtitle">– JAMB Chapter 28 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 28: Electrostatics</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Understand electric charges, charging methods, electroscopes, Coulomb's law, electric fields and potential, and lightning protection for JAMB success.</p>
+
+        <h2>1️⃣ Fundamental Concepts of Charges ⚡</h2>
+        
+        <h3>Existence of Positive and Negative Charges</h3>
+        <p>All matter contains electric charges. There are two types:</p>
+        
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Positive (+):</strong> Carried by protons (in nucleus)</li>
+            <li><strong>Negative (−):</strong> Carried by electrons (orbiting nucleus)</li>
+          </ul>
+        </div>
+
+        <div class="formula-box">
+          <strong>Key Principle:</strong> Like charges repel, unlike charges attract.
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Property</th>
+              <th>Proton</th>
+              <th>Electron</th>
+            </tr>
+            <tr>
+              <td><strong>Charge</strong></td>
+              <td>+e = +1.6 × 10⁻¹⁹ C</td>
+              <td>−e = −1.6 × 10⁻¹⁹ C</td>
+            </tr>
+            <tr>
+              <td><strong>Mass</strong></td>
+              <td>1.67 × 10⁻²⁷ kg</td>
+              <td>9.11 × 10⁻³¹ kg</td>
+            </tr>
+            <tr>
+              <td><strong>Location</strong></td>
+              <td>Nucleus</td>
+              <td>Electron shells</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>SI Unit of Charge:</strong> Coulomb (C)
+        </div>
+
+        <h2>2️⃣ Methods of Charging a Body 🔋</h2>
+
+        <h3>A. Charging by Friction (Triboelectric Effect)</h3>
+        <p>When two different materials rub against each other, electrons transfer from one to another.</p>
+        
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Glass rod + Silk:</strong> Glass loses electrons → becomes positively charged</li>
+            <li><strong>Ebonite rod + Fur:</strong> Ebonite gains electrons → becomes negatively charged</li>
+          </ul>
+        </div>
+
+        <div class="tips-box">
+          <strong>Memory Tip:</strong> "Glass is Posh (Positive), Ebonite is Negative"
+        </div>
+
+        <h3>B. Charging by Contact (Conduction)</h3>
+        <p>A charged body touches a neutral body, transferring charge directly.</p>
+        
+        <div class="organelle-list">
+          <ol>
+            <li>Charged rod touches neutral metal sphere</li>
+            <li>Charges flow until both share same charge</li>
+            <li>Both end up with same type of charge</li>
+          </ol>
+        </div>
+
+        <p><strong>Example:</strong> Touching a negatively charged rod to a neutral electroscope → electroscope becomes negative.</p>
+
+        <h3>C. Charging by Induction (No Contact!)</h3>
+        <p>Charging a body without touching it, using a charged object nearby.</p>
+        
+        <div class="organelle-list">
+          <ol>
+            <li>Bring charged rod near (but not touching) neutral conductor</li>
+            <li>Induced charges separate: opposite charge near rod, like charge far away</li>
+            <li>Ground the far side (touch with finger) – charges escape to earth</li>
+            <li>Remove ground first, then remove rod</li>
+            <li>Conductor retains charge opposite to the rod</li>
+          </ol>
+        </div>
+
+        <div class="formula-box">
+          <strong>JAMB Shortcut:</strong> Induction always produces opposite charge to the inducing object.
+        </div>
+
+        <h2>3️⃣ The Electroscope ⚡</h2>
+        
+        <p>An instrument for detecting and testing electric charges.</p>
+
+        <h3>Gold-Leaf Electroscope Components</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Metal cap:</strong> Receives charge</li>
+            <li><strong>Metal rod</strong></li>
+            <li><strong>Gold leaf:</strong> Moves when charged</li>
+            <li><strong>Insulating support</strong></li>
+            <li><strong>Earthed metal case</strong></li>
+          </ul>
+        </div>
+
+        <h3>Uses</h3>
+        <div class="organelle-list">
+          <ol>
+            <li><strong>Detecting charge:</strong> Leaf diverges when charged</li>
+            <li><strong>Identifying charge type:</strong> Using a known charge</li>
+            <li><strong>Comparing charge magnitudes:</strong> Greater divergence = more charge</li>
+            <li><strong>Testing insulation vs. conduction</strong></li>
+          </ol>
+        </div>
+
+        <h3>Charging an Electroscope by Induction</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Bring negative rod near cap → leaf diverges (positive induced at top, negative at leaf)</li>
+            <li>Ground the cap → negative charges escape</li>
+            <li>Remove ground → remove rod → electroscope left with positive charge</li>
+          </ul>
+        </div>
+
+        <h2>4️⃣ Coulomb's Inverse Square Law 🧲</h2>
+
+        <h3>The Law</h3>
+        <p>The force between two point charges is:</p>
+        <div class="organelle-list">
+          <ul>
+            <li>Directly proportional to the product of the charges</li>
+            <li>Inversely proportional to the square of the distance between them</li>
+          </ul>
+        </div>
+
+        <div class="formula-box">
+          <strong>F = k(q₁q₂)/r²</strong><br><br>
+          Where:<br>
+          • F = Force (N)<br>
+          • q₁, q₂ = Charges (C)<br>
+          • r = Distance between charges (m)<br>
+          • k = 1/(4πε₀) = 9 × 10⁹ Nm²C⁻²<br>
+          • ε₀ = permittivity of free space = 8.85 × 10⁻¹² C²N⁻¹m⁻²
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Force is attractive</strong> if charges are opposite</li>
+            <li><strong>Force is repulsive</strong> if charges are alike</li>
+            <li><strong>If distance doubles, force becomes 1/4</strong> (inverse square!)</li>
+          </ul>
+        </div>
+
+        <h2>🔢 Calculation 1: Coulomb's Law (Basic)</h2>
+        <p><strong>Question:</strong> Two charges of +3μC and −5μC are placed 0.3m apart in air. Calculate the force between them.</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong><br>
+          • q₁ = +3μC = +3 × 10⁻⁶ C<br>
+          • q₂ = −5μC = −5 × 10⁻⁶ C<br>
+          • r = 0.3 m<br>
+          • k = 9 × 10⁹ Nm²C⁻²<br><br>
+          
+          <strong>F = k(q₁q₂)/r²</strong><br>
+          F = (9 × 10⁹)(3 × 10⁻⁶)(5 × 10⁻⁶)/(0.3)²<br>
+          F = (9 × 3 × 5 × 10⁹⁻⁶⁻⁶)/0.09<br>
+          F = (135 × 10⁻³)/0.09<br>
+          F = 1500 × 10⁻³ = 1.5 N
+        </div>
+        <div class="answer-box">Answer: 1.5 N (Attractive - opposite charges)</div>
+
+        <h2>🔢 Calculation 2: Finding Distance</h2>
+        <p><strong>Question:</strong> Two identical charges of +2μC repel each other with a force of 0.36N. Find their separation.</p>
+        
+        <div class="calculation-box">
+          <strong>F = k(q²)/r² → r² = kq²/F</strong><br><br>
+          
+          r² = (9 × 10⁹)(2 × 10⁻⁶)²/0.36<br>
+          r² = (9 × 10⁹)(4 × 10⁻¹²)/0.36<br>
+          r² = (36 × 10⁻³)/0.36 = 0.1<br>
+          r = √0.1 = 0.316 m = 31.6 cm
+        </div>
+        <div class="answer-box">Answer: 31.6 cm</div>
+
+        <h2>5️⃣ Electric Field 🌐</h2>
+
+        <h3>Definition</h3>
+        <p>A <span class="highlight">region of space</span> where an electric charge experiences a force.</p>
+
+        <h3>Electric Field Intensity (E)</h3>
+        <p>Force per unit positive charge at a point.</p>
+        
+        <div class="formula-box">
+          <strong>E = F/q = kQ/r²</strong><br><br>
+          Unit: N/C or V/m
+        </div>
+
+        <h3>Electric Field Patterns</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Charge Configuration</th>
+              <th>Field Pattern Description</th>
+            </tr>
+            <tr>
+              <td><strong>Single positive</strong></td>
+              <td>Radial lines pointing outward</td>
+            </tr>
+            <tr>
+              <td><strong>Single negative</strong></td>
+              <td>Radial lines pointing inward</td>
+            </tr>
+            <tr>
+              <td><strong>Two like charges</strong></td>
+              <td>Lines repel each other (no crossing)</td>
+            </tr>
+            <tr>
+              <td><strong>Two opposite charges</strong></td>
+              <td>Lines go from + to − (attract)</td>
+            </tr>
+            <tr>
+              <td><strong>Parallel plates</strong></td>
+              <td>Uniform, parallel lines (except at edges)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>Rules for Drawing Field Lines</h3>
+          <ol>
+            <li>Lines start from positive, end at negative</li>
+            <li>Lines never cross each other</li>
+            <li>Density of lines shows field strength</li>
+            <li>Lines are perpendicular to conductor surfaces</li>
+          </ol>
+        </div>
+
+        <h2>🔢 Calculation 3: Electric Field Intensity</h2>
+        <p><strong>Question:</strong> Calculate the electric field intensity at a distance of 0.5m from a point charge of +4μC.</p>
+        
+        <div class="calculation-box">
+          <strong>E = kQ/r²</strong><br>
+          E = (9 × 10⁹)(4 × 10⁻⁶)/(0.5)²<br>
+          E = (36 × 10³)/0.25<br>
+          E = 144 × 10³ = 1.44 × 10⁵ N/C
+        </div>
+        <div class="answer-box">Answer: 1.44 × 10⁵ N/C (Radially outward)</div>
+
+        <h2>6️⃣ Electric Potential ⚡</h2>
+
+        <h3>Electric Potential (V)</h3>
+        <p>Work done per unit charge in bringing a positive test charge from infinity to that point.</p>
+        
+        <div class="formula-box">
+          <strong>V = kQ/r</strong><br><br>
+          Unit: Volt (V) = J/C
+        </div>
+
+        <h3>Potential Difference (p.d.)</h3>
+        <p>Work done per unit charge in moving between two points.</p>
+        
+        <div class="formula-box">
+          <strong>ΔV = Vₐ − Vᵦ = W/q</strong>
+        </div>
+
+        <h3>Relationship between E and V</h3>
+        <div class="formula-box">
+          <strong>E = ΔV/d</strong><br><br>
+          Where d = distance between points (for uniform field)
+        </div>
+
+        <h2>🔢 Calculation 4: Electric Potential</h2>
+        <p><strong>Question:</strong> Find the electric potential at 0.2m from a charge of −6μC.</p>
+        
+        <div class="calculation-box">
+          <strong>V = kQ/r</strong><br>
+          V = (9 × 10⁹)(−6 × 10⁻⁶)/0.2<br>
+          V = (−54 × 10³)/0.2<br>
+          V = −270 × 10³ = −2.7 × 10⁵ V
+        </div>
+        <div class="answer-box">Answer: −2.7 × 10⁵ V</div>
+
+        <h2>🔢 Calculation 5: Work Done</h2>
+        <p><strong>Question:</strong> How much work is required to move a charge of +5μC between two points with a potential difference of 200V?</p>
+        
+        <div class="calculation-box">
+          <strong>W = qΔV</strong><br>
+          W = (5 × 10⁻⁶)(200)<br>
+          W = 1000 × 10⁻⁶ = 1 × 10⁻³ J = 1 mJ
+        </div>
+        <div class="answer-box">Answer: 1 mJ</div>
+
+        <h2>🔢 Calculation 6: Uniform Electric Field</h2>
+        <p><strong>Question:</strong> Two parallel plates are 2cm apart with a p.d. of 400V. Find: (a) Electric field intensity, (b) Force on an electron.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>E = V/d = 400/0.02 = 20,000 V/m = 2 × 10⁴ V/m</strong><br><br>
+          
+          (b) <strong>F = qE = (1.6 × 10⁻¹⁹)(2 × 10⁴) = 3.2 × 10⁻¹⁵ N</strong>
+        </div>
+        <div class="answer-box">Answer: (a) 2 × 10⁴ V/m, (b) 3.2 × 10⁻¹⁵ N</div>
+
+        <h2>🔢 Calculation 7: Multiple Charges</h2>
+        <p><strong>Question:</strong> Two charges +4μC and +6μC are placed 0.5m apart. Where should a −2μC charge be placed between them to experience zero net force?</p>
+        
+        <div class="calculation-box">
+          <strong>Let x = distance from +4μC</strong><br>
+          For equilibrium: F₁ = F₂<br><br>
+          
+          k(4μC)(2μC)/x² = k(6μC)(2μC)/(0.5−x)²<br>
+          4/x² = 6/(0.5−x)²<br>
+          √2/x = √3/(0.5−x)<br>
+          x = 0.5√2/(√2 + √3) = 0.225 m
+        </div>
+        <div class="answer-box">Answer: 22.5 cm from +4μC charge</div>
+
+        <h2>7️⃣ Electric Discharge and Lightning ⚡🌩️</h2>
+
+        <h3>Electric Discharge</h3>
+        <p>Sudden flow of charge when potential difference becomes large enough to ionize the surrounding medium (air, gas, etc.).</p>
+
+        <h3>Lightning Formation</h3>
+        <div class="organelle-list">
+          <ol>
+            <li><strong>Charge separation:</strong> Updrafts in clouds cause friction, separating charges</li>
+            <li><strong>Induction:</strong> Bottom of cloud becomes negative, induces positive charge on ground</li>
+            <li><strong>Breakdown:</strong> When E-field exceeds 3 × 10⁶ V/m, air ionizes</li>
+            <li><strong>Stroke:</strong> Rapid discharge (current up to 30,000 A!)</li>
+          </ol>
+        </div>
+
+        <h3>Lightning Conductor (Protection)</h3>
+        <div class="organelle-list">
+          <ul>
+            <li>Sharp metal rod on building top</li>
+            <li>Connected to earth via thick copper strip</li>
+            <li><strong>Principle:</strong> Sharp point has high charge density → ionizes air (corona discharge) → slowly neutralizes cloud charge → provides easy path to ground if struck</li>
+          </ul>
+        </div>
+
+        <h2>📋 Summary Table of Formulas</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Formula</th>
+              <th>Unit</th>
+            </tr>
+            <tr>
+              <td>Coulomb's Law</td>
+              <td>F = k(q₁q₂)/r²</td>
+              <td>N (Newton)</td>
+            </tr>
+            <tr>
+              <td>Electric Field Intensity</td>
+              <td>E = F/q = kQ/r²</td>
+              <td>N/C or V/m</td>
+            </tr>
+            <tr>
+              <td>Electric Potential</td>
+              <td>V = kQ/r</td>
+              <td>V (Volt)</td>
+            </tr>
+            <tr>
+              <td>Potential Difference</td>
+              <td>ΔV = W/q</td>
+              <td>V (Volt)</td>
+            </tr>
+            <tr>
+              <td>E from p.d. (uniform field)</td>
+              <td>E = V/d</td>
+              <td>V/m</td>
+            </tr>
+            <tr>
+              <td>Force on charge in field</td>
+              <td>F = qE</td>
+              <td>N (Newton)</td>
+            </tr>
+            <tr>
+              <td>Permittivity relation</td>
+              <td>k = 1/(4πε₀)</td>
+              <td>C²N⁻¹m⁻²</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Charging methods:</strong> Identify from diagrams (friction = transfer, induction = opposite)</li>
+            <br>
+            <li><strong>Coulomb's Law:</strong> Inverse SQUARE (not cube!) - if distance doubles, force becomes 1/4</li>
+            <br>
+            <li><strong>Field direction:</strong> E-field lines go OUT of + and INTO −</li>
+            <br>
+            <li><strong>Test charge:</strong> Always assumed positive for field direction</li>
+            <br>
+            <li><strong>Memory aids:</strong> "FRICTION = Transfer", "INDUCTION = Opposite", "Glass is Posh (Positive)"</li>
+            <br>
+            <li><strong>Units:</strong> Charge (C), Field (N/C or V/m), Potential (V), Force (N)</li>
+          </ol>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Common Mistakes to Avoid</h3>
+          <ul>
+            <li>❌ Forgetting to convert <strong>μC to C</strong> (×10⁻⁶)</li>
+            <li>❌ Using <strong>r instead of r²</strong> in Coulomb's law</li>
+            <li>❌ Confusing <strong>electric field</strong> (vector) with <strong>potential</strong> (scalar)</li>
+            <li>❌ Getting field direction wrong (test charge is positive!)</li>
+            <li>❌ Forgetting that <strong>potential is scalar</strong> but <strong>field is vector</strong></li>
+            <li>❌ Mixing up charging by <strong>contact</strong> (same charge) vs <strong>induction</strong> (opposite charge)</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Electrostatics!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 29 (Current Electricity) & Chapter 30 (Magnets)</p>
+        <button class="explore-btn" onclick="window.location.href='electrostatics-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
