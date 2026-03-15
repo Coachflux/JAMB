@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Gas Laws</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Gas Laws! 🚀</h1>
+        <p class="subtitle">– JAMB Chapter 16 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 16: Gas Laws</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Understand Boyle's law, Charles' law, Pressure law, absolute zero, general gas equation, ideal gas equation, and Van der Waals equation.</p>
+
+        <h2>1️⃣ Boyle's Law (Pressure-Volume) 🫧</h2>
+        
+        <p><span class="highlight">Statement:</span> The pressure of a given mass of gas is <strong>inversely proportional</strong> to its volume when temperature is kept constant.</p>
+
+        <div class="formula-box">
+          <strong>Mathematical Expression:</strong><br>
+          P ∝ 1/V &nbsp;&nbsp;or&nbsp;&nbsp; PV = constant<br><br>
+          <strong>Working Formula:</strong><br>
+          P₁V₁ = P₂V₂
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li>Temperature must remain constant (<strong>isothermal process</strong>)</li>
+            <li>Graph of P vs V is a <strong>hyperbola</strong></li>
+            <li>Graph of P vs 1/V is a <strong>straight line</strong> through origin</li>
+          </ul>
+        </div>
+
+        <h2>2️⃣ Charles' Law (Volume-Temperature) 🌡️</h2>
+        
+        <p><span class="highlight">Statement:</span> The volume of a given mass of gas is <strong>directly proportional</strong> to its absolute temperature when pressure is kept constant.</p>
+
+        <div class="formula-box">
+          <strong>Mathematical Expression:</strong><br>
+          V ∝ T &nbsp;&nbsp;or&nbsp;&nbsp; V/T = constant<br><br>
+          <strong>Working Formula:</strong><br>
+          V₁/T₁ = V₂/T₂<br><br>
+          <strong>Important:</strong> Temperature must be in <strong>Kelvin (K)</strong><br>
+          Conversion: K = °C + 273
+        </div>
+
+        <h2>3️⃣ Pressure Law (Gay-Lussac's Law) 🔥</h2>
+        
+        <p><span class="highlight">Statement:</span> The pressure of a given mass of gas is <strong>directly proportional</strong> to its absolute temperature when volume is kept constant.</p>
+
+        <div class="formula-box">
+          <strong>Mathematical Expression:</strong><br>
+          P ∝ T &nbsp;&nbsp;or&nbsp;&nbsp; P/T = constant<br><br>
+          <strong>Working Formula:</strong><br>
+          P₁/T₁ = P₂/T₂
+        </div>
+
+        <h2>4️⃣ Absolute Zero of Temperature ❄️</h2>
+        
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Definition:</strong> The theoretical temperature at which a gas would have zero volume and zero pressure</li>
+            <li><strong>Value:</strong> 0 K = -273°C (or -273.15°C precisely)</li>
+            <li><strong>Significance:</strong> Lowest possible temperature; molecular motion ceases</li>
+          </ul>
+        </div>
+
+        <h2>5️⃣ General Gas Equation (Combined Gas Law) 🔄</h2>
+        
+        <p>Combining all three laws for a fixed mass of gas:</p>
+
+        <div class="formula-box">
+          <strong>General Gas Equation:</strong><br>
+          P₁V₁/T₁ = P₂V₂/T₂<br><br>
+          <em>Used when pressure, volume, AND temperature all change</em>
+        </div>
+
+        <h2>6️⃣ Ideal Gas Equation ⚛️</h2>
+        
+        <p>For <strong>n moles</strong> of gas:</p>
+
+        <div class="formula-box">
+          <strong>PV = nRT</strong><br><br>
+          Where:<br>
+          • P = Pressure (Pa or N/m²)<br>
+          • V = Volume (m³)<br>
+          • n = Number of moles<br>
+          • R = Universal gas constant = 8.314 J/(mol·K) or 0.0821 L·atm/(mol·K)<br>
+          • T = Temperature (K)<br><br>
+          <strong>Alternative form:</strong> PV = (m/M)RT<br>
+          Where m = mass of gas, M = molar mass
+        </div>
+
+        <h2>7️⃣ Van der Waals Equation (Real Gases) 📊</h2>
+        
+        <p>Corrects the ideal gas equation for real gas behavior:</p>
+
+        <div class="formula-box">
+          <strong>(P + an²/V²)(V - nb) = nRT</strong><br><br>
+          Where:<br>
+          • a = correction for <strong>intermolecular forces</strong><br>
+          • b = correction for <strong>volume of gas molecules</strong>
+        </div>
+
+        <h2>🔢 7 Essential Calculations for JAMB</h2>
+
+        <h3>Calculation 1: Boyle's Law Application</h3>
+        <p><strong>Question:</strong> A gas occupies 200 cm³ at 760 mmHg. What will be its volume if pressure increases to 950 mmHg at constant temperature?</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong><br>
+          P₁ = 760 mmHg, V₁ = 200 cm³<br>
+          P₂ = 950 mmHg, V₂ = ?<br><br>
+          <strong>Using P₁V₁ = P₂V₂:</strong><br>
+          760 × 200 = 950 × V₂<br>
+          V₂ = (760 × 200)/950<br>
+          V₂ = 152,000/950
+        </div>
+        <div class="answer-box">Answer: V₂ = 160 cm³</div>
+
+        <h3>Calculation 2: Charles' Law Application</h3>
+        <p><strong>Question:</strong> A gas occupies 500 cm³ at 27°C. At what temperature will it occupy 600 cm³ at constant pressure?</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong><br>
+          V₁ = 500 cm³, T₁ = 27°C = 300 K<br>
+          V₂ = 600 cm³, T₂ = ?<br><br>
+          <strong>Using V₁/T₁ = V₂/T₂:</strong><br>
+          500/300 = 600/T₂<br>
+          T₂ = (600 × 300)/500<br>
+          T₂ = 360 K = 360 - 273
+        </div>
+        <div class="answer-box">Answer: 87°C (or 360 K)</div>
+
+        <h3>Calculation 3: Pressure Law Application</h3>
+        <p><strong>Question:</strong> A gas exerts 80 cmHg at 27°C. What will be its pressure at 127°C if volume is constant?</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong><br>
+          P₁ = 80 cmHg, T₁ = 27°C = 300 K<br>
+          T₂ = 127°C = 400 K, P₂ = ?<br><br>
+          <strong>Using P₁/T₁ = P₂/T₂:</strong><br>
+          80/300 = P₂/400<br>
+          P₂ = (80 × 400)/300<br>
+          P₂ = 32,000/300
+        </div>
+        <div class="answer-box">Answer: 106.67 cmHg</div>
+
+        <h3>Calculation 4: General Gas Equation</h3>
+        <p><strong>Question:</strong> A gas occupies 300 cm³ at 27°C and 750 mmHg. Calculate its volume at -23°C and 600 mmHg.</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong><br>
+          P₁ = 750 mmHg, V₁ = 300 cm³, T₁ = 300 K<br>
+          P₂ = 600 mmHg, T₂ = -23°C = 250 K, V₂ = ?<br><br>
+          <strong>Using P₁V₁/T₁ = P₂V₂/T₂:</strong><br>
+          (750 × 300)/300 = (600 × V₂)/250<br>
+          750 = 600V₂/250<br>
+          750 × 250 = 600V₂<br>
+          V₂ = 187,500/600
+        </div>
+        <div class="answer-box">Answer: 312.5 cm³</div>
+
+        <h3>Calculation 5: Ideal Gas Equation (STP)</h3>
+        <p><strong>Question:</strong> Calculate the volume occupied by 2 moles of ideal gas at STP (273 K, 1.01 × 10⁵ Pa).</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong><br>
+          n = 2 mol, T = 273 K<br>
+          P = 1.01 × 10⁵ Pa, R = 8.314 J/(mol·K)<br><br>
+          <strong>Using PV = nRT:</strong><br>
+          V = nRT/P<br>
+          V = (2 × 8.314 × 273)/(1.01 × 10⁵)<br>
+          V = 4,539.44/101,000
+        </div>
+        <div class="answer-box">Answer: 0.0449 m³ ≈ 44.9 dm³</div>
+
+        <h3>Calculation 6: Finding Mass Using Ideal Gas</h3>
+        <p><strong>Question:</strong> What is the mass of O₂ in a 10 dm³ container at 25°C and 200 kPa? (M = 32 g/mol)</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong><br>
+          V = 10 dm³ = 0.01 m³, T = 298 K<br>
+          P = 200 kPa = 200,000 Pa, M = 32 g/mol<br><br>
+          <strong>Using PV = (m/M)RT:</strong><br>
+          m = PVM/(RT)<br>
+          m = (200,000 × 0.01 × 32)/(8.314 × 298)<br>
+          m = 64,000/2,477.57
+        </div>
+        <div class="answer-box">Answer: 25.83 g</div>
+
+        <h3>Calculation 7: Absolute Zero Determination</h3>
+        <p><strong>Question:</strong> A gas occupies 400 cm³ at 0°C. If volume decreases by 1.5 cm³ per 1°C drop, find absolute zero.</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong><br>
+          At 0°C (273 K), V = 400 cm³<br>
+          Rate of decrease = 1.5 cm³/°C<br><br>
+          <strong>For zero volume:</strong><br>
+          Temperature drop = 400/1.5 = 266.67°C<br>
+          Absolute zero = 0°C - 266.67°C<br><br>
+          <em>(Note: Theoretical value is -273°C; this is experimental approximation)</em>
+        </div>
+        <div class="answer-box">Answer: ≈ -267°C or 6 K</div>
+
+        <h2>📋 Quick Reference Table</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Law</th>
+              <th>Constant</th>
+              <th>Relationship</th>
+              <th>Formula</th>
+            </tr>
+            <tr>
+              <td>Boyle's</td>
+              <td>Temperature</td>
+              <td>P ∝ 1/V</td>
+              <td>P₁V₁ = P₂V₂</td>
+            </tr>
+            <tr>
+              <td>Charles'</td>
+              <td>Pressure</td>
+              <td>V ∝ T</td>
+              <td>V₁/T₁ = V₂/T₂</td>
+            </tr>
+            <tr>
+              <td>Pressure</td>
+              <td>Volume</td>
+              <td>P ∝ T</td>
+              <td>P₁/T₁ = P₂/T₂</td>
+            </tr>
+            <tr>
+              <td>General</td>
+              <td>Mass</td>
+              <td>PV/T = constant</td>
+              <td>P₁V₁/T₁ = P₂V₂/T₂</td>
+            </tr>
+            <tr>
+              <td>Ideal Gas</td>
+              <td>-</td>
+              <td>PV = nRT</td>
+              <td>-</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>📝 JAMB Exam Tips</h3>
+          <ul>
+            <li><strong>Always convert temperature to Kelvin</strong> before calculations</li>
+            <li>Check units: Pressure (Pa, atm, mmHg, cmHg), Volume (m³, dm³, cm³)</li>
+            <li><strong>STP:</strong> 273 K and 1.01 × 10⁵ Pa (or 760 mmHg)</li>
+            <li>Real gases behave like ideal gases at <strong>low pressure & high temperature</strong></li>
+            <li>Van der Waals equation is mainly <strong>qualitative</strong> for JAMB</li>
+          </ul>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Common Mistakes to Avoid</h3>
+          <ul>
+            <li>❌ Forgetting to convert °C to K (add 273!)</li>
+            <li>❌ Mixing up pressure units (mmHg vs Pa vs atm)</li>
+            <li>❌ Using wrong formula when multiple variables change</li>
+            <li>❌ Confusing absolute zero (-273°C) with 0°C</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Gas Laws!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 15 (Thermal Expansion) & Chapter 17 (Kinetic Theory)</p>
+        <button class="explore-btn" onclick="window.location.href='gas-laws-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
