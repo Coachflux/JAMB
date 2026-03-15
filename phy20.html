@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Waves</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .diagram-img {
+      width: 100%;
+      border-radius: 12px;
+      margin: 16px 0 8px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+    }
+
+    .organelle-list {
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .organelle-list li strong {
+      color: var(--accent);
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Waves! 🚀</h1>
+        <p class="subtitle">– JAMB Chapter 20 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 20: Waves</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Interpret wave motion, identify vibrating systems as sources, use waves as energy transfer mode, distinguish particle vs wave motion, relate frequency and wavelength to velocity, determine phase difference and wave number, use progressive wave equation, differentiate wave types, distinguish stationary vs progressive waves, analyze wave properties, explain beats and Doppler effect.</p>
+
+        <h2>1️⃣ Production and Propagation of Waves 🌊</h2>
+        
+        <h3>What is Wave Motion?</h3>
+        <p>A wave is a <span class="highlight">disturbance that travels through a medium</span>, transferring energy from one point to another without transferring matter.</p>
+
+        <div class="tips-box">
+          <strong>💡 Key Concept:</strong> Imagine spectators doing "the wave" in a stadium—people stay in place but the disturbance moves around. This is exactly how waves work!
+        </div>
+
+        <h3>Vibrating Systems as Sources</h3>
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Plucked guitar string</strong> → sound waves</li>
+            <li><strong>Dropped pebble in water</strong> → water ripples</li>
+            <li><strong>Radio transmitter</strong> → electromagnetic waves</li>
+          </ul>
+        </div>
+
+        <h3>Waves as Mode of Energy Transfer</h3>
+        <p>Waves transfer <strong>energy, not matter</strong>. When you shout:</p>
+        <div class="organelle-list">
+          <ul>
+            <li>Energy travels through air to listener's ears</li>
+            <li>Air molecules oscillate but don't travel from your mouth to their ear</li>
+          </ul>
+        </div>
+
+        <h3>Particle Motion vs. Wave Motion</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Particle Motion</th>
+              <th>Wave Motion</th>
+            </tr>
+            <tr>
+              <td>Individual particles oscillate about fixed positions</td>
+              <td>The disturbance travels through the medium</td>
+            </tr>
+            <tr>
+              <td>Particles don't travel far</td>
+              <td>Energy travels long distances</td>
+            </tr>
+            <tr>
+              <td>Example: Water molecule moves up and down</td>
+              <td>Example: The ripple spreads outward</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>The Fundamental Wave Equation ⭐</h3>
+        
+        <div class="formula-box">
+          <strong>V = fλ</strong><br><br>
+          Where:<br>
+          • V = wave velocity (speed) in m/s<br>
+          • f = frequency in Hz (cycles per second)<br>
+          • λ (lambda) = wavelength in meters<br><br>
+          <em>Memory tip: "Very Fast Lambda" or "Velocity = Frequency × Lambda"</em>
+        </div>
+
+        <h3>Phase Difference, Wave Number, and Wave Vector</h3>
+        
+        <p><strong>Phase Difference (φ):</strong> The difference in position between two points on a wave at the same time, measured in degrees or radians.</p>
+        
+        <div class="organelle-list">
+          <ul>
+            <li>0° or 0 rad = in phase (points at same position)</li>
+            <li>180° or π rad = completely out of phase</li>
+            <li>360° or 2π rad = one full wavelength apart (back in phase)</li>
+          </ul>
+        </div>
+
+        <div class="formula-box">
+          <strong>Wave Number (k):</strong><br>
+          k = 2π/λ<br>
+          Unit: rad/m<br><br>
+          <strong>Wave Vector:</strong> Points in direction of wave propagation with magnitude equal to wave number.
+        </div>
+
+        <h3>Progressive Wave Equation ⭐</h3>
+        
+        <div class="formula-box">
+          <strong>y = A sin[(2π/λ)(vt ± x)]</strong><br><br>
+          Or equivalently:<br>
+          <strong>y = A sin(ωt ± kx)</strong><br><br>
+          Where:<br>
+          • y = displacement at position x and time t<br>
+          • A = amplitude (maximum displacement)<br>
+          • v = wave velocity<br>
+          • t = time<br>
+          • x = position<br>
+          • ω (omega) = angular frequency = 2πf<br>
+          • Use (+) for waves traveling in negative x-direction<br>
+          • Use (−) for waves traveling in positive x-direction
+        </div>
+
+        <h2>2️⃣ Classification of Waves 🔄</h2>
+
+        <h3>Mechanical vs. Electromagnetic Waves</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Mechanical Waves</th>
+              <th>Electromagnetic Waves</th>
+            </tr>
+            <tr>
+              <td>Need a material medium</td>
+              <td>Can travel through vacuum</td>
+            </tr>
+            <tr>
+              <td>Examples: sound, water waves, waves on strings</td>
+              <td>Examples: light, radio waves, X-rays</td>
+            </tr>
+            <tr>
+              <td>Travel slower (sound: 340 m/s)</td>
+              <td>Travel at speed of light (3 × 10⁸ m/s)</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Longitudinal vs. Transverse Waves</h3>
+        
+        <p><strong>Longitudinal Waves:</strong></p>
+        <div class="organelle-list">
+          <ul>
+            <li>Particle vibration is <strong>parallel</strong> to wave direction</li>
+            <li>Consist of compressions and rarefactions</li>
+            <li>Examples: sound waves, waves in a slinky (pushed)</li>
+          </ul>
+        </div>
+
+        <p><strong>Transverse Waves:</strong></p>
+        <div class="organelle-list">
+          <ul>
+            <li>Particle vibration is <strong>perpendicular</strong> to wave direction</li>
+            <li>Consist of crests and troughs</li>
+            <li>Examples: light waves, waves on a string, water waves</li>
+          </ul>
+        </div>
+
+        <h3>Stationary (Standing) vs. Progressive Waves</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Progressive Waves</th>
+              <th>Stationary (Standing) Waves</th>
+            </tr>
+            <tr>
+              <td>Travel through medium</td>
+              <td>Do not travel; appear to stand still</td>
+            </tr>
+            <tr>
+              <td>Energy is transmitted</td>
+              <td>Energy is stored (no net transfer)</td>
+            </tr>
+            <tr>
+              <td>Same amplitude everywhere</td>
+              <td>Amplitude varies (nodes and antinodes)</td>
+            </tr>
+            <tr>
+              <td>Example: wave on an open string</td>
+              <td>Example: wave on string fixed at both ends</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Nodes:</strong> Points of zero amplitude (no movement)</li>
+            <li><strong>Antinodes:</strong> Points of maximum amplitude</li>
+            <li><strong>Distance between consecutive nodes = λ/2</strong></li>
+          </ul>
+        </div>
+
+        <h3>Examples from Different Sources</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Source</th>
+              <th>Type of Wave</th>
+              <th>Observation</th>
+            </tr>
+            <tr>
+              <td>Spring (slinky)</td>
+              <td>Longitudinal (pushed) / Transverse (shaken)</td>
+              <td>Compression or sideways oscillation</td>
+            </tr>
+            <tr>
+              <td>Rope/Stretched string</td>
+              <td>Transverse</td>
+              <td>Up-and-down or side-to-side motion</td>
+            </tr>
+            <tr>
+              <td>Ripple tank</td>
+              <td>Transverse (water waves)</td>
+              <td>Circular patterns from point source</td>
+            </tr>
+            <tr>
+              <td>Tuning fork</td>
+              <td>Longitudinal (sound)</td>
+              <td>Creates compressions in air</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>3️⃣ Characteristics/Properties of Waves 🎨</h2>
+
+        <h3>Reflection, Refraction, Diffraction, and Polarization</h3>
+        
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Reflection:</strong> Wave bounces off a surface. Angle of incidence = Angle of reflection. Echo is reflection of sound.</li>
+            <li><strong>Refraction:</strong> Wave changes direction when entering different medium (due to change in speed). Light bends when entering water.</li>
+            <li><strong>Diffraction:</strong> Wave spreads out when passing through openings or around obstacles. More noticeable when opening size ≈ wavelength.</li>
+            <li><strong>Plane Polarization:</strong> (Transverse waves only) Restricting vibrations to one plane. Polaroid sunglasses use this principle.</li>
+          </ul>
+        </div>
+
+        <h3>Superposition of Waves (Interference)</h3>
+        <p>When two waves meet, the resultant displacement equals the sum of individual displacements.</p>
+        
+        <div class="organelle-list">
+          <ul>
+            <li><strong>Constructive Interference:</strong> Waves in phase → Amplitude increases (bright spots/loud sound)</li>
+            <li><strong>Destructive Interference:</strong> Waves out of phase → Amplitude decreases (dark spots/quiet sound)</li>
+          </ul>
+        </div>
+
+        <h3>Beats ⭐</h3>
+        <p>When two waves of slightly different frequencies interfere, they produce alternating loud and soft sounds called beats.</p>
+        
+        <div class="formula-box">
+          <strong>Beat Frequency:</strong><br>
+          f_beat = |f₁ - f₂|<br><br>
+          <strong>Applications:</strong><br>
+          • Tuning musical instruments<br>
+          • Police radar speed detection<br>
+          • Medical ultrasound
+        </div>
+
+        <h3>Doppler Effect (Qualitative)</h3>
+        <p>The apparent change in frequency when source and observer move relative to each other.</p>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Scenario</th>
+              <th>Observed Frequency</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td>Source approaching</td>
+              <td>Higher (f' > f)</td>
+              <td>Ambulance siren approaching</td>
+            </tr>
+            <tr>
+              <td>Source receding</td>
+              <td>Lower (f' < f)</td>
+              <td>Ambulance siren moving away</td>
+            </tr>
+            <tr>
+              <td>Source stationary, observer moving</td>
+              <td>Changes accordingly</td>
+              <td>Passenger in moving car</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>✅ Real-World Applications</h3>
+          <ul>
+            <li>Radar speed guns</li>
+            <li>Medical Doppler ultrasound</li>
+            <li>Astronomy (redshift of galaxies)</li>
+          </ul>
+        </div>
+
+        <h2>🔢 8 Essential Calculations for JAMB</h2>
+
+        <h3>Calculation 1: Basic Wave Equation</h3>
+        <p><strong>Question:</strong> A wave has frequency 50 Hz and wavelength 2 m. Calculate its velocity.</p>
+        
+        <div class="calculation-box">
+          <strong>Using V = fλ:</strong><br>
+          V = 50 × 2 = 100 m/s
+        </div>
+        <div class="answer-box">Answer: 100 m/s</div>
+
+        <h3>Calculation 2: Finding Wavelength</h3>
+        <p><strong>Question:</strong> A radio wave travels at 3 × 10⁸ m/s with frequency 100 MHz. Find its wavelength.</p>
+        
+        <div class="calculation-box">
+          <strong>Convert frequency:</strong> f = 100 MHz = 100 × 10⁶ Hz = 10⁸ Hz<br><br>
+          <strong>Using λ = V/f:</strong><br>
+          λ = (3 × 10⁸)/(10⁸) = 3 m
+        </div>
+        <div class="answer-box">Answer: 3 m</div>
+
+        <h3>Calculation 3: Progressive Wave Parameters</h3>
+        <p><strong>Question:</strong> A wave is described by y = 0.5 sin[2π(4t - 0.5x)]. Find: (a) Amplitude, (b) Frequency, (c) Wavelength, (d) Wave velocity.</p>
+        
+        <div class="calculation-box">
+          <strong>Compare with y = A sin[2π(ft - x/λ)]:</strong><br><br>
+          Given: y = 0.5 sin[2π(4t - 0.5x)] = 0.5 sin[2π(4t - x/2)]<br><br>
+          (a) Amplitude A = 0.5 m<br>
+          (b) Frequency f = 4 Hz<br>
+          (c) From x/2: 1/λ = 0.5, so λ = 2 m<br>
+          (d) V = fλ = 4 × 2 = 8 m/s
+        </div>
+        <div class="answer-box">Answer: (a) 0.5 m, (b) 4 Hz, (c) 2 m, (d) 8 m/s</div>
+
+        <h3>Calculation 4: Phase Difference</h3>
+        <p><strong>Question:</strong> Two points on a wave are separated by 0.5 m. The wavelength is 2 m. Calculate the phase difference.</p>
+        
+        <div class="calculation-box">
+          <strong>Using φ = (2π/λ) × Δx:</strong><br>
+          φ = (2π/2) × 0.5<br>
+          φ = π × 0.5 = π/2 rad = 90°
+        </div>
+        <div class="answer-box">Answer: π/2 rad (or 90°)</div>
+
+        <h3>Calculation 5: Beat Frequency</h3>
+        <p><strong>Question:</strong> Two tuning forks produce sounds of frequencies 256 Hz and 260 Hz. What is the beat frequency?</p>
+        
+        <div class="calculation-box">
+          <strong>Using f_beat = |f₁ - f₂|:</strong><br>
+          f_beat = |256 - 260| = 4 Hz<br><br>
+          <em>This means 4 beats (loud-soft cycles) per second</em>
+        </div>
+        <div class="answer-box">Answer: 4 Hz</div>
+
+        <h3>Calculation 6: Standing Waves on a String</h3>
+        <p><strong>Question:</strong> A string of length 1 m is fixed at both ends. Wave speed is 100 m/s. Find the fundamental frequency.</p>
+        
+        <div class="calculation-box">
+          <strong>For fundamental mode:</strong> λ = 2L = 2 × 1 = 2 m<br><br>
+          <strong>Using f = V/λ:</strong><br>
+          f = 100/2 = 50 Hz
+        </div>
+        <div class="answer-box">Answer: 50 Hz</div>
+
+        <h3>Calculation 7: Wave Number and Angular Frequency</h3>
+        <p><strong>Question:</strong> A wave has wavelength 0.5 m and frequency 100 Hz. Calculate: (a) Wave number, (b) Angular frequency, (c) Wave speed.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>Wave number:</strong> k = 2π/λ = 2π/0.5 = 4π ≈ 12.57 rad/m<br><br>
+          (b) <strong>Angular frequency:</strong> ω = 2πf = 2π × 100 = 200π ≈ 628.3 rad/s<br><br>
+          (c) <strong>Wave speed:</strong> V = fλ = 100 × 0.5 = 50 m/s<br><br>
+          <em>Verify: V = ω/k = 200π/4π = 50 m/s ✓</em>
+        </div>
+        <div class="answer-box">Answer: (a) 4π rad/m, (b) 200π rad/s, (c) 50 m/s</div>
+
+        <h3>Calculation 8: Sound Wave Parameters</h3>
+        <p><strong>Question:</strong> A sound wave in air has frequency 440 Hz. Speed of sound is 340 m/s. Calculate: (a) Wavelength, (b) Period, (c) Oscillations in 2 seconds.</p>
+        
+        <div class="calculation-box">
+          (a) <strong>Wavelength:</strong> λ = V/f = 340/440 = 0.773 m ≈ 77.3 cm<br><br>
+          (b) <strong>Period:</strong> T = 1/f = 1/440 = 0.00227 s ≈ 2.27 ms<br><br>
+          (c) <strong>Number of oscillations:</strong> N = f × t = 440 × 2 = 880 complete oscillations
+        </div>
+        <div class="answer-box">Answer: (a) 0.773 m, (b) 2.27 ms, (c) 880 oscillations</div>
+
+        <h2>📋 Key Formulas to Memorize</h2>
+
+        <div class="formula-box">
+          • <strong>V = fλ</strong> (Wave velocity)<br>
+          • <strong>k = 2π/λ</strong> (Wave number)<br>
+          • <strong>ω = 2πf</strong> (Angular frequency)<br>
+          • <strong>f_beat = |f₁ - f₂|</strong> (Beat frequency)<br>
+          • <strong>y = A sin(ωt ± kx)</strong> (Progressive wave)<br>
+          • <strong>φ = (2π/λ) × Δx</strong> (Phase difference)
+        </div>
+
+        <h2>📋 Units to Remember</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quantity</th>
+              <th>Unit</th>
+            </tr>
+            <tr>
+              <td>Frequency</td>
+              <td>Hz (s⁻¹)</td>
+            </tr>
+            <tr>
+              <td>Wavelength</td>
+              <td>meters (m)</td>
+            </tr>
+            <tr>
+              <td>Wave speed</td>
+              <td>m/s</td>
+            </tr>
+            <tr>
+              <td>Wave number</td>
+              <td>rad/m</td>
+            </tr>
+            <tr>
+              <td>Phase difference</td>
+              <td>degrees or radians</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="warning-box">
+          <h3>⚠️ Common JAMB Question Patterns</h3>
+          <ul>
+            <li>❌ Calculate wave speed given frequency and wavelength → Use V = fλ</li>
+            <li>❌ Identify wave type from descriptions or diagrams</li>
+            <li>❌ Determine phase difference between two points</li>
+            <li>❌ Calculate beat frequency → Use f_beat = |f₁ - f₂|</li>
+            <li>❌ Apply progressive wave equation to find parameters</li>
+            <li>❌ Distinguish between wave types (mechanical/electromagnetic, transverse/longitudinal)</li>
+          </ul>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 Final Tips for Success</h3>
+          <ul>
+            <li>Master <strong>V = fλ</strong> — this is the most fundamental equation</li>
+            <li>Understand the difference between <strong>particle motion</strong> (oscillation) and <strong>wave motion</strong> (energy transfer)</li>
+            <li>Remember: <strong>Transverse</strong> = perpendicular, <strong>Longitudinal</strong> = parallel</li>
+            <li>Standing waves have <strong>nodes</strong> (zero amplitude) and <strong>antinodes</strong> (max amplitude)</li>
+            <li>Doppler effect: <strong>Approaching</strong> = higher frequency, <strong>Receding</strong> = lower frequency</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Waves!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 19 (Heat Transfer) & Chapter 21 (Sound)</p>
+        <button class="explore-btn" onclick="window.location.href='waves-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
