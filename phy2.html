@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Introduction to Measurements</title>
+  <title>PHYSICS - Scalars & Vectors</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);
-      --highlight-solution: #ff9800;
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,59 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
     }
 
     table {
       width: 100%;
+      min-width: 500px;
       border-collapse: collapse;
-      margin: 12px 0;
       font-size: 14px;
     }
 
     th, td {
-      border: 1px solid #444;
-      padding: 8px;
+      padding: 12px 16px;
       text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
     }
 
     th {
-      background: #3a3a5a;
       color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
     }
 
-    .graph-img {
-      max-width: 100%;
-      border-radius: 10px;
-      margin: 12px 0;
-      border: 2px solid #444;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -231,21 +290,18 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    body.light .explore-btn {
-      color: #000;
     }
 
     .nav-bar {
@@ -297,13 +353,59 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .part-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .scenario-box {
+      background: rgba(0,0,0,0.2);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      border-left: 4px solid #ffc107;
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Teaching Scalars and Vectors</div>
+      <div class="header">PHYSICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
@@ -313,346 +415,549 @@
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Teaching Scalars and Vectors (Topic 2a)</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Scalars & Vectors! ↔️</h1>
+        <p class="subtitle">– JAMB Chapter 2 Made Easy</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Teaching Scalars and Vectors (Topic 2a)</h2>
-        <p>I'll explain this topic step by step in simple terms, assuming you have basic knowledge of physics but want it broken down for easy understanding. We'll cover definitions, examples, relative velocity, and resolution of vectors (including graphical methods). This is based on the JAMB objectives: distinguishing scalars from vectors, giving examples, determining resultants, relative velocity, resolving vectors, and using graphical methods.</p>
+        <h2>📚 Chapter 2: Scalars & Vectors</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Master scalar vs vector quantities, vector addition, components, position, distance, displacement, and measurement concepts for JAMB success.</p>
 
-        <h3>Step 1: Definition of Scalar and Vector Quantities</h3>
-        <p><strong>Scalar Quantities:</strong> These are basic building blocks of measurement that have only magnitude (size or amount) but no direction. Think of them as just numbers with units.<br>
-<strong>Vector Quantities:</strong> These have both magnitude and direction. They are represented by arrows: length for magnitude, arrowhead for direction.</p>
-        <p><strong>Key Distinction:</strong> Scalars add like numbers. Vectors need rules for direction.</p>
+        <div class="part-header">Part (a): SCALARS AND VECTORS</div>
 
-        <h3>Step 2: Examples of Scalar and Vector Quantities</h3>
-        <p><strong>Scalars:</strong></p>
+        <h2>1️⃣ Definitions 📖</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Definition</th>
+              <th>Key Characteristic</th>
+            </tr>
+            <tr>
+              <td><strong>Scalar</strong></td>
+              <td>Physical quantity with magnitude (size) only</td>
+              <td>Described by number + unit</td>
+            </tr>
+            <tr>
+              <td><strong>Vector</strong></td>
+              <td>Physical quantity with magnitude and direction</td>
+              <td>Requires number, unit, AND direction</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>2️⃣ Examples Classification 📝</h2>
+
+        <h3>Scalars (Magnitude Only):</h3>
+        <div class="component-box">
+          <ul>
+            <li><strong>Mass</strong> (5 kg), <strong>Time</strong> (10 s), <strong>Temperature</strong> (25°C)</li>
+            <li><strong>Speed</strong> (20 m/s), <strong>Distance</strong> (100 m), <strong>Energy</strong> (50 J)</li>
+            <li>Volume, Density, Pressure, Electric current</li>
+          </ul>
+        </div>
+
+        <h3>Vectors (Magnitude + Direction):</h3>
+        <div class="component-box">
+          <ul>
+            <li><strong>Velocity</strong> (20 m/s north), <strong>Displacement</strong> (50 m east)</li>
+            <li><strong>Force</strong> (10 N downward), <strong>Acceleration</strong> (9.8 m/s² down)</li>
+            <li>Weight, Momentum, Electric field, Gravitational field</li>
+          </ul>
+        </div>
+
+        <div class="memory-aid">
+          💡 Memory Tip: Vectors need "where to" — if you can add "to the left/up/north," it's a vector!
+        </div>
+
+        <h2>3️⃣ Vector Representation 🎯</h2>
+
+        <h3>Graphical Representation:</h3>
         <ul>
-          <li>Mass (e.g., 5 kg)</li>
-          <li>Temperature (e.g., 30°C)</li>
-          <li>Time (e.g., 10 seconds)</li>
-          <li>Speed (e.g., 50 km/h)</li>
-          <li>Distance (e.g., 100 m)</li>
-          <li>Energy (e.g., 200 J)</li>
-          <li>Volume (e.g., 2 liters)</li>
+          <li>Drawn as an arrow (→)</li>
+          <li>Length of arrow = magnitude (to scale)</li>
+          <li>Arrowhead = direction</li>
         </ul>
-        <p><strong>Vectors:</strong></p>
-        <ul>
-          <li>Displacement (e.g., 100 m east)</li>
-          <li>Velocity (e.g., 50 km/h north)</li>
-          <li>Force (e.g., 10 N downward)</li>
-          <li>Acceleration (e.g., 9.8 m/s² downward)</li>
-          <li>Momentum (e.g., 20 kg m/s to the right)</li>
-        </ul>
-        <p><strong>Tip:</strong> If you can ask "in which direction?" and it makes sense, it's a vector.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Scalar_vector_quantities.svg/800px-Scalar_vector_quantities.svg.png" alt="Diagram showing scalar (magnitude only) vs vector (magnitude and direction) quantities">
 
-        <h3>Step 3: Relative Velocity</h3>
-        <p><strong>Concept:</strong> Relative velocity is the velocity of one object as seen from another object. It's how fast and in what direction one thing is moving compared to another.</p>
-        <p><strong>Formula:</strong> If object A has velocity \( \vec{v_A} \) and object B has \( \vec{v_B} \), the relative velocity of A with respect to B is \( \vec{v_{AB}} = \vec{v_A} - \vec{v_B} \).</p>
-        <p><strong>Simple Example:</strong> If you're in a car going 60 km/h east, and another car is going 40 km/h east, relative velocity is 20 km/h east. If coming toward you at 40 km/h west, relative is 100 km/h toward each other.</p>
-        <p><strong>Why It Matters:</strong> Helps in problems like overtaking vehicles, river crossings, or airplane flights with wind.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Relative_velocity.svg/800px-Relative_velocity.svg.png" alt="Diagram showing relative velocity between two moving objects">
-
-        <h3>Step 4: Resolution of Vectors into Two Perpendicular Directions</h3>
-        <p><strong>Concept:</strong> Any vector can be broken down (resolved) into two components that are at right angles (90°) to each other, usually horizontal (x-axis) and vertical (y-axis).</p>
-        <p><strong>Why Do This?:</strong> Makes it easier to add vectors or solve problems in 2D.</p>
-        <p><strong>Mathematical Method:</strong><br>
-For a vector \( \vec{R} \) at angle θ to the x-axis:<br>
-Horizontal component: \( R_x = R \cos \theta \)<br>
-Vertical component: \( R_y = R \sin \theta \)</p>
-        <p>To find the resultant from components: Magnitude \( R = \sqrt{R_x^2 + R_y^2} \), direction θ = tan⁻¹(R_y / R_x).</p>
-        <p><strong>Graphical Method:</strong><br>
-Draw the vector as an arrow.<br>
-From the tail, draw perpendicular lines to form a right triangle.<br>
-Adjacent side = x-component (cos), opposite = y-component (sin).</p>
-        <p>To add two vectors: Parallelogram method – draw vectors as adjacent sides; diagonal is resultant. Or tail-to-head: Connect end-to-end; start to end is resultant.</p>
-        <p><strong>Tip:</strong> Practice drawing; graphs help visualize.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Vector_resolution.svg/800px-Vector_resolution.svg.png" alt="Diagram showing resolution of a vector into x and y components">
-
-        <h3>Step 5: Determining Resultant of Two or More Vectors</h3>
-        <p><strong>Resultant:</strong> The single vector that has the same effect as all the others combined.</p>
-        <p>For parallel vectors: Add magnitudes if same direction; subtract if opposite.</p>
-        <p>For non-parallel: Use resolution (break into components, add components, then recombine) or graphical methods.</p>
-
-        <h3>10 JAMB-Style Examples for Scalars and Vectors (2a)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1: Which of the following is a scalar quantity?</div>
-          <div class="example-problem">
-A. Velocity B. Force C. Mass D. Acceleration<br>
-Step 1: Scalars have magnitude only.<br>
-Step 2: Velocity (A), Force (B), Acceleration (D) have direction (vectors).<br>
-Step 3: Mass (C) has no direction (scalar).
-          </div>
-          <div class="example-solution">Answer: C. Mass</div>
+        <h3>Mathematical Representation:</h3>
+        <div class="formula-box">
+          • Bold letters: <strong>F</strong> (force vector)<br>
+          • Arrow notation: <strong>F⃗</strong> or <strong>v⃗</strong><br>
+          • Component form: <strong>F⃗ = (Fx, Fy)</strong> or <strong>Fxî + Fyĵ</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2: A vector quantity among the following is:</div>
-          <div class="example-problem">
-A. Time B. Energy C. Displacement D. Distance<br>
-Step 1: Vectors have magnitude and direction.<br>
-Step 2: Time (A), Energy (B), Distance (D) are scalars.<br>
-Step 3: Displacement (C) has direction.
-          </div>
-          <div class="example-solution">Answer: C. Displacement</div>
+        <h2>4️⃣ Vector Operations ➕</h2>
+
+        <h3>A. Vector Addition (Resultant)</h3>
+
+        <div class="component-box">
+          <h4>Method 1: Parallelogram Law</h4>
+          <p>If two vectors act at a point, their resultant is the diagonal of the parallelogram formed by them.</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3: Two cars are moving in the same direction. Car A at 20 m/s and Car B at 15 m/s. What is the relative velocity of A with respect to B?</div>
-          <div class="example-problem">
-A. 5 m/s B. 35 m/s C. -5 m/s D. 0 m/s<br>
-Step 1: Relative velocity = v_A - v_B.<br>
-Step 2: 20 - 15 = 5 m/s (same direction).
-          </div>
-          <div class="example-solution">Answer: A. 5 m/s</div>
+        <div class="formula-box">
+          <strong>R = √(A² + B² + 2ABcosθ)</strong><br><br>
+          Where θ = angle between vectors
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4: A vector of 10 N at 30° to the horizontal is resolved into components. What is the horizontal component?</div>
-          <div class="example-problem">
-A. 5 N B. 8.66 N C. 10 N D. 5.77 N<br>
-Step 1: Horizontal = magnitude × cos θ.<br>
-Step 2: cos 30° = √3/2 ≈ 0.866.<br>
-Step 3: 10 × 0.866 ≈ 8.66 N.
-          </div>
-          <div class="example-solution">Answer: B. 8.66 N</div>
+        <div class="component-box">
+          <h4>Method 2: Triangle Law</h4>
+          <p>Place vectors head-to-tail; resultant joins tail of first to head of second.</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5: Two vectors, 3 units east and 4 units north, are added. What is the magnitude of the resultant?</div>
-          <div class="example-problem">
-A. 5 units B. 7 units C. 1 unit D. 12 units<br>
-Step 1: x = 3 (east), y = 4 (north).<br>
-Step 2: R = √(3² + 4²) = √(9 + 16) = √25 = 5.
-          </div>
-          <div class="example-solution">Answer: A. 5 units</div>
+        <div class="component-box">
+          <h4>Method 3: Component Method (Most Important for JAMB)</h4>
+          <ol>
+            <li>Break each vector into x and y components</li>
+            <li>Add all x-components: <strong>Rx = Ax + Bx + Cx + ...</strong></li>
+            <li>Add all y-components: <strong>Ry = Ay + By + Cy + ...</strong></li>
+            <li>Resultant magnitude: <strong>R = √(Rx² + Ry²)</strong></li>
+            <li>Direction: <strong>tan α = Ry/Rx → α = tan⁻¹(Ry/Rx)</strong></li>
+          </ol>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 6: If a force of 20 N is applied at 60° to the horizontal, what is the vertical component?</div>
-          <div class="example-problem">
-A. 10 N B. 17.32 N C. 20 N D. 11.55 N<br>
-Step 1: Vertical = magnitude × sin θ.<br>
-Step 2: sin 60° = √3/2 ≈ 0.866.<br>
-Step 3: 20 × 0.866 ≈ 17.32 N.
-          </div>
-          <div class="example-solution">Answer: B. 17.32 N</div>
+        <h2>🔢 Example 1: Resultant of Two Perpendicular Forces</h2>
+        <p><strong>Question:</strong> Two forces of 3N and 4N act at right angles. Find the resultant force.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Using Pythagoras (θ = 90°, cos 90° = 0):<br><br>
+          R = √(3² + 4²) = √(9 + 16) = √25 = 5 N<br><br>
+          
+          Direction: tan θ = 4/3 → θ = tan⁻¹(1.333) = 53.1°
+        </div>
+        <div class="answer-box">Answer: 5 N at 53.1° to the 3N force</div>
+
+        <h2>🔢 Example 2: Vector Components</h2>
+        <p><strong>Question:</strong> A displacement vector of 100 m makes 30° with horizontal. Find horizontal and vertical components.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • Horizontal: dx = 100cos(30°) = 100 × 0.866 = 86.6 m<br>
+          • Vertical: dy = 100sin(30°) = 100 × 0.5 = 50 m
+        </div>
+        <div class="answer-box">Answers: 86.6 m (horizontal), 50 m (vertical)</div>
+
+        <h2>🔢 Example 3: Adding Multiple Vectors</h2>
+        <p><strong>Question:</strong> Find resultant of: A = 5 m at 0°, B = 3 m at 90°, C = 4 m at 180°</p>
+        
+        <div class="calculation-box">
+          <strong>Component Table:</strong><br>
+          Vector A: Vx = 5cos(0°) = 5, Vy = 5sin(0°) = 0<br>
+          Vector B: Vx = 3cos(90°) = 0, Vy = 3sin(90°) = 3<br>
+          Vector C: Vx = 4cos(180°) = -4, Vy = 4sin(180°) = 0<br><br>
+          
+          Sum: Rx = 5 + 0 - 4 = 1, Ry = 0 + 3 + 0 = 3<br><br>
+          
+          R = √(1² + 3²) = √10 = 3.16 m<br>
+          θ = tan⁻¹(3/1) = 71.6°
+        </div>
+        <div class="answer-box">Answer: 3.16 m at 71.6° from positive x-axis</div>
+
+        <h2>🔢 Example 4: Relative Velocity (JAMB Favorite!)</h2>
+        <p><strong>Question:</strong> A boat moves at 5 m/s in still water, heads north across a river flowing east at 3 m/s. Find resultant velocity.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • Boat velocity (north): v⃗b = 5ĵ m/s<br>
+          • River velocity (east): v⃗r = 3î m/s<br><br>
+          
+          Resultant: v⃗ = 3î + 5ĵ<br>
+          Magnitude: v = √(3² + 5²) = √34 = 5.83 m/s<br>
+          Direction: θ = tan⁻¹(5/3) = 59.0° north of east
+        </div>
+        <div class="answer-box">Answer: 5.83 m/s at 59.0° north of east</div>
+
+        <h2>5️⃣ Special Cases of Vector Addition 📐</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Angle Between Vectors</th>
+              <th>Resultant Formula</th>
+              <th>Special Condition</th>
+            </tr>
+            <tr>
+              <td>0° (same direction)</td>
+              <td>R = A + B</td>
+              <td>Maximum resultant</td>
+            </tr>
+            <tr>
+              <td>180° (opposite)</td>
+              <td>R = |A - B|</td>
+              <td>Minimum resultant</td>
+            </tr>
+            <tr>
+              <td>90° (perpendicular)</td>
+              <td>R = √(A² + B²)</td>
+              <td>Pythagorean theorem</td>
+            </tr>
+            <tr>
+              <td>θ (general)</td>
+              <td>R = √(A² + B² + 2ABcosθ)</td>
+              <td>Parallelogram law</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 7: A plane flies 100 km north and 240 km east. What is the displacement magnitude?</div>
-          <div class="example-problem">
-A. 260 km B. 340 km C. 140 km D. 200 km<br>
-Step 1: x = 240 km, y = 100 km.<br>
-Step 2: Displacement = √(240² + 100²) = √(57600 + 10000) = √67600 = 260 km.
-          </div>
-          <div class="example-solution">Answer: A. 260 km</div>
+        <div class="part-header">Part (b): MEASUREMENT, POSITION, DISTANCE & DISPLACEMENT</div>
+
+        <h2>1️⃣ Fundamental Concepts 📏</h2>
+
+        <h3>A. Measurement in Physics</h3>
+        <div class="component-box">
+          <h4>Physical Quantity</h4>
+          <p>Anything that can be measured (e.g., length, time, mass)</p>
+          <p><strong>Types:</strong></p>
+          <ul>
+            <li><strong>Fundamental (Basic):</strong> Cannot be defined in terms of other quantities
+              <ul>
+                <li>Length (m), Mass (kg), Time (s), Current (A), Temperature (K), Amount (mol), Luminous intensity (cd)</li>
+              </ul>
+            </li>
+            <li><strong>Derived:</strong> Obtained from fundamental quantities
+              <ul>
+                <li>Area (m²), Volume (m³), Velocity (m/s), Acceleration (m/s²), Force (N)</li>
+              </ul>
+            </li>
+          </ul>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 8: Relative Velocity – Two boats in river, one 10 m/s east, other 8 m/s west. Relative velocity?</div>
-          <div class="example-problem">
-A. 2 m/s B. 18 m/s C. -2 m/s D. 9 m/s<br>
-Step 1: Assume east positive: v1 = 10, v2 = -8.<br>
-Step 2: Relative v1 to v2 = 10 - (-8) = 18 m/s (apart if opposite).
-          </div>
-          <div class="example-solution">Answer: B. 18 m/s</div>
+        <h2>2️⃣ Position, Distance, and Displacement 🗺️</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Definition</th>
+              <th>Nature</th>
+              <th>Symbol/Unit</th>
+            </tr>
+            <tr>
+              <td><strong>Position</strong></td>
+              <td>Location relative to reference point</td>
+              <td>Vector</td>
+              <td>r⃗ (m)</td>
+            </tr>
+            <tr>
+              <td><strong>Distance</strong></td>
+              <td>Total path length traveled</td>
+              <td>Scalar</td>
+              <td>d or s (m)</td>
+            </tr>
+            <tr>
+              <td><strong>Displacement</strong></td>
+              <td>Change in position (final - initial)</td>
+              <td>Vector</td>
+              <td>s⃗ or Δx⃗ (m)</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 9: Which is a scalar?</div>
-          <div class="example-problem">
-A. Acceleration B. Momentum C. Volume D. Velocity<br>
-Step 1: Acceleration (A), Momentum (B), Velocity (D) vectors.<br>
-Step 2: Volume (C) scalar.
-          </div>
-          <div class="example-solution">Answer: C. Volume</div>
+        <h3>Key Differences:</h3>
+        <div class="scenario-box">
+          <strong>Scenario:</strong> Walking 3m east, then 4m north<br><br>
+          <strong>Distance</strong> = 3m + 4m = 7m (total path)<br>
+          <strong>Displacement</strong> = √(3² + 4²) = 5m northeast (straight line start to finish)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 10: Resultant of two forces 5 N east and 12 N north.</div>
-          <div class="example-problem">
-A. 13 N B. 17 N C. 7 N D. 10 N<br>
-Step 1: √(5² + 12²) = √(25 + 144) = √169 = 13 N.
-          </div>
-          <div class="example-solution">Answer: A. 13 N</div>
+        <h2>3️⃣ Coordinate Systems 📍</h2>
+
+        <div class="formula-box">
+          <strong>1-Dimension (Linear):</strong><br>
+          • Position: x (can be + or -)<br>
+          • Displacement: Δx = xf - xi<br><br>
+          
+          <strong>2-Dimension (Plane):</strong><br>
+          • Position: (x, y)<br>
+          • Displacement: Δr⃗ = (xf - xi)î + (yf - yi)ĵ
         </div>
 
-        <h2>Teaching Measurement, Position, Distance, and Displacement (Topic 2b)</h2>
-        <p>Now, we'll cover Topic 2b step by step. This includes concepts of displacement, distinction from distance, position and coordinates, frame of reference, and measurement tools with accuracy (as per objectives: using tools like meter rule, calipers, etc., and noting accuracy).</p>
+        <h2>🔢 Example 5: Distance vs Displacement</h2>
+        <p><strong>Question:</strong> A student walks 400 m east, then 300 m north, then 400 m west, then 300 m south. Find: (a) Total distance (b) Displacement.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          (a) Distance = 400 + 300 + 400 + 300 = 1400 m<br><br>
+          
+          (b) Displacement:<br>
+          • East-West: +400 - 400 = 0 m<br>
+          • North-South: +300 - 300 = 0 m<br>
+          • Displacement = 0 m
+        </div>
+        <div class="answer-box">Answers: (a) 1400 m (b) 0 m (returned to start!)</div>
 
-        <h3>Step 1: Concept of Displacement</h3>
-        <p><strong>Displacement:</strong> The shortest straight-line distance from starting point to ending point, with direction. It's a vector.</p>
-        <p>Example: If you walk 3 km east then 4 km north, displacement is 5 km northeast (not 7 km total walked).</p>
-        <p><strong>Formula:</strong> Often calculated as change in position: \( \vec{d} = \vec{r_final} - \vec{r_initial} \).</p>
+        <h2>🔢 Example 6: Displacement in 2D</h2>
+        <p><strong>Question:</strong> A particle moves from A(2, 3) to B(5, 7). Find displacement vector and magnitude.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Displacement components:<br>
+          • Δx = 5 - 2 = 3 m<br>
+          • Δy = 7 - 3 = 4 m<br><br>
+          
+          Displacement vector: s⃗ = 3î + 4ĵ m<br>
+          Magnitude: s = √(3² + 4²) = 5 m<br>
+          Direction: θ = tan⁻¹(4/3) = 53.1°
+        </div>
+        <div class="answer-box">Answer: 5 m at 53.1°</div>
 
-        <h3>Step 2: Distinction Between Distance and Displacement</h3>
-        <p><strong>Distance:</strong> Total path length traveled, scalar (magnitude only, no direction). Always positive.</p>
-        <p><strong>Displacement:</strong> Net change in position, vector (magnitude and direction). Can be zero if you return to start.</p>
-        <p><strong>Key Difference:</strong> Distance depends on the path; displacement depends only on start and end points.</p>
-        <p>Example: Running around a track (distance = full lap), but displacement = 0 if back at start.</p>
+        <h2>🔢 Example 7: Average Speed vs Average Velocity</h2>
+        <p><strong>Question:</strong> A car travels 60 km north in 1 hour, then 80 km east in 2 hours. Calculate: (a) Average speed (b) Average velocity.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          (a) Average Speed = Total distance/Total time = (60+80)/(1+2) = 140/3 = 46.7 km/h<br><br>
+          
+          (b) Average Velocity:<br>
+          • Displacement = √(60² + 80²) = 100 km<br>
+          • Direction: tan⁻¹(80/60) = 53.1° east of north<br>
+          • Velocity = 100 km/3 h = 33.3 km/h at 53.1° east of north
+        </div>
+        <div class="answer-box">Answers: (a) 46.7 km/h (b) 33.3 km/h at 53.1° east of north</div>
 
-        <h3>Step 3: Concept of Position and Coordinates</h3>
-        <p><strong>Position:</strong> Where an object is located relative to a reference point. Described using coordinates.</p>
-        <p><strong>Coordinates:</strong> Numbers that pinpoint location, e.g., in 2D: (x, y) on a Cartesian plane. x is horizontal, y vertical.</p>
-        <p>Example: If origin is (0,0), a point at 5 m east and 3 m north is at (5, 3).</p>
-        <p><strong>Tip:</strong> Position is relative; always need a reference.</p>
+        <h2>4️⃣ Units and Dimensions 📐</h2>
 
-        <h3>Step 4: Frame of Reference</h3>
-        <p><strong>Frame of Reference:</strong> A set of coordinates or viewpoint from which we measure position, motion, etc. Can be stationary (e.g., ground) or moving (e.g., inside a train).</p>
-        <p>Example: From Earth's frame, a ball thrown up falls back. From a moving car's frame, the road seems to move backward.</p>
-        <p><strong>Importance:</strong> Motion looks different in different frames; choose one for consistency.</p>
-
-        <h3>Step 5: Measurement Tools and Degree of Accuracy</h3>
-        <p><strong>Tools:</strong></p>
-        <ul>
-          <li><strong>Meter Rule/String:</strong> For straight lengths up to <strong>1 m</strong>; accuracy ±<strong>0.1 cm</strong>.</li>
-          <li><strong>Engineering Calipers:</strong> Measure internal/external diameters; accuracy ±<strong>0.01 cm</strong>.</li>
-          <li><strong>Vernier Calipers:</strong> Precise lengths (with sliding scale); least count <strong>0.01 cm</strong> (accuracy ±<strong>0.01 cm</strong>).</li>
-          <li><strong>Micrometer Screw Gauge:</strong> For small thicknesses; least count <strong>0.01 mm</strong> (accuracy ±<strong>0.001 cm</strong>).</li>
-        </ul>
-        <p><strong>Degree of Accuracy:</strong> How close a measurement is to the true value. Depends on tool's least count. Always include uncertainty, e.g., <strong>10.00 ± 0.01 cm</strong>.</p>
-        <p><strong>Tip:</strong> Read to the nearest division; zero error check for calipers/micrometers.</p>
-
-        <h3>10 JAMB-Style Examples for Measurement, Position, Distance, and Displacement (2b)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1: Which instrument is most suitable for measuring the diameter of a thin wire?</div>
-          <div class="example-problem">
-A. Meter rule B. Vernier calipers C. Micrometer screw gauge D. Engineering calipers<br>
-Step 1: Thin wire needs high precision.<br>
-Step 2: Meter rule (A): <strong>1 mm</strong> coarse.<br>
-Step 3: Vernier (B) and engineering (D): <strong>0.1 mm</strong>.<br>
-Step 4: Micrometer (C): <strong>0.01 mm</strong> best.
-          </div>
-          <div class="example-solution">Answer: C. Micrometer screw gauge</div>
+        <h3>SI Base Units:</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quantity</th>
+              <th>Unit</th>
+              <th>Symbol</th>
+            </tr>
+            <tr>
+              <td>Length</td>
+              <td>meter</td>
+              <td>m</td>
+            </tr>
+            <tr>
+              <td>Mass</td>
+              <td>kilogram</td>
+              <td>kg</td>
+            </tr>
+            <tr>
+              <td>Time</td>
+              <td>second</td>
+              <td>s</td>
+            </tr>
+            <tr>
+              <td>Electric current</td>
+              <td>ampere</td>
+              <td>A</td>
+            </tr>
+            <tr>
+              <td>Temperature</td>
+              <td>kelvin</td>
+              <td>K</td>
+            </tr>
+            <tr>
+              <td>Amount of substance</td>
+              <td>mole</td>
+              <td>mol</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2: A student walks 200 m east and then 150 m west. What is the displacement?</div>
-          <div class="example-problem">
-A. 350 m east B. 50 m west C. 50 m east D. 350 m west<br>
-Step 1: Displacement = net: 200 east - 150 west = 50 m east.<br>
-Step 2: Positive east: +200 - 150 = +50 m east.
-          </div>
-          <div class="example-solution">Answer: C. 50 m east</div>
+        <h3>Common Prefixes:</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Prefix</th>
+              <th>Symbol</th>
+              <th>Multiplier</th>
+            </tr>
+            <tr>
+              <td>Giga</td>
+              <td>G</td>
+              <td>10⁹</td>
+            </tr>
+            <tr>
+              <td>Mega</td>
+              <td>M</td>
+              <td>10⁶</td>
+            </tr>
+            <tr>
+              <td>Kilo</td>
+              <td>k</td>
+              <td>10³</td>
+            </tr>
+            <tr>
+              <td>Centi</td>
+              <td>c</td>
+              <td>10⁻²</td>
+            </tr>
+            <tr>
+              <td>Milli</td>
+              <td>m</td>
+              <td>10⁻³</td>
+            </tr>
+            <tr>
+              <td>Micro</td>
+              <td>μ</td>
+              <td>10⁻⁶</td>
+            </tr>
+            <tr>
+              <td>Nano</td>
+              <td>n</td>
+              <td>10⁻⁹</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3: The total path traveled by an object is 10 km, but it ends up 6 km from start. What is the distance and displacement?</div>
-          <div class="example-problem">
-A. Distance 10 km, displacement 6 km B. Distance 6 km, displacement 10 km C. Both 10 km D. Both 6 km<br>
-Step 1: Distance = total path = 10 km (scalar).<br>
-Step 2: Displacement = net magnitude = 6 km (vector).
-          </div>
-          <div class="example-solution">Answer: A. Distance 10 km, displacement 6 km</div>
+        <h2>🔢 Example 8: Unit Conversion</h2>
+        <p><strong>Question:</strong> Convert 72 km/h to m/s.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          72 km/h = 72 × (1000 m)/(3600 s) = 72 × (5/18) = 20 m/s
+        </div>
+        <div class="answer-box">Answer: 20 m/s</div>
+
+        <div class="memory-aid">
+          💡 Quick Trick: To convert km/h to m/s, multiply by 5/18!
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4: In a coordinate system with origin at (0,0), an object's position is (4, -3). What does this mean?</div>
-          <div class="example-problem">
-A. 4 m north, 3 m east B. 4 m east, 3 m south C. 4 m west, 3 m north D. 4 m south, 3 m west<br>
-Step 1: Standard: x positive east, y positive north.<br>
-Step 2: (4, -3) = 4 m east, 3 m south.
-          </div>
-          <div class="example-solution">Answer: B. 4 m east, 3 m south</div>
+        <h2>📋 Summary Table: Key Formulas</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Topic</th>
+              <th>Formula</th>
+              <th>Notes</th>
+            </tr>
+            <tr>
+              <td>Resultant (General)</td>
+              <td>R = √(A² + B² + 2ABcosθ)</td>
+              <td>Parallelogram law</td>
+            </tr>
+            <tr>
+              <td>Resultant (Perpendicular)</td>
+              <td>R = √(A² + B²)</td>
+              <td>Pythagorean theorem</td>
+            </tr>
+            <tr>
+              <td>Vector Components</td>
+              <td>Vx = Vcosθ, Vy = Vsinθ</td>
+              <td>Resolution</td>
+            </tr>
+            <tr>
+              <td>Resultant Components</td>
+              <td>R = √(Rx² + Ry²)</td>
+              <td>Component method</td>
+            </tr>
+            <tr>
+              <td>Direction</td>
+              <td>θ = tan⁻¹(Ry/Rx)</td>
+              <td>Angle with x-axis</td>
+            </tr>
+            <tr>
+              <td>Displacement</td>
+              <td>s⃗ = r⃗f - r⃗i</td>
+              <td>Vector quantity</td>
+            </tr>
+            <tr>
+              <td>Displacement Magnitude</td>
+              <td>s = √((Δx)² + (Δy)²)</td>
+              <td>2D distance</td>
+            </tr>
+            <tr>
+              <td>Average Velocity</td>
+              <td>v⃗avg = Δs⃗/Δt</td>
+              <td>Vector</td>
+            </tr>
+            <tr>
+              <td>Average Speed</td>
+              <td>vavg = Total distance/Δt</td>
+              <td>Scalar</td>
+            </tr>
+            <tr>
+              <td>Unit Conversion</td>
+              <td>km/h → m/s: × 5/18</td>
+              <td>Common JAMB conversion</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5: The least count of a vernier caliper is 0.01 cm. If a measurement reads 5.23 cm, what is the accuracy?</div>
-          <div class="example-problem">
-A. ±0.01 cm B. ±0.1 cm C. ±1 cm D. ±0.001 cm<br>
-Step 1: Accuracy based on least count.<br>
-Step 2: Vernier least count typically <strong>0.01 cm</strong>, so ±<strong>0.01 cm</strong>.
-          </div>
-          <div class="example-solution">Answer: A. ±0.01 cm</div>
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Always check if answer requires direction</strong> — if vector, direction matters!</li>
+            <li><strong>Draw diagrams</strong> — vector problems are easier with a sketch</li>
+            <li><strong>Watch for negative components</strong> — left/down vectors are negative</li>
+            <li><strong>Distance vs Displacement</strong> — distance is total path (scalar), displacement is shortest path (vector)</li>
+            <li><strong>Component method is safest</strong> — for 3+ vectors, always use components</li>
+          </ol>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 6: What is the frame of reference in measuring motion?</div>
-          <div class="example-problem">
-A. A moving car B. A fixed point or coordinate system C. The object itself D. The Earth's rotation<br>
-Step 1: Frame of reference is the viewpoint from which motion is measured.<br>
-Step 2: Typically a fixed point or system (e.g., ground).<br>
-Step 3: Can be moving, but standard is fixed.
-          </div>
-          <div class="example-solution">Answer: B. A fixed point or coordinate system</div>
+        <h2>📝 Practice Questions</h2>
+
+        <div class="component-box">
+          <ol>
+            <li>Two forces of 6N and 8N act at 60° to each other. Calculate the resultant. [Hint: Use R² = A² + B² + 2ABcosθ]</li>
+            <br>
+            <li>A man walks 5 km due east and then 12 km due north. How far is he from his starting point?</li>
+            <br>
+            <li>Convert 15 m/s to km/h.</li>
+            <br>
+            <li>A particle moves from (1, 2) to (4, 6). Calculate the magnitude of displacement.</li>
+          </ol>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 7: A man walks 5 km north, then 5 km south. Distance and displacement?</div>
-          <div class="example-problem">
-A. Distance 10 km, displacement 0 km B. Distance 0 km, displacement 10 km C. Both 10 km D. Both 0 km<br>
-Step 1: Distance = total walked = 5 + 5 = 10 km.<br>
-Step 2: Displacement = net = 5 north - 5 south = 0 km (back to start).
-          </div>
-          <div class="example-solution">Answer: A. Distance 10 km, displacement 0 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 8: Least count of micrometer screw gauge is</div>
-          <div class="example-problem">
-A. 0.1 mm B. 0.01 mm C. 1 mm D. 0.001 mm<br>
-Step 1: Micrometer for small measurements.<br>
-Step 2: Standard least count <strong>0.01 mm</strong>.
-          </div>
-          <div class="example-solution">Answer: B. 0.01 mm</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 9: Position of an object is given as (3,4) in a frame where x is east, y is north. Distance from origin?</div>
-          <div class="example-problem">
-A. 7 m B. 5 m C. 1 m D. 12 m<br>
-Step 1: Position (3,4) = 3 m east, 4 m north.<br>
-Step 2: Distance from (0,0) = √(3² + 4²) = √25 = 5 m.
-          </div>
-          <div class="example-solution">Answer: B. 5 m</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 10: In a moving train, a ball is thrown forward. From ground frame, its velocity is</div>
-          <div class="example-problem">
-A. Train velocity only B. Throw velocity only C. Sum of train and throw D. Difference<br>
-Step 1: Frame of reference: ground (stationary).<br>
-Step 2: Ball velocity relative to ground = train velocity + throw velocity (same direction).
-          </div>
-          <div class="example-solution">Answer: C. Sum of train and throw</div>
-        </div>
-
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          This is now the **complete Introduction to Measurements chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 10 real/similar JAMB examples with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Scalars & Vectors!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Introduction to Measurements?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 1 (Measurements) & Chapter 3 (Kinematics)</p>
+        <button class="explore-btn" onclick="window.location.href='vectors-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
