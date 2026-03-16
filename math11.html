@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Mensuration</title>
+  <title>MATHEMATICS - Euclidean Geometry</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
-      --highlight-solution: #ff9800;                   /* orange for final answers */
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,24 +290,20 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
-    body.light .explore-btn {
-      color: #000;
-    }
-
-    /* Footer Nav Bar */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -272,410 +353,623 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
+
+    .diagram-box {
+      background: rgba(255,255,255,0.05);
+      border: 2px dashed var(--accent);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 16px 0;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre;
+      color: var(--text-secondary);
+    }
+
+    .angle-symbol {
+      display: inline-block;
+      font-weight: bold;
+      color: var(--accent);
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Mensuration</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Mensuration Made Easy – JAMB Guide 🚀</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Euclidean Geometry! 📐</h1>
+        <p class="subtitle">– JAMB Section III, Topic 1</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Mensuration Made Easy – Step-by-Step for JAMB</h2>
-        <p>Mensuration means “measuring”. It is all about calculating lengths, perimeters, areas, surface areas and volumes of shapes. We will break it exactly as the syllabus has it, using very simple language, clear formulas, and everyday examples. I will teach you step by step like you're in SS1, starting from basics, with diagrams for shapes. For each section (a to e), I will give the key ideas, then 5 JAMB-style examples with full step-by-step solutions.</p>
+        <h2>📚 Euclidean Geometry Complete Guide</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Identify lines/angles, solve polygon problems, calculate angles using circle theorems, and identify construction procedures for special angles (30°, 45°, 60°, 75°, 90°).</p>
 
-        <h2>(a) Lengths and Areas of Plane Geometrical Figures</h2>
-        <p>Plane figures are flat (2-D) shapes. Perimeter = total distance around the shape (like fencing a plot). Area = space inside the shape (like how much grass grows inside the fence).</p>
-        <p><strong>Step 1: Triangle:</strong>
-          <li><strong>•</strong>Perimeter = a + b + c.</li>
-          <li><strong>•</strong>Area = ½ × base × height OR Heron’s formula: s = (a+b+c)/2, Area = √[s(s-a)(s-b)(s-c)]</li></p>
-<p><strong>Step 2: Square:</strong>
-         <li><strong>•</strong>Perimeter = 4s,</li>
-          <li><strong>•</strong>Area = s²</li></p>
-<p><strong>Step 3: Rectangle:</strong>
-  <li><strong>•</strong>Perimeter = 2(l + b),</li>
-  <li><strong>•</strong>Area = l × b</li></p>
-<p><strong>Step 4: Parallelogram:</strong>
-  <li><strong>•</strong>Perimeter = 2(a + b),</li>
-  <li><strong>•</strong>Area = base × height OR ab sinθ</li></p>
-<p><strong>Step 5: Rhombus:</strong>
-  <li><strong>•</strong>Perimeter = 4s,</li>
-  <li><strong>•</strong>Area = (d₁ × d₂)/2</li></p>
-<p><strong>Step 6: Trapezium (trapezoid):</strong>
-  <li><strong>•</strong>Perimeter = sum of all sides,</li>
-  <li><strong>•</strong>Area = ½(a + b) × h (a and b = parallel sides)</li></p>
-<p><strong>Step 7: Circle:</strong>
-  <li><strong>•</strong>Circumference = 2πr or πd,</li>
-  <li><strong>•</strong>Area = πr²</li></p>
-<p><strong>Step 8: Composite figures:</strong>
-  <li><strong>•</strong>Add areas of parts you see, subtract areas you don’t see.</li></p>
-Easy tip: Always draw and label the figure. For composite shapes, break them into rectangles + triangles + semicircles.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Plane_shapes.svg/800px-Plane_shapes.svg.png" alt="Diagram of plane shapes: triangle, square, rectangle, parallelogram, rhombus, trapezium, circle">
+        <div class="section-header">1️⃣ PROPERTIES OF ANGLES AND LINES</div>
 
-        <h3>5 JAMB-Style Examples for (a)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1: The sides of a triangle are 13 cm, 14 cm and 15 cm. Calculate its area correct to 1 decimal place.</div>
-          <div class="example-problem">
-Step 1: Semi-perimeter s = (13+14+15)/2 = 42/2 = 21 cm<br>
-Step 2: Area = √[21(21-13)(21-14)(21-15)] = √[21×8×7×6]<br>
-Step 3: 21×8 = 168, 7×6 = 42, 168×42 = 7056<br>
-Step 4: √7056 = 84 cm²<br>
-Step 5: To 1 decimal place: 84.0 cm²
-          </div>
-          <div class="example-solution">Answer: 84.0 cm²</div>
+        <h2>Fundamental Angle Relationships 📏</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Relationship</th>
+              <th>Definition</th>
+              <th>Rule</th>
+            </tr>
+            <tr>
+              <td>Angles on straight line</td>
+              <td>Adjacent angles on a straight line</td>
+              <td>x + y = 180°</td>
+            </tr>
+            <tr>
+              <td>Angles at a point</td>
+              <td>Angles meeting at a point</td>
+              <td>Sum = 360°</td>
+            </tr>
+            <tr>
+              <td>Vertically opposite</td>
+              <td>Angles opposite intersecting lines</td>
+              <td>∠A = ∠C, ∠B = ∠D</td>
+            </tr>
+            <tr>
+              <td>Complementary</td>
+              <td>Two angles adding to 90°</td>
+              <td>A + B = 90°</td>
+            </tr>
+            <tr>
+              <td>Supplementary</td>
+              <td>Two angles adding to 180°</td>
+              <td>A + B = 180°</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2: A trapezium has parallel sides 8 cm and 12 cm, height 7 cm. Find its area and perimeter if non-parallel sides are each 10 cm.</div>
-          <div class="example-problem">
-Step 1: Area = ½(8 + 12) × 7 = ½×20×7 = 10×7 = 70 cm²<br>
-Step 2: Perimeter = 8 + 12 + 10 + 10 = 40 cm
-          </div>
-          <div class="example-solution">Answer: Area 70 cm², Perimeter 40 cm</div>
+        <h2>Parallel Lines & Transversals 🔄</h2>
+        <div class="memory-aid">
+          💡 Look for "AB || CD" in diagrams - it activates alternate/corresponding angle rules!
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3: A square of side 14 cm has a semicircle of diameter 14 cm on one side. Find the perimeter and area of the figure (π = 22/7).</div>
-          <div class="example-problem">
-Step 1: Perimeter = 3 sides of square + semicircle arc = 3×14 + (1/2)×2πr = 42 + π×7 = 42 + 22 = 64 cm<br>
-Step 2: Area = square + semicircle = 14² + (1/2)×π×7² = 196 + (1/2)×(22/7)×49 = 196 + (1/2)×22×7 = 196 + 77 = 273 cm²
-          </div>
-          <div class="example-solution">Answer: Perimeter 64 cm, Area 273 cm²</div>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Angle Pair</th>
+              <th>Property</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td>Corresponding</td>
+              <td>Equal</td>
+              <td>∠1 = ∠5, ∠2 = ∠6</td>
+            </tr>
+            <tr>
+              <td>Alternate</td>
+              <td>Equal</td>
+              <td>∠3 = ∠5, ∠4 = ∠6</td>
+            </tr>
+            <tr>
+              <td>Interior</td>
+              <td>Sum to 180°</td>
+              <td>∠3 + ∠6 = 180°</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4: Find the area of a parallelogram with base 10 cm, height 5 cm.</div>
-          <div class="example-problem">
-Step 1: Area = base × height = 10 × 5 = 50 cm²
-          </div>
-          <div class="example-solution">Answer: 50 cm²</div>
+        <h2>🔢 Worked Example 1: Parallel Lines</h2>
+        <p><strong>Problem:</strong> AB || CD, EF is a transversal. If <span class="angle-symbol">∠</span>AGE = 70°, find <span class="angle-symbol">∠</span>GHD.</p>
+        
+        <div class="diagram-box">
+        A-------E-------B
+               /
+              /
+        C----F--------D
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5: A rhombus has diagonals 8 cm and 6 cm. Find its area.</div>
-          <div class="example-problem">
-Step 1: Area = (d1 × d2)/2 = (8 × 6)/2 = 48/2 = 24 cm²
-          </div>
-          <div class="example-solution">Answer: 24 cm²</div>
+        <div class="calculation-box">
+          <strong>Step 1:</strong> <span class="angle-symbol">∠</span>AGE and <span class="angle-symbol">∠</span>EGB are on straight line<br>
+          <span class="angle-symbol">∠</span>EGB = 180° - 70° = <strong>110°</strong><br><br>
+          
+          <strong>Step 2:</strong> <span class="angle-symbol">∠</span>EGB and <span class="angle-symbol">∠</span>GHD are corresponding angles<br>
+          Therefore: <span class="angle-symbol">∠</span>GHD = <strong>110°</strong>
         </div>
 
-        <h2>(b) Lengths of Arcs and Chords of a Circle</h2>
-        <p><strong>Step 1: Arc length (part of circumference)</strong>
-          <li><strong>•</strong>= (θ/360) × 2πr (θ = angle at the centre in degrees)</li></p>
-<p><strong>Step 2: Chord length (straight line between two points on circle)</strong>
-  <li><strong>•</strong>= 2r sin(θ/2) (θ in degrees).</li></p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Arc_chord_length.svg/800px-Arc_chord_length.svg.png" alt="Diagram of circle with arc and chord">
+        <div class="section-header">2️⃣ POLYGONS</div>
 
-        <h3>5 JAMB-Style Examples for (b)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1: An arc subtends an angle of 72° at the centre of a circle of radius 10 cm. Find the length of the arc (π = 22/7).</div>
-          <div class="example-problem">
-Step 1: Arc length = (72/360) × 2πr = (1/5) × 2 × (22/7) × 10<br>
-Step 2: (1/5) × (44/7) × 10 = (1/5) × (440/7) = 88/7 cm
-          </div>
-          <div class="example-solution">Answer: 88/7 cm</div>
+        <h2>Triangle Properties 🔺</h2>
+        
+        <div class="formula-box">
+          <strong>Angle Sum:</strong> <span class="angle-symbol">∠</span>A + <span class="angle-symbol">∠</span>B + <span class="angle-symbol">∠</span>C = 180°<br>
+          <strong>Exterior Angle:</strong> Exterior = Sum of opposite interior angles<br>
+          <strong>Exterior Sum:</strong> Always 360°
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2: A chord subtends 60° at the centre of a circle of radius 7 cm. Find the length of the chord.</div>
-          <div class="example-problem">
-Step 1: Chord length = 2 r sin(θ/2) = 2 × 7 × sin(30°)<br>
-Step 2: sin30° = 0.5<br>
-Step 3: 14 × 0.5 = 7 cm
-          </div>
-          <div class="example-solution">Answer: 7 cm</div>
+        <h3>Types of Triangles:</h3>
+        <ul>
+          <li><span class="highlight">Scalene:</span> All sides/angles different</li>
+          <li><span class="highlight">Isosceles:</span> Two equal sides, two equal base angles</li>
+          <li><span class="highlight">Equilateral:</span> All sides equal, all angles = 60°</li>
+          <li><span class="highlight">Right-angled:</span> One angle = 90° (Pythagoras: a² + b² = c²)</li>
+        </ul>
+
+        <h2>🔢 Worked Example 2: Triangle Angles</h2>
+        <p><strong>Problem:</strong> Angles are in ratio 2:3:4. Find the largest angle.</p>
+        
+        <div class="calculation-box">
+          Let angles be 2x, 3x, and 4x<br><br>
+          
+          Sum: 2x + 3x + 4x = 180°<br>
+          9x = 180°<br>
+          x = 20°<br><br>
+          
+          Largest angle = 4x = <strong>80°</strong>
+        </div>
+        <div class="answer-box">Answer: 80°</div>
+
+        <h2>Quadrilaterals 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quadrilateral</th>
+              <th>Key Properties</th>
+              <th>Angle Sum</th>
+            </tr>
+            <tr>
+              <td>Parallelogram</td>
+              <td>Opposite sides parallel & equal; opposite angles equal</td>
+              <td>360°</td>
+            </tr>
+            <tr>
+              <td>Rectangle</td>
+              <td>All angles = 90°; diagonals equal</td>
+              <td>360°</td>
+            </tr>
+            <tr>
+              <td>Square</td>
+              <td>All sides equal; all angles = 90°</td>
+              <td>360°</td>
+            </tr>
+            <tr>
+              <td>Rhombus</td>
+              <td>All sides equal; diagonals bisect at 90°</td>
+              <td>360°</td>
+            </tr>
+            <tr>
+              <td>Trapezium</td>
+              <td>One pair of parallel sides</td>
+              <td>360°</td>
+            </tr>
+            <tr>
+              <td>Kite</td>
+              <td>Two pairs of adjacent sides equal</td>
+              <td>360°</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3: Find the arc length if θ = 90°, r = 14 cm (π = 22/7).</div>
-          <div class="example-problem">
-Step 1: Arc = (90/360) × 2 × (22/7) × 14 = (1/4) × (44/7) × 14 = (1/4) × 44 × 2 = (1/4) × 88 = 22 cm
-          </div>
-          <div class="example-solution">Answer: 22 cm</div>
+        <h2>General Polygons 🛑</h2>
+        
+        <div class="formula-box">
+          <strong>Sum of Interior Angles:</strong> (n - 2) × 180°<br>
+          <strong>Each Interior Angle (regular):</strong> (n - 2) × 180° / n<br>
+          <strong>Sum of Exterior Angles:</strong> Always 360°<br>
+          <strong>Each Exterior Angle (regular):</strong> 360° / n<br>
+          <strong>Number of Diagonals:</strong> n(n - 3) / 2<br><br>
+          <em>Where n = number of sides</em>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4: Chord subtends 120° at centre, r = 10 cm. Chord length?</div>
-          <div class="example-problem">
-Step 1: Chord = 2 × 10 × sin(60°)<br>
-Step 2: sin60° = √3/2 ≈ 0.866<br>
-Step 3: 20 × 0.866 = 17.32 cm (or exact 10√3 cm)
-          </div>
-          <div class="example-solution">Answer: 10√3 cm</div>
+        <h2>🔢 Worked Example 3: Regular Polygon</h2>
+        <p><strong>Problem:</strong> Find number of sides if interior angle = 156°.</p>
+        
+        <div class="calculation-box">
+          Interior angle = (n - 2) × 180° / n = 156°<br><br>
+          
+          (n - 2) × 180 = 156n<br>
+          180n - 360 = 156n<br>
+          24n = 360<br>
+          n = <strong>15 sides</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5: Arc length 22 cm, r = 7 cm (π = 22/7). Find θ.</div>
-          <div class="example-problem">
-Step 1: Arc = (θ/360) × 2πr = 22<br>
-Step 2: (θ/360) × 2 × (22/7) × 7 = 22<br>
-Step 3: (θ/360) × 44 = 22<br>
-Step 4: θ/360 = 1/2<br>
-Step 5: θ = 180°
-          </div>
-          <div class="example-solution">Answer: 180°</div>
+        <div class="section-header">3️⃣ CIRCLES (Most Important!)</div>
+
+        <div class="warning-box">
+          <h4>⚠️ JAMB Favorite Topic!</h4>
+          <p>Circle theorems appear most frequently in the exam. Master these 9 theorems!</p>
         </div>
 
-        <h2>(c) Perimeters and Areas of Sectors and Segments of Circles</h2>
-        <p><strong>Step 1: Sector = “pizza slice”</strong>
-          <li><strong>•</strong>Perimeter of sector = 2r + arc length.</li>
-          <li><strong>•</strong>Area of sector = (θ/360) × πr²</li></p>
-<p><strong>Step 2: Segment = area between chord and arc.</strong>
-  <li><strong>•</strong>Area of segment = Area of sector – Area of triangle.</li>
-  <li><strong>•</strong>Triangle area = ½ r² sinθ</li></p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sector_and_segment.svg/800px-Sector_and_segment.svg.png" alt="Diagram of circle sector and segment">
-
-        <h3>5 JAMB-Style Examples for (c)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1: A sector of a circle of radius 6 cm subtends 90° at the centre. Find (i) its perimeter (ii) its area (π = 22/7).</div>
-          <div class="example-problem">
-Step 1: Arc = (90/360) × 2 × (22/7) × 6 = (1/4) × (264/7) = 66/7 cm<br>
-Step 2: Perimeter = 2×6 + 66/7 = 12 + 66/7 = (84/7 + 66/7) = 150/7 cm<br>
-Step 3: Area = (90/360) × (22/7) × 36 = (1/4) × (792/7) = 198/7 cm²
-          </div>
-          <div class="example-solution">Answer: Perimeter 150/7 cm, Area 198/7 cm²</div>
+        <h2>Essential Circle Theorems ⭕</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Theorem</th>
+              <th>Statement</th>
+            </tr>
+            <tr>
+              <td>1. Angle at center</td>
+              <td>Center = 2 × Circumference (same arc)</td>
+            </tr>
+            <tr>
+              <td>2. Same segment</td>
+              <td>Angles subtended by same arc are equal</td>
+            </tr>
+            <tr>
+              <td>3. Semicircle</td>
+              <td>Angle in semicircle = 90°</td>
+            </tr>
+            <tr>
+              <td>4. Cyclic Quad</td>
+              <td>Opposite angles sum to 180°</td>
+            </tr>
+            <tr>
+              <td>5. Exterior angle</td>
+              <td>Exterior = Interior opposite angle</td>
+            </tr>
+            <tr>
+              <td>6. Tangent-radius</td>
+              <td>Radius ⊥ tangent at contact point</td>
+            </tr>
+            <tr>
+              <td>7. Alternate segment</td>
+              <td>Angle between tangent & chord = angle in alt. segment</td>
+            </tr>
+            <tr>
+              <td>8. Intersecting chords</td>
+              <td>PA × PB = PC × PD (inside circle)</td>
+            </tr>
+            <tr>
+              <td>9. Secant-tangent</td>
+              <td>PT² = PA × PB (outside circle)</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2: A chord subtends 120° at the centre of a circle radius 7 cm. Find the area of the minor segment (π = 22/7).</div>
-          <div class="example-problem">
-Step 1: Sector area = (120/360) × (22/7) × 49 = (1/3) × 154 = 154/3 cm²<br>
-Step 2: Triangle area = ½ × 7 × 7 × sin120° = (49/2) × (√3/2) = (49√3)/4 cm²<br>
-Step 3: Segment = 154/3 – (49√3)/4
-          </div>
-          <div class="example-solution">Answer: 154/3 – (49√3)/4 cm²</div>
+        <h2>🔢 Worked Example 4: Circle Theorem 1</h2>
+        <p><strong>Problem:</strong> Chord AB subtends 70° at circumference. Find angle at center.</p>
+        
+        <div class="calculation-box">
+          Using Theorem 1: Center = 2 × Circumference<br>
+          Angle at center = 2 × 70° = <strong>140°</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3: Sector angle 60°, r = 21 cm (π = 22/7). Find perimeter.</div>
-          <div class="example-problem">
-Step 1: Arc = (60/360) × 2 × (22/7) × 21 = (1/6) × 132 = 22 cm<br>
-Step 2: Perimeter = 2×21 + 22 = 42 + 22 = 64 cm
-          </div>
-          <div class="example-solution">Answer: 64 cm</div>
+        <h2>🔢 Worked Example 5: Cyclic Quadrilateral</h2>
+        <p><strong>Problem:</strong> In cyclic quad ABCD, <span class="angle-symbol">∠</span>A = 85° and <span class="angle-symbol">∠</span>B = 95°. Find <span class="angle-symbol">∠</span>C and <span class="angle-symbol">∠</span>D.</p>
+        
+        <div class="calculation-box">
+          Opposite angles sum to 180° (Theorem 4)<br><br>
+          
+          <span class="angle-symbol">∠</span>A + <span class="angle-symbol">∠</span>C = 180°<br>
+          85° + <span class="angle-symbol">∠</span>C = 180°<br>
+          <span class="angle-symbol">∠</span>C = <strong>95°</strong><br><br>
+          
+          <span class="angle-symbol">∠</span>B + <span class="angle-symbol">∠</span>D = 180°<br>
+          95° + <span class="angle-symbol">∠</span>D = 180°<br>
+          <span class="angle-symbol">∠</span>D = <strong>85°</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4: Segment area for θ = 90°, r = 14 cm (π = 22/7).</div>
-          <div class="example-problem">
-Step 1: Sector = (90/360) × (22/7) × 196 = (1/4) × 616 = 154 cm²<br>
-Step 2: Triangle = ½ × 14 × 14 × sin90° = 98 × 1 = 98 cm²<br>
-Step 3: Segment = 154 – 98 = 56 cm²
-          </div>
-          <div class="example-solution">Answer: 56 cm²</div>
+        <h2>🔢 Worked Example 6: Intersecting Chords</h2>
+        <p><strong>Problem:</strong> Chords AB and CD intersect at P. PA = 4cm, PB = 9cm, PC = 6cm. Find PD.</p>
+        
+        <div class="calculation-box">
+          Using Theorem 8: PA × PB = PC × PD<br>
+          4 × 9 = 6 × PD<br>
+          36 = 6 × PD<br>
+          PD = <strong>6 cm</strong>
+        </div>
+        <div class="answer-box">Answer: PD = 6 cm</div>
+
+        <div class="section-header">4️⃣ CONSTRUCTION</div>
+
+        <h2>Required Special Angles 🛠️</h2>
+        <p>JAMB focuses on <strong>identifying</strong> construction procedures rather than performing them.</p>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Angle</th>
+              <th>Construction Method</th>
+            </tr>
+            <tr>
+              <td>60°</td>
+              <td>Draw equilateral triangle using compass</td>
+            </tr>
+            <tr>
+              <td>90°</td>
+              <td>Construct perpendicular bisector</td>
+            </tr>
+            <tr>
+              <td>45°</td>
+              <td>Bisect 90° angle</td>
+            </tr>
+            <tr>
+              <td>30°</td>
+              <td>Bisect 60° angle</td>
+            </tr>
+            <tr>
+              <td>75°</td>
+              <td>Construct 45° + 30°</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5: Sector area 77 cm², r = 7 cm (π = 22/7). Find θ.</div>
-          <div class="example-problem">
-Step 1: Area = (θ/360) × (22/7) × 49 = 77<br>
-Step 2: (θ/360) × 154 = 77<br>
-Step 3: θ/360 = 77/154 = 1/2<br>
-Step 4: θ = 180°
-          </div>
-          <div class="example-solution">Answer: 180°</div>
+        <div class="section-header">📋 COMPLETE FORMULA SUMMARY</div>
+
+        <h2>All Geometry Formulas 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Category</th>
+              <th>Formula/Rule</th>
+            </tr>
+            <tr>
+              <td colspan="2" style="color: var(--accent); font-weight: bold;">LINES & ANGLES</td>
+            </tr>
+            <tr>
+              <td>Straight line</td>
+              <td><span class="angle-symbol">∠</span>A + <span class="angle-symbol">∠</span>B = 180°</td>
+            </tr>
+            <tr>
+              <td>Angles at point</td>
+              <td>Sum = 360°</td>
+            </tr>
+            <tr>
+              <td colspan="2" style="color: var(--accent); font-weight: bold;">TRIANGLES</td>
+            </tr>
+            <tr>
+              <td>Angle sum</td>
+              <td><span class="angle-symbol">∠</span>A + <span class="angle-symbol">∠</span>B + <span class="angle-symbol">∠</span>C = 180°</td>
+            </tr>
+            <tr>
+              <td>Exterior angle</td>
+              <td>Ext = sum of opposite interiors</td>
+            </tr>
+            <tr>
+              <td>Pythagoras</td>
+              <td>c² = a² + b²</td>
+            </tr>
+            <tr>
+              <td colspan="2" style="color: var(--accent); font-weight: bold;">POLYGONS</td>
+            </tr>
+            <tr>
+              <td>Interior sum</td>
+              <td>(n - 2) × 180°</td>
+            </tr>
+            <tr>
+              <td>One interior</td>
+              <td>(n - 2) × 180° / n</td>
+            </tr>
+            <tr>
+              <td>Exterior sum</td>
+              <td>360°</td>
+            </tr>
+            <tr>
+              <td>One exterior</td>
+              <td>360° / n</td>
+            </tr>
+            <tr>
+              <td>Diagonals</td>
+              <td>n(n - 3) / 2</td>
+            </tr>
+            <tr>
+              <td colspan="2" style="color: var(--accent); font-weight: bold;">CIRCLES</td>
+            </tr>
+            <tr>
+              <td>Center vs Circumference</td>
+              <td>Center = 2 × Circumference</td>
+            </tr>
+            <tr>
+              <td>Angle in semicircle</td>
+              <td>90°</td>
+            </tr>
+            <tr>
+              <td>Cyclic quadrilateral</td>
+              <td>Opposite <span class="angle-symbol">∠</span>s = 180°</td>
+            </tr>
+            <tr>
+              <td>Intersecting chords</td>
+              <td>PA × PB = PC × PD</td>
+            </tr>
+            <tr>
+              <td>Tangent-secant</td>
+              <td>PT² = PA × PB</td>
+            </tr>
+          </table>
         </div>
 
-        <h2>(d) Surface Areas and Volumes of Simple Solids and Composite Figures</h2>
-        <p>Solids are 3-D shapes</p>
-<p><strong>Step 1: Cuboid:</strong>
-  <li><strong>•</strong>TSA = 2(lb + lh + bh),</li>
-    <li><strong>•</strong>Volume = lbh</li></p>
-  <p><strong>Step 2: Cube:</strong>
-  <li><strong>•</strong>TSA = 6s²,</li>
-    <li><strong>•</strong>Volume = s³</li></p>
- <p><strong>Step 3: Cylinder (closed):</strong>
-  <li><strong>•</strong>TSA = 2πr(r + h),</li>
-    <li><strong>•</strong>Volume = πr²h</li></p>
-  <p><strong>Step 4: Cone:</strong>
-    <li><strong>•</strong>Slant height l = √(r² + h²)</li>
-  <li><strong>•</strong>TSA = πr(r + l),</li>
-    <li><strong>•</strong>Volume = ⅓ πr²h</li></p>
- <p><strong>Step 5: Pyramid:</strong>
-  <li><strong>•</strong>TSA = Base area + ½ × perimeter of base × slant height,</li>
-    <li><strong>•</strong>Volume = ⅓ × base area × height</li></p>
-  <p><strong>Step 6: Prism:</strong>
-  <li><strong>•</strong>TSA = 2 × base area + (perimeter of base × height),</li>
-    <li><strong>•</strong>Volume = base area × height</li></p>
-  <p><strong>Step 7: Sphere:</strong>
-  <li><strong>•</strong>TSA = 4πr²,</li>
-    <li><strong>•</strong>Volume = ⁴⁄₃ πr³</li></p>
-   <p><strong>Step 8: Hemisphere:</strong>
-     <li><strong>•</strong>Curved surface = 2πr²</li>
-  <li><strong>•</strong>TSA (with base) = 3πr²,</li>
-    <li><strong>•</strong>Volume = ²⁄₃ πr³</li></p> 
-    <p><strong>Step 9: Composite solids (e.g. cylinder + cone on top):</strong>
-  <li><strong>•</strong>Add volumes. For surface area, add exposed surfaces only (do NOT double-count faces that touch)</li>
-    </p>    
-
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Solid_shapes.svg/800px-Solid_shapes.svg.png" alt="Diagram of simple solids: cuboid, cube, cylinder, cone, pyramid, prism, sphere, hemisphere">
-
-        <h3>5 JAMB-Style Examples for (d)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1: A closed cylindrical tin has radius 7 cm and height 10 cm. Calculate (i) total surface area (ii) volume (π = 22/7).</div>
-          <div class="example-problem">
-Step 1: TSA = 2πr(r + h) = 2 × (22/7) × 7 × (7 + 10) = 2 × 22 × 17 = 748 cm²<br>
-Step 2: Volume = πr²h = (22/7) × 49 × 10 = 22 × 70 = 1540 cm³
-          </div>
-          <div class="example-solution">Answer: TSA 748 cm², Volume 1540 cm³</div>
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Strategy</h3>
+          <p>1. <strong>Master circle theorems</strong> - highest frequency</p>
+          <p>2. <strong>Draw diagrams</strong> - sketch every figure</p>
+          <p>3. <strong>Label unknowns</strong> - use x, y for angles</p>
+          <p>4. <strong>State theorems</strong> - mention which one you used</p>
+          <p>5. <strong>Watch for parallel lines</strong> - activates alternate/corresponding rules</p>
+          <p>6. <strong>Regular polygons:</strong> n = 360°/(exterior angle) for speed</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2: A solid is made of a cylinder of radius 5 cm, height 12 cm with a cone of same radius and height 8 cm on top. Find the total volume (π = 22/7).</div>
-          <div class="example-problem">
-Step 1: Vol cylinder = πr²h = (22/7) × 25 × 12 = (22/7) × 300 = 6600/7 cm³<br>
-Step 2: Vol cone = ⅓ πr²h = (1/3) × (22/7) × 25 × 8 = (22/7) × (200/3) = 4400/21 cm³<br>
-Step 3: Total = 6600/7 + 4400/21 = (19800/21 + 4400/21) = 24200/21 cm³
-          </div>
-          <div class="example-solution">Answer: 24200/21 cm³</div>
+        <div class="shortcut-box">
+          <h4>⚡ Quick Reference</h4>
+          <p>✅ Parallel lines cut by transversal → Corresponding =, Alternate =, Interior = 180°</p>
+          <p>✅ Triangle angles → Always sum to 180°</p>
+          <p>✅ Polygon interior sum → (n-2) × 180°</p>
+          <p>✅ Regular polygon sides → n = 360° ÷ exterior angle</p>
+          <p>✅ Circle theorems → Center = 2×Circumference, Cyclic quad opposites = 180°</p>
+          <p>✅ Intersecting chords → PA×PB = PC×PD</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3: Volume of a cube with side 6 cm.</div>
-          <div class="example-problem">
-Step 1: Volume = s³ = 6 × 6 × 6 = 216 cm³
-          </div>
-          <div class="example-solution">Answer: 216 cm³</div>
+        <h3>Practice Questions:</h3>
+        <div class="practice-box">
+          <p><strong>Q1:</strong> Parallel lines cut by transversal, one angle = 125°. Find x.</p>
+          <p style="margin-top: 8px; color: var(--accent);">Answer: 55° (supplementary) or 125° (corresponding)</p>
+        </div>
+        
+        <div class="practice-box">
+          <p><strong>Q2:</strong> Regular polygon with interior angle 162°. How many sides?</p>
+          <p style="margin-top: 8px; color: var(--accent);">Answer: n = 20 sides</p>
+        </div>
+        
+        <div class="practice-box">
+          <p><strong>Q3:</strong> Chords intersect: segments 3cm, 8cm, 4cm, and x cm. Find x.</p>
+          <p style="margin-top: 8px; color: var(--accent);">Answer: 3 × 8 = 4 × x → x = 6 cm</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4: TSA of a sphere r = 7 cm (π = 22/7).</div>
-          <div class="example-problem">
-Step 1: TSA = 4πr² = 4 × (22/7) × 49 = 4 × 22 × 7 = 616 cm²
-          </div>
-          <div class="example-solution">Answer: 616 cm²</div>
+        <div class="checklist-box">
+          <h3>Pre-Exam Checklist:</h3>
+          <ul>
+            <li>Angle relationships on straight lines and points</li>
+            <li>Parallel line properties (corresponding, alternate, interior)</li>
+            <li>Triangle angle sums and exterior angles</li>
+            <li>Polygon formulas (interior, exterior, diagonals)</li>
+            <li>All 9 circle theorems memorized</li>
+            <li>Intersecting chords and tangent-secant rules</li>
+            <li>Construction methods for special angles</li>
+            <li>Practice drawing diagrams from descriptions</li>
+          </ul>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5: Volume of a pyramid with base area 20 cm², height 9 cm.</div>
-          <div class="example-problem">
-Step 1: Volume = (1/3) × base × height = (1/3) × 20 × 9 = 60 cm³
-          </div>
-          <div class="example-solution">Answer: 60 cm³</div>
-        </div>
-
-        <h2>(e) The Earth as a Sphere: Longitudes and Latitudes</h2>
-        <p>We treat the Earth as a perfect sphere with radius R = 6400 km (JAMB standard).</p>
-<p><strong>Step 1: Latitude (φ):</strong>
-  <li><strong>•</strong>Parallels (horizontal lines).</li>
-  <li><strong>•</strong>Equator = 0°, Poles = 90°.</li></p>
-  <p><strong>Step 2: Longitude (λ):</strong>
-  <li><strong>•</strong>Meridians (vertical lines).</li>
-  <li><strong>•</strong>Difference in longitude = Δλ.</li></p>
- <p><strong>Step 3: Latitude (φ):</strong>
-  <li><strong>•</strong>Distance along a parallel (same latitude α).</li>
-  <li><strong>•</strong>Distance = (Δλ / 360) × 2π × (R cos α).</li></p>
-  <p><strong>Step 4: Longitude (λ):</strong>
-  <li><strong>•</strong>Distance along a meridian (same longitude).</li>
-  <li><strong>•</strong>Distance = (Δφ / 360) × 2πR.</li></p>
- <p><strong>Step 5: Great-circle distance (any two points):</strong>
-  <li><strong>•</strong>cos c = sin φ₁ sin φ₂ + cos φ₁ cos φ₂ cos Δλ.</li>
-  <li><strong>•</strong>then Distance = (c/360) × 2πR.</li></p>       
-
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Latlong.svg/800px-Latlong.svg.png" alt="Diagram of Earth with latitudes and longitudes">
-
-        <h3>5 JAMB-Style Examples for (e)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1: Two towns P (60°N, 20°E) and Q (60°N, 25°W) on the earth’s surface. Calculate the distance between them along the parallel of latitude. (R = 6400 km, π = 22/7)</div>
-          <div class="example-problem">
-Step 1: Δλ = 20° + 25° = 45°<br>
-Step 2: Distance = (45/360) × 2π R cos60°<br>
-Step 3: cos60° = 1/2<br>
-Step 4: (1/8) × 2 × (22/7) × 6400 × (1/2) = (1/8) × (44/7) × 6400 × (1/2)<br>
-Step 5: (1/8) × (44/7) × 3200 = (44/56) × 3200 /7 = (11/14) × 3200 /7 = (11×3200)/(14×7) = (35200)/98 = 17600/49 km (approx 359 km, but exact 17600/49)
-          </div>
-          <div class="example-solution">Answer: 17600/49 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 2: Distance along a meridian between latitudes 30°N and 60°N (R = 6400 km, π = 22/7).</div>
-          <div class="example-problem">
-Step 1: Δφ = 60 – 30 = 30°<br>
-Step 2: Distance = (30/360) × 2πR = (1/12) × 2 × (22/7) × 6400 = (1/12) × (44/7) × 6400<br>
-Step 3: (44/84) × 6400 = (11/21) × 6400 = 110/21 × 640 = 70400/21 ≈ 3352.4 km
-          </div>
-          <div class="example-solution">Answer: 70400/21 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 3: Great-circle distance between (0°, 0°) and (0°, 90°E) (R = 6400 km, π = 22/7).</div>
-          <div class="example-problem">
-Step 1: φ1=0, φ2=0, Δλ=90°<br>
-Step 2: cos c = sin0 sin0 + cos0 cos0 cos90 = 0 + 1×1×0 = 0<br>
-Step 3: c = 90°<br>
-Step 4: Distance = (90/360) × 2πR = (1/4) × (44/7) × 6400 = 11/7 × 6400 = 70400/7 ≈ 10057.1 km
-          </div>
-          <div class="example-solution">Answer: 70400/7 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 4: Points A (30°N, 15°E), B (30°N, 45°E). Distance? (R = 6400 km, π = 22/7)</div>
-          <div class="example-problem">
-Step 1: Δλ = 30°<br>
-Step 2: Distance = (30/360) × 2π R cos30° = (1/12) × 2 × (22/7) × 6400 × (√3/2)<br>
-Step 3: (1/12) × (44/7) × 6400 × (√3/2) = (11/21) × 3200 × √3 /2 wait, full calc: approx use numbers.
-          </div>
-          <div class="example-solution">Answer: (44/21) × 3200 × √3 ≈ calculated value</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 5: Find Δλ if distance 800 km along 45° latitude, R=6400 km (π=22/7).</div>
-          <div class="example-problem">
-Step 1: Distance = (Δλ/360) × 2π R cos45° = 800<br>
-Step 2: (Δλ/360) × (44/7) × 6400 × (1/√2) = 800<br>
-Step 3: Solve for Δλ.
-          </div>
-          <div class="example-solution">Answer: Calculated Δλ</div>
-        </div>
-
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          This is now the **complete Mensuration chapter** — all sections (a) to (e) fully expanded with teaching steps, diagrams for shapes, and 5 JAMB examples each with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Excellent work! 🌟 You now master Euclidean Geometry!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a Real JAMB QUIZ on Mensuration</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Mensuration & Coordinate Geometry</p>
+        <button class="explore-btn" onclick="window.location.href='geometry-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
