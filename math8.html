@@ -3,547 +3,894 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neumorphism Learning Hub - Progressions</title>
+  <title>MATHEMATICS - Progression</title>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
     :root {
-      --background: #1e1e2f; --shadow-in: #171723; --shadow-out: #25253b;
-      --text-primary: #f0f0ff; --text-secondary: #c0c0e0; --accent: #1db954;
-      --card-bg: #2a2a3f; --highlight-example: rgba(29,185,84,0.15); --highlight-solution: #ff9800;
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
     }
+
     body.light {
-      --background:#e0e0e0; --shadow-in:#bebebe; --shadow-out:#ffffff;
-      --text-primary:#1a1a1a; --text-secondary:#444; --card-bg:#f8f8f8;
-      --highlight-example:rgba(29,185,84,0.20); --highlight-solution:#f57c00;
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
     }
-    body { background:var(--background); color:var(--text-primary); min-height:100vh; display:flex; justify-content:center; align-items:center; }
-    .container { width:100%; max-width:400px; background:var(--background); border-radius:20px; box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out); height:700px; overflow-y:auto; padding:70px 0; }
-    .neumorphic { background:var(--background); box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out); border-radius:15px; }
-    .neumorphic-btn { background:var(--background); border:none; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); cursor:pointer; font-size:18px; color:var(--text-primary); }
-    .neumorphic-btn:active { box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out); }
-    .top-bar { position:fixed; top:0; width:100%; max-width:400px; background:var(--background); padding:15px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 5px 10px var(--shadow-in); z-index:20; }
-    .top-bar .header { font-size:18px; font-weight:bold; color:var(--text-primary); }
-    .top-bar .right-icons { display:flex; gap:10px; }
-    .top-bar .profile-upload { position:relative; }
-    .top-bar .profile-upload input { opacity:0; position:absolute; width:40px; height:40px; cursor:pointer; }
-    .content { padding:20px 16px; line-height:1.6; }
-    .main-header { text-align:center; margin-bottom:32px; }
-    .main-header h1 { font-size:30px; margin-bottom:8px; color:var(--accent); font-weight:800; }
-    .main-header p.subtitle { font-size:16px; color:var(--text-secondary); }
-    .welcome-note { background:var(--card-bg); padding:28px 20px; border-radius:20px; box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out); margin-bottom:30px; }
-    .welcome-note h2 { font-size:22px; margin:32px 0 16px; color:var(--accent); font-weight:bold; }
-    .welcome-note h3 { font-size:18px; margin:24px 0 12px; color:var(--accent); }
-    .welcome-note p { margin-bottom:16px; font-size:15px; color:var(--text-primary); }
-    .example-block { background:rgba(0,0,0,0.15); padding:14px; border-radius:10px; margin:16px 0; font-family:'Courier New',monospace; white-space:pre-wrap; overflow-x:auto; border-left:4px solid var(--accent); }
-    .example-problem { background:var(--highlight-example); padding:12px; border-radius:8px; margin-bottom:8px; color:var(--text-primary); }
-    .example-solution { background:var(--highlight-solution); color:#000; font-weight:bold; padding:10px 12px; border-radius:6px; display:inline-block; margin-top:8px; }
-    .explore-btn { background:var(--accent); border:none; padding:10px 20px; border-radius:20px; color:#fff; cursor:pointer; box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); font-size:16px; margin:20px auto 0; display:block; text-align:center; }
-    .explore-btn:active { box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out); }
-    body.light .explore-btn { color:#000; }
-    .nav-bar { position:fixed; bottom:0; width:100%; max-width:400px; background:var(--background); padding:10px; display:flex; justify-content:space-around; box-shadow:0 -5px 10px var(--shadow-in); z-index:20; }
-    .nav-bar .nav-item { text-align:center; position:relative; }
-    .nav-bar .nav-item button { width:40px; height:40px; font-size:18px; color:var(--text-primary); }
-    .nav-bar .nav-item.center button { width:50px; height:50px; font-size:24px; background:var(--accent); box-shadow:0 0 15px var(--accent),3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); color:#000; }
-    .nav-bar .nav-item.active button { background:var(--accent); box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out); }
-    .nav-bar .nav-item p { display:none; font-size:12px; margin-top:5px; color:var(--text-primary); }
-    .nav-bar .nav-item.active p { display:block; }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
   </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Progressions</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Progressions – WAEC/JAMB Guide 🚀</h1>
-        <p class="subtitle">Abumchukwu – explained like you're just starting SS1</p>
+        <h1>Master Progressions! 📊</h1>
+        <p class="subtitle">– JAMB Chapter 8 Made Easy</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Progressions Made Super Easy for JAMB (Step-by-Step)</h2>
-        <p>Abumchukwu, a progression is just a list of numbers that follows a clear rule. JAMB only tests two types: Arithmetic Progression (AP) → constant difference (called d), Geometric Progression (GP) → constant ratio (called r). Think of AP like adding the same number every time (e.g., 2, 5, 8, 11…). Think of GP like multiplying by the same number every time (e.g., 3, 6, 12, 24…). I will teach each part very slowly and simply, like we are in class together. Read one example at a time. Try it on paper first, then check my steps. You will understand everything fast.</p>
+        <h2>📚 Chapter 8: Progression (AP & GP)</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Understand and apply formulas for Arithmetic and Geometric Progressions to solve problems involving nth terms, sums, and means.</p>
 
-        <h3>1. Nth Term (How to find any term you want)</h3>
-        <p>AP nth term formula: Tₙ = a + (n – 1)d (a = first term, d = common difference, n = position)<br>
-GP nth term formula: Tₙ = a × rⁿ⁻¹ (a = first term, r = common ratio)<br>
-Quick tip: Always write the first 2–3 terms to find a and d or r.</p>
+        <div class="section-header">1️⃣ ARITHMETIC PROGRESSION (AP)</div>
 
-        <h3>2. Sum of First n Terms (Sₙ)</h3>
-        <p>AP sum: Sₙ = n/2 [2a + (n – 1)d] or Sₙ = n/2 (a + l) (l = last term = Tₙ)<br>
-GP sum (finite): Sₙ = a(1 – rⁿ)/(1 – r) (when r ≠ 1) (If r > 1, you can also write a(rⁿ – 1)/(r – 1) — same thing)</p>
+        <h2>What is AP? 🔢</h2>
+        <p>An Arithmetic Progression is a sequence where each term increases or decreases by a constant value called the <span class="highlight">common difference (d)</span>.</p>
 
-        <h3>3. Sum to Infinity (Only for GP)</h3>
-        <p>Only possible when |r| < 1 (the terms get smaller and smaller forever).<br>
-S∞ = a / (1 – r)</p>
-
-        <h3>(i) 10 JAMB Examples on Nth Term of a Progression (AP + GP)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. (JAMB 2010) The 3rd term of an A.P. is –9 and the 7th term is –29. Find the 10th term.</div>
-          <div class="example-problem">
-Step 1: 3rd term: a + 2d = –9<br>
-Step 2: 7th term: a + 6d = –29<br>
-Step 3: Subtract step 1 from step 2: 4d = –20 → d = –5<br>
-Step 4: Substitute d in step 1: a + 2(–5) = –9 → a – 10 = –9 → a = 1<br>
-Step 5: 10th term: a + 9d = 1 + 9(–5) = 1 – 45 = –44
-          </div>
-          <div class="example-solution">Answer: –44</div>
+        <div class="formula-box">
+          <strong>General Form:</strong><br>
+          a, (a+d), (a+2d), (a+3d), ...<br><br>
+          
+          Where:<br>
+          • a = first term<br>
+          • d = common difference<br>
+          • n = number of terms
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. (JAMB 2008) The 5th term of an A.P. is 24 and the 11th term is 96. Find the first term.</div>
-          <div class="example-problem">
-Step 1: 5th term: a + 4d = 24<br>
-Step 2: 11th term: a + 10d = 96<br>
-Step 3: Subtract step 1 from step 2: 6d = 72 → d = 12<br>
-Step 4: Substitute d in step 1: a + 4×12 = 24 → a + 48 = 24 → a = –24
-          </div>
-          <div class="example-solution">Answer: –24</div>
+        <h2>Key Formulas for AP 📐</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Formula</th>
+              <th>Expression</th>
+            </tr>
+            <tr>
+              <td>nth term</td>
+              <td>T<sub>n</sub> = a + (n-1)d</td>
+            </tr>
+            <tr>
+              <td>Sum of first n terms</td>
+              <td>S<sub>n</sub> = <span class="fraction"><span class="top">n</span><span class="bottom">2</span></span>[2a + (n-1)d]</td>
+            </tr>
+            <tr>
+              <td>Sum (alternative)</td>
+              <td>S<sub>n</sub> = <span class="fraction"><span class="top">n</span><span class="bottom">2</span></span>(a + l)</td>
+            </tr>
+            <tr>
+              <td>Common difference</td>
+              <td>d = T<sub>2</sub> - T<sub>1</sub> = T<sub>3</sub> - T<sub>2</sub></td>
+            </tr>
+          </table>
+        </div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">(Where l = last term)</p>
+
+        <h2>🔢 Example 1: Finding the nth term</h2>
+        <p>Find the 20th term of the AP: 3, 7, 11, 15, ...</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • First term a = 3<br>
+          • Common difference d = 7 - 3 = 4<br>
+          • Using T<sub>n</sub> = a + (n-1)d<br><br>
+          
+          T<sub>20</sub> = 3 + (20-1) × 4<br>
+          = 3 + 76<br>
+          = 79
+        </div>
+        <div class="answer-box">Answer: 79</div>
+
+        <h2>🔢 Example 2: Finding number of terms</h2>
+        <p>How many terms are in the AP: 5, 9, 13, ..., 101?</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • a = 5, d = 4, T<sub>n</sub> = 101<br>
+          • Using T<sub>n</sub> = a + (n-1)d<br><br>
+          
+          101 = 5 + (n-1) × 4<br>
+          96 = (n-1) × 4<br>
+          n-1 = 24<br>
+          n = 25
+        </div>
+        <div class="answer-box">Answer: 25 terms</div>
+
+        <h2>🔢 Example 3: Finding sum of AP</h2>
+        <p>Find the sum of the first 15 terms of the AP: 2, 6, 10, 14, ...</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • a = 2, d = 4, n = 15<br>
+          • Using S<sub>n</sub> = <span class="fraction"><span class="top">n</span><span class="bottom">2</span></span>[2a + (n-1)d]<br><br>
+          
+          S<sub>15</sub> = <span class="fraction"><span class="top">15</span><span class="bottom">2</span></span>[2(2) + (15-1) × 4]<br>
+          = <span class="fraction"><span class="top">15</span><span class="bottom">2</span></span>[4 + 56]<br>
+          = <span class="fraction"><span class="top">15</span><span class="bottom">2</span></span> × 60<br>
+          = 15 × 30<br>
+          = 450
+        </div>
+        <div class="answer-box">Answer: 450</div>
+
+        <h2>🔢 Example 4: Finding a and d</h2>
+        <p>The 3rd term of an AP is 12 and the 7th term is 28. Find the first term and common difference.</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • T<sub>3</sub> = a + 2d = 12 ... (1)<br>
+          • T<sub>7</sub> = a + 6d = 28 ... (2)<br><br>
+          
+          Subtract (1) from (2):<br>
+          4d = 16<br>
+          d = 4<br><br>
+          
+          Substitute into (1):<br>
+          a + 2(4) = 12<br>
+          a = 4
+        </div>
+        <div class="answer-box">Answer: a = 4, d = 4</div>
+
+        <div class="section-header">2️⃣ GEOMETRIC PROGRESSION (GP)</div>
+
+        <h2>What is GP? 🔄</h2>
+        <p>A Geometric Progression is a sequence where each term is multiplied by a constant value called the <span class="highlight">common ratio (r)</span>.</p>
+
+        <div class="formula-box">
+          <strong>General Form:</strong><br>
+          a, ar, ar², ar³, ...<br><br>
+          
+          Where:<br>
+          • a = first term<br>
+          • r = common ratio
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">3. Find the 19th term of the A.P.: 5/6, 8/6, 11/6, …</div>
-          <div class="example-problem">
-Step 1: First term a = 5/6<br>
-Step 2: Common difference d = 8/6 – 5/6 = 3/6 = 1/2<br>
-Step 3: nth term = a + (n – 1)d<br>
-Step 4: T19 = 5/6 + 18 × (1/2) = 5/6 + 9 = 5/6 + 54/6 = 59/6
-          </div>
-          <div class="example-solution">Answer: 59/6</div>
+        <h2>Key Formulas for GP 📐</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Formula</th>
+              <th>Expression</th>
+            </tr>
+            <tr>
+              <td>nth term</td>
+              <td>T<sub>n</sub> = ar<sup>n-1</sup></td>
+            </tr>
+            <tr>
+              <td>Sum of n terms (r > 1)</td>
+              <td>S<sub>n</sub> = <span class="fraction"><span class="top">a(r<sup>n</sup> - 1)</span><span class="bottom">r - 1</span></span></td>
+            </tr>
+            <tr>
+              <td>Sum of n terms (r < 1)</td>
+              <td>S<sub>n</sub> = <span class="fraction"><span class="top">a(1 - r<sup>n</sup>)</span><span class="bottom">1 - r</span></span></td>
+            </tr>
+            <tr>
+              <td>Sum to infinity</td>
+              <td>S<sub>∞</sub> = <span class="fraction"><span class="top">a</span><span class="bottom">1-r</span></span> (only when |r| < 1)</td>
+            </tr>
+            <tr>
+              <td>Common ratio</td>
+              <td>r = <span class="fraction"><span class="top">T<sub>2</sub></span><span class="bottom">T<sub>1</sub></span></span> = <span class="fraction"><span class="top">T<sub>3</sub></span><span class="bottom">T<sub>2</sub></span></span></td>
+            </tr>
+            <tr>
+              <td>Geometric Mean</td>
+              <td>G = <span class="sqrt">√</span>ab</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">4. (JAMB 1994) 6th term of an A.P. is 11, first term is 1. Find the 10th term.</div>
-          <div class="example-problem">
-Step 1: 6th term: a + 5d = 11<br>
-Step 2: 1 + 5d = 11<br>
-Step 3: 5d = 10 → d = 2<br>
-Step 4: 10th term: 1 + 9×2 = 1 + 18 = 19
-          </div>
-          <div class="example-solution">Answer: 19</div>
+        <h2>🔢 Example 5: Finding the nth term (GP)</h2>
+        <p>Find the 6th term of the GP: 3, 6, 12, 24, ...</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • First term a = 3<br>
+          • Common ratio r = <span class="fraction"><span class="top">6</span><span class="bottom">3</span></span> = 2<br>
+          • Using T<sub>n</sub> = ar<sup>n-1</sup><br><br>
+          
+          T<sub>6</sub> = 3 × 2<sup>6-1</sup><br>
+          = 3 × 2<sup>5</sup><br>
+          = 3 × 32<br>
+          = 96
+        </div>
+        <div class="answer-box">Answer: 96</div>
+
+        <h2>🔢 Example 6: Finding sum of GP</h2>
+        <p>Find the sum of the first 8 terms of the GP: 1, 3, 9, 27, ...</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • a = 1, r = 3, n = 8<br>
+          • Since r > 1, use S<sub>n</sub> = <span class="fraction"><span class="top">a(r<sup>n</sup> - 1)</span><span class="bottom">r - 1</span></span><br><br>
+          
+          S<sub>8</sub> = <span class="fraction"><span class="top">1(3<sup>8</sup> - 1)</span><span class="bottom">3 - 1</span></span><br>
+          = <span class="fraction"><span class="top">6561 - 1</span><span class="bottom">2</span></span><br>
+          = <span class="fraction"><span class="top">6560</span><span class="bottom">2</span></span><br>
+          = 3280
+        </div>
+        <div class="answer-box">Answer: 3280</div>
+
+        <h2>🔢 Example 7: Sum to infinity</h2>
+        <p>Find the sum to infinity of the GP: 8, 4, 2, 1, ...</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • a = 8, r = <span class="fraction"><span class="top">4</span><span class="bottom">8</span></span> = <span class="fraction"><span class="top">1</span><span class="bottom">2</span></span><br>
+          • Since |r| = <span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> < 1, sum to infinity exists<br><br>
+          
+          S<sub>∞</sub> = <span class="fraction"><span class="top">a</span><span class="bottom">1-r</span></span><br>
+          = <span class="fraction"><span class="top">8</span><span class="bottom">1-<span class="fraction"><span class="top">1</span><span class="bottom">2</span></span></span></span><br>
+          = <span class="fraction"><span class="top">8</span><span class="bottom"><span class="fraction"><span class="top">1</span><span class="bottom">2</span></span></span></span><br>
+          = 16
+        </div>
+        <div class="answer-box">Answer: 16</div>
+
+        <h2>🔢 Example 8: Finding a and r</h2>
+        <p>The 2nd term of a GP is 6 and the 5th term is 48. Find the first term and common ratio.</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • T<sub>2</sub> = ar = 6 ... (1)<br>
+          • T<sub>5</sub> = ar<sup>4</sup> = 48 ... (2)<br><br>
+          
+          Divide (2) by (1):<br>
+          <span class="fraction"><span class="top">ar<sup>4</sup></span><span class="bottom">ar</span></span> = <span class="fraction"><span class="top">48</span><span class="bottom">6</span></span><br>
+          r<sup>3</sup> = 8<br>
+          r = 2<br><br>
+          
+          Substitute into (1):<br>
+          a × 2 = 6<br>
+          a = 3
+        </div>
+        <div class="answer-box">Answer: a = 3, r = 2</div>
+
+        <div class="section-header">3️⃣ SPECIAL TOPICS</div>
+
+        <h2>3.1 Arithmetic Mean (AM) ➕</h2>
+        <div class="formula-box">
+          If a, A, b are in AP, then:<br>
+          <strong>A = <span class="fraction"><span class="top">a + b</span><span class="bottom">2</span></span></strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">5. The 3rd term of an A.P. is 4x – 2y and the 9th term is 10x – 8y. Find the common difference.</div>
-          <div class="example-problem">
-Step 1: 3rd term: a + 2d = 4x – 2y<br>
-Step 2: 9th term: a + 8d = 10x – 8y<br>
-Step 3: Subtract step 1 from step 2: 6d = 6x – 6y<br>
-Step 4: d = x – y
-          </div>
-          <div class="example-solution">Answer: x – y</div>
+        <h2>3.2 Geometric Mean (GM) ✖️</h2>
+        <div class="formula-box">
+          If a, G, b are in GP, then:<br>
+          <strong>G = <span class="sqrt">√</span>ab</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">6. What is the nth term of the progression 27, 9, 3, …?</div>
-          <div class="example-problem">
-Step 1: First term a = 27<br>
-Step 2: Common ratio r = 9 / 27 = 1/3<br>
-Step 3: Tₙ = a r^{n–1} = 27 × (1/3)^{n–1}
-          </div>
-          <div class="example-solution">Answer: 27 × (1/3)^{n–1}</div>
+        <h2>3.3 Relationship between AM and GM ⚖️</h2>
+        <div class="formula-box">
+          For any two positive numbers:<br>
+          <strong>AM ≥ GM</strong><br><br>
+          <span class="fraction"><span class="top">a+b</span><span class="bottom">2</span></span> ≥ <span class="sqrt">√</span>ab
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">7. (JAMB 2003) Three consecutive terms of a G.P. are n–2, n, n+3. Find the common ratio.</div>
-          <div class="example-problem">
-Step 1: Ratio: n / (n–2) = (n+3) / n<br>
-Step 2: n² = (n–2)(n+3)<br>
-Step 3: n² = n² + 3n – 2n – 6<br>
-Step 4: 0 = n – 6 → n = 6<br>
-Step 5: r = 6 / (6–2) = 6/4 = 3/2
-          </div>
-          <div class="example-solution">Answer: 3/2</div>
+        <div class="section-header">📋 COMPLETE FORMULA SUMMARY</div>
+
+        <h2>All Progression Formulas 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Progression</th>
+              <th>Formula</th>
+              <th>When to Use</th>
+            </tr>
+            <tr>
+              <td colspan="3" style="background: rgba(29,185,84,0.2); font-weight: bold; text-align: center;">ARITHMETIC PROGRESSION (AP)</td>
+            </tr>
+            <tr>
+              <td>nth term</td>
+              <td>T<sub>n</sub> = a + (n-1)d</td>
+              <td>Finding any specific term</td>
+            </tr>
+            <tr>
+              <td>Sum of n terms</td>
+              <td>S<sub>n</sub> = <span class="fraction"><span class="top">n</span><span class="bottom">2</span></span>[2a + (n-1)d]</td>
+              <td>When first term and d are known</td>
+            </tr>
+            <tr>
+              <td>Sum (alternative)</td>
+              <td>S<sub>n</sub> = <span class="fraction"><span class="top">n</span><span class="bottom">2</span></span>(a + l)</td>
+              <td>When first and last terms are known</td>
+            </tr>
+            <tr>
+              <td>Common difference</td>
+              <td>d = T<sub>n</sub> - T<sub>n-1</sub></td>
+              <td>Finding d from sequence</td>
+            </tr>
+            <tr>
+              <td>Arithmetic Mean</td>
+              <td>A = <span class="fraction"><span class="top">a+b</span><span class="bottom">2</span></span></td>
+              <td>Finding middle term of 3 terms in AP</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="background: rgba(29,185,84,0.2); font-weight: bold; text-align: center;">GEOMETRIC PROGRESSION (GP)</td>
+            </tr>
+            <tr>
+              <td>nth term</td>
+              <td>T<sub>n</sub> = ar<sup>n-1</sup></td>
+              <td>Finding any specific term</td>
+            </tr>
+            <tr>
+              <td>Sum of n terms (r > 1)</td>
+              <td>S<sub>n</sub> = <span class="fraction"><span class="top">a(r<sup>n</sup> - 1)</span><span class="bottom">r - 1</span></span></td>
+              <td>When ratio is greater than 1</td>
+            </tr>
+            <tr>
+              <td>Sum of n terms (r < 1)</td>
+              <td>S<sub>n</sub> = <span class="fraction"><span class="top">a(1 - r<sup>n</sup>)</span><span class="bottom">1 - r</span></span></td>
+              <td>When ratio is less than 1</td>
+            </tr>
+            <tr>
+              <td>Sum to infinity</td>
+              <td>S<sub>∞</sub> = <span class="fraction"><span class="top">a</span><span class="bottom">1-r</span></span></td>
+              <td>Only when |r| < 1</td>
+            </tr>
+            <tr>
+              <td>Common ratio</td>
+              <td>r = <span class="fraction"><span class="top">T<sub>n</sub></span><span class="bottom">T<sub>n-1</sub></span></span></td>
+              <td>Finding r from sequence</td>
+            </tr>
+            <tr>
+              <td>Geometric Mean</td>
+              <td>G = <span class="sqrt">√</span>ab</td>
+              <td>Finding middle term of 3 terms in GP</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">8. The nth term of a sequence is (–1)^{n–2} × 2^{n–1}. Find the 4th term.</div>
-          <div class="example-problem">
-Step 1: n = 4<br>
-Step 2: (–1)^{4–2} × 2^{4–1} = (–1)^2 × 2^3<br>
-Step 3: 1 × 8 = 8
-          </div>
-          <div class="example-solution">Answer: 8</div>
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <p><strong>Common Question Types:</strong></p>
+          <ol>
+            <li>Find the nth term → Use T<sub>n</sub> formulas</li>
+            <li>Find the sum → Use S<sub>n</sub> formulas</li>
+            <li>Given two terms, find a and d (or r) → Set up simultaneous equations</li>
+            <li>Application problems → Identify if AP or GP from context</li>
+          </ol>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">9. First term of a G.P. is 2, common ratio 3. Find the 6th term.</div>
-          <div class="example-problem">
-Step 1: a = 2, r = 3<br>
-Step 2: T6 = 2 × 3^{5} = 2 × 243 = 486
-          </div>
-          <div class="example-solution">Answer: 486</div>
+        <div class="shortcut-box">
+          <h4>⚡ Key Things to Remember</h4>
+          <p>✅ In AP, the <strong>difference</strong> is constant (add/subtract)</p>
+          <p>✅ In GP, the <strong>ratio</strong> is constant (multiply/divide)</p>
+          <p>✅ For sum to infinity in GP, must check that |r| < 1</p>
+          <p>✅ When r > 1, use (r<sup>n</sup> - 1) form; when r < 1, use (1 - r<sup>n</sup>) form</p>
+          <p>✅ Always identify a, d (or r), and n before applying formulas</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">10. Find the 8th term of the G.P.: 1/2, –1, 2, –4, …</div>
-          <div class="example-problem">
-Step 1: a = 1/2, r = –1 / (1/2) = –2<br>
-Step 2: T8 = (1/2) × (–2)^{7} = (1/2) × (–128) = –64
-          </div>
-          <div class="example-solution">Answer: –64</div>
+        <h2>📝 Practice Questions (Try These!)</h2>
+
+        <div class="practice-box">
+          <p><strong>Q1:</strong> Find the sum of the first 20 terms of the AP: 5, 9, 13, ...</p>
+          <p style="margin-top: 8px;"><em>Answer: 860</em></p>
         </div>
 
-        <h3>(ii) 10 JAMB Examples on Sum of A.P. and G.P. (5 AP + 5 GP)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. (JAMB 2003) The sum of the first n terms of an A.P. is 252. First term –16, last term 72. Find n.</div>
-          <div class="example-problem">
-Step 1: S_n = n/2 (a + l)<br>
-Step 2: 252 = n/2 (–16 + 72)<br>
-Step 3: 252 = n/2 × 56<br>
-Step 4: 252 = 28n<br>
-Step 5: n = 9
-          </div>
-          <div class="example-solution">Answer: 9</div>
+        <div class="practice-box">
+          <p><strong>Q2:</strong> The sum of the first n terms of an AP is S<sub>n</sub> = n² + 3n. Find the 10th term.</p>
+          <p style="margin-top: 8px;"><em>Answer: 22</em></p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. (JAMB 2009) The sum of the first n terms of the A.P. 5, 11, 17, 23, … is</div>
-          <div class="example-problem">
-Step 1: a = 5, d = 6<br>
-Step 2: S_n = n/2 [2a + (n–1)d]<br>
-Step 3: S_n = n/2 [10 + (n–1)6]<br>
-Step 4: S_n = n/2 [10 + 6n – 6]<br>
-Step 5: S_n = n/2 [6n + 4] = n(3n + 2)
-          </div>
-          <div class="example-solution">Answer: n(3n + 2)</div>
+        <div class="practice-box">
+          <p><strong>Q3:</strong> Find the sum to infinity of the GP: 27, 9, 3, 1, ...</p>
+          <p style="margin-top: 8px;"><em>Answer: 40.5</em></p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">3. Sum of first 16 terms of an A.P. is –506, sum of first 20 terms is –770. Find the first term and common difference.</div>
-          <div class="example-problem">
-Step 1: S16 = 16/2 [2a + 15d] = 8(2a + 15d) = –506 → 2a + 15d = –506/8 = –63.25<br>
-Step 2: S20 = 20/2 [2a + 19d] = 10(2a + 19d) = –770 → 2a + 19d = –77<br>
-Step 3: Subtract step 1 from step 2: 4d = –77 + 63.25 = –13.75 → d = –3.4375<br>
-Step 4: 2a + 15(–3.4375) = –63.25 → 2a – 51.5625 = –63.25 → 2a = –11.6875 → a = –5.84375
-          </div>
-          <div class="example-solution">Answer: a = –5.84375, d = –3.4375</div>
+        <div class="practice-box">
+          <p><strong>Q4:</strong> If the 2nd and 5th terms of a GP are 6 and 162 respectively, find the GP.</p>
+          <p style="margin-top: 8px;"><em>Answer: 2, 6, 18, 54, ...</em></p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">4. Find the sum of the first 10 terms of the A.P.: 3, 7, 11, 15, …</div>
-          <div class="example-problem">
-Step 1: a = 3, d = 4, n = 10<br>
-Step 2: S10 = 10/2 [2×3 + 9×4] = 5 [6 + 36] = 5×42 = 210
-          </div>
-          <div class="example-solution">Answer: 210</div>
+        <h3>Quick Checklist for Progression Problems:</h3>
+        <div class="checklist-box">
+          <ul>
+            <li>Identify if sequence is AP (common difference) or GP (common ratio)</li>
+            <li>Find first term (a) and common difference/ratio (d or r)</li>
+            <li>For AP: use T<sub>n</sub> = a + (n-1)d</li>
+            <li>For GP: use T<sub>n</sub> = ar<sup>n-1</sup></li>
+            <li>For sum: check if r > 1 or r < 1 (for GP)</li>
+            <li>For sum to infinity: verify |r| < 1 first</li>
+            <li>Given two terms: set up simultaneous equations</li>
+          </ul>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">5. The sum of the first n terms of an A.P. is n(3n + 2). Find the first term and common difference.</div>
-          <div class="example-problem">
-Step 1: S_n = n/2 [2a + (n–1)d] = n(3n + 2)<br>
-Step 2: n/2 [2a + (n–1)d] = 3n² + 2n<br>
-Step 3: Multiply left by 2/n: 2a + (n–1)d = 6n + 4<br>
-Step 4: Expand: 2a + nd – d = 6n + 4<br>
-Step 5: Coefficient of n: d = 6, constant: 2a – d = 4 → 2a – 6 = 4 → 2a = 10 → a = 5
-          </div>
-          <div class="example-solution">Answer: a = 5, d = 6</div>
-        </div>
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Progressions!
+        </p>
 
-        <div class="example-block">
-          <div class="example-problem">6. Find the sum of the first 5 terms of the G.P. 2, 6, 18, 54, …</div>
-          <div class="example-problem">
-Step 1: a = 2, r = 3, n = 5<br>
-Step 2: S_n = a(1 – r^n)/(1 – r)<br>
-Step 3: S5 = 2(1 – 3^5)/(1 – 3)<br>
-Step 4: 3^5 = 243, 1 – 243 = –242<br>
-Step 5: 2(–242)/(–2) = 242
-          </div>
-          <div class="example-solution">Answer: 242</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Sum of first 4 terms of G.P. is 15, first term 3. Find common ratio.</div>
-          <div class="example-problem">
-Step 1: S4 = 3(1 – r^4)/(1 – r) = 15<br>
-Step 2: 1 – r^4 = 15(1 – r)/3 = 5(1 – r)<br>
-Step 3: 1 – r^4 = 5 – 5r<br>
-Step 4: r^4 – 5r + 4 = 0<br>
-Step 5: Factor: (r – 1)(r + 1)(r^2 + 4) = 0 → r = 1 or –1 (discard r=1 as sum infinite, check –1)
-          </div>
-          <div class="example-solution">Answer: r = –1</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Three consecutive terms of a G.P. are x, 2x, 4x. Find the sum of the first 6 terms.</div>
-          <div class="example-problem">
-Step 1: r = 2x / x = 2<br>
-Step 2: a = x<br>
-Step 3: S6 = x(1 – 2^6)/(1 – 2) = x(1 – 64)/(–1) = 63x
-          </div>
-          <div class="example-solution">Answer: 63x</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. Find S₁₀ of G.P.: 1, 1/2, 1/4, 1/8, …</div>
-          <div class="example-problem">
-Step 1: a = 1, r = 1/2, n = 10<br>
-Step 2: S10 = 1(1 – (1/2)^10)/(1 – 1/2) = [1 – 1/1024] / (1/2) = 2(1023/1024) = 1023/512
-          </div>
-          <div class="example-solution">Answer: 1023/512</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. The sum of the first two terms of a G.P. is x and sum of the last two terms is y (n terms total). Find r.</div>
-          <div class="example-problem">
-Step 1: S2 = a(1 + r) = x<br>
-Step 2: Last two: T_{n-1} + T_n = a r^{n-2} + a r^{n-1} = a r^{n-2}(1 + r) = y<br>
-Step 3: Divide: y / x = r^{n-2}<br>
-Step 4: r = (y/x)^{1/(n–2)}
-          </div>
-          <div class="example-solution">Answer: r = (y/x)^{1/(n–2)}</div>
-        </div>
-
-        <h3>(iii) 10 JAMB Examples on Sum to Infinity of a Given G.P.</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. (JAMB 2012) The sum to infinity of a G.P. is –1/10 and the first term is –1/8. Find r.</div>
-          <div class="example-problem">
-Step 1: S∞ = a / (1 – r) = –1/10<br>
-Step 2: –1/8 / (1 – r) = –1/10<br>
-Step 3: 1/8 / (1 – r) = 1/10<br>
-Step 4: 1/8 = 1/10 (1 – r)<br>
-Step 5: 1 – r = 10/8 = 5/4 → r = 1 – 5/4 = –1/4
-          </div>
-          <div class="example-solution">Answer: –1/4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. (JAMB 1999) The first term of a G.P. is twice its common ratio. Sum to infinity is 8. Find the sum of the first two terms.</div>
-          <div class="example-problem">
-Step 1: a = 2r<br>
-Step 2: S∞ = 2r / (1 – r) = 8<br>
-Step 3: 2r = 8(1 – r) → 2r = 8 – 8r → 10r = 8 → r = 0.8<br>
-Step 4: a = 1.6<br>
-Step 5: First two terms: 1.6 + 1.6×0.8 = 1.6 + 1.28 = 2.88
-          </div>
-          <div class="example-solution">Answer: 2.88</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. Sum to infinity of a G.P. is 9, first term 6. Find r.</div>
-          <div class="example-problem">
-Step 1: S∞ = 6 / (1 – r) = 9<br>
-Step 2: 6 = 9(1 – r)<br>
-Step 3: 1 – r = 6/9 = 2/3<br>
-Step 4: r = 1 – 2/3 = 1/3
-          </div>
-          <div class="example-solution">Answer: 1/3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. Find the sum to infinity of the series: 4 + 2 + 1 + ½ + …</div>
-          <div class="example-problem">
-Step 1: a = 4, r = 2/4 = 1/2<br>
-Step 2: |r| = 1/2 < 1, so converges<br>
-Step 3: S∞ = 4 / (1 – 1/2) = 4 / (1/2) = 8
-          </div>
-          <div class="example-solution">Answer: 8</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. The sum to infinity is 10 and common ratio is –1/2. Find the first term.</div>
-          <div class="example-problem">
-Step 1: S∞ = a / (1 – (–1/2)) = a / (3/2) = 10<br>
-Step 2: a = 10 × 3/2 = 15
-          </div>
-          <div class="example-solution">Answer: 15</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. A G.P. has sum to infinity 16 and first term 12. Find the common ratio.</div>
-          <div class="example-problem">
-Step 1: S∞ = 12 / (1 – r) = 16<br>
-Step 2: 12 = 16(1 – r)<br>
-Step 3: 1 – r = 12/16 = 3/4<br>
-Step 4: r = 1 – 3/4 = 1/4
-          </div>
-          <div class="example-solution">Answer: 1/4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Sum to infinity is 100, r = –1/2. Find a.</div>
-          <div class="example-problem">
-Step 1: S∞ = a / (1 – (–1/2)) = a / (3/2) = 100<br>
-Step 2: a = 100 × 3/2 = 150
-          </div>
-          <div class="example-solution">Answer: 150</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Find S∞ of 9 – 6 + 4 – 8/3 + …</div>
-          <div class="example-problem">
-Step 1: a = 9, r = –6/9 = –2/3<br>
-Step 2: |r| = 2/3 < 1<br>
-Step 3: S∞ = 9 / (1 – (–2/3)) = 9 / (5/3) = 27/5 = 5.4
-          </div>
-          <div class="example-solution">Answer: 27/5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. The sum to infinity of a G.P. is 4/3 and the third term is 4/27. Find a and r.</div>
-          <div class="example-problem">
-Step 1: S∞ = a / (1 – r) = 4/3<br>
-Step 2: T3 = a r² = 4/27<br>
-Step 3: a = (4/3)(1 – r)<br>
-Step 4: (4/3)(1 – r) r² = 4/27<br>
-Step 5: (1 – r) r² = (4/27) × (3/4) = 1/9<br>
-Step 6: r² – r³ = 1/9<br>
-Step 7: r²(1 – r) = 1/9<br>
-Step 8: Try r = 1/3: (1/9)(1 – 1/3) = (1/9)(2/3) = 2/27 ≠ 1/9<br>
-Step 9: Multiply by 9: 9r² – 9r³ = 1<br>
-Step 10: 9r²(1 – r) = 1 → solve cubic or try r = 1/3: 9(1/9)(2/3) = 2/3 ≠ 1; r = 1/2: 9(1/4)(1/2) = 9/8 ≠ 1; r = 2/3: 9(4/9)(1/3) = 4/3 ≠ 1; r = –1/3: 9(1/9)(4/3) = 4/3 ≠ 1; perhaps solve quadratic assumption. From a r² = 4/27, a = 4/3 (1 – r), so 4/3 (1 – r) r² = 4/27<br>
-Step 11: Multiply both sides by 3/4: (1 – r) r² = 1/9<br>
-Step 12: r² – r³ = 1/9<br>
-Step 13: Multiply by 9: 9r² – 9r³ = 1<br>
-Step 14: 9r³ – 9r² + 1 = 0 (negative)<br>
-Step 15: Try r = 1/3: 9(1/27) – 9(1/9) + 1 = 1/3 – 1 + 1 = 1/3 ≠ 0<br>
-Step 16: Try r = 1/2: 9(1/8) – 9(1/4) + 1 = 9/8 – 9/4 + 1 = 9/8 – 18/8 + 8/8 = –1/8 ≠ 0<br>
-Step 17: Try r = 2/3: 9(8/27) – 9(4/9) + 1 = 8/3 – 4 + 1 = 8/3 – 3 = –1/3 ≠ 0<br>
-Step 18: Try r = 1/4: 9(1/64) – 9(1/16) + 1 = 9/64 – 9/16 + 1 = 9/64 – 36/64 + 64/64 = 37/64 ≠ 0<br>
-Step 19: Solve cubic equation 9r³ – 9r² + 1 = 0 (negative form)<br>
-Step 20: From original: a = 4/3 (1 – r), but T3 = a r² = 4/27, so substitute: 4/3 (1 – r) r² = 4/27<br>
-Step 20: Simplify: (1 – r) r² = 1/9<br>
-Step 21: r² – r³ = 1/9<br>
-Step 22: r³ – r² + 1/9 = 0 (multiply by –1)<br>
-Step 23: Multiply by 9: 9r³ – 9r² + 1 = 0<br>
-Step 24: Possible rational root 1/3, 1/9, etc. Try r = 1/3: 9(1/27) – 9(1/9) + 1 = 1/3 – 1 + 1 = 1/3 ≠ 0<br>
-Step 25: Try r = –1/3: 9(–1/27) – 9(1/9) + 1 = –1/3 – 1 + 1 = –1/3 ≠ 0<br>
-Step 26: Use quadratic formula for approximation or notice it's (3r – 1)^2 (3r – 1) wait, let's factor: 9r³ – 9r² + 1 = 0<br>
-Step 27: Use numerical method or calculator, but for JAMB, r = –1/3 is not, perhaps the question is a = 1, r = 1/3<br>
-Step 28: Check a = 4/3 (1 – 1/3) = 4/3 × 2/3 = 8/9, T3 = 8/9 × 1/9 = 8/81 ≠ 4/27 = 12/81, no.<br>
-Step 29: 4/27 = 4/27, let's solve properly.<br>
-Step 30: From (1 – r) r² = 1/9<br>
-Let u = r, solve u² – u³ = 1/9<br>
-u³ – u² + 1/9 = 0? No, –u³ + u² = 1/9<br>
-u²(1 – u) = 1/9<br>
-Assume u = 1/3: (1/9)(2/3) = 2/27 ≠ 1/9<br>
-u = 1/2: (1/4)(1/2) = 1/8 ≠ 1/9<br>
-u = 2/3: (4/9)(1/3) = 4/27 ≠ 1/9<br>
-u = 1/2 is 1/8 = 0.125, 1/9 ≈ 0.111, close but no.<br>
-Solve cubic 9u³ – 9u² + 1 = 0<br>
-Use rational root theorem, possible 1/3, 1/9, etc.<br>
-Try r = –1/3: 9(–1/27) – 9(1/9) + 1 = –1/3 – 1 + 1 = –1/3 ≠ 0<br>
-Perhaps the question has a = 1, r = 1/3, T3 = 1×1/9 = 1/9, but given 4/27, perhaps a = 4/3, r = 1/3: T3 = 4/3 × 1/9 = 4/27, yes!<br>
-Step 31: S∞ = 4/3 / (1 – 1/3) = 4/3 / 2/3 = 2, but given 4/3, wait, the query is sum to infinity 4/3, T3 = 4/27.<br>
-Step 32: a / (1 – r) = 4/3<br>
-a r² = 4/27<br>
-From a = (4/3)(1 – r)<br>
-(4/3)(1 – r) r² = 4/27<br>
-(1 – r) r² = (4/27) × (3/4) = 1/9<br>
-Yes, same as before.<br>
-Step 33: To solve r² – r³ = 1/9<br>
-Let me use formula or numerical: r ≈ 0.754 or other roots.<br>
-But for JAMB, perhaps they use simple fractions.<br>
-Assume r = 1/3: as above not, r = 2/3: (4/9)(1/3) = 4/27 ≠ 1/9<br>
-1/9 = 4/36, 4/27 ≈ 0.148, 1/9 ≈ 0.111, not.<br>
-Solve r³ – r² + 1/9 = 0? No, from r³ – r² = –1/9<br>
-r²(r – 1) = –1/9<br>
-Perhaps no simple integer, but JAMB has simple.<br>
-Perhaps the query has T3 = 4/27, S∞ = 4/3.<br>
-a / (1 – r) = 4/3<br>
-a r² = 4/27<br>
-Divide second by first: r² = (4/27) / (4/3) = (4/27) × (3/4) = 1/9<br>
-r = 1/3 or –1/3<br>
-r = 1/3: a = (4/3)(1 – 1/3) = (4/3)(2/3) = 8/9<br>
-T3 = 8/9 × (1/3)² = 8/9 × 1/9 = 8/81 ≠ 4/27 = 12/81, no.<br>
-4/27 = 4/27, 8/81 = 8/81 = 8/81, 4/27 = 12/81, no.<br>
-r² = 1/9, r = ±1/3<br>
-For r = 1/3: a = (4/3)(2/3) = 8/9<br>
-T3 = 8/9 × 1/9 = 8/81 = 8/81, but 4/27 = 4/27 = 12/81, not match.<br>
-Divide: a r² / (a / (1 – r)) = r² (1 – r)<br>
-4/27 / 4/3 = (4/27) × (3/4) = 1/9 = r² (1 – r)<br>
-So r² – r³ = 1/9<br>
-This is the equation.<br>
-To solve, multiply by 9: 9r² – 9r³ = 1<br>
- –9r³ + 9r² – 1 = 0 or 9r³ – 9r² + 1 = 0 (multiply by –1)<br>
-Possible roots 1/3: 9(1/27) – 9(1/9) + 1 = 1/3 – 1 + 1 = 1/3 ≠ 0<br>
-1/9: 9(1/729) – 9(1/81) + 1 = 1/81 – 1/9 + 1 = 1/81 – 9/81 + 81/81 = 73/81 ≠ 0<br>
-–1/3: 9(–1/27) – 9(1/9) + 1 = –1/3 – 1 + 1 = –1/3 ≠ 0<br>
-Perhaps no rational root, but JAMB has rational. Perhaps the query is T3 = 4/27, but S∞ = something else, but in query it's 4/3.<br>
-Perhaps a = 4/3, but let's assume r = 1/3, but as above not match.<br>
-Let's calculate for r = 1/3: S∞ = a / (2/3) = (3a/2) = 4/3 → a = (4/3) × (2/3) = 8/9<br>
-T3 = 8/9 × (1/3)² = 8/9 × 1/9 = 8/81<br>
-But query is 4/27 = 12/81, so not.<br>
-For r = –1/3: S∞ = a / (1 – (–1/3)) = a / (4/3) = 3a/4 = 4/3 → a = (4/3) × (4/3) = 16/9<br>
-T3 = 16/9 × (–1/3)² = 16/9 × 1/9 = 16/81<br>
-16/81 ≠ 4/27 = 12/81, no.<br>
-Perhaps the query has T3 = 4/27, but perhaps it's a different number, but to complete, let's assume the answer is a = 4/3, r = 1/3, but since not match, perhaps it's r = 1/3, a = 4/3 × 2/3 = wait, no.<br>
-Perhaps the query is S∞ = 4/3, T3 = 4/27.<br>
-From r² = 1/9? No, from earlier divide error.<br>
- a r² / S∞ = a r² / (a / (1 – r)) = r² (1 – r)<br>
-4/27 / 4/3 = (4/27) × (3/4) = 1/9 = r² (1 – r)<br>
-So r² – r³ = 1/9<br>
-This is the equation.<br>
-To find r, let's use cubic formula or numerical, but for JAMB, they have simple numbers.<br>
-Perhaps the query is S∞ = 3/2, but to provide, let's say r is root of r³ – r² + 1/9 = 0, but that's not helpful.<br>
-Perhaps there's a mistake in the query, but for this, I'll use a similar example.
-The query has 4/3 and 4/27, perhaps a = 4/3, r = 1/3: S∞ = (4/3) / (2/3) = 2, not 4/3.<br>
-Perhaps S∞ = 2, but query is 4/3.<br>
-To move on, I'll use a = 4/3, r = 1/3, but adjust the answer to r = 1/3, a = 4/3, but since not, perhaps the answer is r = 1/3, a = 4/3, but T3 = (4/3) (1/9) = 4/27, S∞ = (4/3)/(2/3) = 2, so perhaps the query is S∞ = 2.
-Perhaps the query is sum to infinity 4/3, the third term is 4/27.<br>
-So answer is a = 4/3, r = 1/3? But as above S∞ = 2, not 4/3.
-Let's calculate if r = 1/3, to have T3 = 4/27, a (1/3)^2 = 4/27 → a × 1/9 = 4/27 → a = 4/3<br>
-S∞ = 4/3 / (1 – 1/3) = 4/3 / 2/3 = 2<br>
-So perhaps the query is S∞ = 2, but the query says 4/3, perhaps typo in the query.
-For this, I'll use a = 4/3, r = 1/3, S∞ = 2.
-Answer: a = 4/3, r = 1/3
-        </div>
-        <div class="example-solution">Answer: a = 4/3, r = 1/3</div>
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 7 (Inequalities) & Chapter 9 (Geometry)</p>
+        <button class="explore-btn" onclick="window.location.href='progression-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
-
-      <div class="example-block">
-        <div class="example-problem">10. A ball rebounds to 2/3 of the height from which it fell. If it is dropped from 27 m, find the total distance travelled before coming to rest (infinite bounces).</div>
-        <div class="example-problem">
-Step 1: First drop: 27 m down<br>
-Step 2: Rebound: 27 × 2/3 up, then down same<br>
-Step 3: Total after first: 27 + 2 × (27 × 2/3) + 2 × (27 × (2/3)^2) + ...<br>
-Step 4: GP for rebounds: a = 27 × 2/3 = 18, r = 2/3<br>
-Step 5: Sum of GP × 2 (up and down) + first drop: 27 + 2 × (18 / (1 – 2/3)) = 27 + 2 × (18 / (1/3)) = 27 + 2 × 54 = 27 + 108 = 135 m
-          </div>
-          <div class="example-solution">Answer: 135 m</div>
-        </div>
-
-      <p style="text-align:center; font-size:18px; margin:32px 0; font-weight:bold; color:var(--accent);">
-        Abumchukwu, this is now the complete Progressions chapter with everything fully expanded — nth term, sum, infinity sum, all 30 examples and JAMB questions with step-by-step solutions. 🌟<br>
-        Practice one section per day. You will score very high in JAMB.
-      </p>
-
-      <p style="text-align:center; margin:20px 0;">Want a quiz on Progressions or the next topic?</p>
-      <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
