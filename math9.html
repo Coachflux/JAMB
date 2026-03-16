@@ -3,388 +3,854 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neumorphism Learning Hub - Binary Operations</title>
+  <title>MATHEMATICS - Binary Operations</title>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
     :root {
-      --background: #1e1e2f; --shadow-in: #171723; --shadow-out: #25253b;
-      --text-primary: #f0f0ff; --text-secondary: #c0c0e0; --accent: #1db954;
-      --card-bg: #2a2a3f; --highlight-example: rgba(29,185,84,0.15); --highlight-solution: #ff9800;
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
     }
+
     body.light {
-      --background:#e0e0e0; --shadow-in:#bebebe; --shadow-out:#ffffff;
-      --text-primary:#1a1a1a; --text-secondary:#444; --card-bg:#f8f8f8;
-      --highlight-example:rgba(29,185,84,0.20); --highlight-solution:#f57c00;
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
     }
-    body { background:var(--background); color:var(--text-primary); min-height:100vh; display:flex; justify-content:center; align-items:center; }
-    .container { width:100%; max-width:400px; background:var(--background); border-radius:20px; box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out); height:700px; overflow-y:auto; padding:70px 0; }
-    .neumorphic { background:var(--background); box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out); border-radius:15px; }
-    .neumorphic-btn { background:var(--background); border:none; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); cursor:pointer; font-size:18px; color:var(--text-primary); }
-    .neumorphic-btn:active { box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out); }
-    .top-bar { position:fixed; top:0; width:100%; max-width:400px; background:var(--background); padding:15px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 5px 10px var(--shadow-in); z-index:20; }
-    .content { padding:20px 16px; line-height:1.6; }
-    .main-header { text-align:center; margin-bottom:32px; }
-    .main-header h1 { font-size:28px; color:var(--accent); font-weight:bold; margin-bottom:8px; }
-    .welcome-note { background:var(--card-bg); padding:24px 18px; border-radius:20px; box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out); margin-bottom:30px; }
-    .example-block { background:rgba(0,0,0,0.15); padding:14px; border-radius:10px; margin:16px 0; font-family:'Courier New',monospace; white-space:pre-wrap; border-left:4px solid var(--accent); }
-    .example-problem { background:var(--highlight-example); padding:12px; border-radius:8px; margin-bottom:8px; }
-    .example-solution { background:var(--highlight-solution); color:#000; font-weight:bold; padding:10px 12px; border-radius:6px; display:inline-block; margin-top:8px; }
-    .explore-btn { background:var(--accent); border:none; padding:12px 24px; border-radius:20px; color:white; font-size:16px; cursor:pointer; box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); display:block; margin:30px auto; text-align:center; }
-    .nav-bar { position:fixed; bottom:0; width:100%; max-width:400px; background:var(--background); padding:10px; display:flex; justify-content:space-around; box-shadow:0 -5px 10px var(--shadow-in); z-index:20; }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .operation-table {
+      background: rgba(0,0,0,0.2);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
   </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Binary Operations</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Binary Operations – WAEC/JAMB Guide 🚀</h1>
-        <p class="subtitle">Abumchukwu – explained like you're just starting SS1</p>
+        <h1>Binary Operations! 🔢</h1>
+        <p class="subtitle">– JAMB Chapter 9 Made Easy</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Binary Operations Made Simple (JAMB Syllabus)</h2>
-        <p>Abumchukwu, a binary operation is a rule (denoted by *, ⊕, Δ, etc.) that takes two elements from a set and produces exactly one result that must also belong to the same set. Think of it like addition (+) or multiplication (×) on real numbers — you always get another real number back. I will teach you step by step like you're in SS1, starting from the basics. We'll look at the properties one by one, then identity and inverse, and solve examples slowly with every step explained.</p>
+        <h2>📚 Chapter 9: Binary Operations</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Understand binary operations, their properties (closure, commutative, associative, identity, inverse, distributive), and solve problems involving defined operations.</p>
 
-        <h3>Part (a): The Four Key Properties</h3>
-        <p>These are the main things JAMB asks about. We'll explain each one, then check with examples.</p>
+        <h2>What is a Binary Operation? 🤔</h2>
+        <p>A binary operation is a <span class="highlight">rule that combines two elements</span> of a set to produce one element from the same set.</p>
 
-        <h4>1. Closure</h4>
-        <p>Step 1: The result of a * b must stay inside the given set for every a and b in the set.<br>
-Step 2: If even one pair gives a result outside the set, it's not closed.<br>
-Think: Like adding positive numbers — you always get positive, so closed. But subtracting positive numbers can give negative, so not closed on positives.</p>
-
-        <h4>2. Commutativity (order does not matter)</h4>
-        <p>Step 1: Check if a * b = b * a for all a, b in the set.<br>
-Step 2: If it holds for all, it's commutative; if not for even one pair, it's not.<br>
-Think: Addition 2 + 3 = 3 + 2 = 5, so commutative. Subtraction 3 – 2 = 1, 2 – 3 = –1, not equal, so not commutative.</p>
-
-        <h4>3. Associativity (grouping does not matter)</h4>
-        <p>Step 1: Check if (a * b) * c = a * (b * c) for all a, b, c.<br>
-Step 2: If it holds for all, associative; if not, not.<br>
-Think: Addition (2 + 3) + 4 = 5 + 4 = 9, 2 + (3 + 4) = 2 + 7 = 9, associative. Division (8 / 4) / 2 = 2 / 2 = 1, 8 / (4 / 2) = 8 / 2 = 4, not associative.</p>
-
-        <h4>4. Distributivity (one operation spreads over another)</h4>
-        <p>Step 1: Usually * distributes over + : a * (b + c) = (a * b) + (a * c) and (b + c) * a = (b * a) + (c * a).<br>
-Step 2: Check if both hold for all a, b, c.<br>
-Think: Multiplication distributes over addition: 2 × (3 + 4) = 2×7 = 14, (2×3) + (2×4) = 6 + 8 = 14, yes. Addition does not distribute over multiplication: 2 + (3 × 4) = 2 + 12 = 14, (2 + 3) × (2 + 4) = 5×6 = 30, no.</p>
-
-        <h3>Part (b): Identity and Inverse Elements (Simple Cases Only)</h3>
-        <p>Identity element (e): The “do-nothing” element. Step 1: Solve a * e = e * a = a for all a. The e must be the same for all a.<br>
-Inverse element: The “undo” element. Step 1: For any a, solve a * b = b * a = e for b (the inverse of a).<br>
-Think: For + , identity is 0 (a + 0 = a). Inverse of 5 is –5 (5 + –5 = 0).<br>
-For × , identity is 1 (a × 1 = a). Inverse of 5 is 1/5 (5 × 1/5 = 1).</p>
-
-        <h3>10 JAMB-Style Examples on Closure, Commutativity, Associativity & Distributivity (with full solutions)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1 (JAMB 1999 style – Closure & Commutativity)</div>
-          <div class="example-problem">
-A binary operation * is defined on positive integers by x * y = 2x – 3y + 2.
-Is the operation (i) closed (ii) commutative on the set of positive integers?<br>
-Step 1: For closure, pick x=1, y=2 → 2(1) – 3(2) + 2 = 2 – 6 + 2 = –2<br>
-Step 2: –2 is not a positive integer, so result outside the set.<br>
-Step 3: Not closed.<br>
-Step 4: For commutativity, check x * y = y * x.<br>
-Step 5: 1 * 2 = 2(1) – 3(2) + 2 = –2<br>
-Step 6: 2 * 1 = 2(2) – 3(1) + 2 = 4 – 3 + 2 = 3<br>
-Step 7: –2 ≠ 3, so not commutative.
-          </div>
-          <div class="example-solution">Answer: (i) Not closed (ii) Not commutative</div>
+        <div class="formula-box">
+          <strong>Definition:</strong><br>
+          If we have a set S and an operation *, then for any a, b ∈ S:<br>
+          a * b = c &nbsp;&nbsp;where c ∈ S<br><br>
+          
+          Common symbols: *, ∘, ⊕, ⊗, Δ, ∇ (or any defined rule)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2 (JAMB style – Closure on reals)</div>
-          <div class="example-problem">
-The operation a ∗ b = a + b – ab is defined on the set of real numbers ℝ. Is it closed?<br>
-Step 1: Take any two reals a and b, compute a + b – ab.<br>
-Step 2: Addition a + b is real.<br>
-Step 3: Product ab is real.<br>
-Step 4: Subtracting reals is real.<br>
-Step 5: So result is always real, inside ℝ.<br>
-Step 6: Closed on ℝ.
-          </div>
-          <div class="example-solution">Answer: Closed on ℝ</div>
+        <div class="section-header">1️⃣ PROPERTIES OF BINARY OPERATIONS</div>
+
+        <h2>A. Closure Property 🔒</h2>
+        <p>A set S is closed under operation * if for all a, b ∈ S:</p>
+        <div class="formula-box">
+          a * b ∈ S
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3 (JAMB style – Commutativity)</div>
-          <div class="example-problem">
-Given a ∗ b = a + b – ab on ℝ. Show it is commutative.<br>
-Step 1: Compute a ∗ b = a + b – ab<br>
-Step 2: Compute b ∗ a = b + a – ba<br>
-Step 3: Since a + b = b + a and ab = ba, b + a – ba = a + b – ab<br>
-Step 4: a ∗ b = b ∗ a<br>
-Step 5: Commutative.
-          </div>
-          <div class="example-solution">Answer: Commutative</div>
+        <h2>🔢 Example: Closure</h2>
+        <p>Set of even numbers E = {2, 4, 6, 8, ...}, Operation: Addition</p>
+        <div class="calculation-box">
+          <strong>Check:</strong><br>
+          4 + 6 = 10 ∈ E ✓<br><br>
+          <em>Therefore: Closed under addition</em>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4 (JAMB style – Associativity)</div>
-          <div class="example-problem">
-Let a ∗ b = a + b – ab on ℝ. Check if it is associative.<br>
-Step 1: Compute (a ∗ b) ∗ c<br>
-Step 2: a ∗ b = a + b – ab<br>
-Step 3: (a + b – ab) ∗ c = (a + b – ab) + c – (a + b – ab)c<br>
-Step 4: Expand: a + b – ab + c – ac – bc + abc = a + b + c – ab – ac – bc + abc<br>
-Step 5: Now a ∗ (b ∗ c)<br>
-Step 6: b ∗ c = b + c – bc<br>
-Step 7: a ∗ (b + c – bc) = a + (b + c – bc) – a(b + c – bc)<br>
-Step 8: Expand: a + b + c – bc – ab – ac + abc = a + b + c – ab – ac – bc + abc<br>
-Step 9: Both sides equal.<br>
-Step 10: Associative.
-          </div>
-          <div class="example-solution">Answer: Associative</div>
+        <h2>B. Commutative Property 🔄</h2>
+        <div class="formula-box">
+          a * b = b * a
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5 (JAMB style – Distributivity)</div>
-          <div class="example-problem">
-Let * be defined by a ∗ b = a + b – ab and ordinary addition +. Does * distribute over +?<br>
-Step 1: Compute a ∗ (b + c) = a + (b + c) – a(b + c) = a + b + c – ab – ac<br>
-Step 2: Compute (a ∗ b) + (a ∗ c) = (a + b – ab) + (a + c – ac) = 2a + b + c – ab – ac<br>
-Step 3: a + b + c – ab – ac ≠ 2a + b + c – ab – ac<br>
-Step 4: Not equal.<br>
-Step 5: Does not distribute over +.
-          </div>
-          <div class="example-solution">Answer: Does not distribute over +</div>
+        <h2>🔢 Example: Commutative</h2>
+        <p>Operation: a * b = a + b + ab</p>
+        <div class="calculation-box">
+          <strong>Check:</strong><br>
+          2 * 3 = 2 + 3 + (2)(3) = 11<br>
+          3 * 2 = 3 + 2 + (3)(2) = 11<br><br>
+          
+          Therefore: 2 * 3 = 3 * 2 ✓<br>
+          <em>Commutative</em>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 6 (JAMB 2008 style)</div>
-          <div class="example-problem">
-m * n = n – (m + 2) on real numbers. Is it commutative?<br>
-Step 1: Compute 3 * (–5) = –5 – (3 + 2) = –5 – 5 = –10<br>
-Step 2: Compute (–5) * 3 = 3 – (–5 + 2) = 3 – (–3) = 3 + 3 = 6<br>
-Step 3: –10 ≠ 6<br>
-Step 4: Not commutative.
-          </div>
-          <div class="example-solution">Answer: Not commutative</div>
+        <h2>C. Associative Property 🔗</h2>
+        <div class="formula-box">
+          (a * b) * c = a * (b * c)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 7 (JAMB style – Associativity check)</div>
-          <div class="example-problem">
-If a ∗ b = ab on positive integers, is it associative?<br>
-Step 1: Compute (2 ∗ 3) ∗ 4 = (2×3) × 4 = 6 × 4 = 24<br>
-Step 2: Compute 2 ∗ (3 ∗ 4) = 2 × (3×4) = 2 × 12 = 24<br>
-Step 3: Equal for these.<br>
-Step 4: Multiplication is associative in general, so yes.
-          </div>
-          <div class="example-solution">Answer: Associative</div>
+        <h2>🔢 Example: Associative</h2>
+        <p>Operation: a * b = a + b - 1</p>
+        <div class="calculation-box">
+          <strong>Check:</strong><br>
+          <strong>LHS:</strong> (2 * 3) * 4<br>
+          = (2+3-1) * 4<br>
+          = 4 * 4 = 4+4-1 = 7<br><br>
+          
+          <strong>RHS:</strong> 2 * (3 * 4)<br>
+          = 2 * (3+4-1)<br>
+          = 2 * 6 = 2+6-1 = 7<br><br>
+          
+          LHS = RHS ✓ <em>Associative</em>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 8 (JAMB style – Closure on integers)</div>
-          <div class="example-problem">
-x Δ y = x + y + 1 on integers ℤ. Is it closed?<br>
-Step 1: Take x = 1, y = –2 → 1 + (–2) + 1 = 0, integer.<br>
-Step 2: Take x = –3, y = 4 → –3 + 4 + 1 = 2, integer.<br>
-Step 3: Sum of integers + 1 is always integer.<br>
-Step 4: Closed.
-          </div>
-          <div class="example-solution">Answer: Closed</div>
+        <h2>D. Identity Element 🆔</h2>
+        <p>An element e such that:</p>
+        <div class="formula-box">
+          a * e = e * a = a
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 9 (JAMB style – Distributivity)</div>
-          <div class="example-problem">
-Suppose ⊕ is ordinary addition and ⊗ is a ∗ b = 2ab. Does ⊗ distribute over ⊕?<br>
-Step 1: a ⊗ (b ⊕ c) = 2a(b + c) = 2ab + 2ac<br>
-Step 2: (a ⊗ b) ⊕ (a ⊗ c) = 2ab + 2ac<br>
-Step 3: Equal.<br>
-Step 4: Distributes.
-          </div>
-          <div class="example-solution">Answer: Distributes</div>
+        <h2>🔢 Example: Finding Identity</h2>
+        <p>Operation: a * b = a + b - 5</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Find e such that a * e = a<br>
+          a + e - 5 = a<br>
+          e = 5<br><br>
+          
+          <strong>Identity element = 5</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 10 (JAMB style – Mixed properties)</div>
-          <div class="example-problem">
-The operation a ∗ b = a² – b² on reals.<br>
-Is it (i) closed (ii) commutative?<br>
-Step 1: For closure, a² – b² = (a – b)(a + b), product of reals is real, so closed.<br>
-Step 2: For commutative, 3 ∗ 2 = 9 – 4 = 5<br>
-Step 3: 2 ∗ 3 = 4 – 9 = –5<br>
-Step 4: 5 ≠ –5, not commutative.
-          </div>
-          <div class="example-solution">Answer: (i) Closed (ii) Not commutative</div>
+        <h2>E. Inverse Element 🔄</h2>
+        <p>For element a, its inverse a<sup>-1</sup> satisfies:</p>
+        <div class="formula-box">
+          a * a<sup>-1</sup> = a<sup>-1</sup> * a = e (identity)
         </div>
 
-        <h3>10 JAMB-Style Examples on Identity and Inverse Elements (with full solutions)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1 (JAMB 1999)</div>
-          <div class="example-problem">
-a * b = ab + a + b, identity element is 0. Find inverse of 2.<br>
-Step 1: Let inverse of 2 be x.<br>
-Step 2: 2 * x = 0<br>
-Step 3: 2x + 2 + x = 0<br>
-Step 4: 3x + 2 = 0<br>
-Step 5: 3x = –2 → x = –2/3
-          </div>
-          <div class="example-solution">Answer: –2/3</div>
+        <h2>🔢 Example: Finding Inverse</h2>
+        <p>Operation: a * b = a + b - 5 (identity e = 5)</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Find inverse of 3:<br>
+          3 * 3<sup>-1</sup> = 5<br>
+          3 + 3<sup>-1</sup> - 5 = 5<br>
+          3<sup>-1</sup> = 7<br><br>
+          
+          <strong>Inverse of 3 is 7</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2 (JAMB 2009)</div>
-          <div class="example-problem">
-m ⊗ n = m + n + mn, identity = 0. Find inverse of –5.<br>
-Step 1: Let inverse of –5 be x.<br>
-Step 2: –5 ⊗ x = 0<br>
-Step 3: –5 + x + (–5)x = 0<br>
-Step 4: –5 + x – 5x = 0<br>
-Step 5: –5 – 4x = 0 → –4x = 5 → x = –5/4
-          </div>
-          <div class="example-solution">Answer: –5/4</div>
+        <h2>F. Distributive Property 📐</h2>
+        <p>Operation ∘ is distributive over * if:</p>
+        <div class="formula-box">
+          a ∘ (b * c) = (a ∘ b) * (a ∘ c)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3 (JAMB 2007)</div>
-          <div class="example-problem">
-a Δ b = a + b + 1, identity = –1. Find inverse of 7.<br>
-Step 1: Let inverse of 7 be x.<br>
-Step 2: 7 Δ x = –1<br>
-Step 3: 7 + x + 1 = –1<br>
-Step 4: x + 8 = –1<br>
-Step 5: x = –9
-          </div>
-          <div class="example-solution">Answer: –9</div>
+        <div class="section-header">2️⃣ WORKED EXAMPLES (JAMB-STYLE)</div>
+
+        <h2>🔢 Example 1: Defining and Evaluating</h2>
+        <p>The operation * is defined on the set of real numbers by:</p>
+        <p>a * b = <span class="fraction"><span class="top">a + b</span><span class="bottom">2</span></span></p>
+        
+        <div class="calculation-box">
+          <strong>(a) Evaluate 4 * 6:</strong><br>
+          4 * 6 = <span class="fraction"><span class="top">4 + 6</span><span class="bottom">2</span></span> = <span class="fraction"><span class="top">10</span><span class="bottom">2</span></span> = 5
+        </div>
+        <div class="answer-box">Answer: 5</div>
+
+        <div class="calculation-box">
+          <strong>(b) Evaluate (2 * 8) * 4:</strong><br>
+          First: 2 * 8 = <span class="fraction"><span class="top">2+8</span><span class="bottom">2</span></span> = 5<br>
+          Then: 5 * 4 = <span class="fraction"><span class="top">5+4</span><span class="bottom">2</span></span> = 4.5
+        </div>
+        <div class="answer-box">Answer: 4.5</div>
+
+        <h2>🔢 Example 2: Finding Identity Element</h2>
+        <p>Operation: a * b = a + b + ab. Find the identity element.</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Let e be the identity element.<br>
+          a * e = a<br>
+          a + e + ae = a<br>
+          e + ae = 0<br>
+          e(1 + a) = 0<br><br>
+          
+          For this to hold for all a: <strong>e = 0</strong><br><br>
+          
+          <em>Verification: a * 0 = a + 0 + a(0) = a ✓</em>
+        </div>
+        <div class="answer-box">Answer: Identity = 0</div>
+
+        <h2>🔢 Example 3: Finding Inverse Element</h2>
+        <p>Using a * b = a + b + ab with identity e = 0, find the inverse of 2.</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Let 2<sup>-1</sup> = x<br>
+          2 * x = 0<br>
+          2 + x + 2x = 0<br>
+          2 + 3x = 0<br>
+          x = -<span class="fraction"><span class="top">2</span><span class="bottom">3</span></span>
+        </div>
+        <div class="answer-box">Answer: Inverse of 2 is -2/3</div>
+
+        <h2>🔢 Example 4: Checking Properties</h2>
+        <p>Operation * on ℝ is defined by a * b = 2a + b - 3</p>
+        
+        <div class="calculation-box">
+          <strong>(a) Is it commutative?</strong><br>
+          • a * b = 2a + b - 3<br>
+          • b * a = 2b + a - 3<br><br>
+          
+          Since 2a + b - 3 ≠ 2b + a - 3<br>
+          <strong>NOT commutative ✗</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4 (JAMB 2012 style)</div>
-          <div class="example-problem">
-p * q = p + q – pq, identity = 0. Find inverse of p (p ≠ 1).<br>
-Step 1: Let inverse of p be x.<br>
-Step 2: p * x = 0<br>
-Step 3: p + x – px = 0<br>
-Step 4: x – px = –p<br>
-Step 5: x(1 – p) = –p<br>
-Step 6: x = –p / (1 – p) = p / (p – 1)
-          </div>
-          <div class="example-solution">Answer: p / (p – 1)</div>
+        <div class="calculation-box">
+          <strong>(b) Is it associative?</strong><br>
+          • (a * b) * c = (2a + b - 3) * c<br>
+          = 2(2a + b - 3) + c - 3<br>
+          = 4a + 2b - 6 + c - 3<br>
+          = 4a + 2b + c - 9<br><br>
+          
+          • a * (b * c) = a * (2b + c - 3)<br>
+          = 2a + (2b + c - 3) - 3<br>
+          = 2a + 2b + c - 6<br><br>
+          
+          Since 4a + 2b + c - 9 ≠ 2a + 2b + c - 6<br>
+          <strong>NOT associative ✗</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5 (JAMB 2021 style)</div>
-          <div class="example-problem">
-m * n = mn + m + n, identity e satisfies m * e = m. Find e.<br>
-Step 1: m * e = m<br>
-Step 2: m e + m + e = m<br>
-Step 3: m e + e = 0<br>
-Step 4: e (m + 1) = 0<br>
-Step 5: Since m can be any, e = 0
-          </div>
-          <div class="example-solution">Answer: 0</div>
+        <h2>🔢 Example 5: Modulo Arithmetic (Common in JAMB)</h2>
+        <p>Operation ⊕ on set {0, 1, 2, 3, 4} is defined as a ⊕ b = remainder when a + b is divided by 5.</p>
+
+        <div class="operation-table">
+        <strong>Operation Table:</strong>
+
+        ⊕  | 0  1  2  3  4
+        ---+----------------
+        0  | 0  1  2  3  4
+        1  | 1  2  3  4  0
+        2  | 2  3  4  0  1
+        3  | 3  4  0  1  2
+        4  | 4  0  1  2  3
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 6 (JAMB 2014 style)</div>
-          <div class="example-problem">
-x * y = x y (ordinary multiplication). Given x * 2 = 12 – x. Find possible x.<br>
-Step 1: x * 2 = x × 2 = 12 – x<br>
-Step 2: 2x = 12 – x<br>
-Step 3: 2x + x = 12<br>
-Step 4: 3x = 12<br>
-Step 5: x = 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
+        <div class="calculation-box">
+          <strong>(b) Find identity element:</strong><br>
+          From table: a ⊕ 0 = 0 ⊕ a = a<br>
+          <strong>Identity = 0</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 7 (JAMB style)</div>
-          <div class="example-problem">
-a * b = (a + b)/2 on reals, identity = 2. Find inverse of 6.<br>
-Step 1: Let inverse of 6 be x.<br>
-Step 2: 6 * x = 2<br>
-Step 3: (6 + x)/2 = 2<br>
-Step 4: 6 + x = 4<br>
-Step 5: x = 4 – 6 = –2
-          </div>
-          <div class="example-solution">Answer: –2</div>
+        <div class="calculation-box">
+          <strong>(c) Find inverse of 3:</strong><br>
+          Look for x where 3 ⊕ x = 0<br>
+          From table: 3 ⊕ 2 = 0<br>
+          <strong>Inverse of 3 is 2</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 8 (JAMB 2020 style)</div>
-          <div class="example-problem">
-a x b = a² + b, identity e. Find e.<br>
-Step 1: a x e = a<br>
-Step 2: a² + e = a<br>
-Step 3: e = a – a²<br>
-Step 4: e depends on a, so no single e for all a.<br>
-Step 5: No identity element.
-          </div>
-          <div class="example-solution">Answer: No identity</div>
+        <div class="section-header">📋 SUMMARY TABLE</div>
+
+        <h2>Properties & Formulas 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Property</th>
+              <th>Definition</th>
+              <th>Formula/Condition</th>
+              <th>How to Check</th>
+            </tr>
+            <tr>
+              <td>Closure</td>
+              <td>Result stays in set</td>
+              <td>a * b ∈ S</td>
+              <td>Calculate ab, check if in S</td>
+            </tr>
+            <tr>
+              <td>Commutative</td>
+              <td>Order doesn't matter</td>
+              <td>a * b = b * a</td>
+              <td>Swap a and b, compare results</td>
+            </tr>
+            <tr>
+              <td>Associative</td>
+              <td>Grouping doesn't matter</td>
+              <td>(a * b) * c = a * (b * c)</td>
+              <td>Calculate both sides, compare</td>
+            </tr>
+            <tr>
+              <td>Identity (e)</td>
+              <td>Combines to give same element</td>
+              <td>a * e = e * a = a</td>
+              <td>Solve a * e = a for e</td>
+            </tr>
+            <tr>
+              <td>Inverse (a<sup>-1</sup>)</td>
+              <td>Combines to give identity</td>
+              <td>a * a<sup>-1</sup> = e</td>
+              <td>Solve a * x = e for x</td>
+            </tr>
+            <tr>
+              <td>Distributive</td>
+              <td>One operation over another</td>
+              <td>a ∘ (b * c) = (a ∘ b) * (a ∘ c)</td>
+              <td>Expand both sides, compare</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 9 (JAMB style)</div>
-          <div class="example-problem">
-The operation * on reals defined by a * b = ab/2. Identity element is 2. Find inverse of –4.<br>
-Step 1: Let inverse of –4 be x.<br>
-Step 2: –4 * x = 2<br>
-Step 3: (–4 x)/2 = 2<br>
-Step 4: –2x = 2<br>
-Step 5: x = –1
-          </div>
-          <div class="example-solution">Answer: –1</div>
+        <div class="shortcut-box">
+          <h4>⚡ Quick Reference: Solving Steps</h4>
+          <p><strong>Evaluate a * b:</strong> Substitute values into definition</p>
+          <p><strong>Check Commutative:</strong> Calculate ab and ba, compare</p>
+          <p><strong>Check Associative:</strong> Calculate (ab)c and a(bc), compare</p>
+          <p><strong>Find Identity:</strong> Set a * e = a, solve for e</p>
+          <p><strong>Find Inverse of a:</strong> Set a * x = e, solve for x</p>
+          <p><strong>Construct Table:</strong> Calculate all combinations systematically</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 10 (JAMB 1999 variant)</div>
-          <div class="example-problem">
-x * y = 2x – 3y + 2 on positive integers. If identity exists, find it.<br>
-Step 1: x * e = x<br>
-Step 2: 2x – 3e + 2 = x<br>
-Step 3: x + 2 – 3e = x<br>
-Step 4: 2 – 3e = 0<br>
-Step 5: 3e = 2 → e = 2/3 (not integer, so no identity on positive integers)
-          </div>
-          <div class="example-solution">Answer: No identity</div>
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Always write out</strong> the operation definition clearly before starting</li>
+            <li><strong>Show all working steps</strong> — JAMB awards method marks</li>
+            <li><strong>For identity/inverse:</strong> Substitute back to verify your answer</li>
+            <li><strong>Modulo operations:</strong> Remember a mod n gives remainder 0 to n-1</li>
+            <li><strong>Tables:</strong> Be systematic — row first, then column</li>
+          </ol>
         </div>
 
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          Abumchukwu, this is now the **complete Binary Operations chapter** with everything fully expanded — properties, identity, inverse, all 20 examples with step-by-step solutions explained like SS1 class. 🌟<br>
-          Practice one example per day. You will score very high in JAMB.
+        <h2>📝 Practice Question (Try This!)</h2>
+
+        <div class="practice-box">
+          <p>An operation * is defined on the set of real numbers by a * b = <span class="fraction"><span class="top">ab</span><span class="bottom">4</span></span>.</p>
+          <p style="margin-top: 12px;"><strong>(a)</strong> Evaluate 6 * 8</p>
+          <p><strong>(b)</strong> Find the identity element</p>
+          <p><strong>(c)</strong> Find the inverse of 2</p>
+          <p><strong>(d)</strong> Is the operation commutative?</p>
+        </div>
+
+        <div class="calculation-box">
+          <strong>Solutions:</strong><br><br>
+          
+          (a) 6 * 8 = <span class="fraction"><span class="top">6 × 8</span><span class="bottom">4</span></span> = <span class="fraction"><span class="top">48</span><span class="bottom">4</span></span> = <strong>12</strong><br><br>
+          
+          (b) a * e = a ⇒ <span class="fraction"><span class="top">ae</span><span class="bottom">4</span></span> = a ⇒ e = <strong>4</strong><br><br>
+          
+          (c) 2 * x = 4 ⇒ <span class="fraction"><span class="top">2x</span><span class="bottom">4</span></span> = 4 ⇒ x = <strong>8</strong><br><br>
+          
+          (d) a * b = <span class="fraction"><span class="top">ab</span><span class="bottom">4</span></span> = <span class="fraction"><span class="top">ba</span><span class="bottom">4</span></span> = b * a ✓ <strong>Yes, commutative</strong>
+        </div>
+
+        <h3>Quick Checklist for Binary Operations:</h3>
+        <div class="checklist-box">
+          <ul>
+            <li>Write down the operation definition clearly</li>
+            <li>For evaluation: substitute values carefully</li>
+            <li>For properties: test with specific numbers first</li>
+            <li>For identity: solve a * e = a for e</li>
+            <li>For inverse: solve a * x = e for x</li>
+            <li>Always verify your answers by substitution</li>
+            <li>For modulo: remember remainder is always less than divisor</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Binary Operations!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a quiz on Binary Operations or the next topic?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 8 (Progression) & Chapter 10 (Geometry)</p>
+        <button class="explore-btn" onclick="window.location.href='binary-ops-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
