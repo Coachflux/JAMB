@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS - Introductory Electronics</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .part-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">PHYSICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          📷
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Electronics! 💻</h1>
+        <p class="subtitle">– JAMB Chapter 39 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 39: Introductory Electronics</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Master band theory, semiconductors, diodes, rectification, transistors, and amplification for JAMB success.</p>
+
+        <div class="part-header">🎯 Part 1: Classification of Materials</div>
+
+        <h2>1️⃣ Metals, Semiconductors & Insulators ⚡</h2>
+
+        <h3>The Band Theory Concept</h3>
+        <p>Imagine electrons in an atom live in <span class="highlight">"energy bands."</span> The two important bands are:</p>
+        <ul>
+          <li><strong>Valence Band (VB):</strong> Where electrons are normally stuck to atoms</li>
+          <li><strong>Conduction Band (CB):</strong> Where electrons are free to move and conduct electricity</li>
+        </ul>
+        <p>The gap between them is called the <span class="highlight">Band Gap (Forbidden Energy Gap).</span></p>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Material</th>
+              <th>Band Gap Size</th>
+              <th>Conductivity</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td><strong>Conductors (Metals)</strong></td>
+              <td>No gap (overlap)</td>
+              <td>Very High</td>
+              <td>Copper, Aluminum, Silver</td>
+            </tr>
+            <tr>
+              <td><strong>Semiconductors</strong></td>
+              <td>Small gap (~1 eV)</td>
+              <td>Moderate</td>
+              <td>Silicon (Si), Germanium (Ge)</td>
+            </tr>
+            <tr>
+              <td><strong>Insulators</strong></td>
+              <td>Large gap (>5 eV)</td>
+              <td>Negligible</td>
+              <td>Rubber, Glass, Wood</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>Key Points for JAMB:</strong><br>
+          • <strong>Metals:</strong> Valence and conduction bands overlap → electrons move freely<br>
+          • <strong>Semiconductors:</strong> Small gap → some electrons can jump to conduction band when heated or doped<br>
+          • <strong>Insulators:</strong> Large gap → electrons cannot jump → no conduction
+        </div>
+
+        <div class="part-header">🧪 Part 2: Semiconductors</div>
+
+        <h2>2️⃣ Intrinsic Semiconductors 🔬</h2>
+
+        <div class="component-box">
+          <h4>📋 Definition & Properties</h4>
+          <ul>
+            <li><strong>Definition:</strong> Pure semiconductor materials (Si or Ge) with NO impurities</li>
+            <li><strong>Properties:</strong>
+              <ul>
+                <li>Equal number of electrons and holes (charge carriers)</li>
+                <li>Conductivity increases with temperature</li>
+                <li>At 0K (absolute zero), behaves like an insulator</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div class="memory-aid">
+          💡 Memory Aid: <strong>Holes</strong> = When an electron leaves the valence band, it creates a vacancy called a "hole." Holes act as positive charge carriers.
+        </div>
+
+        <h2>3️⃣ Extrinsic Semiconductors (Doped) ⚙️</h2>
+
+        <p>To make semiconductors useful, we add impurities through <span class="highlight">doping:</span></p>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Dopant Added</th>
+              <th>Majority Carrier</th>
+              <th>Minority Carrier</th>
+              <th>Charge</th>
+            </tr>
+            <tr>
+              <td><strong>n-type</strong></td>
+              <td>Pentavalent (5 valence e⁻) e.g., Phosphorus, Arsenic</td>
+              <td>Electrons</td>
+              <td>Holes</td>
+              <td>Neutral overall</td>
+            </tr>
+            <tr>
+              <td><strong>p-type</strong></td>
+              <td>Trivalent (3 valence e⁻) e.g., Boron, Aluminum</td>
+              <td>Holes</td>
+              <td>Electrons</td>
+              <td>Neutral overall</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="memory-aid">
+          🧠 Memory Trick:<br>
+          • <strong>n-type</strong> = negative carriers (electrons) are majority<br>
+          • <strong>p-type</strong> = positive carriers (holes) are majority
+        </div>
+
+        <div class="warning-box">
+          <strong>Important:</strong> Both n-type and p-type remain electrically neutral overall because the dopant atoms are neutral—they just provide extra electrons or holes.
+        </div>
+
+        <div class="part-header">⚡ Part 3: The p-n Junction Diode</div>
+
+        <h2>4️⃣ Formation & Biasing 🔌</h2>
+
+        <h3>Formation of p-n Junction</h3>
+        <p>When you join p-type and n-type semiconductors:</p>
+        <ol>
+          <li>Electrons from n-side diffuse to p-side</li>
+          <li>Holes from p-side diffuse to n-side</li>
+          <li>This creates a <span class="highlight">depletion region</span> (no free carriers) at the junction</li>
+          <li>A <span class="highlight">barrier potential</span> develops (0.7V for Si, 0.3V for Ge)</li>
+        </ol>
+
+        <h3>Biasing (How to Use It)</h3>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Bias Type</th>
+              <th>Connection</th>
+              <th>Behavior</th>
+              <th>Current Flow</th>
+            </tr>
+            <tr>
+              <td><strong>Forward Bias</strong></td>
+              <td>+ve to p-side, -ve to n-side</td>
+              <td>Depletion region narrows</td>
+              <td>Conducts (High current)</td>
+            </tr>
+            <tr>
+              <td><strong>Reverse Bias</strong></td>
+              <td>+ve to n-side, -ve to p-side</td>
+              <td>Depletion region widens</td>
+              <td>Blocks (Minimal current)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <strong>Key JAMB Point:</strong> Diode acts as a one-way valve for current—allows flow in forward bias, blocks in reverse bias.
+        </div>
+
+        <div class="part-header">🔄 Part 4: Rectification</div>
+
+        <h2>5️⃣ AC to DC Conversion ⚡</h2>
+
+        <p>Since diodes conduct only in one direction, they're perfect for converting AC to DC.</p>
+
+        <h3>Half-Wave Rectification</h3>
+        <div class="component-box">
+          <ul>
+            <li>Uses <strong>one diode</strong></li>
+            <li>Allows only one half of AC cycle to pass</li>
+            <li>Output: Pulsating DC (half the input wave is missing)</li>
+            <li>Efficiency: Low (40.6%)</li>
+          </ul>
+        </div>
+
+        <h3>Full-Wave Rectification</h3>
+        <p>Two common methods:</p>
+
+        <div class="component-box">
+          <h4>1. Center-Tap Transformer (Two Diodes)</h4>
+          <ul>
+            <li>Uses two diodes and a center-tapped transformer</li>
+            <li>Both halves of AC cycle are used</li>
+            <li>Output: Pulsating DC with double the frequency of input</li>
+          </ul>
+        </div>
+
+        <div class="component-box">
+          <h4>2. Bridge Rectifier (Four Diodes)</h4>
+          <ul>
+            <li>Uses four diodes in a bridge configuration</li>
+            <li>No center-tapped transformer needed</li>
+            <li>More efficient use of transformer</li>
+            <li>Output: Full-wave rectified DC</li>
+          </ul>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Feature</th>
+              <th>Half-Wave</th>
+              <th>Full-Wave (Center-Tap)</th>
+              <th>Full-Wave (Bridge)</th>
+            </tr>
+            <tr>
+              <td><strong>Diodes needed</strong></td>
+              <td>1</td>
+              <td>2</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td><strong>Transformer</strong></td>
+              <td>Simple</td>
+              <td>Center-tapped required</td>
+              <td>Simple</td>
+            </tr>
+            <tr>
+              <td><strong>Output frequency</strong></td>
+              <td>Same as input</td>
+              <td>2 × input</td>
+              <td>2 × input</td>
+            </tr>
+            <tr>
+              <td><strong>Efficiency</strong></td>
+              <td>Lower</td>
+              <td>Higher</td>
+              <td>Higher</td>
+            </tr>
+            <tr>
+              <td><strong>Peak inverse voltage</strong></td>
+              <td>2Vm</td>
+              <td>2Vm</td>
+              <td>Vm</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="formula-box">
+          <strong>Smoothing:</strong> To get steady DC from pulsating DC, use a capacitor in parallel with the load—it charges during peaks and discharges during troughs.
+        </div>
+
+        <div class="part-header">🔊 Part 5: Transistors</div>
+
+        <h2>6️⃣ Transistors - Amplification 📢</h2>
+
+        <h3>What is a Transistor?</h3>
+        <p>A transistor is a semiconductor device with three layers used for:</p>
+        <ul>
+          <li><strong>Amplification</strong> (making weak signals stronger)</li>
+          <li><strong>Switching</strong> (controlling current flow)</li>
+        </ul>
+
+        <h3>Types</h3>
+        <div class="component-box">
+          <ul>
+            <li><strong>npn transistor:</strong> p-type sandwiched between two n-types</li>
+            <li><strong>pnp transistor:</strong> n-type sandwiched between two p-types</li>
+          </ul>
+        </div>
+
+        <h3>Structure and Terminals</h3>
+        <p>Every transistor has three terminals:</p>
+        <ul>
+          <li><strong>Emitter:</strong> Heavily doped, emits charge carriers</li>
+          <li><strong>Base:</strong> Thin, lightly doped, controls carrier flow</li>
+          <li><strong>Collector:</strong> Moderately doped, collects carriers</li>
+        </ul>
+
+        <h3>Basic Operation (Common Emitter)</h3>
+        <div class="formula-box">
+          <strong>Key Relationships:</strong><br>
+          • Small current into the Base controls large current from Collector to Emitter<br>
+          • <strong>Current gain (β) = Ic/Ib</strong> (typically 20-200)<br>
+          • <strong>Key Point:</strong> Small base current changes → Large collector current changes = Amplification
+        </div>
+
+        <div class="component-box">
+          <h4>🔊 Transistor as an Amplifier</h4>
+          <ul>
+            <li>Weak AC signal is fed into the base circuit</li>
+            <li>Small variations in base current cause large variations in collector current</li>
+            <li>The output is an amplified version of the input signal</li>
+          </ul>
+        </div>
+
+        <h2>📋 Quick Revision Summary</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Key Point</th>
+            </tr>
+            <tr>
+              <td><strong>Band Gap</strong></td>
+              <td>Energy difference between valence and conduction bands</td>
+            </tr>
+            <tr>
+              <td><strong>Intrinsic</strong></td>
+              <td>Pure semiconductor (Si, Ge)</td>
+            </tr>
+            <tr>
+              <td><strong>Extrinsic</strong></td>
+              <td>Doped semiconductor (n-type or p-type)</td>
+            </tr>
+            <tr>
+              <td><strong>n-type</strong></td>
+              <td>Electrons = majority carriers</td>
+            </tr>
+            <tr>
+              <td><strong>p-type</strong></td>
+              <td>Holes = majority carriers</td>
+            </tr>
+            <tr>
+              <td><strong>Diode</strong></td>
+              <td>p-n junction, conducts in forward bias only</td>
+            </tr>
+            <tr>
+              <td><strong>Rectification</strong></td>
+              <td>AC → DC conversion</td>
+            </tr>
+            <tr>
+              <td><strong>Transistor</strong></td>
+              <td>Three-layer device for amplification</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>✅ JAMB Objectives Checklist</h2>
+
+        <div class="checklist-box">
+          <p><strong>You should be able to:</strong></p>
+          <ul>
+            <li>Differentiate between conductors, semiconductors, and insulators</li>
+            <li>Distinguish between intrinsic and extrinsic semiconductors</li>
+            <li>Distinguish between electron and hole carriers</li>
+            <li>Distinguish between n-type and p-type semiconductors</li>
+            <li>Analyze diodes and transistors</li>
+            <li>Relate diodes to rectification and transistors to amplification</li>
+          </ul>
+        </div>
+
+        <div class="tips-box">
+          <h3>💡 Exam Tips</h3>
+          <ol>
+            <li><strong>Focus on understanding forward vs. reverse bias</strong>—JAMB loves this!</li>
+            <li><strong>Know the difference between half-wave and full-wave rectification</strong></li>
+            <li><strong>Remember:</strong> n-type has extra electrons, p-type has extra holes</li>
+            <li><strong>Band gap concept</strong> connects metals, semiconductors, and insulators</li>
+            <li><strong>Don't mix up:</strong> Transistors amplify; diodes rectify</li>
+          </ol>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Introductory Electronics!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 38 (Modern Physics) & Chapter 40 (Further Electronics)</p>
+        <button class="explore-btn" onclick="window.location.href='electronics-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav Bar -->
+  <div class="nav-bar">
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
+    });
+  </script>
+</body>
+</html>
