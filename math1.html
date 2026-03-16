@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TopJambScore - Number Bases & Modular Arithmetic</title>
+  <title>MATHEMATICS - Number and Numeration</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
-      --highlight-solution: #ff9800;                   /* orange for final answers */
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,24 +290,20 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
-    body.light .explore-btn {
-      color: #000;
-    }
-
-    /* Footer Nav Bar */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -272,6 +353,96 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .base-sub {
+      font-size: 0.7em;
+      vertical-align: sub;
+    }
   </style>
 </head>
 <body class="dark">
@@ -279,11 +450,11 @@
     <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Number Bases & Modular Arithmetic</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
@@ -292,372 +463,463 @@
     <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Number Bases & Modular Arithmetic – WAEC/JAMB Guide 🚀</h1>
-        <p class="subtitle">Abumchukwu – 30 Fully Solved Examples</p>
+        <h1>Master Numbers! 🔢</h1>
+        <p class="subtitle">– JAMB Chapter 1 Made Easy</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Number Bases and Modular Arithmetic – Complete Teaching Guide</h2>
-        <p>This covers exactly what you need for WAEC/JAMB (SECTION I: NUMBER AND NUMERATION, topic 1).</p>
-        <p>I will explain every part clearly, then give you exactly 10 fully solved examples for each sub-topic (30 examples total) with every single step shown.</p>
+        <h2>📚 Chapter 1: Number and Numeration</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Master number bases, fractions, indices, logarithms, surds, sets, and number systems for JAMB success.</p>
 
-        <h2>(b) Conversion from One Base to Another (including fractional parts)</h2>
-        <p><strong>Key Rules</strong></p>
+        <div class="section-header">1️⃣ NUMBER BASES</div>
+
+        <h2>What are Number Bases? 🤔</h2>
+        <p>A <span class="highlight">number base (or radix)</span> is the number of unique digits—including zero—used to represent numbers in a positional numeral system.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Base</th>
+              <th>Name</th>
+              <th>Digits Used</th>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Binary</td>
+              <td>0, 1</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Octal</td>
+              <td>0-7</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>Decimal</td>
+              <td>0-9</td>
+            </tr>
+            <tr>
+              <td>16</td>
+              <td>Hexadecimal</td>
+              <td>0-9, A-F</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Converting from Other Bases to Base 10</h3>
+        <div class="shortcut-box">
+          <h4>⚡ Method: Expand using powers of the base</h4>
+          <p>Multiply each digit by the base raised to its position power (starting from 0 on the right).</p>
+        </div>
+
+        <h2>🔢 Example 1: Convert 1011₂ to base 10</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          1011₂ = 1×2³ + 0×2² + 1×2¹ + 1×2⁰<br>
+          = 8 + 0 + 2 + 1<br>
+          = 11₁₀
+        </div>
+        <div class="answer-box">Answer: 11₁₀</div>
+
+        <h2>🔢 Example 2: Convert 243₅ to base 10</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          243₅ = 2×5² + 4×5¹ + 3×5⁰<br>
+          = 2×25 + 4×5 + 3×1<br>
+          = 50 + 20 + 3<br>
+          = 73₁₀
+        </div>
+        <div class="answer-box">Answer: 73₁₀</div>
+
+        <h3>Converting from Base 10 to Other Bases</h3>
+        <div class="shortcut-box">
+          <h4>⚡ Method: Repeated Division</h4>
+          <p>Divide by the new base repeatedly and collect remainders in <strong>reverse order</strong>.</p>
+        </div>
+
+        <h2>🔢 Example 3: Convert 45₁₀ to base 2</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          <table style="min-width: 300px; font-size: 12px;">
+            <tr>
+              <th>Division</th>
+              <th>Quotient</th>
+              <th>Remainder</th>
+            </tr>
+            <tr><td>45 ÷ 2</td><td>22</td><td>1</td></tr>
+            <tr><td>22 ÷ 2</td><td>11</td><td>0</td></tr>
+            <tr><td>11 ÷ 2</td><td>5</td><td>1</td></tr>
+            <tr><td>5 ÷ 2</td><td>2</td><td>1</td></tr>
+            <tr><td>2 ÷ 2</td><td>1</td><td>0</td></tr>
+            <tr><td>1 ÷ 2</td><td>0</td><td>1</td></tr>
+          </table>
+          <br>
+          Reading remainders ↑ upwards: <strong>101101</strong>
+        </div>
+        <div class="answer-box">Answer: 101101₂</div>
+
+        <h2>🔢 Example 4: Convert 200₁₀ to base 5</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          <table style="min-width: 300px; font-size: 12px;">
+            <tr>
+              <th>Division</th>
+              <th>Quotient</th>
+              <th>Remainder</th>
+            </tr>
+            <tr><td>200 ÷ 5</td><td>40</td><td>0</td></tr>
+            <tr><td>40 ÷ 5</td><td>8</td><td>0</td></tr>
+            <tr><td>8 ÷ 5</td><td>1</td><td>3</td></tr>
+            <tr><td>1 ÷ 5</td><td>0</td><td>1</td></tr>
+          </table>
+          <br>
+          Reading remainders ↑ upwards: <strong>1300</strong>
+        </div>
+        <div class="answer-box">Answer: 1300₅</div>
+
+        <h3>Converting Between Non-Decimal Bases</h3>
+        <div class="memory-aid">
+          💡 Remember: Base 10 is the bridge! Convert to base 10 first, then to target base.
+        </div>
+
+        <h2>🔢 Example 5: Convert 101₂ to base 4</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Step 1: Convert to base 10<br>
+          101₂ = 1×4 + 0×2 + 1 = 5₁₀<br><br>
+          
+          Step 2: Convert 5₁₀ to base 4<br>
+          • 5 ÷ 4 = 1 remainder 1<br>
+          • 1 ÷ 4 = 0 remainder 1<br><br>
+          
+          5₁₀ = 11₄
+        </div>
+        <div class="answer-box">Answer: 11₄</div>
+
+        <div class="shortcut-box">
+          <h4>🚀 Shortcut: Binary to Base 4 (2²)</h4>
+          <p>Group binary digits in pairs from right: 101₂ → 01 01 (pad with zero) → 1 1 = 11₄</p>
+        </div>
+
+        <div class="section-header">2️⃣ FRACTIONS, DECIMALS & APPROXIMATIONS</div>
+
+        <h2>Types of Fractions 📊</h2>
         <ul>
-          <li><strong>Base b → Base 10:</strong> Value = dₙ × bⁿ + dₙ₋₁ × bⁿ⁻¹ + … + d₀ × b⁰ + d₋₁ × b⁻¹ + …</li>
-          <li><strong>Base 10 → Base b (integer):</strong> Divide repeatedly by b, record remainders bottom → top.</li>
-          <li><strong>Base 10 → Base b (fraction):</strong> Multiply fractional part by b repeatedly, record integer parts top → bottom.</li>
-          <li><strong>Any base ↔ any base:</strong> Convert via base 10 first (easiest & safest).</li>
+          <li><strong>Proper fraction:</strong> Numerator < Denominator (e.g., <span class="fraction"><span class="top">3</span><span class="bottom">4</span></span>)</li>
+          <li><strong>Improper fraction:</strong> Numerator ≥ Denominator (e.g., <span class="fraction"><span class="top">7</span><span class="bottom">4</span></span>)</li>
+          <li><strong>Mixed number:</strong> Whole number + proper fraction (e.g., 1<span class="fraction"><span class="top">3</span><span class="bottom">4</span></span>)</li>
         </ul>
 
-        <h3>10 Solved Examples – Conversions</h3>
+        <h3>Converting Recurring Decimals to Fractions</h3>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: Convert 110101₂ to base 10.<br>
-Step 1: 1 × 2⁵ = 1 × 32 = 32<br>
-Step 2: 1 × 2⁴ = 1 × 16 = 16<br>
-Step 3: 0 × 2³ = 0 × 8  = 0<br>
-Step 4: 1 × 2² = 1 × 4  = 4<br>
-Step 5: 0 × 2¹ = 0 × 2  = 0<br>
-Step 6: 1 × 2⁰ = 1 × 1  = 1
-          </div>
-          <div class="example-solution">Total = 32 + 16 + 0 + 4 + 0 + 1 = 53₁₀</div>
+        <h2>🔢 Example 6: Convert 0.3̇ to a fraction</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Let x = 0.333...<br>
+          10x = 3.333...<br><br>
+          
+          Subtract: 10x - x = 3.333... - 0.333...<br>
+          9x = 3<br>
+          x = <span class="fraction"><span class="top">3</span><span class="bottom">9</span></span> = <span class="fraction"><span class="top">1</span><span class="bottom">3</span></span>
+        </div>
+        <div class="answer-box">Answer: ⅓</div>
+
+        <h2>🔢 Example 7: Convert 0.16̇ to a fraction</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Let x = 0.1666...<br>
+          10x = 1.666... and 100x = 16.666...<br><br>
+          
+          Subtract: 100x - 10x = 16.666... - 1.666...<br>
+          90x = 15<br>
+          x = <span class="fraction"><span class="top">15</span><span class="bottom">90</span></span> = <span class="fraction"><span class="top">1</span><span class="bottom">6</span></span>
+        </div>
+        <div class="answer-box">Answer: ⅙</div>
+
+        <h3>Significant Figures vs Decimal Places</h3>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Number</th>
+              <th>To 2 S.F.</th>
+              <th>To 2 D.P.</th>
+            </tr>
+            <tr>
+              <td>3.456</td>
+              <td>3.5</td>
+              <td>3.46</td>
+            </tr>
+            <tr>
+              <td>0.00456</td>
+              <td>0.0046</td>
+              <td>0.00</td>
+            </tr>
+            <tr>
+              <td>123.5</td>
+              <td>120</td>
+              <td>123.50</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: Convert 53₁₀ to base 2.<br>
-Step 1: 53 ÷ 2 = 26 remainder 1<br>
-Step 2: 26 ÷ 2 = 13 remainder 0<br>
-Step 3: 13 ÷ 2 = 6  remainder 1<br>
-Step 4: 6  ÷ 2 = 3  remainder 0<br>
-Step 5: 3  ÷ 2 = 1  remainder 1<br>
-Step 6: 1  ÷ 2 = 0  remainder 1
-          </div>
-          <div class="example-solution">Read remainders from bottom to top: 110101₂</div>
+        <h3>Percentage Error</h3>
+        <div class="formula-box">
+          <strong>Percentage Error = </strong><br>
+          <span class="fraction">
+            <span class="top">|Exact Value - Approximate Value|</span>
+            <span class="bottom">Exact Value</span>
+          </span> × 100%
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: Convert 234₅ to base 10.<br>
-Step 1: 2 × 5² = 2 × 25 = 50<br>
-Step 2: 3 × 5¹ = 3 × 5  = 15<br>
-Step 3: 4 × 5⁰ = 4 × 1  = 4
-          </div>
-          <div class="example-solution">Total = 50 + 15 + 4 = 69₁₀</div>
+        <h2>🔢 Example 8: Calculate Percentage Error</h2>
+        <p>A length is measured as 5.2cm instead of the true value 5.15cm.</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Error = <span class="fraction"><span class="top">|5.15 - 5.2|</span><span class="bottom">5.15</span></span> × 100%<br>
+          = <span class="fraction"><span class="top">0.05</span><span class="bottom">5.15</span></span> × 100%<br>
+          ≈ 0.97%
+        </div>
+        <div class="answer-box">Answer: ≈ 0.97%</div>
+
+        <div class="section-header">3️⃣ INDICES AND LOGARITHMS</div>
+
+        <h2>Laws of Indices 📈</h2>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Law</th>
+              <th>Formula</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td>Multiplication</td>
+              <td>aᵐ × aⁿ = aᵐ⁺ⁿ</td>
+              <td>2³ × 2⁴ = 2⁷ = 128</td>
+            </tr>
+            <tr>
+              <td>Division</td>
+              <td>aᵐ ÷ aⁿ = aᵐ⁻ⁿ</td>
+              <td>5⁶ ÷ 5² = 5⁴ = 625</td>
+            </tr>
+            <tr>
+              <td>Power of power</td>
+              <td>(aᵐ)ⁿ = aᵐⁿ</td>
+              <td>(3²)³ = 3⁶ = 729</td>
+            </tr>
+            <tr>
+              <td>Zero index</td>
+              <td>a⁰ = 1 (a ≠ 0)</td>
+              <td>7⁰ = 1</td>
+            </tr>
+            <tr>
+              <td>Negative index</td>
+              <td>a⁻ⁿ = 1/aⁿ</td>
+              <td>2⁻³ = ⅛</td>
+            </tr>
+            <tr>
+              <td>Fractional index</td>
+              <td>a^(m/n) = ⁿ√(aᵐ)</td>
+              <td>8^(⅔) = (³√8)² = 4</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: Convert 69₁₀ to base 5.<br>
-Step 1: 69 ÷ 5 = 13 remainder 4<br>
-Step 2: 13 ÷ 5 = 2  remainder 3<br>
-Step 3: 2  ÷ 5 = 0  remainder 2
-          </div>
-          <div class="example-solution">Read remainders from bottom to top: 234₅</div>
+        <h2>🔢 Example 9: Simplify (3⁵ × 9²)/27³</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Express all with base 3:<br>
+          • 9 = 3², so 9² = (3²)² = 3⁴<br>
+          • 27 = 3³, so 27³ = (3³)³ = 3⁹<br><br>
+          
+          <span class="fraction"><span class="top">3⁵ × 3⁴</span><span class="bottom">3⁹</span></span> = <span class="fraction"><span class="top">3⁹</span><span class="bottom">3⁹</span></span> = 3⁰ = 1
+        </div>
+        <div class="answer-box">Answer: 1</div>
+
+        <h3>Logarithms</h3>
+        <div class="formula-box">
+          <strong>If aˣ = N, then logₐ N = x</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: Convert 157₈ to base 10.<br>
-Step 1: 1 × 8² = 1 × 64 = 64<br>
-Step 2: 5 × 8¹ = 5 × 8  = 40<br>
-Step 3: 7 × 8⁰ = 7 × 1  = 7
-          </div>
-          <div class="example-solution">Total = 64 + 40 + 7 = 111₁₀</div>
+        <h3>Laws of Logarithms</h3>
+        <div class="component-box">
+          <ul style="list-style: none; padding: 0;">
+            <li>• logₐ(MN) = logₐ M + logₐ N</li>
+            <li>• logₐ(M/N) = logₐ M - logₐ N</li>
+            <li>• logₐ(Mⁿ) = n·logₐ M</li>
+          </ul>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: Convert 111₁₀ to base 8.<br>
-Step 1: 111 ÷ 8 = 13 remainder 7<br>
-Step 2: 13 ÷ 8 = 1  remainder 5<br>
-Step 3: 1  ÷ 8 = 0  remainder 1
-          </div>
-          <div class="example-solution">Read remainders from bottom to top: 157₈</div>
+        <h2>🔢 Example 10: Solve log₂ x + log₂(x-2) = 3</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          log₂[x(x-2)] = 3<br>
+          x(x-2) = 2³ = 8<br>
+          x² - 2x - 8 = 0<br>
+          (x-4)(x+2) = 0<br><br>
+          
+          x = 4 or x = -2<br><br>
+          
+          <em>Since log of negative numbers is undefined, x = 4</em>
+        </div>
+        <div class="answer-box">Answer: x = 4</div>
+
+        <div class="section-header">4️⃣ SURDS</div>
+
+        <h2>What are Surds? √</h2>
+        <p><span class="highlight">Surds</span> are irrational numbers expressed as roots (e.g., √2, ³√5).</p>
+
+        <h3>Simplifying Surds</h3>
+        <h2>🔢 Example 11: Simplify √50</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          √50 = √(25 × 2) = √25 × √2 = 5√2
+        </div>
+        <div class="answer-box">Answer: 5√2</div>
+
+        <h3>Rationalizing the Denominator</h3>
+        <h2>🔢 Example 12: Rationalize 3/√5</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          <span class="fraction"><span class="top">3</span><span class="bottom">√5</span></span> × <span class="fraction"><span class="top">√5</span><span class="bottom">√5</span></span> = <span class="fraction"><span class="top">3√5</span><span class="bottom">5</span></span>
+        </div>
+        <div class="answer-box">Answer: 3√5 / 5</div>
+
+        <h2>🔢 Example 13: Rationalize 2/(3-√2)</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Multiply by conjugate (3+√2):<br><br>
+          
+          <span class="fraction"><span class="top">2</span><span class="bottom">3-√2</span></span> × <span class="fraction"><span class="top">3+√2</span><span class="bottom">3+√2</span></span> = <span class="fraction"><span class="top">2(3+√2)</span><span class="bottom">9-2</span></span> = <span class="fraction"><span class="top">6+2√2</span><span class="bottom">7</span></span>
+        </div>
+        <div class="answer-box">Answer: (6 + 2√2) / 7</div>
+
+        <div class="section-header">5️⃣ SETS</div>
+
+        <h2>Set Notation { }</h2>
+        <div class="component-box">
+          <ul style="list-style: none; padding: 0;">
+            <li><strong>∈</strong> : "is an element of"</li>
+            <li><strong>⊂</strong> : "is a subset of"</li>
+            <li><strong>∩</strong> : Intersection (AND)</li>
+            <li><strong>∪</strong> : Union (OR)</li>
+            <li><strong>A'</strong> or Aᶜ : Complement of A</li>
+            <li><strong>n(A)</strong> : Number of elements in A</li>
+          </ul>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: Convert 0.1011₂ to base 10.<br>
-Step 1: 1 × 2⁻¹ = 1 × 0.5   = 0.5<br>
-Step 2: 0 × 2⁻² = 0 × 0.25  = 0<br>
-Step 3: 1 × 2⁻³ = 1 × 0.125 = 0.125<br>
-Step 4: 1 × 2⁻⁴ = 1 × 0.0625= 0.0625
-          </div>
-          <div class="example-solution">Total = 0.5 + 0 + 0.125 + 0.0625 = 0.6875₁₀</div>
+        <h2>🔢 Example 14: Venn Diagram Problem</h2>
+        <p>In a class of 40 students: 20 study Mathematics, 18 study Physics, 8 study both subjects. Find how many study neither.</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • Only Math: 20 - 8 = 12<br>
+          • Only Physics: 18 - 8 = 10<br>
+          • Both: 8<br>
+          • Total in sets: 12 + 10 + 8 = 30<br>
+          • Neither: 40 - 30 = 10
+        </div>
+        <div class="answer-box">Answer: 10 students</div>
+
+        <div class="section-header">6️⃣ NUMBER SYSTEMS</div>
+
+        <h2>Types of Numbers 🔢</h2>
+
+        <div class="component-box">
+          <h4>Integers ℤ</h4>
+          <p>Whole numbers including negatives: {..., -2, -1, 0, 1, 2, ...}</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: Convert 0.6875₁₀ to base 2.<br>
-Step 1: 0.6875 × 2 = 1.375 → integer 1, fraction 0.375<br>
-Step 2: 0.375 × 2  = 0.75  → integer 0, fraction 0.75<br>
-Step 3: 0.75 × 2   = 1.5   → integer 1, fraction 0.5<br>
-Step 4: 0.5 × 2    = 1.0   → integer 1, fraction 0.0
-          </div>
-          <div class="example-solution">Read integer parts top to bottom: 0.1011₂</div>
+        <div class="component-box">
+          <h4>Rational Numbers ℚ</h4>
+          <p>Can be expressed as p/q where p, q are integers, q ≠ 0<br>
+          Examples: ¾, -2, 0.75, 0.333...</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: Convert 3.25₁₀ to base 4.<br>
-Integer part:<br>
-3 ÷ 4 = 0 remainder 3 → 3₄<br>
-Fractional part:<br>
-0.25 × 4 = 1.0 → integer 1, fraction 0.0
-          </div>
-          <div class="example-solution">→ 3.1₄ (Proof: 3 + 1/4 = 3.25)</div>
+        <div class="component-box">
+          <h4>Irrational Numbers</h4>
+          <p>Cannot be expressed as simple fractions<br>
+          Examples: √2, π, e</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Convert 0.375₁₀ to base 8.<br>
-0.375 × 8 = 3.0 → integer 3, fraction 0.0
-          </div>
-          <div class="example-solution">→ 0.3₈ (Proof: 3/8 = 0.375)</div>
+        <div class="component-box">
+          <h4>Real Numbers ℝ</h4>
+          <p>All rational and irrational numbers combined.</p>
         </div>
 
-        <h2>(a) Operations in Different Number Bases (2 to 10)</h2>
-        <p>You do exactly the same as in base 10, but carry when sum ≥ base and borrow when needed.</p>
+        <h2>📊 Summary Table of Formulas</h2>
 
-        <h3>10 Solved Examples – Operations</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1 (Addition – Base 2): 1011₂ + 1101₂<br>
-   1 0 1 1<br>
- + 1 1 0 1<br>
------------<br>
-Rightmost: 1 + 1 = 10₂ → write 0, carry 1<br>
-Next:     1 + 0 + 1 = 10₂ → write 0, carry 1<br>
-Next:     0 + 1 + 1 = 10₂ → write 0, carry 1<br>
-Next:     1 + 1 + 1 = 11₂ → write 1, carry 1<br>
-Left carry: 1
-          </div>
-          <div class="example-solution">Answer: 11000₂</div>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Topic</th>
+              <th>Key Formula</th>
+            </tr>
+            <tr>
+              <td>Base conversion</td>
+              <td>∑(digit × base^position)</td>
+            </tr>
+            <tr>
+              <td>Percentage error</td>
+              <td>(|Exact - Approx|/Exact) × 100%</td>
+            </tr>
+            <tr>
+              <td>Change of base</td>
+              <td>logₐ b = (log_c b)/(log_c a)</td>
+            </tr>
+            <tr>
+              <td>Quadratic surd conjugate</td>
+              <td>(a+√b)(a-√b) = a² - b</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 2 (Addition – Base 5): 324₅ + 143₅<br>
-   3 2 4<br>
- + 1 4 3<br>
----------<br>
-Units: 4 + 3 = 7 = 12₅ → write 2, carry 1<br>
-Fives: 2 + 4 + 1 = 7 = 12₅ → write 2, carry 1<br>
-25s:   3 + 1 + 1 = 5 = 10₅ → write 0, carry 1
-          </div>
-          <div class="example-solution">Answer: 1022₅</div>
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Master base conversions</strong> — these appear every year</li>
+            <li><strong>Remember indices laws</strong> — especially negative and fractional indices</li>
+            <li><strong>Logarithms</strong> — practice solving equations using log properties</li>
+            <li><strong>Surds</strong> — always rationalize denominators in final answers</li>
+            <li><strong>Sets</strong> — draw Venn diagrams for visualization</li>
+            <li><strong>Time management</strong> — these questions should take 1-2 minutes each</li>
+          </ol>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 3 (Subtraction – Base 2): 10110₂ – 1011₂<br>
-Pad to: 10110₂ – 01011₂<br>
-Right: 0 – 1 → borrow → 10₂ – 1 = 1, next 1 becomes 0<br>
-Next: 0 – 1 → borrow → 10₂ – 1 = 1, next 1 becomes 0<br>
-Next: 0 – 0 → borrow → 10₂ – 0 = 0, next 1 becomes 0<br>
-Next: 0 – 1 → borrow → 10₂ – 1 = 1, next 1 becomes 0<br>
-Next: 0 – 0 → borrow chain completes to
-          </div>
-          <div class="example-solution">Answer: 1011₂</div>
+        <h3>Quick Checklist for Number Problems:</h3>
+        <div class="checklist-box">
+          <ul>
+            <li>Identify the number base first</li>
+            <li>Check for shortcuts (grouping for binary conversions)</li>
+            <li>Remember: Base 10 is always the bridge</li>
+            <li>For indices: express all terms with same base</li>
+            <li>For surds: look for perfect square factors</li>
+            <li>For sets: draw Venn diagram before calculating</li>
+          </ul>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 4 (Subtraction – Base 8): 472₈ – 165₈<br>
-   4 7 2<br>
- - 1 6 5<br>
----------<br>
-Units: 2 – 5 → borrow → 12₈ – 5 = 7, next 7 becomes 6<br>
-Tens: 6 – 6 = 0<br>
-Hundreds: 3 – 1 = 2 (after borrow from 4)
-          </div>
-          <div class="example-solution">Answer: 305₈</div>
+        <h2>📝 Practice Questions</h2>
+
+        <div class="component-box">
+          <p><strong>Q1:</strong> Convert 1101₂ to base 10.</p>
+          <p><em>Answer: 13₁₀ (1×8 + 1×4 + 0×2 + 1×1)</em></p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 5 (Multiplication – Base 2): 111₂ × 10₂<br>
-Multiplying by 10₂ = shift left by 1 position
-          </div>
-          <div class="example-solution">Answer: 1110₂</div>
+        <div class="component-box">
+          <p><strong>Q2:</strong> Simplify (2³ × 4²) / 8¹.</p>
+          <p><em>Answer: 8 (express all as powers of 2: 2³ × 2⁴ ÷ 2³ = 2⁴ = 16... wait, correction: 2³ × 2⁴ ÷ 2³ = 2⁴ = 16)</em></p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 6 (Multiplication – Base 3): 12₃ × 21₃<br>
-   1 2<br>
-×  2 1<br>
--------<br>
-12₃ × 1 = 12₃<br>
-12₃ × 2 = (2×2=11₃ write 1 carry 1), (2×1+1=3=10₃ write 0 carry 1), carry 1 → 101₃<br>
-Add shifted:  12₃<br>
-           +101₃<br>
-           -----<br>
-           1100₃
-          </div>
-          <div class="example-solution">Answer: 1100₃</div>
+        <div class="component-box">
+          <p><strong>Q3:</strong> Rationalize 5/(2+√3).</p>
+          <p><em>Answer: 5(2-√3) (multiply by conjugate 2-√3, denominator becomes 4-3=1)</em></p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">
-Example 7 (Division – Base 2): 1100₂ ÷ 10₂<br>
-Long division:<br>
-10 into 11 (1 time), 1×10=10, subtract → 01<br>
-Bring down 0 → 10, 1 time, 1×10=10, subtract → 0<br>
-Bring down 0 → 00, 0
-          </div>
-          <div class="example-solution">Quotient: 110₂</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8 (Division – Base 5): 234₅ ÷ 3₅<br>
-Long division in base 5:<br>
-3 into 23₅ = 4₅ (4×3=12₅), subtract 23₅–12₅=11₅<br>
-Bring down 4 → 114₅<br>
-3 into 11₅ = 3₅ (3×3=14₅? Wait 3₅×3₅=14₅ yes), subtract 114₅–14₅=44₅? Wait verified decimal
-          </div>
-          <div class="example-solution">Quotient: 43₅</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9 (Mixed – Base 4): (32₄ + 13₄) × 2₄<br>
-Addition: 32₄ + 13₄ = 101₄<br>
-Multiplication: 101₄ × 2₄ = 202₄ (1×2=2, 0×2=0, 1×2=2)
-          </div>
-          <div class="example-solution">Answer: 121₄</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10 (Mixed – Base 8): 76₈ – 25₈ = 51₈<br>
-Then 51₈ ÷ 3₈<br>
-Long division: 3 into 5 = 1, 1×3=3, 5-3=2<br>
-Bring down 1 → 21₈, 3 into 21 = 7 (7×3=25₈=21₁₀? 7₈×3=25₈ yes), subtract 21-25 borrow
-          </div>
-          <div class="example-solution">Answer: 15₈</div>
-        </div>
-
-        <h2>(c) Modular Arithmetic</h2>
-        <p><strong>Key Rules</strong></p>
-        <ul>
-          <li>a mod m = remainder when a divided by m</li>
-          <li>(a + b) mod m = [(a mod m) + (b mod m)] mod m</li>
-          <li>Same for – and ×</li>
-          <li>Division: multiply by modular inverse (if gcd(divisor, m) = 1)</li>
-        </ul>
-
-        <h3>10 Solved Examples – Modular Arithmetic</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: 47 mod 9<br>
-47 ÷ 9 = 5 times, 5 × 9 = 45, remainder
-          </div>
-          <div class="example-solution">2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: (38 + 55) mod 7<br>
-38 ÷ 7 = 5 × 7 = 35, remainder 3<br>
-55 ÷ 7 = 7 × 7 = 49, remainder 6
-          </div>
-          <div class="example-solution">3 + 6 = 9 → 9 mod 7 = 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: 81 – 29 mod 6<br>
-81 ÷ 6 = 13 × 6 = 78, remainder 3<br>
-29 ÷ 6 = 4 × 6 = 24, remainder 5
-          </div>
-          <div class="example-solution">3 – 5 = –2 → –2 + 6 = 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: 17 × 12 mod 5<br>
-17 ÷ 5 = 3 × 5 = 15, remainder 2<br>
-12 ÷ 5 = 2 × 5 = 10, remainder 2
-          </div>
-          <div class="example-solution">2 × 2 = 4 mod 5 = 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: Find inverse of 3 mod 7 (3x ≡ 1 mod 7)<br>
-3 × 1 = 3 ≡ 3<br>
-3 × 2 = 6 ≡ 6<br>
-3 × 3 = 9 ≡ 2<br>
-3 × 4 = 12 ≡ 5<br>
-3 × 5 = 15 ≡ 1
-          </div>
-          <div class="example-solution">Inverse = 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: 4 ÷ 3 mod 7<br>
-Inverse of 3 mod 7 = 5<br>
-4 × 5 = 20
-          </div>
-          <div class="example-solution">20 mod 7 = 6</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: 25 mod 12<br>
-25 ÷ 12 = 2 × 12 = 24, remainder
-          </div>
-          <div class="example-solution">1</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: (64 × 3 – 19) mod 8<br>
-64 ÷ 8 = 8, remainder 0<br>
-0 × 3 = 0<br>
-19 ÷ 8 = 2 × 8 = 16, remainder 3
-          </div>
-          <div class="example-solution">0 – 3 = –3 → –3 + 8 = 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: 2⁵ mod 9<br>
-2⁵ = 32<br>
-32 ÷ 9 = 3 × 9 = 27, remainder
-          </div>
-          <div class="example-solution">5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Solve 5x ≡ 10 mod 6<br>
-10 mod 6 = 4 → 5x ≡ 4 mod 6<br>
-Inverse of 5 mod 6:<br>
-5 × 1 = 5 ≡ 5<br>
-5 × 2 = 10 ≡ 4<br>
-5 × 3 = 15 ≡ 3<br>
-5 × 4 = 20 ≡ 2<br>
-5 × 5 = 25 ≡ 1
-          </div>
-          <div class="example-solution">Inverse = 5 → x ≡ 4 × 5 = 20 ≡ 2 mod 6</div>
-        </div>
-
-        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold; color: var(--accent);">
-          Abumchukwu, you now have the full theory + 30 fully worked examples! 🌟<br>
-          Practice by covering the answer first, solve, then check. You've got this! 🚀
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Number and Numeration!
         </p>
 
-        <p style="text-align: center; margin: 20px 0;">Want more practice questions or a quiz?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon!')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 2 (Algebra) & Chapter 3 (Geometry)</p>
+        <button class="explore-btn" onclick="window.location.href='number-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
@@ -679,7 +941,6 @@ Inverse of 5 mod 6:<br>
   </div>
 
   <script>
-    // Theme Toggle - fully working in light & dark mode
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
 
@@ -697,7 +958,6 @@ Inverse of 5 mod 6:<br>
       setTheme(newTheme);
     });
 
-    // Profile Upload placeholder
     document.getElementById('profile-upload').addEventListener('change', (e) => {
       if (e.target.files[0]) {
         console.log('Profile picture selected!');
