@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Motion in Physics</title>
+  <title>PHYSICS - Motion</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);
-      --highlight-solution: #ff9800;
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,59 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
     }
 
     table {
       width: 100%;
+      min-width: 500px;
       border-collapse: collapse;
-      margin: 12px 0;
       font-size: 14px;
     }
 
     th, td {
-      border: 1px solid #444;
-      padding: 8px;
+      padding: 12px 16px;
       text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
     }
 
     th {
-      background: #3a3a5a;
       color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
     }
 
-    .graph-img {
-      max-width: 100%;
-      border-radius: 10px;
-      margin: 12px 0;
-      border: 2px solid #444;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -231,21 +290,18 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    body.light .explore-btn {
-      color: #000;
     }
 
     .nav-bar {
@@ -297,13 +353,65 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .big-five-box {
+      background: rgba(29, 185, 84, 0.2);
+      border: 2px solid var(--accent);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .big-five-box h4 {
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Motion in Physics</div>
+      <div class="header">PHYSICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
@@ -313,1334 +421,739 @@
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Motion in Physics – JAMB Guide 🚀</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Master Motion! 🏃</h1>
+        <p class="subtitle">– JAMB Chapter 3 Made Easy</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Motion in Physics</h2>
-        <p>Motion is the change in position of an object with respect to time and a reference point. Based on New School Physics, we'll cover the subtopics step by step in a concise manner.</p>
+        <h2>📚 Chapter 3: Motion</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Master linear motion, projectile motion, Newton's laws, momentum, circular motion, and simple harmonic motion with complete formulas and calculations for JAMB success.</p>
 
-        <h2>(a) Newton’s Laws of Motion</h2>
-        <p><strong>Step 1: Inertia, Mass, and Force</strong> — Inertia is the tendency of an object to resist changes in its state of motion. <strong>Mass</strong> measures inertia (scalar, <strong>kg</strong>). <strong>Force</strong> is a push or pull causing motion change (vector, <strong>N</strong>).</p>
-        <p><strong>Step 2: First Law (Inertia)</strong> — An object at rest stays at rest, or in uniform motion stays in motion, unless acted upon by a net external force.</p>
-        <p><strong>Step 3: Second Law</strong> — Net force <strong>F = ma</strong>, where a is acceleration. Acceleration is directly proportional to net force and inversely proportional to mass.</p>
-        <p><strong>Step 4: Third Law</strong> — For every action, there is an equal and opposite reaction.</p>
-        <p><strong>Step 5: Impulse and Momentum</strong> — Momentum <strong>p = mv</strong>. Impulse <strong>J = Ft = Δp</strong> (change in momentum).</p>
-        <p><strong>Step 6: Force-Time Graph</strong> — Area under the graph gives impulse (<strong>J = ∫F dt</strong>).</p>
-        <p><strong>Step 7: Conservation of Linear Momentum</strong> — In isolated systems (no external forces), total momentum before = total momentum after collision. For two bodies: <strong>m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂</strong>.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Newton_laws_of_motion.svg/800px-Newton_laws_of_motion.svg.png" alt="Diagram illustrating Newton's three laws of motion">
+        <div class="section-header">🎯 SECTION A: FOUNDATIONS OF MOTION</div>
 
-        <h3>12 JAMB-Style Examples for (a)</h3>
+        <h2>1️⃣ Types of Motion 🔄</h2>
 
-        <div class="example-block">
-          <div class="example-problem">1. Which law states that force equals mass times acceleration?</div>
-          <div class="example-problem">
-A. First B. Second C. Third D. Conservation<br>
-Step 1: Recall Newton's laws.<br>
-Step 2: <strong>F = ma</strong> is the second law.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Second</div>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Examples</th>
+            </tr>
+            <tr>
+              <td><strong>Translational</strong></td>
+              <td>Object moves from one point to another</td>
+              <td>Car moving on road</td>
+            </tr>
+            <tr>
+              <td><strong>Rotational</strong></td>
+              <td>Object spins around an axis</td>
+              <td>Fan blades, wheel</td>
+            </tr>
+            <tr>
+              <td><strong>Oscillatory</strong></td>
+              <td>Back-and-forth motion about a point</td>
+              <td>Pendulum, swing</td>
+            </tr>
+            <tr>
+              <td><strong>Random</strong></td>
+              <td>Irregular, unpredictable motion</td>
+              <td>Gas molecules, Brownian motion</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. Inertia is measured by:</div>
-          <div class="example-problem">
-A. Force B. Acceleration C. Mass D. Velocity<br>
-Step 1: Inertia resists change in motion.<br>
-Step 2: Mass quantifies it.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Mass</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. Impulse is:</div>
-          <div class="example-problem">
-A. mv B. Ft C. ma D. p<br>
-Step 1: Impulse changes momentum.<br>
-Step 2: <strong>J = Ft = Δp</strong>.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Ft</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. In a force-time graph, the area represents:</div>
-          <div class="example-problem">
-A. Force B. Time C. Impulse D. Momentum<br>
-Step 1: Area = ∫F dt.<br>
-Step 2: Area = impulse.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Impulse</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. For conservation of momentum, system must be:</div>
-          <div class="example-problem">
-A. Open B. Isolated C. Accelerated D. In motion<br>
-Step 1: No external forces.<br>
-Step 2: Isolated system.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Isolated</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. If two masses collide and stick, momentum is:</div>
-          <div class="example-problem">
-A. Lost B. Gained C. Conserved D. Zero<br>
-Step 1: In isolated system.<br>
-Step 2: Total momentum conserved.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Conserved</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Relationship between mass and acceleration for constant force:</div>
-          <div class="example-problem">
-A. Direct B. Inverse C. Equal D. None<br>
-Step 1: <strong>F = ma</strong>.<br>
-Step 2: a = F/m → inverse to mass.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Inverse</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. The third law explains:</div>
-          <div class="example-problem">
-A. Inertia B. Acceleration C. Action-reaction D. Momentum<br>
-Step 1: Equal and opposite forces.<br>
-Step 2: Action-reaction.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Action-reaction</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. Change in momentum equals:</div>
-          <div class="example-problem">
-A. Impulse B. Force C. Acceleration D. Velocity<br>
-Step 1: <strong>Δp = J</strong>.<br>
-Step 2: Impulse = change in momentum.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. Impulse</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. In conservation of momentum, external force is:</div>
-          <div class="example-problem">
-A. Present B. Zero C. Variable D. Constant<br>
-Step 1: Isolated system.<br>
-Step 2: Net external force zero.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Zero</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">11. Momentum unit is:</div>
-          <div class="example-problem">
-A. kg m/s B. N C. m/s² D. kg<br>
-Step 1: <strong>p = mv</strong>.<br>
-Step 2: kg × m/s.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. kg m/s</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">12. First law is also called law of:</div>
-          <div class="example-problem">
-A. Action-reaction B. Inertia C. Acceleration D. Conservation<br>
-Step 1: Objects resist change.<br>
-Step 2: Inertia.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Inertia</div>
-        </div>
-
-        <h2>(b) Types of Motion</h2>
-        <p><strong>Step 1: Translational</strong> — Body moves along a straight or curved path without rotation (e.g., car moving).</p>
-        <p><strong>Step 2: Oscillatory</strong> — To-and-fro motion about a mean position (e.g., pendulum).</p>
-        <p><strong>Step 3: Rotational</strong> — Motion around a fixed axis (e.g., wheel spinning).</p>
-        <p><strong>Step 4: Spin</strong> — Rotation about own axis (e.g., top spinning).</p>
-        <p><strong>Step 5: Random</strong> — Irregular, unpredictable path (e.g., Brownian motion).</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Types_of_motion.svg/800px-Types_of_motion.svg.png" alt="Diagram illustrating different types of motion">
-
-        <h3>12 JAMB-Style Examples for (b)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Motion of a swinging pendulum is:</div>
-          <div class="example-problem">
-A. Translational B. Oscillatory C. Rotational D. Random<br>
-Step 1: To-and-fro about mean position.<br>
-Step 2: Oscillatory.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Oscillatory</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. Earth's rotation on its axis is:</div>
-          <div class="example-problem">
-A. Spin B. Translational C. Oscillatory D. Random<br>
-Step 1: About own axis.<br>
-Step 2: Spin.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. Spin</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. Gas molecules' motion is:</div>
-          <div class="example-problem">
-A. Rotational B. Random C. Translational D. Oscillatory<br>
-Step 1: Irregular paths.<br>
-Step 2: Random.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Random</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. A ball rolling down a hill shows:</div>
-          <div class="example-problem">
-A. Oscillatory B. Rotational C. Translational D. Spin<br>
-Step 1: Overall path movement.<br>
-Step 2: Translational (with rotation).<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Translational</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. Fan blades motion:</div>
-          <div class="example-problem">
-A. Random B. Oscillatory C. Rotational D. Translational<br>
-Step 1: Around fixed axis.<br>
-Step 2: Rotational.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Rotational</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. Vibrating string:</div>
-          <div class="example-problem">
-A. Translational B. Oscillatory C. Spin D. Random<br>
-Step 1: Back and forth.<br>
-Step 2: Oscillatory.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Oscillatory</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Satellite orbiting:</div>
-          <div class="example-problem">
-A. Rotational B. Translational C. Random D. Oscillatory<br>
-Step 1: Curved path around center.<br>
-Step 2: Translational (circular).<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Translational</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Motion of a spinning top:</div>
-          <div class="example-problem">
-A. Translational B. Oscillatory C. Rotational D. Random<br>
-Step 1: About own axis.<br>
-Step 2: Spin (rotational).<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Rotational</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. Brownian motion is:</div>
-          <div class="example-problem">
-A. Translational B. Random C. Oscillatory D. Spin<br>
-Step 1: Irregular paths.<br>
-Step 2: Random.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Random</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. Motion of a car on a straight road:</div>
-          <div class="example-problem">
-A. Rotational B. Oscillatory C. Translational D. Random<br>
-Step 1: Straight path.<br>
-Step 2: Translational.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Translational</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">11. Vibration of a tuning fork is:</div>
-          <div class="example-problem">
-A. Translational B. Oscillatory C. Spin D. Random<br>
-Step 1: Back and forth.<br>
-Step 2: Oscillatory.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Oscillatory</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">12. Motion of electrons in an atom:</div>
-          <div class="example-problem">
-A. Rotational B. Random C. Translational D. Oscillatory<br>
-Step 1: Unpredictable paths.<br>
-Step 2: Random.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Random</div>
-        </div>
-
-        <h2>(c) Relative Motion</h2>
-        <p><strong>Step 1:</strong> Motion observed from a moving frame. Velocity of A relative to B = <strong>v_A - v_B</strong>.</p>
-        <p><strong>Step 2:</strong> For collinear: same direction |v₁ - v₂|, opposite v₁ + v₂.</p>
-        <p><strong>Step 3:</strong> Applications: Rain appears slanted from moving train.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Relative_velocity.svg/800px-Relative_velocity.svg.png" alt="Diagram showing relative motion">
-
-        <h3>12 JAMB-Style Examples for (c)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Two cars moving same direction at 20 m/s and 30 m/s, relative speed:</div>
-          <div class="example-problem">
-A. 10 m/s B. 50 m/s C. 0 m/s D. 25 m/s<br>
-Step 1: Same direction.<br>
-Step 2: 30 - 20 = 10 m/s.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. 10 m/s</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. Boat in river current 5 m/s, boat speed 10 m/s upstream, relative to ground:</div>
-          <div class="example-problem">
-A. 15 m/s B. 5 m/s C. 10 m/s D. 0 m/s<br>
-Step 1: Opposite.<br>
-Step 2: 10 - 5 = 5 m/s.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. 5 m/s</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. Relative motion is zero when:</div>
-          <div class="example-problem">
-A. Different speeds B. Same velocity C. Opposite D. Accelerated<br>
-Step 1: v_rel = 0.<br>
-Step 2: Same velocity.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Same velocity</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. Passenger in train sees stationary tree moving:</div>
-          <div class="example-problem">
-A. Forward B. Backward C. Still D. Up<br>
-Step 1: Relative to train.<br>
-Step 2: Backward.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Backward</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. Two objects approaching at 40 km/h each, relative speed:</div>
-          <div class="example-problem">
-A. 80 km/h B. 20 km/h C. 0 D. 40<br>
-Step 1: Opposite.<br>
-Step 2: 40 + 40 = 80 km/h.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. 80 km/h</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. Relative acceleration if both constant velocity:</div>
-          <div class="example-problem">
-A. Zero B. Sum C. Difference D. Product<br>
-Step 1: a_rel = a1 - a2.<br>
-Step 2: Both a=0, a_rel=0.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. Zero</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. In relative motion, reference is:</div>
-          <div class="example-problem">
-A. Fixed B. Moving C. Any D. Earth<br>
-Step 1: Can be moving.<br>
-Step 2: Any frame.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Any</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Two trains same direction, 60 km/h and 40 km/h, relative:</div>
-          <div class="example-problem">
-A. 20 km/h B. 100 km/h C. 50 km/h D. 0<br>
-Step 1: Same.<br>
-Step 2: 60 - 40 = 20 km/h.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. 20 km/h</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. Plane 500 km/h, wind 50 km/h opposite, ground speed:</div>
-          <div class="example-problem">
-A. 550 km/h B. 450 km/h C. 500 km/h D. 0<br>
-Step 1: 500 - 50 = 450 km/h.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. 450 km/h</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. Relative velocity if one stationary:</div>
-          <div class="example-problem">
-A. Zero B. Velocity of moving C. Sum D. Difference<br>
-Step 1: v_moving - 0.<br>
-Step 2: Velocity of moving.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Velocity of moving</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">11. In rain from moving bus, rain appears:</div>
-          <div class="example-problem">
-A. Vertical B. Slanted backward C. Slanted forward D. Horizontal<br>
-Step 1: Bus forward.<br>
-Step 2: Slanted backward relative to bus.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Slanted backward</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">12. Two objects same speed opposite, relative speed:</div>
-          <div class="example-problem">
-A. Zero B. Double C. Half D. Same<br>
-Step 1: Opposite.<br>
-Step 2: Double.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Double</div>
-        </div>
-
-        <h2>(d) Causes of Motion</h2>
-        <p><strong>Step 1: Force causes motion or change in motion.</strong></p>
-        <p><strong>Step 2: Unbalanced force leads to acceleration.</strong></p>
-        <p><strong>Step 3: No force needed for constant velocity (inertia).</strong></p>
-
-        <h3>12 JAMB-Style Examples for (d)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Primary cause of motion:</div>
-          <div class="example-problem">
-A. Velocity B. Force C. Mass D. Time<br>
-Step 1: Newton's laws.<br>
-Step 2: Force.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Force</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. Object moves at constant speed due to:</div>
-          <div class="example-problem">
-A. Net force B. Zero net force C. Gravity D. Friction<br>
-Step 1: First law.<br>
-Step 2: Zero net force.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Zero net force</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. Change in direction caused by:</div>
-          <div class="example-problem">
-A. Balanced force B. Unbalanced force C. Inertia D. Momentum<br>
-Step 1: Acceleration changes direction.<br>
-Step 2: Unbalanced force.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Unbalanced force</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. Resting object starts moving when:</div>
-          <div class="example-problem">
-A. No force B. Balanced force C. Unbalanced force D. Momentum<br>
-Step 1: Overcome inertia.<br>
-Step 2: Unbalanced force.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Unbalanced force</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. Circular motion requires:</div>
-          <div class="example-problem">
-A. Constant force B. Centripetal force C. Zero force D. Tangential<br>
-Step 1: Direction change.<br>
-Step 2: Centripetal force.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Centripetal force</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. Free fall caused by:</div>
-          <div class="example-problem">
-A. Friction B. Gravity C. Inertia D. Thrust<br>
-Step 1: Gravitational force.<br>
-Step 2: Gravity.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Gravity</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Stopping a moving object:</div>
-          <div class="example-problem">
-A. No force B. Opposing force C. Same direction force D. Perpendicular<br>
-Step 1: Decelerate.<br>
-Step 2: Opposing force.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Opposing force</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Motion in vacuum continues due to:</div>
-          <div class="example-problem">
-A. Force B. Inertia C. Gravity D. Friction<br>
-Step 1: No forces.<br>
-Step 2: Inertia.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Inertia</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. Cause of projectile motion:</div>
-          <div class="example-problem">
-A. Gravity only B. Initial force C. Gravity and initial velocity D. Air resistance<br>
-Step 1: Horizontal constant v.<br>
-Step 2: Vertical gravity.<br>
-Step 3: Initial velocity + gravity.<br>
-Step 4: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Gravity and initial velocity</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. Balanced forces cause:</div>
-          <div class="example-problem">
-A. Acceleration B. Constant velocity C. Deceleration D. Change direction<br>
-Step 1: Net zero.<br>
-Step 2: Constant velocity.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Constant velocity</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">11. Rocket launch cause:</div>
-          <div class="example-problem">
-A. Gravity B. Thrust (force) C. Inertia D. Momentum<br>
-Step 1: Propellant force.<br>
-Step 2: Thrust.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Thrust (force)</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">12. Friction opposes:</div>
-          <div class="example-problem">
-A. Motion B. Rest C. Acceleration D. Force<br>
-Step 1: Opposes relative motion.<br>
-Step 2: Motion.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. Motion</div>
-        </div>
-
-        <h2>(e) Types of Force</h2>
-        <p><strong>Step 1: Contact Forces</strong> — Require physical touch: friction, tension, normal, push/pull.</p>
-        <p><strong>Step 2: Force Field (Non-Contact)</strong> — Act at distance: gravitational, magnetic, electric, nuclear.</p>
-        <p><strong>Step 3: Examples</strong> — Gravitational pull, magnetic attraction, electric repulsion.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Contact_non_contact_forces.svg/800px-Contact_non_contact_forces.svg.png" alt="Diagram showing contact and non-contact forces">
-
-        <h3>12 JAMB-Style Examples for (e)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Friction is a:</div>
-          <div class="example-problem">
-A. Contact force B. Field force C. Gravitational D. Magnetic<br>
-Step 1: Requires touch.<br>
-Step 2: Contact.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. Contact force</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. Gravity is:</div>
-          <div class="example-problem">
-A. Contact B. Force field C. Tension D. Normal<br>
-Step 1: At distance.<br>
-Step 2: Field.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Force field</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. Push and pull are:</div>
-          <div class="example-problem">
-A. Field B. Contact C. Electric D. Nuclear<br>
-Step 1: Physical contact.<br>
-Step 2: Contact.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Contact</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. Magnetic attraction:</div>
-          <div class="example-problem">
-A. Contact B. Field C. Friction D. Tension<br>
-Step 1: No touch.<br>
-Step 2: Field.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Field</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. Electric force between charges:</div>
-          <div class="example-problem">
-A. Contact B. Field C. Gravitational D. Normal<br>
-Step 1: At distance.<br>
-Step 2: Field.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Field</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. Normal force:</div>
-          <div class="example-problem">
-A. Field B. Contact C. Magnetic D. Nuclear<br>
-Step 1: Surface contact.<br>
-Step 2: Contact.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Contact</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Gravitational pull on Earth:</div>
-          <div class="example-problem">
-A. Contact B. Field C. Friction D. Tension<br>
-Step 1: At distance.<br>
-Step 2: Field.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Field</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Tension in a string:</div>
-          <div class="example-problem">
-A. Field B. Contact C. Gravitational D. Electric<br>
-Step 1: Pull through contact.<br>
-Step 2: Contact.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Contact</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. Nuclear force:</div>
-          <div class="example-problem">
-A. Contact B. Field C. Friction D. Tension<br>
-Step 1: At short distance.<br>
-Step 2: Field.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Field</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. Viscous drag:</div>
-          <div class="example-problem">
-A. Field B. Contact C. Gravitational D. Magnetic<br>
-Step 1: Fluid contact.<br>
-Step 2: Contact.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Contact</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">11. Electrostatic force:</div>
-          <div class="example-problem">
-A. Contact B. Field C. Normal D. Tension<br>
-Step 1: At distance.<br>
-Step 2: Field.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Field</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">12. Upthrust:</div>
-          <div class="example-problem">
-A. Field B. Contact C. Gravitational D. Magnetic<br>
-Step 1: Fluid pressure contact.<br>
-Step 2: Contact.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Contact</div>
-        </div>
-
-        <h2>(f) Linear Motion</h2>
-        <p><strong>Step 1: Speed, Velocity, Acceleration</strong> — Speed = distance/time (scalar). Velocity = displacement/time (vector). Acceleration = Δv/time (vector).</p>
-        <p><strong>Step 2: Equations of Uniformly Accelerated Motion</strong></p>
+        <h2>2️⃣ Scalars vs Vectors (Quick Review) ↔️</h2>
         <ul>
-          <li><strong>v = u + at</strong></li>
-          <li><strong>s = ut + ½ at²</strong></li>
-          <li><strong>v² = u² + 2as</strong></li>
-          <li><strong>s = (u + v)t / 2</strong></li>
+          <li><strong>Scalars:</strong> Magnitude only (speed, distance, mass, time)</li>
+          <li><strong>Vectors:</strong> Magnitude + direction (velocity, displacement, acceleration, force)</li>
         </ul>
-        <p><strong>Step 3: Motion Under Gravity</strong> — a = g ≈ <strong>10 m/s²</strong> downward.</p>
-        <p><strong>Step 4: Distance-Time Graph</strong> — Slope = velocity.</p>
-        <p><strong>Step 5: Velocity-Time Graph</strong> — Slope = acceleration. Area = displacement.</p>
-        <p><strong>Step 6: Instantaneous Velocity/Acceleration</strong> — Slope of the graph at a point.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Linear_motion_graphs.svg/800px-Linear_motion_graphs.svg.png" alt="Diagram showing position-time, velocity-time, and acceleration-time graphs">
 
-        <h3>12 JAMB-Style Examples for (f)</h3>
+        <div class="section-header">🎯 SECTION B: LINEAR MOTION</div>
 
-        <div class="example-block">
-          <div class="example-problem">1. Speed is scalar, velocity is:</div>
-          <div class="example-problem">
-A. Scalar B. Vector C. Both D. None<br>
-Step 1: Velocity has direction.<br>
-Step 2: Vector.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Vector</div>
+        <h2>3️⃣ Key Definitions with Notations 📐</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quantity</th>
+              <th>Symbol</th>
+              <th>Definition</th>
+              <th>Formula</th>
+              <th>Unit</th>
+            </tr>
+            <tr>
+              <td>Speed</td>
+              <td>v or s</td>
+              <td>Rate of change of distance</td>
+              <td>v = d/t</td>
+              <td>m/s</td>
+            </tr>
+            <tr>
+              <td>Velocity</td>
+              <td>v⃗ or v</td>
+              <td>Rate of change of displacement</td>
+              <td>v = s/t</td>
+              <td>m/s</td>
+            </tr>
+            <tr>
+              <td>Acceleration</td>
+              <td>a</td>
+              <td>Rate of change of velocity</td>
+              <td>a = (v-u)/t</td>
+              <td>m/s²</td>
+            </tr>
+            <tr>
+              <td>Distance</td>
+              <td>d</td>
+              <td>Total path length</td>
+              <td>—</td>
+              <td>m</td>
+            </tr>
+            <tr>
+              <td>Displacement</td>
+              <td>s or s⃗</td>
+              <td>Shortest distance initial to final</td>
+              <td>—</td>
+              <td>m</td>
+            </tr>
+            <tr>
+              <td>Initial velocity</td>
+              <td>u</td>
+              <td>Velocity at start</td>
+              <td>—</td>
+              <td>m/s</td>
+            </tr>
+            <tr>
+              <td>Final velocity</td>
+              <td>v</td>
+              <td>Velocity at end</td>
+              <td>—</td>
+              <td>m/s</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. Equation for distance:</div>
-          <div class="example-problem">
-A. v = u + at B. s = ut + ½ at² C. v² = u² + 2as D. All<br>
-Step 1: Kinematics.<br>
-Step 2: B is s.<br>
-Step 3: Matches option B.
+        <h2>4️⃣ The BIG FIVE Equations of Motion 📝</h2>
+
+        <div class="big-five-box">
+          <h4>⚡ MUST MEMORIZE THESE! ⚡</h4>
+          <div class="table-wrapper">
+            <table>
+              <tr>
+                <th>Equation</th>
+                <th>When to Use</th>
+              </tr>
+              <tr>
+                <td><strong>v = u + at</strong></td>
+                <td>When displacement (s) is not given</td>
+              </tr>
+              <tr>
+                <td><strong>s = ½(u+v)t</strong></td>
+                <td>When acceleration (a) is not given</td>
+              </tr>
+              <tr>
+                <td><strong>s = ut + ½at²</strong></td>
+                <td>When final velocity (v) is not given</td>
+              </tr>
+              <tr>
+                <td><strong>v² = u² + 2as</strong></td>
+                <td>When time (t) is not given</td>
+              </tr>
+              <tr>
+                <td><strong>s = vt - ½at²</strong></td>
+                <td>When initial velocity (u) is not given</td>
+              </tr>
+            </table>
           </div>
-          <div class="example-solution">Answer: B. s = ut + ½ at²</div>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">3. Under gravity, acceleration:</div>
-          <div class="example-problem">
-A. 0 B. 10 m/s² C. Variable D. -10 m/s²<br>
-Step 1: g downward.<br>
-Step 2: <strong>10 m/s²</strong>.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. 10 m/s²</div>
+        <h2>🔢 Example 1: Basic Acceleration</h2>
+        <p><strong>Question:</strong> A car starts from rest and accelerates uniformly at 2 m/s² for 10 seconds. Calculate the distance covered.</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong> u = 0 m/s, a = 2 m/s², t = 10 s<br><br>
+          
+          Using: s = ut + ½at²<br>
+          s = (0)(10) + ½(2)(10)²<br>
+          s = 0 + ½(2)(100) = 100 m
+        </div>
+        <div class="answer-box">Answer: s = 100 m</div>
+
+        <h2>🔢 Example 2: Finding Final Velocity</h2>
+        <p><strong>Question:</strong> A train moving at 20 m/s accelerates at 0.5 m/s² for 30 seconds. Find its final velocity.</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong> u = 20 m/s, a = 0.5 m/s², t = 30 s<br><br>
+          
+          Using: v = u + at<br>
+          v = 20 + (0.5)(30) = 20 + 15 = 35 m/s
+        </div>
+        <div class="answer-box">Answer: v = 35 m/s</div>
+
+        <h2>🔢 Example 3: Motion Under Gravity</h2>
+        <p><strong>Question:</strong> A stone is thrown vertically upward with velocity 30 m/s. Calculate: (a) Maximum height (b) Time to reach maximum height. (Take g = 10 m/s²)</p>
+        
+        <div class="calculation-box">
+          <strong>At max height, v = 0 m/s</strong><br><br>
+          
+          (a) Maximum height:<br>
+          Using: v² = u² + 2as (a = -g = -10 m/s²)<br>
+          0 = (30)² + 2(-10)s<br>
+          0 = 900 - 20s<br>
+          20s = 900 → s = 45 m<br><br>
+          
+          (b) Time to reach max height:<br>
+          Using: v = u + at<br>
+          0 = 30 + (-10)t<br>
+          10t = 30 → t = 3 s
+        </div>
+        <div class="answer-box">Answers: (a) 45 m (b) 3 s</div>
+
+        <div class="section-header">🎯 SECTION C: GRAPHS OF MOTION</div>
+
+        <h2>5️⃣ Graph Interpretation 📊</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Graph Type</th>
+              <th>Slope Represents</th>
+              <th>Area Under Curve Represents</th>
+            </tr>
+            <tr>
+              <td><strong>Displacement-Time</strong></td>
+              <td>v = ds/dt (velocity)</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Velocity-Time</strong></td>
+              <td>a = dv/dt (acceleration)</td>
+              <td>s = ∫v dt (displacement)</td>
+            </tr>
+            <tr>
+              <td><strong>Acceleration-Time</strong></td>
+              <td>—</td>
+              <td>Δv = ∫a dt (change in velocity)</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">4. Slope of v-t graph:</div>
-          <div class="example-problem">
-A. Displacement B. Acceleration C. Velocity D. Speed<br>
-Step 1: dv/dt.<br>
-Step 2: Acceleration.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Acceleration</div>
+        <h2>🔢 Example: Graph Interpretation</h2>
+        <p><strong>Question:</strong> Velocity-time graph shows: 0-5s: velocity increases 0 to 20 m/s; 5-10s: constant at 20 m/s; 10-15s: decreases to 0. Calculate total distance.</p>
+        
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • 0-5s (triangle): Area = ½ × 5 × 20 = 50 m<br>
+          • 5-10s (rectangle): Area = 5 × 20 = 100 m<br>
+          • 10-15s (triangle): Area = ½ × 5 × 20 = 50 m<br><br>
+          
+          Total distance s = 50 + 100 + 50 = 200 m
+        </div>
+        <div class="answer-box">Answer: 200 m</div>
+
+        <div class="section-header">🎯 SECTION D: PROJECTILE MOTION</div>
+
+        <h2>6️⃣ Projectile Key Quantities 🎯</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quantity</th>
+              <th>Symbol</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>Initial velocity</td>
+              <td>u</td>
+              <td>Launch velocity</td>
+            </tr>
+            <tr>
+              <td>Horizontal component</td>
+              <td>ux = ucosθ</td>
+              <td>Constant throughout flight</td>
+            </tr>
+            <tr>
+              <td>Vertical component</td>
+              <td>uy = usinθ</td>
+              <td>Changes due to gravity</td>
+            </tr>
+            <tr>
+              <td>Launch angle</td>
+              <td>θ</td>
+              <td>Angle with horizontal</td>
+            </tr>
+            <tr>
+              <td>Maximum height</td>
+              <td>H</td>
+              <td>Highest vertical point</td>
+            </tr>
+            <tr>
+              <td>Horizontal range</td>
+              <td>R</td>
+              <td>Total horizontal distance</td>
+            </tr>
+            <tr>
+              <td>Time of flight</td>
+              <td>T</td>
+              <td>Total time in air</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">5. Area under v-t graph:</div>
-          <div class="example-problem">
-A. Acceleration B. Displacement C. Speed D. Time<br>
-Step 1: ∫v dt.<br>
-Step 2: Displacement.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Displacement</div>
+        <h3>Projectiles Launched Horizontally from Height h:</h3>
+        <div class="formula-box">
+          • Time of flight: <strong>T = √(2h/g)</strong><br>
+          • Horizontal range: <strong>R = uT = u√(2h/g)</strong><br>
+          • Velocity at ground: <strong>v = √(u² + 2gh)</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">6. Instantaneous velocity from s-t graph:</div>
-          <div class="example-problem">
-A. Area B. Slope C. Intercept D. Curve<br>
-Step 1: ds/dt.<br>
-Step 2: Slope.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Slope</div>
+        <h3>Projectiles Launched at Angle θ:</h3>
+        <div class="formula-box">
+          • Time of flight: <strong>T = (2usinθ)/g</strong><br>
+          • Maximum height: <strong>H = (u²sin²θ)/(2g)</strong><br>
+          • Horizontal range: <strong>R = (u²sin2θ)/g</strong><br>
+          • Max range (θ = 45°): <strong>Rmax = u²/g</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">7. For free fall from rest, s =:</div>
-          <div class="example-problem">
-A. gt B. (1/2)gt
-² C. gt² D. 2gt<br>
-Step 1: u=0, a=g.<br>
-Step 2: <strong>s = (1/2)gt²</strong>.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. (1/2)gt²</div>
+        <h2>🔢 Example 4: Horizontal Projectile</h2>
+        <p><strong>Question:</strong> A ball is projected horizontally from 45 m high cliff with velocity 10 m/s. Calculate: (a) Time to reach ground (b) Horizontal distance. (Take g = 10 m/s²)</p>
+        
+        <div class="calculation-box">
+          (a) Time of flight:<br>
+          T = √(2h/g) = √(2×45/10) = √9 = 3 s<br><br>
+          
+          (b) Horizontal range:<br>
+          R = u × T = 10 × 3 = 30 m
+        </div>
+        <div class="answer-box">Answers: (a) 3 s (b) 30 m</div>
+
+        <div class="section-header">🎯 SECTION E: NEWTON'S LAWS OF MOTION</div>
+
+        <h2>7️⃣ The Three Laws ⚖️</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Law</th>
+              <th>Statement</th>
+              <th>Formula</th>
+            </tr>
+            <tr>
+              <td><strong>First Law (Inertia)</strong></td>
+              <td>Body remains at rest or moves with constant velocity unless acted upon by net external force</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>Second Law</strong></td>
+              <td>Rate of change of momentum is proportional to applied force</td>
+              <td>F = ma = dp/dt</td>
+            </tr>
+            <tr>
+              <td><strong>Third Law</strong></td>
+              <td>Action and reaction are equal and opposite</td>
+              <td>Faction = -Freaction</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">8. Slope of s-t graph:</div>
-          <div class="example-problem">
-A. Acceleration B. Velocity C. Displacement D. Time<br>
-Step 1: ds/dt.<br>
-Step 2: Velocity.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Velocity</div>
+        <h3>Additional Force Notations:</h3>
+        <div class="formula-box">
+          • <strong>Weight:</strong> W = mg<br>
+          • <strong>Normal reaction:</strong> R or N<br>
+          • <strong>Tension:</strong> T<br>
+          • <strong>Frictional force:</strong> f = μR<br>
+          • <strong>Coefficient of friction:</strong> μ = f/R
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">9. In uniform motion, v-t graph is:</div>
-          <div class="example-problem">
-A. Curved B. Horizontal C. Sloped D. Vertical<br>
-Step 1: Constant v.<br>
-Step 2: Horizontal.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Horizontal</div>
+        <h2>🔢 Example 5: Force Calculation</h2>
+        <p><strong>Question:</strong> A 5 kg mass is accelerated from rest to 10 m/s in 2 seconds. Calculate the force applied.</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong> m = 5 kg, u = 0, v = 10 m/s, t = 2 s<br><br>
+          
+          First find acceleration:<br>
+          a = (v-u)/t = (10-0)/2 = 5 m/s²<br><br>
+          
+          Then: F = ma = 5 × 5 = 25 N
+        </div>
+        <div class="answer-box">Answer: F = 25 N</div>
+
+        <h2>🔢 Example 6: Connected Bodies</h2>
+        <p><strong>Question:</strong> Two masses 3 kg and 2 kg are connected by a string over a smooth pulley. Find the acceleration.</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong> m₁ = 3 kg, m₂ = 2 kg, g = 10 m/s²<br><br>
+          
+          Net force = (m₁g - m₂g) = (3×10) - (2×10) = 10 N<br>
+          Total mass = m₁ + m₂ = 3 + 2 = 5 kg<br>
+          Acceleration: a = F/m = 10/5 = 2 m/s²
+        </div>
+        <div class="answer-box">Answer: a = 2 m/s²</div>
+
+        <div class="section-header">🎯 SECTION F: MOMENTUM & IMPULSE</div>
+
+        <h2>8️⃣ Key Quantities 🚀</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quantity</th>
+              <th>Symbol</th>
+              <th>Formula</th>
+              <th>Unit</th>
+            </tr>
+            <tr>
+              <td>Momentum</td>
+              <td>p or p⃗</td>
+              <td>p = mv</td>
+              <td>kg·m/s</td>
+            </tr>
+            <tr>
+              <td>Impulse</td>
+              <td>I or J</td>
+              <td>I = Ft = Δp = m(v-u)</td>
+              <td>N·s or kg·m/s</td>
+            </tr>
+            <tr>
+              <td>Force</td>
+              <td>F</td>
+              <td>F = Δp/t</td>
+              <td>N</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">10. Acceleration from v-t graph area:</div>
-          <div class="example-problem">
-A. Yes B. No C. Slope D. Intercept<br>
-Step 1: Area = displacement.<br>
-Step 2: Slope = acceleration.<br>
-Step 3: No.<br>
-Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. No</div>
+        <h3>Conservation of Momentum:</h3>
+        <div class="formula-box">
+          • <strong>General collision:</strong> m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂<br>
+          • <strong>Perfectly inelastic (stick together):</strong> m₁u₁ + m₂u₂ = (m₁+m₂)v<br>
+          • <strong>Explosion:</strong> 0 = m₁v₁ + m₂v₂
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">11. Instantaneous acceleration from v-t:</div>
-          <div class="example-problem">
-A. Area B. Slope C. Intercept D. Curve<br>
-Step 1: dv/dt.<br>
-Step 2: Slope.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Slope</div>
+        <h2>🔢 Example 7: Collision</h2>
+        <p><strong>Question:</strong> A 2 kg mass moving at 5 m/s collides with a stationary 3 kg mass. After collision, they move together. Find their common velocity.</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong> m₁ = 2 kg, u₁ = 5 m/s, m₂ = 3 kg, u₂ = 0<br><br>
+          
+          Before: Momentum = (2×5) + (3×0) = 10 kg·m/s<br>
+          After: Combined mass = 2 + 3 = 5 kg<br>
+          Conservation: 10 = 5 × v → v = 2 m/s
+        </div>
+        <div class="answer-box">Answer: v = 2 m/s</div>
+
+        <div class="section-header">🎯 SECTION G: CIRCULAR MOTION</div>
+
+        <h2>9️⃣ Circular Motion Quantities 🎡</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quantity</th>
+              <th>Symbol</th>
+              <th>Formula</th>
+              <th>Unit</th>
+            </tr>
+            <tr>
+              <td>Angular displacement</td>
+              <td>θ</td>
+              <td>θ = s/r</td>
+              <td>rad</td>
+            </tr>
+            <tr>
+              <td>Angular velocity</td>
+              <td>ω</td>
+              <td>ω = θ/t = v/r = 2πf</td>
+              <td>rad/s</td>
+            </tr>
+            <tr>
+              <td>Linear velocity</td>
+              <td>v</td>
+              <td>v = ωr = 2πr/T</td>
+              <td>m/s</td>
+            </tr>
+            <tr>
+              <td>Period</td>
+              <td>T</td>
+              <td>T = 1/f = 2π/ω</td>
+              <td>s</td>
+            </tr>
+            <tr>
+              <td>Centripetal acceleration</td>
+              <td>ac</td>
+              <td>ac = v²/r = ω²r</td>
+              <td>m/s²</td>
+            </tr>
+            <tr>
+              <td>Centripetal force</td>
+              <td>Fc</td>
+              <td>Fc = mv²/r = mω²r</td>
+              <td>N</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">12. For constant acceleration, s-t graph is:</div>
-          <div class="example-problem">
-A. Straight B. Parabolic C. Horizontal D. Vertical<br>
-Step 1: s = ut + ½ at².<br>
-Step 2: Parabolic.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Parabolic</div>
+        <h2>🔢 Example 8: Circular Motion</h2>
+        <p><strong>Question:</strong> A 0.5 kg stone is whirled in a horizontal circle of radius 1 m at 2 rev/s. Calculate the centripetal force.</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong> m = 0.5 kg, r = 1 m, f = 2 Hz<br><br>
+          
+          Angular velocity: ω = 2πf = 2π × 2 = 4π rad/s<br>
+          Centripetal force: Fc = mω²r = 0.5 × (4π)² × 1<br>
+          Fc = 0.5 × 16π² = 8π² ≈ 78.96 N
+        </div>
+        <div class="answer-box">Answer: Fc ≈ 79 N or 8π² N</div>
+
+        <div class="section-header">🎯 SECTION H: SIMPLE HARMONIC MOTION</div>
+
+        <h2>🔟 SHM Key Quantities 🎵</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Quantity</th>
+              <th>Symbol</th>
+              <th>Formula</th>
+              <th>Unit</th>
+            </tr>
+            <tr>
+              <td>Amplitude</td>
+              <td>A</td>
+              <td>Maximum displacement</td>
+              <td>m</td>
+            </tr>
+            <tr>
+              <td>Displacement</td>
+              <td>x</td>
+              <td>x = Asin(ωt) or Acos(ωt)</td>
+              <td>m</td>
+            </tr>
+            <tr>
+              <td>Velocity</td>
+              <td>v</td>
+              <td>v = ω√(A²-x²)</td>
+              <td>m/s</td>
+            </tr>
+            <tr>
+              <td>Max velocity</td>
+              <td>vmax</td>
+              <td>vmax = Aω</td>
+              <td>m/s</td>
+            </tr>
+            <tr>
+              <td>Acceleration</td>
+              <td>a</td>
+              <td>a = -ω²x</td>
+              <td>m/s²</td>
+            </tr>
+            <tr>
+              <td>Angular frequency</td>
+              <td>ω</td>
+              <td>ω = 2π/T = √(k/m)</td>
+              <td>rad/s</td>
+            </tr>
+            <tr>
+              <td>Period (pendulum)</td>
+              <td>T</td>
+              <td>T = 2π√(L/g)</td>
+              <td>s</td>
+            </tr>
+            <tr>
+              <td>Period (spring)</td>
+              <td>T</td>
+              <td>T = 2π√(m/k)</td>
+              <td>s</td>
+            </tr>
+          </table>
         </div>
 
-        <h2>(g) Projectiles</h2>
-        <p><strong>Step 1:</strong> Horizontal constant velocity, vertical under gravity.</p>
-        <p><strong>Step 2: Range</strong> <strong>R = (u² sin 2θ)/g</strong></p>
-        <p><strong>Step 3: Max Height</strong> <strong>H = (u² sin² θ)/(2g)</strong></p>
-        <p><strong>Step 4: Time of Flight</strong> <strong>T = (2u sin θ)/g</strong></p>
-        <p><strong>Step 5:</strong> From height h: quadratic equation.</p>
-        <p><strong>Step 6: Applications:</strong> Ballistics, sports, fireworks.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Projectile_motion.svg/800px-Projectile_motion.svg.png" alt="Diagram of projectile motion">
+        <h2>🔢 Example 9: Simple Pendulum</h2>
+        <p><strong>Question:</strong> A simple pendulum has period of 2 seconds. Calculate its length. (Take g = π² m/s²)</p>
+        
+        <div class="calculation-box">
+          <strong>Given:</strong> T = 2 s, g = π² m/s²<br><br>
+          
+          Using: T = 2π√(L/g)<br>
+          2 = 2π√(L/π²)<br>
+          1 = π × √(L)/π = √L<br>
+          L = 1 m
+        </div>
+        <div class="answer-box">Answer: L = 1 m</div>
 
-        <h3>12 JAMB-Style Examples for (g)</h3>
+        <h2>📋 Complete Formula Summary</h2>
 
-        <div class="example-block">
-          <div class="example-problem">1. Angle for maximum range:</div>
-          <div class="example-problem">
-A. 30° B. 45° C. 60° D. 90°<br>
-Step 1: <strong>R = (u² sin 2θ)/g</strong>.<br>
-Step 2: θ = 45°.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. 45°</div>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Category</th>
+              <th>Formula</th>
+              <th>Application</th>
+            </tr>
+            <tr>
+              <td rowspan="5">Linear Motion</td>
+              <td>v = u + at</td>
+              <td>Final velocity</td>
+            </tr>
+            <tr>
+              <td>s = ut + ½at²</td>
+              <td>Displacement</td>
+            </tr>
+            <tr>
+              <td>v² = u² + 2as</td>
+              <td>Velocity without time</td>
+            </tr>
+            <tr>
+              <td>s = ½(u+v)t</td>
+              <td>Average velocity</td>
+            </tr>
+            <tr>
+              <td>s = vt - ½at²</td>
+              <td>Without initial velocity</td>
+            </tr>
+            <tr>
+              <td rowspan="4">Projectile</td>
+              <td>R = (u²sin2θ)/g</td>
+              <td>Horizontal range</td>
+            </tr>
+            <tr>
+              <td>H = (u²sin²θ)/(2g)</td>
+              <td>Max height</td>
+            </tr>
+            <tr>
+              <td>T = (2usinθ)/g</td>
+              <td>Time of flight</td>
+            </tr>
+            <tr>
+              <td>Rmax = u²/g (at 45°)</td>
+              <td>Maximum range</td>
+            </tr>
+            <tr>
+              <td rowspan="3">Forces</td>
+              <td>F = ma</td>
+              <td>Newton's 2nd Law</td>
+            </tr>
+            <tr>
+              <td>p = mv</td>
+              <td>Momentum</td>
+            </tr>
+            <tr>
+              <td>I = Ft = Δp</td>
+              <td>Impulse</td>
+            </tr>
+            <tr>
+              <td rowspan="3">Circular</td>
+              <td>Fc = mv²/r</td>
+              <td>Centripetal force</td>
+            </tr>
+            <tr>
+              <td>ac = v²/r = ω²r</td>
+              <td>Centripetal acceleration</td>
+            </tr>
+            <tr>
+              <td>v = ωr</td>
+              <td>Linear velocity</td>
+            </tr>
+            <tr>
+              <td rowspan="3">SHM</td>
+              <td>T = 2π√(L/g)</td>
+              <td>Simple pendulum</td>
+            </tr>
+            <tr>
+              <td>T = 2π√(m/k)</td>
+              <td>Mass-spring</td>
+            </tr>
+            <tr>
+              <td>vmax = Aω</td>
+              <td>Maximum velocity</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. Time of flight formula:</div>
-          <div class="example-problem">
-A. (u sin θ)/g B. (2u sin θ)/g C. (u cos θ)/g D. (2u cos θ)/g<br>
-Step 1: Up and down.<br>
-Step 2: <strong>(2u sin θ)/g</strong>.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. (2u sin θ)/g</div>
+        <div class="tips-box">
+          <h3>🎓 JAMB Exam Tips for Motion</h3>
+          <ol>
+            <li><strong>Always draw diagrams</strong> for projectile and circular motion problems</li>
+            <li><strong>Check units carefully</strong> - convert km/h to m/s (multiply by 5/18)</li>
+            <li><strong>For graphs:</strong> Remember area = distance/change, slope = rate of change</li>
+            <li><strong>Projectile at angle:</strong> Maximum range always occurs at θ = 45°</li>
+            <li><strong>Conservation of momentum:</strong> Total before = Total after</li>
+            <li><strong>SHM:</strong> Velocity max at equilibrium (x=0), acceleration max at extremes (x=A)</li>
+            <li><strong>Circular motion:</strong> Centripetal force always points toward center</li>
+          </ol>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">3. At max height, vertical velocity:</div>
-          <div class="example-problem">
-A. u sin θ B. 0 C. u cos θ D. g<br>
-Step 1: Peak.<br>
-Step 2: Vertical = 0.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. 0</div>
+        <h2>📝 Practice Questions</h2>
+
+        <div class="component-box">
+          <ol>
+            <li>A car accelerates uniformly from 10 m/s to 30 m/s over 100 m. Find the acceleration.</li>
+            <br>
+            <li>A ball is thrown upward at 20 m/s. How long until it returns to the thrower?</li>
+            <br>
+            <li>Two bodies of masses 4 kg and 6 kg collide and stick together. If the 4 kg mass was moving at 3 m/s and the 6 kg mass at 2 m/s in the opposite direction, find their final velocity.</li>
+            <br>
+            <li>A stone of mass 2 kg is whirled in a vertical circle of radius 0.5 m at 4 m/s. Calculate the tension at the lowest point.</li>
+          </ol>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">4. Range for θ=30°:</div>
-          <div class="example-problem">
-A. (u² √3)/(2g) B. (u²)/g C. (u² √3)/(2g) D. (u²)/(2g)<br>
-Step 1: sin 60° = √3/2.<br>
-Step 2: <strong>R = (u
-² √3)/(2g)</strong>.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. (u² √3)/(2g)</div>
+        <div class="memory-aid">
+          Answers: 1) a = 4 m/s², 2) t = 4 s, 3) v = 0 m/s, 4) T = 78.4 N
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">5. Projectile application:</div>
-          <div class="example-problem">
-A. Pendulum B. Missile launch C. Circular D. Oscillation<br>
-Step 1: Curved trajectory.<br>
-Step 2: Missile.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Missile launch</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. Horizontal component:</div>
-          <div class="example-problem">
-A. u sin θ B. u cos θ C. g D. 0<br>
-Step 1: Constant horizontal.<br>
-Step 2: <strong>u cos θ</strong>.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. u cos θ</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. From height, time increases:</div>
-          <div class="example-problem">
-A. Yes B. No C. Same D. Decreases<br>
-Step 1: Extra vertical fall.<br>
-Step 2: Longer time.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. Yes</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Max height formula:</div>
-          <div class="example-problem">
-A. (u² sin θ)/(2g) B. (u² sin
-² θ)/(2g) C. (u² cos θ)/g D. u
-²/g<br>
-Step 1: Vertical peak.<br>
-Step 2: <strong>H = (u² sin² θ)/(2g)</strong>.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. (u² sin² θ)/(2g)</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. Velocity at max height:</div>
-          <div class="example-problem">
-A. Zero B. u cos θ C. u sin θ D. u<br>
-Step 1: Vertical zero.<br>
-Step 2: Horizontal u cos θ.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. u cos θ</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. For θ=45°, range max because:</div>
-          <div class="example-problem">
-A. sin 90°=1 B. cos 45°=sin 45° C. tan 45°=1 D. All<br>
-Step 1: sin 2θ max at 90°.<br>
-Step 2: θ=45°.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. sin 90°=1</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">11. Time to max height:</div>
-          <div class="example-problem">
-A. (u sin θ)/g B. (2u sin θ)/g C. (u cos θ)/g D. g/2<br>
-Step 1: vy=0 = u sin θ - g t.<br>
-Step 2: t = (u sin θ)/g.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. (u sin θ)/g</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">12. Projectile path is:</div>
-          <div class="example-problem">
-A. Straight B. Circular C. Parabolic D. Hyperbolic<br>
-Step 1: Horizontal linear, vertical quadratic.<br>
-Step 2: Parabolic.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Parabolic</div>
-        </div>
-
-        <h2>(h) Motion in a Circle</h2>
-        <p><strong>Step 1: Angular Velocity</strong> <strong>ω = θ/t</strong> (rad/s).</p>
-        <p><strong>Step 2: Angular Acceleration</strong> <strong>α = Δω/t</strong>.</p>
-        <p><strong>Step 3: Centripetal Force</strong> <strong>F_c = mv²/r = m r ω
-²</strong> (inward).</p>
-        <p><strong>Step 4: Centrifugal Force</strong> — Apparent outward in rotating frame.</p>
-        <p><strong>Step 5: Applications:</strong> Banking of roads, satellites, centrifuges.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Circular_motion_centripetal_force.svg/800px-Circular_motion_centripetal_force.svg.png" alt="Diagram showing centripetal force">
-
-        <h3>12 JAMB-Style Examples for (h)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Centripetal force direction:</div>
-          <div class="example-problem">
-A. Outward B. Inward C. Tangential D. Vertical<br>
-Step 1: Towards center.<br>
-Step 2: Inward.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Inward</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. Angular velocity unit:</div>
-          <div class="example-problem">
-A. m/s B. rad/s C. rad D. s<br>
-Step 1: Angle/time.<br>
-Step 2: rad/s.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. rad/s</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. For uniform circular, acceleration:</div>
-          <div class="example-problem">
-A. Zero B. Tangential C. Centripetal D. None<br>
-Step 1: Direction change.<br>
-Step 2: Centripetal.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Centripetal</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. Centrifugal force is:</div>
-          <div class="example-problem">
-A. Real B. Apparent C. Inward D. Gravitational<br>
-Step 1: In non-inertial frame.<br>
-Step 2: Apparent.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Apparent</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. Satellite orbit due to:</div>
-          <div class="example-problem">
-A. Centrifugal B. Centripetal (gravity) C. Tangential D. Friction<br>
-Step 1: Balance.<br>
-Step 2: Centripetal by gravity.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Centripetal (gravity)</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. α =:</div>
-          <div class="example-problem">
-A. ω/t B. Δω/t C. v/r D. ω² r<br>
-Step 1: Change in ω.<br>
-Step 2: Δω/t.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Δω/t</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Banking of roads prevents:</div>
-          <div class="example-problem">
-A. Slipping B. Falling C. Acceleration D. Deceleration<br>
-Step 1: Provides centripetal.<br>
-Step 2: Slipping.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. Slipping</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Centripetal acceleration:</div>
-          <div class="example-problem">
-A. v/r B. v
-²/r C. ω/r D. ω²/r<br>
-Step 1: <strong>a_c = v²/r</strong>.<br>
-Step 2: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. v²/r</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. For circular motion, net force is:</div>
-          <div class="example-problem">
-A. Zero B. Centripetal C. Tangential D. Outward<br>
-Step 1: To maintain circle.<br>
-Step 2: Centripetal.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Centripetal</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. In centrifuge, separation due to:</div>
-          <div class="example-problem">
-A. Centrifugal B. Centripetal C. Gravity D. Friction<br>
-Step 1: Apparent outward.<br>
-Step 2: Centrifugal.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. Centrifugal</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">11. Angular displacement unit:</div>
-          <div class="example-problem">
-A. m B. rad C. s D. m/s<br>
-Step 1: Angle.<br>
-Step 2: Radian.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. rad</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">12. Relation v = r ω is for:</div>
-          <div class="example-problem">
-A. Linear velocity B. Angular velocity C. Acceleration D. Force<br>
-Step 1: Linear from angular.<br>
-Step 2: <strong>v = r ω</strong>.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. Linear velocity</div>
-        </div>
-
-        <h2>(i) Simple Harmonic Motion (S.H.M)</h2>
-        <p><strong>Step 1: Definition</strong> - Periodic motion where restoring force ∝ -displacement (e.g., <strong>F = -kx</strong>).</p>
-        <p><strong>Step 2: Examples</strong> - Simple pendulum, mass-spring, floating object.</p>
-        <p><strong>Step 3: Period T</strong> = time for one cycle; Frequency f = 1/T; Amplitude A = max displacement.</p>
-        <p><strong>Step 4: Velocity</strong> <strong>v = ω √(A
-² - x²)</strong>; Acceleration <strong>a = -ω² x</strong> (ω = 2π/T).</p>
-        <p><strong>Step 5: Energy</strong> — Total <strong>E = ½ k A² = KE + PE</strong>; KE = ½ m v²; PE = ½ k x².</p>
-        <p><strong>Step 6: Forced Vibration</strong> - External periodic force.</p>
-        <p><strong>Step 7: Resonance</strong> - When driving f = natural f, amplitude max.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Simple_harmonic_motion.svg/800px-Simple_harmonic_motion.svg.png" alt="Diagram showing SHM graphs">
-
-        <h3>12 JAMB-Style Examples for (i)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. SHM restoring force:</div>
-          <div class="example-problem">
-A. ∝ x B. ∝ -x C. Constant D. Zero<br>
-Step 1: Towards mean.<br>
-Step 2: <strong>F = -kx</strong>.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. ∝ -x</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. Example of SHM:</div>
-          <div class="example-problem">
-A. Free fall B. Pendulum C. Circular D. Random<br>
-Step 1: Oscillatory with ∝ -x.<br>
-Step 2: Pendulum.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Pendulum</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. Frequency f =:</div>
-          <div class="example-problem">
-A. T B. 1/T C. ω D. 2π/T<br>
-Step 1: Cycles/sec.<br>
-Step 2: 1/T.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. 1/T</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. Max velocity in SHM:</div>
-          <div class="example-problem">
-A. ω A B. ω² A C. 0 D. A<br>
-Step 1: At x=0.<br>
-Step 2: <strong>v_max = ω A</strong>.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. ω A</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. Acceleration in SHM:</div>
-          <div class="example-problem">
-A. Constant B. -ω² x C. ω x D. Zero<br>
-Step 1: a = -ω
-² x.<br>
-Step 2: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. -ω² x</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. At resonance:</div>
-          <div class="example-problem">
-A. Min amplitude B. Max amplitude C. Zero D. Constant<br>
-Step 1: Driving frequency = natural frequency.<br>
-Step 2: Max amplitude.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Max amplitude</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Energy in SHM is:</div>
-          <div class="example-problem">
-A. KE only B. PE only C. Total conserved D. Lost<br>
-Step 1: Ideal case no dissipation.<br>
-Step 2: Total E constant.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. Total conserved</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Period of simple pendulum:</div>
-          <div class="example-problem">
-A. 2π√(l/g) B. 2π√(g/l) C. √(l/g) D. g/l<br>
-Step 1: <strong>T = 2π√(l/g)</strong>.<br>
-Step 2: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. 2π√(l/g)</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. In SHM, at equilibrium position:</div>
-          <div class="example-problem">
-A. v max B. a max C. v=0 D. a=0<br>
-Step 1: x=0.<br>
-Step 2: v max, a=0.<br>
-Step 3: Matches option A.
-          </div>
-          <div class="example-solution">Answer: A. v max</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. Forced vibration with resonance causes:</div>
-          <div class="example-problem">
-A. Min amplitude B. Max amplitude C. No change D. Stop<br>
-Step 1: Frequencies match.<br>
-Step 2: Max amplitude.<br>
-Step 3: Matches option B.
-          </div>
-          <div class="example-solution">Answer: B. Max amplitude</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">11. SHM equation of motion:</div>
-          <div class="example-problem">
-A. a = -ω² x B. v = ω A C. s = A sin ωt D. All<br>
-Step 1: All describe SHM.<br>
-Step 2: Matches option D.
-          </div>
-          <div class="example-solution">Answer: D. All</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">12. In SHM, total energy is:</div>
-          <div class="example-problem">
-A. (1/2) m v² B. (1/2) k x² C. (1/2) k A² D. m g h<br>
-Step 1: Constant total energy.<br>
-Step 2: <strong>E = ½ k A
-²</strong>.<br>
-Step 3: Matches option C.
-          </div>
-          <div class="example-solution">Answer: C. (1/2) k A²</div>
-        </div>
-
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          This is now the **complete Motion in Physics chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 12 JAMB examples each with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Motion!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Motion in Physics?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 2 (Vectors) & Chapter 4 (Work, Energy & Power)</p>
+        <button class="explore-btn" onclick="window.location.href='motion-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
