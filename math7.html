@@ -3,331 +3,913 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neumorphism Learning Hub - Linear Inequalities</title>
+  <title>MATHEMATICS - Inequalities</title>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial',sans-serif; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
     :root {
-      --background: #1e1e2f; --shadow-in: #171723; --shadow-out: #25253b;
-      --text-primary: #f0f0ff; --text-secondary: #c0c0e0; --accent: #1db954;
-      --card-bg: #2a2a3f; --highlight-example: rgba(29,185,84,0.15); --highlight-solution: #ff9800;
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
     }
+
     body.light {
-      --background:#e0e0e0; --shadow-in:#bebebe; --shadow-out:#ffffff;
-      --text-primary:#1a1a1a; --text-secondary:#444; --card-bg:#f8f8f8;
-      --highlight-example:rgba(29,185,84,0.20); --highlight-solution:#f57c00;
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
     }
-    body { background:var(--background); color:var(--text-primary); min-height:100vh; display:flex; justify-content:center; align-items:center; }
-    .container { width:100%; max-width:400px; background:var(--background); border-radius:20px; box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out); height:700px; overflow-y:auto; padding:70px 0; }
-    .neumorphic { background:var(--background); box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out); border-radius:15px; }
-    .neumorphic-btn { background:var(--background); border:none; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); cursor:pointer; font-size:18px; color:var(--text-primary); }
-    .neumorphic-btn:active { box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out); }
-    .top-bar { position:fixed; top:0; width:100%; max-width:400px; background:var(--background); padding:15px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 5px 10px var(--shadow-in); z-index:20; }
-    .content { padding:20px 16px; line-height:1.6; }
-    .main-header { text-align:center; margin-bottom:32px; }
-    .main-header h1 { font-size:28px; color:var(--accent); font-weight:bold; margin-bottom:8px; }
-    .welcome-note { background:var(--card-bg); padding:24px 18px; border-radius:20px; box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out); margin-bottom:30px; }
-    .example-block { background:rgba(0,0,0,0.15); padding:14px; border-radius:10px; margin:16px 0; font-family:'Courier New',monospace; white-space:pre-wrap; border-left:4px solid var(--accent); }
-    .example-problem { background:var(--highlight-example); padding:12px; border-radius:8px; margin-bottom:8px; }
-    .example-solution { background:var(--highlight-solution); color:#000; font-weight:bold; padding:10px 12px; border-radius:6px; display:inline-block; margin-top:8px; }
-    .explore-btn { background:var(--accent); border:none; padding:12px 24px; border-radius:20px; color:white; font-size:16px; cursor:pointer; box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out); display:block; margin:30px auto; text-align:center; }
-    .nav-bar { position:fixed; bottom:0; width:100%; max-width:400px; background:var(--background); padding:10px; display:flex; justify-content:space-around; box-shadow:0 -5px 10px var(--shadow-in); z-index:20; }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .number-line {
+      background: rgba(0,0,0,0.2);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .inequality-symbol {
+      font-size: 1.3em;
+      color: var(--accent);
+      font-weight: bold;
+    }
   </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Linear Inequalities</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Linear Inequalities – WAEC/JAMB Guide 🚀</h1>
-        <p class="subtitle">Abumchukwu – explained like you're just starting SS1</p>
+        <h1>Master Inequalities! ⚖️</h1>
+        <p class="subtitle">– JAMB Chapter 7 Made Easy</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Linear Inequalities (Analytical and Graphical Solutions)</h2>
-        <p>Abumchukwu, linear inequalities are solved almost like equations, but flip the inequality sign when multiplying or dividing by a negative number. The goal is to isolate x (or the variable). I will teach each part very slowly and simply, like we are in class together. Read one example at a time. Try it on paper first, then check my steps. You will understand everything fast.</p>
+        <h2>📚 Chapter 7: Inequalities</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Solve linear and quadratic inequalities analytically and graphically. Interpret graphs of inequalities.</p>
 
-        <h2>Analytical Solution Steps (1 variable)</h2>
-        <p>Step 1: Simplify both sides (expand brackets, collect like terms).<br>
-Step 2: Move variable terms to one side, constants to the other.<br>
-Step 3: Divide or multiply — flip sign if the coefficient is negative.<br>
-For compound inequalities (e.g., –3 ≤ 2x + 1 < 5), solve each part separately and find the overlapping range.</p>
+        <div class="section-header">1️⃣ LINEAR INEQUALITIES</div>
 
-        <h2>Graphical Solution (1 variable – Number Line)</h2>
-        <p>Step 1: > or < → open circle (○), arrow in the direction.<br>
-Step 2: ≥ or ≤ → closed circle (●), arrow in the direction.<br>
-Step 3: Compound: shade only the overlapping part.</p>
-
-        <h2>Graphical Solution (2 variables – Shaded Region on Plane)</h2>
-        <p>Step 1: Graph each boundary line (solid for ≥/≤, dashed for >/ <).<br>
-Step 2: Test a point (usually (0,0)) in the inequality.<br>
-Step 3: Shade the side that satisfies it.<br>
-Step 4: The solution is the overlapping shaded region (often a polygon like a triangle).<br>
-Candidates must interpret graphs: identify which system of inequalities produces a given shaded region (common JAMB question).</p>
-
-        <h3>10 JAMB-Style Examples for Linear Inequalities (with full solutions)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1: Solve 3(x – 1) ≤ 2(x – 3)</div>
-          <div class="example-problem">
-Step 1: Expand brackets: 3x – 3 ≤ 2x – 6<br>
-Step 2: Subtract 2x from both sides: x – 3 ≤ –6<br>
-Step 3: Add 3 to both sides: x ≤ –3
-          </div>
-          <div class="example-solution">Answer: x ≤ –3</div>
+        <h2>Understanding Inequality Symbols 🔣</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Symbol</th>
+              <th>Meaning</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td class="inequality-symbol"><</td>
+              <td>Less than</td>
+              <td>x < 5 (x is less than 5)</td>
+            </tr>
+            <tr>
+              <td class="inequality-symbol">></td>
+              <td>Greater than</td>
+              <td>x > 3 (x is greater than 3)</td>
+            </tr>
+            <tr>
+              <td class="inequality-symbol">≤</td>
+              <td>Less than or equal to</td>
+              <td>x ≤ 4 (x is 4 or less)</td>
+            </tr>
+            <tr>
+              <td class="inequality-symbol">≥</td>
+              <td>Greater than or equal to</td>
+              <td>x ≥ 2 (x is 2 or more)</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2: For what range of values of x is ½x + ¼ > ⅓x + ½?</div>
-          <div class="example-problem">
-Step 1: Multiply by 12 to clear fractions: 12(½x) + 12(¼) > 12(⅓x) + 12(½)<br>
-Step 2: 6x + 3 > 4x + 6<br>
-Step 3: 6x – 4x > 6 – 3<br>
-Step 4: 2x > 3<br>
-Step 5: x > 3/2
-          </div>
-          <div class="example-solution">Answer: x > 3/2</div>
+        <div class="warning-box">
+          <h4>⚠️ Key Rule</h4>
+          <p>The inequality sign <strong>FLIPS</strong> when you multiply or divide both sides by a <strong>NEGATIVE</strong> number!</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3: Find the range of values of x which satisfy 4x – 7 ≤ 3x and 3x – 4 ≤ 4x.</div>
-          <div class="example-problem">
-Step 1: First inequality: 4x – 7 ≤ 3x → 4x – 3x ≤ 7 → x ≤ 7<br>
-Step 2: Second inequality: 3x – 4 ≤ 4x → –4 ≤ 4x – 3x → –4 ≤ x<br>
-Step 3: Combine: –4 ≤ x ≤ 7
-          </div>
-          <div class="example-solution">Answer: –4 ≤ x ≤ 7</div>
+        <h2>Solving Linear Inequalities 📝</h2>
+
+        <h2>🔢 Example 1: Basic Linear Inequality</h2>
+        <p>Solve: 3x + 7 < 16</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          3x + 7 < 16<br>
+          3x < 16 - 7<br>
+          3x < 9<br>
+          x < 3
+        </div>
+        <div class="answer-box">Answer: x < 3 or (-∞, 3)</div>
+
+        <h2>🔢 Example 2: When Sign Flips!</h2>
+        <p>Solve: 5 - 2x ≥ 11</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          5 - 2x ≥ 11<br>
+          -2x ≥ 11 - 5<br>
+          -2x ≥ 6<br>
+          x ≤ <span class="fraction"><span class="top">6</span><span class="bottom">-2</span></span> &nbsp;&nbsp;<strong>(Sign flips!)</strong><br>
+          x ≤ -3
+        </div>
+        <div class="answer-box">Answer: x ≤ -3 or (-∞, -3]</div>
+
+        <h2>🔢 Example 3: Compound Inequality</h2>
+        <p>Solve: -3 ≤ 2x + 5 < 13</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong> Solve all parts simultaneously:<br>
+          -3 ≤ 2x + 5 < 13<br>
+          -3 - 5 ≤ 2x < 13 - 5<br>
+          -8 ≤ 2x < 8<br>
+          -4 ≤ x < 4
+        </div>
+        <div class="answer-box">Answer: -4 ≤ x < 4 or [-4, 4)</div>
+
+        <h2>Graphical Representation 📊</h2>
+
+        <div class="component-box">
+          <h4>Graphing Rules:</h4>
+          <p>• <strong>< or ></strong> → Use <strong>open circle</strong> (○)</p>
+          <p>• <strong>≤ or ≥</strong> → Use <strong>closed circle</strong> (●)</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4: Find the range of values of x for which 3x – 7 ≤ 0 and x + 5 > 0.</div>
-          <div class="example-problem">
-Step 1: 3x – 7 ≤ 0 → 3x ≤ 7 → x ≤ 7/3<br>
-Step 2: x + 5 > 0 → x > –5<br>
-Step 3: Combine: –5 < x ≤ 7/3
-          </div>
-          <div class="example-solution">Answer: –5 < x ≤ 7/3</div>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Inequality</th>
+              <th>Graph Representation</th>
+            </tr>
+            <tr>
+              <td>x > 2</td>
+              <td>Open circle at 2, arrow right →</td>
+            </tr>
+            <tr>
+              <td>x ≤ -1</td>
+              <td>Closed circle at -1, arrow left ←</td>
+            </tr>
+            <tr>
+              <td>-2 < x ≤ 3</td>
+              <td>Open at -2, closed at 3, line between</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5: Solve the inequalities –6 ≤ 4 – 2x < 5 – x.</div>
-          <div class="example-problem">
-Step 1: Split: –6 ≤ 4 – 2x and 4 – 2x < 5 – x<br>
-Step 2: –6 ≤ 4 – 2x → –10 ≤ –2x → 5 ≥ x (flip) → x ≤ 5<br>
-Step 3: 4 – 2x < 5 – x → –2x + x < 5 – 4 → –x < 1 → x > –1 (flip)<br>
-Step 4: Combine: –1 < x ≤ 5
-          </div>
-          <div class="example-solution">Answer: –1 < x ≤ 5</div>
+        <h2>Linear Inequalities with Fractions 📐</h2>
+
+        <h2>🔢 Example 4: With Fractions</h2>
+        <p>Solve: <span class="fraction"><span class="top">x</span><span class="bottom">3</span></span> + <span class="fraction"><span class="top">x</span><span class="bottom">2</span></span> > 5</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Find LCM of 3 and 2 = 6<br>
+          Multiply every term by 6:<br><br>
+          
+          6 × <span class="fraction"><span class="top">x</span><span class="bottom">3</span></span> + 6 × <span class="fraction"><span class="top">x</span><span class="bottom">2</span></span> > 6 × 5<br>
+          2x + 3x > 30<br>
+          5x > 30<br>
+          x > 6
+        </div>
+        <div class="answer-box">Answer: x > 6</div>
+
+        <div class="section-header">2️⃣ QUADRATIC INEQUALITIES</div>
+
+        <div class="memory-aid">
+          💡 JAMB Scope: Only quadratic inequalities that factorize nicely with whole number (integral) roots.
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 6: List all integers satisfying –2 < 2x – 6 < 4.</div>
-          <div class="example-problem">
-Step 1: Add 6: 4 < 2x < 10<br>
-Step 2: Divide by 2: 2 < x < 5<br>
-Step 3: Integers: 3, 4
-          </div>
-          <div class="example-solution">Answer: 3, 4</div>
+        <h2>General Approach 🎯</h2>
+        
+        <div class="shortcut-box">
+          <h4>⚡ 5-Step Method</h4>
+          <p>1. Rewrite in standard form (make RHS = 0)</p>
+          <p>2. Factorize the quadratic expression</p>
+          <p>3. Find critical values (roots)</p>
+          <p>4. Sketch the parabola or use test intervals</p>
+          <p>5. Select appropriate intervals based on inequality sign</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 7: Triangle SPT is the solution of the linear inequalities (graph shows triangle in second quadrant).</div>
-          <div class="example-problem">
-Step 1: Identify lines: e.g., 2y – x – 2 = 0, y + 2x + 2 = 0, y = 0, x = 0<br>
-Step 2: Test point in shaded region to confirm inequalities (≤ or <)<br>
-Step 3: 2y – x – 2 ≤ 0, y + 2x + 2 ≤ 0, y ≥ 0, x ≤ 0
-          </div>
-          <div class="example-solution">Answer: 2y – x – 2 ≤ 0, y + 2x + 2 ≤ 0, y ≥ 0, x ≤ 0</div>
+        <h2>🔢 Example 5: Basic Quadratic Inequality</h2>
+        <p>Solve: x² - 5x + 6 > 0</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          x² - 5x + 6 > 0<br>
+          (x - 2)(x - 3) > 0<br><br>
+          
+          Critical values: x = 2 and x = 3<br><br>
+          
+          <strong>Interval Testing:</strong><br>
+          • x < 2: Test x = 0 → (-2)(-3) = 6 [+]<br>
+          • 2 < x < 3: Test x = 2.5 → (0.5)(-0.5) = -0.25 [-]<br>
+          • x > 3: Test x = 4 → (2)(1) = 2 [+]<br><br>
+          
+          We want where > 0 (positive): x < 2 or x > 3
+        </div>
+        <div class="answer-box">Answer: x < 2 or x > 3, or (-∞, 2) ∪ (3, ∞)</div>
+
+        <h2>🔢 Example 6: "Less Than" Quadratic</h2>
+        <p>Solve: x² + 3x - 10 ≤ 0</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          x² + 3x - 10 ≤ 0<br>
+          (x + 5)(x - 2) ≤ 0<br><br>
+          
+          Critical values: x = -5 and x = 2<br><br>
+          
+          Since parabola opens upward and we want ≤ 0 (negative or zero), we take the middle interval.
+        </div>
+        <div class="answer-box">Answer: -5 ≤ x ≤ 2 or [-5, 2]</div>
+
+        <h2>🔢 Example 7: Rearranging First</h2>
+        <p>Solve: 2x² < 5x + 3</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          2x² - 5x - 3 < 0<br>
+          (2x + 1)(x - 3) < 0<br><br>
+          
+          Critical values: x = -<span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> and x = 3<br><br>
+          
+          Test intervals for < 0 (negative): -<span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> < x < 3
+        </div>
+        <div class="answer-box">Answer: -½ < x < 3 or (-½, 3)</div>
+
+        <h2>🔢 Example 8: Perfect Square (Special Case)</h2>
+        <p>Solve: x² - 6x + 9 > 0</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          x² - 6x + 9 > 0<br>
+          (x - 3)² > 0<br><br>
+          
+          Since (x-3)² is always ≥ 0, and equals 0 only at x = 3:<br><br>
+          
+          All real numbers except x = 3
+        </div>
+        <div class="answer-box">Answer: x ≠ 3 or (-∞, 3) ∪ (3, ∞)</div>
+
+        <div class="section-header">3️⃣ GRAPHICAL SOLUTIONS</div>
+
+        <h2>Graphing Linear Inequalities 📈</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Inequality</th>
+              <th>Region to Shade</th>
+            </tr>
+            <tr>
+              <td>y > mx + c</td>
+              <td>Above the line</td>
+            </tr>
+            <tr>
+              <td>y < mx + c</td>
+              <td>Below the line</td>
+            </tr>
+            <tr>
+              <td>y ≥ mx + c</td>
+              <td>Above the line (solid line)</td>
+            </tr>
+            <tr>
+              <td>y ≤ mx + c</td>
+              <td>Below the line (solid line)</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 8: Which inequality describes the graph (shaded region below the line 4y + 5x = 20 in first quadrant)?</div>
-          <div class="example-problem">
-Step 1: Line: 4y + 5x = 20<br>
-Step 2: Test (0,0): 0 + 0 = 0 < 20<br>
-Step 3: Below line shaded, solid line → 4y + 5x ≤ 20
-          </div>
-          <div class="example-solution">Answer: 4y + 5x ≤ 20</div>
+        <h2>🔢 Example 9: Graphing Inequality</h2>
+        <p>Graph the inequality: 2x + 3y ≤ 6</p>
+        <div class="calculation-box">
+          <strong>Steps:</strong><br>
+          1. Draw the line 2x + 3y = 6 (solid line because of ≤)<br>
+             • When x = 0, y = 2 → point (0, 2)<br>
+             • When y = 0, x = 3 → point (3, 0)<br>
+          2. Shade below the line (since it's "less than")<br>
+          3. Test point (0,0): 0 ≤ 6 ✓ → Origin side is the solution
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 9: The graph above represents inequalities (shaded triangle in first quadrant bounded by 3x + 4y = 12).</div>
-          <div class="example-problem">
-Step 1: Line: 3x + 4y = 12<br>
-Step 2: Test (0,0): 0 + 0 = 0 ≤ 12 true<br>
-Step 3: First quadrant, solid line → 3x + 4y ≤ 12, x ≥ 0, y ≥ 0
-          </div>
-          <div class="example-solution">Answer: 3x + 4y ≤ 12, x ≥ 0, y ≥ 0</div>
+        <h2>🔢 Example 10: Simultaneous Inequalities</h2>
+        <p>Find the region satisfying:</p>
+        <p>• x + y ≤ 4</p>
+        <p>• x ≥ 0</p>
+        <p>• y ≥ 0</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          This defines a feasible region in the first quadrant below the line x + y = 4.<br><br>
+          
+          Vertices of the region: (0,0), (4,0), and (0,4)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 10: Solve x² – 4x + 3 > 0 and x > 1.</div>
-          <div class="example-problem">
-Step 1: (x – 1)(x – 3) > 0 → x < 1 or x > 3<br>
-Step 2: Intersect with x > 1 → x > 3
-          </div>
-          <div class="example-solution">Answer: x > 3</div>
+        <div class="section-header">📋 SUMMARY TABLE</div>
+
+        <h2>Key Formulas & Rules 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Category</th>
+              <th>Formula/Rule</th>
+              <th>Notes</th>
+            </tr>
+            <tr>
+              <td>Sign Change</td>
+              <td>If a > b, then -a < -b</td>
+              <td>Multiplying/dividing by negative flips sign</td>
+            </tr>
+            <tr>
+              <td>Transitive</td>
+              <td>If a > b and b > c, then a > c</td>
+              <td>Logical ordering</td>
+            </tr>
+            <tr>
+              <td>Addition</td>
+              <td>If a > b, then a + c > b + c</td>
+              <td>Adding same number preserves inequality</td>
+            </tr>
+            <tr>
+              <td>Multiplication (+)</td>
+              <td>If a > b and c > 0, then ac > bc</td>
+              <td>Positive multiplication preserves sign</td>
+            </tr>
+            <tr>
+              <td>Multiplication (-)</td>
+              <td>If a > b and c < 0, then ac < bc</td>
+              <td>Negative multiplication reverses sign</td>
+            </tr>
+            <tr>
+              <td>Quadratic (>)</td>
+              <td>For (x-a)(x-b) > 0 where a < b</td>
+              <td>Solution: x < a or x > b (outer intervals)</td>
+            </tr>
+            <tr>
+              <td>Quadratic (<)</td>
+              <td>For (x-a)(x-b) < 0 where a < b</td>
+              <td>Solution: a < x < b (inner interval)</td>
+            </tr>
+            <tr>
+              <td>Number Line</td>
+              <td>x > a</td>
+              <td>Open circle at a, arrow right</td>
+            </tr>
+            <tr>
+              <td>Number Line</td>
+              <td>x ≤ b</td>
+              <td>Closed circle at b, arrow left</td>
+            </tr>
+            <tr>
+              <td>Graphical</td>
+              <td>y > mx + c</td>
+              <td>Shade above the line</td>
+            </tr>
+            <tr>
+              <td>Graphical</td>
+              <td>y < mx + c</td>
+              <td>Shade below the line</td>
+            </tr>
+          </table>
         </div>
 
-      <!-- (b) Quadratic Inequalities with Integral Roots Only -->
-      <h2>(b) Quadratic Inequalities with Integral Roots Only</h2>
-      <p><strong>Very easy explanation</strong></p>
-      <p>Bring to standard form ax² + bx + c ≥ 0 (or >, ≤, <).<br>
-Factorise: (x – r)(x – s) where r and s are integers.<br>
-Roots divide number line into intervals.<br>
-Use sign chart or test points in each interval.<br>
-Include roots if ≥ or ≤.</p>
-      <p>Sign Chart Rule: Product positive when both factors same sign (outside roots or between if negative leading coefficient).</p>
-      <p>Graphical Interpretation: The quadratic graph is a parabola; solution is where it is above/below x-axis (including touches for ≥/≤).</p>
-
-      <h3>10 JAMB-Style Examples for Quadratic Inequalities (with full solutions)</h3>
-
-      <div class="example-block">
-        <div class="example-problem">Example 1: Solve x² – 5x + 6 ≥ 0</div>
-        <div class="example-problem">
-Step 1: Factorise → (x – 2)(x – 3) ≥ 0<br>
-Step 2: Roots: x = 2, x = 3<br>
-Step 3: Sign chart: positive for x ≤ 2 or x ≥ 3 (same signs)<br>
-Step 4: Test: x=1 (1–2)(1–3) = (+)(+) = +; x=4 (+) (+)=+; x=2.5 (-) (+) = –
+        <div class="warning-box">
+          <h4>⚠️ Common Mistakes to Avoid</h4>
+          <table style="font-size: 13px;">
+            <tr>
+              <th>Mistake</th>
+              <th>Correction</th>
+            </tr>
+            <tr>
+              <td>Forgetting to flip sign when multiplying/dividing by negative</td>
+              <td>Always flip when multiplying/dividing by negative</td>
+            </tr>
+            <tr>
+              <td>Including endpoints for strict inequalities (< or >)</td>
+              <td>Use open circles and parentheses ()</td>
+            </tr>
+            <tr>
+              <td>Wrong interval for quadratic inequalities</td>
+              <td>Sketch the parabola or test points</td>
+            </tr>
+            <tr>
+              <td>Dividing by variable without checking if positive/negative</td>
+              <td>Bring all terms to one side instead</td>
+            </tr>
+          </table>
         </div>
-        <div class="example-solution">Answer: x ≤ 2 or x ≥ 3</div>
+
+        <div class="tips-box">
+          <h3>🎓 Exam Tips</h3>
+          <ol>
+            <li><strong>Always check</strong> if your answer makes sense by testing a value</li>
+            <li><strong>Sketch number lines</strong> for quadratic inequalities to avoid confusion</li>
+            <li><strong>Watch for "integral roots only"</strong> — JAMB quadratics will factorize nicely</li>
+            <li><strong>Remember the sign flip rule</strong> — it's tested frequently!</li>
+            <li><strong>For graphical questions</strong>, identify the boundary line first, then determine the shading region</li>
+          </ol>
+        </div>
+
+        <h2>📝 Practice Questions (JAMB Style)</h2>
+
+        <div class="component-box">
+          <h4>Q1. Solve: 3(x - 2) ≤ 2(x + 1) - 5</h4>
+        </div>
+
+        <div class="component-box">
+          <h4>Q2. Solve: x² - 7x + 10 < 0</h4>
+        </div>
+
+        <div class="component-box">
+          <h4>Q3. Find the range of values of x for which <span class="fraction"><span class="top">x+1</span><span class="bottom">2</span></span> - <span class="fraction"><span class="top">x-1</span><span class="bottom">3</span></span> > 1</h4>
+        </div>
+
+        <h3>Quick Checklist for Inequality Problems:</h3>
+        <div class="checklist-box">
+          <ul>
+            <li>Identify if linear or quadratic inequality</li>
+            <li>Remember: flip sign when × or ÷ by negative</li>
+            <li>For quadratics: factorize and find critical values</li>
+            <li>Use test points or sketch parabola for quadratics</li>
+            <li>For > 0: take outer intervals; for < 0: take inner interval</li>
+            <li>Check if endpoints should be included (≤, ≥) or excluded (<, >)</li>
+            <li>For fractions: find LCM and clear denominators</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Inequalities!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 6 (Variation) & Chapter 8 (Geometry)</p>
+        <button class="explore-btn" onclick="window.location.href='inequalities-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
-
-      <div class="example-block">
-        <div class="example-problem">Example 2: The solution of x² + x – 12 ≥ 0 is</div>
-        <div class="example-problem">
-Step 1: Factorise → (x + 4)(x – 3) ≥ 0<br>
-Step 2: Roots: x = –4, x = 3<br>
-Step 3: Sign chart: positive for x ≤ –4 or x ≥ 3<br>
-Step 4: Test: x=–5 (+) (+)=+; x=0 (+) (-) = –; x=4 (+) (+)=+
-        </div>
-        <div class="example-solution">Answer: x ≤ –4 or x ≥ 3</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">Example 3: Solve x² – x – 4 ≤ 2</div>
-        <div class="example-problem">
-Step 1: x² – x – 6 ≤ 0<br>
-Step 2: (x – 3)(x + 2) ≤ 0<br>
-Step 3: Roots: x = –2, x = 3<br>
-Step 4: Sign chart: negative between roots inclusive → –2 ≤ x ≤ 3<br>
-Step 5: Test: x=0 (+) (-) = –; x=4 (+) (+) = +; x=–3 (-) (-) = +
-        </div>
-        <div class="example-solution">Answer: –2 ≤ x ≤ 3</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">Example 4: Solve x² – 7x + 12 < 0</div>
-        <div class="example-problem">
-Step 1: (x – 3)(x – 4) < 0<br>
-Step 2: Roots: x = 3, x = 4<br>
-Step 3: Sign chart: negative between roots (different signs) → 3 < x < 4<br>
-Step 4: Test: x=3.5 (-) (+) = –; x=2 (+) (+) = +; x=5 (+) (+) = +
-        </div>
-        <div class="example-solution">Answer: 3 < x < 4</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">Example 5: Solve x² + 2x – 8 ≥ 0</div>
-        <div class="example-problem">
-Step 1: (x + 4)(x – 2) ≥ 0<br>
-Step 2: Roots: x = –4, x = 2<br>
-Step 3: Sign chart: positive outside inclusive → x ≤ –4 or x ≥ 2<br>
-Step 4: Test: x=–5 (+) (-) = – wait no (+) (-) wait (–5+4)=–1 (–5–2)=–7 (+) (–) wait no (–1)(–7)=+; x=0 (+) (-) = –; x=3 (+) (+) = +
-        </div>
-        <div class="example-solution">Answer: x ≤ –4 or x ≥ 2</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">Example 6: Find range where x² – 9 ≤ 0</div>
-        <div class="example-problem">
-Step 1: (x – 3)(x + 3) ≤ 0<br>
-Step 2: Roots: x = –3, x = 3<br>
-Step 3: Sign chart: negative between inclusive → –3 ≤ x ≤ 3<br>
-Step 4: Test: x=0 (+) (-) = –; x=4 (+) (+) = +; x=–4 (-) (-) = +
-        </div>
-        <div class="example-solution">Answer: –3 ≤ x ≤ 3</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">Example 7: Solve 2x² – 10x + 12 > 0</div>
-        <div class="example-problem">
-Step 1: Divide by 2: x² – 5x + 6 > 0<br>
-Step 2: (x – 2)(x – 3) > 0<br>
-Step 3: Positive outside: x < 2 or x > 3<br>
-Step 4: Test: x=1 (+) (+) = +; x=2.5 (+) (-) = –; x=4 (+) (+) = +
-        </div>
-        <div class="example-solution">Answer: x < 2 or x > 3</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">Example 8: Solve (x – 1)(x – 5) ≤ 0</div>
-        <div class="example-problem">
-Step 1: Roots: x = 1, x = 5<br>
-Step 2: Sign chart: negative between inclusive → 1 ≤ x ≤ 5<br>
-Step 3: Test: x=0 (-) (-) = +; x=3 (-) (+) = –; x=6 (+) (+) = +
-        </div>
-        <div class="example-solution">Answer: 1 ≤ x ≤ 5</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">Example 9: Solve x² + 2x > 15</div>
-        <div class="example-problem">
-Step 1: x² + 2x – 15 > 0<br>
-Step 2: (x + 5)(x – 3) > 0<br>
-Step 3: Positive outside: x < –5 or x > 3<br>
-Step 4: Test: x=–6 (-) (-) = +; x=0 (+) (-) = –; x=4 (+) (+) = +
-        </div>
-        <div class="example-solution">Answer: x < –5 or x > 3</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">Example 10: Solve x² – 4x + 3 > 0 and x > 1</div>
-        <div class="example-problem">
-Step 1: (x – 1)(x – 3) > 0 → x < 1 or x > 3<br>
-Step 2: Intersect with x > 1 → x > 3
-        </div>
-        <div class="example-solution">Answer: x > 3</div>
-      </div>
-
-      <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-        Abumchukwu, this is now the **complete Linear Inequalities chapter** — analytical and graphical solutions fully expanded with 10 examples + 10 quadratic examples, every step written out. 🌟<br>
-        Practice one example per day. You will do very well in JAMB.
-      </p>
-
-      <p style="text-align:center; margin:20px 0;">Want a quiz on Linear Inequalities or the next topic?</p>
-      <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
