@@ -3,903 +3,817 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JAMB Variation – Complete Guide</title>
+  <title>MATHEMATICS - Variation</title>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
     :root {
-      --bg:#1e1e2f; --sh-in:#171723; --sh-out:#25253b;
-      --text:#f0f0ff; --text2:#c0c0e0; --accent:#1db954;
-      --card:#2a2a3f; --ex:rgba(29,185,84,0.15); --sol:#ff9800;
+      --background: #1e1e2f;
+      --shadow-in: #171723;
+      --shadow-out: #25253b;
+      --text-primary: #f0f0ff;
+      --text-secondary: #c0c0e0;
+      --accent: #1db954;
+      --card-bg: #2a2a3f;
     }
+
     body.light {
-      --bg:#e0e0e0; --sh-in:#bebebe; --sh-out:#ffffff;
-      --text:#1a1a1a; --text2:#444; --card:#f8f8f8;
-      --ex:rgba(29,185,84,0.20); --sol:#f57c00;
+      --background: #e0e0e0;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #444;
+      --accent: #1db954;
+      --card-bg: #f8f8f8;
     }
-    body { background:var(--bg); color:var(--text); min-height:100vh; display:flex; justify-content:center; align-items:center; }
-    .container { width:100%; max-width:400px; background:var(--bg); border-radius:20px; box-shadow:10px 10px 20px var(--sh-in),-10px -10px 20px var(--sh-out); height:700px; overflow-y:auto; padding:70px 0; }
-    .neumorphic { background:var(--bg); box-shadow:5px 5px 10px var(--sh-in),-5px -5px 10px var(--sh-out); border-radius:15px; }
-    .neumorphic-btn { background:var(--bg); border:none; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:3px 3px 6px var(--sh-in),-3px -3px 6px var(--sh-out); cursor:pointer; font-size:18px; color:var(--text); }
-    .neumorphic-btn:active { box-shadow:inset 3px 3px 6px var(--sh-in),inset -3px -3px 6px var(--sh-out); }
-    .top-bar { position:fixed; top:0; width:100%; max-width:400px; background:var(--bg); padding:15px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 5px 10px var(--sh-in); z-index:20; }
-    .content { padding:20px 16px; line-height:1.6; }
-    .main-header { text-align:center; margin-bottom:32px; }
-    .main-header h1 { font-size:28px; color:var(--accent); font-weight:bold; margin-bottom:8px; }
-    .welcome-note { background:var(--card); padding:24px 18px; border-radius:20px; box-shadow:inset 4px 4px 10px var(--sh-in),inset -4px -4px 10px var(--sh-out); margin-bottom:30px; }
-    .example-block { background:rgba(0,0,0,0.15); padding:14px; border-radius:10px; margin:16px 0; font-family:'Courier New',monospace; white-space:pre-wrap; border-left:4px solid var(--accent); }
-    .example-problem { background:var(--ex); padding:12px; border-radius:8px; margin-bottom:8px; }
-    .example-solution { background:var(--sol); color:#000; font-weight:bold; padding:10px 12px; border-radius:6px; display:inline-block; margin-top:8px; }
-    .explore-btn { background:var(--accent); border:none; padding:12px 24px; border-radius:20px; color:white; font-size:16px; cursor:pointer; box-shadow:3px 3px 6px var(--sh-in),-3px -3px 6px var(--sh-out); display:block; margin:30px auto; text-align:center; }
-    .nav-bar { position:fixed; bottom:0; width:100%; max-width:400px; background:var(--bg); padding:10px; display:flex; justify-content:space-around; box-shadow:0 -5px 10px var(--sh-in); z-index:20; }
+
+    body {
+      background: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      border-radius: 20px;
+      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+      height: 700px;
+      overflow-y: auto;
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
+      border-radius: 15px;
+    }
+
+    .neumorphic-btn {
+      background: var(--background);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+    }
+
+    .neumorphic-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar .profile-upload {
+      position: relative;
+    }
+
+    .top-bar .profile-upload input {
+      opacity: 0;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .main-header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .main-header p.subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .welcome-note {
+      background: var(--card-bg);
+      padding: 28px 20px;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
+      margin-bottom: 30px;
+    }
+
+    .welcome-note h2 {
+      font-size: 22px;
+      margin: 32px 0 16px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
+    .welcome-note h3 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      color: var(--accent);
+    }
+
+    .welcome-note p {
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .welcome-note .highlight {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .explore-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      font-size: 16px;
+      margin: 24px auto 0;
+      display: block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .explore-btn:active {
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      background: var(--background);
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -5px 10px var(--shadow-in);
+      z-index: 20;
+    }
+
+    .nav-bar .nav-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-bar .nav-item button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.center button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background: var(--accent);
+      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+      color: #000;
+    }
+
+    .nav-bar .nav-item.active button {
+      background: var(--accent);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    }
+
+    .nav-bar .nav-item p {
+      display: none;
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-primary);
+    }
+
+    .nav-bar .nav-item.active p {
+      display: block;
+    }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
   </style>
 </head>
 <body class="dark">
+  <div class="container">
+    <!-- Top Fixed Bar -->
+    <div class="top-bar neumorphic">
+      <button class="neumorphic-btn">←</button>
+      <div class="header">MATHEMATICS</div>
+      <div class="right-icons">
+        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
+        <button class="neumorphic-btn profile-upload">
+          🚀
+          <input type="file" accept="image/*" id="profile-upload">
+        </button>
+      </div>
+    </div>
 
-<div class="container">
-  <div class="top-bar neumorphic">
-    <button class="neumorphic-btn">←</button>
-    <div class="header">Variation</div>
-    <div class="right-icons">
-      <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-      <button class="neumorphic-btn profile-upload">
-        📷
-        <input type="file" accept="image/*" id="profile-upload">
-      </button>
+    <!-- Main Content -->
+    <div class="content">
+      <div class="main-header">
+        <h1>Master Variation! 📈</h1>
+        <p class="subtitle">– JAMB Chapter 6 Made Easy</p>
+      </div>
+
+      <div class="welcome-note neumorphic">
+        <h2>📚 Chapter 6: Variation</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Solve problems involving direct, inverse, joint, partial, and combined variation, including percentage changes.</p>
+
+        <div class="section-header">1️⃣ DIRECT VARIATION</div>
+
+        <h2>Concept ➡️</h2>
+        <p>When one variable increases, the other increases at the same rate.</p>
+        
+        <div class="memory-aid">
+          💡 Key phrases: "y varies directly as x" or "y is directly proportional to x"
+        </div>
+
+        <div class="formula-box">
+          <strong>Formula:</strong><br>
+          y = kx &nbsp;&nbsp;or&nbsp;&nbsp; <span class="fraction"><span class="top">y₁</span><span class="bottom">x₁</span></span> = <span class="fraction"><span class="top">y₂</span><span class="bottom">x₂</span></span><br><br>
+          Where k = constant of proportionality
+        </div>
+
+        <h2>🔢 Example 1: Basic Direct Variation</h2>
+        <p>y varies directly as x. When y = 20, x = 2. Find y when x = 8.</p>
+        
+        <div class="calculation-box">
+          <strong>Method 1 - Formula:</strong><br>
+          1. Start with y = kx<br>
+          2. Substitute: 20 = k(2)<br>
+          3. Solve: k = 10<br>
+          4. New equation: y = 10x<br>
+          5. When x = 8: y = 10(8) = 80
+        </div>
+
+        <div class="calculation-box">
+          <strong>Method 2 - Proportion (Faster):</strong><br>
+          <span class="fraction"><span class="top">y₁</span><span class="bottom">x₁</span></span> = <span class="fraction"><span class="top">y₂</span><span class="bottom">x₂</span></span><br>
+          <span class="fraction"><span class="top">20</span><span class="bottom">2</span></span> = <span class="fraction"><span class="top">y</span><span class="bottom">8</span></span><br>
+          2y = 160<br>
+          y = 80
+        </div>
+        <div class="answer-box">Answer: y = 80</div>
+
+        <h2>🔢 Example 2: Direct Square Variation</h2>
+        <p>y varies directly as the square of x. When y = 4, x = 3. Find y when x = 2.</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          y = kx²<br>
+          4 = k(3)² ⇒ 4 = 9k ⇒ k = <span class="fraction"><span class="top">4</span><span class="bottom">9</span></span><br><br>
+          
+          New equation: y = <span class="fraction"><span class="top">4</span><span class="bottom">9</span></span>x²<br>
+          When x = 2: y = <span class="fraction"><span class="top">4</span><span class="bottom">9</span></span>(2)² = <span class="fraction"><span class="top">4</span><span class="bottom">9</span></span>(4) = <span class="fraction"><span class="top">16</span><span class="bottom">9</span></span>
+        </div>
+        <div class="answer-box">Answer: y = 16/9</div>
+
+        <div class="section-header">2️⃣ INVERSE VARIATION</div>
+
+        <h2>Concept ⬅️➡️</h2>
+        <p>When one variable increases, the other decreases. Their product is constant.</p>
+        
+        <div class="memory-aid">
+          💡 Key phrases: "y varies inversely as x" or "y is inversely proportional to x"
+        </div>
+
+        <div class="formula-box">
+          <strong>Formula:</strong><br>
+          y = <span class="fraction"><span class="top">k</span><span class="bottom">x</span></span> &nbsp;&nbsp;or&nbsp;&nbsp; xy = k &nbsp;&nbsp;or&nbsp;&nbsp; x₁y₁ = x₂y₂
+        </div>
+
+        <h2>🔢 Example 3: Inverse Variation</h2>
+        <p>y varies inversely as x. When y = 4, x = 3. Find x when y = 6.</p>
+        
+        <div class="calculation-box">
+          <strong>Method 1 - Formula:</strong><br>
+          1. y = <span class="fraction"><span class="top">k</span><span class="bottom">x</span></span><br>
+          2. 4 = <span class="fraction"><span class="top">k</span><span class="bottom">3</span></span> ⇒ k = 12<br>
+          3. New equation: y = <span class="fraction"><span class="top">12</span><span class="bottom">x</span></span><br>
+          4. When y = 6: 6 = <span class="fraction"><span class="top">12</span><span class="bottom">x</span></span> ⇒ 6x = 12 ⇒ x = 2
+        </div>
+
+        <div class="calculation-box">
+          <strong>Method 2 - Product Rule (Faster):</strong><br>
+          x₁y₁ = x₂y₂<br>
+          (3)(4) = x₂(6)<br>
+          12 = 6x₂<br>
+          x₂ = 2
+        </div>
+        <div class="answer-box">Answer: x = 2</div>
+
+        <div class="section-header">3️⃣ JOINT VARIATION</div>
+
+        <h2>Concept 🔗</h2>
+        <p>One variable varies directly with two or more other variables simultaneously.</p>
+        
+        <div class="memory-aid">
+          💡 Key phrase: "y varies jointly as x and z"
+        </div>
+
+        <div class="formula-box">
+          <strong>Formula:</strong><br>
+          y = kxz &nbsp;&nbsp;or&nbsp;&nbsp; y = kx√z &nbsp;&nbsp;(depending on relationship)
+        </div>
+
+        <h2>🔢 Example 4: Joint Variation</h2>
+        <p>x varies jointly as y and the square root of z. When x = -18, y = 2, and z = 9. Find y when x = 10 and z = 4.</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          x = ky√z<br>
+          -18 = k(2)√9<br>
+          -18 = k(2)(3) = 6k<br>
+          k = -3<br><br>
+          
+          New equation: x = -3y√z<br><br>
+          
+          When x = 10 and z = 4:<br>
+          10 = -3y√4<br>
+          10 = -3y(2) = -6y<br>
+          y = <span class="fraction"><span class="top">10</span><span class="bottom">-6</span></span> = -<span class="fraction"><span class="top">5</span><span class="bottom">3</span></span>
+        </div>
+        <div class="answer-box">Answer: y = -5/3</div>
+
+        <div class="section-header">4️⃣ PARTIAL VARIATION</div>
+
+        <h2>Concept ➕</h2>
+        <p>A relationship consisting of a constant part plus a variable part.</p>
+        
+        <div class="memory-aid">
+          💡 Key phrase: "y is partly constant and partly varies as x"
+        </div>
+
+        <div class="formula-box">
+          <strong>Formula:</strong><br>
+          y = k₁x + k₂<br><br>
+          Where k₁ = variation constant, k₂ = constant term
+        </div>
+
+        <h2>🔢 Example 5: Partial Variation</h2>
+        <p>y is partly constant and partly varies directly with x. When y = 4, x = 2, and when y = 16, x = 4. Find y when x = 6.</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Let y = k₁x + k₂<br><br>
+          
+          From first condition: 4 = 2k₁ + k₂ ... (1)<br>
+          From second condition: 16 = 4k₁ + k₂ ... (2)<br><br>
+          
+          Subtract (1) from (2):<br>
+          12 = 2k₁ ⇒ k₁ = 6<br><br>
+          
+          Substitute back into (1):<br>
+          4 = 2(6) + k₂ ⇒ 4 = 12 + k₂ ⇒ k₂ = -8<br><br>
+          
+          Equation: y = 6x - 8<br><br>
+          
+          When x = 6:<br>
+          y = 6(6) - 8 = 36 - 8 = 28
+        </div>
+        <div class="answer-box">Answer: y = 28</div>
+
+        <div class="section-header">5️⃣ COMBINED VARIATION</div>
+
+        <h2>Concept ⚡</h2>
+        <p>Mixture of direct, inverse, and joint variations in one relationship.</p>
+        
+        <div class="memory-aid">
+          💡 Key phrase: "y varies jointly as x and w and inversely as the square of z"
+        </div>
+
+        <div class="formula-box">
+          <strong>Formula:</strong><br>
+          y = <span class="fraction"><span class="top">kxw</span><span class="bottom">z²</span></span>
+        </div>
+
+        <h2>🔢 Example 6: Combined Variation</h2>
+        <p>y varies jointly as x and w and inversely as the square of z. When y = 100, x = 2, w = 4, and z = 20.</p>
+        <p>(a) Find the equation of variation</p>
+        <p>(b) Find y when x = 1, w = 5, and z = 4</p>
+        
+        <div class="calculation-box">
+          <strong>Solution (a):</strong><br>
+          y = <span class="fraction"><span class="top">kxw</span><span class="bottom">z²</span></span><br>
+          100 = <span class="fraction"><span class="top">k(2)(4)</span><span class="bottom">(20)²</span></span> = <span class="fraction"><span class="top">8k</span><span class="bottom">400</span></span><br>
+          8k = 100 × 400 = 40000<br>
+          k = <span class="fraction"><span class="top">40000</span><span class="bottom">8</span></span> = 5000<br><br>
+          
+          Equation: y = <span class="fraction"><span class="top">5000xw</span><span class="bottom">z²</span></span>
+        </div>
+
+        <div class="calculation-box">
+          <strong>Solution (b):</strong><br>
+          y = <span class="fraction"><span class="top">5000(1)(5)</span><span class="bottom">4²</span></span> = <span class="fraction"><span class="top">25000</span><span class="bottom">16</span></span> = 1562.5
+        </div>
+        <div class="answer-box">Answers: (a) y = 5000xw/z² (b) y = 1562.5</div>
+
+        <div class="section-header">6️⃣ PERCENTAGE INCREASE/DECREASE</div>
+
+        <h2>Concept 📊</h2>
+        <p>Calculate percentage changes when variables in a variation relationship change.</p>
+
+        <h2>🔢 Example 7: Percentage Change in Variation</h2>
+        <p>The area of a triangle varies jointly with its base and height. If the base is increased by 40% and the height is decreased by 10%, what is the percentage change in the area?</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Original: A = kbh<br><br>
+          
+          New conditions:<br>
+          • Base becomes 1.4b (40% increase)<br>
+          • Height becomes 0.9h (10% decrease)<br><br>
+          
+          New area:<br>
+          A<sub>new</sub> = k(1.4b)(0.9h) = k(1.26)bh = 1.26(kbh) = 1.26A<sub>original</sub><br><br>
+          
+          Change = 1.26 - 1.00 = 0.26 = 26% increase
+        </div>
+        <div class="answer-box">Answer: 26% increase</div>
+
+        <div class="section-header">📋 SUMMARY TABLE</div>
+
+        <h2>All Variation Formulas 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Variation Type</th>
+              <th>General Formula</th>
+              <th>Proportion Method</th>
+              <th>Key Indicator Words</th>
+            </tr>
+            <tr>
+              <td>Direct</td>
+              <td>y = kx</td>
+              <td><span class="fraction"><span class="top">y₁</span><span class="bottom">x₁</span></span> = <span class="fraction"><span class="top">y₂</span><span class="bottom">x₂</span></span></td>
+              <td>"varies directly as"</td>
+            </tr>
+            <tr>
+              <td>Direct Square</td>
+              <td>y = kx²</td>
+              <td><span class="fraction"><span class="top">y₁</span><span class="bottom">x₁²</span></span> = <span class="fraction"><span class="top">y₂</span><span class="bottom">x₂²</span></span></td>
+              <td>"varies as the square of"</td>
+            </tr>
+            <tr>
+              <td>Inverse</td>
+              <td>y = <span class="fraction"><span class="top">k</span><span class="bottom">x</span></span> or xy = k</td>
+              <td>x₁y₁ = x₂y₂</td>
+              <td>"varies inversely as"</td>
+            </tr>
+            <tr>
+              <td>Inverse Square</td>
+              <td>y = <span class="fraction"><span class="top">k</span><span class="bottom">x²</span></span> or x²y = k</td>
+              <td>x₁²y₁ = x₂²y₂</td>
+              <td>"inversely as the square of"</td>
+            </tr>
+            <tr>
+              <td>Joint</td>
+              <td>y = kxz</td>
+              <td>(Use formula method)</td>
+              <td>"varies jointly as"</td>
+            </tr>
+            <tr>
+              <td>Partial</td>
+              <td>y = k₁x + k₂</td>
+              <td>Simultaneous equations</td>
+              <td>"partly constant and partly varies"</td>
+            </tr>
+            <tr>
+              <td>Combined</td>
+              <td>y = <span class="fraction"><span class="top">kxw</span><span class="bottom">z²</span></span></td>
+              <td>(Use formula method)</td>
+              <td>"jointly as... and inversely as..."</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 Quick Tips for JAMB Exam</h3>
+          <ol>
+            <li><strong>Identify the type first</strong> — Look for keywords in the question</li>
+            <li><strong>Find k first</strong> — Always calculate the constant of proportionality using given values</li>
+            <li><strong>Write the equation</strong> — Once you have k, write the complete variation equation</li>
+            <li><strong>Substitute new values</strong> — Use the equation to find unknowns</li>
+            <li><strong>For partial variation</strong> — Set up two simultaneous equations and solve</li>
+            <li><strong>Check units</strong> — Make sure your answer makes sense in context</li>
+          </ol>
+        </div>
+
+        <div class="shortcut-box">
+          <h4>⚡ Practice Strategy</h4>
+          <p>1. Read the problem carefully and underline variation keywords</p>
+          <p>2. Write down the appropriate formula template</p>
+          <p>3. Substitute given values to find k</p>
+          <p>4. Write the specific equation for this problem</p>
+          <p>5. Solve for the required unknown</p>
+        </div>
+
+        <h3>Quick Checklist for Variation Problems:</h3>
+        <div class="checklist-box">
+          <ul>
+            <li>Identify variation type from keywords</li>
+            <li>Write general formula with constant k</li>
+            <li>Substitute given values to find k</li>
+            <li>Write specific equation with found k value</li>
+            <li>For partial variation: use simultaneous equations</li>
+            <li>For percentage changes: use multipliers (1.4 for 40% increase, etc.)</li>
+            <li>Check if answer is reasonable in context</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Variation!
+        </p>
+
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 5 (Polynomials) & Chapter 7 (Geometry)</p>
+        <button class="explore-btn" onclick="window.location.href='variation-quiz.html'">Start JAMB Quiz Now!</button>
+      </div>
     </div>
   </div>
 
-  <div class="content">
-    <div class="main-header">
-      <h1>Variation – WAEC/JAMB Guide 🚀</h1>
-      <p class="subtitle">Abumchukwu – explained like SS1 beginner</p>
-    </div>
-
-    <div class="welcome-note neumorphic">
-      <h2>Variation in Mathematics (JAMB Style)</h2>
-      <p>Variation shows how one quantity (dependent variable) changes with one or more other quantities (independent variables). We use the constant of variation k to write equations. Always find k first using given values, then solve for the unknown. I will teach each part very slowly and simply. Try each example on paper first, then check my steps. You will understand everything fast.</p>
-
-      <!-- (a) Direct Variation -->
-      <h2>(a) Direct Variation</h2>
-      <p><strong>Very easy explanation</strong></p>
-      <p>When y varies directly as x (y ∝ x), when x increases, y increases by the same factor.</p>
-      <p>Formula: y = kx (or y = kxⁿ for powers).</p>
-      <p>Steps: 1. Write y = kx (or with power). 2. Find k using given values. 3. Use new value to find unknown.</p>
-
-      <h3>10 Full Examples with Step-by-Step</h3>
-
-      <div class="example-block">
-        <div class="example-problem">1. y varies directly as x. y = 15 when x = 3. Find y when x = 12.</div>
-        <div class="example-problem">
-Step 1: y = kx<br>
-Step 2: 15 = k × 3<br>
-Step 3: k = 15 ÷ 3 = 5<br>
-Step 4: y = 5x<br>
-Step 5: y = 5 × 12 = 60
-        </div>
-        <div class="example-solution">Answer: 60</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">2. y varies directly as x². y = 8 when x = 2. Find y when x = 5.</div>
-        <div class="example-problem">
-Step 1: y = kx²<br>
-Step 2: 8 = k × 4<br>
-Step 3: k = 8 ÷ 4 = 2<br>
-Step 4: y = 2x²<br>
-Step 5: y = 2 × 25 = 50
-        </div>
-        <div class="example-solution">Answer: 50</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">3. Volume V varies directly as temperature T. V = 300 cm³ when T = 150 K. Find V when T = 200 K.</div>
-        <div class="example-problem">
-Step 1: V = kT<br>
-Step 2: 300 = k × 150<br>
-Step 3: k = 300 ÷ 150 = 2<br>
-Step 4: V = 2T<br>
-Step 5: V = 2 × 200 = 400 cm³
-        </div>
-        <div class="example-solution">Answer: 400 cm³</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">4. p varies directly as q². p = 18 when q = 3. Find p when q = 6.</div>
-        <div class="example-problem">
-Step 1: p = kq²<br>
-Step 2: 18 = k × 9<br>
-Step 3: k = 18 ÷ 9 = 2<br>
-Step 4: p = 2q²<br>
-Step 5: p = 2 × 36 = 72
-        </div>
-        <div class="example-solution">Answer: 72</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">5. y varies directly as √x. y = 6 when x = 36. Find y when x = 100.</div>
-        <div class="example-problem">
-Step 1: y = k√x<br>
-Step 2: 6 = k × 6<br>
-Step 3: k = 6 ÷ 6 = 1<br>
-Step 4: y = √x<br>
-Step 5: y = √100 = 10
-        </div>
-        <div class="example-solution">Answer: 10</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">6. Cost C varies directly as number n of books. 200 books cost ₦12,000. Find cost of 500 books.</div>
-        <div class="example-problem">
-Step 1: C = kn<br>
-Step 2: 12000 = k × 200<br>
-Step 3: k = 12000 ÷ 200 = 60<br>
-Step 4: C = 60n<br>
-Step 5: C = 60 × 500 = ₦30,000
-        </div>
-        <div class="example-solution">Answer: ₦30,000</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">7. x varies directly as y³. x = 54 when y = 3. Find x when y = 2.</div>
-        <div class="example-problem">
-Step 1: x = ky³<br>
-Step 2: 54 = k × 27<br>
-Step 3: k = 54 ÷ 27 = 2<br>
-Step 4: x = 2y³<br>
-Step 5: x = 2 × 8 = 16
-        </div>
-        <div class="example-solution">Answer: 16</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">8. Distance d varies directly as time t. d = 180 km in 3 hours. Find d in 5 hours.</div>
-        <div class="example-problem">
-Step 1: d = kt<br>
-Step 2: 180 = k × 3<br>
-Step 3: k = 180 ÷ 3 = 60<br>
-Step 4: d = 60t<br>
-Step 5: d = 60 × 5 = 300 km
-        </div>
-        <div class="example-solution">Answer: 300 km</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">9. z varies directly as x² y. z = 48 when x = 2, y = 3. Find z when x = 3, y = 4.</div>
-        <div class="example-problem">
-Step 1: z = k x² y<br>
-Step 2: 48 = k × 4 × 3<br>
-Step 3: 48 = k × 12 → k = 4<br>
-Step 4: z = 4 x² y<br>
-Step 5: z = 4 × 9 × 4 = 144
-        </div>
-        <div class="example-solution">Answer: 144</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">10. y varies directly as x⁴. y = 81 when x = 3. Find y when x = 1.</div>
-        <div class="example-problem">
-Step 1: y = k x⁴<br>
-Step 2: 81 = k × 81<br>
-Step 3: k = 1<br>
-Step 4: y = x⁴<br>
-Step 5: y = 1⁴ = 1
-        </div>
-        <div class="example-solution">Answer: 1</div>
-      </div>
-
-      <h3>JAMB Past Questions for (a) Direct Variation – 8 questions</h3>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2008: y varies directly as x. y = 15 when x = 3. Find y when x = 12.</div>
-        <div class="example-problem">
-Step 1: y = kx<br>
-Step 2: 15 = k × 3<br>
-Step 3: k = 5<br>
-Step 4: y = 5 × 12 = 60
-        </div>
-        <div class="example-solution">Answer: 60</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2010: y varies directly as x². y = 8 when x = 2. Find y when x = 5.</div>
-        <div class="example-problem">
-Step 1: y = kx²<br>
-Step 2: 8 = k × 4<br>
-Step 3: k = 2<br>
-Step 4: y = 2 × 25 = 50
-        </div>
-        <div class="example-solution">Answer: 50</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2012: Volume V varies directly as temperature T. V = 300 cm³ when T = 150 K. Find V when T = 200 K.</div>
-        <div class="example-problem">
-Step 1: V = kT<br>
-Step 2: 300 = k × 150<br>
-Step 3: k = 2<br>
-Step 4: V = 2 × 200 = 400 cm³
-        </div>
-        <div class="example-solution">Answer: 400 cm³</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2015: p varies directly as q². p = 18 when q = 3. Find p when q = 6.</div>
-        <div class="example-problem">
-Step 1: p = kq²<br>
-Step 2: 18 = k × 9<br>
-Step 3: k = 2<br>
-Step 4: p = 2 × 36 = 72
-        </div>
-        <div class="example-solution">Answer: 72</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2017: y varies directly as √x. y = 6 when x = 36. Find y when x = 100.</div>
-        <div class="example-problem">
-Step 1: y = k√x<br>
-Step 2: 6 = k × 6<br>
-Step 3: k = 1<br>
-Step 4: y = √100 = 10
-        </div>
-        <div class="example-solution">Answer: 10</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2018: Cost C varies directly as number n. 200 books cost ₦12,000. Find cost of 500 books.</div>
-        <div class="example-problem">
-Step 1: C = kn<br>
-Step 2: 12000 = k × 200<br>
-Step 3: k = 60<br>
-Step 4: C = 60 × 500 = ₦30,000
-        </div>
-        <div class="example-solution">Answer: ₦30,000</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2019: x varies directly as y³. x = 54 when y = 3. Find x when y = 2.</div>
-        <div class="example-problem">
-Step 1: x = ky³<br>
-Step 2: 54 = k × 27<br>
-Step 3: k = 2<br>
-Step 4: x = 2 × 8 = 16
-        </div>
-        <div class="example-solution">Answer: 16</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2020: Distance d varies directly as time t. d = 180 km in 3 hours. Find d in 5 hours.</div>
-        <div class="example-problem">
-Step 1: d = kt<br>
-Step 2: 180 = k × 3<br>
-Step 3: k = 60<br>
-Step 4: d = 60 × 5 = 300 km
-        </div>
-        <div class="example-solution">Answer: 300 km</div>
-      </div>
-
-      <!-- (b) Inverse Variation -->
-      <h2>(b) Inverse Variation</h2>
-      <p><strong>Very easy explanation</strong></p>
-      <p>When y varies inversely as x (y ∝ 1/x), when x increases, y decreases.</p>
-      <p>Formula: y = k / x  (or y = k / xⁿ)</p>
-      <p>Steps: 1. Find k = y × x (product constant). 2. Use new value to find unknown.</p>
-
-      <h3>10 Full Examples with Step-by-Step</h3>
-
-      <div class="example-block">
-        <div class="example-problem">1. y varies inversely as x. y = 12 when x = 4. Find y when x = 6.</div>
-        <div class="example-problem">
-Step 1: y = k / x<br>
-Step 2: k = 12 × 4 = 48<br>
-Step 3: y = 48 / 6 = 8
-        </div>
-        <div class="example-solution">Answer: 8</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">2. Time t varies inversely as number of workers w. 8 workers take 6 days. How long for 12 workers?</div>
-        <div class="example-problem">
-Step 1: t = k / w<br>
-Step 2: k = 8 × 6 = 48<br>
-Step 3: t = 48 / 12 = 4 days
-        </div>
-        <div class="example-solution">Answer: 4 days</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">3. y varies inversely as √x. y = 10 when x = 25. Find y when x = 100.</div>
-        <div class="example-problem">
-Step 1: y = k / √x<br>
-Step 2: k = 10 × 5 = 50<br>
-Step 3: y = 50 / 10 = 5
-        </div>
-        <div class="example-solution">Answer: 5</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">4. p varies inversely as q². p = 18 when q = 3. Find p when q = 9.</div>
-        <div class="example-problem">
-Step 1: p = k / q²<br>
-Step 2: k = 18 × 9 = 162<br>
-Step 3: p = 162 / 81 = 2
-        </div>
-        <div class="example-solution">Answer: 2</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">5. Resistance R varies inversely as square of diameter d. R = 20 Ω when d = 2 mm. Find R when d = 4 mm.</div>
-        <div class="example-problem">
-Step 1: R = k / d²<br>
-Step 2: k = 20 × 4 = 80<br>
-Step 3: R = 80 / 16 = 5 Ω
-        </div>
-        <div class="example-solution">Answer: 5 Ω</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">6. Journey 240 km takes 4 hours at speed v. How long at speed 80 km/h?</div>
-        <div class="example-problem">
-Step 1: t = k / v<br>
-Step 2: k = 240 (distance constant)<br>
-Step 3: t = 240 / 80 = 3 hours
-        </div>
-        <div class="example-solution">Answer: 3 hours</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">7. y = k / x³. y = 27 when x = 2. Find y when x = 3.</div>
-        <div class="example-problem">
-Step 1: k = 27 × 8 = 216<br>
-Step 2: y = 216 / 27 = 8
-        </div>
-        <div class="example-solution">Answer: 8</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">8. Intensity I varies inversely as square of distance d. I = 36 when d = 2 m. Find I when d = 6 m.</div>
-        <div class="example-problem">
-Step 1: I = k / d²<br>
-Step 2: k = 36 × 4 = 144<br>
-Step 3: I = 144 / 36 = 4
-        </div>
-        <div class="example-solution">Answer: 4</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">9. Number of days d to eat food varies inversely as number of people p. 15 people eat in 8 days. How many days for 20 people?</div>
-        <div class="example-problem">
-Step 1: d = k / p<br>
-Step 2: k = 15 × 8 = 120<br>
-Step 3: d = 120 / 20 = 6 days
-        </div>
-        <div class="example-solution">Answer: 6 days</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">10. y varies inversely as x⁴. y = 16 when x = 2. Find y when x = 1.</div>
-        <div class="example-problem">
-Step 1: k = 16 × 16 = 256<br>
-Step 2: y = 256 / 1 = 256
-        </div>
-        <div class="example-solution">Answer: 256</div>
-      </div>
-
-      <h3>JAMB Past Questions for (b) Inverse Variation – 8 questions</h3>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2008: y varies inversely as x. y = 12 when x = 4. Find y when x = 6.</div>
-        <div class="example-problem">
-Step 1: k = 12 × 4 = 48<br>
-Step 2: y = 48 / 6 = 8
-        </div>
-        <div class="example-solution">Answer: 8</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2010: Time t varies inversely as number of workers w. 8 workers take 6 days. How long for 12 workers?</div>
-        <div class="example-problem">
-Step 1: k = 8 × 6 = 48<br>
-Step 2: t = 48 / 12 = 4 days
-        </div>
-        <div class="example-solution">Answer: 4 days</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2012: y varies inversely as √x. y = 10 when x = 25. Find y when x = 100.</div>
-        <div class="example-problem">
-Step 1: k = 10 × 5 = 50<br>
-Step 2: y = 50 / 10 = 5
-        </div>
-        <div class="example-solution">Answer: 5</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2015: p varies inversely as q². p = 18 when q = 3. Find p when q = 9.</div>
-        <div class="example-problem">
-Step 1: k = 18 × 9 = 162<br>
-Step 2: p = 162 / 81 = 2
-        </div>
-        <div class="example-solution">Answer: 2</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2017: Resistance R varies inversely as d². R = 20 when d = 2 mm. Find R when d = 4 mm.</div>
-        <div class="example-problem">
-Step 1: k = 20 × 4 = 80<br>
-Step 2: R = 80 / 16 = 5 Ω
-        </div>
-        <div class="example-solution">Answer: 5 Ω</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2018: Journey 240 km takes 4 hours at speed v. How long at speed 80 km/h?</div>
-        <div class="example-problem">
-Step 1: k = 240<br>
-Step 2: t = 240 / 80 = 3 hours
-        </div>
-        <div class="example-solution">Answer: 3 hours</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2019: y = k / x³. y = 27 when x = 2. Find y when x = 3.</div>
-        <div class="example-problem">
-Step 1: k = 27 × 8 = 216<br>
-Step 2: y = 216 / 27 = 8
-        </div>
-        <div class="example-solution">Answer: 8</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2020: Intensity I varies inversely as d². I = 36 when d = 2 m. Find I when d = 6 m.</div>
-        <div class="example-problem">
-Step 1: k = 36 × 4 = 144<br>
-Step 2: I = 144 / 36 = 4
-        </div>
-        <div class="example-solution">Answer: 4</div>
-      </div>
-
-      <!-- (c) Joint Variation -->
-      <h2>(c) Joint Variation</h2>
-      <p><strong>Very easy explanation</strong></p>
-      <p>y varies jointly as x and z means y ∝ x z. Formula: y = k × x × z (or y = k xᵐ zⁿ).</p>
-      <p>Steps: 1. Find k = y / (x × z × powers). 2. Use new values to find unknown.</p>
-
-      <h3>10 Full Examples with Step-by-Step</h3>
-
-      <div class="example-block">
-        <div class="example-problem">1. z varies jointly as x and y. z = 24 when x = 3, y = 4. Find z when x = 5, y = 6.</div>
-        <div class="example-problem">
-Step 1: z = k x y<br>
-Step 2: 24 = k × 3 × 4<br>
-Step 3: 24 = k × 12 → k = 2<br>
-Step 4: z = 2 × 5 × 6 = 60
-        </div>
-        <div class="example-solution">Answer: 60</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">2. P varies jointly as Q and R². P = 36 when Q = 3, R = 2. Find P when Q = 4, R = 3.</div>
-        <div class="example-problem">
-Step 1: P = k Q R²<br>
-Step 2: 36 = k × 3 × 4<br>
-Step 3: 36 = k × 12 → k = 3<br>
-Step 4: P = 3 × 4 × 9 = 108
-        </div>
-        <div class="example-solution">Answer: 108</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">3. Volume V varies jointly as r² and h. V = 88 when r = 2, h = 7 (use π = 22/7). Find V when r = 3, h = 5.</div>
-        <div class="example-problem">
-Step 1: V = k r² h<br>
-Step 2: 88 = k × 4 × 7<br>
-Step 3: 88 = k × 28 → k = 88 / 28 = 22/7<br>
-Step 4: V = (22/7) × 9 × 5 = 990 / 7 ≈ 141.43
-        </div>
-        <div class="example-solution">Answer: ≈141.43</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">4. z varies jointly as x and y². z = 36 when x = 2, y = 3. Find z when x = 3, y = 2.</div>
-        <div class="example-problem">
-Step 1: z = k x y²<br>
-Step 2: 36 = k × 2 × 9<br>
-Step 3: 36 = k × 18 → k = 2<br>
-Step 4: z = 2 × 3 × 4 = 24
-        </div>
-        <div class="example-solution">Answer: 24</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">5. Area A of triangle varies jointly as base b and height h. A = 30 when b = 6, h = 10. Find A when b = 8, h = 15.</div>
-        <div class="example-problem">
-Step 1: A = k b h<br>
-Step 2: 30 = k × 6 × 10<br>
-Step 3: 30 = k × 60 → k = 0.5<br>
-Step 4: A = 0.5 × 8 × 15 = 60
-        </div>
-        <div class="example-solution">Answer: 60</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">6. P varies jointly as m and u. P = 12 when m = 2, u = 3. Find P when m = 4, u = 6.</div>
-        <div class="example-problem">
-Step 1: P = k m u<br>
-Step 2: 12 = k × 2 × 3<br>
-Step 3: 12 = k × 6 → k = 2<br>
-Step 4: P = 2 × 4 × 6 = 48
-        </div>
-        <div class="example-solution">Answer: 48</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">7. y varies jointly as x² and z. y = 80 when x = 2, z = 5. Find y when x = 3, z = 4.</div>
-        <div class="example-problem">
-Step 1: y = k x² z<br>
-Step 2: 80 = k × 4 × 5<br>
-Step 3: 80 = k × 20 → k = 4<br>
-Step 4: y = 4 × 9 × 4 = 144
-        </div>
-        <div class="example-solution">Answer: 144</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">8. Work W varies jointly as force F and distance d. W = 120 when F = 10, d = 12. Find W when F = 15, d = 8.</div>
-        <div class="example-problem">
-Step 1: W = k F d<br>
-Step 2: 120 = k × 10 × 12<br>
-Step 3: 120 = k × 120 → k = 1<br>
-Step 4: W = 1 × 15 × 8 = 120
-        </div>
-        <div class="example-solution">Answer: 120</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">9. z varies jointly as x and y². z = 48 when x = 4, y = 3. Find z when x = 6, y = 2.</div>
-        <div class="example-problem">
-Step 1: z = k x y²<br>
-Step 2: 48 = k × 4 × 9<br>
-Step 3: 48 = k × 36 → k = 48 / 36 = 4/3<br>
-Step 4: z = (4/3) × 6 × 4 = 32
-        </div>
-        <div class="example-solution">Answer: 32</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">10. P varies jointly as Q³ and R. P = 108 when Q = 3, R = 4. Find P when Q = 2, R = 6.</div>
-        <div class="example-problem">
-Step 1: P = k Q³ R<br>
-Step 2: 108 = k × 27 × 4<br>
-Step 3: 108 = k × 108 → k = 1<br>
-Step 4: P = 1 × 8 × 6 = 48
-        </div>
-        <div class="example-solution">Answer: 48</div>
-      </div>
-
-      <h3>JAMB Past Questions for (c) Joint Variation – 8 questions</h3>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2009: z varies jointly as x and y. z = 24 when x = 3, y = 4. Find z when x = 5, y = 6.</div>
-        <div class="example-problem">
-Step 1: z = k x y<br>
-Step 2: k = 24 / 12 = 2<br>
-Step 3: z = 2 × 5 × 6 = 60
-        </div>
-        <div class="example-solution">Answer: 60</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2011: P varies jointly as Q and R². P = 36 when Q = 3, R = 2. Find P when Q = 4, R = 3.</div>
-        <div class="example-problem">
-Step 1: P = k Q R²<br>
-Step 2: k = 36 / 12 = 3<br>
-Step 3: P = 3 × 4 × 9 = 108
-        </div>
-        <div class="example-solution">Answer: 108</div>
-      </div>
-
-      <!-- Remaining 6 JAMB questions for (c) follow the same pattern -->
-
-      <!-- (d) Partial Variation -->
-      <h2>(d) Partial Variation</h2>
-      <p><strong>Very easy explanation</strong></p>
-      <p>y = a + kx  (a = fixed/constant part, kx = varying part)</p>
-      <p>Steps: Use two given pairs → make two equations → solve for a and k → use new value.</p>
-
-      <h3>10 Full Examples with Step-by-Step</h3>
-
-      <div class="example-block">
-        <div class="example-problem">1. y varies partially as x. When x = 2, y = 11; when x = 5, y = 20. Find y when x = 8.</div>
-        <div class="example-problem">
-Step 1: 11 = a + 2k<br>
-Step 2: 20 = a + 5k<br>
-Step 3: Subtract → 9 = 3k → k = 3<br>
-Step 4: 11 = a + 6 → a = 5<br>
-Step 5: y = 5 + 3×8 = 29
-        </div>
-        <div class="example-solution">Answer: 29</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">2. Cost C of hiring a bus is partly constant and partly varies directly as distance d. C = ₦800 for 100 km, ₦1,100 for 200 km. Find C for 350 km.</div>
-        <div class="example-problem">
-Step 1: 800 = a + 100k<br>
-Step 2: 1100 = a + 200k<br>
-Step 3: Subtract → 300 = 100k → k = 3<br>
-Step 4: 800 = a + 300 → a = 500<br>
-Step 5: C = 500 + 3×350 = ₦1,550
-        </div>
-        <div class="example-solution">Answer: ₦1,550</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">3. x – 3 varies directly as y². x = 5 when y = 2; find x when y = 6.</div>
-        <div class="example-problem">
-Step 1: x – 3 = k y²<br>
-Step 2: 5 – 3 = k × 4 → 2 = 4k → k = 0.5<br>
-Step 3: x – 3 = 0.5 y²<br>
-Step 4: x – 3 = 0.5 × 36 = 18<br>
-Step 5: x = 18 + 3 = 21
-        </div>
-        <div class="example-solution">Answer: 21</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">4. Cost C = fixed + variable per item. C = ₦450 for 10 items, ₦750 for 20 items. Find C for 30 items.</div>
-        <div class="example-problem">
-Step 1: 450 = a + 10k<br>
-Step 2: 750 = a + 20k<br>
-Step 3: Subtract → 300 = 10k → k = 30<br>
-Step 4: 450 = a + 300 → a = 150<br>
-Step 5: C = 150 + 30×30 = ₦1,050
-        </div>
-        <div class="example-solution">Answer: ₦1,050</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">5. When t = 3, s = 19; t = 7, s = 43. s partial as t. Find s at t = 10.</div>
-        <div class="example-problem">
-Step 1: 19 = a + 3k<br>
-Step 2: 43 = a + 7k<br>
-Step 3: Subtract → 24 = 4k → k = 6<br>
-Step 4: 19 = a + 18 → a = 1<br>
-Step 5: s = 1 + 6×10 = 61
-        </div>
-        <div class="example-solution">Answer: 61</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">6. x = a + k y². x = 7 when y = 2; x = 19 when y = 4. Find x when y = 5.</div>
-        <div class="example-problem">
-Step 1: 7 = a + 4k<br>
-Step 2: 19 = a + 16k<br>
-Step 3: Subtract → 12 = 12k → k = 1<br>
-Step 4: 7 = a + 4 → a = 3<br>
-Step 5: x = 3 + 1×25 = 28
-        </div>
-        <div class="example-solution">Answer: 28</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">7. Electricity bill B is partly fixed and partly varies as units u. B = ₦1,200 for 80 units, ₦1,800 for 140 units. Find B for 200 units.</div>
-        <div class="example-problem">
-Step 1: 1200 = a + 80k<br>
-Step 2: 1800 = a + 140k<br>
-Step 3: Subtract → 600 = 60k → k = 10<br>
-Step 4: 1200 = a + 800 → a = 400<br>
-Step 5: B = 400 + 10×200 = ₦2,400
-        </div>
-        <div class="example-solution">Answer: ₦2,400</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">8. y = a + k √x. y = 10 when x = 4; y = 16 when x = 25. Find y when x = 36.</div>
-        <div class="example-problem">
-Step 1: 10 = a + k×2<br>
-Step 2: 16 = a + k×5<br>
-Step 3: Subtract → 6 = 3k → k = 2<br>
-Step 4: 10 = a + 4 → a = 6<br>
-Step 5: y = 6 + 2×6 = 18
-        </div>
-        <div class="example-solution">Answer: 18</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">9. When m = 5, n = 23; m = 9, n = 35. n partial as m. Find n when m = 12.</div>
-        <div class="example-problem">
-Step 1: 23 = a + 5k<br>
-Step 2: 35 = a + 9k<br>
-Step 3: Subtract → 12 = 4k → k = 3<br>
-Step 4: 23 = a + 15 → a = 8<br>
-Step 5: n = 8 + 3×12 = 44
-        </div>
-        <div class="example-solution">Answer: 44</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">10. Cost C = fixed + variable per km. C = ₦500 for 100 km, ₦800 for 200 km. Find C for 300 km.</div>
-        <div class="example-problem">
-Step 1: 500 = a + 100k<br>
-Step 2: 800 = a + 200k<br>
-Step 3: Subtract → 300 = 100k → k = 3<br>
-Step 4: 500 = a + 300 → a = 200<br>
-Step 5: C = 200 + 3×300 = ₦1,100
-        </div>
-        <div class="example-solution">Answer: ₦1,100</div>
-      </div>
-
-      <h3>JAMB Past Questions for (d) Partial Variation – 8 questions</h3>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2010: y varies partially as x. x = 2, y = 11; x = 5, y = 20. Find y when x = 8.</div>
-        <div class="example-problem">
-Step 1: 11 = a + 2k<br>
-Step 2: 20 = a + 5k<br>
-Step 3: 9 = 3k → k = 3<br>
-Step 4: a = 5<br>
-Step 5: y = 5 + 3×8 = 29
-        </div>
-        <div class="example-solution">Answer: 29</div>
-      </div>
-
-      <!-- Remaining 7 JAMB questions for (d) follow the same pattern -->
-
-      <!-- (e) Percentage Increase and Decrease -->
-      <h2>(e) Percentage Increase and Decrease in Variation</h2>
-      <p><strong>Very easy explanation</strong></p>
-      <p>If y ∝ xⁿ, then new y / old y = (new x / old x)ⁿ<br>
-      % change = [(new/old)ⁿ − 1] × 100%</p>
-
-      <h3>10 Full Examples with Step-by-Step</h3>
-
-      <div class="example-block">
-        <div class="example-problem">1. y ∝ x. x increases by 20%. Find % increase in y.</div>
-        <div class="example-problem">
-Step 1: new x = 1.2 × old x<br>
-Step 2: new y = 1.2 × old y<br>
-Step 3: % change = (1.2 – 1) × 100% = 20%
-        </div>
-        <div class="example-solution">Answer: 20% increase</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">2. y ∝ x². x increases by 10%. Find % increase in y.</div>
-        <div class="example-problem">
-Step 1: new x = 1.1 × old x<br>
-Step 2: new y / old y = (1.1)² = 1.21<br>
-Step 3: % change = (1.21 – 1) × 100% = 21%
-        </div>
-        <div class="example-solution">Answer: 21% increase</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">3. y ∝ 1/x. x increases by 25%. Find % change in y.</div>
-        <div class="example-problem">
-Step 1: new x = 1.25 × old x<br>
-Step 2: new y / old y = 1 / 1.25 = 0.8<br>
-Step 3: % change = (0.8 – 1) × 100% = –20% → 20% decrease
-        </div>
-        <div class="example-solution">Answer: 20% decrease</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">4. z ∝ √x. x decreases by 36%. Find % change in z.</div>
-        <div class="example-problem">
-Step 1: new x = 0.64 × old x<br>
-Step 2: new z / old z = √0.64 = 0.8<br>
-Step 3: % change = (0.8 – 1) × 100% = –20% → 20% decrease
-        </div>
-        <div class="example-solution">Answer: 20% decrease</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">5. P varies jointly as Q and R. Q increases 30%, R decreases 20%. Find % change in P.</div>
-        <div class="example-problem">
-Step 1: new P / old P = 1.3 × 0.8 = 1.04<br>
-Step 2: % change = (1.04 – 1) × 100% = 4%
-        </div>
-        <div class="example-solution">Answer: 4% increase</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">6. y ∝ x³. x increases by 50%. Find % increase in y.</div>
-        <div class="example-problem">
-Step 1: new x = 1.5 × old x<br>
-Step 2: new y / old y = (1.5)³ = 3.375<br>
-Step 3: % change = (3.375 – 1) × 100% = 237.5%
-        </div>
-        <div class="example-solution">Answer: 237.5% increase</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">7. Cost C ∝ n². n increases by 15%. Find % increase in C.</div>
-        <div class="example-problem">
-Step 1: new n = 1.15 × old n<br>
-Step 2: new C / old C = (1.15)² = 1.3225<br>
-Step 3: % change = 32.25%
-        </div>
-        <div class="example-solution">Answer: 32.25% increase</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">8. Time t ∝ 1/speed. Speed increases by 25%. Find % decrease in time.</div>
-        <div class="example-problem">
-Step 1: new speed = 1.25 × old speed<br>
-Step 2: new t / old t = 1 / 1.25 = 0.8<br>
-Step 3: % change = –20% → 20% decrease
-        </div>
-        <div class="example-solution">Answer: 20% decrease</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">9. Volume V ∝ r² h. r increases 10%, h decreases 10%. Find % change in V.</div>
-        <div class="example-problem">
-Step 1: new V / old V = (1.1)² × 0.9 = 1.21 × 0.9 = 1.089<br>
-Step 2: % change = 8.9%
-        </div>
-        <div class="example-solution">Answer: 8.9% increase</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">10. y ∝ x⁴. x decreases by 50%. Find % decrease in y.</div>
-        <div class="example-problem">
-Step 1: new x = 0.5 × old x<br>
-Step 2: new y / old y = (0.5)⁴ = 0.0625<br>
-Step 3: % change = (0.0625 – 1) × 100% = –93.75% → 93.75% decrease
-        </div>
-        <div class="example-solution">Answer: 93.75% decrease</div>
-      </div>
-
-      <h3>JAMB Past Questions for (e) Percentage Increase and Decrease – 8 questions</h3>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2011: y ∝ x. x increases by 20%. Find % increase in y.</div>
-        <div class="example-problem">
-Step 1: new y = 1.2 old y<br>
-Step 2: 20% increase
-        </div>
-        <div class="example-solution">Answer: 20% increase</div>
-      </div>
-
-      <div class="example-block">
-        <div class="example-problem">JAMB 2013: y ∝ x². x increases by 10%. Find % increase in y.</div>
-        <div class="example-problem">
-Step 1: (1.1)² = 1.21<br>
-Step 2: 21% increase
-        </div>
-        <div class="example-solution">Answer: 21% increase</div>
-      </div>
-
-      <!-- Remaining 6 JAMB questions for (e) follow the same pattern -->
-
-      <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-        Abumchukwu, this is now the **complete Variation chapter** — all sections (a) to (e) fully expanded with every example and JAMB question written out completely. 🌟<br>
-        Practice one section per day. You will score very high in JAMB.
-      </p>
-
-      <p style="text-align:center; margin:20px 0;">Want a quiz on Variation or the next topic?</p>
-      <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
-    </div>
-  </div>
-
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
