@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neumorphism Learning Hub - Indices, Logarithms and Surds</title>
+  <title>MATHEMATICS - Indices, Logarithms & Surds</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);
-      --highlight-solution: #ff9800;
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -121,7 +117,7 @@
       height: 40px;
       cursor: pointer;
     }
-    
+
     .content {
       padding: 20px 16px;
       line-height: 1.6;
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,21 +290,18 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    body.light .explore-btn {
-      color: #000;
     }
 
     .nav-bar {
@@ -271,1327 +353,593 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .base-sub {
+      font-size: 0.7em;
+      vertical-align: sub;
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
+
+    .sqrt {
+      font-family: 'Times New Roman', serif;
+      font-size: 1.1em;
+    }
   </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Indices, Logarithms and Surds</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Indices, Logarithms and Surds – WAEC/JAMB Guide 🚀</h1>
-        <p class="subtitle">Abumchukwu – explained like teaching a new SS1 student</p>
+        <h1>Powers & Roots! 🔢</h1>
+        <p class="subtitle">– JAMB Chapter 3 Made Easy</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>3. Indices, Logarithms and Surds</h2>
-        <p>Abumchukwu, this topic looks big but we will learn it slowly and easily — like you are just starting SS1. Read one example at a time. Try it on paper first, then check my steps. I will explain every part like I'm your class teacher.</p>
-
-        <!-- (a) Laws of Indices -->
-        <h2>(a) Laws of Indices</h2>
-        <p><strong>Very easy rules to remember</strong></p>
-        <ul>
-          <li>When multiplying same base → add powers: 2³ × 2² = 2⁵</li>
-          <li>When dividing same base → subtract powers: 2⁵ ÷ 2² = 2³</li>
-          <li>Power on power → multiply powers: (2³)² = 2⁶</li>
-          <li>Negative power → flip to bottom: 2⁻² = 1/4</li>
-          <li>Fraction power → root: 16^{1/2} = √16 = 4</li>
-        </ul>
-
-        <h3>10 Easy Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: Simplify 32^{3/5} × 2^{-2}
-          </div>
-          <div class="example-problem">
-Step 1: 32 is 2 × 2 × 2 × 2 × 2 = 2^5  
-Step 2: So 32 raised to 3/5 becomes (2^5) raised to 3/5  
-Step 3: Multiply powers: 5 × 3/5 = 3 → 2^3 = 8  
-Step 4: Now 8 × 2^{-2}  
-Step 5: 2^{-2} = 1 ÷ 2^2 = 1 ÷ 4 = 0.25  
-Step 6: 8 × 0.25 = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: Evaluate 81^{3/4} ÷ 27^{1/3}
-          </div>
-          <div class="example-problem">
-Step 1: 81 = 3 × 3 × 3 × 3 = 3^4  
-Step 2: 81 raised to 3/4 = (3^4) raised to 3/4 = 3^3 = 27  
-Step 3: 27 = 3 × 3 × 3 = 3^3  
-Step 4: 27 raised to 1/3 = 3^1 = 3  
-Step 5: 27 ÷ 3 = 9
-          </div>
-          <div class="example-solution">Answer: 9</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: Simplify (16^{1/2} × 8^{2/3}) ÷ 4^{3/2}
-          </div>
-          <div class="example-problem">
-Step 1: 16 = 2^4 → 16^{1/2} = 2^2 = 4  
-Step 2: 8 = 2^3 → 8^{2/3} = 2^2 = 4  
-Step 3: 4 = 2^2 → 4^{3/2} = 2^3 = 8  
-Step 4: (4 × 4) ÷ 8 = 16 ÷ 8 = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: Evaluate 243^{2/5}
-          </div>
-          <div class="example-problem">
-Step 1: 243 = 3^5 (3×3×3×3×3 = 243)  
-Step 2: (3^5) raised to 2/5 = 3^{5×2/5} = 3^2 = 9
-          </div>
-          <div class="example-solution">Answer: 9</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: Simplify 10^{-4} × 10^{6} × 10^{-1}
-          </div>
-          <div class="example-problem">
-Step 1: Same base (10) so add powers: -4 + 6 + (-1) = 1  
-Step 2: 10^1 = 10
-          </div>
-          <div class="example-solution">Answer: 10</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: Evaluate (125^{2/3})^{3/2}
-          </div>
-          <div class="example-problem">
-Step 1: 125 = 5^3  
-Step 2: 125 raised to 2/3 = (5^3) raised to 2/3 = 5^2 = 25  
-Step 3: 25 raised to 3/2 = (5^2) raised to 3/2 = 5^3 = 125
-          </div>
-          <div class="example-solution">Answer: 125</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: Simplify (a^5 b^{-2})^2 × a^{-3}
-          </div>
-          <div class="example-problem">
-Step 1: Raise everything to power 2: a^{10} b^{-4}  
-Step 2: Now multiply by a^{-3}: a^{10-3} b^{-4} = a^7 b^{-4}  
-Step 3: Answer = a^7 / b^4
-          </div>
-          <div class="example-solution">Answer: a^7 / b^4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: Evaluate 27^{-2/3}
-          </div>
-          <div class="example-problem">
-Step 1: 27 = 3^3  
-Step 2: (3^3) raised to -2/3 = 3^{-2}  
-Step 3: 3^{-2} = 1/9
-          </div>
-          <div class="example-solution">Answer: 1/9</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: Simplify 16^{3/4} × 4^{-1/2}
-          </div>
-          <div class="example-problem">
-Step 1: 16 = 2^4 → 16 raised to 3/4 = 2^3 = 8  
-Step 2: 4 = 2^2 → 4 raised to -1/2 = 2^{-1} = 1/2  
-Step 3: 8 × 1/2 = 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Express 0.000001 in index form
-          </div>
-          <div class="example-problem">
-Step 1: Move decimal point 6 places to the right → 1  
-Step 2: So 1 × 10^{-6}
-          </div>
-          <div class="example-solution">Answer: 10^{-6}</div>
-        </div>
-
-        <h3>JAMB Past Questions for (a) Laws of Indices</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 1999: If (a²b^{-3}c)³ / 4a^{-1}b⁴c⁵ = a^p b^q c^r, find p + 2q
-          </div>
-          <div class="example-problem">
-Step 1: Numerator becomes a^6 b^{-9} c^3  
-Step 2: Divide by denominator → a^7 b^{-13} c^{-2}  
-Step 3: p = 7, q = -13 → p + 2q = 7 - 26 = -19 (but common variant simplifies to 5/2)
-          </div>
-          <div class="example-solution">Answer: 5/2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2008: Simplify 3^{-1} / 3^{-2}
-          </div>
-          <div class="example-problem">
-Step 1: 3^{-1 - (-2)} = 3^{1} = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2012: Simplify 2^3 × 2^5 / 2^4
-          </div>
-          <div class="example-problem">
-Step 1: 2^{3+5-4} = 2^4 = 16
-          </div>
-          <div class="example-solution">Answer: 16</div>
-        </div>
-
-        <!-- (b) Equations involving indices -->
-        <h2>(b) Equations involving indices</h2>
-        <p><strong>Easy method</strong>: Change both sides to the same base, then make the powers equal and solve for x.</p>
-
-        <h3>10 Examples with solutions</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: Solve 4^x = 64
-          </div>
-          <div class="example-problem">
-Step 1: 64 = 4 × 4 × 4 = 4^3  
-Step 2: So 4^x = 4^3  
-Step 3: Powers must be equal → x = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: Solve 9^{x-1} = 27
-          </div>
-          <div class="example-problem">
-Step 1: 9 = 3^2, 27 = 3^3  
-Step 2: So (3^2)^{x-1} = 3^3  
-Step 3: 3^{2(x-1)} = 3^3  
-Step 4: Powers equal → 2(x-1) = 3  
-Step 5: x-1 = 1.5 → x = 2.5 (which is 5/2)
-          </div>
-          <div class="example-solution">Answer: 5/2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: Solve 2^{2x} = 8^{x-1}
-          </div>
-          <div class="example-problem">
-Step 1: 8 = 2^3  
-Step 2: So 2^{2x} = (2^3)^{x-1} = 2^{3(x-1)}  
-Step 3: Powers equal → 2x = 3x - 3  
-Step 4: Subtract 2x → 0 = x - 3  
-Step 5: x = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: Solve 5^{x+1} = 25
-          </div>
-          <div class="example-problem">
-Step 1: 25 = 5 × 5 = 5^2  
-Step 2: 5^{x+1} = 5^2  
-Step 3: x + 1 = 2  
-Step 4: x = 1
-          </div>
-          <div class="example-solution">Answer: 1</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: Solve 8^{2x} = 4^{x+3}
-          </div>
-          <div class="example-problem">
-Step 1: 8 = 2^3, 4 = 2^2  
-Step 2: (2^3)^{2x} = (2^2)^{x+3}  
-Step 3: 2^{6x} = 2^{2x+6}  
-Step 4: 6x = 2x + 6  
-Step 5: 4x = 6 → x = 3/2 (1.5)
-          </div>
-          <div class="example-solution">Answer: 3/2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: Solve 27^x = 9^{x+1}
-          </div>
-          <div class="example-problem">
-Step 1: 27 = 3^3, 9 = 3^2  
-Step 2: 3^{3x} = 3^{2(x+1)}  
-Step 3: 3x = 2x + 2  
-Step 4: x = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: Solve 4^{x+1} = 2^{x+5}
-          </div>
-          <div class="example-problem">
-Step 1: 4 = 2^2  
-Step 2: (2^2)^{x+1} = 2^{x+5}  
-Step 3: 2^{2x+2} = 2^{x+5}  
-Step 4: 2x + 2 = x + 5  
-Step 5: x = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: Solve 3^{2x-1} = 81
-          </div>
-          <div class="example-problem">
-Step 1: 81 = 3^4  
-Step 2: 3^{2x-1} = 3^4  
-Step 3: 2x - 1 = 4  
-Step 4: 2x = 5  
-Step 5: x = 5/2
-          </div>
-          <div class="example-solution">Answer: 5/2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: Solve 16^x = 64
-          </div>
-          <div class="example-problem">
-Step 1: 16 = 2^4, 64 = 2^6  
-Step 2: 2^{4x} = 2^6  
-Step 3: 4x = 6  
-Step 4: x = 3/2
-          </div>
-          <div class="example-solution">Answer: 3/2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Solve 7^x = 49^{x-1}
-          </div>
-          <div class="example-problem">
-Step 1: 49 = 7^2  
-Step 2: 7^x = (7^2)^{x-1} = 7^{2(x-1)}  
-Step 3: x = 2(x-1)  
-Step 4: x = 2x - 2  
-Step 5: x = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <h3>JAMB Past Questions for (b) Equations involving indices</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2010: If 27^x ÷ 81^{x+2y} = 9, and x + 4y = 0, find x, y
-          </div>
-          <div class="example-problem">
-Step 1: 27 = 3^3, 81 = 3^4, 9 = 3^2  
-Step 2: 3^{3x - 4(x+2y)} = 3^2  
-Step 3: 3x - 4x - 8y = 2 → -x - 8y = 2  
-Step 4: x + 4y = 0 → x = -4y  
-Step 5: Substitute → x = 1, y = 1/2
-          </div>
-          <div class="example-solution">Answer: x=1, y=1/2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2011: Solve 3^{2x} = 81
-          </div>
-          <div class="example-problem">
-Step 1: 81 = 3^4  
-Step 2: 2x = 4  
-Step 3: x = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2015: If 4^x = 64, find x
-          </div>
-          <div class="example-problem">
-Step 1: 64 = 4^3  
-Step 2: x = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <!-- (c) Standard form -->
-        <h2>(c) Standard form</h2>
-        <p><strong>Very easy rule</strong></p>
-        <p>Write the number as A × 10^n where A is between 1 and 10 (no root, no decimal at beginning)</p>
-
-        <h3>10 Easy Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: 450000
-          </div>
-          <div class="example-problem">
-Step 1: Move decimal point 5 places left → 4.5  
-Step 2: 4.5 × 10^5
-          </div>
-          <div class="example-solution">Answer: 4.5 × 10^5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: 0.00032
-          </div>
-          <div class="example-problem">
-Step 1: Move decimal point 4 places right → 3.2  
-Step 2: 3.2 × 10^{-4}
-          </div>
-          <div class="example-solution">Answer: 3.2 × 10^{-4}</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: 7200000
-          </div>
-          <div class="example-problem">
-Step 1: Move decimal 6 places left → 7.2  
-Step 2: 7.2 × 10^6
-          </div>
-          <div class="example-solution">Answer: 7.2 × 10^6</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: 0.000008
-          </div>
-          <div class="example-problem">
-Step 1: Move decimal 6 places right → 8  
-Step 2: 8 × 10^{-6}
-          </div>
-          <div class="example-solution">Answer: 8 × 10^{-6}</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: 0.0014 × 0.011
-          </div>
-          <div class="example-problem">
-Step 1: 0.0014 = 1.4 × 10^{-3}  
-Step 2: 0.011 = 1.1 × 10^{-2}  
-Step 3: Multiply → 1.54 × 10^{-5}
-          </div>
-          <div class="example-solution">Answer: 1.54 × 10^{-5}</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: 0.000045
-          </div>
-          <div class="example-problem">
-Step 1: Move decimal 5 places right → 4.5  
-Step 2: 4.5 × 10^{-5}
-          </div>
-          <div class="example-solution">Answer: 4.5 × 10^{-5}</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: 123456789
-          </div>
-          <div class="example-problem">
-Step 1: Move decimal 8 places left → 1.23456789  
-Step 2: 1.23456789 × 10^8
-          </div>
-          <div class="example-solution">Answer: 1.23456789 × 10^8</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: 0.000000001
-          </div>
-          <div class="example-problem">
-Step 1: Move decimal 9 places right → 1  
-Step 2: 1 × 10^{-9}
-          </div>
-          <div class="example-solution">Answer: 1 × 10^{-9}</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: 56000
-          </div>
-          <div class="example-problem">
-Step 1: Move decimal 4 places left → 5.6  
-Step 2: 5.6 × 10^4
-          </div>
-          <div class="example-solution">Answer: 5.6 × 10^4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: 0.00067
-          </div>
-          <div class="example-problem">
-Step 1: Move decimal 4 places right → 6.7  
-Step 2: 6.7 × 10^{-4}
-          </div>
-          <div class="example-solution">Answer: 6.7 × 10^{-4}</div>
-        </div>
-
-        <h3>JAMB Past Questions for (c) Standard form</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: Product of 0.0014 and 0.011 in standard form
-          </div>
-          <div class="example-problem">
-Step 1: 1.4 × 10^{-3} × 1.1 × 10^{-2} = 1.54 × 10^{-5}
-          </div>
-          <div class="example-solution">Answer: 1.54 × 10^{-5}</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: 0.007685 to three significant figures in standard form
-          </div>
-          <div class="example-problem">
-Step 1: 7.69 × 10^{-3}
-          </div>
-          <div class="example-solution">Answer: 7.69 × 10^{-3}</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2018: Product 0.21 × 0.34 in standard form
-          </div>
-          <div class="example-problem">
-Step 1: 0.0714 = 7.14 × 10^{-2}
-          </div>
-          <div class="example-solution">Answer: 7.14 × 10^{-2}</div>
-        </div>
-
-        <!-- (d) Logarithm Laws -->
-        <h2>(d) Logarithm Laws</h2>
-        <p><strong>Very easy rules</strong></p>
-        <ul>
-          <li>log of multiply = add logs: log(2×3) = log 2 + log 3</li>
-          <li>log of divide = subtract logs: log(6/2) = log 6 - log 2</li>
-          <li>log of power = power × log: log(2^5) = 5 × log 2</li>
-          <li>log of the base itself = 1: log₂ 2 = 1</li>
-          <li>log of 1 = 0: log 1 = 0</li>
-        </ul>
-
-        <h3>10 Easy Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: log₃ 81
-          </div>
-          <div class="example-problem">
-Step 1: What power of 3 gives 81?  
-Step 2: 3 × 3 × 3 × 3 = 81 → 3^4  
-Step 3: So log₃ 81 = 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: log₁₀ 10000
-          </div>
-          <div class="example-problem">
-Step 1: 10 × 10 × 10 × 10 = 10000 → 10^4  
-Step 2: log₁₀ 10000 = 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: If log₂ y = 6, find y
-          </div>
-          <div class="example-problem">
-Step 1: log₂ y = 6 means 2 raised to 6 = y  
-Step 2: 2^6 = 64  
-Step 3: y = 64
-          </div>
-          <div class="example-solution">Answer: 64</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: log₅ 1
-          </div>
-          <div class="example-problem">
-Step 1: Any number raised to power 0 = 1  
-Step 2: So log₅ 1 = 0
-          </div>
-          <div class="example-solution">Answer: 0</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: log₄ 64
-          </div>
-          <div class="example-problem">
-Step 1: 4 × 4 × 4 = 64 → 4^3 = 64  
-Step 2: log₄ 64 = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: log_b (b^7)
-          </div>
-          <div class="example-problem">
-Step 1: b raised to 7 = b^7  
-Step 2: So log_b (b^7) = 7
-          </div>
-          <div class="example-solution">Answer: 7</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: log₂ 1/8
-          </div>
-          <div class="example-problem">
-Step 1: 1/8 = 1 ÷ 8 = 2^{-3}  
-Step 2: log₂ (2^{-3}) = -3
-          </div>
-          <div class="example-solution">Answer: -3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: log₁₀ 0.01
-          </div>
-          <div class="example-problem">
-Step 1: 0.01 = 1/100 = 10^{-2}  
-Step 2: log₁₀ (10^{-2}) = -2
-          </div>
-          <div class="example-solution">Answer: -2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: If 5^x = 125, find x
-          </div>
-          <div class="example-problem">
-Step 1: 125 = 5 × 5 × 5 = 5^3  
-Step 2: 5^x = 5^3  
-Step 3: x = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: log₈ 4
-          </div>
-          <div class="example-problem">
-Step 1: 8 = 2^3, 4 = 2^2  
-Step 2: 8 raised to what power = 4?  
-Step 3: (2^3)^y = 2^2 → 3y = 2 → y = 2/3
-          </div>
-          <div class="example-solution">Answer: 2/3</div>
-        </div>
-
-        <h3>JAMB Past Questions for (d) Logarithm Laws</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: If log₂ y = 6, find y
-          </div>
-          <div class="example-problem">
-Step 1: 2^6 = 64  
-Step 2: y = 64
-          </div>
-          <div class="example-solution">Answer: 64</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: Simplify log 2 + log 3 - log 6
-          </div>
-          <div class="example-problem">
-Step 1: log 2 + log 3 = log (2×3) = log 6  
-Step 2: log 6 - log 6 = 0
-          </div>
-          <div class="example-solution">Answer: 0</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2018: log₃ 81
-          </div>
-          <div class="example-problem">
-Step 1: 81 = 3^4  
-Step 2: 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
-        </div>
-
-        <!-- (e) Logarithms of any base -->
-        <h2>(e) Logarithms of any base</h2>
-        <p><strong>Easy meaning</strong></p>
-        <p>log_b a means "what power must I raise b to get a?"</p>
-
-        <h3>10 Easy Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: log₃ 27
-          </div>
-          <div class="example-problem">
-Step 1: What power of 3 gives 27?  
-Step 2: 3 × 3 × 3 = 27 → 3^3  
-Step 3: log₃ 27 = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: log₅ 125
-          </div>
-          <div class="example-problem">
-Step 1: 5 × 5 × 5 = 125 → 5^3  
-Step 2: log₅ 125 = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: log₄ 256
-          </div>
-          <div class="example-problem">
-Step 1: 4 × 4 × 4 × 4 = 256 → 4^4  
-Step 2: log₄ 256 = 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: log₂ 32
-          </div>
-          <div class="example-problem">
-Step 1: 2 × 2 × 2 × 2 × 2 = 32 → 2^5  
-Step 2: log₂ 32 = 5
-          </div>
-          <div class="example-solution">Answer: 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: log₁₀ 1000
-          </div>
-          <div class="example-problem">
-Step 1: 10 × 10 × 10 = 1000 → 10^3  
-Step 2: log₁₀ 1000 = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: log₇ 49
-          </div>
-          <div class="example-problem">
-Step 1: 7 × 7 = 49 → 7^2  
-Step 2: log₇ 49 = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: log₈ 512
-          </div>
-          <div class="example-problem">
-Step 1: 8 × 8 × 8 = 512 → 8^3  
-Step 2: log₈ 512 = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: log₆ 216
-          </div>
-          <div class="example-problem">
-Step 1: 6 × 6 × 6 = 216 → 6^3  
-Step 2: log₆ 216 = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: log₉ 81
-          </div>
-          <div class="example-problem">
-Step 1: 9 × 9 = 81 → 9^2  
-Step 2: log₉ 81 = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: log₁₂ 144
-          </div>
-          <div class="example-problem">
-Step 1: 12 × 12 = 144 → 12^2  
-Step 2: log₁₂ 144 = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <h3>JAMB Past Questions for (e) Logarithms of any base</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: If log_b 64 = 6, find b
-          </div>
-          <div class="example-problem">
-Step 1: b raised to 6 = 64  
-Step 2: 64 = 2^6 → b = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: log₄ 64
-          </div>
-          <div class="example-problem">
-Step 1: 4^3 = 64 → 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2018: log₅ 1
-          </div>
-          <div class="example-problem">
-Step 1: 0
-          </div>
-          <div class="example-solution">Answer: 0</div>
-        </div>
-
-        <!-- (f) Change of base -->
-        <h2>(f) Change of base</h2>
-        <p><strong>Easy formula</strong></p>
-        <p>log_b a = log₁₀ a / log₁₀ b (or any base you like)</p>
-
-        <h3>10 Easy Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: log₃ 81 (change to base 10)
-          </div>
-          <div class="example-problem">
-Step 1: Use formula: log₁₀ 81 / log₁₀ 3  
-Step 2: ≈ 1.908 / 0.477 ≈ 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: log₅ 25
-          </div>
-          <div class="example-problem">
-Step 1: log₁₀ 25 / log₁₀ 5 ≈ 1.398 / 0.699 = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: log₂ 16
-          </div>
-          <div class="example-problem">
-Step 1: log₁₀ 16 / log₁₀ 2 ≈ 1.204 / 0.301 = 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: log₄ 64
-          </div>
-          <div class="example-problem">
-Step 1: log₁₀ 64 / log₁₀ 4 ≈ 1.806 / 0.602 = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: log₇ 343
-          </div>
-          <div class="example-problem">
-Step 1: 343 = 7 × 7 × 7 = 7^3  
-Step 2: log₇ 343 = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: log₆ 216
-          </div>
-          <div class="example-problem">
-Step 1: 216 = 6 × 6 × 6 = 6^3  
-Step 2: log₆ 216 = 3
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: log₃ 243
-          </div>
-          <div class="example-problem">
-Step 1: 243 = 3^5  
-Step 2: log₃ 243 = 5
-          </div>
-          <div class="example-solution">Answer: 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: log₈ 2
-          </div>
-          <div class="example-problem">
-Step 1: log₁₀ 2 / log₁₀ 8 ≈ 0.301 / 0.903 = 1/3
-          </div>
-          <div class="example-solution">Answer: 1/3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: log₉ 3
-          </div>
-          <div class="example-problem">
-Step 1: log₁₀ 3 / log₁₀ 9 ≈ 0.477 / 0.954 = 0.5
-          </div>
-          <div class="example-solution">Answer: 0.5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: log₁₂ 144
-          </div>
-          <div class="example-problem">
-Step 1: 144 = 12 × 12 = 12^2  
-Step 2: log₁₂ 144 = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <h3>JAMB Past Questions for (f) Change of base</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: If log₈ 10 = x, evaluate log₈ 5 in terms of x
-          </div>
-          <div class="example-problem">
-Step 1: log₈ 5 = log₈ (10 ÷ 2) = log₈ 10 - log₈ 2  
-Step 2: log₈ 2 = 1/3 (because 8^{1/3} = 2)  
-Step 3: x - 1/3
-          </div>
-          <div class="example-solution">Answer: x - 1/3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: log₃ 81 using change of base
-          </div>
-          <div class="example-problem">
-Step 1: log₁₀ 81 / log₁₀ 3 = 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2018: Change log₄ 16 to base 2
-          </div>
-          <div class="example-problem">
-Step 1: log₂ 16 / log₂ 4 = 4 / 2 = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <!-- (g) Indices-Log Relationship and Applications -->
-        <h2>(g) Indices-Log Relationship and Applications</h2>
-        <p><strong>Easy connection</strong></p>
-        <p>If b raised to x = a, then log_b a = x (and the other way round)</p>
-
-        <h3>10 Easy Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: log₁₀ 2 ≈ 0.3010, log₁₀ 3 ≈ 0.4771. Find log₁₀ 24
-          </div>
-          <div class="example-problem">
-Step 1: 24 = 8 × 3 = 2^3 × 3  
-Step 2: log 24 = log(2^3) + log 3 = 3 × log 2 + log 3  
-Step 3: 3 × 0.3010 = 0.903  
-Step 4: 0.903 + 0.4771 = 1.3801
-          </div>
-          <div class="example-solution">Answer: 1.3801</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: log₁₀ 2 = 0.3010, log₁₀ 5 = 0.6990. Find log₁₀ 0.04
-          </div>
-          <div class="example-problem">
-Step 1: 0.04 = 4 / 100 = 2^2 / 10^2  
-Step 2: log 0.04 = log(2^2) - log(10^2) = 2 log 2 - 2  
-Step 3: 2 × 0.3010 = 0.602  
-Step 4: 0.602 - 2 = -1.398
-          </div>
-          <div class="example-solution">Answer: -1.398</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: Solve log₃ (4x – 5) = 3
-          </div>
-          <div class="example-problem">
-Step 1: If log₃ of something = 3, then something = 3^3 = 27  
-Step 2: 4x – 5 = 27  
-Step 3: 4x = 32  
-Step 4: x = 8
-          </div>
-          <div class="example-solution">Answer: 8</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: log₁₀ 2 = 0.3010, log₁₀ 7 = 0.8451. Find log₁₀ 98
-          </div>
-          <div class="example-problem">
-Step 1: 98 = 2 × 49 = 2 × 7^2  
-Step 2: log 98 = log 2 + log(7^2) = log 2 + 2 log 7  
-Step 3: 0.3010 + 2 × 0.8451 = 0.3010 + 1.6902 = 1.9912
-          </div>
-          <div class="example-solution">Answer: 1.9912</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: Solve log₂ (3x – 7) = 5
-          </div>
-          <div class="example-problem">
-Step 1: log₂ of something = 5 → something = 2^5 = 32  
-Step 2: 3x – 7 = 32  
-Step 3: 3x = 39  
-Step 4: x = 13
-          </div>
-          <div class="example-solution">Answer: 13</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: Find number of digits in 8000
-          </div>
-          <div class="example-problem">
-Step 1: Number of digits = floor(log₁₀ of number) + 1  
-Step 2: 8000 = 8 × 10^3 → log₁₀ 8000 ≈ log₁₀ 8 + 3 ≈ 0.903 + 3 = 3.903  
-Step 3: floor(3.903) = 3 → 3 + 1 = 4 digits
-          </div>
-          <div class="example-solution">Answer: 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: log₅ 7 = log₂ 7 / log₂ 5
-          </div>
-          <div class="example-problem">
-Step 1: This is the change of base formula  
-Step 2: Yes, it is true
-          </div>
-          <div class="example-solution">Answer: True</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: If log_b 64 = 6, find b
-          </div>
-          <div class="example-problem">
-Step 1: log_b 64 = 6 means b^6 = 64  
-Step 2: 64 = 2^6 → b = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: Evaluate log₃ 9 + log₃ 27
-          </div>
-          <div class="example-problem">
-Step 1: log₃ 9 + log₃ 27 = log₃ (9 × 27)  
-Step 2: 9 × 27 = 243  
-Step 3: 243 = 3^5 → log₃ 243 = 5
-          </div>
-          <div class="example-solution">Answer: 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Given log₁₀ 3 ≈ 0.4771, find log₁₀ √27
-          </div>
-          <div class="example-problem">
-Step 1: √27 = 27 raised to 1/2 = (3^3) raised to 1/2 = 3^{3/2}  
-Step 2: log₁₀ (3^{3/2}) = (3/2) × log₁₀ 3  
-Step 3: 1.5 × 0.4771 ≈ 0.71565
-          </div>
-          <div class="example-solution">Answer: 0.71565</div>
-        </div>
-
-        <h3>JAMB Past Questions for (g) Indices-Log Relationship and Applications</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: log₁₀ 2 = 0.3010, log₁₀ 3 = 0.4771. Find log₁₀ 24
-          </div>
-          <div class="example-problem">
-Step 1: 1.3801
-          </div>
-          <div class="example-solution">Answer: 1.3801</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: Solve log₂ x = 5
-          </div>
-          <div class="example-problem">
-Step 1: x = 2^5 = 32
-          </div>
-          <div class="example-solution">Answer: 32</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2018: Number of digits in 10^6
-          </div>
-          <div class="example-problem">
-Step 1: log₁₀ (10^6) = 6  
-Step 2: 6 + 1 = 7 digits
-          </div>
-          <div class="example-solution">Answer: 7</div>
-        </div>
-
-        <!-- (h) Surds -->
-        <h2>(h) Surds</h2>
-        <p><strong>Easy rules</strong></p>
-        <ul>
-          <li>Take out perfect squares: √50 = √(25×2) = 5√2</li>
-          <li>√a × √b = √(a×b)</li>
-          <li>Add/subtract only same roots: 3√2 + 5√2 = 8√2</li>
-          <li>To remove root from bottom → multiply by conjugate (opposite sign)</li>
-        </ul>
-
-        <h3>10 Easy Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: Simplify √200
-          </div>
-          <div class="example-problem">
-Step 1: 200 = 100 × 2  
-Step 2: √200 = √100 × √2 = 10√2
-          </div>
-          <div class="example-solution">Answer: 10√2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: Rationalise 1 / (√7 – √2)
-          </div>
-          <div class="example-problem">
-Step 1: Multiply top and bottom by (√7 + √2)  
-Step 2: Bottom: (√7 – √2)(√7 + √2) = 7 – 2 = 5  
-Step 3: Top: 1 × (√7 + √2)  
-Step 4: Answer = (√7 + √2)/5
-          </div>
-          <div class="example-solution">Answer: (√7 + √2)/5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: Simplify 4√18 – 3√50 + √72
-          </div>
-          <div class="example-problem">
-Step 1: √18 = 3√2 → 4 × 3√2 = 12√2  
-Step 2: √50 = 5√2 → 3 × 5√2 = 15√2  
-Step 3: √72 = 6√2  
-Step 4: 12√2 – 15√2 + 6√2 = 3√2
-          </div>
-          <div class="example-solution">Answer: 3√2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: Rationalise (√5 + √3) / (√5 – √3)
-          </div>
-          <div class="example-problem">
-Step 1: Multiply top and bottom by (√5 + √3)  
-Step 2: Bottom: 5 – 3 = 2  
-Step 3: Top: (√5 + √3)^2 = 5 + 2√15 + 3 = 8 + 2√15  
-Step 4: (8 + 2√15)/2 = 4 + √15
-          </div>
-          <div class="example-solution">Answer: 4 + √15</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: √45 + √20 – √5
-          </div>
-          <div class="example-problem">
-Step 1: √45 = 3√5, √20 = 2√5  
-Step 2: 3√5 + 2√5 – √5 = 4√5
-          </div>
-          <div class="example-solution">Answer: 4√5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: (√8 + √2)²
-          </div>
-          <div class="example-problem">
-Step 1: √8 = 2√2  
-Step 2: (2√2 + √2)^2 = (3√2)^2 = 9 × 2 = 18 wait — correct: 8 + 2 + 4√2 = 10 + 4√2
-          </div>
-          <div class="example-solution">Answer: 10 + 4√2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: Rationalise 3 / (√6 + √3)
-          </div>
-          <div class="example-problem">
-Step 1: Multiply by (√6 – √3)  
-Step 2: Bottom: 6 – 3 = 3  
-Step 3: Top: 3(√6 – √3)  
-Step 4: √6 – √3
-          </div>
-          <div class="example-solution">Answer: √6 – √3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: Simplify √98 – √50 + √32
-          </div>
-          <div class="example-problem">
-Step 1: √98 = 7√2, √50 = 5√2, √32 = 4√2  
-Step 2: 7√2 – 5√2 + 4√2 = 6√2
-          </div>
-          <div class="example-solution">Answer: 6√2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: √27 × √12
-          </div>
-          <div class="example-problem">
-Step 1: √27 × √12 = √(27 × 12) = √324  
-Step 2: √324 = 18
-          </div>
-          <div class="example-solution">Answer: 18</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Rationalise 6 / (√10 – √6)
-          </div>
-          <div class="example-problem">
-Step 1: Multiply by (√10 + √6)  
-Step 2: Bottom: 10 – 6 = 4  
-Step 3: Top: 6(√10 + √6)  
-Step 4: 6/4 = 3/2 → (3/2)(√10 + √6)
-          </div>
-          <div class="example-solution">Answer: (3/2)(√10 + √6)</div>
-        </div>
-
-        <h3>JAMB Past Questions for (h) Surds</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2010: Simplify √200 - √50
-          </div>
-          <div class="example-problem">
-Step 1: √200 = 10√2, √50 = 5√2  
-Step 2: 10√2 - 5√2 = 5√2
-          </div>
-          <div class="example-solution">Answer: 5√2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: Rationalise 1/√2
-          </div>
-          <div class="example-problem">
-Step 1: Multiply by √2 / √2  
-Step 2: √2 / 2
-          </div>
-          <div class="example-solution">Answer: √2 / 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2018: Width of rectangle with diagonal 8 cm, length 4 cm
-          </div>
-          <div class="example-problem">
-Step 1: Use Pythagoras: width = √(8² - 4²) = √(64 - 16) = √48  
-Step 2: √48 = √(16×3) = 4√3
-          </div>
-          <div class="example-solution">Answer: 4√3 cm</div>
-        </div>
-
-        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold; color: var(--accent);">
-          Abumchukwu, now every section (a to h) is complete with 10 easy examples + 3 JAMB questions each — explained like you're just starting SS1! 🌟<br>
-          Do 1 section per day. Try the examples yourself first. You will do very well in JAMB.
+        <h2>📚 Chapter 3: Indices, Logarithms and Surds</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Master laws of indices, logarithmic equations, and surd operations for JAMB success. This chapter appears frequently in exams!</p>
+
+        <div class="section-header">1️⃣ INDICES (Powers/Exponents)</div>
+
+        <h2>Basic Laws of Indices 📈</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Law</th>
+              <th>Formula</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td>Multiplication</td>
+              <td>a<sup>m</sup> × a<sup>n</sup> = a<sup>m+n</sup></td>
+              <td>2³ × 2⁴ = 2⁷ = 128</td>
+            </tr>
+            <tr>
+              <td>Division</td>
+              <td>a<sup>m</sup> ÷ a<sup>n</sup> = a<sup>m-n</sup></td>
+              <td>5⁶ ÷ 5² = 5⁴ = 625</td>
+            </tr>
+            <tr>
+              <td>Power of Power</td>
+              <td>(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></td>
+              <td>(3²)³ = 3⁶ = 729</td>
+            </tr>
+            <tr>
+              <td>Zero Index</td>
+              <td>a⁰ = 1 (a ≠ 0)</td>
+              <td>7⁰ = 1, (-5)⁰ = 1</td>
+            </tr>
+            <tr>
+              <td>Negative Index</td>
+              <td>a<sup>-n</sup> = <span class="fraction"><span class="top">1</span><span class="bottom">a<sup>n</sup></span></span></td>
+              <td>2<sup>-3</sup> = <span class="fraction"><span class="top">1</span><span class="bottom">8</span></span></td>
+            </tr>
+            <tr>
+              <td>Fractional Index</td>
+              <td>a<sup><span class="fraction"><span class="top">1</span><span class="bottom">n</span></span></sup> = <span class="sqrt">√[n]</span>a</td>
+              <td>8<sup><span class="fraction"><span class="top">1</span><span class="bottom">3</span></span></sup> = 2</td>
+            </tr>
+            <tr>
+              <td>General Fractional</td>
+              <td>a<sup><span class="fraction"><span class="top">m</span><span class="bottom">n</span></span></sup> = (<span class="sqrt">√[n]</span>a)<sup>m</sup></td>
+              <td>16<sup><span class="fraction"><span class="top">3</span><span class="bottom">4</span></span></sup> = 2³ = 8</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>🔢 Example 1: Simplifying Expressions</h2>
+        <p>Simplify: <span class="fraction"><span class="top">3⁵ × 3<sup>-2</sup></span><span class="bottom">3³</span></span></p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • Numerator: 3⁵ × 3<sup>-2</sup> = 3<sup>5+(-2)</sup> = 3³<br>
+          • Division: <span class="fraction"><span class="top">3³</span><span class="bottom">3³</span></span> = 3<sup>3-3</sup> = 3⁰ = 1
+        </div>
+        <div class="answer-box">Answer: 1</div>
+
+        <h2>🔢 Example 2: Solving Exponential Equations</h2>
+        <p>Solve: 2<sup>2x+1</sup> = 8<sup>x-1</sup></p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Express both sides with base 2:<br>
+          • 8 = 2³, so 8<sup>x-1</sup> = (2³)<sup>x-1</sup> = 2<sup>3x-3</sup><br><br>
+          
+          Therefore: 2<sup>2x+1</sup> = 2<sup>3x-3</sup><br>
+          Equate exponents: 2x + 1 = 3x - 3<br>
+          1 + 3 = 3x - 2x<br>
+          x = 4
+        </div>
+        <div class="answer-box">Answer: x = 4</div>
+
+        <h2>🔢 Example 3: Fractional Indices</h2>
+        <p>Evaluate: 27<sup><span class="fraction"><span class="top">2</span><span class="bottom">3</span></span></sup> + 16<sup><span class="fraction"><span class="top">3</span><span class="bottom">4</span></span></sup></p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • 27<sup><span class="fraction"><span class="top">2</span><span class="bottom">3</span></span></sup> = (<span class="sqrt">³√</span>27)² = 3² = 9<br>
+          • 16<sup><span class="fraction"><span class="top">3</span><span class="bottom">4</span></span></sup> = (<span class="sqrt">⁴√</span>16)³ = 2³ = 8<br><br>
+          
+          Answer: 9 + 8 = 17
+        </div>
+        <div class="answer-box">Answer: 17</div>
+
+        <div class="section-header">2️⃣ LOGARITHMS</div>
+
+        <h2>Definition 📖</h2>
+        <div class="formula-box">
+          <strong>If a<sup>x</sup> = N, then log<sub>a</sub> N = x</strong><br><br>
+          Where:<br>
+          • a = base (must be positive and ≠ 1)<br>
+          • N = number (must be positive)<br>
+          • x = logarithm
+        </div>
+
+        <h2>Laws of Logarithms 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Law</th>
+              <th>Formula</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td>Product Rule</td>
+              <td>log<sub>a</sub>(MN) = log<sub>a</sub> M + log<sub>a</sub> N</td>
+              <td>log₂(8×4) = 3+2 = 5</td>
+            </tr>
+            <tr>
+              <td>Quotient Rule</td>
+              <td>log<sub>a</sub>(<span class="fraction"><span class="top">M</span><span class="bottom">N</span></span>) = log<sub>a</sub> M - log<sub>a</sub> N</td>
+              <td>log₃(<span class="fraction"><span class="top">27</span><span class="bottom">9</span></span>) = 3-2 = 1</td>
+            </tr>
+            <tr>
+              <td>Power Rule</td>
+              <td>log<sub>a</sub>(M<sup>n</sup>) = n·log<sub>a</sub> M</td>
+              <td>log₅(25²) = 2×2 = 4</td>
+            </tr>
+            <tr>
+              <td>Change of Base</td>
+              <td>log<sub>a</sub> b = <span class="fraction"><span class="top">log<sub>c</sub> b</span><span class="bottom">log<sub>c</sub> a</span></span></td>
+              <td>log₂ 8 = <span class="fraction"><span class="top">log 8</span><span class="bottom">log 2</span></span></td>
+            </tr>
+            <tr>
+              <td>Log of Base</td>
+              <td>log<sub>a</sub> a = 1</td>
+              <td>log₅ 5 = 1</td>
+            </tr>
+            <tr>
+              <td>Log of 1</td>
+              <td>log<sub>a</sub> 1 = 0</td>
+              <td>log₇ 1 = 0</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="component-box">
+          <h4>Common and Natural Logarithms</h4>
+          <p>• <strong>Common logarithms:</strong> Base 10 (log₁₀ or simply log)</p>
+          <p>• <strong>Natural logarithms:</strong> Base e (ln or logₑ) where e ≈ 2.718</p>
+        </div>
+
+        <h2>🔢 Example 4: Using Logarithm Laws</h2>
+        <p>Simplify: log₃ 54 + log₃ 2 - log₃ 4</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • log₃ 54 + log₃ 2 = log₃(54 × 2) = log₃ 108<br>
+          • log₃ 108 - log₃ 4 = log₃(<span class="fraction"><span class="top">108</span><span class="bottom">4</span></span>) = log₃ 27<br>
+          • Since 27 = 3³: log₃ 27 = 3
+        </div>
+        <div class="answer-box">Answer: 3</div>
+
+        <h2>🔢 Example 5: Solving Logarithmic Equations</h2>
+        <p>Solve: log₂(x+3) + log₂(x-1) = 3</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • Combine: log₂[(x+3)(x-1)] = 3<br>
+          • Convert to exponential: (x+3)(x-1) = 2³ = 8<br>
+          • Expand: x² + 2x - 3 = 8<br>
+          • x² + 2x - 11 = 0<br><br>
+          
+          Using quadratic formula:<br>
+          x = <span class="fraction"><span class="top">-2 ± <span class="sqrt">√</span>(4 + 44)</span><span class="bottom">2</span></span> = <span class="fraction"><span class="top">-2 ± <span class="sqrt">√</span>48</span><span class="bottom">2</span></span> = -1 ± 2<span class="sqrt">√</span>3<br><br>
+          
+          <em>Since x > 1 (for log₂(x-1) to exist):</em><br>
+          x = -1 + 2<span class="sqrt">√</span>3 ≈ 2.46
+        </div>
+        <div class="answer-box">Answer: x = -1 + 2√3 ≈ 2.46</div>
+
+        <h2>🔢 Example 6: Change of Base</h2>
+        <p>Evaluate: log₄ 8</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          log₄ 8 = <span class="fraction"><span class="top">log₂ 8</span><span class="bottom">log₂ 4</span></span> = <span class="fraction"><span class="top">3</span><span class="bottom">2</span></span> = 1.5
+        </div>
+        <div class="answer-box">Answer: 1.5</div>
+
+        <div class="section-header">3️⃣ SURDS (Irrational Roots)</div>
+
+        <h2>Definition √</h2>
+        <p><span class="highlight">Surds</span> are irrational numbers expressed as roots that cannot be simplified to exact rational numbers.</p>
+        
+        <div class="component-box">
+          <h4>Examples:</h4>
+          <p>• <span class="sqrt">√</span>2, <span class="sqrt">√</span>3, <span class="sqrt">³√</span>5</p>
+        </div>
+
+        <h2>Types of Surds 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td>Quadratic Surd</td>
+              <td>Square root of non-perfect square</td>
+              <td><span class="sqrt">√</span>5, <span class="sqrt">√</span>18</td>
+            </tr>
+            <tr>
+              <td>Cubic Surd</td>
+              <td>Cube root of non-perfect cube</td>
+              <td><span class="sqrt">³√</span>2, <span class="sqrt">³√</span>7</td>
+            </tr>
+            <tr>
+              <td>Binomial Surd</td>
+              <td>Sum/difference of two surds</td>
+              <td>3 + <span class="sqrt">√</span>2, <span class="sqrt">√</span>5 - <span class="sqrt">√</span>3</td>
+            </tr>
+            <tr>
+              <td>Conjugate Surd</td>
+              <td>Change sign between terms</td>
+              <td>If a + <span class="sqrt">√</span>b, conjugate is a - <span class="sqrt">√</span>b</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Operations with Surds</h3>
+
+        <h2>Simplification 📝</h2>
+        <div class="formula-box">
+          <span class="sqrt">√</span>(a × b) = <span class="sqrt">√</span>a × <span class="sqrt">√</span>b<br>
+          <span class="sqrt">√</span>(a² × b) = a<span class="sqrt">√</span>b
+        </div>
+
+        <div class="memory-aid">
+          💡 Example: <span class="sqrt">√</span>50 = <span class="sqrt">√</span>(25 × 2) = 5<span class="sqrt">√</span>2
+        </div>
+
+        <h2>Rationalization 🎯</h2>
+        <p>Removing surds from the denominator.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Form</th>
+              <th>Multiply by</th>
+              <th>Result</th>
+            </tr>
+            <tr>
+              <td><span class="fraction"><span class="top">1</span><span class="bottom"><span class="sqrt">√</span>a</span></span></td>
+              <td><span class="fraction"><span class="top"><span class="sqrt">√</span>a</span><span class="bottom"><span class="sqrt">√</span>a</span></span></td>
+              <td><span class="fraction"><span class="top"><span class="sqrt">√</span>a</span><span class="bottom">a</span></span></td>
+            </tr>
+            <tr>
+              <td><span class="fraction"><span class="top">1</span><span class="bottom">a + <span class="sqrt">√</span>b</span></span></td>
+              <td><span class="fraction"><span class="top">a - <span class="sqrt">√</span>b</span><span class="bottom">a - <span class="sqrt">√</span>b</span></span></td>
+              <td><span class="fraction"><span class="top">a - <span class="sqrt">√</span>b</span><span class="bottom">a² - b</span></span></td>
+            </tr>
+            <tr>
+              <td><span class="fraction"><span class="top">1</span><span class="bottom"><span class="sqrt">√</span>a + <span class="sqrt">√</span>b</span></span></td>
+              <td><span class="fraction"><span class="top"><span class="sqrt">√</span>a - <span class="sqrt">√</span>b</span><span class="bottom"><span class="sqrt">√</span>a - <span class="sqrt">√</span>b</span></span></td>
+              <td><span class="fraction"><span class="top"><span class="sqrt">√</span>a - <span class="sqrt">√</span>b</span><span class="bottom">a - b</span></span></td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>🔢 Example 7: Simplifying Surds</h2>
+        <p>Simplify: <span class="sqrt">√</span>72 + <span class="sqrt">√</span>50 - <span class="sqrt">√</span>32</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • <span class="sqrt">√</span>72 = <span class="sqrt">√</span>(36 × 2) = 6<span class="sqrt">√</span>2<br>
+          • <span class="sqrt">√</span>50 = <span class="sqrt">√</span>(25 × 2) = 5<span class="sqrt">√</span>2<br>
+          • <span class="sqrt">√</span>32 = <span class="sqrt">√</span>(16 × 2) = 4<span class="sqrt">√</span>2<br><br>
+          
+          Answer: 6<span class="sqrt">√</span>2 + 5<span class="sqrt">√</span>2 - 4<span class="sqrt">√</span>2 = 7<span class="sqrt">√</span>2
+        </div>
+        <div class="answer-box">Answer: 7√2</div>
+
+        <h2>🔢 Example 8: Rationalization</h2>
+        <p>Rationalize: <span class="fraction"><span class="top">3</span><span class="bottom">2 + <span class="sqrt">√</span>5</span></span></p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Multiply by conjugate (2 - <span class="sqrt">√</span>5):<br><br>
+          
+          <span class="fraction"><span class="top">3</span><span class="bottom">2 + <span class="sqrt">√</span>5</span></span> × <span class="fraction"><span class="top">2 - <span class="sqrt">√</span>5</span><span class="bottom">2 - <span class="sqrt">√</span>5</span></span> = <span class="fraction"><span class="top">3(2 - <span class="sqrt">√</span>5)</span><span class="bottom">4 - 5</span></span><br><br>
+          
+          = <span class="fraction"><span class="top">6 - 3<span class="sqrt">√</span>5</span><span class="bottom">-1</span></span> = 3<span class="sqrt">√</span>5 - 6
+        </div>
+        <div class="answer-box">Answer: 3√5 - 6</div>
+
+        <h2>🔢 Example 9: Binomial Surds</h2>
+        <p>If a = 3 + 2<span class="sqrt">√</span>2 and b = 3 - 2<span class="sqrt">√</span>2, find a² + b²</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          • Note that a + b = 6 and ab = 9 - 8 = 1<br>
+          • a² + b² = (a+b)² - 2ab = 36 - 2 = 34
+        </div>
+        <div class="answer-box">Answer: 34</div>
+
+        <div class="section-header">📋 COMPLETE FORMULA SUMMARY</div>
+
+        <h2>Indices, Logarithms & Surds 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Category</th>
+              <th>Formula</th>
+              <th>Key Notes</th>
+            </tr>
+            <tr>
+              <td colspan="3" style="background: rgba(29,185,84,0.2); font-weight: bold; text-align: center;">INDICES</td>
+            </tr>
+            <tr>
+              <td>Multiplication</td>
+              <td>a<sup>m</sup> × a<sup>n</sup> = a<sup>m+n</sup></td>
+              <td>Same base, add powers</td>
+            </tr>
+            <tr>
+              <td>Division</td>
+              <td><span class="fraction"><span class="top">a<sup>m</sup></span><span class="bottom">a<sup>n</sup></span></span> = a<sup>m-n</sup></td>
+              <td>Same base, subtract powers</td>
+            </tr>
+            <tr>
+              <td>Power of power</td>
+              <td>(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></td>
+              <td>Multiply powers</td>
+            </tr>
+            <tr>
+              <td>Zero power</td>
+              <td>a⁰ = 1</td>
+              <td>Any non-zero number</td>
+            </tr>
+            <tr>
+              <td>Negative power</td>
+              <td>a<sup>-n</sup> = <span class="fraction"><span class="top">1</span><span class="bottom">a<sup>n</sup></span></span></td>
+              <td>Reciprocal</td>
+            </tr>
+            <tr>
+              <td>Fractional power</td>
+              <td>a<sup><span class="fraction"><span class="top">m</span><span class="bottom">n</span></span></sup> = <span class="sqrt">√[n]</span>(a<sup>m</sup>)</td>
+              <td>nth root</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="background: rgba(29,185,84,0.2); font-weight: bold; text-align: center;">LOGARITHMS</td>
+            </tr>
+            <tr>
+              <td>Definition</td>
+              <td>If a<sup>x</sup> = N, then log<sub>a</sub> N = x</td>
+              <td>a > 0, a ≠ 1, N > 0</td>
+            </tr>
+            <tr>
+              <td>Product</td>
+              <td>log<sub>a</sub>(MN) = log<sub>a</sub> M + log<sub>a</sub> N</td>
+              <td>Log of product = sum of logs</td>
+            </tr>
+            <tr>
+              <td>Quotient</td>
+              <td>log<sub>a</sub>(<span class="fraction"><span class="top">M</span><span class="bottom">N</span></span>) = log<sub>a</sub> M - log<sub>a</sub> N</td>
+              <td>Log of quotient = difference</td>
+            </tr>
+            <tr>
+              <td>Power</td>
+              <td>log<sub>a</sub>(M<sup>n</sup>) = n·log<sub>a</sub> M</td>
+              <td>Power comes to front</td>
+            </tr>
+            <tr>
+              <td>Change of base</td>
+              <td>log<sub>a</sub> b = <span class="fraction"><span class="top">log<sub>c</sub> b</span><span class="bottom">log<sub>c</sub> a</span></span></td>
+              <td>Useful for calculators</td>
+            </tr>
+            <tr>
+              <td>Special values</td>
+              <td>log<sub>a</sub> 1 = 0, log<sub>a</sub> a = 1</td>
+              <td>Always true</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="background: rgba(29,185,84,0.2); font-weight: bold; text-align: center;">SURDS</td>
+            </tr>
+            <tr>
+              <td>Simplification</td>
+              <td><span class="sqrt">√</span>(a²b) = a<span class="sqrt">√</span>b</td>
+              <td>Extract perfect squares</td>
+            </tr>
+            <tr>
+              <td>Addition</td>
+              <td>a<span class="sqrt">√</span>c + b<span class="sqrt">√</span>c = (a+b)<span class="sqrt">√</span>c</td>
+              <td>Like surds only</td>
+            </tr>
+            <tr>
+              <td>Rationalization (single)</td>
+              <td><span class="fraction"><span class="top">1</span><span class="bottom"><span class="sqrt">√</span>a</span></span> = <span class="fraction"><span class="top"><span class="sqrt">√</span>a</span><span class="bottom">a</span></span></td>
+              <td>Remove root from denominator</td>
+            </tr>
+            <tr>
+              <td>Rationalization (binomial)</td>
+              <td colspan="2">Multiply by conjugate: <span class="fraction"><span class="top">1</span><span class="bottom">a+<span class="sqrt">√</span>b</span></span> × <span class="fraction"><span class="top">a-<span class="sqrt">√</span>b</span><span class="bottom">a-<span class="sqrt">√</span>b</span></span></td>
+            </tr>
+            <tr>
+              <td>Conjugate pairs</td>
+              <td>(a+<span class="sqrt">√</span>b)(a-<span class="sqrt">√</span>b) = a² - b</td>
+              <td>Difference of squares</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Indices:</strong> Always try to express numbers with the same base when solving equations</li>
+            <li><strong>Logarithms:</strong> Remember that log<sub>a</sub> N is only defined when N > 0</li>
+            <li><strong>Surds:</strong> When rationalizing, the conjugate always has the opposite sign</li>
+            <li><strong>Common mistake:</strong> log<sub>a</sub>(M + N) ≠ log<sub>a</sub> M + log<sub>a</sub> N (product rule only, not sum!)</li>
+          </ol>
+        </div>
+
+        <div class="warning-box">
+          <h4>⚠️ Common Pitfall</h4>
+          <p>Remember: There is no law for log<sub>a</sub>(M + N)! Many students mistakenly think log<sub>a</sub>(M + N) = log<sub>a</sub> M + log<sub>a</sub> N. This is FALSE!</p>
+        </div>
+
+        <h2>📝 Practice Questions</h2>
+
+        <div class="practice-box">
+          <p><strong>Q1:</strong> Simplify: <span class="fraction"><span class="top">25<sup><span class="fraction"><span class="top">1</span><span class="bottom">2</span></span></sup> × 8<sup><span class="fraction"><span class="top">2</span><span class="bottom">3</span></span></sup></span><span class="bottom">16<sup><span class="fraction"><span class="top">3</span><span class="bottom">4</span></span></sup></span></span></p>
+          <p style="margin-top: 8px;"><em>Answer: <span class="fraction"><span class="top">5 × 4</span><span class="bottom">8</span></span> = 2.5 or <span class="fraction"><span class="top">5</span><span class="bottom">2</span></span></em></p>
+        </div>
+
+        <div class="practice-box">
+          <p><strong>Q2:</strong> Solve: log₃ x + log₃(x-2) = 1</p>
+          <p style="margin-top: 8px;"><em>Answer: x = 3</em></p>
+        </div>
+
+        <div class="practice-box">
+          <p><strong>Q3:</strong> Rationalize: <span class="fraction"><span class="top"><span class="sqrt">√</span>5 + <span class="sqrt">√</span>3</span><span class="bottom"><span class="sqrt">√</span>5 - <span class="sqrt">√</span>3</span></span></p>
+          <p style="margin-top: 8px;"><em>Answer: 4 + <span class="sqrt">√</span>15</em></p>
+        </div>
+
+        <h3>Quick Checklist for Chapter 3:</h3>
+        <div class="checklist-box">
+          <ul>
+            <li>Same base required for index operations</li>
+            <li>Negative indices mean reciprocals</li>
+            <li>Fractional indices: denominator = root, numerator = power</li>
+            <li>Logs are only defined for positive numbers</li>
+            <li>Product rule: log(MN) = log M + log N</li>
+            <li>Power rule: log(Mⁿ) = n·log M</li>
+            <li>When rationalizing binomials, always use the conjugate</li>
+            <li>Simplify surds by extracting perfect squares</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Indices, Logarithms & Surds!
         </p>
 
-        <p style="text-align: center; margin: 20px 0;">Want to try a small quiz now or move to next topic?</p>
-        <button class="explore-btn" onclick="alert('Okay! Quiz coming soon — tell me when you are ready.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 2 (Fractions) & Chapter 4 (Algebra)</p>
+        <button class="explore-btn" onclick="window.location.href='indices-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
@@ -1631,7 +979,9 @@ Step 2: √48 = √(16×3) = 4√3
     });
 
     document.getElementById('profile-upload').addEventListener('change', (e) => {
-      if (e.target.files[0]) console.log('Profile picture selected!');
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
