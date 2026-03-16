@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neumorphism Learning Hub - Fractions, Decimals & Percentages</title>
+  <title>MATHEMATICS - Fractions, Decimals & Percentages</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);
-      --highlight-solution: #ff9800;
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -121,7 +117,7 @@
       height: 40px;
       cursor: pointer;
     }
-    
+
     .content {
       padding: 20px 16px;
       line-height: 1.6;
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 500px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,21 +290,18 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    body.light .explore-btn {
-      color: #000;
     }
 
     .nav-bar {
@@ -271,1021 +353,636 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .base-sub {
+      font-size: 0.7em;
+      vertical-align: sub;
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
   </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Fractions, Decimals & Percentages</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Fractions, Decimals, Approximations & Percentages – WAEC/JAMB Guide 🚀</h1>
-        <p class="subtitle">Abumchukwu – 80 Examples + Real JAMB Questions</p>
+        <h1>Fractions & Decimals! 🔢</h1>
+        <p class="subtitle">– JAMB Chapter 2 Made Easy</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>2. Fractions, Decimals, Approximations and Percentages</h2>
-        <p>This is an important foundation topic in WAEC/JAMB Mathematics. I will teach each subtopic clearly with rules, formulas, and tips, then give exactly 10 worked examples per subtopic (a)–(h) with full step-by-step solutions. All examples use real-life style (especially ₦ for Nigeria context). Practice them in order — they get slightly harder.</p>
-
-        <h2>(a) Fractions and decimals</h2>
-        <p><strong>Key rules</strong></p>
-        <ul>
-          <li>Fractions: Add/subtract → same denominator (LCD). Multiply → numerators × numerators, denominators × denominators. Divide → multiply by reciprocal.</li>
-          <li>Decimals: Add/subtract → align decimal points. Multiply → ignore decimals first then count total decimal places. Divide → make divisor whole number by moving decimal.</li>
-          <li>Fraction ↔ decimal: Divide numerator by denominator (or place over 10, 100, etc. and simplify).</li>
-        </ul>
-
-        <h3>10 Examples with solutions</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: ½ + ⅓<br>
-Step 1: Find LCD of 2 and 3 = 6<br>
-Step 2: ½ = 3/6<br>
-Step 3: ⅓ = 2/6<br>
-Step 4: 3/6 + 2/6 = 5/6
-          </div>
-          <div class="example-solution">Answer: 5/6</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: ¾ – ⅕<br>
-Step 1: LCD of 4 and 5 = 20<br>
-Step 2: ¾ = 15/20<br>
-Step 3: ⅕ = 4/20<br>
-Step 4: 15/20 – 4/20 = 11/20
-          </div>
-          <div class="example-solution">Answer: 11/20</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: ⅔ × ¾<br>
-Step 1: (2 × 3) / (3 × 4) = 6/12<br>
-Step 2: Simplify by dividing by 6 → 1/2
-          </div>
-          <div class="example-solution">Answer: ½</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: 5/6 ÷ ⅔<br>
-Step 1: 5/6 × 3/2 (reciprocal)<br>
-Step 2: (5 × 3) / (6 × 2) = 15/12<br>
-Step 3: Simplify by dividing by 3 → 5/4
-          </div>
-          <div class="example-solution">Answer: 5/4 (or 1¼)</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: 0.45 + 0.75<br>
-Step 1: Align decimals<br>
-  0.45<br>
-+ 0.75<br>
-Step 2: 5 + 5 = 10 (write 0, carry 1)<br>
-Step 3: 4 + 7 + 1 = 12 (write 2, carry 1)<br>
-Step 4: Carry 1 = 1
-          </div>
-          <div class="example-solution">Answer: 1.20</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: 2.35 – 0.8<br>
-Step 1: Align: 2.35 – 0.80<br>
-Step 2: 5 – 0 = 5<br>
-Step 3: 3 – 8 → borrow → 13 – 8 = 5, units 1 becomes 0<br>
-Step 4: 1 – 0 = 1
-          </div>
-          <div class="example-solution">Answer: 1.55</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: 0.3 × 0.25<br>
-Step 1: Ignore decimals: 3 × 25 = 75<br>
-Step 2: Total decimal places = 1 + 2 = 3<br>
-Step 3: 75 with 3 decimal places = 0.075
-          </div>
-          <div class="example-solution">Answer: 0.075</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: 1.5 ÷ 0.3<br>
-Step 1: Move decimal in divisor 1 place → 3<br>
-Step 2: Move in dividend: 1.5 → 15<br>
-Step 3: 15 ÷ 3 = 5
-          </div>
-          <div class="example-solution">Answer: 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: Convert 7/8 to decimal<br>
-Step 1: 7 ÷ 8<br>
-Step 2: 70 ÷ 8 = 8 (64), remainder 6 → 0.8<br>
-Step 3: 60 ÷ 8 = 7 (56), remainder 4 → 0.87<br>
-Step 4: 40 ÷ 8 = 5 (40), remainder 0 → 0.875
-          </div>
-          <div class="example-solution">Answer: 0.875</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Convert 0.625 to fraction<br>
-Step 1: 0.625 = 625/1000<br>
-Step 2: Divide by 125: 625÷125 = 5, 1000÷125 = 8
-          </div>
-          <div class="example-solution">Answer: 5/8</div>
-        </div>
-
-        <h3>JAMB Past Questions for (a) Fractions and decimals</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: Express the product of 0.0014 and 0.011 in standard form.<br>
-Step 1: 0.0014 = 1.4 × 10^{-3}<br>
-Step 2: 0.011 = 1.1 × 10^{-2}<br>
-Step 3: 1.4 × 1.1 = 1.54<br>
-Step 4: 10^{-3} × 10^{-2} = 10^{-5}<br>
-Step 5: 1.54 × 10^{-5}
-          </div>
-          <div class="example-solution">Answer: 1.54 × 10^{-5}</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: Simplify 0.45 + 0.75 - 0.3<br>
-Step 1: 0.45 + 0.75 = 1.20<br>
-Step 2: 1.20 - 0.3 = 0.9
-          </div>
-          <div class="example-solution">Answer: 0.9</div>
-        </div>
-
-        <!-- (b) Significant figures -->
-        <h2>(b) Significant figures</h2>
-        <p><strong>Key rules</strong></p>
-        <ul>
-          <li>Significant figures start from the first non-zero digit.</li>
-          <li>Round by looking at the next digit: ≥5 → round up.</li>
-          <li>Trailing zeros after decimal are significant; leading zeros are not.</li>
-        </ul>
-
-        <h3>10 Examples (round to the number of sig figs given)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: 3.14159 to 3 sig figs<br>
-Step 1: First three significant digits: 3.14<br>
-Step 2: Next digit 1 < 5 → no round up
-          </div>
-          <div class="example-solution">Answer: 3.14</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: 0.002345 to 3 sig figs<br>
-Step 1: First non-zero: 2.34<br>
-Step 2: Next digit 5 → round up
-          </div>
-          <div class="example-solution">Answer: 0.00235</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: 4567 to 2 sig figs<br>
-Step 1: First two: 45<br>
-Step 2: Next 6 ≥ 5 → round up to 46<br>
-Step 3: 4600 or 4.6 × 10³
-          </div>
-          <div class="example-solution">Answer: 4600 (or 4.6 × 10³)</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: 12.034 to 4 sig figs<br>
-Step 1: 12.03<br>
-Step 2: Next 4 < 5 → no round up
-          </div>
-          <div class="example-solution">Answer: 12.03</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: 0.0009876 to 2 sig figs<br>
-Step 1: 9.8<br>
-Step 2: Next 7 ≥ 5 → round up
-          </div>
-          <div class="example-solution">Answer: 0.00099</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: 500 to 1 sig fig<br>
-Step 1: 5<br>
-Step 2: 5 × 10²
-          </div>
-          <div class="example-solution">Answer: 5 × 10²</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: 9.8765 to 3 sig figs<br>
-Step 1: 9.87<br>
-Step 2: Next 6 ≥ 5 → round up
-          </div>
-          <div class="example-solution">Answer: 9.88</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: 0.05060 to 3 sig figs<br>
-Step 1: 5.06<br>
-Step 2: Next 0 < 5 → no round up
-          </div>
-          <div class="example-solution">Answer: 0.0506</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: 123456 to 3 sig figs<br>
-Step 1: 123<br>
-Step 2: Next 4 < 5 → no round up
-          </div>
-          <div class="example-solution">Answer: 123000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: 1.005 to 3 sig figs<br>
-Step 1: 1.00<br>
-Step 2: Next 5 → round up (trailing zero significant)
-          </div>
-          <div class="example-solution">Answer: 1.00</div>
-        </div>
-
-        <h3>JAMB Past Questions for (b) Significant figures</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: The radius of a circle is given as 5cm subject to an error of 0.1cm. What is the percentage error in the area of the circle?<br>
-Step 1: Area = πr² = π(5)² = 25π<br>
-Step 2: Error in r = 0.1, relative error in r = 0.1/5 = 0.02<br>
-Step 3: Relative error in area = 2 × 0.02 = 0.04<br>
-Step 4: Percentage error = 0.04 × 100 = 4%
-          </div>
-          <div class="example-solution">Answer: 4%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: 0.007685 correct to three significant figures is<br>
-Step 1: First three digits: 0.00769 (7,6,8)<br>
-Step 2: Next digit 5 → round up
-          </div>
-          <div class="example-solution">Answer: 0.00769</div>
-        </div>
-
-        <!-- (c) Decimal places -->
-        <h2>(c) Decimal places</h2>
-        <p><strong>Key rules</strong></p>
-        <ul>
-          <li>Count only digits after the decimal point.</li>
-          <li>Round by looking at the next digit: ≥5 → round up.</li>
-        </ul>
-
-        <h3>10 Examples (round to the number of decimal places given)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: 3.14159 to 2 d.p.<br>
-Step 1: Third decimal: 1<br>
-Step 2: 1 < 5 → no round up
-          </div>
-          <div class="example-solution">Answer: 3.14</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: 0.98765 to 3 d.p.<br>
-Step 1: Third decimal: 7<br>
-Step 2: 7 ≥ 5 → round up 6 to 7
-          </div>
-          <div class="example-solution">Answer: 0.988</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: 12.3456 to 1 d.p.<br>
-Step 1: First decimal: 3<br>
-Step 2: Next 4 < 5 → no round up
-          </div>
-          <div class="example-solution">Answer: 12.3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: 0.00456 to 4 d.p.<br>
-Step 1: Fourth decimal: 5<br>
-Step 2: 5 → round up
-          </div>
-          <div class="example-solution">Answer: 0.0046</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: 7.899 to 2 d.p.<br>
-Step 1: Second decimal: 9<br>
-Step 2: Next 9 ≥ 5 → round up to 7.90
-          </div>
-          <div class="example-solution">Answer: 7.90</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: 45.6789 to 3 d.p.<br>
-Step 1: Third decimal: 8<br>
-Step 2: Next 9 ≥ 5 → round up
-          </div>
-          <div class="example-solution">Answer: 45.679</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: 0.1234 to 1 d.p.<br>
-Step 1: First decimal: 1<br>
-Step 2: Next 2 < 5 → no round up
-          </div>
-          <div class="example-solution">Answer: 0.1</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: 9.995 to 2 d.p.<br>
-Step 1: Second decimal: 9<br>
-Step 2: Next 5 → round up to 10.00
-          </div>
-          <div class="example-solution">Answer: 10.00</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: 2.005 to 2 d.p.<br>
-Step 1: Second decimal: 0<br>
-Step 2: Next 5 → round up to 2.01
-          </div>
-          <div class="example-solution">Answer: 2.01</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: 0.000987 to 5 d.p.<br>
-Step 1: Fifth decimal: 8<br>
-Step 2: Next 7 ≥ 5 → round up to 0.00099
-          </div>
-          <div class="example-solution">Answer: 0.00099</div>
-        </div>
-
-        <h3>JAMB Past Questions for (c) Decimal places</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: 0.007685 correct to three decimal places is<br>
-Step 1: Third decimal: 7<br>
-Step 2: Next 6 ≥ 5 → round up to 0.008
-          </div>
-          <div class="example-solution">Answer: 0.008</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: Round 0.0567 to 2 decimal places<br>
-Step 1: Second decimal: 5<br>
-Step 2: Next 6 ≥ 5 → round up to 0.06
-          </div>
-          <div class="example-solution">Answer: 0.06</div>
-        </div>
-
-        <!-- (d) Percentage errors -->
-        <h2>(d) Percentage errors</h2>
-        <p><strong>Formula</strong></p>
-        <p>Percentage error = |Approximate value – Exact value| / Exact value × 100%</p>
-
-        <h3>10 Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: Exact = 50, Approx = 52<br>
-Step 1: Difference = 2<br>
-Step 2: 2 / 50 = 0.04<br>
-Step 3: 0.04 × 100 = 4%
-          </div>
-          <div class="example-solution">Answer: 4%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: Exact length 2.4 m, measured 2.35 m<br>
-Step 1: Difference = 0.05<br>
-Step 2: 0.05 / 2.4 ≈ 0.02083<br>
-Step 3: 0.02083 × 100 ≈ 2.1%
-          </div>
-          <div class="example-solution">Answer: 2.1%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: Exact = 100, Approx = 98<br>
-Step 1: Difference = 2<br>
-Step 2: 2 / 100 = 0.02<br>
-Step 3: 0.02 × 100 = 2%
-          </div>
-          <div class="example-solution">Answer: 2%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: Book costs ₦850 exactly, weighed as ₦860<br>
-Step 1: Difference = 10<br>
-Step 2: 10 / 850 ≈ 0.01176<br>
-Step 3: 0.01176 × 100 ≈ 1.18%
-          </div>
-          <div class="example-solution">Answer: ≈1.18%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: Exact time 60 s, measured 58 s<br>
-Step 1: Difference = 2<br>
-Step 2: 2 / 60 ≈ 0.03333<br>
-Step 3: 0.03333 × 100 ≈ 3.33%
-          </div>
-          <div class="example-solution">Answer: ≈3.33%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: Exact = 3.14, Approx = 3.1<br>
-Step 1: Difference = 0.04<br>
-Step 2: 0.04 / 3.14 ≈ 0.01274<br>
-Step 3: 0.01274 × 100 ≈ 1.27%
-          </div>
-          <div class="example-solution">Answer: ≈1.27%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: Exact mass 250 g, measured 248 g<br>
-Step 1: Difference = 2<br>
-Step 2: 2 / 250 = 0.008<br>
-Step 3: 0.008 × 100 = 0.8%
-          </div>
-          <div class="example-solution">Answer: 0.8%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: Exact = 5000, Approx = 5100<br>
-Step 1: Difference = 100<br>
-Step 2: 100 / 5000 = 0.02<br>
-Step 3: 0.02 × 100 = 2%
-          </div>
-          <div class="example-solution">Answer: 2%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: Exact = 1.25, Approx = 1.3<br>
-Step 1: Difference = 0.05<br>
-Step 2: 0.05 / 1.25 = 0.04<br>
-Step 3: 0.04 × 100 = 4%
-          </div>
-          <div class="example-solution">Answer: 4%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Exact population 1,200,000, estimated 1,180,000<br>
-Step 1: Difference = 20,000<br>
-Step 2: 20,000 / 1,200,000 ≈ 0.01667<br>
-Step 3: 0.01667 × 100 ≈ 1.67%
-          </div>
-          <div class="example-solution">Answer: ≈1.67%</div>
-        </div>
-
-        <h3>JAMB Past Questions for (d) Percentage errors</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2010: The weight of a day-old chick was measured to be 0.21g. If the actual weight of the chick is 0.18g, what was the percentage error in the measurement?<br>
-Step 1: Difference = |0.21 - 0.18| = 0.03<br>
-Step 2: 0.03 / 0.18 ≈ 0.1667<br>
-Step 3: 0.1667 × 100 = 16.67% (but options were small; perhaps different question, but this is the standard one)
-          </div>
-          <div class="example-solution">Answer: 16.67% (standard JAMB style)</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: The radius of a circle is given as 5cm subject to an error of 0.1cm. What is the percentage error in the area of the circle?<br>
-Step 1: Area = πr² = 25π<br>
-Step 2: Relative error in r = 0.1/5 = 0.02<br>
-Step 3: Relative error in area = 2 × 0.02 = 0.04<br>
-Step 4: 0.04 × 100 = 4%
-          </div>
-          <div class="example-solution">Answer: 4%</div>
-        </div>
-
-        <!-- (e) Simple interest -->
-        <h2>(e) Simple interest</h2>
-        <p><strong>Formula</strong></p>
-        <p>I = (Principal × Rate × Time) / 100<br>Amount = Principal + I</p>
-
-        <h3>10 Examples (use ₦)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: ₦10,000 at 5% for 2 years<br>
-Step 1: I = (10,000 × 5 × 2) / 100 = 1,000
-          </div>
-          <div class="example-solution">Interest = ₦1,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: ₦20,000 at 8% for 3 years<br>
-Step 1: I = (20,000 × 8 × 3) / 100 = 4,800
-          </div>
-          <div class="example-solution">Interest = ₦4,800</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: Find rate if ₦5,000 becomes ₦5,800 in 2 years<br>
-Step 1: I = 800<br>
-Step 2: R = (800 × 100) / (5,000 × 2) = 8%
-          </div>
-          <div class="example-solution">Rate = 8%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: ₦15,000 at 6% for 18 months (1.5 years)<br>
-Step 1: I = (15,000 × 6 × 1.5) / 100 = 1,350
-          </div>
-          <div class="example-solution">Interest = ₦1,350</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: How long for ₦8,000 at 10% to earn ₦2,000?<br>
-Step 1: T = (2,000 × 100) / (8,000 × 10) = 2.5 years
-          </div>
-          <div class="example-solution">Time = 2.5 years</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: ₦50,000 at 4% for 5 years<br>
-Step 1: I = (50,000 × 4 × 5) / 100 = 10,000
-          </div>
-          <div class="example-solution">Interest = ₦10,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: Amount after ₦12,000 at 7% for 4 years<br>
-Step 1: I = (12,000 × 7 × 4) / 100 = 3,360<br>
-Step 2: Amount = 12,000 + 3,360
-          </div>
-          <div class="example-solution">Amount = ₦15,360</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: Principal that gives ₦3,000 interest at 12% in 2.5 years<br>
-Step 1: P = (3,000 × 100) / (12 × 2.5) = 10,000
-          </div>
-          <div class="example-solution">Principal = ₦10,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: ₦25,000 at 9% for 8 months (2/3 year)<br>
-Step 1: I = (25,000 × 9 × 2/3) / 100 = 1,500
-          </div>
-          <div class="example-solution">Interest = ₦1,500</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Find time for ₦40,000 at 5% to double (I = ₦40,000)<br>
-Step 1: T = (40,000 × 100) / (40,000 × 5) = 20 years
-          </div>
-          <div class="example-solution">Time = 20 years</div>
-        </div>
-
-        <h3>JAMB Past Questions for (e) Simple interest</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: The simple interest on ₦8550 for 3 years at x% per annum is ₦4890. Calculate the value of x to the nearest whole number.<br>
-Step 1: I = 4890, P = 8550, T = 3<br>
-Step 2: 4890 = (8550 × x × 3) / 100<br>
-Step 3: x = (4890 × 100) / (8550 × 3) = 19%
-          </div>
-          <div class="example-solution">Answer: 19%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: Oke deposited N800.00 in the bank at the rate of 12½% simple interest. After some time the total amount was one and half times the principal. For how many years was the money left in the bank?<br>
-Step 1: Amount = 1.5 × 800 = 1,200<br>
-Step 2: I = 1,200 – 800 = 400<br>
-Step 3: T = (400 × 100) / (800 × 12.5) = 4 years
-          </div>
-          <div class="example-solution">Answer: 4 years</div>
-        </div>
-
-        <!-- (f) Profit and loss percent -->
-        <h2>(f) Profit and loss percent</h2>
-        <p><strong>Formulas</strong></p>
-        <p>Profit % = (Profit / Cost Price) × 100<br>Loss % = (Loss / Cost Price) × 100<br>Selling Price = CP ± Profit/Loss</p>
-
-        <h3>10 Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: CP ₦200, SP ₦250<br>
-Step 1: Profit = 50<br>
-Step 2: Profit % = (50 / 200) × 100 = 25%
-          </div>
-          <div class="example-solution">Answer: 25%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: CP ₦1,200, SP ₦1,080<br>
-Step 1: Loss = 120<br>
-Step 2: Loss % = (120 / 1,200) × 100 = 10%
-          </div>
-          <div class="example-solution">Answer: 10%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: CP ₦800, profit 15%<br>
-Step 1: Profit = 0.15 × 800 = 120<br>
-Step 2: SP = 800 + 120
-          </div>
-          <div class="example-solution">Answer: ₦920</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: SP ₦3,450, loss 8%<br>
-Step 1: CP = 3,450 / (1 - 0.08) = 3,450 / 0.92 = 3,750
-          </div>
-          <div class="example-solution">Answer: CP = ₦3,750</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: CP ₦5,000, sold at 20% profit<br>
-Step 1: Profit = 0.2 × 5,000 = 1,000<br>
-Step 2: SP = 5,000 + 1,000
-          </div>
-          <div class="example-solution">Answer: ₦6,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: Bought for ₦400, sold for ₦350<br>
-Step 1: Loss = 50<br>
-Step 2: Loss % = (50 / 400) × 100 = 12.5%
-          </div>
-          <div class="example-solution">Answer: 12.5%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: Profit 30% on ₦2,500<br>
-Step 1: Profit = 0.3 × 2,500 = 750<br>
-Step 2: SP = 2,500 + 750
-          </div>
-          <div class="example-solution">Answer: ₦3,250</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: Loss of ₦600 is 12%<br>
-Step 1: 12 = 600 / CP × 100<br>
-Step 2: CP = 600 × 100 / 12 = 5,000
-          </div>
-          <div class="example-solution">Answer: CP = ₦5,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: CP ₦1,500, SP ₦1,800<br>
-Step 1: Profit = 300<br>
-Step 2: Profit % = (300 / 1,500) × 100 = 20%
-          </div>
-          <div class="example-solution">Answer: 20%</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: SP ₦9,000 after 25% loss<br>
-Step 1: SP = CP × 0.75<br>
-Step 2: CP = 9,000 / 0.75 = 12,000
-          </div>
-          <div class="example-solution">Answer: CP = ₦12,000</div>
-        </div>
-
-        <h3>JAMB Past Questions for (f) Profit and loss percent</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: Tade bought 200 mangoes at 4 for ₦2.50. 30 out of the mangoes got spoilt and the remaining were sold at 2 for ₦2.40. Find the percentage profit or loss.<br>
-Step 1: Cost = 200 / 4 × 2.50 = ₦125<br>
-Step 2: Sold = 170 / 2 × 2.40 = ₦204<br>
-Step 3: Profit = 204 - 125 = 79<br>
-Step 4: Profit % = 79 / 125 × 100 = 63.2%
-          </div>
-          <div class="example-solution">Answer: 63.2% profit</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: A trader sold an article for ₦460 with a 10% gain on the first and a 10% loss on the second. What is the percentage profit or loss?<br>
-Step 1: Assume first article CP = x, SP = 1.1x<br>
-Step 2: Second CP = y, SP = 0.9y<br>
-Step 3: Total SP = 1.1x + 0.9y = 460<br>
-Step 4: The question is incomplete in search, but standard is overall loss or gain.
-          </div>
-          <div class="example-solution">Answer: (From search: 28% loss or similar; the full calculation is in the code)</div>
-        </div>
-
-        <!-- (g) Ratio, proportion and rate -->
-        <h2>(g) Ratio, proportion and rate</h2>
-        <p><strong>Key rules</strong></p>
-        <ul>
-          <li>Ratio a:b simplified by dividing by HCF.</li>
-          <li>Direct proportion: increase one → increase other.</li>
-          <li>Inverse proportion: increase one → decrease other.</li>
-          <li>Rate = quantity / time (e.g. speed = distance/time)</li>
-        </ul>
-
-        <h3>10 Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: Simplify 12:18<br>
-Step 1: HCF = 6<br>
-Step 2: 12÷6 = 2, 18÷6 = 3
-          </div>
-          <div class="example-solution">Answer: 2:3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: Divide ₦1,200 in ratio 3:5<br>
-Step 1: Total parts = 8<br>
-Step 2: 1 part = 150<br>
-Step 3: 3 parts = 450, 5 parts = 750
-          </div>
-          <div class="example-solution">Answer: ₦450 : ₦750</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: 4 men build wall in 10 days, 8 men?<br>
-Step 1: Inverse: time halves<br>
-Step 2: 10 / 2 = 5 days
-          </div>
-          <div class="example-solution">Answer: 5 days</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: 50 km in 2 hours<br>
-Step 1: Rate = 50 / 2 = 25 km/h
-          </div>
-          <div class="example-solution">Answer: 25 km/h</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: a/b = 3/5, a=12<br>
-Step 1: 12 / b = 3/5<br>
-Step 2: b = 12 × 5 / 3 = 20
-          </div>
-          <div class="example-solution">Answer: b = 20</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: ₦2,400 shared 5:3<br>
-Step 1: Total parts = 8<br>
-Step 2: 1 part = 300<br>
-Step 3: 5 parts = 1,500, 3 parts = 900
-          </div>
-          <div class="example-solution">Answer: ₦1,500 : ₦900</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: 6 workers, 15 days; 10 workers?<br>
-Step 1: Worker-days = 90<br>
-Step 2: Time = 90 / 10 = 9 days
-          </div>
-          <div class="example-solution">Answer: 9 days</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: Speed 60 km/h for 3 hours<br>
-Step 1: Distance = 60 × 3 = 180 km
-          </div>
-          <div class="example-solution">Answer: 180 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: Ratio 2:3:5, total ₦20,000<br>
-Step 1: Total parts = 10<br>
-Step 2: 1 part = 2,000<br>
-Step 3: 4,000 : 6,000 : 10,000
-          </div>
-          <div class="example-solution">Answer: ₦4,000 : ₦6,000 : ₦10,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Petrol 45 litres for 300 km<br>
-Step 1: Rate = 300 / 45 = 6.67 km/litre
-          </div>
-          <div class="example-solution">Answer: 6.67 km/litre</div>
-        </div>
-
-        <h3>JAMB Past Questions for (g) Ratio, proportion and rate</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: The ratio of boys to girls in a school is 3:5. If there are 240 boys, how many girls are there?<br>
-Step 1: Boys = 3k = 240 → k = 80<br>
-Step 2: Girls = 5k = 400
-          </div>
-          <div class="example-solution">Answer: 400 girls</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: If 4 men can build a wall in 10 days, how long will 8 men take?<br>
-Step 1: Inverse proportion: time halves<br>
-Step 2: 10 / 2 = 5 days
-          </div>
-          <div class="example-solution">Answer: 5 days</div>
-        </div>
-
-        <!-- (h) Shares and Value Added Tax (VAT) -->
-        <h2>(h) Shares and Value Added Tax (VAT)</h2>
-        <p><strong>Nigeria note:</strong> Standard VAT rate is 7.5% on most goods/services (essentials often exempt).</p>
-        <p>Shares: Profit/dividend shared in ratio of number of shares held.</p>
-        <p>VAT = 7.5% of selling price (usually exclusive). Total = Price + VAT.</p>
-
-        <h3>10 Examples (use ₦ and 7.5% VAT)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 1: VAT on ₦10,000 item<br>
-Step 1: VAT = 0.075 × 10,000 = 750<br>
-Step 2: Total = 10,750
-          </div>
-          <div class="example-solution">Answer: ₦750 VAT, Total ₦10,750</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 2: Total paid ₦21,500 includes VAT. Find price before VAT<br>
-Step 1: Price × 1.075 = 21,500<br>
-Step 2: Price = 21,500 / 1.075 = 20,000
-          </div>
-          <div class="example-solution">Answer: ₦20,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 3: Company profit ₦50,000, A has 200 shares, B 300 (total 500)<br>
-Step 1: A = 200/500 = 0.4<br>
-Step 2: A = 0.4 × 50,000 = 20,000<br>
-Step 3: B = 0.6 × 50,000 = 30,000
-          </div>
-          <div class="example-solution">Answer: A ₦20,000, B ₦30,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 4: VAT on ₦40,000 phone<br>
-Step 1: VAT = 0.075 × 40,000 = 3,000<br>
-Step 2: Total = 43,000
-          </div>
-          <div class="example-solution">Answer: ₦3,000 VAT, Total ₦43,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 5: Total capital ₦1,000,000 divided into 10,000 shares of ₦100 each. You buy 400<br>
-Step 1: Value = 400 × 100 = 40,000
-          </div>
-          <div class="example-solution">Answer: ₦40,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 6: Dividend ₦120,000 shared by 800 : 400 shares<br>
-Step 1: Ratio 2:1<br>
-Step 2: Total parts 3<br>
-Step 3: 2 parts = 80,000, 1 part = 40,000
-          </div>
-          <div class="example-solution">Answer: ₦80,000 and ₦40,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 7: VAT-inclusive price ₦5,375 → price before VAT<br>
-Step 1: Price = 5,375 / 1.075 = 5,000
-          </div>
-          <div class="example-solution">Answer: ₦5,000</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 8: Company issues 5,000 shares. You own 15%<br>
-Step 1: 15% of 5,000 = 750
-          </div>
-          <div class="example-solution">Answer: 750 shares</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 9: VAT on ₦8,000 service<br>
-Step 1: VAT = 0.075 × 8,000 = 600<br>
-Step 2: Total = 8,600
-          </div>
-          <div class="example-solution">Answer: ₦600 VAT, Total ₦8,600</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-Example 10: Profit ₦90,000 shared in ratio of shares 250:350:400 (total 1,000)<br>
-Step 1: 1 part = 90<br>
-Step 2: 250 parts = 22,500<br>
-Step 3: 350 parts = 31,500<br>
-Step 4: 400 parts = 36,000
-          </div>
-          <div class="example-solution">Answer: ₦22,500 : ₦31,500 : ₦36,000</div>
-        </div>
-
-        <h3>JAMB Past Questions for (h) Shares and Value Added Tax (VAT)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2019: A company issued 5,000 shares. If you own 15% of the shares, how many shares do you own?<br>
-Step 1: 15% of 5,000 = 0.15 × 5,000 = 750
-          </div>
-          <div class="example-solution">Answer: 750 shares</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">
-JAMB 2020: VAT on a ₦10,000 item at 7.5% is<br>
-Step 1: 0.075 × 10,000 = 750
-          </div>
-          <div class="example-solution">Answer: ₦750</div>
-        </div>
-
-        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold; color: var(--accent);">
-          Abumchukwu, you now have the complete 80 examples + real JAMB questions with full step-by-step solutions! 🌟<br>
-          Practice by covering the answer first, solve, then check. You've got this! 🚀
+        <h2>📚 Chapter 2: Fractions, Decimals, Approximations & Percentages</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Master fraction operations, decimal conversions, significant figures, percentages, and ratios for JAMB success.</p>
+
+        <div class="section-header">1️⃣ FRACTIONS</div>
+
+        <h2>Types of Fractions 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Definition</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td>Proper Fraction</td>
+              <td>Numerator < Denominator</td>
+              <td><span class="fraction"><span class="top">3</span><span class="bottom">4</span></span>, <span class="fraction"><span class="top">2</span><span class="bottom">5</span></span></td>
+            </tr>
+            <tr>
+              <td>Improper Fraction</td>
+              <td>Numerator ≥ Denominator</td>
+              <td><span class="fraction"><span class="top">7</span><span class="bottom">4</span></span>, <span class="fraction"><span class="top">5</span><span class="bottom">3</span></span></td>
+            </tr>
+            <tr>
+              <td>Mixed Number</td>
+              <td>Whole number + Proper fraction</td>
+              <td>1<span class="fraction"><span class="top">3</span><span class="bottom">4</span></span>, 2<span class="fraction"><span class="top">2</span><span class="bottom">3</span></span></td>
+            </tr>
+            <tr>
+              <td>Equivalent Fractions</td>
+              <td>Same value, different forms</td>
+              <td><span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> = <span class="fraction"><span class="top">2</span><span class="bottom">4</span></span> = <span class="fraction"><span class="top">3</span><span class="bottom">6</span></span></td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>Operations with Fractions</h3>
+
+        <h2>➕ Addition & Subtraction (Same Denominator)</h2>
+        <div class="formula-box">
+          <span class="fraction"><span class="top">a</span><span class="bottom">c</span></span> + <span class="fraction"><span class="top">b</span><span class="bottom">c</span></span> = <span class="fraction"><span class="top">a+b</span><span class="bottom">c</span></span>
+        </div>
+
+        <h2>🔢 Example 1: <span class="fraction"><span class="top">3</span><span class="bottom">8</span></span> + <span class="fraction"><span class="top">5</span><span class="bottom">8</span></span></h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          = <span class="fraction"><span class="top">3+5</span><span class="bottom">8</span></span><br>
+          = <span class="fraction"><span class="top">8</span><span class="bottom">8</span></span><br>
+          = 1
+        </div>
+        <div class="answer-box">Answer: 1</div>
+
+        <h2>➕ Addition & Subtraction (Different Denominators)</h2>
+        <div class="shortcut-box">
+          <h4>⚡ Method: Find LCM of denominators first</h4>
+        </div>
+
+        <h2>🔢 Example 2: <span class="fraction"><span class="top">2</span><span class="bottom">3</span></span> + <span class="fraction"><span class="top">1</span><span class="bottom">4</span></span></h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          LCM of 3 and 4 = 12<br><br>
+          
+          = <span class="fraction"><span class="top">2×4</span><span class="bottom">12</span></span> + <span class="fraction"><span class="top">1×3</span><span class="bottom">12</span></span><br>
+          = <span class="fraction"><span class="top">8</span><span class="bottom">12</span></span> + <span class="fraction"><span class="top">3</span><span class="bottom">12</span></span><br>
+          = <span class="fraction"><span class="top">11</span><span class="bottom">12</span></span>
+        </div>
+        <div class="answer-box">Answer: <span class="fraction"><span class="top">11</span><span class="bottom">12</span></span></div>
+
+        <h2>✖️ Multiplication</h2>
+        <div class="formula-box">
+          <span class="fraction"><span class="top">a</span><span class="bottom">b</span></span> × <span class="fraction"><span class="top">c</span><span class="bottom">d</span></span> = <span class="fraction"><span class="top">a×c</span><span class="bottom">b×d</span></span>
+        </div>
+
+        <h2>🔢 Example 3: <span class="fraction"><span class="top">2</span><span class="bottom">5</span></span> × <span class="fraction"><span class="top">3</span><span class="bottom">4</span></span></h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          = <span class="fraction"><span class="top">2×3</span><span class="bottom">5×4</span></span><br>
+          = <span class="fraction"><span class="top">6</span><span class="bottom">20</span></span><br>
+          = <span class="fraction"><span class="top">3</span><span class="bottom">10</span></span> (simplified)
+        </div>
+        <div class="answer-box">Answer: <span class="fraction"><span class="top">3</span><span class="bottom">10</span></span></div>
+
+        <h2>➗ Division (Multiply by Reciprocal)</h2>
+        <div class="formula-box">
+          <span class="fraction"><span class="top">a</span><span class="bottom">b</span></span> ÷ <span class="fraction"><span class="top">c</span><span class="bottom">d</span></span> = <span class="fraction"><span class="top">a</span><span class="bottom">b</span></span> × <span class="fraction"><span class="top">d</span><span class="bottom">c</span></span>
+        </div>
+
+        <h2>🔢 Example 4: <span class="fraction"><span class="top">3</span><span class="bottom">4</span></span> ÷ <span class="fraction"><span class="top">2</span><span class="bottom">5</span></span></h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          = <span class="fraction"><span class="top">3</span><span class="bottom">4</span></span> × <span class="fraction"><span class="top">5</span><span class="bottom">2</span></span><br>
+          = <span class="fraction"><span class="top">15</span><span class="bottom">8</span></span><br>
+          = 1<span class="fraction"><span class="top">7</span><span class="bottom">8</span></span>
+        </div>
+        <div class="answer-box">Answer: 1<span class="fraction"><span class="top">7</span><span class="bottom">8</span></span></div>
+
+        <h3>Converting Mixed to Improper Fractions</h3>
+        <div class="formula-box">
+          a<span class="fraction"><span class="top">b</span><span class="bottom">c</span></span> = <span class="fraction"><span class="top">(a×c) + b</span><span class="bottom">c</span></span>
+        </div>
+
+        <h2>🔢 Example 5: Convert 2<span class="fraction"><span class="top">3</span><span class="bottom">5</span></span> to improper fraction</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          = <span class="fraction"><span class="top">(2×5) + 3</span><span class="bottom">5</span></span><br>
+          = <span class="fraction"><span class="top">10 + 3</span><span class="bottom">5</span></span><br>
+          = <span class="fraction"><span class="top">13</span><span class="bottom">5</span></span>
+        </div>
+        <div class="answer-box">Answer: <span class="fraction"><span class="top">13</span><span class="bottom">5</span></span></div>
+
+        <div class="section-header">2️⃣ DECIMALS</div>
+
+        <h2>Converting Fractions to Decimals 🔢</h2>
+        <p>Divide numerator by denominator.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Fraction</th>
+              <th>Decimal</th>
+            </tr>
+            <tr>
+              <td><span class="fraction"><span class="top">1</span><span class="bottom">2</span></span></td>
+              <td>0.5</td>
+            </tr>
+            <tr>
+              <td><span class="fraction"><span class="top">1</span><span class="bottom">4</span></span></td>
+              <td>0.25</td>
+            </tr>
+            <tr>
+              <td><span class="fraction"><span class="top">3</span><span class="bottom">8</span></span></td>
+              <td>0.375</td>
+            </tr>
+            <tr>
+              <td><span class="fraction"><span class="top">2</span><span class="bottom">3</span></span></td>
+              <td>0.666... (recurring)</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>🔢 Example 6: Convert <span class="fraction"><span class="top">5</span><span class="bottom">8</span></span> to decimal</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          5 ÷ 8 = 0.625
+        </div>
+        <div class="answer-box">Answer: 0.625</div>
+
+        <h2>Converting Decimals to Fractions 📝</h2>
+        <p>Use place value (tenths, hundredths, thousandths).</p>
+
+        <div class="component-box">
+          <h4>Examples:</h4>
+          <p>• 0.3 = <span class="fraction"><span class="top">3</span><span class="bottom">10</span></span></p>
+          <p>• 0.25 = <span class="fraction"><span class="top">25</span><span class="bottom">100</span></span> = <span class="fraction"><span class="top">1</span><span class="bottom">4</span></span></p>
+          <p>• 0.125 = <span class="fraction"><span class="top">125</span><span class="bottom">1000</span></span> = <span class="fraction"><span class="top">1</span><span class="bottom">8</span></span></p>
+        </div>
+
+        <h3>Operations with Decimals</h3>
+
+        <div class="component-box">
+          <h4>➕ Addition/Subtraction: Align decimal points</h4>
+          <div class="calculation-box" style="margin-top: 8px;">
+            &nbsp;&nbsp;12.45<br>
+            +&nbsp;&nbsp;3.8<br>
+            -------<br>
+            &nbsp;&nbsp;16.25
+          </div>
+        </div>
+
+        <div class="component-box">
+          <h4>✖️ Multiplication: Count total decimal places</h4>
+          <p>2.5 × 1.2 = 3.00 = 3</p>
+          <p><em>(1 d.p. + 1 d.p. = 2 d.p. in answer)</em></p>
+        </div>
+
+        <div class="component-box">
+          <h4>➗ Division: Make divisor a whole number</h4>
+          <p>6.25 ÷ 0.5 = 62.5 ÷ 5 = 12.5</p>
+        </div>
+
+        <div class="section-header">3️⃣ APPROXIMATIONS & SIGNIFICANT FIGURES</div>
+
+        <h2>Rounding to Decimal Places 📍</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Number</th>
+              <th>To 1 d.p.</th>
+              <th>To 2 d.p.</th>
+              <th>To 3 d.p.</th>
+            </tr>
+            <tr>
+              <td>3.14159</td>
+              <td>3.1</td>
+              <td>3.14</td>
+              <td>3.142</td>
+            </tr>
+            <tr>
+              <td>2.71828</td>
+              <td>2.7</td>
+              <td>2.72</td>
+              <td>2.718</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="shortcut-box">
+          <h4>⚡ Rounding Rule</h4>
+          <p>Look at the digit after the place you're rounding to:</p>
+          <p>• If it's 5 or more → round UP</p>
+          <p>• If it's less than 5 → round DOWN</p>
+        </div>
+
+        <h2>Significant Figures (s.f.) 🔢</h2>
+        
+        <div class="component-box">
+          <h4>Rules:</h4>
+          <p>1. All non-zero digits are significant</p>
+          <p>2. Zeros between non-zero digits are significant</p>
+          <p>3. Leading zeros are NOT significant</p>
+          <p>4. Trailing zeros after decimal ARE significant</p>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Number</th>
+              <th>1 s.f.</th>
+              <th>2 s.f.</th>
+              <th>3 s.f.</th>
+            </tr>
+            <tr>
+              <td>45678</td>
+              <td>50000</td>
+              <td>46000</td>
+              <td>45700</td>
+            </tr>
+            <tr>
+              <td>0.00456</td>
+              <td>0.005</td>
+              <td>0.0046</td>
+              <td>0.00456</td>
+            </tr>
+            <tr>
+              <td>3.050</td>
+              <td>3</td>
+              <td>3.1</td>
+              <td>3.05</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>Standard Form (Scientific Notation) 🔬</h2>
+        <div class="formula-box">
+          a × 10ⁿ where 1 ≤ a < 10
+        </div>
+
+        <h2>🔢 Example 7: Standard Form Conversions</h2>
+        <div class="calculation-box">
+          <strong>Examples:</strong><br>
+          • 5600 = 5.6 × 10³<br>
+          • 0.0034 = 3.4 × 10⁻³<br>
+          • 245000 = 2.45 × 10⁵
+        </div>
+
+        <div class="section-header">4️⃣ PERCENTAGES</div>
+
+        <h2>Conversions 🔄</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>From</th>
+              <th>To</th>
+              <th>Method</th>
+            </tr>
+            <tr>
+              <td>Fraction</td>
+              <td>%</td>
+              <td>Multiply by 100</td>
+            </tr>
+            <tr>
+              <td>Decimal</td>
+              <td>%</td>
+              <td>Multiply by 100</td>
+            </tr>
+            <tr>
+              <td>%</td>
+              <td>Fraction</td>
+              <td>Divide by 100, simplify</td>
+            </tr>
+            <tr>
+              <td>%</td>
+              <td>Decimal</td>
+              <td>Divide by 100</td>
+            </tr>
+          </table>
+        </div>
+
+        <h2>🔢 Example 8: Conversion Examples</h2>
+        <div class="calculation-box">
+          • <span class="fraction"><span class="top">3</span><span class="bottom">4</span></span> = <span class="fraction"><span class="top">3</span><span class="bottom">4</span></span> × 100 = 75%<br><br>
+          • 0.35 = 0.35 × 100 = 35%<br><br>
+          • 40% = <span class="fraction"><span class="top">40</span><span class="bottom">100</span></span> = <span class="fraction"><span class="top">2</span><span class="bottom">5</span></span> = 0.4
+        </div>
+
+        <h3>Percentage Calculations</h3>
+
+        <h2>Finding a Percentage of a Quantity 📊</h2>
+        <div class="formula-box">
+          <span class="fraction"><span class="top">Percentage</span><span class="bottom">100</span></span> × Whole = Part
+        </div>
+
+        <h2>🔢 Example 9: What is 15% of 80?</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          = <span class="fraction"><span class="top">15</span><span class="bottom">100</span></span> × 80<br>
+          = 0.15 × 80<br>
+          = 12
+        </div>
+        <div class="answer-box">Answer: 12</div>
+
+        <h2>Percentage Increase/Decrease 📈📉</h2>
+        <div class="formula-box">
+          <strong>Increase:</strong> Original × (1 + <span class="fraction"><span class="top">Rate</span><span class="bottom">100</span></span>)<br>
+          <strong>Decrease:</strong> Original × (1 - <span class="fraction"><span class="top">Rate</span><span class="bottom">100</span></span>)
+        </div>
+
+        <h2>🔢 Example 10: Increase 200 by 25%</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          = 200 × 1.25<br>
+          = 250
+        </div>
+        <div class="answer-box">Answer: 250</div>
+
+        <h2>🔢 Example 11: Decrease 80 by 20%</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          = 80 × 0.80<br>
+          = 64
+        </div>
+        <div class="answer-box">Answer: 64</div>
+
+        <h2>Finding Original Amount (Reverse Percentage) 🔄</h2>
+        <div class="memory-aid">
+          💡 If a price increased by 20% to ₦120, find original:<br>
+          Original = <span class="fraction"><span class="top">120</span><span class="bottom">1.20</span></span> = ₦100
+        </div>
+
+        <h2>Profit and Loss 💰</h2>
+        <div class="formula-box">
+          <strong>Profit %</strong> = <span class="fraction"><span class="top">SP - CP</span><span class="bottom">CP</span></span> × 100<br><br>
+          <strong>Loss %</strong> = <span class="fraction"><span class="top">CP - SP</span><span class="bottom">CP</span></span> × 100
+        </div>
+
+        <h2>🔢 Example 12: Profit Calculation</h2>
+        <p>A trader bought goods for ₦5000 and sold for ₦6500</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Profit % = <span class="fraction"><span class="top">6500 - 5000</span><span class="bottom">5000</span></span> × 100<br>
+          = <span class="fraction"><span class="top">1500</span><span class="bottom">5000</span></span> × 100<br>
+          = 30%
+        </div>
+        <div class="answer-box">Answer: 30%</div>
+
+        <div class="section-header">5️⃣ RATIOS AND PROPORTIONS</div>
+
+        <h2>Simplifying Ratios 📐</h2>
+        <p>Express in lowest terms by dividing by HCF.</p>
+
+        <h2>🔢 Example 13: Simplify 24:36</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          HCF = 12<br>
+          Ratio = <span class="fraction"><span class="top">24</span><span class="bottom">12</span></span> : <span class="fraction"><span class="top">36</span><span class="bottom">12</span></span><br>
+          = 2:3
+        </div>
+        <div class="answer-box">Answer: 2:3</div>
+
+        <h2>Dividing in a Given Ratio 🥧</h2>
+
+        <h2>🔢 Example 14: Divide ₦600 in ratio 2:3</h2>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          Total parts = 2 + 3 = 5<br><br>
+          
+          First share = <span class="fraction"><span class="top">2</span><span class="bottom">5</span></span> × 600 = ₦240<br>
+          Second share = <span class="fraction"><span class="top">3</span><span class="bottom">5</span></span> × 600 = ₦360
+        </div>
+        <div class="answer-box">Answer: ₦240 and ₦360</div>
+
+        <h2>Direct Proportion ➡️</h2>
+        <div class="formula-box">
+          If a ∝ b, then <span class="fraction"><span class="top">a₁</span><span class="bottom">b₁</span></span> = <span class="fraction"><span class="top">a₂</span><span class="bottom">b₂</span></span>
+        </div>
+
+        <h2>🔢 Example 15: Direct Proportion</h2>
+        <p>If 5 books cost ₦250, what do 8 books cost?</p>
+        <div class="calculation-box">
+          <strong>Solution:</strong><br>
+          <span class="fraction"><span class="top">5</span><span class="bottom">250</span></span> = <span class="fraction"><span class="top">8</span><span class="bottom">x</span></span><br><br>
+          
+          x = <span class="fraction"><span class="top">250 × 8</span><span class="bottom">5</span></span><br>
+          x = ₦400
+        </div>
+        <div class="answer-box">Answer: ₦400</div>
+
+        <div class="section-header">📝 PRACTICE PROBLEMS (JAMB Style)</div>
+
+        <div class="practice-box">
+          <p><strong>Question 1:</strong> Simplify: <span class="fraction"><span class="top">3</span><span class="bottom">4</span></span> + <span class="fraction"><span class="top">2</span><span class="bottom">5</span></span> - <span class="fraction"><span class="top">1</span><span class="bottom">2</span></span></p>
+          <p style="margin-top: 8px;"><em>Solution: LCM of 4, 5, 2 = 20</em></p>
+          <p><em>= <span class="fraction"><span class="top">15</span><span class="bottom">20</span></span> + <span class="fraction"><span class="top">8</span><span class="bottom">20</span></span> - <span class="fraction"><span class="top">10</span><span class="bottom">20</span></span> = <span class="fraction"><span class="top">13</span><span class="bottom">20</span></span></em></p>
+        </div>
+
+        <div class="practice-box">
+          <p><strong>Question 2:</strong> Express 0.0456 in standard form</p>
+          <p style="margin-top: 8px;"><em>Answer: 4.56 × 10⁻²</em></p>
+        </div>
+
+        <div class="practice-box">
+          <p><strong>Question 3:</strong> A student scored 45 out of 60 marks. What percentage is this?</p>
+          <p style="margin-top: 8px;"><em>Solution: <span class="fraction"><span class="top">45</span><span class="bottom">60</span></span> × 100 = 75%</em></p>
+        </div>
+
+        <div class="practice-box">
+          <p><strong>Question 4:</strong> Approximate 3.987 to 2 significant figures</p>
+          <p style="margin-top: 8px;"><em>Answer: 4.0</em></p>
+        </div>
+
+        <div class="practice-box">
+          <p><strong>Question 5:</strong> A car depreciates by 15% annually. If bought for ₦800,000, what's its value after 1 year?</p>
+          <p style="margin-top: 8px;"><em>Solution: 800,000 × (1 - 0.15) = 800,000 × 0.85 = ₦680,000</em></p>
+        </div>
+
+        <h2>📊 Summary Table of Key Formulas</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Topic</th>
+              <th>Formula</th>
+            </tr>
+            <tr>
+              <td>Percentage</td>
+              <td><span class="fraction"><span class="top">Part</span><span class="bottom">Whole</span></span> × 100</td>
+            </tr>
+            <tr>
+              <td>Profit %</td>
+              <td><span class="fraction"><span class="top">SP - CP</span><span class="bottom">CP</span></span> × 100</td>
+            </tr>
+            <tr>
+              <td>Loss %</td>
+              <td><span class="fraction"><span class="top">CP - SP</span><span class="bottom">CP</span></span> × 100</td>
+            </tr>
+            <tr>
+              <td>Increase by r%</td>
+              <td>Original × (1 + <span class="fraction"><span class="top">r</span><span class="bottom">100</span></span>)</td>
+            </tr>
+            <tr>
+              <td>Decrease by r%</td>
+              <td>Original × (1 - <span class="fraction"><span class="top">r</span><span class="bottom">100</span></span>)</td>
+            </tr>
+            <tr>
+              <td>Standard Form</td>
+              <td>a × 10ⁿ where 1 ≤ a < 10</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB Exam Tips</h3>
+          <ol>
+            <li><strong>Always simplify fractions</strong> to lowest terms in final answers</li>
+            <li><strong>Check units</strong> — ensure consistency before calculating</li>
+            <li><strong>For approximation questions</strong>, identify the required precision first</li>
+            <li><strong>In percentage problems</strong>, identify what is the "base" (100% value)</li>
+            <li><strong>Practice converting</strong> between fractions, decimals, and percentages quickly</li>
+          </ol>
+        </div>
+
+        <h3>Quick Checklist for Chapter 2:</h3>
+        <div class="checklist-box">
+          <ul>
+            <li>Find LCM for different denominator operations</li>
+            <li>Remember: dividing by fraction = multiply by reciprocal</li>
+            <li>Count decimal places carefully in multiplication</li>
+            <li>Leading zeros are NOT significant figures</li>
+            <li>For reverse percentages, divide by (1 ± rate)</li>
+            <li>In ratios, always find total parts first</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Great job 🌟 You now master Fractions, Decimals & Percentages!
         </p>
 
-        <p style="text-align: center; margin: 20px 0;">Want more difficult questions, mixed past WAEC questions, or a quiz?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Let me know when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 1 (Number Bases) & Chapter 3 (Algebra)</p>
+        <button class="explore-btn" onclick="window.location.href='fractions-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
@@ -1325,7 +1022,9 @@ Step 1: 0.075 × 10,000 = 750
     });
 
     document.getElementById('profile-upload').addEventListener('change', (e) => {
-      if (e.target.files[0]) console.log('Profile picture selected!');
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
