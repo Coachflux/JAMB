@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Representation of Data</title>
+  <title>MATHEMATICS - Integration</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
-      --highlight-solution: #ff9800;                   /* orange for final answers */
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,24 +290,20 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
-    body.light .explore-btn {
-      color: #000;
-    }
-
-    /* Footer Nav Bar */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -272,324 +353,559 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .integral {
+      font-family: 'Courier New', monospace;
+      color: var(--accent);
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Representation of Data</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Representation of Data – JAMB Guide 🚀</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Integration! ∫</h1>
+        <p class="subtitle">– JAMB Chapter 18</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Representation of Data (Easy-to-Understand Teaching Guide for JAMB)</h2>
-        <p>This topic is from the JAMB Mathematics syllabus (Section V: Statistics). You need to identify and interpret frequency tables and interpret histograms, bar charts, and pie charts. No drawing is usually required in CBT – just reading and calculating from given tables or diagrams.</p>
-        <p>I will explain each part simply, with everyday examples, then give exactly 10 real/similar JAMB-style questions with full solutions for (a) and 10 for (b). All are at JAMB level.</p>
+        <h2>📚 Introduction to Integration</h2>
+        
+        <p>Integration is the <span class="highlight">reverse process of differentiation</span>. If differentiation gives us the rate of change, integration helps us find the original function from its rate of change.</p>
 
-        <h2>(a) Frequency Distribution</h2>
-        <p>A frequency distribution is just a table that tells you “how many times each value (or group of values) appears” in the data.</p>
-        <p><strong>Ungrouped:</strong> Every single score is listed separately (e.g., marks 1,2,3…).<br>
-<strong>Grouped:</strong> Scores are put into classes (e.g., 0–9, 10–19) when there is a lot of data.</p>
-        <p><strong>Key things to look for when interpreting:</strong></p>
-        <ul>
-          <li>Total number of people/items = sum of all frequencies (∑f).</li>
-          <li>Number in a particular group = that frequency (or sum of frequencies in grouped data).</li>
-          <li>Percentage = (frequency ÷ total) × 100.</li>
-          <li>Sometimes they give total score (∑fx) and ask for missing frequency (y).</li>
-        </ul>
-        <p><strong>Simple everyday example</strong><br>
-30 students’ test scores: 5,6,5,7,8,5,6,9,10,5<br>
-<strong>Frequency table:</strong><br>
-Score: 5, Frequency: 4<br>
-Score: 6, Frequency: 2<br>
-Score: 7, Frequency: 1<br>
-Score: 8, Frequency: 1<br>
-Score: 9, Frequency: 1<br>
-Score: 10, Frequency: 1<br>
-Total students = 10 (sum of frequencies).</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Frequency_distribution.svg/800px-Frequency_distribution.svg.png" alt="Diagram showing a frequency distribution table and bar chart">
-
-        <h3>10 JAMB Examples with Solutions (Frequency Distribution)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Q1 (JAMB 2007 style)</div>
-          <div class="example-problem">
-Marks: 3   4    5   6   7   8<br>
-Frequency: 5  (y-1)  y   9   4   1<br>
-Total marks scored = 200. Find y.<br>
-Step 1: Calculate ∑(mark × frequency) = 3×5 + 4(y-1) + 5y + 6×9 + 7×4 + 8×1 = 15 + 4y – 4 + 5y + 54 + 28 + 8 = 9y + 101.<br>
-Step 2: Set equal to 200: 9y + 101 = 200.<br>
-Step 3: 9y = 99 → y = 11.
-          </div>
-          <div class="example-solution">Answer: 11</div>
+        <div class="formula-box">
+          <strong>Key Terms:</strong><br>
+          • <span class="integral">Indefinite Integration:</span> General function (+C)<br>
+          • <span class="integral">Definite Integration:</span> Numerical value between limits<br>
+          • <span class="integral">Constant of Integration (+C):</span> Derivative of any constant is zero
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q2 (JAMB style – mean given)</div>
-          <div class="example-problem">
-x: 1   2   3   4   5<br>
-f: y+2  y-1  2y-3  y+4  3y-4<br>
-Mean = 43/14. Find y.<br>
-Step 1: ∑f = (y+2) + (y-1) + (2y-3) + (y+4) + (3y-4) = 8y – 2.<br>
-Step 2: ∑fx = 1(y+2) + 2(y-1) + 3(2y-3) + 4(y+4) + 5(3y-4) = y+2 + 2y-2 + 6y-9 + 4y+16 + 15y-20 = 28y – 13.<br>
-Step 3: Mean = (28y – 13)/(8y – 2) = 43/14.<br>
-Step 4: Cross multiply: 14(28y – 13) = 43(8y – 2) → 392y – 182 = 344y – 86 → 48y = 96 → y = 2.
-          </div>
-          <div class="example-solution">Answer: 2</div>
+        <div class="memory-aid">
+          💡 JAMB Focus: Expect 3-5 questions on integration, combining algebraic, trigonometric, and application problems.
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q3 (JAMB 2016 style – total marks 48)</div>
-          <div class="example-problem">
-Marks: 1  2  3  4  5<br>
-Frequency: 2  y  3  4  y<br>
-Total marks = 48. Find y.<br>
-Step 1: ∑fx = 1×2 + 2y + 3×3 + 4×4 + 5y = 2 + 2y + 9 + 16 + 5y = 7y + 27 = 48.<br>
-Step 2: 7y = 21 → y = 3.
-          </div>
-          <div class="example-solution">Answer: 3</div>
+        <div class="section-header">1️⃣ BASIC INTEGRATION RULES</div>
+
+        <h2>Power Rule ⭐ (Most Important!)</h2>
+        
+        <div class="formula-box">
+          <span class="integral">∫ xⁿ dx = <span class="fraction"><span class="top">xⁿ⁺¹</span><span class="bottom">n+1</span></span> + C</span> (where n ≠ -1)<br><br>
+          
+          <strong>Constant Multiple:</strong> <span class="integral">∫ k·f(x) dx = k ∫ f(x) dx</span><br>
+          <strong>Sum/Difference:</strong> <span class="integral">∫ [f(x) ± g(x)] dx = ∫ f(x) dx ± ∫ g(x) dx</span>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q4</div>
-          <div class="example-problem">
-Ages of pupils (years): 10–14  15–19  20–24  25–29<br>
-Frequency: 12     25     18     5<br>
-What percentage are 15 years but less than 21 years?<br>
-Step 1: 15–19 class = 25 pupils.<br>
-Step 2: Total = 12 + 25 + 18 + 5 = 60.<br>
-Step 3: (25/60) × 100 = 41.67% (approx 42% in options).
-          </div>
-          <div class="example-solution">Answer: 41.67%</div>
+        <h3>🔢 Example 1: Power Rule</h3>
+        <p>Find <span class="integral">∫ 3x⁴ dx</span></p>
+        
+        <div class="calculation-box">
+          ∫ 3x⁴ dx = 3 · <span class="fraction"><span class="top">x⁴⁺¹</span><span class="bottom">4+1</span></span> + C<br>
+          = 3 · <span class="fraction"><span class="top">x⁵</span><span class="bottom">5</span></span> + C = <span class="fraction"><span class="top">3x⁵</span><span class="bottom">5</span></span> + C
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q5</div>
-          <div class="example-problem">
-The frequency distribution of marks of 50 students:<br>
-0–9: 5, 10–19: 12, 20–29: 18, 30–39: 10, 40–49: 5<br>
-How many students scored 20 marks and above?<br>
-Step 1: 20–29: 18, 30–39: 10, 40–49: 5.<br>
-Step 2: 18 + 10 + 5 = 33 students.
-          </div>
-          <div class="example-solution">Answer: 33</div>
+        <h3>🔢 Example 2: Polynomial</h3>
+        <p>Find <span class="integral">∫ (2x³ - 5x² + 4x - 7) dx</span></p>
+        
+        <div class="calculation-box">
+          = 2·<span class="fraction"><span class="top">x⁴</span><span class="bottom">4</span></span> - 5·<span class="fraction"><span class="top">x³</span><span class="bottom">3</span></span> + 4·<span class="fraction"><span class="top">x²</span><span class="bottom">2</span></span> - 7x + C<br>
+          = <span class="fraction"><span class="top">x⁴</span><span class="bottom">2</span></span> - <span class="fraction"><span class="top">5x³</span><span class="bottom">3</span></span> + 2x² - 7x + C
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q6</div>
-          <div class="example-problem">
-Marks: 1  2  3  4  5  6<br>
-Frequency: 4  y  5  y+1  3  2<br>
-Total frequency = 20. Find y.<br>
-Step 1: 4 + y + 5 + (y+1) + 3 + 2 = 2y + 15 = 20.<br>
-Step 2: 2y = 5 → y = 2.5 (fractional in some options).
-          </div>
-          <div class="example-solution">Answer: 2.5</div>
+        <div class="section-header">2️⃣ ALGEBRAIC FUNCTIONS</div>
+
+        <h2>Rational & Exponential Functions 📊</h2>
+        
+        <div class="formula-box">
+          <strong>When n = -1:</strong> <span class="integral">∫ <span class="fraction"><span class="top">1</span><span class="bottom">x</span></span> dx = ln|x| + C</span><br><br>
+          
+          <strong>Exponential:</strong><br>
+          <span class="integral">∫ eˣ dx = eˣ + C</span><br>
+          <span class="integral">∫ aˣ dx = <span class="fraction"><span class="top">aˣ</span><span class="bottom">ln a</span></span> + C</span>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q7</div>
-          <div class="example-problem">
-The table shows frequency of goals scored by 30 teams:<br>
-Goals: 0  1  2  3  4<br>
-Frequency: 8  10  7  4  1<br>
-What percentage scored at least 2 goals?<br>
-Step 1: At least 2: 7 + 4 + 1 = 12.<br>
-Step 2: (12/30) × 100 = 40%.
-          </div>
-          <div class="example-solution">Answer: 40%</div>
+        <h3>🔢 Example 3: Rational Function</h3>
+        <p>Find <span class="integral">∫ <span class="fraction"><span class="top">3</span><span class="bottom">x</span></span> dx</span></p>
+        
+        <div class="calculation-box">
+          ∫ <span class="fraction"><span class="top">3</span><span class="bottom">x</span></span> dx = <strong>3 ln|x| + C</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q8</div>
-          <div class="example-problem">
-Class interval: 0–10  11–20  21–30  31–40<br>
-Frequency: 6     15     20     9<br>
-Estimate the number of items in 11–30.<br>
-Step 1: 11–20: 15, 21–30: 20.<br>
-Step 2: 15 + 20 = 35.
-          </div>
-          <div class="example-solution">Answer: 35</div>
+        <div class="section-header">3️⃣ TRIGONOMETRIC FUNCTIONS</div>
+
+        <h2>Basic Trigonometric Integrals 📐</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Function</th>
+              <th>Integral</th>
+            </tr>
+            <tr>
+              <td>sin x</td>
+              <td>-cos x + C</td>
+            </tr>
+            <tr>
+              <td>cos x</td>
+              <td>sin x + C</td>
+            </tr>
+            <tr>
+              <td>sec² x</td>
+              <td>tan x + C</td>
+            </tr>
+            <tr>
+              <td>csc² x</td>
+              <td>-cot x + C</td>
+            </tr>
+            <tr>
+              <td>sec x tan x</td>
+              <td>sec x + C</td>
+            </tr>
+            <tr>
+              <td>csc x cot x</td>
+              <td>-csc x + C</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q9</div>
-          <div class="example-problem">
-Frequency table of weights (kg) of 40 students. Total frequency = 40. If frequency of 50–59 kg is missing (z), and sum of frequencies so far is 35, find z.<br>
-Step 1: z = 40 – 35 = 5.
-          </div>
-          <div class="example-solution">Answer: 5</div>
+        <h3>🔢 Example 4: Trigonometric</h3>
+        <p>Find <span class="integral">∫ (4 sin x + 3 cos x) dx</span></p>
+        
+        <div class="calculation-box">
+          = 4(-cos x) + 3(sin x) + C<br>
+          = <strong>-4 cos x + 3 sin x + C</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q10</div>
-          <div class="example-problem">
-The frequency distribution below has mean 6. Find the missing frequency k.<br>
-x: 4  5  6  7  8<br>
-f: 3  k  5  4  2<br>
-Step 1: ∑f = 3 + k + 5 + 4 + 2 = 14 + k.<br>
-Step 2: ∑fx = 4×3 + 5k + 6×5 + 7×4 + 8×2 = 12 + 5k + 30 + 28 + 16 = 86 + 5k.<br>
-Step 3: Mean = (86 + 5k)/(14 + k) = 6.<br>
-Step 4: 86 + 5k = 84 + 6k → 2 = k.
-          </div>
-          <div class="example-solution">Answer: 2</div>
+        <h3>🔢 Example 5: Using Identities</h3>
+        <p>Find <span class="integral">∫ sin² x dx</span></p>
+        
+        <div class="calculation-box">
+          Use identity: sin² x = <span class="fraction"><span class="top">1 - cos 2x</span><span class="bottom">2</span></span><br><br>
+          
+          ∫ sin² x dx = ∫ <span class="fraction"><span class="top">1 - cos 2x</span><span class="bottom">2</span></span> dx<br>
+          = <span class="fraction"><span class="top">1</span><span class="bottom">2</span></span>∫ 1 dx - <span class="fraction"><span class="top">1</span><span class="bottom">2</span></span>∫ cos 2x dx<br>
+          = <span class="fraction"><span class="top">x</span><span class="bottom">2</span></span> - <span class="fraction"><span class="top">sin 2x</span><span class="bottom">4</span></span> + C
         </div>
 
-        <h2>(b) Histogram, Bar Chart and Pie Chart</h2>
-        <p><strong>Bar Chart:</strong> Used for categorical (separate groups) data. Bars are separate (gaps). Height = frequency.<br>
-<strong>Histogram:</strong> Used for continuous data (e.g., heights, marks in ranges). Bars touch each other. Height = frequency (or frequency density if class widths differ).<br>
-<strong>Pie Chart:</strong> Circle divided into sectors. Angle of sector = (frequency / total) × 360°.</p>
-        <p><strong>How to interpret:</strong></p>
-        <ul>
-          <li>Read the height/length of bar → number of items.</li>
-          <li>For pie: angle ÷ 360 × total = number of items.</li>
-          <li>Ratio, percentage, total number, etc.</li>
-        </ul>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Bar_chart_histogram_pie_chart.svg/800px-Bar_chart_histogram_pie_chart.svg.png" alt="Diagram showing bar chart, histogram, and pie chart examples">
+        <div class="section-header">4️⃣ INTEGRATION BY SUBSTITUTION</div>
 
-        <h3>10 JAMB Examples with Solutions (Charts)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Q1 (JAMB 2008 Pie Chart)</div>
-          <div class="example-problem">
-Six sectors: four angles 30°, 45°, 60°, 90°. Remaining two in ratio 2:1. Smallest of the remaining two?<br>
-Step 1: Sum of known angles = 30 + 45 + 60 + 90 = 225°.<br>
-Step 2: Remaining = 360° – 225° = 135°.<br>
-Step 3: Ratio 2:1 → parts 3, each part 135/3 = 45°.<br>
-Step 4: Remaining angles: 90° and 45°. Smallest = 45°.
-          </div>
-          <div class="example-solution">Answer: 45°</div>
+        <h2>When to Use 🔄</h2>
+        
+        <div class="memory-aid">
+          💡 Use when you have a composite function or a function and its derivative present.
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q2 (Bar Chart – words in paragraph)</div>
-          <div class="example-problem">
-Words: a, and, in, it, the, to. Frequencies shown in bar chart. Ratio of least frequent to most frequent = ?<br>
-Step 1: Assume typical frequencies: least = 2, most = 6.<br>
-Step 2: Ratio = 2:6 = 1:3 or 1/3.
-          </div>
-          <div class="example-solution">Answer: 1/3</div>
+        <div class="component-box">
+          <h4>Method:</h4>
+          <p>1. Let u = inner function</p>
+          <p>2. Find <span class="integral">du/dx</span> and rearrange for dx</p>
+          <p>3. Substitute into the integral</p>
+          <p>4. Integrate with respect to u</p>
+          <p>5. Substitute back to x</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q3 (Pie Chart – travel to school)</div>
-          <div class="example-problem">
-100 students travelled by bus. Total students = ? (pie shows bus sector 120°).<br>
-Step 1: Bus sector = 120° = (bus students / total) × 360°.<br>
-Step 2: 120/360 = 1/3 = 100 / total.<br>
-Step 3: Total = 100 × 3 = 300 students.
-          </div>
-          <div class="example-solution">Answer: 300</div>
+        <h3>🔢 Example 6: Substitution</h3>
+        <p>Find <span class="integral">∫ 2x(x² + 3)⁴ dx</span></p>
+        
+        <div class="calculation-box">
+          Let u = x² + 3, then <span class="integral">du/dx</span> = 2x, so du = 2x dx<br><br>
+          
+          ∫ 2x(x² + 3)⁴ dx = ∫ u⁴ du<br>
+          = <span class="fraction"><span class="top">u⁵</span><span class="bottom">5</span></span> + C<br>
+          = <span class="fraction"><span class="top">(x² + 3)⁵</span><span class="bottom">5</span></span> + C
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q4 (Bar Chart – marks in test)</div>
-          <div class="example-problem">
-Bars show number of students per mark. Total students who took the test = 38 (sum of all bar heights).
-          </div>
-          <div class="example-solution">Answer: 38</div>
+        <h3>🔢 Example 7: Trigonometric Substitution</h3>
+        <p>Find <span class="integral">∫ cos 3x dx</span></p>
+        
+        <div class="calculation-box">
+          Let u = 3x, then du = 3 dx, so dx = <span class="fraction"><span class="top">du</span><span class="bottom">3</span></span><br><br>
+          
+          ∫ cos 3x dx = ∫ cos u · <span class="fraction"><span class="top">du</span><span class="bottom">3</span></span><br>
+          = <span class="fraction"><span class="top">1</span><span class="bottom">3</span></span> sin u + C<br>
+          = <span class="fraction"><span class="top">sin 3x</span><span class="bottom">3</span></span> + C
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q5 (Pie Chart – subjects)</div>
-          <div class="example-problem">
-30 students offered French (sector 108°). How many offered C.R.K (sector 36°)?<br>
-Step 1: French 108° → 30 students → 1° = 30/108 = 5/18 students per degree.<br>
-Step 2: C.R.K 36° → 36 × (5/18) = 10 students.
-          </div>
-          <div class="example-solution">Answer: 10</div>
+        <div class="section-header">5️⃣ INTEGRATION BY PARTS</div>
+
+        <h2>Formula & LIATE Rule 📋</h2>
+        
+        <div class="formula-box">
+          <span class="integral">∫ u dv = uv - ∫ v du</span><br><br>
+          
+          <strong>LIATE Rule (Priority for choosing u):</strong><br>
+          1. Logarithmic | 2. Inverse trig | 3. Algebraic<br>
+          4. Trigonometric | 5. Exponential
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q6 (Histogram – weights of students)</div>
-          <div class="example-problem">
-Histogram shows weights. Total students who made the trip = sum of frequencies (bar areas) = 60.
-          </div>
-          <div class="example-solution">Answer: 60</div>
+        <h3>🔢 Example 8: Integration by Parts</h3>
+        <p>Find <span class="integral">∫ x eˣ dx</span></p>
+        
+        <div class="calculation-box">
+          Let u = x (Algebraic), dv = eˣ dx<br>
+          Then du = dx, v = eˣ<br><br>
+          
+          ∫ x eˣ dx = x·eˣ - ∫ eˣ dx<br>
+          = xeˣ - eˣ + C<br>
+          = <strong>eˣ(x - 1) + C</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q7 (Bar Chart – 60 pupils, max 10)</div>
-          <div class="example-problem">
-Pass mark 5. Percentage who passed = (students scoring 5–10 / 60) × 100. Suppose bars give 42 passed → 70%.
-          </div>
-          <div class="example-solution">Answer: 70%</div>
+        <h3>🔢 Example 9: Another Parts Example</h3>
+        <p>Find <span class="integral">∫ x ln x dx</span></p>
+        
+        <div class="calculation-box">
+          Let u = ln x (Logarithmic), dv = x dx<br>
+          Then du = <span class="fraction"><span class="top">1</span><span class="bottom">x</span></span>dx, v = <span class="fraction"><span class="top">x²</span><span class="bottom">2</span></span><br><br>
+          
+          ∫ x ln x dx = <span class="fraction"><span class="top">x²</span><span class="bottom">2</span></span> ln x - ∫ <span class="fraction"><span class="top">x²</span><span class="bottom">2</span></span> · <span class="fraction"><span class="top">1</span><span class="bottom">x</span></span> dx<br>
+          = <span class="fraction"><span class="top">x²</span><span class="bottom">2</span></span> ln x - ∫ <span class="fraction"><span class="top">x</span><span class="bottom">2</span></span> dx<br>
+          = <span class="fraction"><span class="top">x²</span><span class="bottom">2</span></span> ln x - <span class="fraction"><span class="top">x²</span><span class="bottom">4</span></span> + C<br>
+          = <span class="fraction"><span class="top">x²</span><span class="bottom">4</span></span>(2 ln x - 1) + C
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q8 (Pie Chart – 80 students, 5 subjects)</div>
-          <div class="example-problem">
-Mathematics sector 90°. Number offering Mathematics = (90/360) × 80 = 20 students.
-          </div>
-          <div class="example-solution">Answer: 20</div>
+        <div class="section-header">6️⃣ DEFINITE INTEGRATION</div>
+
+        <h2>Format & Properties 📊</h2>
+        
+        <div class="formula-box">
+          <span class="integral">∫ₐᵇ f(x) dx = [F(x)]ₐᵇ = F(b) - F(a)</span><br><br>
+          
+          <strong>Properties:</strong><br>
+          • ∫ₐᵇ f(x) dx = -∫ᵇₐ f(x) dx<br>
+          • ∫ₐₐ f(x) dx = 0<br>
+          • ∫ₐᵇ f(x) dx + ∫ᵇᶜ f(x) dx = ∫ₐᶜ f(x) dx
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q9 (Bar Chart – marks distribution)</div>
-          <div class="example-problem">
-Total students = sum of frequencies shown on bars = 32.
-          </div>
-          <div class="example-solution">Answer: 32</div>
+        <h3>🔢 Example 10: Definite Integral</h3>
+        <p>Evaluate <span class="integral">∫₁³ (2x + 1) dx</span></p>
+        
+        <div class="calculation-box">
+          ∫₁³ (2x + 1) dx = [x² + x]₁³<br>
+          = (3² + 3) - (1² + 1)<br>
+          = (9 + 3) - (1 + 1)<br>
+          = 12 - 2 = <strong>10</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q10 (Histogram – candidates in thousands)</div>
-          <div class="example-problem">
-Ranges of marks. Number who scored at most 30 marks = sum of first few bars (e.g., 15 + 25 + 30 = 70 thousand).
-          </div>
-          <div class="example-solution">Answer: 70 thousand</div>
+        <h3>🔢 Example 11: Definite with Substitution</h3>
+        <p>Evaluate <span class="integral">∫₀² x(x² + 1)³ dx</span></p>
+        
+        <div class="calculation-box">
+          Let u = x² + 1, du = 2x dx, so x dx = <span class="fraction"><span class="top">du</span><span class="bottom">2</span></span><br><br>
+          
+          When x = 0, u = 1; when x = 2, u = 5<br><br>
+          
+          ∫₀² x(x² + 1)³ dx = ∫₁⁵ u³ · <span class="fraction"><span class="top">du</span><span class="bottom">2</span></span><br>
+          = <span class="fraction"><span class="top">1</span><span class="bottom">2</span></span>[<span class="fraction"><span class="top">u⁴</span><span class="bottom">4</span></span>]₁⁵<br>
+          = <span class="fraction"><span class="top">1</span><span class="bottom">8</span></span>(5⁴ - 1⁴)<br>
+          = <span class="fraction"><span class="top">1</span><span class="bottom">8</span></span>(625 - 1) = <span class="fraction"><span class="top">624</span><span class="bottom">8</span></span> = <strong>78</strong>
         </div>
 
-        <p><strong>Quick Revision Tips for JAMB CBT</strong></p>
-        <ul>
-          <li>Always sum frequencies first to get total (n).</li>
-          <li>For pie chart, angle formula is your best friend: (f/n) × 360.</li>
-          <li>Histogram vs Bar chart: touching bars = histogram (continuous); gaps = bar chart (categories).</li>
-          <li>Practice reading “the diagram above” quickly – questions are straightforward once you identify total.</li>
-        </ul>
+        <div class="section-header">7️⃣ APPLICATIONS OF INTEGRATION</div>
 
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          Abumchukwu, this is now the **complete Representation of Data chapter** — all sections (a) to (b) fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <h2>A. Area Under a Curve 📐</h2>
+        
+        <div class="formula-box">
+          <span class="integral">Area = ∫ₐᵇ y dx</span> (above x-axis)
+        </div>
+
+        <h3>🔢 Example 12: Area</h3>
+        <p>Find area bounded by y = x², x = 1, x = 3, and x-axis.</p>
+        
+        <div class="calculation-box">
+          Area = ∫₁³ x² dx = [<span class="fraction"><span class="top">x³</span><span class="bottom">3</span></span>]₁³<br>
+          = <span class="fraction"><span class="top">27</span><span class="bottom">3</span></span> - <span class="fraction"><span class="top">1</span><span class="bottom">3</span></span> = <span class="fraction"><span class="top">26</span><span class="bottom">3</span></span> square units
+        </div>
+
+        <h2>B. Area Between Two Curves 📊</h2>
+        
+        <div class="formula-box">
+          <span class="integral">Area = ∫ₐᵇ (y<sub>upper</sub> - y<sub>lower</sub>) dx</span>
+        </div>
+
+        <h3>🔢 Example 13: Area Between Curves</h3>
+        <p>Find area enclosed by y = x² and y = x.</p>
+        
+        <div class="calculation-box">
+          Find intersection: x² = x → x = 0, 1<br><br>
+          
+          Area = ∫₀¹ (x - x²) dx<br>
+          = [<span class="fraction"><span class="top">x²</span><span class="bottom">2</span></span> - <span class="fraction"><span class="top">x³</span><span class="bottom">3</span></span>]₀¹<br>
+          = (<span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> - <span class="fraction"><span class="top">1</span><span class="bottom">3</span></span>) - 0 = <span class="fraction"><span class="top">1</span><span class="bottom">6</span></span> square units
+        </div>
+
+        <h2>C. Volume of Revolution 🔄</h2>
+        
+        <div class="formula-box">
+          About x-axis: <span class="integral">V = π ∫ₐᵇ y² dx</span>
+        </div>
+
+        <h3>🔢 Example 14: Volume</h3>
+        <p>Find volume generated by rotating y = √x from x = 0 to x = 4 about x-axis.</p>
+        
+        <div class="calculation-box">
+          V = π ∫₀⁴ (√x)² dx = π ∫₀⁴ x dx<br>
+          = π[<span class="fraction"><span class="top">x²</span><span class="bottom">2</span></span>]₀⁴<br>
+          = π(<span class="fraction"><span class="top">16</span><span class="bottom">2</span></span> - 0) = <strong>8π cubic units</strong>
+        </div>
+
+        <div class="section-header">📋 FORMULA SUMMARY</div>
+
+        <h2>Basic Integration Formulas 📚</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>No.</th>
+              <th>Function</th>
+              <th>Integral</th>
+              <th>Notes</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>∫ xⁿ dx</td>
+              <td><span class="fraction"><span class="top">xⁿ⁺¹</span><span class="bottom">n+1</span></span> + C</td>
+              <td>n ≠ -1</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>∫ <span class="fraction"><span class="top">1</span><span class="bottom">x</span></span> dx</td>
+              <td>ln|x| + C</td>
+              <td>Special case</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>∫ eˣ dx</td>
+              <td>eˣ + C</td>
+              <td>Base e</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>∫ aˣ dx</td>
+              <td><span class="fraction"><span class="top">aˣ</span><span class="bottom">ln a</span></span> + C</td>
+              <td>Base a</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>∫ sin x dx</td>
+              <td>-cos x + C</td>
+              <td>Trig</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>∫ cos x dx</td>
+              <td>sin x + C</td>
+              <td>Trig</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>∫ sec² x dx</td>
+              <td>tan x + C</td>
+              <td>Trig</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>∫ csc² x dx</td>
+              <td>-cot x + C</td>
+              <td>Trig</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="shortcut-box">
+          <h4>⚡ Advanced Techniques</h4>
+          <p><strong>Substitution:</strong> ∫ f(g(x))g'(x)dx = ∫ f(u)du</p>
+          <p><strong>Parts:</strong> ∫ u dv = uv - ∫ v du</p>
+          <p><strong>Definite:</strong> ∫ₐᵇ f(x)dx = F(b) - F(a)</p>
+          <p><strong>Area:</strong> ∫ₐᵇ y dx or ∫ₐᵇ (y₁ - y₂)dx</p>
+          <p><strong>Volume:</strong> V = π∫ₐᵇ y² dx</p>
+        </div>
+
+        <div class="checklist-box">
+          <h3>Quick Revision Checklist:</h3>
+          <ul>
+            <li>Power rule mastered</li>
+            <li>Constant of integration (+C) remembered</li>
+            <li>Polynomial integration term by term</li>
+            <li>∫ 1/x dx = ln|x| special case</li>
+            <li>Exponential integrals</li>
+            <li>Trigonometric integrals (sin, cos, sec², csc²)</li>
+            <li>Integration by substitution</li>
+            <li>Integration by parts (LIATE rule)</li>
+            <li>Definite integration evaluation</li>
+            <li>Area under curve</li>
+            <li>Area between curves</li>
+            <li>Volume of revolution</li>
+          </ul>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 Practice Tips for JAMB 2026</h3>
+          <p>1. <strong>Master basics first:</strong> Power rule and standard integrals</p>
+          <p>2. <strong>Practice substitution:</strong> Most common JAMB technique</p>
+          <p>3. <strong>Watch your signs:</strong> Especially with trig integrals</p>
+          <p>4. <strong>Check answers:</strong> Differentiate your result to verify</p>
+          <p>5. <strong>Time yourself:</strong> Aim for 2-3 minutes per question</p>
+          <p>6. <strong>Sketch graphs:</strong> For area questions, always sketch first</p>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Outstanding! 🌟 You now master Integration!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a quiz on Representation of Data or the next topic?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">3-5 questions per JAMB exam | Reverse of differentiation</p>
+        <button class="explore-btn" onclick="window.location.href='integration-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
