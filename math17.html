@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Integration</title>
+  <title>MATHEMATICS - Application of Differentiation</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
-      --highlight-solution: #ff9800;                   /* orange for final answers */
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,24 +290,20 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
-    body.light .explore-btn {
-      color: #000;
-    }
-
-    /* Footer Nav Bar */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -272,299 +353,413 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .derivative {
+      font-family: 'Courier New', monospace;
+      color: var(--accent);
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Integration</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Integration Made Super Easy for JAMB</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Application of Differentiation! 📈</h1>
+        <p class="subtitle">– JAMB Section IV: Calculus</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Integration Made Super Easy for JAMB!</h2>
-        <p>Integration is just the reverse of differentiation. If differentiation asks “What is the slope?”, integration asks “What was the original function before we took the slope?”</p>
-        <p><strong>Think of it like this:</strong><br>
-Differentiation: “Break down” a function → get its derivative.<br>
-Integration: “Build back up” → add the +C (constant of integration) because many functions can give the same derivative.</p>
-        <p><strong>Quick Rules You Must Know (for algebraic & simple trig functions):</strong></p>
-        <ul>
-          <li><strong>Function: Constant k</strong> → Integral (Indefinite): kx + C</li>
-          <li><strong>Function: xⁿ (n ≠ –1)</strong> → Integral: xⁿ⁺¹/(n+1) + C (Power rule)</li>
-          <li><strong>Function: (ax + b)ⁿ</strong> → Use substitution u = ax + b, du = a dx</li>
-          <li><strong>Function: sin(ax)</strong> → Integral: –(1/a) cos(ax) + C</li>
-          <li><strong>Function: cos(ax)</strong> → Integral: (1/a) sin(ax) + C</li>
-          <li><strong>Sum/Difference</strong> → Integrate term by term</li>
-        </ul>
-        <p><strong>Definite Integral (from a to b):</strong><br>
-∫ₐᵇ f(x) dx = [F(x)]ₐᵇ = F(b) – F(a)<br>
-(No +C needed)</p>
-        <p><strong>Area under the curve (simple cases only):</strong><br>
-If the curve is above the x-axis from a to b → Area = ∫ₐᵇ y dx<br>
-If it crosses the x-axis → split the integral or take absolute value (JAMB usually gives regions above the axis).</p>
-        <p>Now let’s practise with real & typical JAMB-style examples.</p>
+        <h2>📘 Chapter 17: Application of Differentiation</h2>
+        
+        <p><strong>🎯 Syllabus Coverage:</strong> Rate of change and Maxima & minima. You must be able to solve problems involving applications of rate of change, maxima and minima.</p>
 
-        <h2>(a) Integration of explicit algebraic and simple trigonometric functions</h2>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Integral_example.svg/800px-Integral_example.svg.png" alt="Graph showing integration as area under curve">
+        <div class="section-header">🔑 ESSENTIAL FORMULAS</div>
 
-        <h3>10 JAMB-style examples with full step-by-step solutions</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Evaluate ∫₁³ (x² – 1) dx (JAMB-style definite algebraic)</div>
-          <div class="example-problem">
-Step 1: Antiderivative F(x) = x³/3 – x.<br>
-Step 2: At upper limit x=3: (27/3) – 3 = 9 – 3 = 6.<br>
-Step 3: At lower limit x=1: (1/3) – 1 = 1/3 – 3/3 = –2/3.<br>
-Step 4: F(3) – F(1) = 6 – (–2/3) = 6 + 2/3 = 18/3 + 2/3 = 20/3.
-          </div>
-          <div class="example-solution">Answer: 20/3</div>
+        <h2>Summary Table 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Application</th>
+              <th>Formula/Rule</th>
+              <th>Explanation</th>
+            </tr>
+            <tr>
+              <td>Rate of Change</td>
+              <td><span class="derivative">dy/dx</span> or <span class="derivative">ds/dt</span></td>
+              <td>Instantaneous rate of change</td>
+            </tr>
+            <tr>
+              <td>Chain Rule</td>
+              <td><span class="derivative">dy/dt = dy/dx × dx/dt</span></td>
+              <td>Connects related rates</td>
+            </tr>
+            <tr>
+              <td>Stationary Points</td>
+              <td>Set <span class="derivative">dy/dx = 0</span></td>
+              <td>Points where gradient is zero</td>
+            </tr>
+            <tr>
+              <td>Second Derivative</td>
+              <td><span class="derivative">d²y/dx²</span></td>
+              <td>Determines nature of points</td>
+            </tr>
+            <tr>
+              <td>Maximum Point</td>
+              <td><span class="derivative">dy/dx = 0</span> & <span class="derivative">d²y/dx² < 0</span></td>
+              <td>Curve concave downward (peak)</td>
+            </tr>
+            <tr>
+              <td>Minimum Point</td>
+              <td><span class="derivative">dy/dx = 0</span> & <span class="derivative">d²y/dx² > 0</span></td>
+              <td>Curve concave upward (valley)</td>
+            </tr>
+            <tr>
+              <td>Point of Inflection</td>
+              <td><span class="derivative">d²y/dx² = 0</span></td>
+              <td>Where concavity changes</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. Evaluate ∫₂³ (x² – 2x) dx</div>
-          <div class="example-problem">
-Step 1: F(x) = x³/3 – x².<br>
-Step 2: At x=3: 27/3 – 9 = 9 – 9 = 0.<br>
-Step 3: At x=2: 8/3 – 4 = 8/3 – 12/3 = –4/3.<br>
-Step 4: 0 – (–4/3) = 4/3.
-          </div>
-          <div class="example-solution">Answer: 4/3</div>
+        <div class="section-header">1️⃣ RATE OF CHANGE</div>
+
+        <h2>Concept & Applications 📈</h2>
+        
+        <div class="formula-box">
+          <strong>Key Rates:</strong><br>
+          • <span class="derivative">ds/dt</span> = rate of change of distance (speed/velocity)<br>
+          • <span class="derivative">dA/dt</span> = rate of change of area<br>
+          • <span class="derivative">dV/dt</span> = rate of change of volume
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">3. If dy/dx = 2x – 3 and y = 3 when x = 0, find y in terms of x.</div>
-          <div class="example-problem">
-Step 1: y = ∫(2x – 3) dx = x² – 3x + C.<br>
-Step 2: At x=0, y=3: 0 – 0 + C = 3 → C=3.<br>
-Step 3: y = x² – 3x + 3.
-          </div>
-          <div class="example-solution">Answer: y = x² – 3x + 3</div>
+        <h3>🔢 Example 1: Basic Rate of Change</h3>
+        <p>Square side increasing at 2 cm/s. Find rate of increase of area when side is 5 cm.</p>
+        
+        <div class="calculation-box">
+          Let s = side, A = area<br>
+          Given: <span class="derivative">ds/dt</span> = 2 cm/s<br><br>
+          
+          Formula: A = s²<br><br>
+          
+          Differentiate with respect to t:<br>
+          <span class="derivative">dA/dt</span> = 2s · <span class="derivative">ds/dt</span> (chain rule)<br><br>
+          
+          Substitute s = 5 and <span class="derivative">ds/dt</span> = 2:<br>
+          <span class="derivative">dA/dt</span> = 2(5)(2) = <strong>20 cm²/s</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">4. Evaluate ∫ sin(3x) dx</div>
-          <div class="example-problem">
-Step 1: Let u = 3x, du = 3 dx → dx = du/3.<br>
-Step 2: ∫ sin u (du/3) = (1/3) ∫ sin u du = (1/3)(–cos u) + C.<br>
-Step 3: –(1/3) cos(3x) + C.
-          </div>
-          <div class="example-solution">Answer: –(1/3) cos(3x) + C</div>
+        <h3>🔢 Example 2: Related Rates (JAMB Style)</h3>
+        <p>Spherical balloon inflated, radius increases at 0.5 cm/s. Find rate of volume increase when r = 3 cm. [π = <span class="fraction"><span class="top">22</span><span class="bottom">7</span></span>]</p>
+        
+        <div class="calculation-box">
+          Volume: V = <span class="fraction"><span class="top">4</span><span class="bottom">3</span></span>πr³<br>
+          Given: <span class="derivative">dr/dt</span> = 0.5 cm/s<br><br>
+          
+          Differentiate V with respect to t:<br>
+          <span class="derivative">dV/dt</span> = <span class="fraction"><span class="top">4</span><span class="bottom">3</span></span>π · 3r² · <span class="derivative">dr/dt</span> = 4πr² · <span class="derivative">dr/dt</span><br><br>
+          
+          When r = 3:<br>
+          <span class="derivative">dV/dt</span> = 4 × <span class="fraction"><span class="top">22</span><span class="bottom">7</span></span> × 9 × 0.5<br>
+          = <span class="fraction"><span class="top">396</span><span class="bottom">7</span></span> ≈ <strong>56.57 cm³/s</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">5. Evaluate ∫ 2(2x – 3)²/³ dx (JAMB 2001 style)</div>
-          <div class="example-problem">
-Step 1: Let u = 2x – 3, du = 2 dx → dx = du/2.<br>
-Step 2: 2 ∫ (u²/³) (du/2) = ∫ u²/³ du.<br>
-Step 3: ∫ u²/³ du = u^(5/3)/(5/3) + C = (3/5) u^(5/3) + C.<br>
-Step 4: (3/5)(2x – 3)^(5/3) + C.
-          </div>
-          <div class="example-solution">Answer: (3/5)(2x – 3)^(5/3) + C</div>
+        <div class="section-header">2️⃣ MAXIMA AND MINIMA</div>
+
+        <h2>Optimization Problems 📊</h2>
+        
+        <div class="memory-aid">
+          💡 Step-by-Step Procedure:<br>
+          1. Find <span class="derivative">dy/dx</span><br>
+          2. Set to zero: Solve <span class="derivative">dy/dx = 0</span><br>
+          3. Second derivative test: Calculate <span class="derivative">d²y/dx²</span><br>
+          4. Determine nature: >0 (min), <0 (max), =0 (inflection)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">6. A function f(x) passes through the origin and f'(x) = 3x + 2. Find f(x).</div>
-          <div class="example-problem">
-Step 1: f(x) = ∫(3x + 2) dx = (3/2)x² + 2x + C.<br>
-Step 2: f(0) = 0: C = 0.<br>
-Step 3: f(x) = (3/2)x² + 2x.
-          </div>
-          <div class="example-solution">Answer: (3/2)x² + 2x</div>
+        <h3>🔢 Example 3: Finding Max/Min Points</h3>
+        <p>Find maximum and minimum values of y = x³ - 6x² + 9x + 2</p>
+        
+        <div class="calculation-box">
+          <strong>Step 1:</strong> Differentiate<br>
+          <span class="derivative">dy/dx</span> = 3x² - 12x + 9<br><br>
+          
+          <strong>Step 2:</strong> Set to zero<br>
+          3x² - 12x + 9 = 0<br>
+          x² - 4x + 3 = 0<br>
+          (x - 1)(x - 3) = 0<br>
+          x = 1 or x = 3<br><br>
+          
+          <strong>Step 3:</strong> Second derivative<br>
+          <span class="derivative">d²y/dx²</span> = 6x - 12<br><br>
+          
+          <strong>Step 4:</strong> Test each point<br>
+          At x = 1: 6(1) - 12 = -6 < 0 → <strong>Maximum</strong><br>
+          y = 1 - 6 + 9 + 2 = 6 → Point (1, 6)<br><br>
+          
+          At x = 3: 6(3) - 12 = 6 > 0 → <strong>Minimum</strong><br>
+          y = 27 - 54 + 27 + 2 = 2 → Point (3, 2)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">7. Evaluate ∫₋₁² (2x² + x) dx</div>
-          <div class="example-problem">
-Step 1: F(x) = (2/3)x³ + (1/2)x².<br>
-Step 2: At x=2: (2/3)(8) + (1/2)(4) = 16/3 + 2 = 16/3 + 6/3 = 22/3.<br>
-Step 3: At x=–1: (2/3)(–1) + (1/2)(1) = –2/3 + 1/2 = –4/6 + 3/6 = –1/6.<br>
-Step 4: 22/3 – (–1/6) = 44/6 + 1/6 = 45/6 = 15/2.
+        <h3>🔢 Example 4: Optimization (JAMB Common Type)</h3>
+        <p>Farmer has 100 m fencing for rectangular plot. Find dimensions for maximum area.</p>
+        
+        <div class="calculation-box">
+          Let length = x, width = y<br><br>
+          
+          Constraint (perimeter):<br>
+          2x + 2y = 100 → x + y = 50 → y = 50 - x<br><br>
+          
+          Area: A = x · y = x(50 - x) = 50x - x²<br><br>
+          
+          Differentiate: <span class="derivative">dA/dx</span> = 50 - 2x<br><br>
+          
+          Set to zero: 50 - 2x = 0 → x = 25<br><br>
+          
+          Second derivative: <span class="derivative">d²A/dx²</span> = -2 < 0 ✓ (Maximum)<br><br>
+          
+          Find y: y = 50 - 25 = 25<br><br>
+          
+          Maximum Area = 25 × 25 = <strong>625 m²</strong>
+        </div>
+        <div class="answer-box">Square plot: 25 m × 25 m, Area = 625 m²</div>
+
+        <h3>🔢 Example 5: Curve Sketching</h3>
+        <p>Find coordinates of turning point on y = 2x² - 8x + 5 and determine its nature.</p>
+        
+        <div class="calculation-box">
+          <span class="derivative">dy/dx</span> = 4x - 8<br><br>
+          
+          Set to zero: 4x - 8 = 0 → x = 2<br><br>
+          
+          Find y: y = 2(2)² - 8(2) + 5 = 8 - 16 + 5 = -3<br><br>
+          
+          Second derivative: <span class="derivative">d²y/dx²</span> = 4 > 0
+        </div>
+        <div class="answer-box">Turning point at (2, -3), Minimum</div>
+
+        <div class="section-header">📝 JAMB PRACTICE QUESTIONS</div>
+
+        <h2>Objective Questions 🎯</h2>
+
+        <div class="practice-box">
+          <p><strong>Q1:</strong> If y = x³ - 3x² + 4, find x at which y is maximum.</p>
+          <p style="margin-top: 8px;">(A) 0 (B) 1 (C) 2 (D) 3</p>
+          
+          <div class="calculation-box" style="margin-top: 12px;">
+            <span class="derivative">dy/dx</span> = 3x² - 6x = 0<br>
+            3x(x - 2) = 0 → x = 0 or 2<br><br>
+            
+            <span class="derivative">d²y/dx²</span> = 6x - 6<br>
+            At x=0: -6 < 0 (max) ✓<br>
+            At x=2: 6 > 0 (min)
           </div>
-          <div class="example-solution">Answer: 15/2</div>
+          <p style="margin-top: 8px; color: var(--accent); font-weight: bold;">Answer: (A) 0</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">8. Integrate (2x + 1)³</div>
-          <div class="example-problem">
-Step 1: Let u = 2x + 1, du = 2 dx → dx = du/2.<br>
-Step 2: ∫ u³ (du/2) = (1/2) ∫ u³ du = (1/2)(u⁴/4) + C = (1/8)u⁴ + C.<br>
-Step 3: (1/8)(2x + 1)⁴ + C.
+        <div class="practice-box">
+          <p><strong>Q2:</strong> Circle radius increasing at 0.1 cm/s. Rate of area increase when r = 5 cm?</p>
+          <p style="margin-top: 8px;">(A) π (B) 2π (C) 5π (D) 10π cm²/s</p>
+          
+          <div class="calculation-box" style="margin-top: 12px;">
+            A = πr²<br>
+            <span class="derivative">dA/dt</span> = 2πr · <span class="derivative">dr/dt</span><br>
+            = 2π(5)(0.1) = π
           </div>
-          <div class="example-solution">Answer: (1/8)(2x + 1)⁴ + C</div>
+          <p style="margin-top: 8px; color: var(--accent); font-weight: bold;">Answer: (A) π cm²/s</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">9. Integrate 4x³ + 2x + cos x</div>
-          <div class="example-problem">
-Step 1: ∫ 4x³ dx = x⁴.<br>
-Step 2: ∫ 2x dx = x².<br>
-Step 3: ∫ cos x dx = sin x.<br>
-Step 4: x⁴ + x² + sin x + C.
-          </div>
-          <div class="example-solution">Answer: x⁴ + x² + sin x + C</div>
+        <div class="tips-box">
+          <h3>🎯 Key Points for JAMB 2026</h3>
+          <p>✓ <strong>Simplify first:</strong> Factorize before differentiating</p>
+          <p>✓ <strong>Chain rule crucial:</strong> Essential for related rates</p>
+          <p>✓ <strong>Don't forget units:</strong> Rate questions require units</p>
+          <p>✓ <strong>Test both points:</strong> Some curves have max AND min</p>
+          <p>✓ <strong>Second derivative saves time:</strong> Quicker than testing values</p>
+          <p>✓ <strong>Read carefully:</strong> "Rate of increase" vs "rate of decrease"</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">10. Integrate (1 + x)/x³ dx</div>
-          <div class="example-problem">
-Step 1: (1 + x)/x³ = x^{-3} + x^{-2}.<br>
-Step 2: ∫ x^{-3} dx = x^{-2}/(-2) = –1/(2x²).<br>
-Step 3: ∫ x^{-2} dx = x^{-1}/(-1) = –1/x.<br>
-Step 4: –1/(2x²) – 1/x + C.
-          </div>
-          <div class="example-solution">Answer: –1/(2x²) – 1/x + C</div>
+        <div class="shortcut-box">
+          <h4>⚡ Quick Reference: Nature of Points</h4>
+          <p>d²y/dx² > 0 → Minimum (valley) 📉</p>
+          <p>d²y/dx² < 0 → Maximum (peak) 📈</p>
+          <p>d²y/dx² = 0 → Point of inflection</p>
         </div>
 
-        <h2>(b) Area under the curve (simple cases only)</h2>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Integral_example.svg/800px-Integral_example.svg.png" alt="Graph showing integration as area under curve">
-
-        <h3>10 JAMB-style examples with full solutions</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Find the area bounded by y = x(2 – x), the x-axis, x = 0 and x = 2 (real JAMB).</div>
-          <div class="example-problem">
-Step 1: y = 2x – x².<br>
-Step 2: Area = ∫₀² (2x – x²) dx = [x² – (x³/3)]₀².<br>
-Step 3: At 2: 4 – (8/3) = 12/3 – 8/3 = 4/3.<br>
-Step 4: At 0: 0.<br>
-Step 5: Area = 4/3 sq units.
-          </div>
-          <div class="example-solution">Answer: 4/3 sq units</div>
+        <div class="checklist-box">
+          <h3>Pre-Exam Checklist:</h3>
+          <ul>
+            <li>Rate of change concept mastered</li>
+            <li>Chain rule for related rates</li>
+            <li>Finding stationary points (dy/dx = 0)</li>
+            <li>Second derivative test</li>
+            <li>Maximum point identification</li>
+            <li>Minimum point identification</li>
+            <li>Point of inflection recognition</li>
+            <li>Optimization problems ( fencing, boxes)</li>
+            <li>Units in final answers</li>
+            <li>Curve sketching applications</li>
+          </ul>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. Find the area under y = x² from x = 0 to x = 1.</div>
-          <div class="example-problem">
-Step 1: ∫₀¹ x² dx = [x³/3]₀¹ = (1/3) – 0 = 1/3 sq unit.
-          </div>
-          <div class="example-solution">Answer: 1/3 sq unit</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. Find the area under y = 4 – x² from x = –2 to x = 2 (symmetric).</div>
-          <div class="example-problem">
-Step 1: ∫₋₂² (4 – x²) dx = [4x – (x³/3)]₋₂².<br>
-Step 2: At 2: 8 – (8/3) = 24/3 – 8/3 = 16/3.<br>
-Step 3: At –2: –8 – (–8/3) = –24/3 + 8/3 = –16/3.<br>
-Step 4: 16/3 – (–16/3) = 32/3 sq units.
-          </div>
-          <div class="example-solution">Answer: 32/3 sq units</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. Area bounded by y = 2x, x-axis, x=1 to x=4.</div>
-          <div class="example-problem">
-Step 1: ∫₁⁴ 2x dx = [x²]₁⁴ = 16 – 1 = 15 sq units.
-          </div>
-          <div class="example-solution">Answer: 15 sq units</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. Area under y = sin x from 0 to π (above x-axis).</div>
-          <div class="example-problem">
-Step 1: ∫₀^π sin x dx = [–cos x]₀^π = (–cos π) – (–cos 0) = (–(–1)) – (–1) = 1 + 1 = 2 sq units.
-          </div>
-          <div class="example-solution">Answer: 2 sq units</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. Area under y = x³ from x=0 to x=2.</div>
-          <div class="example-problem">
-Step 1: ∫₀² x³ dx = [x⁴/4]₀² = (16/4) – 0 = 4 sq units.
-          </div>
-          <div class="example-solution">Answer: 4 sq units</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Find the area between y = x² + 1 and x-axis from x=0 to x=1 (always above).</div>
-          <div class="example-problem">
-Step 1: ∫₀¹ (x² + 1) dx = [x³/3 + x]₀¹ = (1/3 + 1) – 0 = 4/3 sq units.
-          </div>
-          <div class="example-solution">Answer: 4/3 sq units</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Area bounded by y = 3x – x² and x-axis (find limits first: roots at 0 and 3).</div>
-          <div class="example-problem">
-Step 1: Roots: 3x – x² = 0 → x(3 – x)=0 → x=0,3.<br>
-Step 2: ∫₀³ (3x – x²) dx = [(3/2)x² – (1/3)x³]₀³.<br>
-Step 3: At 3: (3/2)(9) – (1/3)(27) = 27/2 – 9 = 13.5 – 9 = 4.5 sq units.
-          </div>
-          <div class="example-solution">Answer: 4.5 sq units</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. Area under y = cos(2x) from 0 to π/4.</div>
-          <div class="example-problem">
-Step 1: ∫₀^{π/4} cos(2x) dx = [ (1/2) sin(2x) ]₀^{π/4}.<br>
-Step 2: At π/4: (1/2) sin(π/2) = (1/2)(1) = 1/2.<br>
-Step 3: At 0: (1/2) sin 0 = 0.<br>
-Step 4: 1/2 sq unit.
-          </div>
-          <div class="example-solution">Answer: 1/2 sq unit</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. Find the area bounded by y = 6x – x² and the x-axis.</div>
-          <div class="example-problem">
-Step 1: Roots: 6x – x² = 0 → x(6 – x)=0 → x=0,6.<br>
-Step 2: ∫₀⁶ (6x – x²) dx = [3x² – (1/3)x³]₀⁶.<br>
-Step 3: At 6: 3(36) – (1/3)(216) = 108 – 72 = 36 sq units.
-          </div>
-          <div class="example-solution">Answer: 36 sq units</div>
-        </div>
-
-        <p><strong>Quick Tips for JAMB Success</strong></p>
-        <ul>
-          <li>Always check if the curve is above the x-axis (positive area).</li>
-          <li>For (ax + b)ⁿ use substitution — it appears every year.</li>
-          <li>Definite integrals for area never need +C.</li>
-          <li>Practice writing the integral first, then antiderivative, then plug in limits.</li>
-          <li>Time yourself: these should take you less than 2 minutes each in the exam.</li>
-        </ul>
-
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          This is now the **complete Integration chapter** — all sections (a) to (b) fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Excellent! 🌟 You now master Applications of Differentiation!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Integration?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">High-yield topic: 2-3 questions per JAMB exam</p>
+        <button class="explore-btn" onclick="window.location.href='application-diff-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
