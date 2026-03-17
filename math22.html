@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Introduction to Probability</title>
+  <title>MATHEMATICS - Permutations & Combinations</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
-      --highlight-solution: #ff9800;                   /* orange for final answers */
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,197 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,24 +369,20 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
-    body.light .explore-btn {
-      color: #000;
-    }
-
-    /* Footer Nav Bar */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -272,342 +432,423 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .sigma {
+      font-family: 'Courier New', monospace;
+      color: var(--accent);
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Introduction to Probability</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Introduction to Probability for JAMB</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Permutations & Combinations! 🔢</h1>
+        <p class="subtitle">– JAMB Section V, Topic 4</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Introduction to Probability for JAMB</h2>
-        <p>Probability is a branch of mathematics that measures how likely an event is to happen. It ranges from 0 (impossible) to 1 (certain). For JAMB, focus on simple calculations using fractions, and understand key concepts like experimental probability and rules for combining probabilities.</p>
+        <h2>🔄 Permutations and Combinations</h2>
+        
+        <p>This chapter covers <span class="highlight">factorials, arrangements, and selections</span> - a high-yield topic that appears frequently in JAMB CBT exams.</p>
 
-        <h3>Step 1: Understanding Basic Terms</h3>
-        <p><strong>Sample Space:</strong> All possible outcomes of an experiment. E.g., for tossing a coin: {Heads, Tails} (2 outcomes).<br>
-<strong>Event:</strong> A specific outcome or set of outcomes you're interested in. E.g., getting Heads.<br>
-<strong>Favorable Outcomes:</strong> The outcomes that match the event.<br>
-<strong>Probability Formula (Theoretical):</strong> P(Event) = Number of favorable outcomes / Total number of possible outcomes (assuming all outcomes are equally likely).<br>
-Example: Probability of rolling a 6 on a fair die = 1 (favorable) / 6 (total) = 1/6.</p>
+        <div class="section-header">1️⃣ FACTORIAL NOTATION (!)</div>
 
-        <h2>(a) Experimental Probability</h2>
-        <p>Experimental probability is calculated from actual trials or experiments, not theory. It's an estimate that gets closer to the theoretical value with more trials.<br>
-<strong>Formula:</strong> P(Event) = Number of times the event occurs / Total number of trials.<br>
-<strong>Key Examples:</strong><br>
-Tossing a Coin: Suppose you toss a fair coin 20 times and get Heads 12 times. Experimental P(Heads) = 12/20 = 3/5 = 0.6. (Theoretical is 1/2 = 0.5; more tosses would make it closer.)<br>
-Throwing a Die: Roll a die 30 times. Suppose 1 appears 4 times, 2 appears 6 times, etc. Experimental P(Even number) = (times 2,4,6 appear) / 30.<br>
-In JAMB, you might get a table of results from trials and calculate from it. Remember: It's based on observed data, not assuming fairness unless stated.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Experimental_probability.svg/800px-Experimental_probability.svg.png" alt="Diagram showing experimental probability from coin toss trials">
-
-        <h3>10 JAMB-style examples for (a) with full step-by-step solutions</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1: Basic Experimental Probability (Die Rolls)</div>
-          <div class="example-problem">
-The result of rolling a fair die 150 times is summarized as follows (assume from a table: 1: 20 times, 2: 25, 3: 30, 4: 25, 5: 25, 6: 25). What is the experimental probability of obtaining a 5?<br>
-Step 1: Event = rolling a 5.<br>
-Step 2: Number of times 5 occurred = 25.<br>
-Step 3: Total trials = 150.<br>
-Step 4: P(5) = 25 / 150 = 1/6.
-          </div>
-          <div class="example-solution">Answer: 1/6</div>
+        <h2>Foundation Concept 🏗️</h2>
+        
+        <div class="formula-box">
+          <strong>Definition:</strong> n! = n × (n−1) × (n−2) × ... × 3 × 2 × 1<br>
+          <strong>Special Case:</strong> 0! = 1 (always remember!)<br><br>
+          
+          <strong>JAMB Shortcut:</strong> n! = n × (n−1)! — useful for simplifying
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2: Experimental Probability (Coin Toss)</div>
-          <div class="example-problem">
-A coin is tossed 50 times, and tails appears 28 times. What is the experimental probability of tails?<br>
-Step 1: Event = tails.<br>
-Step 2: Times occurred = 28.<br>
-Step 3: Total trials = 50.<br>
-Step 4: P(tails) = 28/50 = 14/25 = 0.56.
-          </div>
-          <div class="example-solution">Answer: 14/25</div>
+        <h3>🔢 Examples: Factorial Calculations</h3>
+        
+        <div class="calculation-box">
+          • 4! = 4 × 3 × 2 × 1 = <strong>24</strong><br>
+          • 5! = 5 × 4 × 3 × 2 × 1 = <strong>120</strong><br>
+          • 6! = <strong>720</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3: Experimental Probability (Marbles)</div>
-          <div class="example-problem">
-A bag has marbles drawn 100 times with replacement. Red appears 45 times. Experimental P(red)?<br>
-Step 1: Event = red.<br>
-Step 2: Occurred = 45.<br>
-Step 3: Trials = 100.<br>
-Step 4: P = 45/100 = 9/20 = 0.45.
-          </div>
-          <div class="example-solution">Answer: 9/20</div>
+        <div class="memory-aid">
+          💡 0! = 1 (This is a definition, not a calculation!)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4: Experimental Probability (Survey)</div>
-          <div class="example-problem">
-In a survey of 200 people, 120 like football. Experimental P(like football)?<br>
-Step 1: Event = like football.<br>
-Step 2: Occurred = 120.<br>
-Step 3: Trials = 200.<br>
-Step 4: P = 120/200 = 3/5 = 0.6.
-          </div>
-          <div class="example-solution">Answer: 3/5</div>
+        <div class="section-header">2️⃣ PERMUTATIONS (ORDER MATTERS)</div>
+
+        <h2>Linear Permutations 📏</h2>
+        
+        <div class="formula-box">
+          <strong>Formula:</strong> <sup>n</sup>P<sub>r</sub> = <span class="fraction"><span class="top">n!</span><span class="bottom">(n−r)!</span></span><br><br>
+          
+          Where:<br>
+          • n = total number of items<br>
+          • r = number of items being arranged<br>
+          • <strong>Order matters</strong> (AB is different from BA)<br><br>
+          
+          <strong>When to use:</strong> Arranging people in a line, forming numbers, letter arrangements, race positions
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5: Experimental Probability (Rain Days)</div>
-          <div class="example-problem">
-In 30 days, it rained 12 days. Experimental P(rain on a day)?<br>
-Step 1: Event = rain.<br>
-Step 2: Occurred = 12.<br>
-Step 3: Trials = 30.<br>
-Step 4: P = 12/30 = 2/5 = 0.4.
-          </div>
-          <div class="example-solution">Answer: 2/5</div>
+        <h3>🔢 Example 1: Linear Arrangement</h3>
+        <p>In how many ways can 5 students be arranged in a row of 3 seats?</p>
+        
+        <div class="calculation-box">
+          <sup>5</sup>P<sub>3</sub> = <span class="fraction"><span class="top">5!</span><span class="bottom">(5−3)!</span></span> = <span class="fraction"><span class="top">5!</span><span class="bottom">2!</span></span> = <span class="fraction"><span class="top">120</span><span class="bottom">2</span></span> = <strong>60 ways</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 6: Experimental Probability (Defective Items)</div>
-          <div class="example-problem">
-In 500 items tested, 25 are defective. Experimental P(defective)?<br>
-Step 1: Event = defective.<br>
-Step 2: Occurred = 25.<br>
-Step 3: Trials = 500.<br>
-Step 4: P = 25/500 = 1/20 = 0.05.
-          </div>
-          <div class="example-solution">Answer: 1/20</div>
+        <div class="answer-box">Answer: 60 ways</div>
+
+        <h3>🔢 Example 2: Number Formation</h3>
+        <p>How many 3-digit numbers can be formed from digits 2, 3, 4, 5, 6 without repetition?</p>
+        
+        <div class="calculation-box">
+          <sup>5</sup>P<sub>3</sub> = <span class="fraction"><span class="top">5!</span><span class="bottom">2!</span></span> = <strong>60 numbers</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 7: Experimental Probability (Cards)</div>
-          <div class="example-problem">
-A card is drawn 40 times with replacement from a deck. Hearts appear 9 times. P(hearts)?<br>
-Step 1: Event = hearts.<br>
-Step 2: Occurred = 9.<br>
-Step 3: Trials = 40.<br>
-Step 4: P = 9/40 = 0.225.
-          </div>
-          <div class="example-solution">Answer: 9/40</div>
+        <div class="answer-box">Answer: 60 numbers</div>
+
+        <h2>Circular Permutations 🔄</h2>
+        
+        <div class="formula-box">
+          <strong>Formula:</strong> (n−1)!<br><br>
+          
+          <strong>Key Concept:</strong> In a circle, there's no "first" position — arrangements are the same if they can be rotated into each other
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 8: Experimental Probability (Basketball Shots)</div>
-          <div class="example-problem">
-A player shoots 20 free throws, makes 14. Experimental P(make a shot)?<br>
-Step 1: Event = make shot.<br>
-Step 2: Occurred = 14.<br>
-Step 3: Trials = 20.<br>
-Step 4: P = 14/20 = 7/10 = 0.7.
-          </div>
-          <div class="example-solution">Answer: 7/10</div>
+        <h3>🔢 Example 3: Circular Table</h3>
+        <p>In how many ways can 6 people sit around a circular table?</p>
+        
+        <div class="calculation-box">
+          (6−1)! = 5! = 5 × 4 × 3 × 2 × 1 = <strong>120 ways</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 9: Experimental Probability (Traffic Lights)</div>
-          <div class="example-problem">
-A driver notes traffic light 100 times: green 60 times. P(green)?<br>
-Step 1: Event = green.<br>
-Step 2: Occurred = 60.<br>
-Step 3: Trials = 100.<br>
-Step 4: P = 60/100 = 3/5 = 0.6.
-          </div>
-          <div class="example-solution">Answer: 3/5</div>
+        <div class="answer-box">Answer: 120 ways</div>
+
+        <h2>Permutations with Repeated Objects 🔁</h2>
+        
+        <div class="formula-box">
+          <strong>Formula:</strong> <span class="fraction"><span class="top">n!</span><span class="bottom">n<sub>1</sub>! × n<sub>2</sub>! × n<sub>3</sub>! ...</span></span><br><br>
+          
+          Where n<sub>1</sub>, n<sub>2</sub>, n<sub>3</sub> are frequencies of identical objects
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 10: Experimental Probability (Survey Responses)</div>
-          <div class="example-problem">
-In 80 surveys, 32 say yes. Experimental P(yes)?<br>
-Step 1: Event = yes.<br>
-Step 2: Occurred = 32.<br>
-Step 3: Trials = 80.<br>
-Step 4: P = 32/80 = 2/5 = 0.4.
-          </div>
-          <div class="example-solution">Answer: 2/5</div>
+        <h3>🔢 Example 4: Repeated Letters</h3>
+        <p>How many ways can the letters of "BANANA" be arranged?</p>
+        
+        <div class="calculation-box">
+          • Total letters: 6<br>
+          • A appears 3 times, N appears 2 times, B appears 1 time<br><br>
+          
+          Number of ways = <span class="fraction"><span class="top">6!</span><span class="bottom">3! × 2! × 1!</span></span> = <span class="fraction"><span class="top">720</span><span class="bottom">6 × 2 × 1</span></span> = <span class="fraction"><span class="top">720</span><span class="bottom">12</span></span> = <strong>60 ways</strong>
         </div>
 
-        <h3>Step 3: Theoretical Probability</h3>
-        <p>This assumes equally likely outcomes (e.g., fair coin or die). Most JAMB questions use this.<br>
-Example: P(Tails on coin toss) = 1/2.<br>
-Example: P(Rolling an odd number on die) = 3/6 = 1/2 (1,3,5 are favorable).</p>
+        <div class="answer-box">Answer: 60 ways</div>
 
-        <h2>(b) Addition Rule for Probabilities – Mutually Exclusive Cases</h2>
-        <p>Use this for "or" scenarios. Mutually exclusive events cannot happen at the same time (e.g., rolling a 1 or a 2 on one die).<br>
-<strong>Formula:</strong> P(A or B) = P(A) + P(B).<br>
-If not mutually exclusive (e.g., drawing a red card or a king; king of hearts is both), use: P(A or B) = P(A) + P(B) - P(A and B).<br>
-Example: On a die, P(1 or 2) = 1/6 + 1/6 = 2/6 = 1/3 (mutually exclusive).<br>
-Example: P(Red card or King from deck) = 26/52 + 4/52 - 2/52 = 28/52 = 7/13 (subtract the 2 red kings).</p>
+        <div class="section-header">3️⃣ COMBINATIONS (ORDER DOESN'T MATTER)</div>
 
-        <h2>(b) Multiplication Rule for Probabilities – Independent Cases</h2>
-        <p>Use this for "and" scenarios. Independent events don't affect each other (e.g., coin toss and die roll).<br>
-<strong>Formula:</strong> P(A and B) = P(A) × P(B).<br>
-For more events: Multiply all.<br>
-Example: P(Heads on coin and 3 on die) = (1/2) × (1/6) = 1/12.<br>
-Example: P(Passing two independent exams, each with P=0.7) = 0.7 × 0.7 = 0.49.<br>
-If dependent (e.g., drawing cards without replacement), adjust: P(First ace and second ace) = (4/52) × (3/51).</p>
-
-        <h3>10 JAMB-style examples for (b) with full step-by-step solutions</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1: Theoretical Probability (Letter Selection)</div>
-          <div class="example-problem">
-The probability of picking a letter T from the word OBSTRUCTION is?<br>
-Step 1: Letters: O,B,S,T,R,U,C,T,I,O,N (11 total).<br>
-Step 2: T appears 2 times (favorable).<br>
-Step 3: P(T) = 2 / 11.
-          </div>
-          <div class="example-solution">Answer: 2/11</div>
+        <h2>Selection Problems 🎯</h2>
+        
+        <div class="formula-box">
+          <strong>Formula:</strong> <sup>n</sup>C<sub>r</sub> = <span class="fraction"><span class="top">n!</span><span class="bottom">r!(n−r)!</span></span><br><br>
+          
+          <strong>Key Difference:</strong> Order doesn't matter (AB is the SAME as BA)<br><br>
+          
+          <strong>When to use:</strong> Selecting teams, choosing committees, forming groups, handshakes
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2: Multiplication (Independent Events - Coins)</div>
-          <div class="example-problem">
-If three unbiased coins are tossed, find the probability that they are all heads.<br>
-Step 1: P(Heads on one coin) = 1/2.<br>
-Step 2: Independent, so P(all heads) = (1/2) × (1/2) × (1/2) = 1/8.<br>
-Step 3: (Total outcomes 8, favorable HHH = 1).
-          </div>
-          <div class="example-solution">Answer: 1/8</div>
+        <h3>🔢 Example 5: Committee Selection</h3>
+        <p>In how many ways can a committee of 3 be chosen from 10 people?</p>
+        
+        <div class="calculation-box">
+          <sup>10</sup>C<sub>3</sub> = <span class="fraction"><span class="top">10!</span><span class="bottom">3! × 7!</span></span> = <span class="fraction"><span class="top">10 × 9 × 8</span><span class="bottom">3 × 2 × 1</span></span> = <span class="fraction"><span class="top">720</span><span class="bottom">6</span></span> = <strong>120 ways</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3: Multiplication (Independent Events - Exams)</div>
-          <div class="example-problem">
-The probability of a student passing any examination is 2/3. If the student takes three examinations, what is the probability that he will not pass any of them?<br>
-Step 1: P(Pass) = 2/3, P(Fail) = 1/3.<br>
-Step 2: Independent, P(Fail all) = (1/3) × (1/3) × (1/3) = 1/27.
-          </div>
-          <div class="example-solution">Answer: 1/27</div>
+        <div class="answer-box">Answer: 120 ways</div>
+
+        <h3>🔢 Example 6: Mixed Selection</h3>
+        <p>A team of 4 players is selected from 7 boys and 5 girls. How many ways if 2 must be boys and 2 must be girls?</p>
+        
+        <div class="calculation-box">
+          Ways to choose 2 boys from 7: <sup>7</sup>C<sub>2</sub> = <span class="fraction"><span class="top">7 × 6</span><span class="bottom">2 × 1</span></span> = <strong>21</strong><br>
+          Ways to choose 2 girls from 5: <sup>5</sup>C<sub>2</sub> = <span class="fraction"><span class="top">5 × 4</span><span class="bottom">2 × 1</span></span> = <strong>10</strong><br><br>
+          
+          Total ways = 21 × 10 = <strong>210 ways</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4: Basic Probability (Bottles)</div>
-          <div class="example-problem">
-A crate of soft drinks contains 10 bottles of Coca-Cola, 8 of Fanta, and 6 of Sprite. If one bottle is selected at random, what is the probability that it is NOT a Coca-Cola bottle?<br>
-Step 1: Total = 10+8+6=24.<br>
-Step 2: Non-Coca = 8+6=14.<br>
-Step 3: P = 14/24 = 7/12.
-          </div>
-          <div class="example-solution">Answer: 7/12</div>
+        <div class="answer-box">Answer: 210 ways</div>
+
+        <div class="section-header">4️⃣ PERMUTATION vs COMBINATION</div>
+
+        <h2>Complete Comparison Table 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Aspect</th>
+              <th>PERMUTATION</th>
+              <th>COMBINATION</th>
+            </tr>
+            <tr>
+              <td>Key Question</td>
+              <td>"In how many ways can we ARRANGE...?"</td>
+              <td>"In how many ways can we SELECT...?"</td>
+            </tr>
+            <tr>
+              <td>Order</td>
+              <td>Matters (AB ≠ BA)</td>
+              <td>Does NOT matter (AB = BA)</td>
+            </tr>
+            <tr>
+              <td>Formula</td>
+              <td><sup>n</sup>P<sub>r</sub> = <span class="fraction"><span class="top">n!</span><span class="bottom">(n−r)!</span></span></td>
+              <td><sup>n</sup>C<sub>r</sub> = <span class="fraction"><span class="top">n!</span><span class="bottom">r!(n−r)!</span></span></td>
+            </tr>
+            <tr>
+              <td>Memory Trick</td>
+              <td>"P for Position/Place"</td>
+              <td>"C for Choose/Committee"</td>
+            </tr>
+            <tr>
+              <td>Real-life</td>
+              <td>Race positions, passwords, queue</td>
+              <td>Teams, committees, handshakes</td>
+            </tr>
+            <tr>
+              <td>Value</td>
+              <td>Always ≥ Combination</td>
+              <td>Always ≤ Permutation</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5: Addition and Multiplication (Combined Events)</div>
-          <div class="example-problem">
-The probability of outcome A is 1/6. The probability of outcome B is 1/4. If the probability of A or B or both is 1/12, what is the probability of both A and B?<br>
-Step 1: P(A or B) = P(A) + P(B) - P(A and B).<br>
-Step 2: 1/12 = 1/6 + 1/4 - P(A and B).<br>
-Step 3: 1/6 = 2/12, 1/4 = 3/12, sum = 5/12.<br>
-Step 4: 1/12 = 5/12 - P(A and B) → P(A and B) = 5/12 - 1/12 = 4/12 = 1/3.
-          </div>
-          <div class="example-solution">Answer: 1/3</div>
+        <div class="memory-aid">
+          💡 Permutation = Combination × r! or Combination = Permutation ÷ r!
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 6: Dice (Sum Probability)</div>
-          <div class="example-problem">
-A die is rolled twice. What is the probability of getting a sum equal to 9?<br>
-Step 1: Total outcomes = 6×6=36.<br>
-Step 2: Favorable: (3,6), (4,5), (5,4), (6,3) = 4.<br>
-Step 3: P = 4/36 = 1/9.
-          </div>
-          <div class="example-solution">Answer: 1/9</div>
+        <div class="section-header">5️⃣ JAMB EXAM TIPS & TRAPS</div>
+
+        <h2>How to Identify Which to Use 🎯</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Keywords in Question</th>
+              <th>Use</th>
+            </tr>
+            <tr>
+              <td>Arrange, order, line up, rank, position, queue, different patterns</td>
+              <td><strong>PERMUTATION</strong></td>
+            </tr>
+            <tr>
+              <td>Select, choose, pick, committee, team, group, handshake</td>
+              <td><strong>COMBINATION</strong></td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 7: Without Replacement (Dependent - Balls)</div>
-          <div class="example-problem">
-A bag contains 2 yellow, 3 green, and 2 blue balls. Two balls are drawn at random without replacement. What is the probability that none of the balls drawn is blue?<br>
-Step 1: Total = 7, non-blue = 5.<br>
-Step 2: Use combinations: C(7,2) = 21 total ways.<br>
-Step 3: C(5,2) = 10 favorable.<br>
-Step 4: P = 10/21.
-          </div>
-          <div class="example-solution">Answer: 10/21</div>
+        <h3>🔢 Example 7: JAMB-Style Problem (Committee)</h3>
+        <p>A committee of 5 from 6 men and 4 women. Find committees if:</p>
+        <p>(a) no restrictions (b) exactly 2 women (c) at least 3 men</p>
+        
+        <div class="calculation-box">
+          <strong>(a) No restrictions:</strong><br>
+          <sup>10</sup>C<sub>5</sub> = <span class="fraction"><span class="top">10!</span><span class="bottom">5!5!</span></span> = <strong>252 committees</strong><br><br>
+          
+          <strong>(b) Exactly 2 women (so 3 men):</strong><br>
+          <sup>6</sup>C<sub>3</sub> × <sup>4</sup>C<sub>2</sub> = 20 × 6 = <strong>120 committees</strong><br><br>
+          
+          <strong>(c) At least 3 men:</strong><br>
+          • Case 1: 3 men, 2 women → <sup>6</sup>C<sub>3</sub> × <sup>4</sup>C<sub>2</sub> = 20 × 6 = 120<br>
+          • Case 2: 4 men, 1 woman → <sup>6</sup>C<sub>4</sub> × <sup>4</sup>C<sub>1</sub> = 15 × 4 = 60<br>
+          • Case 3: 5 men, 0 women → <sup>6</sup>C<sub>5</sub> × <sup>4</sup>C<sub>0</sub> = 6 × 1 = 6<br>
+          <strong>Total: 120 + 60 + 6 = 186 committees</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 8: Multiplication (Independent - Subjects)</div>
-          <div class="example-problem">
-Amamath appears in an exam that has 4 subjects. The chance he passes an individual subject’s test is 0.8. What is the probability that he will pass in all the subjects?<br>
-Step 1: P(pass one) = 0.8.<br>
-Step 2: Independent, P(all) = 0.8^4.<br>
-Step 3: 0.8^2 = 0.64, 0.64^2 = 0.4096.
-          </div>
-          <div class="example-solution">Answer: 0.4096</div>
+        <div class="answer-box">Answers: (a) 252 (b) 120 (c) 186</div>
+
+        <div class="section-header">📋 QUICK REFERENCE FORMULAS</div>
+
+        <h2>All Formulas at a Glance 📚</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Formula</th>
+              <th>When to Apply</th>
+            </tr>
+            <tr>
+              <td>n!</td>
+              <td>Basic factorial calculations</td>
+            </tr>
+            <tr>
+              <td><sup>n</sup>P<sub>n</sub> = n!</td>
+              <td>Arranging all n items linearly</td>
+            </tr>
+            <tr>
+              <td><sup>n</sup>P<sub>r</sub> = <span class="fraction"><span class="top">n!</span><span class="bottom">(n−r)!</span></span></td>
+              <td>Arranging r items from n (linear)</td>
+            </tr>
+            <tr>
+              <td>(n−1)!</td>
+              <td>Circular arrangements of n distinct items</td>
+            </tr>
+            <tr>
+              <td><span class="fraction"><span class="top">n!</span><span class="bottom">n<sub>1</sub>!n<sub>2</sub>!...</span></span></td>
+              <td>Arrangements with repeated identical items</td>
+            </tr>
+            <tr>
+              <td><sup>n</sup>C<sub>r</sub> = <span class="fraction"><span class="top">n!</span><span class="bottom">r!(n−r)!</span></span></td>
+              <td>Selecting r items from n (order irrelevant)</td>
+            </tr>
+            <tr>
+              <td><sup>n</sup>C<sub>r</sub> = <sup>n</sup>C<sub>n−r</sub></td>
+              <td>Complementary combination property</td>
+            </tr>
+            <tr>
+              <td><sup>n</sup>C<sub>0</sub> = <sup>n</sup>C<sub>n</sub> = 1</td>
+              <td>Boundary cases</td>
+            </tr>
+            <tr>
+              <td><sup>n</sup>C<sub>1</sub> = n</td>
+              <td>Selecting 1 from n</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 9: Basic Prime Numbers</div>
-          <div class="example-problem">
-What is the probability of selecting a prime number from 1,2,3,...,10?<br>
-Step 1: Total = 10.<br>
-Step 2: Primes: 2,3,5,7 (4 primes; 1 not prime).<br>
-Step 3: P = 4/10 = 2/5.
-          </div>
-          <div class="example-solution">Answer: 2/5</div>
+        <div class="shortcut-box">
+          <h4>⚡ Common JAMB Patterns</h4>
+          <p><strong>"At least" or "At most":</strong> Use complementary counting or case-by-case addition</p>
+          <p><strong>Restrictions:</strong> Treat restricted items as one unit, then arrange internally</p>
+          <p><strong>Mixed selection:</strong> Multiply combinations for different categories</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 10: Cards (Mutually Exclusive Addition)</div>
-          <div class="example-problem">
-Probability of drawing a spade or club from a deck of 52 cards?<br>
-Step 1: P(spade) = 13/52 = 1/4.<br>
-Step 2: P(club) = 13/52 = 1/4.<br>
-Step 3: Mutually exclusive (no overlap).<br>
-Step 4: P = 1/4 + 1/4 = 1/2.
-          </div>
-          <div class="example-solution">Answer: 1/2</div>
+        <div class="practice-box">
+          <p><strong>✏️ PRACTICE QUESTIONS (JAMB Standard):</strong></p>
+          <p style="margin-top: 8px;"><strong>Q1:</strong> How many ways can "MATHEMATICS" be arranged?</p>
+          <p style="margin-top: 8px;"><strong>Q2:</strong> 8 people around a table, 2 particular people must sit together?</p>
+          <p style="margin-top: 8px;"><strong>Q3:</strong> Principal and vice-principal from 12 teachers?</p>
+          <p style="margin-top: 8px;"><strong>Q4:</strong> Selecting 4 books from 7 different books?</p>
+          <p style="margin-top: 8px; color: var(--accent); font-weight: bold;">Answers: (1) 11!/(2!2!2!) (2) 2×6! (3) <sup>12</sup>P<sub>2</sub>=132 (4) <sup>7</sup>C<sub>4</sub>=35</p>
         </div>
 
-        <h3>Step 6: Tips for Solving JAMB Problems</h3>
-        <ul>
-          <li>Identify if events are mutually exclusive (for addition) or independent (for multiplication).</li>
-          <li>Use combinations (C(n,r)) for selecting items without order, e.g., drawing balls.</li>
-          <li>Practice with coins, dice, cards, and bags of items.</li>
-          <li>Always simplify fractions.</li>
-          <li>For "at least one," use 1 - P(none).</li>
-        </ul>
+        <div class="tips-box">
+          <h3>🎯 JAMB EXAM TIPS</h3>
+          <p>1. <strong>Master the distinction:</strong> Permutation (order matters) vs Combination (order doesn't)</p>
+          <p>2. <strong>Identify keywords quickly:</strong> "Arrange" = Permutation, "Select" = Combination</p>
+          <p>3. <strong>0! = 1:</strong> Always remember this special case</p>
+          <p>4. <strong>Simplify factorials:</strong> Cancel common terms before calculating</p>
+          <p>5. <strong>Circular arrangements:</strong> Always (n−1)!, not n!</p>
+          <p>6. <strong>Repeated objects:</strong> Divide by factorials of identical items</p>
+          <p>7. <strong>Mixed problems:</strong> Multiply separate selections</p>
+        </div>
 
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          This is now the **complete Introduction to Probability chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <div class="warning-box">
+          <strong>⚠️ Common Traps:</strong>
+          <p>• Using permutation when combination is needed (and vice versa)</p>
+          <p>• Forgetting that AB and BA are different in permutations</p>
+          <p>• Not dividing by factorials for repeated items</p>
+          <p>• Using n! instead of (n−1)! for circular arrangements</p>
+          <p>• Missing "at least" or "at most" conditions in questions</p>
+        </div>
+
+        <div class="checklist-box">
+          <h3>Pre-Exam Checklist:</h3>
+          <ul>
+            <li>Factorial notation (n!)</li>
+            <li>0! = 1 (special case)</li>
+            <li>Linear permutations (<sup>n</sup>P<sub>r</sub>)</li>
+            <li>Circular permutations ((n−1)!)</li>
+            <li>Permutations with repeated objects</li>
+            <li>Combinations (<sup>n</sup>C<sub>r</sub>)</li>
+            <li>Relationship: Perm = Comb × r!</li>
+            <li>Keyword identification</li>
+            <li>Mixed selection problems</li>
+            <li>"At least/at most" strategies</li>
+            <li>Complementary counting</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Excellent! 🌟 You now master Permutations & Combinations!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Introduction to Probability?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Probability & Statistics</p>
+        <button class="explore-btn" onclick="window.location.href='permutations-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
