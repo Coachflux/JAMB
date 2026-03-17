@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Permutation and Combination</title>
+  <title>MATHEMATICS - Measures of Dispersion</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
-      --highlight-solution: #ff9800;                   /* orange for final answers */
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,197 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,24 +369,20 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
-    body.light .explore-btn {
-      color: #000;
-    }
-
-    /* Footer Nav Bar */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -272,297 +432,477 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .sigma {
+      font-family: 'Courier New', monospace;
+      color: var(--accent);
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Permutation and Combination</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Permutation and Combination: Super Easy Guide for JAMB</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Measures of Dispersion! 📏</h1>
+        <p class="subtitle">– JAMB Chapter 21</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Permutation and Combination: Super Easy Guide for JAMB</h2>
-        <p>I will teach this topic in very simple English with everyday examples, formulas, and clear steps. Then I will give exactly 10 JAMB-style examples for (a) and 10 for (b), each with full solution and the correct option.</p>
+        <h2>📏 Chapter 21: Measures of Dispersion</h2>
+        
+        <p>This chapter covers <span class="highlight">range, mean deviation, variance, standard deviation, and coefficient of variation</span> - essential statistics describing how spread out data values are from the center.</p>
 
-        <h3>Quick Basics (Understand in 2 minutes)</h3>
-        <p><strong>Permutation (P) = Arrangement → Order matters.</strong><br>
-Example: Who sits on seat 1, seat 2, seat 3? Different order = different arrangement.<br>
-<strong>Formula:</strong> ⁿPᵣ = n! / (n-r)!  or simply n × (n-1) × … × (n-r+1)</p>
-        <p><strong>Combination (C) = Selection → Order does NOT matter.</strong><br>
-Example: Choosing 3 friends to form a group (ABC is same as BCA).<br>
-<strong>Formula:</strong> ⁿCᵣ = n! / [r! (n-r)!]</p>
-        <p><strong>Factorial (!) reminder</strong></p>
-        <ul>
-          <li>3! = 3×2×1 = 6</li>
-          <li>4! = 24</li>
-          <li>5! = 120</li>
-          <li>6! = 720</li>
-          <li>7! = 5040</li>
-          <li>8! = 40320</li>
-          <li>9! = 362880</li>
-          <li>10! = 3,628,800</li>
-        </ul>
-        <p>Now let’s go to the exact syllabus parts.</p>
+        <div class="section-header">1️⃣ TYPES OF MEASURES OF DISPERSION</div>
 
-        <h2>(a) Linear and Circular Arrangements</h2>
-        <p><strong>Linear arrangement = Straight line or row (order matters, positions are different).</strong><br>
-n distinct objects → n! ways<br>
-Selecting & arranging r out of n → ⁿPᵣ</p>
-        <p><strong>Circular arrangement = Round table or circle.</strong><br>
-Rotations look the same (turning the table does not create a new arrangement).<br>
-So we fix one person’s position and arrange the rest → (n-1)! ways.</p>
-        <p>(The pictures above show why circular uses (n-1)! — the round table makes rotations identical.)</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Linear_circular_arrangements.svg/800px-Linear_circular_arrangements.svg.png" alt="Diagram showing linear vs circular arrangements of objects">
-
-        <h3>10 JAMB-Style Examples for (a) Linear and Circular Arrangements</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. In how many ways can 9 people be seated if only 3 chairs are available? (JAMB 2009 style)</div>
-          <div class="example-problem">
-Step 1: Linear arrangement (row of chairs).<br>
-Step 2: Select and arrange 3 out of 9.<br>
-Step 3: ⁹P₃ = 9! / (9-3)! = 9 × 8 × 7 = 504.
-          </div>
-          <div class="example-solution">Answer: 504</div>
+        <h2>A. Range 📐</h2>
+        
+        <div class="formula-box">
+          <strong>Definition:</strong> Simplest measure - difference between highest and lowest values<br>
+          <strong>Formula:</strong> Range = Highest Value − Lowest Value
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. Six students are to sit in a row for a photograph. In how many ways can they be arranged?</div>
-          <div class="example-problem">
-Step 1: Linear arrangement.<br>
-Step 2: All 6 distinct students.<br>
-Step 3: 6! = 720.
-          </div>
-          <div class="example-solution">Answer: 720</div>
+        <h3>🔢 Example 1: Range</h3>
+        <p>Find the range of: 12, 18, 25, 30, 15, 22, 28</p>
+        
+        <div class="calculation-box">
+          Highest = 30, Lowest = 12<br>
+          Range = 30 − 12 = <strong>18</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">3. In how many ways can 4 different books be arranged on a shelf?</div>
-          <div class="example-problem">
-Step 1: Linear arrangement.<br>
-Step 2: 4 distinct books.<br>
-Step 3: 4! = 24.
-          </div>
-          <div class="example-solution">Answer: 24</div>
+        <div class="answer-box">Answer: Range = 18</div>
+
+        <div class="memory-aid">
+          💡 Range = Max − Min (simplest but affected by extreme values)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">4. In how many ways can the letters of the word “JAMB” be arranged in a line?</div>
-          <div class="example-problem">
-Step 1: Linear arrangement.<br>
-Step 2: 4 distinct letters (J,A,M,B).<br>
-Step 3: 4! = 24.
-          </div>
-          <div class="example-solution">Answer: 24</div>
+        <h2>B. Mean Deviation (Average Deviation) 📊</h2>
+        
+        <div class="formula-box">
+          <strong>Definition:</strong> Average distance of each data point from the mean<br>
+          <strong>Formula:</strong> Mean Deviation = <span class="fraction"><span class="top"><span class="sigma">∑</span>|x − x̄|</span><span class="bottom">n</span></span><br><br>
+          
+          Where:<br>
+          • x = each data value<br>
+          • x̄ = mean<br>
+          • n = number of values<br>
+          • |...| = absolute value (always positive)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">5. From 10 students, 5 are to be chosen and arranged in a line for a debate. How many ways?</div>
-          <div class="example-problem">
-Step 1: Linear arrangement.<br>
-Step 2: Select and arrange 5 out of 10.<br>
-Step 3: ¹⁰P₅ = 10 × 9 × 8 × 7 × 6 = 30,240.
-          </div>
-          <div class="example-solution">Answer: 30,240</div>
+        <h3>🔢 Example 2: Mean Deviation</h3>
+        <p>Find the mean deviation of: 5, 8, 12, 15, 10</p>
+        
+        <div class="calculation-box">
+          <strong>Step 1:</strong> Calculate the mean<br>
+          x̄ = <span class="fraction"><span class="top">5 + 8 + 12 + 15 + 10</span><span class="bottom">5</span></span> = <span class="fraction"><span class="top">50</span><span class="bottom">5</span></span> = <strong>10</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">6. In how many ways can 6 people sit around a circular table? (JAMB 2024 real question)</div>
-          <div class="example-problem">
-Step 1: Circular arrangement.<br>
-Step 2: Fix one position to account for rotations.<br>
-Step 3: (6-1)! = 5! = 120.
-          </div>
-          <div class="example-solution">Answer: 120</div>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>x</th>
+              <th>x − x̄</th>
+              <th>|x − x̄|</th>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>5 − 10 = −5</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>8 − 10 = −2</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>12 − 10 = 2</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td>15 − 10 = 5</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>10 − 10 = 0</td>
+              <td>0</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">7. Five friends are sitting around a round table. In how many ways can they be seated?</div>
-          <div class="example-problem">
-Step 1: Circular arrangement.<br>
-Step 2: (5-1)! = 4! = 24.
-          </div>
-          <div class="example-solution">Answer: 24</div>
+        <div class="calculation-box">
+          <strong>Step 2:</strong> Sum of absolute deviations = 5 + 2 + 2 + 5 + 0 = <strong>14</strong><br><br>
+          
+          <strong>Step 3:</strong> Mean Deviation = <span class="fraction"><span class="top">14</span><span class="bottom">5</span></span> = <strong>2.8</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">8. In how many ways can 7 beads be arranged on a circular necklace (rotations same)?</div>
-          <div class="example-problem">
-Step 1: Circular arrangement.<br>
-Step 2: (7-1)! = 6! = 720.<br>
-(Note: JAMB usually does not divide by 2 unless flipping is mentioned.)
-          </div>
-          <div class="example-solution">Answer: 720</div>
+        <div class="answer-box">Answer: Mean Deviation = 2.8</div>
+
+        <h2>C. Variance 📈</h2>
+        
+        <div class="formula-box">
+          <strong>Definition:</strong> Average of the squared deviations from the mean<br>
+          <strong>Formula:</strong> Variance (σ²) = <span class="fraction"><span class="top"><span class="sigma">∑</span>(x − x̄)²</span><span class="bottom">n</span></span>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">9. Four couples (8 people) sit around a circular table. In how many ways if rotations are considered the same?</div>
-          <div class="example-problem">
-Step 1: Circular arrangement.<br>
-Step 2: (8-1)! = 7! = 5040.
-          </div>
-          <div class="example-solution">Answer: 5040</div>
+        <h3>🔢 Example 3: Variance</h3>
+        <p>Find the variance of: 4, 6, 8, 10, 12</p>
+        
+        <div class="calculation-box">
+          <strong>Step 1:</strong> Calculate the mean<br>
+          x̄ = <span class="fraction"><span class="top">4 + 6 + 8 + 10 + 12</span><span class="bottom">5</span></span> = <span class="fraction"><span class="top">40</span><span class="bottom">5</span></span> = <strong>8</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">10. How many different circular arrangements are possible for 3 distinct keys on a key ring?</div>
-          <div class="example-problem">
-Step 1: Circular arrangement.<br>
-Step 2: (3-1)! = 2! = 2.
-          </div>
-          <div class="example-solution">Answer: 2</div>
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>x</th>
+              <th>(x − x̄)</th>
+              <th>(x − x̄)²</th>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>4 − 8 = −4</td>
+              <td>16</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>6 − 8 = −2</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>8 − 8 = 0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>10 − 8 = 2</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>12 − 8 = 4</td>
+              <td>16</td>
+            </tr>
+          </table>
         </div>
 
-        <h2>(b) Arrangements Involving Repeated Objects</h2>
-        <p>When some objects/letters are identical, we divide by the factorial of the number of repeats to avoid counting identical arrangements multiple times.<br>
-<strong>Formula for distinct arrangements of n objects where some are repeated:</strong><br>
-n! / (k₁! × k₂! × … × kₘ!)<br>
-where k₁, k₂ … are the frequencies of each repeated item.</p>
-
-        <h3>10 JAMB-Style Examples for (b) Arrangements with Repeated Objects</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. In how many ways can the letters of the word ACCEPTANCE be arranged? (JAMB 2008 real)</div>
-          <div class="example-problem">
-Step 1: 10 letters: A×2, C×3, E×2, N×1, P×1, T×1.<br>
-Step 2: Total arrangements = 10! / (2! × 3! × 2!) = 3628800 / (2 × 6 × 2) = 3628800 / 24 = 151200.
-          </div>
-          <div class="example-solution">Answer: 151200</div>
+        <div class="calculation-box">
+          <strong>Step 2:</strong> Sum of squared deviations = 16 + 4 + 0 + 4 + 16 = <strong>40</strong><br><br>
+          
+          <strong>Step 3:</strong> Variance = <span class="fraction"><span class="top">40</span><span class="bottom">5</span></span> = <strong>8</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. In how many ways can the letters of the word ZOOLOGY be arranged? (JAMB 2022 real)</div>
-          <div class="example-problem">
-Step 1: 7 letters: Z×1, O×3, L×1, G×1, Y×1.<br>
-Step 2: 7! / 3! = 5040 / 6 = 840.
-          </div>
-          <div class="example-solution">Answer: 840</div>
+        <div class="answer-box">Answer: Variance = 8</div>
+
+        <h2>D. Standard Deviation 📉</h2>
+        
+        <div class="formula-box">
+          <strong>Definition:</strong> Square root of variance - most commonly used measure<br>
+          <strong>Returns to original units of measurement</strong><br>
+          <strong>Formula:</strong> σ = <span class="sigma">√</span>Variance = <span class="sigma">√</span><span class="fraction"><span class="top"><span class="sigma">∑</span>(x − x̄)²</span><span class="bottom">n</span></span>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">3. How many different 8-letter words are possible using the letters of the word SYLLABUS? (JAMB 2023 real)</div>
-          <div class="example-problem">
-Step 1: 8 letters: S×2, Y×1, L×2, A×1, B×1, U×1.<br>
-Step 2: 8! / (2! × 2!) = 40320 / 4 = 10080.
-          </div>
-          <div class="example-solution">Answer: 10080</div>
+        <h3>🔢 Example 4: Standard Deviation</h3>
+        <p>Continuing from Example 3 (Variance = 8):</p>
+        
+        <div class="calculation-box">
+          σ = <span class="sigma">√</span>8 ≈ <strong>2.83</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">4. Find the number of permutations of the letters of the word SCHOOL. (JAMB 2025 real)</div>
-          <div class="example-problem">
-Step 1: 6 letters: S×1, C×1, H×1, O×2, L×1.<br>
-Step 2: 6! / 2! = 720 / 2 = 360.
-          </div>
-          <div class="example-solution">Answer: 360</div>
+        <div class="answer-box">Answer: Standard Deviation ≈ 2.83</div>
+
+        <div class="memory-aid">
+          💡 Standard Deviation = √Variance (most reliable measure of spread)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">5. The word HANDIER can be arranged in how many distinct ways? (JAMB 2025 real)</div>
-          <div class="example-problem">
-Step 1: 7 letters: H×1, A×1, N×1, D×1, I×1, E×1, R×1 (all distinct).<br>
-Step 2: 7! = 5040.
-          </div>
-          <div class="example-solution">Answer: 5040</div>
+        <h2>E. Coefficient of Variation 📊</h2>
+        
+        <div class="formula-box">
+          <strong>Definition:</strong> Relative measure to compare dispersion of different datasets<br>
+          <strong>Formula:</strong> CV = <span class="fraction"><span class="top">σ</span><span class="bottom">x̄</span></span> × 100%
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">6. In how many ways can the letters of MATHEMATICS be arranged?</div>
-          <div class="example-problem">
-Step 1: 11 letters: M×2, A×2, T×2, H×1, E×1, I×1, C×1, S×1.<br>
-Step 2: 11! / (2! × 2! × 2!) = 39916800 / 8 = 4989600.
-          </div>
-          <div class="example-solution">Answer: 4989600</div>
+        <div class="section-header">2️⃣ FORMULAS FOR GROUPED DATA</div>
+
+        <h2>Frequency Distribution Tables 📋</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Measure</th>
+              <th>Formula</th>
+            </tr>
+            <tr>
+              <td>Mean</td>
+              <td>x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span>fx</span><span class="bottom"><span class="sigma">∑</span>f</span></span></td>
+            </tr>
+            <tr>
+              <td>Variance</td>
+              <td>σ² = <span class="fraction"><span class="top"><span class="sigma">∑</span>fx²</span><span class="bottom"><span class="sigma">∑</span>f</span></span> − x̄²</td>
+            </tr>
+            <tr>
+              <td>Standard Deviation</td>
+              <td>σ = <span class="sigma">√</span>(<span class="fraction"><span class="top"><span class="sigma">∑</span>fx²</span><span class="bottom"><span class="sigma">∑</span>f</span></span> − x̄²)</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">7. How many distinct arrangements of the letters in MISSISSIPPI?</div>
-          <div class="example-problem">
-Step 1: 11 letters: M×1, I×4, S×4, P×2.<br>
-Step 2: 11! / (4! × 4! × 2!) = 39916800 / (24 × 24 × 2) = 39916800 / 1152 = 34650.
-          </div>
-          <div class="example-solution">Answer: 34650</div>
+        <div class="component-box">
+          <h4>Where:</h4>
+          <p>• f = frequency</p>
+          <p>• x = midpoint of each class interval</p>
+          <p>• fx = frequency × midpoint</p>
+          <p>• fx² = frequency × (midpoint)²</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">8. The letters of the word BOOK are arranged. How many distinct words?</div>
-          <div class="example-problem">
-Step 1: 4 letters: B×1, O×2, K×1.<br>
-Step 2: 4! / 2! = 24 / 2 = 12.
-          </div>
-          <div class="example-solution">Answer: 12</div>
+        <div class="section-header">3️⃣ WORKED EXAMPLE: GROUPED DATA</div>
+
+        <h3>🔢 Example 5: Mean & Standard Deviation (Grouped)</h3>
+        <p>Calculate the mean and standard deviation:</p>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Class Interval</th>
+              <th>Frequency (f)</th>
+            </tr>
+            <tr>
+              <td>10-14</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>15-19</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>20-24</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>25-29</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>30-34</td>
+              <td>1</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">9. In how many ways can the letters of COMMITTEE be arranged?</div>
-          <div class="example-problem">
-Step 1: 9 letters: C×1, O×1, M×2, I×1, T×2, E×2.<br>
-Step 2: 9! / (2! × 2! × 2!) = 362880 / 8 = 45360.
-          </div>
-          <div class="example-solution">Answer: 45360</div>
+        <div class="calculation-box">
+          <strong>Step 1:</strong> Complete the calculation table<br><br>
+          
+          Class | f | Midpoint (x) | fx | x² | fx²<br>
+          ------+---+--------------+----+----+-----<br>
+          10-14 | 2 | 12 | 24 | 144 | 288<br>
+          15-19 | 5 | 17 | 85 | 289 | 1445<br>
+          20-24 | 8 | 22 | 176 | 484 | 3872<br>
+          25-29 | 4 | 27 | 108 | 729 | 2916<br>
+          30-34 | 1 | 32 | 32 | 1024 | 1024<br>
+          ------+---+--------------+----+----+-----<br>
+          <strong>Total</strong> | <strong>20</strong> | | <strong>425</strong> | | <strong>9545</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">10. How many different arrangements can be made with the letters of the word BANANA?</div>
-          <div class="example-problem">
-Step 1: 6 letters: B×1, A×3, N×2.<br>
-Step 2: 6! / (3! × 2!) = 720 / (6 × 2) = 720 / 12 = 60.
-          </div>
-          <div class="example-solution">Answer: 60</div>
+        <div class="calculation-box">
+          <strong>Step 2:</strong> Calculate Mean<br>
+          x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span>fx</span><span class="bottom"><span class="sigma">∑</span>f</span></span> = <span class="fraction"><span class="top">425</span><span class="bottom">20</span></span> = <strong>21.25</strong>
         </div>
 
-        <p><strong>Final Tips for JAMB</strong></p>
-        <ul>
-          <li>Read the question carefully: “arranged in a line/row” → linear (n!).</li>
-          <li>“around a table / circular” → (n-1)!.</li>
-          <li>Repeated letters → always divide by the factorials of repeats.</li>
-          <li>If it says “select” without order → use Combination.</li>
-          <li>Practice calculating factorials fast (or use calculator in CBT).</li>
-        </ul>
+        <div class="calculation-box">
+          <strong>Step 3:</strong> Calculate Variance<br>
+          σ² = <span class="fraction"><span class="top"><span class="sigma">∑</span>fx²</span><span class="bottom"><span class="sigma">∑</span>f</span></span> − x̄²<br>
+             = <span class="fraction"><span class="top">9545</span><span class="bottom">20</span></span> − (21.25)²<br>
+             = 477.25 − 451.5625<br>
+             = <strong>25.6875</strong>
+        </div>
 
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          This is now the **complete Permutation and Combination chapter** — all sections (a) to (b) fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <div class="calculation-box">
+          <strong>Step 4:</strong> Calculate Standard Deviation<br>
+          σ = <span class="sigma">√</span>25.6875 ≈ <strong>5.07</strong>
+        </div>
+
+        <div class="answer-box">Answers: Mean = 21.25, Standard Deviation ≈ 5.07</div>
+
+        <div class="section-header">📋 COMPLETE SUMMARY TABLE</div>
+
+        <h2>All Measures Comparison 📚</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Measure</th>
+              <th>Definition</th>
+              <th>Formula (Ungrouped)</th>
+              <th>Formula (Grouped)</th>
+            </tr>
+            <tr>
+              <td>Range</td>
+              <td>Max − Min</td>
+              <td>H − L</td>
+              <td>H − L</td>
+            </tr>
+            <tr>
+              <td>Mean Deviation</td>
+              <td>Average absolute deviation</td>
+              <td><span class="fraction"><span class="top"><span class="sigma">∑</span>|x−x̄|</span><span class="bottom">n</span></span></td>
+              <td><span class="fraction"><span class="top"><span class="sigma">∑</span>f|x−x̄|</span><span class="bottom"><span class="sigma">∑</span>f</span></span></td>
+            </tr>
+            <tr>
+              <td>Variance</td>
+              <td>Average of squared deviations</td>
+              <td><span class="fraction"><span class="top"><span class="sigma">∑</span>(x−x̄)²</span><span class="bottom">n</span></span></td>
+              <td><span class="fraction"><span class="top"><span class="sigma">∑</span>fx²</span><span class="bottom"><span class="sigma">∑</span>f</span></span> − x̄²</td>
+            </tr>
+            <tr>
+              <td>Standard Deviation</td>
+              <td>Square root of variance</td>
+              <td><span class="sigma">√</span>Variance</td>
+              <td><span class="sigma">√</span>Variance</td>
+            </tr>
+            <tr>
+              <td>Coefficient of Variation</td>
+              <td>Relative dispersion</td>
+              <td><span class="fraction"><span class="top">σ</span><span class="bottom">x̄</span></span> × 100%</td>
+              <td><span class="fraction"><span class="top">σ</span><span class="bottom">x̄</span></span> × 100%</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="shortcut-box">
+          <h4>⚡ Quick Calculation Steps</h4>
+          <p><strong>For Ungrouped Data:</strong></p>
+          <p>1. Find mean (x̄)</p>
+          <p>2. Calculate deviations (x − x̄)</p>
+          <p>3. Square them for variance, absolute for MD</p>
+          <p>4. Average appropriately</p>
+          <p>5. Take √ for standard deviation</p>
+        </div>
+
+        <div class="practice-box">
+          <p><strong>✏️ PRACTICE QUESTIONS:</strong></p>
+          <p style="margin-top: 8px;"><strong>Q1:</strong> Find range and standard deviation of: 20, 25, 30, 35, 40</p>
+          <p style="margin-top: 8px;"><strong>Q2:</strong> Calculate mean deviation of: 12, 15, 18, 21, 24</p>
+          <p style="margin-top: 8px;"><strong>Q3:</strong> Find variance from frequency table:</p>
+          <p>x: 2, 4, 6, 8, 10 | f: 3, 5, 7, 4, 1</p>
+          <p style="margin-top: 8px; color: var(--accent); font-weight: bold;">Answers: Q1: Range=20, SD≈7.07 | Q2: MD=3.6 | Q3: Variance≈5.84</p>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB EXAM TIPS</h3>
+          <p>1. <strong>Standard deviation is most reliable:</strong> Always use when comparing spread</p>
+          <p>2. <strong>Range is simplest but risky:</strong> Easily affected by extreme values (outliers)</p>
+          <p>3. <strong>Variance is always positive:</strong> Squaring eliminates negatives</p>
+          <p>4. <strong>Units matter:</strong> SD has same units as data, variance has squared units</p>
+          <p>5. <strong>Grouped data:</strong> Always use midpoint of class intervals</p>
+          <p>6. <strong>CV for comparison:</strong> Use coefficient of variation to compare different datasets</p>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Mistakes:</strong>
+          <p>• Forgetting to use absolute values in mean deviation</p>
+          <p>• Using class limits instead of midpoints for grouped data</p>
+          <p>• Confusing variance (σ²) with standard deviation (σ)</p>
+          <p>• Not squaring deviations when calculating variance</p>
+          <p>• Taking square root too early in calculations</p>
+        </div>
+
+        <div class="checklist-box">
+          <h3>Pre-Exam Checklist:</h3>
+          <ul>
+            <li>Range calculation (Max − Min)</li>
+            <li>Mean deviation (absolute deviations)</li>
+            <li>Variance (squared deviations)</li>
+            <li>Standard deviation (√variance)</li>
+            <li>Coefficient of variation (relative measure)</li>
+            <li>Grouped data formulas (using midpoints)</li>
+            <li>Calculation table method (∑fx, ∑fx²)</li>
+            <li>Alternative variance formula (∑fx²/∑f − x̄²)</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Excellent! 🌟 You now master Measures of Dispersion!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Permutation and Combination?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Measures of Location & Probability</p>
+        <button class="explore-btn" onclick="window.location.href='dispersion-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
