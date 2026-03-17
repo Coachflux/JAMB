@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Trigonometry</title>
+  <title>MATHEMATICS - Coordinate Geometry</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
-      --highlight-solution: #ff9800;                   /* orange for final answers */
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,41 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
     }
 
-    .graph-img {
-      max-width: 100%;
-      border-radius: 10px;
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
       margin: 12px 0;
-      border: 2px solid #444;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -213,24 +290,20 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
-    body.light .explore-btn {
-      color: #000;
-    }
-
-    /* Footer Nav Bar */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -280,673 +353,502 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .sqrt {
+      font-family: 'Courier New', monospace;
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Trigonometry</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Trigonometry – JAMB Guide 🚀</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Coordinate Geometry! 📍</h1>
+        <p class="subtitle">– JAMB Section III, Topic 4</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Trigonometry Made Simple for JAMB</h2>
-        <p>Here is the fully completed, easy-to-understand guide to the entire trigonometry section for JAMB. I've used simple language, key formulas, tips, and exactly 10 realistic JAMB-style multiple-choice questions (with correct answers and step-by-step solutions) for each of the six sub-topics (a–f). These are based on common patterns from past JAMB, WAEC, and similar exams.</p>
-        <p>Focus on diagrams (sketch them!), special angles, and the CAST rule. Practice these 60 questions — they cover what JAMB loves to ask.</p>
+        <h2>📐 COORDINATE GEOMETRY</h2>
+        
+        <p><strong>🎯 Learning Objectives:</strong> Determine midpoint & gradient, find distance between points, identify parallel/perpendicular conditions, and find equations of lines in various forms.</p>
 
-        <h2>(a) Trigonometrical Ratios of Angles</h2>
-        <p><strong>Key points:</strong> SOH-CAH-TOA for right triangles. For any angle: reference angle + CAST rule (All positive in Q1; Sin positive in Q2; Tan positive in Q3; Cos positive in Q4). Negative angle: sin(-θ) = -sinθ, cos(-θ) = cosθ, tan(-θ) = -tanθ.</p>
-        <p><strong>Special values (memorize!):</strong></p>
-        <ul>
-          <li><strong>30°</strong> → sin = ½, cos = √3/2, tan = 1/√3</li>
-          <li><strong>45°</strong> → sin = cos = 1/√2, tan = 1</li>
-          <li><strong>60°</strong> → sin = √3/2, cos = ½, tan = √3</li>
-          <li><strong>75°</strong> → sin = (√6 + √2)/4, cos = (√6 – √2)/4</li>
-        </ul>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Unit_circle_angles_color.svg/800px-Unit_circle_angles_color.svg.png" alt="Unit circle diagram showing trigonometric ratios for special angles">
+        <div class="section-header">📊 COMPLETE FORMULA SUMMARY</div>
 
-        <h3>10 JAMB Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. sin 210° = ?</div>
-          <div class="example-problem">
-Step 1: 210° is in Quadrant III (180° to 270°).<br>
-Step 2: Reference angle = 210° – 180° = 30°.<br>
-Step 3: Sine is negative in Q3.<br>
-Step 4: sin 30° = ½ → sin 210° = –½.
-          </div>
-          <div class="example-solution">Answer: –½</div>
+        <h2>All Coordinate Geometry Formulas 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Formula</th>
+              <th>Variables</th>
+            </tr>
+            <tr>
+              <td>Distance</td>
+              <td>d = <span class="sqrt">√</span>[(x₂-x₁)²+(y₂-y₁)²]</td>
+              <td>Two points (x₁,y₁), (x₂,y₂)</td>
+            </tr>
+            <tr>
+              <td>Midpoint</td>
+              <td>M = (<span class="fraction"><span class="top">x₁+x₂</span><span class="bottom">2</span></span>, <span class="fraction"><span class="top">y₁+y₂</span><span class="bottom">2</span></span>)</td>
+              <td>Average of coordinates</td>
+            </tr>
+            <tr>
+              <td>Gradient</td>
+              <td>m = <span class="fraction"><span class="top">y₂-y₁</span><span class="bottom">x₂-x₁</span></span></td>
+              <td>Change in y over change in x</td>
+            </tr>
+            <tr>
+              <td>Parallel</td>
+              <td>m₁ = m₂</td>
+              <td>Same gradient</td>
+            </tr>
+            <tr>
+              <td>Perpendicular</td>
+              <td>m₁ × m₂ = -1</td>
+              <td>Negative reciprocals</td>
+            </tr>
+            <tr>
+              <td>Slope-intercept</td>
+              <td>y = mx + c</td>
+              <td>m=gradient, c=y-intercept</td>
+            </tr>
+            <tr>
+              <td>Point-slope</td>
+              <td>y-y₁ = m(x-x₁)</td>
+              <td>Through point (x₁,y₁)</td>
+            </tr>
+            <tr>
+              <td>Two-point</td>
+              <td><span class="fraction"><span class="top">y-y₁</span><span class="bottom">x-x₁</span></span> = <span class="fraction"><span class="top">y₂-y₁</span><span class="bottom">x₂-x₁</span></span></td>
+              <td>Through two points</td>
+            </tr>
+            <tr>
+              <td>General form</td>
+              <td>ax + by + c = 0</td>
+              <td>Standard JAMB format</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. cos 330° = ?</div>
-          <div class="example-problem">
-Step 1: 330° is in Quadrant IV (270° to 360°).<br>
-Step 2: Reference angle = 360° – 330° = 30°.<br>
-Step 3: Cosine is positive in Q4.<br>
-Step 4: cos 30° = √3/2 → cos 330° = √3/2.
-          </div>
-          <div class="example-solution">Answer: √3/2</div>
+        <div class="section-header">1️⃣ DISTANCE BETWEEN POINTS</div>
+
+        <h2>Distance Formula 📏</h2>
+        
+        <div class="memory-aid">
+          💡 Derived from Pythagoras' theorem: d² = (Δx)² + (Δy)²
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">3. tan 150° = ?</div>
-          <div class="example-problem">
-Step 1: 150° is in Quadrant II (90° to 180°).<br>
-Step 2: Reference angle = 180° – 150° = 30°.<br>
-Step 3: Tangent is negative in Q2.<br>
-Step 4: tan 30° = 1/√3 → tan 150° = –1/√3.
-          </div>
-          <div class="example-solution">Answer: –1/√3</div>
+        <h3>🔢 Example 1: Basic Distance</h3>
+        <p>Find distance between A(2, 3) and B(5, 7).</p>
+        
+        <div class="calculation-box">
+          d = <span class="sqrt">√</span>[(5-2)² + (7-3)²]<br>
+          d = <span class="sqrt">√</span>[3² + 4²]<br>
+          d = <span class="sqrt">√</span>[9 + 16]<br>
+          d = <span class="sqrt">√</span>[25]
+        </div>
+        <div class="answer-box">d = 5 units</div>
+
+        <h3>🔢 Example 2: Find Unknown Coordinate (JAMB Style)</h3>
+        <p>Distance between P(3, k) and Q(7, 1) is 5 units. Find k.</p>
+        
+        <div class="calculation-box">
+          5 = <span class="sqrt">√</span>[(7-3)² + (1-k)²]<br>
+          5 = <span class="sqrt">√</span>[16 + (1-k)²]<br><br>
+          
+          Square both sides:<br>
+          25 = 16 + (1-k)²<br>
+          9 = (1-k)²<br><br>
+          
+          Take square root:<br>
+          1-k = ±3<br><br>
+          
+          Case 1: 1-k = 3 → k = -2<br>
+          Case 2: 1-k = -3 → k = 4
+        </div>
+        <div class="answer-box">k = -2 or 4</div>
+
+        <div class="section-header">2️⃣ MIDPOINT OF LINE SEGMENT</div>
+
+        <h2>Midpoint Formula ⏺️</h2>
+        
+        <div class="formula-box">
+          <strong>Concept:</strong> Average the x-coordinates and average the y-coordinates.<br>
+          M = (<span class="fraction"><span class="top">x₁+x₂</span><span class="bottom">2</span></span>, <span class="fraction"><span class="top">y₁+y₂</span><span class="bottom">2</span></span>)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">4. sin(-120°) = ?</div>
-          <div class="example-problem">
-Step 1: Negative angle → add 360°: –120° + 360° = 240°.<br>
-Step 2: 240° is in Quadrant III, ref angle = 240° – 180° = 60°.<br>
-Step 3: Sine is negative in Q3.<br>
-Step 4: sin 60° = √3/2 → sin(-120°) = –√3/2.
-          </div>
-          <div class="example-solution">Answer: –√3/2</div>
+        <h3>🔢 Example 3: Find Midpoint</h3>
+        <p>Find midpoint of line joining A(4, 6) and B(8, 10).</p>
+        
+        <div class="calculation-box">
+          M<sub>x</sub> = <span class="fraction"><span class="top">4+8</span><span class="bottom">2</span></span> = <span class="fraction"><span class="top">12</span><span class="bottom">2</span></span> = 6<br>
+          M<sub>y</sub> = <span class="fraction"><span class="top">6+10</span><span class="bottom">2</span></span> = <span class="fraction"><span class="top">16</span><span class="bottom">2</span></span> = 8
+        </div>
+        <div class="answer-box">M = (6, 8)</div>
+
+        <h3>🔢 Example 4: Find Endpoint</h3>
+        <p>M(5, 3) is midpoint of AB. If A is (2, 1), find B.</p>
+        
+        <div class="calculation-box">
+          Let B = (x, y)<br><br>
+          
+          5 = <span class="fraction"><span class="top">2+x</span><span class="bottom">2</span></span> → 10 = 2+x → x = 8<br>
+          3 = <span class="fraction"><span class="top">1+y</span><span class="bottom">2</span></span> → 6 = 1+y → y = 5
+        </div>
+        <div class="answer-box">B = (8, 5)</div>
+
+        <div class="section-header">3️⃣ GRADIENT (SLOPE)</div>
+
+        <h2>Gradient Formula 📈</h2>
+        
+        <div class="formula-box">
+          m = <span class="fraction"><span class="top">y₂-y₁</span><span class="bottom">x₂-x₁</span></span> = <span class="fraction"><span class="top">Δy</span><span class="bottom">Δx</span></span><br><br>
+          <strong>Signs:</strong> +ve = upward slope | -ve = downward slope | 0 = horizontal | undefined = vertical
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">5. cos 495° = ?</div>
-          <div class="example-problem">
-Step 1: 495° – 360° = 135°.<br>
-Step 2: 135° is in Quadrant II, ref angle = 180° – 135° = 45°.<br>
-Step 3: Cosine is negative in Q2.<br>
-Step 4: cos 45° = 1/√2 → cos 495° = –1/√2.
-          </div>
-          <div class="example-solution">Answer: –1/√2</div>
+        <h3>🔢 Example 5: Basic Gradient</h3>
+        <p>Find gradient through P(2, 5) and Q(6, 13).</p>
+        
+        <div class="calculation-box">
+          m = <span class="fraction"><span class="top">13-5</span><span class="bottom">6-2</span></span> = <span class="fraction"><span class="top">8</span><span class="bottom">4</span></span> = <strong>2</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">6. tan 405° = ?</div>
-          <div class="example-problem">
-Step 1: 405° – 360° = 45°.<br>
-Step 2: 45° is in Quadrant I, all positive.<br>
-Step 3: tan 45° = 1.
-          </div>
-          <div class="example-solution">Answer: 1</div>
+        <h3>🔢 Example 6: Angle with x-axis</h3>
+        <p>Line makes 45° with positive x-axis. Find gradient.</p>
+        
+        <div class="calculation-box">
+          m = tan(θ) = tan(45°) = <strong>1</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">7. sin 75° = ?</div>
-          <div class="example-problem">
-Step 1: 75° = 45° + 30°.<br>
-Step 2: sin(A+B) = sin A cos B + cos A sin B.<br>
-Step 3: sin45° = cos45° = 1/√2, cos30° = √3/2, sin30° = ½.<br>
-Step 4: (1/√2)(√3/2) + (1/√2)(1/2) = (√6 + √2)/4.
-          </div>
-          <div class="example-solution">Answer: (√6 + √2)/4</div>
+        <div class="section-header">4️⃣ PARALLEL & PERPENDICULAR</div>
+
+        <h2>Line Relationships 📐</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Relationship</th>
+              <th>Condition</th>
+              <th>Formula</th>
+            </tr>
+            <tr>
+              <td>Parallel</td>
+              <td>Same gradient</td>
+              <td>m₁ = m₂</td>
+            </tr>
+            <tr>
+              <td>Perpendicular</td>
+              <td>Negative reciprocals</td>
+              <td>m₁ × m₂ = -1</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">8. If sin θ = 3/5 (acute), find tan θ.</div>
-          <div class="example-problem">
-Step 1: cos θ = √(1 – sin²θ) = √(1 – 9/25) = √(16/25) = 4/5 (positive in acute angle).<br>
-Step 2: tan θ = sin θ / cos θ = (3/5) / (4/5) = 3/4.
-          </div>
-          <div class="example-solution">Answer: 3/4</div>
+        <h3>🔢 Example 7: Parallel Lines</h3>
+        <p>Show line through A(1,2) and B(4,8) is parallel to line through C(0,0) and D(2,4).</p>
+        
+        <div class="calculation-box">
+          Gradient of AB: m₁ = <span class="fraction"><span class="top">8-2</span><span class="bottom">4-1</span></span> = <span class="fraction"><span class="top">6</span><span class="bottom">3</span></span> = 2<br><br>
+          
+          Gradient of CD: m₂ = <span class="fraction"><span class="top">4-0</span><span class="bottom">2-0</span></span> = <span class="fraction"><span class="top">4</span><span class="bottom">2</span></span> = 2<br><br>
+          
+          Since m₁ = m₂ = 2, lines are <strong>parallel</strong>.
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">9. cos 300° = ?</div>
-          <div class="example-problem">
-Step 1: 300° is in Quadrant IV, ref angle = 360° – 300° = 60°.<br>
-Step 2: Cosine positive in Q4.<br>
-Step 3: cos 60° = ½.
-          </div>
-          <div class="example-solution">Answer: ½</div>
+        <h3>🔢 Example 8: Perpendicular Gradient</h3>
+        <p>Find gradient of line perpendicular to line with gradient <span class="fraction"><span class="top">3</span><span class="bottom">4</span></span>.</p>
+        
+        <div class="calculation-box">
+          If m₁ = <span class="fraction"><span class="top">3</span><span class="bottom">4</span></span>, then:<br>
+          m₂ = -<span class="fraction"><span class="top">1</span><span class="bottom">m₁</span></span> = -<span class="fraction"><span class="top">4</span><span class="bottom">3</span></span>
+        </div>
+        <div class="answer-box">m₂ = -4/3</div>
+
+        <div class="section-header">5️⃣ EQUATIONS OF LINES</div>
+
+        <h2>Four Forms of Line Equations 📝</h2>
+
+        <div class="component-box">
+          <h4>1. Slope-Intercept: y = mx + c</h4>
+          <p>Use when you know gradient and y-intercept.</p>
+          <p><strong>Example:</strong> m = 3, c = -2 → <span class="highlight">y = 3x - 2</span></p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">10. tan(-225°) = ?</div>
-          <div class="example-problem">
-Step 1: –225° + 360° = 135°.<br>
-Step 2: 135° in Quadrant II, ref = 45°.<br>
-Step 3: Tangent negative in Q2.<br>
-Step 4: tan 45° = 1 → tan(-225°) = –1.
-          </div>
-          <div class="example-solution">Answer: –1</div>
+        <div class="component-box">
+          <h4>2. Point-Slope: y - y₁ = m(x - x₁)</h4>
+          <p>Use when you know gradient and one point.</p>
         </div>
 
-        <h2>(b) Angles of Elevation and Depression</h2>
-        <p><strong>Key points:</strong> Elevation = looking up; depression = looking down (equal angle from other end). Mostly use tan θ = opposite / adjacent. Always draw horizontal line + right triangle.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Angle_of_elevation_and_depression.svg/800px-Angle_of_elevation_and_depression.svg.png" alt="Diagram showing angles of elevation and depression from a point to an object">
-
-        <h3>10 JAMB Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Angle of depression from 50 m cliff to boat is 45°. Distance from base?</div>
-          <div class="example-problem">
-Step 1: Depression angle = elevation from boat to cliff top.<br>
-Step 2: tan 45° = 1 = height / distance.<br>
-Step 3: 1 = 50 / d → d = 50 m.
-          </div>
-          <div class="example-solution">Answer: 50 m</div>
+        <h3>🔢 Example 9: Point-Slope Form</h3>
+        <p>Find equation of line with gradient 2 passing through (3, 5).</p>
+        
+        <div class="calculation-box">
+          y - 5 = 2(x - 3)<br>
+          y - 5 = 2x - 6<br>
+          y = 2x - 1<br><br>
+          
+          General form: <strong>2x - y - 1 = 0</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">2. From 120 m away, angle of elevation to tree top is 30°. Tree height?</div>
-          <div class="example-problem">
-Step 1: tan(elevation) = opposite / adjacent.<br>
-Step 2: tan 30° = 1/√3 = h / 120.<br>
-Step 3: h = 120 × (1/√3) = 120/√3 = 40√3 m.
-          </div>
-          <div class="example-solution">Answer: 40√3 m</div>
+        <div class="component-box">
+          <h4>3. Two-Point Form</h4>
+          <p>Use when you know two points on the line.</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">3. Angle of depression from 80 m tower to ship is 60°. Distance to ship?</div>
-          <div class="example-problem">
-Step 1: tan 60° = √3 = 80 / d.<br>
-Step 2: d = 80 / √3 m.
-          </div>
-          <div class="example-solution">Answer: 80 / √3 m</div>
+        <h3>🔢 Example 10: Two-Point Form</h3>
+        <p>Find equation through A(2, 3) and B(4, 7).</p>
+        
+        <div class="calculation-box">
+          <strong>Step 1:</strong> Find gradient<br>
+          m = <span class="fraction"><span class="top">7-3</span><span class="bottom">4-2</span></span> = <span class="fraction"><span class="top">4</span><span class="bottom">2</span></span> = 2<br><br>
+          
+          <strong>Step 2:</strong> Use point-slope with A(2, 3)<br>
+          y - 3 = 2(x - 2)<br>
+          y - 3 = 2x - 4<br>
+          y = 2x - 1
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">4. Boy 1.6 m tall, 20 m from pole, elevation to top 60°. Pole height?</div>
-          <div class="example-problem">
-Step 1: tan 60° = √3 = height above eye / 20.<br>
-Step 2: height above eye = 20√3 m.<br>
-Step 3: total pole height = 20√3 + 1.6 m.
-          </div>
-          <div class="example-solution">Answer: 20√3 + 1.6 m</div>
+        <div class="component-box">
+          <h4>4. General Form: ax + by + c = 0</h4>
+          <p>Standard JAMB format. Convert from other forms.</p>
+          <p><strong>Example:</strong> y = 3x + 5 → <span class="highlight">3x - y + 5 = 0</span></p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">5. From cliff top, depression to point 100 m away is 30°. Cliff height?</div>
-          <div class="example-problem">
-Step 1: tan 30° = 1/√3 = h / 100.<br>
-Step 2: h = 100 / √3 m.
-          </div>
-          <div class="example-solution">Answer: 100 / √3 m</div>
+        <div class="section-header">🔥 JAMB PAST QUESTIONS</div>
+
+        <h2>Common Question Patterns 🎯</h2>
+
+        <h3>Type 1: Combined Concepts</h3>
+        <p>Line joining P(3, 4) and Q(7, k) has gradient 2. Find k and distance PQ.</p>
+        
+        <div class="calculation-box">
+          <strong>Find k:</strong><br>
+          2 = <span class="fraction"><span class="top">k-4</span><span class="bottom">7-3</span></span> = <span class="fraction"><span class="top">k-4</span><span class="bottom">4</span></span><br>
+          8 = k - 4<br>
+          k = 12<br><br>
+          
+          <strong>Distance PQ:</strong><br>
+          d = <span class="sqrt">√</span>[(7-3)² + (12-4)²]<br>
+          d = <span class="sqrt">√</span>[16 + 64]<br>
+          d = <span class="sqrt">√</span>[80] = <span class="sqrt">√</span>[16×5]
+        </div>
+        <div class="answer-box">k = 12, PQ = 4√5</div>
+
+        <h3>Type 2: Perpendicular Bisector</h3>
+        <p>Find equation of perpendicular bisector of AB where A(2, 4) and B(6, 8).</p>
+        
+        <div class="calculation-box">
+          <strong>Step 1:</strong> Midpoint<br>
+          M = (<span class="fraction"><span class="top">2+6</span><span class="bottom">2</span></span>, <span class="fraction"><span class="top">4+8</span><span class="bottom">2</span></span>) = (4, 6)<br><br>
+          
+          <strong>Step 2:</strong> Gradient of AB<br>
+          m<sub>AB</sub> = <span class="fraction"><span class="top">8-4</span><span class="bottom">6-2</span></span> = 1<br><br>
+          
+          <strong>Step 3:</strong> Gradient of perpendicular<br>
+          m<sub>⊥</sub> = -1<br><br>
+          
+          <strong>Step 4:</strong> Equation<br>
+          y - 6 = -1(x - 4)<br>
+          y - 6 = -x + 4<br>
+          x + y - 10 = 0
+        </div>
+        <div class="answer-box">x + y - 10 = 0</div>
+
+        <div class="tips-box">
+          <h3>💡 EXAM TIPS</h3>
+          <p>1. <strong>Always sketch:</strong> Draw rough diagram to visualize</p>
+          <p>2. <strong>Watch signs:</strong> Be careful with negative coordinates</p>
+          <p>3. <strong>Simplify radicals:</strong> √50 = 5√2, √80 = 4√5</p>
+          <p>4. <strong>General form:</strong> Provide answers as ax + by + c = 0</p>
+          <p>5. <strong>Units:</strong> Include units for distance if given</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">6. Elevation 45°, distance 40 m, height?</div>
-          <div class="example-problem">
-Step 1: tan 45° = 1 = h / 40.<br>
-Step 2: h = 40 m.
-          </div>
-          <div class="example-solution">Answer: 40 m</div>
+        <div class="shortcut-box">
+          <h4>⚡ Quick Reference</h4>
+          <p>🔹 Distance: Pythagoras on coordinate differences</p>
+          <p>🔹 Midpoint: Average x, average y</p>
+          <p>🔹 Gradient: Rise over run (Δy/Δx)</p>
+          <p>🔹 Parallel: m₁ = m₂</p>
+          <p>🔹 Perpendicular: m₁ × m₂ = -1</p>
+          <p>🔹 Line equation: Point-slope most versatile</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">7. Depression 60°, distance 50 m from base, height?</div>
-          <div class="example-problem">
-Step 1: tan 60° = √3 = h / 50.<br>
-Step 2: h = 50√3 m.
-          </div>
-          <div class="example-solution">Answer: 50√3 m</div>
+        <div class="checklist-box">
+          <h3>Pre-Exam Checklist:</h3>
+          <ul>
+            <li>Distance formula memorized</li>
+            <li>Midpoint calculation (both directions)</li>
+            <li>Gradient from two points</li>
+            <li>Parallel vs perpendicular conditions</li>
+            <li>Slope-intercept form</li>
+            <li>Point-slope form</li>
+            <li>Conversion to general form</li>
+            <li>Perpendicular bisector problems</li>
+            <li>Radical simplification</li>
+            <li>Sketching coordinate diagrams</li>
+          </ul>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">8. Man 1.7 m tall sees building top at 30° elevation, 50 m away. Building height?</div>
-          <div class="example-problem">
-Step 1: tan 30° = 1/√3 = height above eye / 50.<br>
-Step 2: height above eye = 50/√3 m.<br>
-Step 3: total building height = 50/√3 + 1.7 m.
-          </div>
-          <div class="example-solution">Answer: 50/√3 + 1.7 m</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. From 200 m away, elevation 45°. Height?</div>
-          <div class="example-problem">
-Step 1: tan 45° = 1 = h / 200.<br>
-Step 2: h = 200 m.
-          </div>
-          <div class="example-solution">Answer: 200 m</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. Depression from 120 m height is 30°. Distance?</div>
-          <div class="example-problem">
-Step 1: tan 30° = 1/√3 = 120 / d.<br>
-Step 2: d = 120 √3 m.
-          </div>
-          <div class="example-solution">Answer: 120√3 m</div>
-        </div>
-
-        <h2>(c) Bearings</h2>
-        <p><strong>Key points:</strong> Clockwise from North, 3 digits (e.g. 075°). Reverse bearing = +180° (mod 360°). Use Pythagoras for 90° turns, cosine rule otherwise.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Bearing_diagram.svg/800px-Bearing_diagram.svg.png" alt="Diagram showing bearings from north, clockwise">
-
-        <h3>10 JAMB Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Ship sails 10 km on 060°, then 10 km on 150°. Distance from start?</div>
-          <div class="example-problem">
-Step 1: Angle between directions = 150° – 60° = 90°.<br>
-Step 2: Right triangle with legs 10 km each.<br>
-Step 3: Distance = √(10² + 10²) = √200 = 10√2 km.
-          </div>
-          <div class="example-solution">Answer: 10√2 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. Bearing of B from A is 070°. Bearing of A from B?</div>
-          <div class="example-problem">
-Step 1: Reverse bearing = 070° + 180° = 250°.
-          </div>
-          <div class="example-solution">Answer: 250°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. P to Q 8 km on 030°, Q to R 8 km on 120°. Distance P to R?</div>
-          <div class="example-problem">
-Step 1: Angle at Q = 120° – 30° = 90°.<br>
-Step 2: Legs 8 km and 8 km.<br>
-Step 3: Distance = √(64 + 64) = √128 = 8√2 km.
-          </div>
-          <div class="example-solution">Answer: 8√2 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. Bearing of X from Y is 320°. Bearing of Y from X?</div>
-          <div class="example-problem">
-Step 1: 320° + 180° = 500°.<br>
-Step 2: 500° – 360° = 140°.
-          </div>
-          <div class="example-solution">Answer: 140°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. A to B 050° 12 km, B to C 140° 9 km. Approx distance A to C?</div>
-          <div class="example-problem">
-Step 1: Angle at B = 140° – 50° = 90°.<br>
-Step 2: Legs 12 km and 9 km.<br>
-Step 3: Distance = √(144 + 81) = √225 = 15 km.
-          </div>
-          <div class="example-solution">Answer: 15 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. Two towns 5 km apart, bearings 200° and 110° from cottage. Distance between towns?</div>
-          <div class="example-problem">
-Step 1: Angle at cottage = 200° – 110° = 90°.<br>
-Step 2: If distances to towns are equal or given, typical √(d² + d²) = d√2 ≈ 7.07 km (but 5 km given as between towns? Wait, common variant ≈7.8 km if different distances).
-          </div>
-          <div class="example-solution">Answer: ≈7.8 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Bearing 090° 20 km, then 180° 15 km. Distance back?</div>
-          <div class="example-problem">
-Step 1: East 20 km, South 15 km, 90° angle.<br>
-Step 2: √(20² + 15²) = √(400 + 225) = √625 = 25 km.
-          </div>
-          <div class="example-solution">Answer: 25 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. From start, point on 045° 10 km. Bearing back?</div>
-          <div class="example-problem">
-Step 1: Forward bearing 045°.<br>
-Step 2: Back bearing = 045° + 180° = 225°.
-          </div>
-          <div class="example-solution">Answer: 225°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. From start, 6 km 000°, then 8 km 090°. Distance?</div>
-          <div class="example-problem">
-Step 1: North 6 km, East 8 km, right angle.<br>
-Step 2: √(36 + 64) = √100 = 10 km.
-          </div>
-          <div class="example-solution">Answer: 10 km</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. Bearing change 90° turn, equal legs 7 km. Distance?</div>
-          <div class="example-problem">
-Step 1: 90° angle between legs.<br>
-Step 2: √(7² + 7²) = √98 = 7√2 km.
-          </div>
-          <div class="example-solution">Answer: 7√2 km</div>
-        </div>
-
-        <h2>(d) Areas and Solutions of Triangle</h2>
-        <p><strong>Key points:</strong> Area = ½ ab sin C. Sine rule: a/sin A = b/sin B = c/sin C = 2R. Cosine rule: c² = a² + b² – 2ab cos C.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Triangle_with_notations_2.svg/800px-Triangle_with_notations_2.svg.png" alt="Diagram of triangle with sides a,b,c and angles A,B,C">
-
-        <h3>10 JAMB Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Sides 5 cm, 6 cm, included 60°. Area?</div>
-          <div class="example-problem">
-Step 1: Area = ½ ab sin C = ½ × 5 × 6 × sin 60°.<br>
-Step 2: sin 60° = √3/2.<br>
-Step 3: ½ × 30 × (√3/2) = 15 × (√3/2) = (15√3)/2 cm².
-          </div>
-          <div class="example-solution">Answer: (15√3)/2 cm²</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. Right triangle sides 3, 4, hypotenuse 5. Area?</div>
-          <div class="example-problem">
-Step 1: Area = ½ × base × height = ½ × 3 × 4 = 6 cm².
-          </div>
-          <div class="example-solution">Answer: 6 cm²</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. Sides 7 cm, 8 cm, included 90°. Area?</div>
-          <div class="example-problem">
-Step 1: sin 90° = 1.<br>
-Step 2: ½ × 7 × 8 × 1 = 28 cm².
-          </div>
-          <div class="example-solution">Answer: 28 cm²</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. Sides 10, 12, included 45°. Area?</div>
-          <div class="example-problem">
-Step 1: sin 45° = 1/√2.<br>
-Step 2: ½ × 10 × 12 × (1/√2) = 60 / √2 = 30√2 cm².
-          </div>
-          <div class="example-solution">Answer: 30√2 cm²</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. Triangle sides 6, 8, 10. Area (Heron first)?</div>
-          <div class="example-problem">
-Step 1: s = (6+8+10)/2 = 12.<br>
-Step 2: Area = √[12(12-6)(12-8)(12-10)] = √[12×6×4×2] = √576 = 24 cm².
-          </div>
-          <div class="example-solution">Answer: 24 cm²</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. a=5, A=30°, b= ? (sine rule)</div>
-          <div class="example-problem">
-Step 1: Assume B=90° (common case).<br>
-Step 2: b / sin 90° = a / sin 30° → b / 1 = 5 / (1/2) → b = 10.
-          </div>
-          <div class="example-solution">Answer: 10</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Sides 9, 10, included 60°. Area?</div>
-          <div class="example-problem">
-Step 1: ½ × 9 × 10 × sin 60° = 45 × (√3/2) = (45√3)/2 cm².
-          </div>
-          <div class="example-solution">Answer: (45√3)/2 cm²</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Find side c: a=4, b=5, C=60°.</div>
-          <div class="example-problem">
-Step 1: Cosine rule: c² = a² + b² – 2ab cos C.<br>
-Step 2: cos 60° = 1/2.<br>
-Step 3: c² = 16 + 25 – 40 × (1/2) = 41 – 20 = 21.<br>
-Step 4: c = √21.
-          </div>
-          <div class="example-solution">Answer: √21</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. Area = 20 cm², sides 8 cm, 10 cm. Included angle?</div>
-          <div class="example-problem">
-Step 1: ½ × 8 × 10 × sin C = 20.<br>
-Step 2: 40 sin C = 20.<br>
-Step 3: sin C = ½.<br>
-Step 4: C = 30° (or 150°, but acute typical).
-          </div>
-          <div class="example-solution">Answer: 30°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. a/sin A = 2R. If a=10, A=30°, 2R?</div>
-          <div class="example-problem">
-Step 1: 2R = a / sin A = 10 / sin 30°.<br>
-Step 2: sin 30° = ½.<br>
-Step 3: 10 / (1/2) = 20.
-          </div>
-          <div class="example-solution">Answer: 20</div>
-        </div>
-
-        <h2>(e) Graphs of Sine and Cosine</h2>
-        <p><strong>Key points:</strong> Amplitude = maximum height from centre line. Period = 360° for y = sin θ and y = cos θ. sin θ starts at 0, rises to 1 at 90°. cos θ starts at 1, falls to 0 at 90°. Zeros: sin at 0°, 180°, 360°; cos at 90°, 270°.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Sine_and_cosine_graph.svg/800px-Sine_and_cosine_graph.svg.png" alt="Graph of sine and cosine functions showing period, amplitude, zeros">
-
-        <h3>10 JAMB Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. Period of y = sin θ?</div>
-          <div class="example-problem">
-Step 1: The graph repeats every 360°.<br>
-Step 2: Period = 360°.
-          </div>
-          <div class="example-solution">Answer: 360°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. Amplitude of y = 5 cos θ?</div>
-          <div class="example-problem">
-Step 1: Amplitude is the coefficient in front of cos θ.<br>
-Step 2: Amplitude = 5.
-          </div>
-          <div class="example-solution">Answer: 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. y = sin θ maximum value?</div>
-          <div class="example-problem">
-Step 1: Sine reaches maximum 1 at 90°.<br>
-Step 2: Maximum = 1.
-          </div>
-          <div class="example-solution">Answer: 1</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. y = 2 sin θ + 3 maximum value?</div>
-          <div class="example-problem">
-Step 1: Amplitude = 2, shifted up by 3.<br>
-Step 2: Maximum = 3 + 2 = 5.
-          </div>
-          <div class="example-solution">Answer: 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. y = cos θ at 180°?</div>
-          <div class="example-problem">
-Step 1: cos 180° = –1.
-          </div>
-          <div class="example-solution">Answer: –1</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. How many zeros for sin θ in 0° to 360°?</div>
-          <div class="example-problem">
-Step 1: sin θ = 0 at 0°, 180°, 360°.<br>
-Step 2: 3 zeros (including both ends).
-          </div>
-          <div class="example-solution">Answer: 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Period of y = sin 2θ?</div>
-          <div class="example-problem">
-Step 1: Coefficient 2 inside θ makes period = 360° / 2 = 180°.
-          </div>
-          <div class="example-solution">Answer: 180°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. y = 3 cos θ minimum value?</div>
-          <div class="example-problem">
-Step 1: Cos reaches minimum –1.<br>
-Step 2: Minimum = 3 × (–1) = –3.
-          </div>
-          <div class="example-solution">Answer: –3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. At θ=90°, sin θ = ?</div>
-          <div class="example-problem">
-Step 1: sin 90° = 1.
-          </div>
-          <div class="example-solution">Answer: 1</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. y = cos θ at 270°?</div>
-          <div class="example-problem">
-Step 1: cos 270° = 0.
-          </div>
-          <div class="example-solution">Answer: 0</div>
-        </div>
-
-        <h2>(f) Sine and Cosine Formulae</h2>
-        <p><strong>Key points:</strong> Sine rule for ASA, AAS, SSA (watch ambiguous case). Cosine rule for SAS, SSS. Area = ½ ab sin C.</p>
-
-        <h3>10 JAMB Examples</h3>
-
-        <div class="example-block">
-          <div class="example-problem">1. a=6, b=8, C=60°. Find c.</div>
-          <div class="example-problem">
-Step 1: Cosine rule: c² = a² + b² – 2ab cos C.<br>
-Step 2: cos 60° = ½.<br>
-Step 3: c² = 36 + 64 – 96 × (1/2) = 100 – 48 = 52.<br>
-Step 4: c = √52 = 2√13.
-          </div>
-          <div class="example-solution">Answer: √52 or 2√13</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">2. a=5, A=30°, b= ? (sine rule)</div>
-          <div class="example-problem">
-Step 1: Assume B=90° (common case).<br>
-Step 2: b / sin 90° = a / sin 30°.<br>
-Step 3: b / 1 = 5 / (1/2) → b = 10.
-          </div>
-          <div class="example-solution">Answer: 10</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">3. Sides 3,4,5. Largest angle?</div>
-          <div class="example-problem">
-Step 1: Largest side opposite largest angle.<br>
-Step 2: Cosine rule on angle opposite 5: cos C = (9 + 16 – 25)/ (2×3×4) = 0/24 = 0.<br>
-Step 3: C = 90°.
-          </div>
-          <div class="example-solution">Answer: 90°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">4. a=7, b=8, c=5. Angle C?</div>
-          <div class="example-problem">
-Step 1: cos C = (a² + b² – c²)/(2ab) = (49 + 64 – 25)/(112) = 88/112 = 11/14 ≈ 0.786.<br>
-Step 2: C ≈ cos⁻¹(0.786) ≈ 38°.
-          </div>
-          <div class="example-solution">Answer: ≈38°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">5. Area = ½ ab sin C = 20, a=8, b=10. C?</div>
-          <div class="example-problem">
-Step 1: ½ × 8 × 10 × sin C = 20.<br>
-Step 2: 40 sin C = 20.<br>
-Step 3: sin C = ½.<br>
-Step 4: C = 30° or 150° (acute typical 30°).
-          </div>
-          <div class="example-solution">Answer: 30°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">6. a=10, b=12, C=90°. c?</div>
-          <div class="example-problem">
-Step 1: Cosine rule or Pythagoras (right angle).<br>
-Step 2: c = √(100 + 144) = √244 ≈ 15.62.
-          </div>
-          <div class="example-solution">Answer: √244 ≈ 15.62</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">7. Sine rule: A=45°, a=7, B= ? (side opposite)</div>
-          <div class="example-problem">
-Step 1: Common isosceles case when B=45°.<br>
-Step 2: b = a sin B / sin A = 7 sin45° / sin45° = 7.
-          </div>
-          <div class="example-solution">Answer: 45°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">8. Sides 5,5,6. Area?</div>
-          <div class="example-problem">
-Step 1: Heron: s = (5+5+6)/2 = 8.<br>
-Step 2: √[8(8-5)(8-5)(8-6)] = √[8×3×3×2] = √144 = 12.
-          </div>
-          <div class="example-solution">Answer: 12</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">9. Cosine rule: find angle opposite 13 in 5-12-13.</div>
-          <div class="example-problem">
-Step 1: cos C = (25 + 144 – 169)/(2×5×12) = (169 – 169)/120 = 0.<br>
-Step 2: C = 90°.
-          </div>
-          <div class="example-solution">Answer: 90°</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">10. a/sin A = 2R. If a=10, A=30°, 2R?</div>
-          <div class="example-problem">
-Step 1: 2R = a / sin A = 10 / sin 30°.<br>
-Step 2: sin 30° = ½.<br>
-Step 3: 10 / (1/2) = 20.
-          </div>
-          <div class="example-solution">Answer: 20</div>
-        </div>
-
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          This is now the **complete Trigonometry chapter** — all sections (a) to (f) fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Outstanding! 🌟 You now master Coordinate Geometry!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Trigonometry?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Loci & Trigonometry</p>
+        <button class="explore-btn" onclick="window.location.href='coordinate-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
