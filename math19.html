@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Measures of Location</title>
+  <title>MATHEMATICS - Representation of Data</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
-      --highlight-solution: #ff9800;                   /* orange for final answers */
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,24 +290,20 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
-    body.light .explore-btn {
-      color: #000;
-    }
-
-    /* Footer Nav Bar */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -272,348 +353,530 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .sigma {
+      font-family: 'Courier New', monospace;
+      color: var(--accent);
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Measures of Location</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Measures of Location – JAMB Guide 🚀</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Representation of Data! 📊</h1>
+        <p class="subtitle">– JAMB Chapter 19</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Measures of Location (also called Measures of Central Tendency)</h2>
-        <p>These tell us the “centre” or typical value in a set of data. JAMB loves this topic because it is straightforward once you know the simple rules. We will cover everything in the syllabus with easy language, formulas, and exactly 10 JAMB-style examples with full solutions for (a) and 10 for (b).</p>
+        <h2>📊 Chapter 19: Representation of Data</h2>
+        
+        <p>This chapter covers <span class="highlight">statistics and data visualization</span> - crucial topics for your JAMB exam.</p>
 
-        <h2>(a) Mean, Mode and Median of Ungrouped and Grouped Data (simple cases only)</h2>
-        <p><strong>Quick Summary Table (memorise this!)</strong></p>
-        <ul>
-          <li><strong>Measure: Mean</strong><br>
-Ungrouped Data: Σx / n<br>
-Grouped Data (simple cases): Σ(f × midpoint) / Σf</li>
-          <li><strong>Measure: Mode</strong><br>
-Ungrouped Data: Value that appears most often<br>
-Grouped Data (simple cases): Modal class (highest f). Formula: L + [(f₁ – f₀)/(2f₁ – f₀ – f₂)] × h</li>
-          <li><strong>Measure: Median</strong><br>
-Ungrouped Data: Arrange in order → middle value(s)<br>
-Grouped Data (simple cases): Median class (where cum. freq. first ≥ N/2). Formula: L + [(N/2 – CF)/f] × h</li>
-        </ul>
-        <p><strong>Key words</strong><br>
-n or N = total number of items/frequency<br>
-L = lower boundary of the class<br>
-f = frequency of that class<br>
-CF = cumulative frequency before that class<br>
-h = class width (upper – lower)<br>
-Midpoint = (lower + upper)/2</p>
-        <p>Ungrouped examples are very easy – just add and divide.<br>
-Grouped examples need a table with midpoints or cumulative frequency.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Mean_mode_median.svg/800px-Mean_mode_median.svg.png" alt="Diagram showing mean, mode, median on a frequency distribution">
+        <div class="section-header">1️⃣ TYPES OF DATA</div>
 
-        <h3>10 JAMB-Style Examples for (a) with Solutions</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1 (Ungrouped Mean – very common)</div>
-          <div class="example-problem">
-The scores of 8 students in a test are: 5, 7, 8, 8, 9, 10, 12, 15. What is the mean score?<br>
-Step 1: Sum the scores: 5 + 7 + 8 + 8 + 9 + 10 + 12 + 15 = 74.<br>
-Step 2: n = 8.<br>
-Step 3: Mean = 74 / 8 = 9.25.
-          </div>
-          <div class="example-solution">Answer: 9.25</div>
+        <h2>Data Classification 📋</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Examples</th>
+            </tr>
+            <tr>
+              <td>Qualitative (Categorical)</td>
+              <td>Non-numerical data</td>
+              <td>Colors, gender, types of cars</td>
+            </tr>
+            <tr>
+              <td>Quantitative (Discrete)</td>
+              <td>Countable whole numbers</td>
+              <td>Number of students, goals scored</td>
+            </tr>
+            <tr>
+              <td>Quantitative (Continuous)</td>
+              <td>Measurable, any value in range</td>
+              <td>Height, weight, temperature</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2 (Ungrouped Mode)</div>
-          <div class="example-problem">
-The ages of some pupils are: 12, 13, 14, 14, 15, 15, 15, 16. Find the mode.<br>
-Step 1: Count frequencies: 12:1, 13:1, 14:2, 15:3, 16:1.<br>
-Step 2: Highest frequency = 3 for 15 → Mode = 15.
-          </div>
-          <div class="example-solution">Answer: 15</div>
+        <div class="section-header">2️⃣ DATA REPRESENTATION METHODS</div>
+
+        <h2>A. Frequency Distribution Tables 📊</h2>
+        
+        <div class="formula-box">
+          <strong>Key Terms:</strong><br>
+          • <span class="highlight">Class width:</span> Upper boundary − Lower boundary<br>
+          • <span class="highlight">Midpoint:</span> (Lower limit + Upper limit) ÷ 2
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3 (Ungrouped Median – odd number)</div>
-          <div class="example-problem">
-Arrange: 20, 25, 30, 35, 40. Find the median.<br>
-Step 1: Number of values = 5 (odd).<br>
-Step 2: Middle position = (5+1)/2 = 3rd value = 30.
-          </div>
-          <div class="example-solution">Answer: 30</div>
+        <h3>🔢 Example 1: Ungrouped Data</h3>
+        <p>Raw data: 3, 5, 2, 3, 4, 5, 3, 2, 4, 3</p>
+        
+        <div class="calculation-box">
+          Value (x) | Tally | Frequency (f)<br>
+          ----------+-------+--------------<br>
+              2     |  II   |      2<br>
+              3     |  IIII |      4<br>
+              4     |  II   |      2<br>
+              5     |  II   |      2<br>
+          ----------+-------+--------------<br>
+          <strong>Total</strong> |       |     <strong>10</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4 (Ungrouped Median – even number)</div>
-          <div class="example-problem">
-Arrange: 4, 6, 8, 10. Find the median.<br>
-Step 1: Number of values = 4 (even).<br>
-Step 2: Middle positions = 2nd and 3rd: 6 and 8.<br>
-Step 3: Average = (6 + 8)/2 = 7.
-          </div>
-          <div class="example-solution">Answer: 7</div>
+        <h3>🔢 Example 2: Grouped Data</h3>
+        
+        <div class="calculation-box">
+          Height (cm) | f | Class Boundaries | Midpoint (x)<br>
+          ------------+---+------------------+------------<br>
+           150-154    | 3 |   149.5-154.5    |    152<br>
+           155-159    | 7 |   154.5-159.5    |    157<br>
+           160-164    | 12|   159.5-164.5    |    162<br>
+           165-169    | 5 |   164.5-169.5    |    167<br>
+           170-174    | 3 |   169.5-174.5    |    172
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5 (Grouped Mean)</div>
-          <div class="example-problem">
-Marks | 0–9 | 10–19 | 20–29 | 30–39<br>
-Freq  | 4   | 6     | 8     | 2<br>
-Calculate the mean.<br>
-Step 1: Midpoints: (0+9)/2 = 4.5, 14.5, 24.5, 34.5.<br>
-Step 2: fx = 4×4.5=18, 6×14.5=87, 8×24.5=196, 2×34.5=69.<br>
-Step 3: Σfx = 18+87+196+69 = 370.<br>
-Step 4: Σf = 4+6+8+2 = 20.<br>
-Step 5: Mean = 370 / 20 = 18.5.
-          </div>
-          <div class="example-solution">Answer: 18.5</div>
+        <h2>B. Bar Charts 📊</h2>
+        
+        <div class="memory-aid">
+          💡 Used for discrete or categorical data. Bars have equal width and gaps between them.
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 6 (Grouped Mode)</div>
-          <div class="example-problem">
-Using the same table as Example 5. Find the mode.<br>
-Step 1: Modal class = 20–29 (highest f=8).<br>
-Step 2: L = 20, f₁=8, f₀=6, f₂=2, h=10.<br>
-Step 3: Mode = 20 + [(8–6)/(2×8 –6–2)] ×10 = 20 + [2/ (16–8)] ×10 = 20 + (2/8)×10 = 20 + 2.5 = 22.5.
-          </div>
-          <div class="example-solution">Answer: 22.5</div>
+        <h2>C. Histograms 📈</h2>
+        
+        <div class="formula-box">
+          <strong>Key Difference:</strong> Histograms touch each other (no gaps) - used for continuous data. Area represents frequency.
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 7 (Grouped Median)</div>
-          <div class="example-problem">
-Using the same table. Find the median.<br>
-Step 1: N=20, N/2=10.<br>
-Step 2: Cum. freq: 4 (0–9), 10 (up to 19), 18 (up to 29), 20 (up to 39).<br>
-Step 3: Median class = 10–19 (first cum ≥10).<br>
-Step 4: L=10, CF before=4, f=6, h=10.<br>
-Step 5: Median = 10 + [(10–4)/6] ×10 = 10 + (6/6)×10 = 10 + 10 = 20.
-          </div>
-          <div class="example-solution">Answer: 20</div>
+        <h2>D. Frequency Polygon 📉</h2>
+        
+        <div class="component-box">
+          <h4>How to Draw:</h4>
+          <p>1. Find midpoint of each class interval</p>
+          <p>2. Plot point (midpoint, frequency)</p>
+          <p>3. Join points with straight lines</p>
+          <p>4. Extend to x-axis at both ends</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 8 (Grouped – mixed)</div>
-          <div class="example-problem">
-Class: 1–5 (f=3), 6–10 (f=5), 11–15 (f=7), 16–20 (f=5)<br>
-(a) Mean (b) Mode (c) Median<br>
-Step 1: Midpoints: 3, 8, 13, 18.<br>
-Step 2: Σfx = 3×3=9, 5×8=40, 7×13=91, 5×18=90 = 230.<br>
-Step 3: Σf = 20 → Mean = 230/20 = 11.5.<br>
-Step 4: Modal class = 11–15 (f=7).<br>
-Step 5: L=11, f₁=7, f₀=5, f₂=5, h=5 → Mode = 11 + [(7–5)/(14–5–5)]×5 = 11 + (2/4)×5 = 11 + 2.5 = 13.5.<br>
-Step 6: N/2=10, cum freq: 3,8,15,20 → median class 11–15.<br>
-Step 7: L=11, CF=8, f=7, h=5 → Median = 11 + [(10–8)/7]×5 = 11 + (2/7)×5 ≈ 11 + 1.43 ≈ 12.43.
-          </div>
-          <div class="example-solution">Answer: Mean 11.5, Mode 13.5, Median ≈12.43</div>
+        <h2>E. Pie Charts 🥧</h2>
+        
+        <div class="formula-box">
+          <strong>Sector Angle =</strong> <span class="fraction"><span class="top">Component</span><span class="bottom">Total</span></span> × 360°
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 9 (JAMB-style MCQ type)</div>
-          <div class="example-problem">
-The mean of the numbers 3, 6, 4, x, 7 is 5. Find x.<br>
-Step 1: Sum = 3+6+4+x+7 = 20 + x.<br>
-Step 2: Mean = (20 + x)/5 = 5 → 20 + x = 25 → x = 5.
-          </div>
-          <div class="example-solution">Answer: 5</div>
+        <h3>🔢 Example: Pie Chart Calculation</h3>
+        <p>Expenditure: Food ₦40k, Rent ₦30k, Transport ₦20k, Others ₦10k (Total ₦100k)</p>
+        
+        <div class="calculation-box">
+          • Food: <span class="fraction"><span class="top">40,000</span><span class="bottom">100,000</span></span> × 360° = <strong>144°</strong><br>
+          • Rent: <span class="fraction"><span class="top">30,000</span><span class="bottom">100,000</span></span> × 360° = <strong>108°</strong><br>
+          • Transport: <span class="fraction"><span class="top">20,000</span><span class="bottom">100,000</span></span> × 360° = <strong>72°</strong><br>
+          • Others: <span class="fraction"><span class="top">10,000</span><span class="bottom">100,000</span></span> × 360° = <strong>36°</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 10 (Advanced grouped – common in JAMB)</div>
-          <div class="example-problem">
-Class interval: 20–24 (f=5), 25–29 (f=8), 30–34 (f=12), 35–39 (f=5)<br>
-Find (i) mean (ii) modal mark (iii) median mark.<br>
-Step 1: Mid: 22, 27, 32, 37.<br>
-Step 2: Σfx = 5×22=110, 8×27=216, 12×32=384, 5×37=185 = 895.<br>
-Step 3: Σf=30 → Mean = 895/30 ≈ 29.83.<br>
-Step 4: Modal class 30–34 (f=12).<br>
-Step 5: L=30, f₁=12, f₀=8, f₂=5, h=5 → Mode = 30 + [(12–8)/(24–8–5)]×5 = 30 + (4/11)×5 ≈ 30 + 1.82 ≈ 31.82.<br>
-Step 6: N/2=15, cum freq:5,13,25,30 → median class 30–34.<br>
-Step 7: L=30, CF=13, f=12, h=5 → Median = 30 + [(15–13)/12]×5 = 30 + (2/12)×5 ≈ 30 + 0.83 ≈ 30.83.
-          </div>
-          <div class="example-solution">Answer: Mean ≈29.83, Mode ≈31.82, Median ≈30.83</div>
+        <div class="section-header">3️⃣ MEASURES OF CENTRAL TENDENCY</div>
+
+        <h2>A. Mean (Average) 📐</h2>
+        
+        <div class="formula-box">
+          <strong>Ungrouped:</strong> x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span> x</span><span class="bottom">n</span></span> or <span class="fraction"><span class="top"><span class="sigma">∑</span> fx</span><span class="bottom"><span class="sigma">∑</span> f</span></span><br><br>
+          
+          <strong>Grouped:</strong> x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span> fx</span><span class="bottom"><span class="sigma">∑</span> f</span></span> where x = midpoint
         </div>
 
-        <h2>(b) Cumulative Frequency & Use of Ogive</h2>
-        <p>Cumulative Frequency (CF) = running total of frequencies (add from the top).<br>
-It tells “how many are less than or equal to this value”.</p>
-        <p>Ogive = graph of cumulative frequency plotted against upper class boundaries.<br>
-It is an S-shaped curve. In JAMB exam they give the graph; you just read it.</p>
-        <p><strong>How to read Ogive (very important for JAMB):</strong></p>
-        <ul>
-          <li>Median → CF = N/2</li>
-          <li>Lower Quartile (Q₁) → CF = N/4</li>
-          <li>Upper Quartile (Q₃) → CF = 3N/4</li>
-          <li>kth Percentile → CF = (k/100) × N</li>
-        </ul>
-        <p>Draw horizontal line from the CF value to the curve, then vertical line down to the x-axis to read the value.</p>
-        <p>Here are visual examples of what an ogive looks like in exams:<br>
-(Note the red lines showing median, Q1, Q3 – exactly what you do in the exam!)</p>
-        <p>Here is how a cumulative frequency table looks:</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Cumulative_frequency_ogive.svg/800px-Cumulative_frequency_ogive.svg.png" alt="Diagram showing cumulative frequency table and ogive graph">
-
-        <h3>10 JAMB-Style Examples for (b) with Solutions</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1 (Construct CF table)</div>
-          <div class="example-problem">
-Marks: 0–9 (4), 10–19 (6), 20–29 (8), 30–39 (2)<br>
-Construct the cumulative frequency table.<br>
-Step 1: Upper limits: 9, 19, 29, 39.<br>
-Step 2: CF: 4 (up to 9), 4+6=10 (up to 19), 10+8=18 (up to 29), 18+2=20 (up to 39).
-          </div>
-          <div class="example-solution">Answer: CF table as above</div>
+        <h3>🔢 Example 3: Mean from Ungrouped Data</h3>
+        
+        <div class="calculation-box">
+          x  | 2 | 3 | 4 | 5 | 6<br>
+          f  | 4 | 6 | 5 | 3 | 2<br><br>
+          
+          <span class="sigma">∑</span>fx = (2×4) + (3×6) + (4×5) + (5×3) + (6×2)<br>
+              = 8 + 18 + 20 + 15 + 12 = <strong>73</strong><br><br>
+          
+          <span class="sigma">∑</span>f = 4 + 6 + 5 + 3 + 2 = <strong>20</strong><br><br>
+          
+          Mean = <span class="fraction"><span class="top">73</span><span class="bottom">20</span></span> = <strong>3.65</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2 (Median from CF)</div>
-          <div class="example-problem">
-Total N=40. From the ogive, the median is the value at CF=20. If the curve crosses at 25 on x-axis, what is the median?<br>
-Step 1: Draw horizontal from CF=20 to curve.<br>
-Step 2: Vertical down to x-axis = 25.<br>
-Step 3: Median = 25.
-          </div>
-          <div class="example-solution">Answer: 25</div>
+        <h3>🔢 Example 4: Mean from Grouped Data</h3>
+        
+        <div class="calculation-box">
+          Class   | 0-10 | 10-20 | 20-30 | 30-40 | 40-50<br>
+          f       |   3  |   5   |   8   |   4   |   2<br><br>
+          
+          Midpoint (x): 5, 15, 25, 35, 45<br><br>
+          
+          <span class="sigma">∑</span>fx = (5×3) + (15×5) + (25×8) + (35×4) + (45×2)<br>
+              = 15 + 75 + 200 + 140 + 90 = <strong>520</strong><br><br>
+          
+          <span class="sigma">∑</span>f = 3 + 5 + 8 + 4 + 2 = <strong>22</strong><br><br>
+          
+          Mean = <span class="fraction"><span class="top">520</span><span class="bottom">22</span></span> = <strong>23.64</strong> (2 d.p.)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3 (Quartiles)</div>
-          <div class="example-problem">
-N=100 students. On the ogive, CF=25 gives 45 marks, CF=50 gives 62 marks, CF=75 gives 78 marks.<br>
-Find Q₁, median, Q₃.<br>
-Step 1: Q₁ at CF=25 = 45.<br>
-Step 2: Median at CF=50 = 62.<br>
-Step 3: Q₃ at CF=75 = 78.
-          </div>
-          <div class="example-solution">Answer: Q₁=45, Median=62, Q₃=78</div>
+        <h2>B. Median 📊</h2>
+        
+        <div class="formula-box">
+          <strong>Grouped Data Formula:</strong><br>
+          Median = L + <span class="fraction"><span class="top"><span class="fraction"><span class="top">N</span><span class="bottom">2</span></span> - F<sub>b</sub></span><span class="bottom">f<sub>m</sub></span></span> × c<br><br>
+          
+          Where: L = Lower boundary, N = Total frequency, F<sub>b</sub> = Cumulative freq before, f<sub>m</sub> = Median class freq, c = Class width
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4 (Percentile)</div>
-          <div class="example-problem">
-Using Example 3 above, find the 36th percentile.<br>
-Step 1: CF for 36th percentile = (36/100) × 100 = 36.<br>
-Step 2: Read mark at CF=36 on ogive, suppose 52.<br>
-Step 3: 36th percentile = 52.
-          </div>
-          <div class="example-solution">Answer: 52</div>
+        <h3>🔢 Example 5: Median from Grouped Data</h3>
+        
+        <div class="calculation-box">
+          Class       | 10-20 | 20-30 | 30-40 | 40-50 | 50-60<br>
+          Frequency   |   4   |   6   |   10  |   7   |   3<br>
+          Cumulative  |   4   |   10  |   20  |   27  |   30<br><br>
+          
+          N = 30, N/2 = 15<br>
+          Median class: 30-40 (where cumulative freq reaches 15)<br><br>
+          
+          L = 29.5, F<sub>b</sub> = 10, f<sub>m</sub> = 10, c = 10<br><br>
+          
+          Median = 29.5 + [<span class="fraction"><span class="top">15 - 10</span><span class="bottom">10</span></span>] × 10<br>
+                 = 29.5 + 5 = <strong>34.5</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5 (Full ogive question – common in JAMB)</div>
-          <div class="example-problem">
-50 students, scores grouped. N/2 = 25. From the given ogive the point at CF=25 is 48.<br>
-What is the median score?<br>
-Step 1: Median at CF=25.<br>
-Step 2: Read from ogive = 48.
-          </div>
-          <div class="example-solution">Answer: 48</div>
+        <h2>C. Mode 📈</h2>
+        
+        <div class="formula-box">
+          <strong>Grouped Data Formula:</strong><br>
+          Mode = L + <span class="fraction"><span class="top">D<sub>1</sub></span><span class="bottom">D<sub>1</sub> + D<sub>2</sub></span></span> × c<br><br>
+          
+          Where: L = Lower boundary of modal class, D<sub>1</sub> = Modal freq − Previous freq, D<sub>2</sub> = Modal freq − Next freq
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 6</div>
-          <div class="example-problem">
-From an ogive of 200 candidates, the 80th percentile is read as 65 marks. How many candidates scored 65 or less?<br>
-Step 1: 80th percentile means 80% scored ≤65.<br>
-Step 2: 80% of 200 = 0.8 × 200 = 160.
-          </div>
-          <div class="example-solution">Answer: 160</div>
+        <h3>🔢 Example 6: Mode from Grouped Data</h3>
+        
+        <div class="calculation-box">
+          Class       | 0-10 | 10-20 | 20-30 | 30-40 | 40-50<br>
+          Frequency   |   3  |   7   |  12   |   6   |   2<br><br>
+          
+          Modal class: 20-30 (highest freq = 12)<br>
+          L = 19.5, D<sub>1</sub> = 12-7 = 5, D<sub>2</sub> = 12-6 = 6, c = 10<br><br>
+          
+          Mode = 19.5 + [<span class="fraction"><span class="top">5</span><span class="bottom">5+6</span></span>] × 10<br>
+               = 19.5 + <span class="fraction"><span class="top">50</span><span class="bottom">11</span></span><br>
+               = 19.5 + 4.55 = <strong>24.05</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 7 (Construct + read)</div>
-          <div class="example-problem">
-Class: 10–14(3), 15–19(7), 20–24(12), 25–29(8)<br>
-Draw CF table and state the CF value for median.<br>
-Step 1: CF: 3 (up to 14), 3+7=10 (up to 19), 10+12=22 (up to 24), 22+8=30 (up to 29).<br>
-Step 2: N=30, N/2=15 → CF for median = 15 (in 20–24 class).
-          </div>
-          <div class="example-solution">Answer: CF table as above, median CF=15</div>
+        <div class="section-header">4️⃣ MEASURES OF DISPERSION</div>
+
+        <h2>Range, Variance & Standard Deviation 📊</h2>
+        
+        <div class="formula-box">
+          <strong>Range:</strong> Highest value − Lowest value<br><br>
+          
+          <strong>Variance:</strong> σ² = <span class="fraction"><span class="top"><span class="sigma">∑</span>fx²</span><span class="bottom"><span class="sigma">∑</span>f</span></span> − x̄²<br><br>
+          
+          <strong>Standard Deviation:</strong> σ = <span class="sigma">√</span>Variance
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 8</div>
-          <div class="example-problem">
-N=80. Q₁ is at CF=20, Q₃ at CF=60. Inter-quartile range = Q₃ – Q₁. If Q₁=35, Q₃=65, what is IQR?<br>
-Step 1: Read Q₁ at CF=20 = 35.<br>
-Step 2: Read Q₃ at CF=60 = 65.<br>
-Step 3: IQR = 65 – 35 = 30.
-          </div>
-          <div class="example-solution">Answer: 30</div>
+        <h3>🔢 Example 7: Standard Deviation</h3>
+        
+        <div class="calculation-box">
+          x  | 2 | 4 | 6 | 8 | 10<br>
+          f  | 3 | 5 | 8 | 4 | 2<br><br>
+          
+          <strong>Step 1:</strong> Find mean<br>
+          <span class="sigma">∑</span>fx = 6 + 20 + 48 + 32 + 20 = 126<br>
+          <span class="sigma">∑</span>f = 22<br>
+          Mean = <span class="fraction"><span class="top">126</span><span class="bottom">22</span></span> = 5.727<br><br>
+          
+          <strong>Step 2:</strong> Calculate fx²<br>
+          x² |  4  |  16  |  36  |  64  | 100<br>
+          fx²| 12  |  80  | 288  | 256  | 200<br>
+          <span class="sigma">∑</span>fx² = 836<br><br>
+          
+          <strong>Step 3:</strong> Variance<br>
+          σ² = (<span class="fraction"><span class="top">836</span><span class="bottom">22</span></span>) − (5.727)²<br>
+             = 38 − 32.8 = <strong>5.2</strong><br><br>
+          
+          <strong>Step 4:</strong> Standard Deviation<br>
+          σ = <span class="sigma">√</span>5.2 = <strong>2.28</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 9 (JAMB 2019 style)</div>
-          <div class="example-problem">
-Cumulative frequency curve shows distribution of 50 students. Find the 36th percentile score (read from graph as 42).<br>
-Step 1: 36th percentile CF = (36/100) × 50 = 18.<br>
-Step 2: Read value at CF=18 on ogive = 42.
-          </div>
-          <div class="example-solution">Answer: 42</div>
+        <div class="section-header">5️⃣ CUMULATIVE FREQUENCY & OGIVE</div>
+
+        <h2>Ogive (Cumulative Frequency Curve) 📈</h2>
+        
+        <div class="memory-aid">
+          💡 Shows "running total" of frequencies. From ogive: Median ≈ where y = N/2, Q1 ≈ where y = N/4, Q3 ≈ where y = 3N/4
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 10 (Combined)</div>
-          <div class="example-problem">
-Using the 800 candidates marks example that appears often:<br>
-From the ogive, the 50th percentile (median) is read as 47 marks.<br>
-What does this mean?<br>
-Step 1: 50th percentile CF = 400 (50% of 800).<br>
-Step 2: Half the candidates (400) scored 47 marks or less.
-          </div>
-          <div class="example-solution">Answer: 400 candidates scored ≤47</div>
+        <h3>🔢 Example 8: Ogive</h3>
+        
+        <div class="calculation-box">
+          Upper Boundary | <10 | <20 | <30 | <40 | <50<br>
+          Cumulative f   |  3  |  8  |  16 |  24 |  30<br><br>
+          
+          Plot: (10,3), (20,8), (30,16), (40,24), (50,30)<br><br>
+          
+          From ogive:<br>
+          • Median ≈ 32 (where y = 15)<br>
+          • Lower quartile (Q1) ≈ 22 (where y = 7.5)<br>
+          • Upper quartile (Q3) ≈ 42 (where y = 22.5)
         </div>
 
-        <p><strong>Quick Revision Tips for JAMB</strong></p>
-        <ul>
-          <li>Always arrange ungrouped data first.</li>
-          <li>For grouped, always make midpoint and cumulative frequency columns.</li>
-          <li>In the exam, when they give an ogive graph, just use a ruler: horizontal from CF value → curve → down to x-axis.</li>
-          <li>Practice drawing one ogive at home – it takes 2 minutes once you know upper boundaries.</li>
-        </ul>
+        <div class="section-header">📋 ESSENTIAL FORMULAS SUMMARY</div>
 
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          This is now the **complete Measures of Location chapter** — all sections (a) to (b) fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <h2>All Statistics Formulas 📚</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Formula</th>
+              <th>Variables</th>
+            </tr>
+            <tr>
+              <td>Mean (Grouped)</td>
+              <td>x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span>fx</span><span class="bottom"><span class="sigma">∑</span>f</span></span></td>
+              <td>x = midpoint, f = frequency</td>
+            </tr>
+            <tr>
+              <td>Median (Grouped)</td>
+              <td>L + <span class="fraction"><span class="top"><span class="fraction"><span class="top">N</span><span class="bottom">2</span></span> − F<sub>b</sub></span><span class="bottom">f<sub>m</sub></span></span> × c</td>
+              <td>L=lower boundary, N=total freq</td>
+            </tr>
+            <tr>
+              <td>Mode (Grouped)</td>
+              <td>L + <span class="fraction"><span class="top">D<sub>1</sub></span><span class="bottom">D<sub>1</sub> + D<sub>2</sub></span></span> × c</td>
+              <td>D₁=modal−prev, D₂=modal−next</td>
+            </tr>
+            <tr>
+              <td>Range</td>
+              <td>Highest − Lowest</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Variance</td>
+              <td><span class="fraction"><span class="top"><span class="sigma">∑</span>fx²</span><span class="bottom"><span class="sigma">∑</span>f</span></span> − x̄²</td>
+              <td>Alternative: <span class="fraction"><span class="top"><span class="sigma">∑</span>f(x−x̄)²</span><span class="bottom"><span class="sigma">∑</span>f</span></span></td>
+            </tr>
+            <tr>
+              <td>Standard Deviation</td>
+              <td>σ = <span class="sigma">√</span>Variance</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Class Width</td>
+              <td>Upper boundary − Lower boundary</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Midpoint</td>
+              <td><span class="fraction"><span class="top">Lower + Upper</span><span class="bottom">2</span></span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Pie Chart Angle</td>
+              <td><span class="fraction"><span class="top">Component</span><span class="bottom">Total</span></span> × 360°</td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="practice-box">
+          <p><strong>✏️ PRACTICE QUESTION:</strong></p>
+          <p style="margin-top: 8px;">Marks distribution of 50 students:</p>
+          <p>Marks: 20-29, 30-39, 40-49, 50-59, 60-69, 70-79</p>
+          <p>Freq: 4, 8, 12, 10, 9, 7</p>
+          <p style="margin-top: 12px;"><strong>Find:</strong> (a) Mean (b) Median (c) Mode</p>
+          <p style="margin-top: 8px; color: var(--accent); font-weight: bold;">Answers: Mean ≈ 51.9, Median ≈ 51.25, Mode ≈ 46.17</p>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB EXAM TIPS</h3>
+          <p>1. <strong>Check data type:</strong> Grouped or ungrouped before applying formulas</p>
+          <p>2. <strong>Class boundaries:</strong> For discrete data (e.g., 10-20), boundaries are 9.5-20.5</p>
+          <p>3. <strong>Histogram vs Bar chart:</strong> Histograms touch (continuous), bar charts have gaps (discrete)</p>
+          <p>4. <strong>Ogive readings:</strong> Use ruler to draw lines from y-axis to curve to x-axis for quartiles</p>
+          <p>5. <strong>Calculator:</strong> Master statistical functions for speed</p>
+        </div>
+
+        <div class="checklist-box">
+          <h3>Pre-Exam Checklist:</h3>
+          <ul>
+            <li>Types of data (qualitative vs quantitative)</li>
+            <li>Frequency distribution tables</li>
+            <li>Class boundaries and midpoints</li>
+            <li>Bar charts (discrete, gaps)</li>
+            <li>Histograms (continuous, touch)</li>
+            <li>Frequency polygons</li>
+            <li>Pie charts (angle calculations)</li>
+            <li>Mean (grouped and ungrouped)</li>
+            <li>Median (grouped formula)</li>
+            <li>Mode (grouped formula)</li>
+            <li>Range, variance, standard deviation</li>
+            <li>Cumulative frequency</li>
+            <li>Ogive curve interpretation</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Excellent! 🌟 You now master Data Representation!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Measures of Location?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Probability & Statistics</p>
+        <button class="explore-btn" onclick="window.location.href='statistics-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
