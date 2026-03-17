@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Measures of Dispersion</title>
+  <title>MATHEMATICS - Measures of Location</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
-      --highlight-solution: #ff9800;                   /* orange for final answers */
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,197 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,24 +369,20 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
-    body.light .explore-btn {
-      color: #000;
-    }
-
-    /* Footer Nav Bar */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -272,268 +432,472 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .sigma {
+      font-family: 'Courier New', monospace;
+      color: var(--accent);
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Measures of Dispersion</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Measures of Dispersion – JAMB Guide 🚀</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Measures of Location! 📍</h1>
+        <p class="subtitle">– JAMB Chapter 20</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Measures of Dispersion: Easy-to-Understand Guide (JAMB Style)</h2>
-        <p>Measures of dispersion (also called measures of spread or variation) tell us how spread out the data is.<br>
-Mean/median/mode tell us the “centre” or typical value.<br>
-Dispersion tells us: “Are the numbers close together or scattered far apart?”<br>
-Imagine two classes with the same average score of 50:<br>
-Class A: all students scored exactly 50 → very little spread.<br>
-Class B: scores from 10 to 90 → very big spread.<br>
-Dispersion helps us see the difference.</p>
-        <p>We will cover four main measures for both ungrouped data (raw list of numbers) and grouped data (frequency table).</p>
-        <ul>
-          <li><strong>1. Range (Simplest)</strong><br>
-Formula (ungrouped): Range = Highest value – Lowest value<br>
-For grouped data: Range = Upper boundary of highest class – Lower boundary of lowest class<br>
-(Example: classes 10–19 and 50–59 → range = 59 – 10 = 49)<br>
-Why useful? Quick idea of total spread. Very sensitive to outliers.</li>
-          <li><strong>2. Mean Deviation (M.D. or Average Deviation)</strong><br>
-It is the average distance of each value from the mean (we ignore + or – by using absolute value | |).<br>
-Ungrouped formula: M.D. = Σ |x – x̄| / n<br>
-(where x̄ = mean, n = number of items)<br>
-Grouped formula: M.D. = Σ f |m – x̄| / N<br>
-(m = class midpoint, f = frequency, N = total frequency)</li>
-          <li><strong>3. Variance</strong><br>
-It is the average of the squared distances from the mean. Squaring removes the +/– problem.<br>
-Ungrouped formula (JAMB uses population formula): Variance (σ²) = Σ (x – x̄)² / n<br>
-(Shortcut: Σx²/n – (x̄)²  ← very useful in exams!)<br>
-Grouped: Variance = Σ f (m – x̄)² / N</li>
-          <li><strong>4. Standard Deviation (S.D. or σ)</strong><br>
-Square root of variance. It is in the same units as the original data (most useful).<br>
-Formula: S.D. = √Variance</li>
-        </ul>
-        <p><strong>Note for JAMB:</strong> They almost always use division by n (not n–1).<br>
-Answers are often left in √ form or to 2 decimal places.</p>
-        <p><strong>Step-by-Step Calculation Tips (Easy Method)</strong></p>
-        <p>Ungrouped data (quick table method):<br>
-Find mean (x̄).<br>
-Make columns: x | x – x̄ | |x – x̄| | (x – x̄)²<br>
-Sum the columns you need.</p>
-        <p>Grouped data:<br>
-Find class midpoints (m).<br>
-Calculate mean first: x̄ = Σ(f × m) / N<br>
-Then use the absolute or squared columns.</p>
-        <img class="graph-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Standard_deviation_diagram.svg/800px-Standard_deviation_diagram.svg.png" alt="Diagram showing measures of dispersion on a normal distribution curve">
+        <h2>📍 Chapter 20: Measures of Location</h2>
+        
+        <p>This chapter covers <span class="highlight">mean, median, mode, quartiles and percentiles</span> - fundamental statistics for finding central values in data sets.</p>
 
-        <h3>10 JAMB-Style & Past Questions with Full Solutions</h3>
-        <p>I have mixed real JAMB past questions (from 1993–2024) and very similar JAMB-style questions. They cover ungrouped and grouped data. All solutions are shown step-by-step exactly as examiners expect.</p>
+        <div class="section-header">1️⃣ MEAN (ARITHMETIC MEAN)</div>
 
-        <h4>Range Examples</h4>
-
-        <div class="example-block">
-          <div class="example-problem">Q1 (JAMB-style): Find the range of: 2, 4, 5, 9</div>
-          <div class="example-problem">
-Step 1: Identify highest = 9, lowest = 2.<br>
-Step 2: Range = 9 – 2 = 7.
-          </div>
-          <div class="example-solution">Answer: 7</div>
+        <h2>The Average 📐</h2>
+        
+        <div class="formula-box">
+          <strong>Formula:</strong><br>
+          x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span> x</span><span class="bottom">n</span></span><br><br>
+          Where:<br>
+          • <span class="sigma">∑</span>x = sum of all values<br>
+          • n = number of values
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q2 (JAMB-style): The scores of 10 students: 15, 18, 22, 25, 30, 35, 40, 45, 50, 55. Find the range.</div>
-          <div class="example-problem">
-Step 1: Highest = 55, lowest = 15.<br>
-Step 2: Range = 55 – 15 = 40.
-          </div>
-          <div class="example-solution">Answer: 40</div>
+        <h3>🔢 Example 1: Simple Mean</h3>
+        <p>Find the mean of: 5, 8, 12, 15, 20</p>
+        
+        <div class="calculation-box">
+          x̄ = <span class="fraction"><span class="top">5 + 8 + 12 + 15 + 20</span><span class="bottom">5</span></span><br>
+              = <span class="fraction"><span class="top">60</span><span class="bottom">5</span></span><br>
+              = <strong>12</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q3 (Grouped – JAMB-style): Marks of students:<br>
-0–9 (f=5), 10–19 (f=15), 20–29 (f=20), 30–39 (f=10)<br>
-Range = ?</div>
-          <div class="example-problem">
-Step 1: Lowest class lower boundary = 0, highest class upper boundary = 39.<br>
-Step 2: Range = 39 – 0 = 39.
-          </div>
-          <div class="example-solution">Answer: 39</div>
+        <div class="answer-box">Answer: Mean = 12</div>
+
+        <h3>🔢 Example 2: Mean from Frequency Table</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Score (x)</th>
+              <th>Frequency (f)</th>
+              <th>f × x</th>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>3</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>5</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>2</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td><strong>Total</strong></td>
+              <td><strong><span class="sigma">∑</span>f = 10</strong></td>
+              <td><strong><span class="sigma">∑</span>fx = 38</strong></td>
+            </tr>
+          </table>
         </div>
 
-        <h4>Mean Deviation Examples</h4>
-
-        <div class="example-block">
-          <div class="example-problem">Q4 (Real JAMB 2008): Find the mean deviation of 2, 4, 5, 9.</div>
-          <div class="example-problem">
-Step 1: Mean x̄ = (2+4+5+9)/4 = 20/4 = 5.<br>
-Step 2: Absolute deviations: |2-5|=3, |4-5|=1, |5-5|=0, |9-5|=4.<br>
-Step 3: Sum = 3+1+0+4 = 8.<br>
-Step 4: M.D. = 8/4 = 2.
-          </div>
-          <div class="example-solution">Answer: 2</div>
+        <div class="calculation-box">
+          x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span>fx</span><span class="bottom"><span class="sigma">∑</span>f</span></span> = <span class="fraction"><span class="top">38</span><span class="bottom">10</span></span> = <strong>3.8</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q5 (Real JAMB 2007): What is the mean deviation of 3, 5, 8, 11, 12, 21?</div>
-          <div class="example-problem">
-Step 1: Mean x̄ = (3+5+8+11+12+21)/6 = 60/6 = 10.<br>
-Step 2: Abs dev: |3-10|=7, |5-10|=5, |8-10|=2, |11-10|=1, |12-10|=2, |21-10|=11.<br>
-Step 3: Sum = 7+5+2+1+2+11 = 28.<br>
-Step 4: M.D. = 28/6 ≈ 4.67 (or 4.7).
-          </div>
-          <div class="example-solution">Answer: 4.67</div>
+        <div class="answer-box">Answer: Mean = 3.8</div>
+
+        <div class="memory-aid">
+          💡 Mean = Sum of everything ÷ How many things
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q6 (Real JAMB 2002): Calculate the mean deviation of 7, 3, 14, 9, 7, 8.</div>
-          <div class="example-problem">
-Step 1: Mean x̄ = (7+3+14+9+7+8)/6 = 48/6 = 8.<br>
-Step 2: Abs dev: |7-8|=1, |3-8|=5, |14-8|=6, |9-8|=1, |7-8|=1, |8-8|=0.<br>
-Step 3: Sum = 1+5+6+1+1+0 = 14.<br>
-Step 4: M.D. = 14/6 = 7/3 ≈ 2.33.
-          </div>
-          <div class="example-solution">Answer: 7/3</div>
+        <div class="section-header">2️⃣ MEDIAN</div>
+
+        <h2>The Middle Value 📊</h2>
+        
+        <div class="formula-box">
+          <strong>For Ungrouped Data:</strong><br>
+          • <strong>Odd count:</strong> Middle value directly<br>
+          • <strong>Even count:</strong> Average of two middle values<br><br>
+          
+          <strong>For Grouped Data:</strong><br>
+          Median = L + <span class="fraction"><span class="top"><span class="fraction"><span class="top">n</span><span class="bottom">2</span></span> − F<sub>b</sub></span><span class="bottom">f<sub>m</sub></span></span> × c<br><br>
+          
+          Where:<br>
+          • L = lower class boundary of median class<br>
+          • n = total frequency<br>
+          • F<sub>b</sub> = cumulative frequency before median class<br>
+          • f<sub>m</sub> = frequency of median class<br>
+          • c = class width
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q7 (Real JAMB 2000): If the mean of 0, (x+2), (3x+6), (4x+8) is 4, find their mean deviation.</div>
-          <div class="example-problem">
-Step 1: Sum = 0 + (x+2) + (3x+6) + (4x+8) = 8x + 16 = 4 × 4 = 16 → 8x + 16 = 16 → 8x = 0 → x = 0.<br>
-Step 2: Data: 0, 2, 6, 8. Mean = 16/4 = 4.<br>
-Step 3: Abs dev: |0-4|=4, |2-4|=2, |6-4|=2, |8-4|=4.<br>
-Step 4: Sum = 12, M.D. = 12/4 = 3.
-          </div>
-          <div class="example-solution">Answer: 3</div>
+        <h3>🔢 Example 3: Median (Ungrouped - Odd)</h3>
+        <p>Data: 3, 7, 8, 12, 15</p>
+        
+        <div class="calculation-box">
+          Data arranged: 3, 7, <strong>8</strong>, 12, 15<br>
+          Middle value (3rd) = <strong>8</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q8 (JAMB-style): Find M.D. of 10, 12, 15, 18, 20 (n=5)</div>
-          <div class="example-problem">
-Step 1: Mean x̄ = (10+12+15+18+20)/5 = 75/5 = 15.<br>
-Step 2: Abs dev: |10-15|=5, |12-15|=3, |15-15|=0, |18-15|=3, |20-15|=5.<br>
-Step 3: Sum = 16.<br>
-Step 4: M.D. = 16/5 = 3.2.
-          </div>
-          <div class="example-solution">Answer: 3.2</div>
+        <div class="answer-box">Answer: Median = 8</div>
+
+        <h3>🔢 Example 4: Median (Ungrouped - Even)</h3>
+        <p>Data: 4, 6, 10, 14</p>
+        
+        <div class="calculation-box">
+          Middle values: 6 and 10<br>
+          Median = <span class="fraction"><span class="top">6 + 10</span><span class="bottom">2</span></span> = <span class="fraction"><span class="top">16</span><span class="bottom">2</span></span> = <strong>8</strong>
         </div>
 
-        <h4>Variance & Standard Deviation Examples</h4>
+        <div class="answer-box">Answer: Median = 8</div>
 
-        <div class="example-block">
-          <div class="example-problem">Q9 (Real JAMB 2024): Calculate the standard deviation of 5, 4, 6, 7, 8.</div>
-          <div class="example-problem">
-Step 1: Mean x̄ = (5+4+6+7+8)/5 = 30/5 = 6.<br>
-Step 2: (x – x̄)²: (5-6)²=1, (4-6)²=4, (6-6)²=0, (7-6)²=1, (8-6)²=4.<br>
-Step 3: Sum = 1+4+0+1+4 = 10.<br>
-Step 4: Variance = 10/5 = 2.<br>
-Step 5: S.D. = √2 ≈ 1.41 (or √2).
-          </div>
-          <div class="example-solution">Answer: √2</div>
+        <h3>🔢 Example 5: Median from Grouped Data</h3>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Class</th>
+              <th>Frequency (f)</th>
+              <th>Cumulative Frequency</th>
+            </tr>
+            <tr>
+              <td>10-19</td>
+              <td>5</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>20-29</td>
+              <td>8</td>
+              <td>13</td>
+            </tr>
+            <tr>
+              <td>30-39</td>
+              <td>12</td>
+              <td>25</td>
+            </tr>
+            <tr>
+              <td>40-49</td>
+              <td>10</td>
+              <td>35</td>
+            </tr>
+            <tr>
+              <td>50-59</td>
+              <td>5</td>
+              <td>40</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q10 (Real JAMB 2010): Find the standard deviation of 2, 3, 5, 6.</div>
-          <div class="example-problem">
-Step 1: Mean x̄ = (2+3+5+6)/4 = 16/4 = 4.<br>
-Step 2: (x – x̄)²: (2-4)²=4, (3-4)²=1, (5-4)²=1, (6-4)²=4.<br>
-Step 3: Sum = 10.<br>
-Step 4: Variance = 10/4 = 2.5.<br>
-Step 5: S.D. = √2.5 = √(5/2) ≈1.58.
-          </div>
-          <div class="example-solution">Answer: √(5/2)</div>
+        <div class="calculation-box">
+          <strong>Step 1:</strong> n = 40, so <span class="fraction"><span class="top">n</span><span class="bottom">2</span></span> = <strong>20</strong><br><br>
+          
+          <strong>Step 2:</strong> Median class = 30-39 (where cumulative freq reaches 20)<br><br>
+          
+          <strong>Step 3:</strong> Values:<br>
+          • L = 29.5 (lower boundary)<br>
+          • F<sub>b</sub> = 13<br>
+          • f<sub>m</sub> = 12<br>
+          • c = 10<br><br>
+          
+          <strong>Step 4:</strong> Calculate<br>
+          Median = 29.5 + <span class="fraction"><span class="top">20 − 13</span><span class="bottom">12</span></span> × 10<br>
+                 = 29.5 + <span class="fraction"><span class="top">7</span><span class="bottom">12</span></span> × 10<br>
+                 = 29.5 + 5.83<br>
+                 = <strong>35.33</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q11 (Real JAMB 1993): Calculate the standard deviation of 7, 8, 9, 10, 11, 12, 13.</div>
-          <div class="example-problem">
-Step 1: Mean x̄ = (7+8+9+10+11+12+13)/7 = 70/7 = 10.<br>
-Step 2: (x – x̄)²: (7-10)²=9, (8-10)²=4, (9-10)²=1, 0, 1, 4, 9.<br>
-Step 3: Sum = 28.<br>
-Step 4: Variance = 28/7 = 4.<br>
-Step 5: S.D. = √4 = 2.
-          </div>
-          <div class="example-solution">Answer: 2</div>
+        <div class="answer-box">Answer: Median = 35.33</div>
+
+        <div class="section-header">3️⃣ MODE</div>
+
+        <h2>Most Frequent Value 📈</h2>
+        
+        <div class="formula-box">
+          <strong>For Ungrouped Data:</strong><br>
+          Value that appears most frequently<br><br>
+          
+          <strong>For Grouped Data:</strong><br>
+          Mode = L + <span class="fraction"><span class="top">D<sub>1</sub></span><span class="bottom">D<sub>1</sub> + D<sub>2</sub></span></span> × c<br><br>
+          
+          Where:<br>
+          • L = lower boundary of modal class (highest frequency)<br>
+          • D<sub>1</sub> = modal freq − previous freq<br>
+          • D<sub>2</sub> = modal freq − next freq<br>
+          • c = class width
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q12 (Real JAMB 2000 – Variance): The variance of x, 2x, 3x, 4x, 5x is</div>
-          <div class="example-problem">
-Step 1: Mean x̄ = (x+2x+3x+4x+5x)/5 = 15x/5 = 3x.<br>
-Step 2: (x – 3x)² = (–2x)² = 4x², (2x–3x)²= x², 0, x², 4x².<br>
-Step 3: Sum = 4x² + x² + 0 + x² + 4x² = 10x².<br>
-Step 4: Variance = 10x² / 5 = 2x².
-          </div>
-          <div class="example-solution">Answer: 2x²</div>
+        <h3>🔢 Example 6: Mode (Ungrouped)</h3>
+        <p>Data: 2, 3, 3, 5, 7, 3, 8</p>
+        
+        <div class="calculation-box">
+          • 2 appears 1 time<br>
+          • 3 appears <strong>3 times</strong> ← Most frequent<br>
+          • 5 appears 1 time<br>
+          • 7 appears 1 time<br>
+          • 8 appears 1 time
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q13 (Grouped – JAMB-style):</div>
-          <div class="example-problem">
-Class: 0–4 (f=2), 5–9 (f=5), 10–14 (f=8), 15–19 (f=5)  (N=20)<br>
-Midpoints (m): 2, 7, 12, 17<br>
-Mean x̄ = (2×2 + 5×7 + 8×12 + 5×17)/20 = (4+35+96+85)/20 = 220/20 = 11<br>
-Now Variance:<br>
-f(m–11)²:<br>
-(2–11)²×2 = 81×2 = 162<br>
-(7–11)²×5 = 16×5 = 80<br>
-(12–11)²×8 = 1×8 = 8<br>
-(17–11)²×5 = 36×5 = 180<br>
-Sum = 162+80+8+180 = 430<br>
-Variance = 430/20 = 21.5<br>
-S.D. = √21.5 ≈ 4.64
-          </div>
-          <div class="example-solution">Answer: Variance 21.5, S.D. ≈4.64</div>
+        <div class="answer-box">Answer: Mode = 3</div>
+
+        <h3>🔢 Example 7: Mode from Grouped Data</h3>
+        <p>Using the same table (Example 5):</p>
+        
+        <div class="calculation-box">
+          <strong>Modal class:</strong> 30-39 (highest frequency = 12)<br><br>
+          
+          Values:<br>
+          • L = 29.5<br>
+          • D<sub>1</sub> = 12 − 8 = <strong>4</strong><br>
+          • D<sub>2</sub> = 12 − 10 = <strong>2</strong><br>
+          • c = 10<br><br>
+          
+          Mode = 29.5 + <span class="fraction"><span class="top">4</span><span class="bottom">4 + 2</span></span> × 10<br>
+               = 29.5 + <span class="fraction"><span class="top">4</span><span class="bottom">6</span></span> × 10<br>
+               = 29.5 + 6.67<br>
+               = <strong>36.17</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Q14 (Simple Variance from S.D.): If S.D. = 12.34, find variance.</div>
-          <div class="example-problem">
-Step 1: Variance = (S.D.)² = (12.34)² = 152.2756.
-          </div>
-          <div class="example-solution">Answer: 152.2756</div>
+        <div class="answer-box">Answer: Mode = 36.17</div>
+
+        <div class="section-header">4️⃣ PERCENTILES & QUARTILES</div>
+
+        <h2>Data Division Points 📏</h2>
+        
+        <div class="component-box">
+          <h4>Quartiles (Q):</h4>
+          <p>• Q₁ (1st quartile) = 25th percentile</p>
+          <p>• Q₂ (2nd quartile) = Median = 50th percentile</p>
+          <p>• Q₃ (3rd quartile) = 75th percentile</p>
         </div>
 
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          This is now the **complete Measures of Dispersion chapter** — all sections fully expanded with teaching steps, diagrams for shapes, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <div class="formula-box">
+          <strong>Formula for Quartiles (Grouped Data):</strong><br>
+          Q<sub>k</sub> = L + <span class="fraction"><span class="top"><span class="fraction"><span class="top">kn</span><span class="bottom">4</span></span> − F<sub>b</sub></span><span class="bottom">f</span></span> × c<br><br>
+          
+          Where k = 1, 2, 3 for Q₁, Q₂, Q₃<br><br>
+          
+          <strong>Percentiles:</strong><br>
+          P = L + <span class="fraction"><span class="top"><span class="fraction"><span class="top">Pn</span><span class="bottom">100</span></span> − F<sub>b</sub></span><span class="bottom">f</span></span> × c
+        </div>
+
+        <h3>🔢 Example 8: Finding Q₁</h3>
+        <p>Using grouped data from Example 5 (n = 40):</p>
+        
+        <div class="calculation-box">
+          <strong>Step 1:</strong> Position = <span class="fraction"><span class="top">1 × 40</span><span class="bottom">4</span></span> = <strong>10</strong><br><br>
+          
+          <strong>Step 2:</strong> Q₁ class = 20-29 (cumulative freq 13 covers position 10)<br><br>
+          
+          Values:<br>
+          • L = 19.5<br>
+          • F<sub>b</sub> = 5<br>
+          • f = 8<br>
+          • c = 10<br><br>
+          
+          Q₁ = 19.5 + <span class="fraction"><span class="top">10 − 5</span><span class="bottom">8</span></span> × 10<br>
+             = 19.5 + <span class="fraction"><span class="top">5</span><span class="bottom">8</span></span> × 10<br>
+             = 19.5 + 6.25<br>
+             = <strong>25.75</strong>
+        </div>
+
+        <div class="answer-box">Answer: Q₁ = 25.75</div>
+
+        <div class="section-header">📋 ALL FORMULAS SUMMARY</div>
+
+        <h2>Complete Reference Table 📚</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Measure</th>
+              <th>Type</th>
+              <th>Formula</th>
+            </tr>
+            <tr>
+              <td>Mean</td>
+              <td>Simple</td>
+              <td>x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span>x</span><span class="bottom">n</span></span></td>
+            </tr>
+            <tr>
+              <td>Mean</td>
+              <td>Frequency</td>
+              <td>x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span>fx</span><span class="bottom"><span class="sigma">∑</span>f</span></span></td>
+            </tr>
+            <tr>
+              <td>Median</td>
+              <td>Ungrouped (odd)</td>
+              <td>Middle value</td>
+            </tr>
+            <tr>
+              <td>Median</td>
+              <td>Ungrouped (even)</td>
+              <td><span class="fraction"><span class="top">middle₁ + middle₂</span><span class="bottom">2</span></span></td>
+            </tr>
+            <tr>
+              <td>Median</td>
+              <td>Grouped</td>
+              <td>L + <span class="fraction"><span class="top"><span class="fraction"><span class="top">n</span><span class="bottom">2</span></span>−F<sub>b</sub></span><span class="bottom">f<sub>m</sub></span></span>×c</td>
+            </tr>
+            <tr>
+              <td>Mode</td>
+              <td>Ungrouped</td>
+              <td>Most frequent value</td>
+            </tr>
+            <tr>
+              <td>Mode</td>
+              <td>Grouped</td>
+              <td>L + <span class="fraction"><span class="top">D<sub>1</sub></span><span class="bottom">D<sub>1</sub>+D<sub>2</sub></span></span>×c</td>
+            </tr>
+            <tr>
+              <td>Quartiles</td>
+              <td>Grouped</td>
+              <td>L + <span class="fraction"><span class="top"><span class="fraction"><span class="top">kn</span><span class="bottom">4</span></span>−F<sub>b</sub></span><span class="bottom">f</span></span>×c</td>
+            </tr>
+            <tr>
+              <td>Percentiles</td>
+              <td>Grouped</td>
+              <td>L + <span class="fraction"><span class="top"><span class="fraction"><span class="top">Pn</span><span class="bottom">100</span></span>−F<sub>b</sub></span><span class="bottom">f</span></span>×c</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="shortcut-box">
+          <h4>⚡ Key Variables Quick Guide</h4>
+          <p><strong>L:</strong> Lower boundary (subtract 0.5 from lower limit)</p>
+          <p><strong>n:</strong> Total frequency (sum of all f)</p>
+          <p><strong>F<sub>b</sub>:</strong> Cumulative frequency BEFORE the class</p>
+          <p><strong>c:</strong> Class width (upper − lower boundary)</p>
+          <p><strong>D<sub>1</sub>, D<sub>2</sub>:</strong> Differences with adjacent classes</p>
+        </div>
+
+        <div class="practice-box">
+          <p><strong>✏️ PRACTICE QUESTION:</strong></p>
+          <p style="margin-top: 8px;">Ages of 50 students:</p>
+          <p>Age (years): 10-14, 15-19, 20-24, 25-29, 30-34</p>
+          <p>Frequency: 5, 12, 18, 10, 5</p>
+          <p style="margin-top: 12px;"><strong>Find:</strong> (a) Mean (b) Median (c) Mode</p>
+          <p style="margin-top: 8px; color: var(--accent); font-weight: bold;">Answers: Mean = 21.8, Median = 21.72, Mode = 21.64</p>
+        </div>
+
+        <div class="tips-box">
+          <h3>🎯 JAMB EXAM TIPS</h3>
+          <p>1. <strong>Check data type:</strong> Grouped or ungrouped determines formula</p>
+          <p>2. <strong>Class boundaries:</strong> 10-19 → 9.5-19.5 (subtract 0.5)</p>
+          <p>3. <strong>Cumulative frequency:</strong> Calculate first for median/quartiles</p>
+          <p>4. <strong>Modal class:</strong> Highest frequency (not the mode itself)</p>
+          <p>5. <strong>Symmetry check:</strong> Mean = Mode = Median for symmetrical distribution</p>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Mistakes:</strong>
+          <p>• Using class limits instead of boundaries (always use 9.5, not 10)</p>
+          <p>• Forgetting to calculate cumulative frequency first</p>
+          <p>• Confusing modal class with the actual mode value</p>
+          <p>• Wrong position calculation for quartiles (use kn/4, not n/4)</p>
+        </div>
+
+        <div class="checklist-box">
+          <h3>Pre-Exam Checklist:</h3>
+          <ul>
+            <li>Simple mean calculation</li>
+            <li>Mean from frequency table</li>
+            <li>Median (ungrouped - odd/even)</li>
+            <li>Median (grouped formula)</li>
+            <li>Mode (ungrouped)</li>
+            <li>Mode (grouped formula)</li>
+            <li>Quartiles Q₁, Q₂, Q₃</li>
+            <li>Percentiles calculation</li>
+            <li>Class boundaries</li>
+            <li>Cumulative frequency table</li>
+          </ul>
+        </div>
+
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Excellent! 🌟 You now master Measures of Location!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a Real JAMB Quiz on Measures of Dispersion?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Measures of Dispersion & Representation of Data</p>
+        <button class="explore-btn" onclick="window.location.href='measures-location-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
