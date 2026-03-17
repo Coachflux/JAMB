@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Jamb Score - Coordinate Geometry</title>
+  <title>MATHEMATICS - Loci</title>
   <style>
     * {
       margin: 0;
@@ -20,8 +20,6 @@
       --text-secondary: #c0c0e0;
       --accent: #1db954;
       --card-bg: #2a2a3f;
-      --highlight-example: rgba(29, 185, 84, 0.15);    /* light green for problem steps */
-      --highlight-solution: #ff9800;                   /* orange for final answers */
     }
 
     body.light {
@@ -32,8 +30,6 @@
       --text-secondary: #444;
       --accent: #1db954;
       --card-bg: #f8f8f8;
-      --highlight-example: rgba(29, 185, 84, 0.20);
-      --highlight-solution: #f57c00;
     }
 
     body {
@@ -159,6 +155,10 @@
       font-weight: bold;
     }
 
+    .welcome-note h2:first-child {
+      margin-top: 0;
+    }
+
     .welcome-note h3 {
       font-size: 18px;
       margin: 24px 0 12px;
@@ -171,33 +171,118 @@
       color: var(--text-primary);
     }
 
-    .example-block {
-      background: rgba(0,0,0,0.15);
-      padding: 14px;
-      border-radius: 10px;
+    .welcome-note ul, .welcome-note ol {
+      padding-left: 24px;
       margin: 16px 0;
-      font-family: 'Courier New', Courier, monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
-      border-left: 4px solid var(--accent);
     }
 
-    .example-problem {
-      background: var(--highlight-example);
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    .welcome-note li {
+      margin-bottom: 10px;
+      font-size: 15px;
       color: var(--text-primary);
     }
 
-    .example-solution {
-      background: var(--highlight-solution);
-      color: #000;
+    .welcome-note .highlight {
+      color: var(--accent);
       font-weight: bold;
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 8px;
+    }
+
+    .formula-box {
+      background: rgba(29, 185, 84, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box {
+      background: rgba(0,0,0,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .calculation-box strong {
+      color: var(--accent);
+    }
+
+    .answer-box {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .warning-box {
+      background: rgba(244, 67, 54, 0.1);
+      border-left: 4px solid #f44336;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+      border-radius: 12px;
+      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: var(--shadow-in);
+      border-radius: 3px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--shadow-in);
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--accent);
+      font-weight: bold;
+      background: rgba(0,0,0,0.1);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     .explore-btn {
@@ -205,24 +290,20 @@
       border: none;
       padding: 10px 20px;
       border-radius: 20px;
-      color: #fff;
+      color: #000;
       cursor: pointer;
       box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
       font-size: 16px;
-      margin: 20px auto 0;
+      margin: 24px auto 0;
       display: block;
       text-align: center;
+      font-weight: bold;
     }
 
     .explore-btn:active {
       box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
     }
 
-    body.light .explore-btn {
-      color: #000;
-    }
-
-    /* Footer Nav Bar */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -272,522 +353,443 @@
     .nav-bar .nav-item.active p {
       display: block;
     }
-    </style>
+
+    .memory-aid {
+      background: rgba(29, 185, 84, 0.15);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .component-box {
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .component-box h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
+      color: #000;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    }
+
+    .shortcut-box {
+      background: rgba(255, 193, 7, 0.2);
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .shortcut-box h4 {
+      color: #ffc107;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .checklist-box {
+      background: rgba(29, 185, 84, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .checklist-box li {
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .checklist-box li:before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+
+    .practice-box {
+      background: rgba(33, 150, 243, 0.1);
+      border-left: 4px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .practice-box strong {
+      color: #2196f3;
+    }
+
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .fraction .top {
+      border-bottom: 1px solid var(--text-primary);
+      display: block;
+      padding: 0 2px;
+    }
+
+    .fraction .bottom {
+      display: block;
+      padding: 0 2px;
+    }
+
+    .sqrt {
+      font-family: 'Courier New', monospace;
+    }
+  </style>
 </head>
 <body class="dark">
   <div class="container">
+    <!-- Top Fixed Bar -->
     <div class="top-bar neumorphic">
       <button class="neumorphic-btn">←</button>
-      <div class="header">Coordinate Geometry</div>
+      <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
         <button class="neumorphic-btn profile-upload">
-          📷
+          🚀
           <input type="file" accept="image/*" id="profile-upload">
         </button>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Coordinate Geometry Made Simple for JAMB</h1>
-        <p class="subtitle">Explained like you're just starting SS1</p>
+        <h1>Loci! 📍</h1>
+        <p class="subtitle">– JAMB Chapter 13</p>
       </div>
 
       <div class="welcome-note neumorphic">
-        <h2>Coordinate Geometry Made Simple for JAMB</h2>
-        <p>I will teach you everything step-by-step in very easy English, like a friend explaining to you. We use the Cartesian plane (x-y graph). Every point has coordinates (x, y).</p>
-        <p>We will cover (a), (b), (c), (d) one by one with clear formulas, why they work, and then exactly 10 JAMB-style examples with full solutions for each part. All examples are either real past JAMB/WAEC questions or very similar ones that appear every year.</p>
+        <h2>📚 What is a Locus?</h2>
+        
+        <p>A <span class="highlight">locus</span> (plural: loci) is the path traced out by a point that moves according to a specific rule or set of conditions.</p>
 
-        <h2>(a) Midpoint and Gradient (Slope) of a Line Segment</h2>
-        <p>Midpoint – The middle point of the line joining two points.<br>
-It is the average of the x-coordinates and the average of the y-coordinates.<br>
-<strong>Formula:</strong><br>
-If A(x₁, y₁) and B(x₂, y₂), then Midpoint M = ( (x₁ + x₂)/2 , (y₁ + y₂)/2 )<br>
-Gradient (Slope) m – How steep the line is.<br>
-<strong>Formula:</strong><br>
-m = (y₂ − y₁) / (x₂ − x₁)<br>
-(Rise over Run)<br>
-Positive m = line going up from left to right<br>
-Negative m = line going down<br>
-m = 0 → horizontal line<br>
-m undefined → vertical line (x = constant)</p>
-
-        <h3>10 JAMB Examples for (a) – Midpoint & Gradient</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1 (Midpoint)</div>
-          <div class="example-problem">
-The midpoint of XY is (−4, −2). If X is (−8, −12), find the coordinates of Y.<br>
-Step 1: Let Y = (p, q)<br>
-Step 2: (−8 + p)/2 = −4 → −8 + p = −8 → p = 0<br>
-Step 3: (−12 + q)/2 = −2 → −12 + q = −4 → q = 8
-          </div>
-          <div class="example-solution">Answer: (0, 8)</div>
+        <div class="memory-aid">
+          💡 Simple Definition: A locus is the set of all points that satisfy a given geometric condition.
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2 (Midpoint)</div>
-          <div class="example-problem">
-Find the midpoint of A(−4, 6) and B(2, −8).<br>
-Step 1: x = (−4 + 2)/2 = −2/2 = −1<br>
-Step 2: y = (6 + (−8))/2 = −2/2 = −1
-          </div>
-          <div class="example-solution">Answer: (−1, −1)</div>
+        <div class="section-header">📋 SUMMARY TABLE OF LOCI</div>
+
+        <h2>All Loci Formulas 📊</h2>
+        
+        <div class="table-wrapper">
+          <table>
+            <tr>
+              <th>Condition</th>
+              <th>Locus</th>
+              <th>Key Features</th>
+            </tr>
+            <tr>
+              <td>Equidistant from 2 points</td>
+              <td>Perpendicular bisector</td>
+              <td>Passes through midpoint ⊥ to AB</td>
+            </tr>
+            <tr>
+              <td>Equidistant from 2 lines</td>
+              <td>Angle bisectors (pair)</td>
+              <td>Two lines bisecting angles</td>
+            </tr>
+            <tr>
+              <td>Constant distance from point</td>
+              <td>Circle</td>
+              <td>Center at point, radius = distance</td>
+            </tr>
+            <tr>
+              <td>Constant distance from line</td>
+              <td>Two parallel lines</td>
+              <td>One each side of given line</td>
+            </tr>
+            <tr>
+              <td>Equidistant from point & line</td>
+              <td>Parabola</td>
+              <td>Focus = point, Directrix = line</td>
+            </tr>
+            <tr>
+              <td>Constant ratio e from focus/directrix</td>
+              <td>Conic section</td>
+              <td>e&lt;1: Ellipse, e=1: Parabola, e&gt;1: Hyperbola</td>
+            </tr>
+          </table>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3 (Midpoint)</div>
-          <div class="example-problem">
-P(1, 3) and Q(5, 7). Find midpoint.<br>
-Step 1: x = (1+5)/2 = 6/2 = 3<br>
-Step 2: y = (3+7)/2 = 10/2 = 5
-          </div>
-          <div class="example-solution">Answer: (3, 5)</div>
+        <div class="section-header">1️⃣ EQUIDISTANT FROM TWO POINTS</div>
+
+        <h2>Perpendicular Bisector 📏</h2>
+        
+        <div class="formula-box">
+          <strong>Rule:</strong> The perpendicular bisector of the line joining the two points.<br><br>
+          If P(x,y) is equidistant from A(x₁,y₁) and B(x₂,y₂):<br>
+          <span class="sqrt">√</span>[(x-x₁)²+(y-y₁)²] = <span class="sqrt">√</span>[(x-x₂)²+(y-y₂)²]
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 4 (Gradient)</div>
-          <div class="example-problem">
-Find the gradient of the line joining P(1, 1) and Q(2, 5).<br>
-Step 1: m = (y2 − y1)/(x2 − x1) = (5 − 1)/(2 − 1) = 4/1 = 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
+        <h3>🔢 Example 1: Two Points</h3>
+        <p>Find the locus of P(x,y) equidistant from A(2,3) and B(6,7).</p>
+        
+        <div class="calculation-box">
+          PA = PB<br><br>
+          
+          <span class="sqrt">√</span>[(x-2)²+(y-3)²] = <span class="sqrt">√</span>[(x-6)²+(y-7)²]<br><br>
+          
+          Squaring both sides:<br>
+          (x-2)²+(y-3)² = (x-6)²+(y-7)²<br><br>
+          
+          Expanding:<br>
+          x²-4x+4+y²-6y+9 = x²-12x+36+y²-14y+49<br><br>
+          
+          Simplifying:<br>
+          -4x-6y+13 = -12x-14y+85<br>
+          8x+8y = 72
+        </div>
+        <div class="answer-box">x + y = 9</div>
+        <p style="text-align: center; color: var(--text-secondary); font-size: 14px;">(Straight line - perpendicular bisector of AB)</p>
+
+        <div class="section-header">2️⃣ EQUIDISTANT FROM TWO LINES</div>
+
+        <h2>Angle Bisectors 📐</h2>
+        
+        <div class="formula-box">
+          <strong>Rule:</strong> The angle bisectors of the angles formed by the two lines.<br><br>
+          Distance from point (x,y) to line ax+by+c=0:<br>
+          d = |ax+by+c|/√(a²+b²)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 5 (Gradient)</div>
-          <div class="example-problem">
-Find gradient of line through (−2, 0) and (0, −4).<br>
-Step 1: m = (−4 − 0)/(0 − (−2)) = (−4)/2 = −2
-          </div>
-          <div class="example-solution">Answer: −2</div>
+        <h3>🔢 Example 2: Two Intersecting Lines</h3>
+        <p>Find locus equidistant from 3x+4y-7=0 and 5x-12y+3=0.</p>
+        
+        <div class="calculation-box">
+          |3x+4y-7|/√(3²+4²) = |5x-12y+3|/√(5²+12²)<br><br>
+          
+          |3x+4y-7|/5 = |5x-12y+3|/13<br><br>
+          
+          <strong>Case 1:</strong> 13(3x+4y-7) = 5(5x-12y+3)<br>
+          39x+52y-91 = 25x-60y+15<br>
+          14x+112y-106 = 0<br>
+          <strong>7x+56y-53 = 0</strong><br><br>
+          
+          <strong>Case 2:</strong> 13(3x+4y-7) = -5(5x-12y+3)<br>
+          39x+52y-91 = -25x+60y-15<br>
+          64x-8y-76 = 0<br>
+          <strong>16x-2y-19 = 0</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 6 (Gradient)</div>
-          <div class="example-problem">
-Calculate gradient of (3, −2) and (−1, 4).<br>
-Step 1: m = (4 − (−2))/(−1 − 3) = (4 + 2)/(−4) = 6/−4 = −3/2
-          </div>
-          <div class="example-solution">Answer: −3/2</div>
+        <div class="section-header">3️⃣ CONSTANT DISTANCE FROM POINT</div>
+
+        <h2>Circle ⭕</h2>
+        
+        <div class="formula-box">
+          <strong>Rule:</strong> A circle with the fixed point as center and constant distance as radius.<br><br>
+          Equation: (x-a)² + (y-b)² = r²<br>
+          Center: (a,b), Radius: r
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 7 (Both)</div>
-          <div class="example-problem">
-Points A(2, 3), B(5, 7). Find midpoint and gradient.<br>
-Step 1: Midpoint x = (2+5)/2 = 3.5<br>
-Step 2: Midpoint y = (3+7)/2 = 5<br>
-Step 3: Gradient m = (7−3)/(5−2) = 4/3
-          </div>
-          <div class="example-solution">Answer: Midpoint (3.5, 5), Gradient 4/3</div>
+        <h3>🔢 Example 3: Circle Locus</h3>
+        <p>Find locus of point always 5 units from (2,-3).</p>
+        
+        <div class="calculation-box">
+          (x-2)² + (y-(-3))² = 5²<br>
+          (x-2)² + (y+3)² = 25<br><br>
+          
+          Expanding:<br>
+          x²-4x+4+y²+6y+9 = 25<br>
+          x²+y²-4x+6y+13 = 25
+        </div>
+        <div class="answer-box">x² + y² - 4x + 6y - 12 = 0</div>
+
+        <div class="section-header">4️⃣ CONSTANT DISTANCE FROM LINE</div>
+
+        <h2>Parallel Lines 🔄</h2>
+        
+        <div class="formula-box">
+          <strong>Rule:</strong> Two parallel lines, one on each side of the given line.<br><br>
+          Distance d from line ax+by+c=0 gives two lines:<br>
+          ax+by+c = ±d√(a²+b²)
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 8 (Gradient)</div>
-          <div class="example-problem">
-Gradient of line joining (x, 4) and (3, −2) is 3/2. Find x.<br>
-Step 1: m = (−2 − 4)/(3 − x) = 3/2<br>
-Step 2: −6/(3 − x) = 3/2<br>
-Step 3: Cross multiply: −12 = 3(3 − x)<br>
-Step 4: −12 = 9 − 3x<br>
-Step 5: −21 = −3x → x = 7
-          </div>
-          <div class="example-solution">Answer: 7</div>
+        <h3>🔢 Example 4: Parallel Lines</h3>
+        <p>Find locus of points at distance 3 units from line 4x-3y+5=0.</p>
+        
+        <div class="calculation-box">
+          |4x-3y+5|/√(4²+(-3)²) = 3<br>
+          |4x-3y+5|/5 = 3<br>
+          |4x-3y+5| = 15<br><br>
+          
+          <strong>Case 1:</strong> 4x-3y+5 = 15<br>
+          <strong>4x-3y-10 = 0</strong><br><br>
+          
+          <strong>Case 2:</strong> 4x-3y+5 = -15<br>
+          <strong>4x-3y+20 = 0</strong>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 9 (Midpoint)</div>
-          <div class="example-problem">
-Midpoint of AB is (1, −1). If A is (−4, 6), find B.<br>
-Step 1: Let B = (p, q)<br>
-Step 2: (−4 + p)/2 = 1 → −4 + p = 2 → p = 6<br>
-Step 3: (6 + q)/2 = −1 → 6 + q = −2 → q = −8
-          </div>
-          <div class="example-solution">Answer: (6, −8)</div>
+        <div class="section-header">5️⃣ EQUIDISTANT FROM POINT & LINE</div>
+
+        <h2>Parabola 📈</h2>
+        
+        <div class="memory-aid">
+          💡 This is the geometric definition of a parabola: locus equidistant from focus (point) and directrix (line).
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 10 (Gradient)</div>
-          <div class="example-problem">
-Line through (1, 2) and (4, 8). Gradient?<br>
-Step 1: m = (8 − 2)/(4 − 1) = 6/3 = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
+        <h3>🔢 Example 5: Parabola</h3>
+        <p>Find locus equidistant from point (0,3) and line y=-3.</p>
+        
+        <div class="calculation-box">
+          Distance to (0,3) = Distance to y=-3<br><br>
+          
+          <span class="sqrt">√</span>[(x-0)²+(y-3)²] = |y-(-3)|<br>
+          <span class="sqrt">√</span>[x²+(y-3)²] = |y+3|<br><br>
+          
+          Squaring:<br>
+          x²+(y-3)² = (y+3)²<br>
+          x²+y²-6y+9 = y²+6y+9<br>
+          x² = 12y
+        </div>
+        <div class="answer-box">x² = 12y</div>
+        <p style="text-align: center; color: var(--text-secondary); font-size: 14px;">(Parabola opening upward, vertex at origin)</p>
+
+        <div class="section-header">📝 JAMB PRACTICE QUESTIONS</div>
+
+        <h2>Worked Examples 🎯</h2>
+
+        <h3>Question 1 (Basic):</h3>
+        <p>Find locus equidistant from A(1,2) and B(5,6).</p>
+        
+        <div class="calculation-box">
+          <span class="sqrt">√</span>[(x-1)²+(y-2)²] = <span class="sqrt">√</span>[(x-5)²+(y-6)²]<br><br>
+          
+          (x-1)²+(y-2)² = (x-5)²+(y-6)²<br>
+          x²-2x+1+y²-4y+4 = x²-10x+25+y²-12y+36<br>
+          8x+8y = 56
+        </div>
+        <div class="answer-box">x + y = 7</div>
+
+        <h3>Question 2 (Intermediate):</h3>
+        <p>Point P moves so its distance from origin is twice its distance from (3,0). Find the locus.</p>
+        
+        <div class="calculation-box">
+          PO = 2 × P(3,0)<br>
+          <span class="sqrt">√</span>[x²+y²] = 2<span class="sqrt">√</span>[(x-3)²+y²]<br><br>
+          
+          x²+y² = 4[(x-3)²+y²]<br>
+          x²+y² = 4x²-24x+36+4y²<br>
+          0 = 3x²-24x+36+3y²<br>
+          x²-8x+12+y² = 0<br>
+          (x-4)²+y² = 4
+        </div>
+        <div class="answer-box">Circle: center (4,0), radius 2</div>
+
+        <h3>Question 3 (Advanced - Ellipse):</h3>
+        <p>Find locus where sum of distances from (-3,0) and (3,0) is always 10.</p>
+        
+        <div class="calculation-box">
+          This is an ellipse definition:<br>
+          Foci at (±3,0), so c = 3<br>
+          Major axis 2a = 10, so a = 5<br><br>
+          
+          b² = a²-c² = 25-9 = 16<br>
+          b = 4
+        </div>
+        <div class="answer-box"><span class="fraction"><span class="top">x²</span><span class="bottom">25</span></span> + <span class="fraction"><span class="top">y²</span><span class="bottom">16</span></span> = 1</div>
+
+        <div class="tips-box">
+          <h3>💡 Key Tips for JAMB</h3>
+          <p>1. <strong>Always sketch:</strong> Draw diagram to visualize</p>
+          <p>2. <strong>Use distance formula:</strong> <span class="sqrt">√</span>[(x₂-x₁)²+(y₂-y₁)²]</p>
+          <p>3. <strong>Simplify carefully:</strong> Expand and collect like terms</p>
+          <p>4. <strong>Check your answer:</strong> Test a point on your locus</p>
+          <p>5. <strong>Know standard forms:</strong> Circle, Parabola, Ellipse, Hyperbola</p>
         </div>
 
-        <h2>(b) Distance Between Two Points</h2>
-        <p>This is just the straight-line distance (like using ruler).<br>
-It comes from Pythagoras theorem.<br>
-<strong>Formula:</strong><br>
-Distance d = √[ (x₂ − x₁)² + (y₂ − y₁)² ]</p>
-
-        <h3>10 JAMB Examples for (b) – Distance</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1</div>
-          <div class="example-problem">
-Distance between P(5, 3) and Q(8, 7).<br>
-Step 1: √[(8−5)² + (7−3)²] = √[3² + 4²] = √[9 + 16] = √25 = 5 units
-          </div>
-          <div class="example-solution">Answer: 5 units</div>
+        <div class="shortcut-box">
+          <h4>⚡ Common JAMB Patterns</h4>
+          <p>🔹 "Equidistant from two points" → Perpendicular bisector</p>
+          <p>🔹 "Constant distance from point" → Circle</p>
+          <p>🔹 "Sum of distances constant" → Ellipse</p>
+          <p>🔹 "Difference of distances constant" → Hyperbola</p>
+          <p>🔹 "Equidistant from point and line" → Parabola</p>
+          <p>🔹 "Constant distance from line" → Parallel lines</p>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 2</div>
-          <div class="example-problem">
-Distance between (½, ½) and (−½, −½).<br>
-Step 1: √[(−½−½)² + (−½−½)²] = √[(−1)² + (−1)²] = √[1 + 1] = √2
-          </div>
-          <div class="example-solution">Answer: √2</div>
+        <div class="checklist-box">
+          <h3>Pre-Exam Checklist:</h3>
+          <ul>
+            <li>Distance formula memorized</li>
+            <li>Perpendicular bisector derivation</li>
+            <li>Angle bisector formula (two cases)</li>
+            <li>Circle equation from center/radius</li>
+            <li>Parallel lines from distance</li>
+            <li>Parabola definition (focus/directrix)</li>
+            <li>Conic sections identification (e values)</li>
+            <li>Algebraic expansion skills</li>
+            <li>Standard form recognition</li>
+          </ul>
         </div>
 
-        <div class="example-block">
-          <div class="example-problem">Example 3</div>
-          <div class="example-problem">
-Points L(−1, −6) and M(−3, −5).<br>
-Step 1: √[(−3−(−1))² + (−5−(−6))²] = √[(−2)² + 1²] = √[4 + 1] = √5
-          </div>
-          <div class="example-solution">Answer: √5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 4</div>
-          <div class="example-problem">
-Distance between (2, 5) and (5, 9).<br>
-Step 1: √[(5−2)² + (9−5)²] = √[3² + 4²] = √[9+16] = √25 = 5
-          </div>
-          <div class="example-solution">Answer: 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 5</div>
-          <div class="example-problem">
-Distance between (−2, −3) and (−2, 4).<br>
-Step 1: √[(−2−(−2))² + (4−(−3))²] = √[0 + 7²] = √49 = 7
-          </div>
-          <div class="example-solution">Answer: 7</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 6</div>
-          <div class="example-problem">
-Distance between (x, 1) and (3, 5) is 5. Find possible x.<br>
-Step 1: √[(3−x)² + (5−1)²] = 5<br>
-Step 2: (3−x)² + 16 = 25<br>
-Step 3: (3−x)² = 9<br>
-Step 4: 3−x = ±3<br>
-Step 5: x = 0 or x = 6
-          </div>
-          <div class="example-solution">Answer: x = 0 or x = 6</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 7</div>
-          <div class="example-problem">
-Points C(2, 2) and D(5, 6). Distance?<br>
-Step 1: √[(5−2)² + (6−2)²] = √[9+16] = √25 = 5
-          </div>
-          <div class="example-solution">Answer: 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 8</div>
-          <div class="example-problem">
-Distance between (0, 0) and (3, 4).<br>
-Step 1: √[3² + 4²] = √[9+16] = √25 = 5
-          </div>
-          <div class="example-solution">Answer: 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 9</div>
-          <div class="example-problem">
-A(1, 2), B(4, 2), C(1, 6). Length of AC?<br>
-Step 1: √[(1−1)² + (6−2)²] = √[0 + 16] = 4
-          </div>
-          <div class="example-solution">Answer: 4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 10</div>
-          <div class="example-problem">
-Distance between (x, 3) and (−x, 2) is 5. Find x.<br>
-Step 1: √[(−x−x)² + (2−3)²] = 5<br>
-Step 2: √[(−2x)² + (−1)²] = 5<br>
-Step 3: 4x² + 1 = 25<br>
-Step 4: 4x² = 24<br>
-Step 5: x² = 6 → x = ±√6
-          </div>
-          <div class="example-solution">Answer: x = ±√6</div>
-        </div>
-
-        <h2>(c) Parallel and Perpendicular Lines</h2>
-        <p>Parallel lines → same gradient (m₁ = m₂)<br>
-Perpendicular lines → product of gradients = −1 (m₁ × m₂ = −1)<br>
-(Vertical and horizontal are always perpendicular)</p>
-
-        <h3>10 JAMB Examples for (c)</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1</div>
-          <div class="example-problem">
-Gradient of line perpendicular to 3x + 2y + 1 = 0.<br>
-Step 1: Rewrite: 2y = −3x −1 → y = −(3/2)x − 1/2 → m = −3/2<br>
-Step 2: Perp m = −1 / (−3/2) = 2/3
-          </div>
-          <div class="example-solution">Answer: 2/3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 2</div>
-          <div class="example-problem">
-Line 3x + y = 5 is perpendicular to y = mx + 7. Find m.<br>
-Step 1: First line: y = −3x + 5 → m1 = −3<br>
-Step 2: m1 × m = −1 → −3 m = −1 → m = 1/3
-          </div>
-          <div class="example-solution">Answer: 1/3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 3</div>
-          <div class="example-problem">
-Line through (−1, −p) and (−2, 2) is parallel to 2y + 8x − 17 = 0 (gradient = −4). Find p.<br>
-Step 1: m of given = −4 (from y = −4x + 17/2)<br>
-Step 2: m = (2 − (−p))/(−2 − (−1)) = (2 + p)/(−1) = −2 − p<br>
-Step 3: −2 − p = −4 → −p = −2 → p = 2
-          </div>
-          <div class="example-solution">Answer: 2</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 4</div>
-          <div class="example-problem">
-Two lines: y = 2x − 3 and kx − 4y + 5 = 0. Find k for parallel.<br>
-Step 1: Second line: 4y = kx + 5 → y = (k/4)x + 5/4 → m2 = k/4<br>
-Step 2: m1 = 2 = m2 → k/4 = 2 → k = 8
-          </div>
-          <div class="example-solution">Answer: 8</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 5</div>
-          <div class="example-problem">
-Line joining A(−3, 1) and B(5, y) perpendicular to y = 2x + 4. Find y.<br>
-Step 1: m given = 2, perp m = −1/2<br>
-Step 2: m AB = (y−1)/(5−(−3)) = (y−1)/8 = −1/2<br>
-Step 3: y−1 = −4 → y = −3
-          </div>
-          <div class="example-solution">Answer: −3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 6</div>
-          <div class="example-problem">
-Are lines y = 3x + 1 and 3y = 9x − 6 parallel?<br>
-Step 1: Second: 3y = 9x − 6 → y = 3x − 2 → m=3<br>
-Step 2: First m=3, same m → parallel
-          </div>
-          <div class="example-solution">Answer: Yes</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 7</div>
-          <div class="example-problem">
-Find gradient of line perpendicular to y = −4x + 2.<br>
-Step 1: m = −4<br>
-Step 2: perp m = −1/(−4) = 1/4
-          </div>
-          <div class="example-solution">Answer: 1/4</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 8</div>
-          <div class="example-problem">
-Line L1: 3x − 2y = 4. L2 parallel to L1 through (0,0). Equation of L2?<br>
-Step 1: m L1 = 3/2 (from 2y = 3x − 4)<br>
-Step 2: L2 through (0,0): y = (3/2)x → 3x − 2y = 0
-          </div>
-          <div class="example-solution">Answer: 3x − 2y = 0</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 9</div>
-          <div class="example-problem">
-Points P(2,3), Q(4,7), R(x,11) collinear. Find x (same gradient).<br>
-Step 1: m PQ = (7−3)/(4−2) = 4/2 = 2<br>
-Step 2: m PR = (11−3)/(x−2) = 8/(x−2) = 2<br>
-Step 3: 8 = 2(x−2) → 8 = 2x − 4 → 2x = 12 → x = 6
-          </div>
-          <div class="example-solution">Answer: 6</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 10</div>
-          <div class="example-problem">
-Line through (1,2) parallel to segment joining (4,1) and (2,5).<br>
-Step 1: m segment = (5−1)/(2−4) = 4/(−2) = −2<br>
-Step 2: Parallel same m = −2<br>
-Step 3: y − 2 = −2(x − 1) → y = −2x + 4
-          </div>
-          <div class="example-solution">Answer: y = −2x + 4</div>
-        </div>
-
-        <h2>(d) Equations of Straight Lines</h2>
-        <p>Four common forms you MUST know:<br>
-<strong>Slope-intercept form:</strong> y = mx + c   (c = y-intercept)<br>
-<strong>Point-slope form:</strong> y − y₁ = m(x − x₁)<br>
-<strong>Two-point form:</strong> (y − y₁)/(y₂ − y₁) = (x − x₁)/(x₂ − x₁)<br>
-<strong>General form:</strong> ax + by + c = 0</p>
-
-        <h3>10 JAMB Examples for (d) – Equations of Lines</h3>
-
-        <div class="example-block">
-          <div class="example-problem">Example 1</div>
-          <div class="example-problem">
-Equation of line through (2, 5) with gradient −3.<br>
-Step 1: Use point-slope: y − 5 = −3(x − 2)<br>
-Step 2: y − 5 = −3x + 6<br>
-Step 3: y = −3x + 11
-          </div>
-          <div class="example-solution">Answer: y = −3x + 11</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 2</div>
-          <div class="example-problem">
-Line parallel to y = −4x + 2 passing through (2, 3).<br>
-Step 1: Same m = −4<br>
-Step 2: y − 3 = −4(x − 2)<br>
-Step 3: y − 3 = −4x + 8<br>
-Step 4: y = −4x + 11
-          </div>
-          <div class="example-solution">Answer: y = −4x + 11</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 3</div>
-          <div class="example-problem">
-Equation of line through (1, −3) and (3, 1).<br>
-Step 1: m = (1 − (−3))/(3 − 1) = 4/2 = 2<br>
-Step 2: y + 3 = 2(x − 1)<br>
-Step 3: y + 3 = 2x − 2<br>
-Step 4: y = 2x − 5
-          </div>
-          <div class="example-solution">Answer: y = 2x − 5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 4</div>
-          <div class="example-problem">
-Find equation of line perpendicular to 2x − y = 5 passing through (4, 1).<br>
-Step 1: Given line m = 2 (from y = 2x − 5)<br>
-Step 2: Perp m = −1/2<br>
-Step 3: y − 1 = (−1/2)(x − 4)<br>
-Step 4: y − 1 = (−1/2)x + 2<br>
-Step 5: y = (−1/2)x + 3
-          </div>
-          <div class="example-solution">Answer: y = (−1/2)x + 3</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 5</div>
-          <div class="example-problem">
-Line through origin parallel to 3x − 2y = 4.<br>
-Step 1: m = 3/2 (from y = (3/2)x − 2)<br>
-Step 2: Through (0,0): y = (3/2)x<br>
-Step 3: 3x − 2y = 0
-          </div>
-          <div class="example-solution">Answer: 3x − 2y = 0</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 6</div>
-          <div class="example-problem">
-Find equation in general form: gradient 2, passes through (1, 2).<br>
-Step 1: y − 2 = 2(x − 1)<br>
-Step 2: y − 2 = 2x − 2<br>
-Step 3: y − 2x = 0
-          </div>
-          <div class="example-solution">Answer: y − 2x = 0</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 7</div>
-          <div class="example-problem">
-Line cuts x-axis at (3, 0). Gradient = 5. Equation?<br>
-Step 1: y − 0 = 5(x − 3)<br>
-Step 2: y = 5x − 15<br>
-Step 3: 5x − y − 15 = 0
-          </div>
-          <div class="example-solution">Answer: 5x − y − 15 = 0</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 8</div>
-          <div class="example-problem">
-Two-point form: through (1, 2) and (4, 8).<br>
-Step 1: (y−2)/(8−2) = (x−1)/(4−1)<br>
-Step 2: (y−2)/6 = (x−1)/3<br>
-Step 3: y−2 = 2(x−1)<br>
-Step 4: y = 2x
-          </div>
-          <div class="example-solution">Answer: y = 2x</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 9</div>
-          <div class="example-problem">
-Convert 3x − 5y = 7 to slope-intercept and state gradient.<br>
-Step 1: 5y = 3x − 7<br>
-Step 2: y = (3/5)x − 7/5<br>
-Step 3: Gradient = 3/5
-          </div>
-          <div class="example-solution">Answer: y = (3/5)x − 7/5, gradient 3/5</div>
-        </div>
-
-        <div class="example-block">
-          <div class="example-problem">Example 10</div>
-          <div class="example-problem">
-Find equation of line with gradient 3/2 passing through (−1, 4).<br>
-Step 1: y − 4 = (3/2)(x + 1)<br>
-Step 2: 2(y − 4) = 3(x + 1)<br>
-Step 3: 2y − 8 = 3x + 3<br>
-Step 4: 3x − 2y + 11 = 0
-          </div>
-          <div class="example-solution">Answer: 3x − 2y + 11 = 0</div>
-        </div>
-
-        <p style="text-align:center; font-size:18px; color:var(--accent); margin:40px 0;">
-          Abumchukwu, this is now the **complete Coordinate Geometry chapter** — all sections (a) to (d) fully expanded with teaching steps, and 10 JAMB examples each with step-by-step solutions. 🌟<br>
-          Practice one section per day. You will score very high in JAMB.
+        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
+          Excellent! 🌟 You now master Loci!
         </p>
 
-        <p style="text-align:center; margin:20px 0;">Want a quiz on Coordinate Geometry or the next topic?</p>
-        <button class="explore-btn" onclick="alert('Quiz mode coming soon! Tell me when you want it.')">Start Quiz</button>
+        <p style="text-align: center; margin: 20px 0;">Connects to Coordinate Geometry & Conic Sections</p>
+        <button class="explore-btn" onclick="window.location.href='loci-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
     </div>
   </div>
 
+  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
-    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">🔍</button>
+      <p>Search</p>
+    </div>
+    <div class="nav-item center">
+      <button class="neumorphic-btn">⭐</button>
+      <p>Favorite</p>
+    </div>
+    <div class="nav-item">
+      <button class="neumorphic-btn">📚</button>
+      <p>Library</p>
+    </div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+
     function setTheme(theme) {
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-    setTheme(localStorage.getItem('theme') || 'dark');
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
+    });
+
+    document.getElementById('profile-upload').addEventListener('change', (e) => {
+      if (e.target.files[0]) {
+        console.log('Profile picture selected!');
+      }
     });
   </script>
 </body>
