@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Support & Movement</title>
+<title>JAMB Biology - Support & Movement</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
@@ -15,6 +15,7 @@
 --sub:#b0b0d0;
 --accent:#1db954;
 --accent2:#ff6b6b;
+--accent3:#4ecdc4;
 --shadow1:#171723;
 --shadow2:#25253b;
 }
@@ -51,7 +52,7 @@ width:100%;
 max-width:420px;
 height:5px;
 background:#0002;
-z-index:10;
+z-index:20;
 }
 .progress-bar{
 height:100%;
@@ -69,14 +70,13 @@ padding:10px 15px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-z-index:10;
+z-index:20;
 background:var(--bg);
 border-radius:0 0 15px 15px;
 box-shadow:5px 5px 10px var(--shadow1),-5px -5px 10px var(--shadow2);
 }
 
 .header{font-weight:bold;color:var(--accent);}
-
 .right-icons{display:flex;gap:10px;}
 
 .neumorphic-btn{
@@ -86,16 +86,12 @@ border-radius:50%;
 background:var(--bg);
 box-shadow:3px 3px 6px var(--shadow1),-3px -3px 6px var(--shadow2);
 cursor:pointer;
+font-size:16px;
 }
 
 /* CONTENT */
 .content{padding:80px 15px;}
-
-.main-header{
-text-align:center;
-margin-bottom:20px;
-}
-
+.main-header{text-align:center;margin-bottom:20px;}
 .subtitle{color:var(--sub);}
 
 /* CARD */
@@ -108,10 +104,10 @@ box-shadow:5px 5px 10px var(--shadow1),-5px -5px 10px var(--shadow2);
 }
 
 h2{color:var(--accent);margin-bottom:10px;}
-h3{margin-top:10px;color:#4ecdc4;}
+h3{margin-top:10px;color:var(--accent3);}
 h4{color:var(--accent2);}
 
-/* QUICK FACTS */
+/* FACTS */
 .quick-facts{
 background:#1db95422;
 padding:10px;
@@ -128,9 +124,7 @@ margin-top:10px;
 }
 
 /* TABLE */
-.table-container{
-overflow-x:auto;
-}
+.table-container{overflow-x:auto;}
 .summary-table{
 min-width:500px;
 border-collapse:collapse;
@@ -184,6 +178,7 @@ padding:12px;
 border-radius:20px;
 margin:20px auto;
 display:block;
+cursor:pointer;
 }
 
 /* NAV */
@@ -196,6 +191,7 @@ display:flex;
 justify-content:space-around;
 background:var(--bg);
 padding:10px;
+box-shadow:0 -5px 10px var(--shadow1);
 }
 .nav-item{text-align:center;font-size:12px;}
 .nav-item.center{transform:translateY(-10px);}
@@ -203,7 +199,6 @@ padding:10px;
 </head>
 
 <body class="dark">
-
 <div class="container" id="scroll-container">
 
 <!-- PROGRESS -->
@@ -211,16 +206,17 @@ padding:10px;
 <div class="progress-bar" id="progress-bar"></div>
 </div>
 
-<!-- TOP -->
+<!-- TOP BAR -->
 <div class="top-bar">
 <button class="neumorphic-btn" onclick="history.back()">←</button>
 <div class="header">BIOLOGY</div>
 <div class="right-icons">
 <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-<button class="neumorphic-btn">🚀</button>
+<button class="neumorphic-btn" onclick="alert('📖 Bookmarked!')">🚀</button>
 </div>
 </div>
 
+<!-- CONTENT -->
 <div class="content">
 
 <div class="main-header">
@@ -228,14 +224,14 @@ padding:10px;
 <p class="subtitle">JAMB Chapter 9</p>
 </div>
 
-<!-- SECTION -->
 <div class="section-card">
 <h2>Why Support & Movement?</h2>
 
 <div class="quick-facts">
 <h4>Support</h4>
 <ul>
-<li>Maintains shape</li>
+<li>Maintains body shape</li>
+<li>Keeps organism upright</li>
 <li>Prevents collapse</li>
 </ul>
 </div>
@@ -243,15 +239,15 @@ padding:10px;
 <div class="quick-facts">
 <h4>Movement</h4>
 <ul>
-<li>Escape danger</li>
-<li>Find food</li>
+<li>Search for food</li>
+<li>Escape predators</li>
+<li>Respond to stimuli</li>
 </ul>
 </div>
 
-<div class="memory-tip">No support = No survival</div>
+<div class="memory-tip">No support + no movement = No survival!</div>
 </div>
 
-<!-- PLANTS -->
 <div class="section-card">
 <h2>Movement in Plants</h2>
 
@@ -260,33 +256,31 @@ padding:10px;
 
 <div class="table-container">
 <table class="summary-table">
-<tr><th>Type</th><th>Stimulus</th></tr>
-<tr><td>Phototropism</td><td>Light</td></tr>
-<tr><td>Geotropism</td><td>Gravity</td></tr>
-<tr><td>Hydrotropism</td><td>Water</td></tr>
-<tr><td>Thigmotropism</td><td>Touch</td></tr>
+<tr><th>Type</th><th>Stimulus</th><th>Response</th></tr>
+<tr><td>Phototropism</td><td>Light</td><td>Shoot bends to light</td></tr>
+<tr><td>Geotropism</td><td>Gravity</td><td>Root down, shoot up</td></tr>
+<tr><td>Hydrotropism</td><td>Water</td><td>Roots move to water</td></tr>
+<tr><td>Thigmotropism</td><td>Touch</td><td>Climbers wrap</td></tr>
 </table>
 </div>
 </div>
 
-<!-- SKELETON -->
 <div class="section-card">
 <h2>Types of Skeleton</h2>
 
 <div class="comparison-grid">
 <div class="comparison-card">
 <h5>Exoskeleton</h5>
-<ul><li>Outside</li><li>Chitin</li></ul>
+<ul><li>Outside body</li><li>Chitin</li><li>Insects</li></ul>
 </div>
 
 <div class="comparison-card">
 <h5>Endoskeleton</h5>
-<ul><li>Inside</li><li>Bone</li></ul>
+<ul><li>Inside body</li><li>Bone + cartilage</li><li>Humans</li></ul>
 </div>
 </div>
 </div>
 
-<!-- VERTEBRAL -->
 <div class="section-card">
 <h2>Vertebral Column</h2>
 
@@ -294,22 +288,23 @@ padding:10px;
 
 <div class="table-container">
 <table class="summary-table">
-<tr><th>Region</th><th>Function</th></tr>
-<tr><td>Cervical</td><td>Neck movement</td></tr>
-<tr><td>Thoracic</td><td>Rib attachment</td></tr>
-<tr><td>Lumbar</td><td>Weight support</td></tr>
-<tr><td>Sacral</td><td>Pelvis link</td></tr>
-<tr><td>Caudal</td><td>Balance</td></tr>
+<tr><th>Region</th><th>Number</th><th>Function</th></tr>
+<tr><td>Cervical</td><td>7</td><td>Neck movement</td></tr>
+<tr><td>Thoracic</td><td>12</td><td>Rib attachment</td></tr>
+<tr><td>Lumbar</td><td>5</td><td>Body weight</td></tr>
+<tr><td>Sacral</td><td>5</td><td>Pelvis link</td></tr>
+<tr><td>Caudal</td><td>4</td><td>Balance</td></tr>
 </table>
 </div>
 </div>
 
-<!-- ALERT -->
 <div class="jamb-alert">
 <h4>JAMB HOT POINTS</h4>
 <ul>
 <li>33 vertebrae</li>
 <li>Femur longest bone</li>
+<li>Auxin controls tropism</li>
+<li>Exoskeleton = chitin</li>
 </ul>
 </div>
 
@@ -321,12 +316,12 @@ padding:10px;
 <!-- NAV -->
 <div class="nav-bar">
 <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
-<div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Fav</p></div>
+<div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Favorite</p></div>
 <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
 </div>
 
 <script>
-// THEME
+// THEME TOGGLE
 document.getElementById('theme-toggle').onclick=()=>{
 document.body.classList.toggle('light');
 }
