@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JAMB Biology - Excretion</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+    :root{--bg:#1e1e2f;--si:#171723;--so:#25253b;--t:#fff;--a:#1db954;--d:#ff4d4d;--w:#ff9800;--info:#2196f3}
+    body.light{--bg:#e0e5ec;--si:#a3b1c6;--so:#ffffff;--t:#2d3748;--a:#48bb78;--d:#e53e3e;--w:#dd6b20;--info:#1976d2}
+    body{background:var(--bg);color:var(--t);min-height:100vh;line-height:1.6}
+    
+    #load{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
+    #load.hide{opacity:0;pointer-events:none}
+    .spinner{width:40px;height:40px;border:3px solid var(--si);border-top-color:var(--a);border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    
+    #access{display:none;min-height:100vh;padding:20px;align-items:center;justify-content:center}
+    .card{background:var(--bg);padding:32px;border-radius:16px;width:100%;max-width:400px;box-shadow:8px 8px 16px var(--si),-8px -8px 16px var(--so)}
+    .card h1{color:var(--a);margin-bottom:8px;font-size:24px}
+    .card p{color:#888;font-size:14px;margin-bottom:24px}
+    input{width:100%;padding:14px 16px;font-size:16px;border-radius:10px;border:none;background:var(--bg);color:var(--t);box-shadow:inset 3px 3px 6px var(--si),inset -3px -3px 6px var(--so);margin-bottom:16px}
+    input:focus{outline:2px solid var(--a)}
+    button.primary{width:100%;padding:14px;background:var(--a);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:4px 4px 8px var(--si);transition:transform .1s}
+    button.primary:active{transform:scale(.98)}
+    button.primary:disabled{opacity:.6;cursor:not-allowed}
+    .msg{margin-top:16px;padding:10px;border-radius:8px;font-size:13px;display:none}
+    .msg.show{display:block}
+    .msg.err{background:rgba(255,77,77,.1);color:var(--d)}
+    .msg.ok{background:rgba(29,185,84,.1);color:var(--a)}
+    
+    #quiz{display:none;max-width:800px;margin:0 auto;padding:80px 12px 100px}
+    
+    .top{position:fixed;top:0;left:0;right:0;height:56px;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:0 12px;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+    .top h1{font-size:15px;font-weight:600;flex:1;text-align:center}
+    .btn{width:36px;height:36px;border-radius:50%;background:var(--bg);border:none;color:var(--t);cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so);display:flex;align-items:center;justify-content:center;font-size:16px}
+    .btn:active{box-shadow:inset 2px 2px 4px var(--si),inset -2px -2px 4px var(--so)}
+    
+    .prog{position:fixed;top:56px;left:0;right:0;height:3px;background:var(--si);z-index:99}
+    .prog-bar{height:100%;background:var(--a);width:0%;transition:width .2s}
+    .prog-text{position:fixed;top:62px;right:12px;font-size:11px;background:var(--bg);padding:2px 8px;border-radius:10px;box-shadow:1px 1px 2px var(--si)}
+    
+    .q-cont{background:var(--bg);border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:4px 4px 8px var(--si),-4px -4px 8px var(--so)}
+    .timer{font-size:13px;margin-bottom:12px;color:#888;display:flex;align-items:center;gap:6px}
+    .timer.warn{color:var(--w);font-weight:600}
+    .timer.danger{color:var(--d);font-weight:600;animation:pulse 1s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+    .section-type{display:inline-block;padding:4px 12px;background:var(--a);color:#fff;font-size:11px;border-radius:20px;margin-bottom:10px;font-weight:600}
+    .question{font-size:15px;font-weight:600;margin-bottom:14px;padding:12px;background:rgba(0,0,0,.03);border-radius:8px;line-height:1.6}
+    
+    .opts{display:flex;flex-direction:column;gap:10px}
+    .opt{padding:14px 16px;background:var(--bg);border-radius:10px;cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so);display:flex;align-items:center;gap:12px;transition:all .15s;border:2px solid transparent}
+    .opt:hover{border-color:rgba(29,185,84,.3)}
+    .opt.sel{border-color:var(--a);background:rgba(29,185,84,.05);box-shadow:inset 2px 2px 4px var(--si),inset -2px -2px 4px var(--so)}
+    .opt-mark{width:26px;height:26px;border-radius:50%;background:var(--si);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+    .opt.sel .opt-mark{background:var(--a);color:#fff}
+    .opt p{font-size:14px;flex:1}
+    
+    .nav{position:fixed;bottom:0;left:0;right:0;height:70px;background:var(--bg);display:flex;align-items:center;justify-content:center;gap:12px;padding:0 12px;box-shadow:0 -2px 8px rgba(0,0,0,.1);z-index:100}
+    .nav-btn{padding:12px 24px;border-radius:8px;border:none;background:var(--bg);color:var(--t);font-size:14px;font-weight:600;cursor:pointer;box-shadow:3px 3px 6px var(--si),-3px -3px 6px var(--so)}
+    .nav-btn:disabled{opacity:.4;cursor:not-allowed}
+    .nav-btn.primary{background:var(--a);color:#fff}
+    .nav-center{width:48px;height:48px;border-radius:50%;background:var(--a);color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(29,185,84,.3)}
+    
+    .pop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px}
+    .pop.show{display:flex}
+    .pop-box{background:var(--bg);border-radius:16px;padding:20px;width:100%;max-width:360px;max-height:80vh;overflow-y:auto}
+    .pop-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .pop h3{font-size:16px}
+    .pop-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:16px}
+    .pop-grid button{aspect-ratio:1;border:none;border-radius:8px;background:var(--bg);color:var(--t);font-size:12px;font-weight:600;cursor:pointer;box-shadow:2px 2px 4px var(--si),-2px -2px 4px var(--so)}
+    .pop-grid button.ans{background:var(--a);color:#fff}
+    .pop-grid button.cur{border:2px solid var(--a)}
+    
+    .res{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;overflow-y:auto}
+    .res.show{display:flex}
+    .res-box{background:var(--bg);padding:32px;border-radius:24px;box-shadow:8px 8px 16px var(--si),-8px -8px 12px var(--so);max-width:400px;width:100%}
+    .res-circle{width:140px;height:140px;border-radius:50%;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:6px 6px 12px var(--si),-6px -6px 12px var(--so)}
+    .res-score{font-size:36px;font-weight:800;color:var(--a)}
+    .res-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:4px}
+    .res h2{font-size:24px;margin-bottom:8px}
+    .res p{color:#888;margin-bottom:24px;font-size:15px;line-height:1.5}
+    .res-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+    .res-btns button{min-width:120px}
+    
+    .det{display:none;position:fixed;inset:0;background:var(--bg);z-index:250;overflow-y:auto;padding:80px 16px 24px}
+    .det-head{position:fixed;top:0;left:0;right:0;height:56px;background:var(--bg);display:flex;align-items:center;gap:12px;padding:0 16px;box-shadow:0 2px 8px rgba(0,0,0,.1);z-index:251}
+    .det h3{flex:1;font-size:16px}
+    .det-summary{background:var(--bg);padding:20px;border-radius:16px;margin-bottom:20px;box-shadow:4px 4px 8px var(--si),-4px -4px 8px var(--so);text-align:center}
+    .det-summary .big{font-size:48px;font-weight:800;color:var(--a)}
+    .det-item{margin-bottom:16px;padding:16px;background:rgba(0,0,0,.03);border-radius:12px;border-left:4px solid var(--d)}
+    .det-item.ok{border-left-color:var(--a)}
+    .det-item h4{font-size:13px;color:#888;margin-bottom:8px}
+    .det-item .q-text{font-size:15px;font-weight:600;margin-bottom:10px;padding:10px;background:var(--bg);border-radius:8px}
+    .det-item .ans-row{display:flex;gap:16px;margin-bottom:6px;font-size:14px}
+    .det-item .ans-row strong{min-width:80px}
+    .det-item .exp{font-size:13px;color:#666;margin-top:10px;padding:12px;background:var(--bg);border-radius:8px;box-shadow:inset 2px 2px 4px var(--si);line-height:1.6}
+    
+    .hide{display:none!important}
+    @media(max-width:400px){
+      .opt{padding:12px}
+      .res-box{padding:24px}
+      .res-circle{width:120px;height:120px}
+      .res-score{font-size:32px}
+      .pop-grid{grid-template-columns:repeat(5,1fr)}
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading -->
+  <div id="load"><div class="spinner"></div></div>
+
+  <!-- Access -->
+  <div id="access">
+    <div class="card">
+      <h1>🔐 JAMB Biology</h1>
+      <p>Chapter 8: Excretion<br>Enter your 8-character access code</p>
+      <input type="text" id="code" placeholder="XXXXXXXX" maxlength="8" autocomplete="off">
+      <button class="primary" id="unlockBtn" onclick="unlock()">Start Quiz</button>
+      <div class="msg" id="msg"></div>
+    </div>
+  </div>
+
+  <!-- Quiz -->
+  <div id="quiz">
+    <div class="top">
+      <button class="btn" onclick="exit()">←</button>
+      <h1>Excretion</h1>
+      <button class="btn" onclick="toggleTheme()">🌙</button>
+    </div>
+    
+    <div class="prog"><div class="prog-bar" id="pbar"></div></div>
+    <div class="prog-text" id="ptxt">0/0</div>
+    
+    <div class="q-cont">
+      <div class="timer" id="timer">⏱️ 60:00</div>
+      <div class="section-type" id="stype">Section 1</div>
+      <div class="question" id="question"></div>
+      <div class="opts" id="opts"></div>
+    </div>
+    
+    <div class="nav">
+      <button class="nav-btn" id="prevBtn" onclick="prev()">← Prev</button>
+      <button class="nav-center" onclick="showPop()">📋</button>
+      <button class="nav-btn primary" id="nextBtn" onclick="next()">Next →</button>
+    </div>
+  </div>
+
+  <!-- Navigator -->
+  <div class="pop" id="pop" onclick="hidePop(event)">
+    <div class="pop-box" onclick="event.stopPropagation()">
+      <div class="pop-head">
+        <h3>Question Navigator</h3>
+        <button class="btn" onclick="hidePop()">✕</button>
+      </div>
+      <div class="pop-grid" id="pgrid"></div>
+      <div style="font-size:12px;color:#888;text-align:center;margin-top:8px">
+        <span style="color:var(--a)">●</span> Answered &nbsp;
+        <span style="color:var(--t)">●</span> Current &nbsp;
+        <span style="color:#666">●</span> Unanswered
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="res" id="res">
+    <div class="res-box">
+      <div class="res-circle">
+        <div class="res-score" id="rscore">0%</div>
+        <div class="res-label">Score</div>
+      </div>
+      <h2 id="rtitle">Quiz Complete!</h2>
+      <p id="rmsg">You completed the quiz</p>
+      <div class="res-btns">
+        <button class="primary" onclick="showDet()">📊 View Details</button>
+        <button class="nav-btn" onclick="continueQuiz()">↩ Continue</button>
+        <button class="nav-btn" onclick="restart()" style="background:var(--d);color:#fff">🔄 Restart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Details -->
+  <div class="det" id="det">
+    <div class="det-head">
+      <button class="btn" onclick="hideDet()">← Back</button>
+      <h3>Detailed Results</h3>
+      <button class="btn" onclick="window.print()">🖨️ Print</button>
+    </div>
+    <div id="dcont"></div>
+  </div>
+
+<script>
+// Configuration
+const CONFIG={TIME:3600,PASS:60}; // 60 minutes for 60 questions
+
+// Section mapping
+const SECTIONS={
+  0:"1: Definition & Types of Excretory Structures",
+  20:"2: Excretory Mechanisms & Human Kidney/Nephron",
+  40:"3: Plant Excretory Products & Economic Importance + Mixed"
+};
+
+function getSection(qIndex){
+  const keys=Object.keys(SECTIONS).map(Number).sort((a,b)=>b-a);
+  for(let k of keys){
+    if(qIndex>=k)return SECTIONS[k];
+  }
+  return "Introduction";
+}
+
+// Quiz Data - 60 JAMB Biology Excretion Questions
+const QUIZ_DATA=[
+  // Section 1: Definition & Types (1-20)
+  {q:"Excretion is best defined as the",o:["removal of undigested food from the body","removal of metabolic waste products from cells","release of hormones into the blood","absorption of nutrients from food"],a:1,e:"Excretion removes toxic metabolic wastes (e.g. urea, CO₂) to prevent harm and maintain homeostasis."},
+  {q:"The excretory structure in Amoeba and Paramecium is",o:["flame cell","nephridium","contractile vacuole","Malpighian tubule"],a:2,e:"Contractile vacuole performs osmoregulation by pumping out excess water and ammonia in freshwater protozoans."},
+  {q:"Flame cells are found in",o:["earthworm","planaria","insects","humans"],a:1,e:"Flame cells (protonephridia) in flatworms like planaria filter body fluids with beating cilia."},
+  {q:"The excretory organ of earthworm is",o:["Malpighian tubule","nephridium","kidney","stoma"],a:1,e:"Nephridia are coiled tubes that remove wastes from coelomic fluid in annelids."},
+  {q:"Malpighian tubules are excretory structures in",o:["vertebrates","insects","flatworms","protozoans"],a:1,e:"In insects, Malpighian tubules convert toxic ammonia to uric acid for water conservation."},
+  {q:"The functional unit of the vertebrate kidney is",o:["nephridium","nephron","flame cell","glomerulus"],a:1,e:"Nephron is the basic filtering and reabsorbing unit in kidneys."},
+  {q:"Stomata in plants mainly excrete",o:["urea","oxygen and carbon(IV) oxide","tannins","uric acid"],a:1,e:"Stomata release O₂ (photosynthesis) and CO₂ (respiration), plus water vapour."},
+  {q:"Lenticels are found in",o:["leaves","roots","woody stems and bark","flowers"],a:2,e:"Lenticels allow gas exchange and waste release in woody plant stems."},
+  {q:"Which structure helps insects conserve water during excretion?",o:["Flame cell","Nephridium","Malpighian tubule","Contractile vacuole"],a:2,e:"Malpighian tubules produce uric acid (insoluble, low water loss)."},
+  {q:"The most common excretory product in aquatic animals is",o:["urea","uric acid","ammonia","creatinine"],a:2,e:"Ammonia is highly toxic but very soluble, suitable for dilution in water."},
+  {q:"Which is NOT an excretory structure?",o:["Stoma","Lenticel","Malpighian tubule","Mitochondrion"],a:3,e:"Mitochondrion is for energy production, not excretion."},
+  {q:"Contractile vacuoles are mainly for",o:["gas exchange","osmoregulation","food digestion","locomotion"],a:1,e:"They expel excess water and soluble wastes in freshwater protists."},
+  {q:"Uric acid is the main excretory product in",o:["fish","amphibians","birds and insects","earthworms"],a:2,e:"Uric acid is insoluble, conserves water in terrestrial animals."},
+  {q:"The excretory organ in cockroach is",o:["nephridium","flame cell","Malpighian tubule","kidney"],a:2,e:"Malpighian tubules blind-ending at gut junction excrete uric acid."},
+  {q:"Which organism excretes ammonia directly?",o:["Birds","Mammals","Insects","Aquatic invertebrates"],a:3,e:"Aquatic animals excrete ammonia due to abundant water."},
+  {q:"Flame cells help in",o:["respiration","excretion and osmoregulation","digestion","reproduction"],a:1,e:"They filter and remove wastes in flatworms."},
+  {q:"The main excretory product of birds is",o:["urea","ammonia","uric acid","carbon dioxide"],a:2,e:"Uric acid minimizes water loss in eggs and adults."},
+  {q:"Nephridia in earthworms remove",o:["oxygen","carbon dioxide","nitrogenous wastes","undigested food"],a:2,e:"They excrete ammonia/urea from coelomic fluid."},
+  {q:"Which excretory product requires least water for removal?",o:["Ammonia","Urea","Uric acid","Carbon dioxide"],a:2,e:"Uric acid is semi-solid, ideal for arid environments."},
+  {q:"In protozoans, ammonia is excreted mainly by",o:["diffusion and contractile vacuole","flame cells","nephridia","Malpighian tubules"],a:0,e:"Diffusion across membrane plus vacuole in freshwater forms."},
+
+  // Section 2: Mechanisms & Human Kidney/Nephron (21-40)
+  {q:"The main excretory organ in humans is",o:["liver","kidney","skin","lungs"],a:1,e:"Kidneys form urine and regulate osmoregulation."},
+  {q:"Ultrafiltration in the nephron occurs in the",o:["proximal tubule","glomerulus and Bowman's capsule","loop of Henle","collecting duct"],a:1,e:"High pressure forces small molecules into Bowman's capsule."},
+  {q:"Glucose is completely reabsorbed in the",o:["glomerulus","proximal convoluted tubule","distal tubule","collecting duct"],a:1,e:"100% reabsorption via active transport in PCT (no glucose in normal urine)."},
+  {q:"The countercurrent mechanism occurs in the",o:["proximal tubule","loop of Henle","glomerulus","Bowman's capsule"],a:1,e:"Creates medullary osmotic gradient for urine concentration."},
+  {q:"The ascending limb of the loop of Henle is impermeable to",o:["salts","water","urea","glucose"],a:1,e:"Allows active salt pumping out without water following."},
+  {q:"ADH mainly acts on the",o:["proximal tubule","loop of Henle","collecting duct","glomerulus"],a:2,e:"Inserts aquaporins for water reabsorption."},
+  {q:"The lungs excrete",o:["urea","carbon(IV) oxide and water vapour","excess salts","uric acid"],a:1,e:"CO₂ from respiration is a major metabolic waste."},
+  {q:"Sweat from skin contains small amounts of",o:["glucose","urea and salts","oxygen","amino acids"],a:1,e:"Skin excretes minor wastes via sweat glands."},
+  {q:"The hormone that increases Na⁺ reabsorption in DCT is",o:["ADH","aldosterone","ANP","insulin"],a:1,e:"Aldosterone (from RAAS) promotes Na⁺ retention."},
+  {q:"Renin is secreted by",o:["adrenal cortex","juxtaglomerular cells","posterior pituitary","heart atria"],a:1,e:"Triggers RAAS when BP/volume is low."},
+  {q:"The part of nephron impermeable to water in descending limb is",o:["true","false (it is permeable)","only in cortex","only in medulla"],a:1,e:"Descending limb is permeable to water but not salts."},
+  {q:"Selective reabsorption mainly occurs in",o:["Bowman's capsule","proximal tubule","distal tubule","collecting duct"],a:1,e:"PCT reabsorbs glucose, amino acids, most water/salts."},
+  {q:"ANP promotes",o:["water retention","Na⁺ and water excretion","Na⁺ reabsorption","ADH release"],a:1,e:"Released when blood volume high; opposes RAAS."},
+  {q:"The juxtaglomerular apparatus includes",o:["glomerulus only","macula densa and JG cells","Bowman's capsule","loop of Henle"],a:1,e:"Regulates renin release based on Na⁺ and pressure."},
+  {q:"Urea is formed in the",o:["kidney","liver","spleen","pancreas"],a:1,e:"Ornithine cycle (urea cycle) in liver detoxifies ammonia."},
+  {q:"Osmoregulation is mainly controlled by",o:["insulin","ADH and aldosterone","thyroxine","glucagon"],a:1,e:"ADH for water, aldosterone for salts."},
+  {q:"Glomerular filtrate is first formed by",o:["diffusion","ultrafiltration","active transport","osmosis"],a:1,e:"Pressure-driven filtration of blood plasma."},
+  {q:"Aldosterone is secreted by",o:["adrenal medulla","adrenal cortex","pituitary","pancreas"],a:1,e:"Zona glomerulosa of adrenal cortex."},
+  {q:"In dehydration, urine becomes",o:["dilute","concentrated","acidic only","alkaline"],a:1,e:"ADH increases water reabsorption → hypertonic urine."},
+  {q:"The collecting duct is permeable to water when",o:["ADH absent","ADH present","aldosterone absent","ANP high"],a:1,e:"ADH inserts aquaporins."},
+
+  // Section 3: Plant Products & Mixed (41-60)
+  {q:"Plants excrete excess oxygen through",o:["roots","stomata","phloem","xylem"],a:1,e:"During photosynthesis via stomata."},
+  {q:"An economic importance of plant tannins is",o:["tyre production","leather tanning","anti-malaria drug","food thickening"],a:1,e:"Used in leather industry and dyes."},
+  {q:"Quinine, an alkaloid, is economically important as",o:["stimulant","anti-malaria drug","varnish","laxative"],a:1,e:"Extracted from cinchona bark."},
+  {q:"Latex from rubber tree is used for",o:["medicine","tyres and gloves","incense","glue"],a:1,e:"Natural source of rubber."},
+  {q:"The main excretory product of plants at night is",o:["oxygen","carbon(IV) oxide","tannins","resins"],a:1,e:"From respiration via stomata/lenticels."},
+  {q:"Gums from acacia are used in",o:["leather tanning","food thickener and glue","tyres","anti-malaria"],a:1,e:"Industrial and food applications."},
+  {q:"Which is NOT an excretory product of plants?",o:["Oxygen","Urea","Resins","Alkaloids"],a:1,e:"Urea is animal waste; plants produce O₂, CO₂, alkaloids, etc."},
+  {q:"Aldosterone secretion is stimulated by",o:["high blood volume","angiotensin II","ANP","low osmolarity"],a:1,e:"Part of RAAS pathway."},
+  {q:"ANP is released when",o:["blood pressure is low","atria are stretched (high volume)","osmolarity is high","dehydration occurs"],a:1,e:"Promotes Na⁺ and water excretion to lower BP."},
+  {q:"Resins from plants are used in",o:["leather tanning","varnish and incense","tyres","food thickening"],a:1,e:"Protective and industrial uses."},
+  {q:"The most abundant harmful waste product of metabolism is",o:["CO₂","urea","ammonia","uric acid"],a:0,e:"CO₂ is produced in huge amounts during respiration."},
+  {q:"Why do insects excrete uric acid?",o:["To increase toxicity","To conserve water","For easy solubility","To aid flight"],a:1,e:"Insoluble uric acid reduces water loss in terrestrial life."},
+  {q:"Mucilage from plants has economic use in",o:["medicine and food","tyre production","leather tanning","anti-malaria"],a:0,e:"Thickening and pharmaceutical applications."},
+  {q:"Caffeine is an excretory product used as",o:["stimulant","laxative","varnish","glue"],a:0,e:"Alkaloid from tea/coffee plants."},
+  {q:"Excess salts in humans are mainly excreted by",o:["lungs","liver","kidneys and skin","intestine"],a:2,e:"Kidneys primary; skin via sweat secondary."},
+  {q:"In plants, excess CO₂ is released through",o:["roots only","stomata and lenticels","xylem only","phloem"],a:1,e:"Mainly stomata during respiration."},
+  {q:"Which hormone reduces blood volume?",o:["ADH","Aldosterone","ANP","Renin"],a:2,e:"Atrial natriuretic peptide promotes excretion."},
+  {q:"The economic importance of latex includes production of",o:["quinine","rubber","tannins","gums"],a:1,e:"Natural rubber for tyres, gloves, etc."},
+  {q:"Which waste is least toxic?",o:["Ammonia","Urea","Uric acid","CO₂"],a:2,e:"Uric acid is least toxic and insoluble."},
+  {q:"In JAMB, focus on nephron labeling and",o:["RAAS pathway","plant products uses","excretory structures comparison","all of the above"],a:3,e:"All are high-yield areas."}
+];
+
+let state={data:QUIZ_DATA,ans:new Array(QUIZ_DATA.length).fill(null),q:0,time:CONFIG.TIME,timer:null,submitted:false};
+
+function init(){
+  const saved=sessionStorage.getItem('biology_quiz_progress');
+  if(saved){
+    const d=JSON.parse(saved);
+    if(Date.now()-d.ts<86400000&&!d.submitted&&confirm('Resume previous session?')){
+      state.q=d.q;state.ans=d.ans;state.time=d.time;
+    }
+  }
+  document.getElementById('load').classList.add('hide');
+  document.getElementById('access').style.display='flex';
+}
+
+function unlock(){
+  const c=document.getElementById('code').value.trim().toUpperCase();
+  const btn=document.getElementById('unlockBtn');
+  
+  if(c.length!==8){showMsg('Enter 8-character code','err');return;}
+  
+  btn.disabled=true;btn.textContent='Checking...';
+  
+  setTimeout(()=>{
+    if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid code format','err');btn.disabled=false;btn.textContent='Start Quiz';return;}
+    localStorage.setItem('biology_quiz_auth',c);
+    showMsg('Access granted!','ok');
+    setTimeout(()=>{
+      document.getElementById('access').style.display='none';
+      document.getElementById('quiz').style.display='block';
+      startTimer();
+      render();
+    },400);
+  },300);
+}
+
+function showMsg(t,type){
+  const m=document.getElementById('msg');
+  m.textContent=t;m.className='msg show '+type;
+}
+
+function startTimer(){
+  if(state.timer)clearInterval(state.timer);
+  state.timer=setInterval(()=>{
+    if(state.time>0){
+      state.time--;
+      updateTimer();
+      if(state.time%10===0)saveProgress();
+    }else{
+      submit(true);
+    }
+  },1000);
+}
+
+function updateTimer(){
+  const m=Math.floor(state.time/60),s=state.time%60;
+  const el=document.getElementById('timer');
+  el.textContent=`⏱️ \( {m}: \){s.toString().padStart(2,'0')}`;
+  el.className='timer'+(state.time<60?' danger':state.time<300?' warn':'');
+}
+
+function render(){
+  const q=state.data[state.q];
+  
+  // Progress
+  const done=state.ans.filter(x=>x!==null).length;
+  document.getElementById('pbar').style.width=(done/state.data.length*100)+'%';
+  document.getElementById('ptxt').textContent=`\( {done}/ \){state.data.length}`;
+  
+  // Section
+  document.getElementById('stype').textContent=`Section ${getSection(state.q)} • Question ${state.q+1}/60`;
+  
+  // Question
+  document.getElementById('question').textContent=q.q;
+  
+  // Options
+  const opts=document.getElementById('opts');
+  opts.innerHTML='';
+  q.o.forEach((o,i)=>{
+    const d=document.createElement('div');
+    d.className='opt'+(state.ans[state.q]===i?' sel':'');
+    d.innerHTML=`<div class="opt-mark">\( {String.fromCharCode(65+i)}</div><p> \){o}</p>`;
+    d.onclick=()=>select(i);
+    opts.appendChild(d);
+  });
+  
+  // Navigation
+  document.getElementById('prevBtn').disabled=state.q===0;
+  const isLast=state.q===state.data.length-1;
+  document.getElementById('nextBtn').textContent=isLast?'Submit Quiz ✓':'Next →';
+}
+
+function select(i){
+  state.ans[state.q]=i;
+  document.querySelectorAll('.opt').forEach((el,idx)=>{
+    el.classList.toggle('sel',idx===i);
+  });
+  saveProgress();
+}
+
+function next(){
+  const isLast=state.q===state.data.length-1;
+  
+  if(isLast){
+    const unans=state.ans.filter(x=>x===null).length;
+    if(unans>0&&!confirm(`${unans} question(s) unanswered. Submit anyway?`)){
+      showPop();return;
+    }
+    submit(false);return;
+  }
+  
+  state.q++;
+  render();
+}
+
+function prev(){
+  if(state.q>0){state.q--;}
+  render();
+}
+
+function saveProgress(){
+  sessionStorage.setItem('biology_quiz_progress',JSON.stringify({
+    q:state.q,ans:state.ans,time:state.time,submitted:state.submitted,ts:Date.now()
+  }));
+}
+
+function submit(timeout){
+  clearInterval(state.timer);
+  state.submitted=true;
+  saveProgress();
+  
+  let correct=0;
+  state.data.forEach((q,i)=>{
+    if(state.ans[i]===q.a)correct++;
+  });
+  
+  const pct=Math.round((correct/state.data.length)*100);
+  
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('res').style.display='flex';
+  document.getElementById('res').classList.add('show');
+  
+  document.getElementById('rscore').textContent=pct+'%';
+  document.getElementById('rtitle').textContent=pct>=CONFIG.PASS?'🎉 Excellent!':timeout?'⏰ Time Up!':'Quiz Complete';
+  document.getElementById('rmsg').innerHTML=`You scored <strong>\( {correct}/ \){state.data.length}</strong> (\( {pct}%)<br> \){pct>=CONFIG.PASS?'✓ Pass mark achieved!':'Keep practicing!'}<br><br>${pct>=45?'Ready for JAMB!':pct>=38?'Good, review weak areas':pct>=30?'Average, needs more practice':'Study fundamentals again'}`;
+}
+
+function continueQuiz(){
+  document.getElementById('res').classList.remove('show');
+  document.getElementById('res').style.display='none';
+  document.getElementById('quiz').style.display='block';
+}
+
+function showPop(){
+  const g=document.getElementById('pgrid');
+  g.innerHTML='';
+  state.data.forEach((_,i)=>{
+    const b=document.createElement('button');
+    b.textContent=i+1;
+    const ans=state.ans[i]!==null;
+    const cur=i===state.q;
+    if(ans)b.className='ans';
+    if(cur)b.style.border='2px solid var(--a)';
+    b.onclick=()=>{state.q=i;hidePop();render();};
+    g.appendChild(b);
+  });
+  document.getElementById('pop').classList.add('show');
+}
+
+function hidePop(e){
+  if(!e||e.target.id==='pop')document.getElementById('pop').classList.remove('show');
+}
+
+function showDet(){
+  const c=document.getElementById('dcont');
+  c.innerHTML='';
+  
+  let correct=0;
+  state.data.forEach((q,i)=>{
+    if(state.ans[i]===q.a)correct++;
+  });
+  const pct=Math.round((correct/state.data.length)*100);
+  
+  const sum=document.createElement('div');
+  sum.className='det-summary';
+  sum.innerHTML=`<div class="big">\( {pct}%</div><div> \){correct}/${state.data.length} correct</div>`;
+  c.appendChild(sum);
+  
+  // Group by sections
+  const sections=[0,20,40,60];
+  const sectionNames=["1: Definition & Types of Excretory Structures","2: Excretory Mechanisms & Human Kidney/Nephron","3: Plant Excretory Products & Economic Importance + Mixed"];
+  
+  for(let s=0;s<3;s++){
+    const start=sections[s];
+    const end=sections[s+1];
+    
+    const ph=document.createElement('div');
+    ph.style.cssText='margin:20px 0 12px;padding:12px;background:var(--a);color:#fff;border-radius:8px;font-size:14px';
+    ph.innerHTML=`<strong>Section ${sectionNames[s]}</strong>`;
+    c.appendChild(ph);
+    
+    for(let i=start;i<end;i++){
+      const q=state.data[i];
+      const ans=state.ans[i];
+      const ok=ans===q.a;
+      const d=document.createElement('div');
+      d.className='det-item'+(ok?' ok':'');
+      d.innerHTML=`<h4>Question \( {i+1}</h4><div class="q-text"> \){q.q}</div><div class="ans-row"><strong>Your answer:</strong> ${ans!==null?String.fromCharCode(65+ans)+') '+q.o[ans]:'Not answered'}</div><div class="ans-row"><strong>Correct:</strong> \( {String.fromCharCode(65+q.a)+') '+q.o[q.a]}</div><div class="exp"> \){q.e}</div>`;
+      c.appendChild(d);
+    }
+  }
+  
+  document.getElementById('res').classList.remove('show');
+  document.getElementById('res').style.display='none';
+  document.getElementById('det').style.display='block';
+}
+
+function hideDet(){
+  document.getElementById('det').style.display='none';
+  document.getElementById('res').style.display='flex';
+  document.getElementById('res').classList.add('show');
+}
+
+function restart(){
+  if(!confirm('Start a new quiz? All progress will be reset.'))return;
+  localStorage.removeItem('biology_quiz_auth');
+  sessionStorage.removeItem('biology_quiz_progress');
+  location.reload();
+}
+
+function exit(){
+  if(confirm('Exit quiz? Your progress is saved.')){saveProgress();location.reload();}
+}
+
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  localStorage.setItem('biology_quiz_theme',document.body.classList.contains('light')?'light':'dark');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(localStorage.getItem('biology_quiz_theme')==='light')document.body.classList.add('light');
+  document.getElementById('code').addEventListener('keypress',e=>{if(e.key==='Enter')unlock();});
+  init();
+});
+</script>
+</body>
+</html>
