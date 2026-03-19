@@ -114,7 +114,7 @@
   <div id="access">
     <div class="card">
       <h1>🔐 JAMB Biology</h1>
-      <p>Chapter 8: Excretion<br>Enter your 8-character access code</p>
+      <p>Excretion<br>Enter your 8-character access code</p>
       <input type="text" id="code" placeholder="XXXXXXXX" maxlength="8" autocomplete="off">
       <button class="primary" id="unlockBtn" onclick="unlock()">Start Quiz</button>
       <div class="msg" id="msg"></div>
@@ -130,11 +130,11 @@
     </div>
     
     <div class="prog"><div class="prog-bar" id="pbar"></div></div>
-    <div class="prog-text" id="ptxt">0/60</div>
+    <div class="prog-text" id="ptxt">0/0</div>
     
     <div class="q-cont">
       <div class="timer" id="timer">⏱️ 60:00</div>
-      <div class="section-type" id="stype">Section 1</div>
+      <div class="section-type" id="stype">Section A</div>
       <div class="question" id="question"></div>
       <div class="opts" id="opts"></div>
     </div>
@@ -193,11 +193,12 @@
 // Configuration
 const CONFIG={TIME:3600,PASS:60}; // 60 minutes for 60 questions
 
-// Section mapping (aligned to your 1–20, 21–40, 41–60 split)
+// Section mapping - variable section sizes (25,20,15,10)
 const SECTIONS={
-  0:"1: Definition & Types of Excretory Structures",
-  20:"2: Excretory Mechanisms & Human Kidney/Nephron",
-  40:"3: Plant Excretory Products & Economic Importance + Mixed"
+  0:"A: Types of Excretory Structures",
+  25:"B: Excretory Mechanisms",
+  45:"C: Excretory Products of Plants",
+  55:"D: General/Integrated Questions"
 };
 
 function getSection(qIndex){
@@ -205,82 +206,84 @@ function getSection(qIndex){
   for(let k of keys){
     if(qIndex>=k)return SECTIONS[k];
   }
-  return "Section 1";
+  return "Introduction";
 }
 
-// Quiz Data - 60 realistic JAMB-style questions on Excretion
+// Quiz Data - 60 JAMB Biology Excretion Questions
 const QUIZ_DATA=[
-  // Section 1 (1–20)
-  {q:"Excretion is best defined as the",o:["removal of undigested food from the body","removal of metabolic waste products from cells","release of hormones into the blood","absorption of nutrients from food"],a:1,e:"Excretion removes toxic metabolic wastes (e.g. urea, CO₂) to prevent harm and maintain homeostasis."},
-  {q:"The excretory structure in Amoeba and Paramecium is",o:["flame cell","nephridium","contractile vacuole","Malpighian tubule"],a:2,e:"Contractile vacuole performs osmoregulation by pumping out excess water and ammonia in freshwater protozoans."},
-  {q:"Flame cells are found in",o:["earthworm","planaria","insects","humans"],a:1,e:"Flame cells (protonephridia) in flatworms like planaria filter body fluids with beating cilia."},
-  {q:"The excretory organ of earthworm is",o:["Malpighian tubule","nephridium","kidney","stoma"],a:1,e:"Nephridia are coiled tubes that remove wastes from coelomic fluid in annelids."},
-  {q:"Malpighian tubules are excretory structures in",o:["vertebrates","insects","flatworms","protozoans"],a:1,e:"In insects, Malpighian tubules convert toxic ammonia to uric acid for water conservation."},
-  {q:"The functional unit of the vertebrate kidney is",o:["nephridium","nephron","flame cell","glomerulus"],a:1,e:"Nephron is the basic filtering and reabsorbing unit in kidneys."},
-  {q:"Stomata in plants mainly excrete",o:["urea","oxygen and carbon(IV) oxide","tannins","uric acid"],a:1,e:"Stomata release O₂ (photosynthesis) and CO₂ (respiration), plus water vapour."},
-  {q:"Lenticels are found in",o:["leaves","roots","woody stems and bark","flowers"],a:2,e:"Lenticels allow gas exchange and waste release in woody plant stems."},
-  {q:"Which structure helps insects conserve water during excretion?",o:["Flame cell","Nephridium","Malpighian tubule","Contractile vacuole"],a:2,e:"Malpighian tubules produce uric acid (insoluble, low water loss)."},
-  {q:"The most common excretory product in aquatic animals is",o:["urea","uric acid","ammonia","creatinine"],a:2,e:"Ammonia is highly toxic but very soluble, suitable for dilution in water."},
-  {q:"Which is NOT an excretory structure?",o:["Stoma","Lenticel","Malpighian tubule","Mitochondrion"],a:3,e:"Mitochondrion is for energy production, not excretion."},
-  {q:"Contractile vacuoles are mainly for",o:["gas exchange","osmoregulation","food digestion","locomotion"],a:1,e:"They expel excess water and soluble wastes in freshwater protists."},
-  {q:"Uric acid is the main excretory product in",o:["fish","amphibians","birds and insects","earthworms"],a:2,e:"Uric acid is insoluble, conserves water in terrestrial animals."},
-  {q:"The excretory organ in cockroach is",o:["nephridium","flame cell","Malpighian tubule","kidney"],a:2,e:"Malpighian tubules blind-ending at gut junction excrete uric acid."},
-  {q:"Which organism excretes ammonia directly?",o:["Birds","Mammals","Insects","Aquatic invertebrates"],a:3,e:"Aquatic animals excrete ammonia due to abundant water."},
-  {q:"Flame cells help in",o:["respiration","excretion and osmoregulation","digestion","reproduction"],a:1,e:"They filter and remove wastes in flatworms."},
-  {q:"The main excretory product of birds is",o:["urea","ammonia","uric acid","carbon dioxide"],a:2,e:"Uric acid minimizes water loss in eggs and adults."},
-  {q:"Nephridia in earthworms remove",o:["oxygen","carbon dioxide","nitrogenous wastes","undigested food"],a:2,e:"They excrete ammonia/urea from coelomic fluid."},
-  {q:"Which excretory product requires least water for removal?",o:["Ammonia","Urea","Uric acid","Carbon dioxide"],a:2,e:"Uric acid is semi-solid, ideal for arid environments."},
-  {q:"In protozoans, ammonia is excreted mainly by",o:["diffusion and contractile vacuole","flame cells","nephridia","Malpighian tubules"],a:0,e:"Diffusion across membrane plus vacuole in freshwater forms."},
-
-  // Section 2 (21–40)
-  {q:"The main excretory organ in humans is",o:["liver","kidney","skin","lungs"],a:1,e:"Kidneys form urine and regulate osmoregulation."},
-  {q:"Ultrafiltration in the nephron occurs in the",o:["proximal tubule","glomerulus and Bowman's capsule","loop of Henle","collecting duct"],a:1,e:"High pressure forces small molecules into Bowman's capsule."},
-  {q:"Glucose is completely reabsorbed in the",o:["glomerulus","proximal convoluted tubule","distal tubule","collecting duct"],a:1,e:"100% reabsorption via active transport in PCT (no glucose in normal urine)."},
-  {q:"The countercurrent mechanism occurs in the",o:["proximal tubule","loop of Henle","glomerulus","Bowman's capsule"],a:1,e:"Creates medullary osmotic gradient for urine concentration."},
-  {q:"The ascending limb of the loop of Henle is impermeable to",o:["salts","water","urea","glucose"],a:1,e:"Allows active salt pumping out without water following."},
-  {q:"ADH mainly acts on the",o:["proximal tubule","loop of Henle","collecting duct","glomerulus"],a:2,e:"Inserts aquaporins for water reabsorption."},
-  {q:"The lungs excrete",o:["urea","carbon(IV) oxide and water vapour","excess salts","uric acid"],a:1,e:"CO₂ from respiration is a major metabolic waste."},
-  {q:"Sweat from skin contains small amounts of",o:["glucose","urea and salts","oxygen","amino acids"],a:1,e:"Skin excretes minor wastes via sweat glands."},
-  {q:"The hormone that increases Na⁺ reabsorption in DCT is",o:["ADH","aldosterone","ANP","insulin"],a:1,e:"Aldosterone (from RAAS) promotes Na⁺ retention."},
-  {q:"Renin is secreted by",o:["adrenal cortex","juxtaglomerular cells","posterior pituitary","heart atria"],a:1,e:"Triggers RAAS when BP/volume is low."},
-  {q:"The part of nephron where water is reabsorbed by osmosis in descending limb is",o:["impermeable to water","permeable to water","impermeable to salts","only in cortex"],a:1,e:"Descending limb is freely permeable to water."},
-  {q:"Most selective reabsorption occurs in the",o:["Bowman's capsule","proximal convoluted tubule","distal convoluted tubule","collecting duct"],a:1,e:"PCT reabsorbs glucose, amino acids, most water & ions."},
-  {q:"ANP promotes",o:["water retention","Na⁺ and water excretion","Na⁺ reabsorption","renin release"],a:1,e:"Released when blood volume high; opposes RAAS."},
-  {q:"The juxtaglomerular apparatus regulates",o:["urine pH","blood pressure via renin","glucose reabsorption","urea formation"],a:1,e:"Monitors Na⁺ & pressure to control renin."},
-  {q:"Urea is produced mainly in the",o:["kidney","liver","spleen","pancreas"],a:1,e:"Via ornithine cycle (urea cycle) in hepatocytes."},
-  {q:"Osmoregulation in humans is primarily controlled by",o:["insulin and glucagon","ADH and aldosterone","thyroxine","cortisol"],a:1,e:"ADH controls water; aldosterone controls salts."},
-  {q:"Glomerular filtrate formation is by",o:["diffusion","ultrafiltration","active transport","facilitated diffusion"],a:1,e:"Pressure-driven filtration of plasma."},
-  {q:"Aldosterone is secreted by the",o:["adrenal medulla","adrenal cortex","anterior pituitary","posterior pituitary"],a:1,e:"Zona glomerulosa of adrenal cortex."},
-  {q:"In dehydration, the kidney produces",o:["large volume dilute urine","small volume concentrated urine","acidic urine only","alkaline urine"],a:1,e:"ADH increases water reabsorption → concentrated urine."},
-  {q:"The collecting duct becomes permeable to water in the presence of",o:["low ADH","high ADH","high aldosterone","high ANP"],a:1,e:"ADH inserts aquaporin channels."},
-
-  // Section 3 (41–60)
-  {q:"Plants excrete excess oxygen through",o:["roots","stomata","phloem","xylem"],a:1,e:"During photosynthesis via stomata."},
-  {q:"An economic importance of plant tannins is",o:["tyre production","leather tanning","anti-malaria drug","food thickening"],a:1,e:"Used in leather industry and dyes."},
-  {q:"Quinine, an alkaloid, is economically important as",o:["stimulant","anti-malaria drug","varnish","laxative"],a:1,e:"Extracted from cinchona bark."},
-  {q:"Latex from rubber tree is used for",o:["medicine","tyres and gloves","incense","glue"],a:1,e:"Natural source of rubber."},
-  {q:"The main excretory product of plants at night is",o:["oxygen","carbon(IV) oxide","tannins","resins"],a:1,e:"From respiration via stomata/lenticels."},
-  {q:"Gums from acacia are used in",o:["leather tanning","food thickener and glue","tyres","anti-malaria"],a:1,e:"Industrial and food applications."},
-  {q:"Which is NOT an excretory product of plants?",o:["Oxygen","Urea","Resins","Alkaloids"],a:1,e:"Urea is animal waste; plants produce O₂, CO₂, alkaloids, etc."},
-  {q:"Aldosterone secretion is stimulated by",o:["high blood volume","angiotensin II","ANP","low osmolarity"],a:1,e:"Part of RAAS pathway."},
-  {q:"ANP is released when",o:["blood pressure is low","atria are stretched (high volume)","osmolarity is high","dehydration occurs"],a:1,e:"Promotes Na⁺ and water excretion to lower BP."},
-  {q:"Resins from plants are economically used in",o:["leather tanning","varnish and incense","tyres","food thickening"],a:1,e:"Protective secretions with industrial uses."},
-  {q:"The most abundant harmful metabolic waste is",o:["CO₂","urea","ammonia","uric acid"],a:0,e:"CO₂ is produced in largest quantity during respiration."},
-  {q:"Insects excrete uric acid mainly to",o:["increase toxicity","conserve water","improve solubility","aid locomotion"],a:1,e:"Insoluble uric acid reduces water loss in terrestrial life."},
-  {q:"Mucilage from certain plants is used in",o:["medicine and food industry","tyre production","leather tanning","anti-malaria drugs"],a:0,e:"As thickener and in pharmaceuticals."},
-  {q:"Caffeine is a plant excretory product used as a",o:["stimulant","laxative","varnish","glue"],a:0,e:"Alkaloid from coffee and tea plants."},
-  {q:"Excess mineral salts in humans are mainly removed by the",o:["lungs","liver","kidneys and skin","large intestine"],a:2,e:"Kidneys primary; skin secondary via sweat."},
-  {q:"In plants, excess CO₂ is eliminated mainly through",o:["roots only","stomata and lenticels","xylem vessels","phloem sieve tubes"],a:1,e:"Via stomata during respiration."},
-  {q:"Which hormone decreases blood volume and pressure?",o:["ADH","Aldosterone","ANP","Renin"],a:2,e:"Atrial natriuretic peptide promotes excretion."},
-  {q:"The economic importance of latex includes the production of",o:["quinine","natural rubber","tannins","gums"],a:1,e:"Used for tyres, gloves, etc."},
-  {q:"Which nitrogenous waste is the least toxic?",o:["Ammonia","Urea","Uric acid","Creatinine"],a:2,e:"Uric acid has lowest toxicity and water solubility."},
-  {q:"High-yield JAMB topics on excretion include nephron structure,",o:["RAAS pathway and hormones","plant excretory products and uses","comparison of excretory structures across organisms","all of the above"],a:3,e:"All are frequently tested areas."}
+  // Section A: Types of Excretory Structures (Questions 1-25)
+  {q:"The contractile vacuole in Paramecium is primarily responsible for",o:["Digestion of food","Osmoregulation and excretion","Locomotion","Respiration"],a:1,e:"It expels excess water and waste to maintain osmotic balance in freshwater environments."},
+  {q:"Which of the following organisms possesses a contractile vacuole?",o:["Tapeworm","Amoeba","Earthworm","Cockroach"],a:1,e:"Amoeba and Paramecium are unicellular organisms that use contractile vacuoles for osmoregulation."},
+  {q:"The contractile vacuole fills with water and expels its contents through",o:["The nucleus","A permanent pore","The cell membrane","A temporary pore"],a:3,e:"It contracts rhythmically to force water out through a temporary pore in the cell membrane."},
+  {q:"Flame cells are found in",o:["Roundworms","Flatworms","Annelids","Insects"],a:1,e:"Planaria and other flatworms (phylum Platyhelminthes) use flame cells as excretory structures."},
+  {q:"The 'flame' appearance of flame cells is caused by",o:["Heat production","Rapid beating of cilia","Bioluminescence","Blood circulation"],a:1,e:"The tuft of cilia beats rapidly to create a flickering flame-like appearance under the microscope."},
+  {q:"Flame cells are also known as",o:["Nephridia","Protonephridia","Metanephridia","Malpighian tubules"],a:1,e:"Protonephridia refers to the closed internal end of the tubule (no internal opening)."},
+  {q:"Nephridia are the excretory organs of",o:["Flatworms","Roundworms","Annelids","Arthropods"],a:2,e:"Earthworms and other segmented worms use nephridia for excretion and osmoregulation."},
+  {q:"The ciliated funnel of the nephridium is called",o:["Nephrostome","Nephridiopore","Coelomostome","Flame bulb"],a:0,e:"The nephrostome collects coelomic fluid and waste into the nephridial tubule."},
+  {q:"Which type of nephridium opens to the exterior through the skin?",o:["Septal nephridium","Pharyngeal nephridium","Integumentary nephridium","Enteronephric nephridium"],a:2,e:"Integumentary nephridia open externally through the body wall/skin."},
+  {q:"Septal nephridia in earthworms discharge their wastes into",o:["The exterior directly","The pharynx","The alimentary canal","The coelom"],a:2,e:"They are enteronephric, discharging into the intestine to conserve water."},
+  {q:"Malpighian tubules are characteristic excretory organs of",o:["Mollusks","Arthropods","Echinoderms","Annelids"],a:1,e:"Insects, spiders, and other arthropods possess Malpighian tubules."},
+  {q:"The main advantage of excreting uric acid in insects is",o:["Faster excretion","Water conservation","Energy production","Temperature regulation"],a:1,e:"Uric acid is insoluble and excreted as paste/crystals, minimizing water loss—crucial for terrestrial life."},
+  {q:"Malpighian tubules empty their contents into",o:["The exterior directly","The hindgut","The hemocoel","The Malpighian body"],a:1,e:"They discharge nitrogenous wastes into the hindgut, where water is reabsorbed before feces/uric acid exit."},
+  {q:"Which of the following is NOT a feature of Malpighian tubules?",o:["They are blind-ended","They are bathed in hemolymph","They filter blood under pressure","They transport wastes to the gut"],a:2,e:"They absorb wastes by diffusion from hemolymph, not by pressure filtration like kidneys."},
+  {q:"The white substance in bird droppings represents",o:["Feces","Uric acid from Malpighian tubules","Undigested food","Eggs"],a:1,e:"Birds, like insects, convert nitrogenous waste to uric acid to conserve water."},
+  {q:"The functional unit of the kidney is the",o:["Neuron","Nephron","Nephridium","Glomerulus"],a:1,e:"Each kidney contains about 1 million nephrons that perform filtration and urine formation."},
+  {q:"Which part of the nephron is responsible for ultrafiltration?",o:["Proximal convoluted tubule","Loop of Henle","Renal corpuscle","Collecting duct"],a:2,e:"The glomerulus and Bowman's capsule together form the renal corpuscle where blood is filtered."},
+  {q:"The Bowman's capsule is lined with",o:["Ciliated cells","Squamous epithelial cells","Columnar epithelial cells","Cuboidal epithelial cells"],a:1,e:"Simple squamous epithelium allows easy passage of filtrate from glomerular capillaries."},
+  {q:"Which structure creates the osmotic gradient in the kidney medulla?",o:["Proximal tubule","Loop of Henle","Distal tubule","Collecting duct"],a:1,e:"The counter-current multiplier system in the loop of Henle concentrates urine."},
+  {q:"The hormone ADH acts primarily on the",o:["Glomerulus","Proximal tubule","Distal tubule and collecting duct","Loop of Henle"],a:2,e:"ADH increases water permeability here, promoting water reabsorption and concentrated urine."},
+  {q:"Which blood vessel carries blood away from the glomerulus?",o:["Afferent arteriole","Efferent arteriole","Renal artery","Renal vein"],a:1,e:"Afferent brings blood in; efferent carries it out (then forms peritubular capillaries)."},
+  {q:"Glucose is completely reabsorbed in the",o:["Bowman's capsule","Proximal convoluted tubule","Loop of Henle","Collecting duct"],a:1,e:"Active transport reabsorbs 100% of glucose here under normal conditions."},
+  {q:"Which of the following is NOT normally found in urine?",o:["Urea","Water","Glucose","Salts"],a:2,e:"Glucose appears in urine only when blood levels exceed renal threshold (diabetes)."},
+  {q:"The renal pelvis connects the kidney to the",o:["Urethra","Ureter","Bladder","Blood vessels"],a:1,e:"Urine flows from pelvis → ureter → bladder → urethra."},
+  {q:"Which adaptation allows marine fish to excrete excess salt?",o:["Long loops of Henle","Short loops of Henle","Absence of glomeruli","Large Malpighian tubules"],a:0,e:"Long loops enable production of concentrated urine to conserve water in salty environment."},
+  
+  // Section B: Excretory Mechanisms (Questions 26-45)
+  {q:"The kidney performs all the following EXCEPT",o:["Regulation of blood pH","Production of erythropoietin","Digestion of proteins","Regulation of blood pressure"],a:2,e:"Kidneys filter blood and produce hormones but do not perform digestion."},
+  {q:"The juxtaglomerular apparatus secretes",o:["Insulin","Renin","Thyroxine","Adrenaline"],a:1,e:"Renin activates the renin-angiotensin-aldosterone system to regulate blood pressure."},
+  {q:"Which process in the nephron requires ATP?",o:["Ultrafiltration","Tubular reabsorption","Tubular secretion","Both B and C"],a:3,e:"Both reabsorption (glucose, amino acids) and secretion (H⁺, K⁺, drugs) use active transport."},
+  {q:"The presence of protein in urine indicates damage to the",o:["Loop of Henle","Glomerular basement membrane","Collecting duct","Ureter"],a:1,e:"Large proteins should not pass through the glomerular filter; their presence suggests kidney disease."},
+  {q:"Which condition results from kidney failure?",o:["Diabetes mellitus","Uremia","Anemia only","Hypertension only"],a:1,e:"Uremia (urea in blood) occurs when kidneys cannot filter nitrogenous wastes."},
+  {q:"The lungs excrete",o:["Oxygen and carbon dioxide","Carbon dioxide and water vapor","Urea and ammonia","Bile pigments"],a:1,e:"CO₂ from cellular respiration and water vapor are removed via exhalation."},
+  {q:"Which substance is removed by the lungs during detoxification of alcohol?",o:["Acetic acid","Ethanol vapor","Acetaldehyde","Ketones"],a:1,e:"About 2-10% of alcohol is excreted unchanged through lungs (detected in breathalyzer tests)."},
+  {q:"The skin contributes to excretion through",o:["Sebaceous glands only","Sweat glands only","Both sebaceous and sweat glands","Hair follicles"],a:2,e:"Sweat removes water/salts/urea; sebaceous glands secrete sebum (oily waste)."},
+  {q:"Which component of sweat indicates its excretory function?",o:["Water","Sodium chloride","Trace urea","All of the above"],a:3,e:"While thermoregulation is primary, all components represent metabolic waste removal."},
+  {q:"The primary excretory product of the skin is",o:["Urea","Water and salts","Carbon dioxide","Bile pigments"],a:1,e:"Sweat is 99% water with NaCl; urea is present only in traces compared to urine."},
+  {q:"Which statement about skin excretion is correct?",o:["It is the main excretory organ in humans","It removes more nitrogenous waste than kidneys","It plays a minor role in nitrogenous waste excretion","It produces concentrated urine"],a:2,e:"Skin removes minimal urea; kidneys handle 90%+ of nitrogenous waste excretion."},
+  {q:"Goosebumps are caused by contractions of",o:["Sweat glands","Arrector pili muscles","Sebaceous glands","Blood vessels"],a:1,e:"These muscles raise hair to trap air for insulation (thermoregulation, not excretion)."},
+  {q:"The characteristic odor of sweat is produced by",o:["Bacterial decomposition of sweat","Urea in sweat","Lactic acid","Sebum mixing with sweat"],a:0,e:"Fresh sweat is odorless; bacteria on skin break down components causing odor."},
+  {q:"During heavy exercise, the skin excretes increased amounts of",o:["Glucose","Lactic acid","Insulin","Glycogen"],a:1,e:"Lactic acid from anaerobic respiration is partially removed through sweat."},
+  {q:"Which condition increases sweat production?",o:["Hypothyroidism","Hyperthyroidism","Diabetes insipidus","Addison's disease"],a:1,e:"Hyperthyroidism increases metabolic rate and heat production, triggering more sweating."},
+  {q:"Which gas is excreted by plants during photosynthesis?",o:["Carbon dioxide","Oxygen","Nitrogen","Methane"],a:1,e:"O₂ is released as byproduct when water is split during light reactions."},
+  {q:"Plants excrete carbon dioxide during",o:["Photosynthesis only","Respiration only","Both photosynthesis and respiration","Neither process"],a:1,e:"CO₂ is produced in respiration (all the time) but used in photosynthesis (day only)."},
+  {q:"Stomata open when guard cells",o:["Lose water and become flaccid","Gain water and become turgid","Die and collapse","Divide rapidly"],a:1,e:"Water uptake makes guard cells bow outward, creating the pore opening."},
+  {q:"Lenticels are found on",o:["Leaves","Woody stems and roots","Flowers","Fruits only"],a:1,e:"They replace stomata for gas exchange when bark covers the stem surface."},
+  {q:"Which plant product is used in tanning leather?",o:["Resins","Tannins","Gums","Mucilage"],a:1,e:"Tannins bind to proteins in animal hides, preserving and coloring leather."},
+  
+  // Section C: Excretory Products of Plants (Questions 46-55)
+  {q:"Gums are economically important as",o:["Insecticides","Food thickeners and stabilizers","Fuels","Fertilizers"],a:1,e:"Arabic gum and others are used in foods, pharmaceuticals, and cosmetics."},
+  {q:"Quinine, used to treat malaria, is obtained from",o:["Tannins","Alkaloids","Resins","Gums"],a:1,e:"Quinine is an alkaloid extracted from Cinchona tree bark."},
+  {q:"Which plant excretory product is used as a laxative?",o:["Resins","Mucilage","Tannins","Essential oils"],a:1,e:"Mucilage (e.g., from psyllium seeds) absorbs water and promotes bowel movement."},
+  {q:"Resins from conifers are used to make",o:["Food coloring","Varnishes and turpentine","Perfumes only","Alkaloid drugs"],a:1,e:"Resins are distilled to produce turpentine and processed into varnishes."},
+  {q:"The medicinal value of alkaloids includes all EXCEPT",o:["Pain relief (morphine)","Malaria treatment (quinine)","Stimulation (caffeine)","Blood clotting (heparin)"],a:3,e:"Heparin is an animal-derived anticoagulant, not a plant alkaloid."},
+  {q:"Oxygen produced by plants is economically important for",o:["Steel production only","Medical use and industrial processes","Fire extinguishers","Plastic manufacturing"],a:1,e:"Medical oxygen supports breathing; industrial oxygen is used in steel, rockets, etc."},
+  {q:"Which statement about plant excretion is FALSE?",o:["Plants store waste products in vacuoles","Plants excrete nitrogenous waste like urea","Plants release CO₂ during respiration","Plants shed leaves to remove wastes"],a:1,e:"Plants recycle nitrogen compounds; they don't excrete urea like animals."},
+  {q:"Abscission (leaf fall) helps plants excrete",o:["Only water","Accumulated mineral salts and wastes","Oxygen","Carbon dioxide"],a:1,e:"Leaves store metabolic wastes; shedding them removes these wastes from the plant."},
+  {q:"Mucilage in plants functions to",o:["Attract pollinators","Protect seeds and store water","Produce toxins","Capture insects"],a:1,e:"It forms protective, water-retaining layers around seeds and in tissues."},
+  {q:"Which combination is correct?",o:["Tannins—Adhesives","Resins—Leather tanning","Gums—Food thickeners","Alkaloids—Varnishes"],a:2,e:"Gums thicken foods; tannins tan leather; resins make varnishes; alkaloids are drugs."},
+  
+  // Section D: General/Integrated Questions (Questions 56-60)
+  {q:"An organism living in freshwater must constantly pump out water because",o:["It drinks too much","Water enters by osmosis due to hypotonic environment","It produces excess urine","Its cells absorb salt"],a:1,e:"Freshwater is hypotonic to body fluids; water enters continuously, requiring active removal."},
+  {q:"Which adaptation is common to desert animals and insects?",o:["Excretion of dilute urine","Excretion of uric acid","Presence of contractile vacuoles","Excretion through skin"],a:1,e:"Both convert nitrogenous waste to uric acid (paste/crystals) to minimize water loss."},
+  {q:"A patient with kidney failure would show elevated blood levels of",o:["Glucose","Urea","Insulin","Oxygen"],a:1,e:"Uremia results when kidneys cannot filter urea from blood."},
+  {q:"Which structure-function pair is INCORRECT?",o:["Flame cell—Flatworms","Nephridium—Earthworms","Malpighian tubule—Fishes","Kidney—Mammals"],a:2,e:"Malpighian tubules are in insects/arthropods, not fishes (which use kidneys)."},
+  {q:"The economic importance of plant excretory products includes all EXCEPT",o:["Production of medicines","Manufacturing of leather goods","Generation of electricity","Food industry applications"],a:2,e:"While plant products have many uses, they are not used to generate electricity directly."}
 ];
 
 let state={data:QUIZ_DATA,ans:new Array(QUIZ_DATA.length).fill(null),q:0,time:CONFIG.TIME,timer:null,submitted:false};
 
 function init(){
-  const saved=sessionStorage.getItem('biology_quiz_progress');
+  const saved=sessionStorage.getItem('excretion_quiz_progress');
   if(saved){
     const d=JSON.parse(saved);
     if(Date.now()-d.ts<86400000&&!d.submitted&&confirm('Resume previous session?')){
@@ -301,7 +304,7 @@ function unlock(){
   
   setTimeout(()=>{
     if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid code format','err');btn.disabled=false;btn.textContent='Start Quiz';return;}
-    localStorage.setItem('biology_quiz_auth',c);
+    localStorage.setItem('excretion_quiz_auth',c);
     showMsg('Access granted!','ok');
     setTimeout(()=>{
       document.getElementById('access').style.display='none';
@@ -333,7 +336,7 @@ function startTimer(){
 function updateTimer(){
   const m=Math.floor(state.time/60),s=state.time%60;
   const el=document.getElementById('timer');
-  el.textContent=`⏱️ \( {m}: \){s.toString().padStart(2,'0')}`;
+  el.textContent=`⏱️ ${m}:${s.toString().padStart(2,'0')}`;
   el.className='timer'+(state.time<60?' danger':state.time<300?' warn':'');
 }
 
@@ -343,7 +346,7 @@ function render(){
   // Progress
   const done=state.ans.filter(x=>x!==null).length;
   document.getElementById('pbar').style.width=(done/state.data.length*100)+'%';
-  document.getElementById('ptxt').textContent=`\( {done}/ \){state.data.length}`;
+  document.getElementById('ptxt').textContent=`${done}/${state.data.length}`;
   
   // Section
   document.getElementById('stype').textContent=`Section ${getSection(state.q)} • Question ${state.q+1}/60`;
@@ -357,7 +360,7 @@ function render(){
   q.o.forEach((o,i)=>{
     const d=document.createElement('div');
     d.className='opt'+(state.ans[state.q]===i?' sel':'');
-    d.innerHTML=`<div class="opt-mark">\( {String.fromCharCode(65+i)}</div><p> \){o}</p>`;
+    d.innerHTML=`<div class="opt-mark">${String.fromCharCode(65+i)}</div><p>${o}</p>`;
     d.onclick=()=>select(i);
     opts.appendChild(d);
   });
@@ -397,7 +400,7 @@ function prev(){
 }
 
 function saveProgress(){
-  sessionStorage.setItem('biology_quiz_progress',JSON.stringify({
+  sessionStorage.setItem('excretion_quiz_progress',JSON.stringify({
     q:state.q,ans:state.ans,time:state.time,submitted:state.submitted,ts:Date.now()
   }));
 }
@@ -420,7 +423,7 @@ function submit(timeout){
   
   document.getElementById('rscore').textContent=pct+'%';
   document.getElementById('rtitle').textContent=pct>=CONFIG.PASS?'🎉 Excellent!':timeout?'⏰ Time Up!':'Quiz Complete';
-  document.getElementById('rmsg').innerHTML=`You scored <strong>\( {correct}/ \){state.data.length}</strong> (\( {pct}%)<br> \){pct>=CONFIG.PASS?'✓ Pass mark achieved!':'Keep practicing!'}<br><br>${pct>=45?'Ready for JAMB!':pct>=38?'Good, review weak areas':pct>=30?'Average, needs more practice':'Study fundamentals again'}`;
+  document.getElementById('rmsg').innerHTML=`You scored <strong>${correct}/${state.data.length}</strong> (${pct}%)<br>${pct>=CONFIG.PASS?'✓ Pass mark achieved!':'Keep practicing!'}<br><br>${pct>=45?'Ready for JAMB!':pct>=38?'Good, review weak areas':pct>=30?'Average, needs more practice':'Study fundamentals again'}`;
 }
 
 function continueQuiz(){
@@ -461,16 +464,16 @@ function showDet(){
   
   const sum=document.createElement('div');
   sum.className='det-summary';
-  sum.innerHTML=`<div class="big">\( {pct}%</div><div> \){correct}/${state.data.length} correct</div>`;
+  sum.innerHTML=`<div class="big">${pct}%</div><div>${correct}/${state.data.length} correct</div>`;
   c.appendChild(sum);
   
-  // Group by sections
-  const sections=[0,20,40,60];
-  const sectionNames=["1: Definition & Types of Excretory Structures","2: Excretory Mechanisms & Human Kidney/Nephron","3: Plant Excretory Products & Economic Importance + Mixed"];
+  // Group by sections - using actual section boundaries
+  const sectionStarts=[0,25,45,55,60];
+  const sectionNames=["A: Types of Excretory Structures","B: Excretory Mechanisms","C: Excretory Products of Plants","D: General/Integrated Questions"];
   
-  for(let s=0;s<3;s++){
-    const start=sections[s];
-    const end=sections[s+1];
+  for(let s=0;s<4;s++){
+    const start=sectionStarts[s];
+    const end=sectionStarts[s+1];
     
     const ph=document.createElement('div');
     ph.style.cssText='margin:20px 0 12px;padding:12px;background:var(--a);color:#fff;border-radius:8px;font-size:14px';
@@ -483,7 +486,7 @@ function showDet(){
       const ok=ans===q.a;
       const d=document.createElement('div');
       d.className='det-item'+(ok?' ok':'');
-      d.innerHTML=`<h4>Question \( {i+1}</h4><div class="q-text"> \){q.q}</div><div class="ans-row"><strong>Your answer:</strong> ${ans!==null?String.fromCharCode(65+ans)+') '+q.o[ans]:'Not answered'}</div><div class="ans-row"><strong>Correct:</strong> \( {String.fromCharCode(65+q.a)+') '+q.o[q.a]}</div><div class="exp"> \){q.e}</div>`;
+      d.innerHTML=`<h4>Question ${i+1}</h4><div class="q-text">${q.q}</div><div class="ans-row"><strong>Your answer:</strong> ${ans!==null?String.fromCharCode(65+ans)+') '+q.o[ans]:'Not answered'}</div><div class="ans-row"><strong>Correct:</strong> ${String.fromCharCode(65+q.a)+') '+q.o[q.a]}</div><div class="exp">${q.e}</div>`;
       c.appendChild(d);
     }
   }
@@ -501,8 +504,8 @@ function hideDet(){
 
 function restart(){
   if(!confirm('Start a new quiz? All progress will be reset.'))return;
-  localStorage.removeItem('biology_quiz_auth');
-  sessionStorage.removeItem('biology_quiz_progress');
+  localStorage.removeItem('excretion_quiz_auth');
+  sessionStorage.removeItem('excretion_quiz_progress');
   location.reload();
 }
 
@@ -512,11 +515,11 @@ function exit(){
 
 function toggleTheme(){
   document.body.classList.toggle('light');
-  localStorage.setItem('biology_quiz_theme',document.body.classList.contains('light')?'light':'dark');
+  localStorage.setItem('excretion_quiz_theme',document.body.classList.contains('light')?'light':'dark');
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
-  if(localStorage.getItem('biology_quiz_theme')==='light')document.body.classList.add('light');
+  if(localStorage.getItem('excretion_quiz_theme')==='light')document.body.classList.add('light');
   document.getElementById('code').addEventListener('keypress',e=>{if(e.key==='Enter')unlock();});
   init();
 });
