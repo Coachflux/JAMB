@@ -9,7 +9,7 @@
 
 <div class="content">
   <div class="main-header">
-    <h1>🧬 Organic Compounds (JAMB Full Note)</h1>
+    <h1>👩‍🔬 Organic Compounds (JAMB Full Note)</h1>
     <p>Definition • classification • general formulae • IUPAC • hydrocarbons • alcohols • acids/esters • amines • carbohydrates • proteins • polymers • tests</p>
   </div>
 
@@ -552,7 +552,7 @@
     </div>
   </div>
 
-  <button class="explore-btn" onclick="alert('Practice: functional group identification + general formulae + tests (bromine, Tollens, Benedict, Biuret)!')">Practice Questions</button>
+  <button class="explore-btn" onclick="alert('Practice: functional group identification + general formulae + tests (bromine, Tollens, Benedict, Biuret)!')">Practice JAMB Questions</button>
 </div>
 </div>
 
@@ -562,3 +562,28 @@
     <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
 
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    function setTheme(theme){
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+  </script>
+</body>
+</html>
