@@ -425,3 +425,74 @@
     <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
 
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    function setTheme(theme){
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+
+    const F = 96500;
+
+    function calcMass(){
+      const M = parseFloat(document.getElementById('M').value || "0");
+      const n = parseFloat(document.getElementById('n').value || "0");
+      const I = parseFloat(document.getElementById('I').value || "0");
+      const t = parseFloat(document.getElementById('t').value || "0");
+      const out = document.getElementById('massResult');
+
+      if(M<=0 || n<=0 || I<=0 || t<=0){
+        out.textContent = "Enter valid M, n, I, and t values (>0).";
+        return;
+      }
+      const m = (M*I*t)/(n*F);
+      const Q = I*t;
+      out.textContent = `Q = It = ${I}×${t} = ${Q.toFixed(2)} C. m = (MIt)/(nF) = (${M}×${I}×${t})/(${n}×${F}) = ${m.toFixed(4)} g.`;
+    }
+
+    function calcTime(){
+      const m = parseFloat(document.getElementById('m2').value || "0");
+      const M = parseFloat(document.getElementById('M2').value || "0");
+      const n = parseFloat(document.getElementById('n2').value || "0");
+      const I = parseFloat(document.getElementById('I2').value || "0");
+      const out = document.getElementById('timeResult');
+
+      if(m<=0 || M<=0 || n<=0 || I<=0){
+        out.textContent = "Enter valid m, M, n, and I values (>0).";
+        return;
+      }
+      const t = (m*n*F)/(M*I);
+      out.textContent = `t = (m n F)/(M I) = (${m}×${n}×${F})/(${M}×${I}) = ${t.toFixed(2)} s (≈ ${(t/60).toFixed(2)} min).`;
+    }
+
+    function calcGasVol(){
+      const Q = parseFloat(document.getElementById('Q3').value || "0");
+      const n = parseFloat(document.getElementById('n3').value || "0");
+      const out = document.getElementById('gasResult');
+
+      if(Q<=0 || n<=0){
+        out.textContent = "Enter valid Q and n values (>0).";
+        return;
+      }
+      const V = (Q*22.4)/(n*F);
+      out.textContent = `V = (Q×22.4)/(nF) = (${Q}×22.4)/(${n}×${F}) = ${V.toFixed(4)} dm³ at STP.`;
+    }
+  </script>
+</body>
+</html>
