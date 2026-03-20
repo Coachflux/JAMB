@@ -260,3 +260,54 @@
     <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
     <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    function setTheme(theme){
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+
+    function calcPercentC(){
+      const C = parseFloat(document.getElementById('ramC').value || "0");
+      const O = parseFloat(document.getElementById('ramO').value || "0");
+      const total = C + 2*O;
+      if(total <= 0){ document.getElementById('percentCResult').textContent = "Please enter valid RAM values."; return; }
+      const pct = (C/total)*100;
+      document.getElementById('percentCResult').textContent =
+        `Molar mass of CO₂ = ${C} + 2×${O} = ${total}. %C = (${C}/${total})×100 = ${pct.toFixed(2)}%`;
+    }
+
+    function calcMoles(){
+      const m = parseFloat(document.getElementById('massIn').value || "0");
+      const M = parseFloat(document.getElementById('molarIn').value || "0");
+      if(m <= 0 || M <= 0){ document.getElementById('moleResult').textContent = "Enter valid mass and molar mass."; return; }
+      const n = m / M;
+      document.getElementById('moleResult').textContent = `Moles (n) = m/M = ${m}/${M} = ${n.toFixed(4)} mol`;
+    }
+
+    function calcH2OFromH2(){
+      const nH2 = parseFloat(document.getElementById('h2moles').value || "0");
+      if(nH2 < 0){ document.getElementById('stoichResult').textContent = "Enter a valid value."; return; }
+      document.getElementById('stoichResult').textContent =
+        `From 2H₂ + O₂ → 2H₂O, moles H₂ : moles H₂O = 2:2 = 1:1. So H₂O formed = ${nH2} mol.`;
+    }
+  </script>
+</body>
+</html>
