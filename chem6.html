@@ -326,3 +326,63 @@
     <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
     <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    function setTheme(theme){
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+
+    function calcSolubility(){
+      const mass = parseFloat(document.getElementById('massG').value || "0");
+      const Mr = parseFloat(document.getElementById('molarMass').value || "0");
+      const volCm3 = parseFloat(document.getElementById('volCm3').value || "0");
+      const out = document.getElementById('calcResult');
+
+      if(mass<=0 || Mr<=0 || volCm3<=0){
+        out.textContent = "Enter valid mass, molar mass, and volume (cm³).";
+        return;
+      }
+      const moles = mass / Mr;
+      const volDm3 = volCm3 / 1000;
+      const sol = moles / volDm3;
+
+      out.textContent = `Moles = ${mass}/${Mr} = ${moles.toFixed(4)} mol. Volume = ${volCm3}/1000 = ${volDm3.toFixed(4)} dm³. Solubility = ${moles.toFixed(4)}/${volDm3.toFixed(4)} = ${sol.toFixed(4)} mol/dm³.`;
+    }
+
+    function calcMassFromSol(){
+      const sol = parseFloat(document.getElementById('solMolDm3').value || "0");
+      const Mr = parseFloat(document.getElementById('molarMass').value || "0");
+      const volCm3 = parseFloat(document.getElementById('volCm3').value || "0");
+      const out = document.getElementById('calcResult');
+
+      if(sol<=0 || Mr<=0 || volCm3<=0){
+        out.textContent = "Enter valid solubility (mol/dm³), molar mass, and volume (cm³).";
+        return;
+      }
+      const volDm3 = volCm3 / 1000;
+      const moles = sol * volDm3;
+      const mass = moles * Mr;
+
+      out.textContent = `Volume = ${volCm3}/1000 = ${volDm3.toFixed(4)} dm³. Moles = ${sol}×${volDm3.toFixed(4)} = ${moles.toFixed(4)} mol. Mass = ${moles.toFixed(4)}×${Mr} = ${mass.toFixed(2)} g.`;
+    }
+  </script>
+</body>
+</html>
