@@ -294,3 +294,58 @@
     <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
 
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    function setTheme(theme){
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+
+    function calcAvgRate(){
+      const c1 = parseFloat(document.getElementById('c1').value || "0");
+      const c2 = parseFloat(document.getElementById('c2').value || "0");
+      const t = parseFloat(document.getElementById('t1').value || "0");
+      const out = document.getElementById('rateResult');
+
+      if(t<=0){
+        out.textContent = "Enter a valid time (t > 0).";
+        return;
+      }
+      const delta = Math.abs(c1 - c2);
+      const rate = delta / t;
+
+      out.textContent = `ΔC = |${c1} − ${c2}| = ${delta.toFixed(6)} mol/dm³. Average rate = ΔC/t = ${delta.toFixed(6)}/${t} = ${rate.toFixed(6)} mol dm⁻³ s⁻¹.`;
+    }
+
+    function calcFactor(){
+      const oldT = parseFloat(document.getElementById('timeOld').value || "0");
+      const newT = parseFloat(document.getElementById('timeNew').value || "0");
+      const out = document.getElementById('factorResult');
+
+      if(oldT<=0 || newT<=0){
+        out.textContent = "Enter valid old and new times (>0).";
+        return;
+      }
+      const factor = oldT / newT;
+
+      out.textContent = `Rate ∝ 1/time. Factor increase = (1/${newT}) / (1/${oldT}) = ${oldT}/${newT} = ${factor.toFixed(4)}.`;
+    }
+  </script>
+</body>
+</html>
