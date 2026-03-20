@@ -504,3 +504,64 @@
     <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
 
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    function setTheme(theme){
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+
+    function log10(x){ return Math.log(x)/Math.LN10; }
+
+    function calcPH(){
+      const h = parseFloat(document.getElementById('hConc').value || "0");
+      const out = document.getElementById('phResult');
+      if(h<=0){ out.textContent="Enter a valid [H⁺] value (>0)."; return; }
+      const ph = -log10(h);
+      out.textContent = `pH = −log₁₀[H⁺] = −log₁₀(${h}) = ${ph.toFixed(4)}`;
+    }
+
+    function calcPOH(){
+      const oh = parseFloat(document.getElementById('ohConc').value || "0");
+      const out = document.getElementById('pohResult');
+      if(oh<=0){ out.textContent="Enter a valid [OH⁻] value (>0)."; return; }
+      const poh = -log10(oh);
+      const ph = 14 - poh;
+      out.textContent = `pOH = −log₁₀[OH⁻] = ${poh.toFixed(4)}; pH = 14 − pOH = ${ph.toFixed(4)}`;
+    }
+
+    function calcM2(){
+      const M1 = parseFloat(document.getElementById('m1').value || "0");
+      const V1 = parseFloat(document.getElementById('v1').value || "0");
+      const n1 = parseFloat(document.getElementById('n1').value || "0");
+      const V2 = parseFloat(document.getElementById('v2').value || "0");
+      const n2 = parseFloat(document.getElementById('n2').value || "0");
+
+      const out = document.getElementById('titrResult');
+      if(M1<=0 || V1<=0 || n1<=0 || V2<=0 || n2<=0){
+        out.textContent="Enter valid M1, V1, n1, V2, n2 values (>0).";
+        return;
+      }
+      const M2 = (M1*V1*n1)/(V2*n2);
+      document.getElementById('m2').value = M2.toFixed(6);
+      out.textContent = `Using M₁V₁n₁ = M₂V₂n₂: M₂ = (${M1}×${V1}×${n1})/(${V2}×${n2}) = ${M2.toFixed(6)} M`;
+    }
+  </script>
+</body>
+</html>
