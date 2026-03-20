@@ -1,9 +1,9 @@
 <div class="top-bar neumorphic">
   <button class="neumorphic-btn" onclick="history.back()">←</button>
-  <div class="header">ENGLISH (JAMB)</div>
+  <div class="header">ENGLISH (NOVEL)</div>
   <div class="right-icons">
     <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-    <button class="neumorphic-btn" onclick="alert('📌 Saved for revision!')">⭐</button>
+    <button class="neumorphic-btn" onclick="alert('📌 Saved for revision!')">🚀</button>
   </div>
 </div>
 
@@ -211,7 +211,7 @@
     </div>
   </div>
 
-  <button class="explore-btn" onclick="alert('Revise: setting/time + who called + DNA result + Favour + effects. Then practise MCQs.')">Practice Questions</button>
+  <button class="explore-btn" onclick="alert('Revise: setting/time + who called + DNA result + Favour + effects. Then practise MCQs.')">Practice JAMB Questions</button>
 </div>
 </div>
 
@@ -220,3 +220,29 @@
     <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
     <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    function setTheme(theme){
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+  </script>
+</body>
+</html>
