@@ -3,7 +3,7 @@
   <div class="header">CHEMISTRY</div>
   <div class="right-icons">
     <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-    <button class="neumorphic-btn" onclick="alert('📌 Saved for revision!')">⭐</button>
+    <button class="neumorphic-btn" onclick="alert('📌 Saved for revision!')">🚀</button>
   </div>
 </div>
 
@@ -292,7 +292,7 @@
     </div>
   </div>
 
-  <button class="explore-btn" onclick="alert('Practice: write Kc expression + Le Chatelier shifts + simple Kc calculations daily!')">Practice Questions</button>
+  <button class="explore-btn" onclick="alert('Practice: write Kc expression + Le Chatelier shifts + simple Kc calculations daily!')">Practice JAMB Questions</button>
 </div>
 </div>
 
@@ -301,3 +301,42 @@
     <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
     <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    function setTheme(theme){
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+
+    function calcKc(){
+      const no2 = parseFloat(document.getElementById('no2').value || "0");
+      const n2o4 = parseFloat(document.getElementById('n2o4').value || "0");
+      const out = document.getElementById('kcResult');
+
+      if(no2<=0 || n2o4<=0){
+        out.textContent = "Enter valid equilibrium concentrations (>0) for both NO₂ and N₂O₄.";
+        return;
+      }
+      const kc = (no2*no2)/n2o4;
+      out.textContent = `Kc = [NO₂]² / [N₂O₄] = (${no2})² / (${n2o4}) = ${kc.toFixed(4)}.`;
+    }
+  </script>
+</body>
+</html>
