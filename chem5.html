@@ -478,3 +478,47 @@
     <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
     <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    function setTheme(theme){
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+
+    function calcHalfLife(){
+      const init = parseFloat(document.getElementById('initAmt').value || "0");
+      const t12 = parseFloat(document.getElementById('halfLife').value || "0");
+      const t = parseFloat(document.getElementById('timeElapsed').value || "0");
+
+      const out = document.getElementById('halfLifeResult');
+      if(init <= 0 || t12 <= 0 || t < 0){
+        out.textContent = "Please enter valid values (initial > 0, half-life > 0, time ≥ 0).";
+        return;
+      }
+      const n = t / t12;
+      const fraction = Math.pow(0.5, n);
+      const remaining = init * fraction;
+
+      out.textContent =
+        `n = time/T½ = ${t}/${t12} = ${n.toFixed(4)}. Fraction remaining = (1/2)^n = ${(fraction).toFixed(6)}. Remaining amount = ${remaining.toFixed(4)} (same unit as initial).`;
+    }
+  </script>
+</body>
+</html>
