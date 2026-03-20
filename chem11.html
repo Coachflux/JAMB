@@ -321,3 +321,65 @@
     <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
     <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
+
+    function setTheme(theme){
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
+    });
+
+    function calcDG(){
+      const dH = parseFloat(document.getElementById('dH').value || "0");
+      const dS_J = parseFloat(document.getElementById('dS').value || "0");
+      const T = parseFloat(document.getElementById('tempK').value || "0");
+      const out = document.getElementById('dgResult');
+
+      if(T<=0){
+        out.textContent = "Enter a valid temperature in Kelvin (T > 0).";
+        return;
+      }
+      const dS = dS_J/1000; // kJ/mol·K
+      const TdS = T*dS;
+      const dG = dH - TdS;
+
+      let tag = "Non-spontaneous";
+      if(dG < 0) tag = "Spontaneous";
+      else if(Math.abs(dG) < 1e-9) tag = "Equilibrium";
+
+      out.textContent = `∆S = ${dS_J} J/mol·K = ${dS.toFixed(6)} kJ/mol·K. T∆S = ${T}×${dS.toFixed(6)} = ${TdS.toFixed(4)} kJ/mol. ∆G = ∆H − T∆S = ${dH} − ${TdS.toFixed(4)} = ${dG.toFixed(4)} kJ/mol → ${tag}.`;
+    }
+
+    function calcT(){
+      const dH = parseFloat(document.getElementById('dH2').value || "0");
+      const dS_J = parseFloat(document.getElementById('dS2').value || "0");
+      const out = document.getElementById('tResult');
+
+      if(dS_J === 0){
+        out.textContent = "∆S cannot be 0 for this calculation.";
+        return;
+      }
+      const dS = dS_J/1000; // kJ/mol·K
+      const T = dH / dS;
+
+      out.textContent = `Convert ∆S: ${dS_J} J/mol·K = ${dS.toFixed(6)} kJ/mol·K. T = ∆H/∆S = ${dH}/${dS.toFixed(6)} = ${T.toFixed(2)} K.`;
+    }
+  </script>
+</body>
+</html>
