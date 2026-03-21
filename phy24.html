@@ -1,664 +1,485 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PHYSICS - Reflection of Light</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JAMB Physics - Reflection of Light at Plane and Curved Surfaces</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
+    :root{
+      --background:#1e1e2f;--shadow-in:#171723;--shadow-out:#25253b;
+      --text-primary:#f0f0ff;--text-secondary:#c0c0e0;
+      --accent:#1db954;--accent-secondary:#ff6b6b;--accent-tertiary:#4ecdc4;
+      --card-bg:#2a2a3f;--line:#8ea2ff;--grid:rgba(255,255,255,.08)
+    }
+    body.light{
+      --background:#e0e0e0;--shadow-in:#bebebe;--shadow-out:#ffffff;
+      --text-primary:#1a1a1a;--text-secondary:#444;--card-bg:#f8f8f8;--line:#2b59ff;--grid:rgba(0,0,0,.08)
+    }
+    body{
+      background:var(--background);color:var(--text-primary);
+      display:flex;justify-content:center;align-items:center;
+      min-height:100vh;overflow-x:hidden
+    }
+    .container{
+      width:100%;max-width:420px;height:750px;overflow-y:auto;
+      background:var(--background);border-radius:20px;
+      box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out);
+      padding-top:70px;padding-bottom:80px;position:relative
+    }
+    .neumorphic{
+      background:var(--background);
+      box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out);
+      border-radius:15px
+    }
+    .neumorphic-btn{
+      background:var(--background);border:none;border-radius:50%;
+      width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+      box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      cursor:pointer;color:var(--text-primary);font-size:18px;transition:all .3s ease
+    }
+    .neumorphic-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.95)
+    }
+    .top-bar{
+      position:fixed;top:0;width:100%;max-width:420px;
+      background:var(--background);padding:15px;
+      display:flex;align-items:center;justify-content:space-between;
+      box-shadow:0 5px 10px var(--shadow-in);z-index:20
+    }
+    .top-bar .header{font-size:16px;font-weight:900;color:var(--accent)}
+    .top-bar .right-icons{display:flex;gap:10px}
+
+    .progress-container{
+      position:fixed;top:70px;left:0;width:100%;max-width:420px;height:4px;
+      background:var(--shadow-in);z-index:15
+    }
+    .progress-bar{height:100%;background:var(--accent);width:0%;transition:width .3s}
+
+    .content{padding:20px 16px;line-height:1.7}
+    .main-header{
+      text-align:center;margin-bottom:26px;padding:20px;border-radius:20px;
+      background:rgba(29,185,84,.1)
+    }
+    .main-header h1{font-size:20px;margin-bottom:8px;color:var(--accent);font-weight:900}
+    .main-header p{font-size:13px;color:var(--text-secondary);font-weight:500}
+
+    .section-card{
+      background:var(--card-bg);padding:22px 18px;border-radius:20px;
+      box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out);
+      margin-bottom:22px;border-left:4px solid var(--accent)
+    }
+    .section-card h2{
+      font-size:18px;margin-bottom:12px;color:var(--accent);font-weight:900;
+      display:flex;align-items:center;gap:8px
+    }
+    .section-card h3{
+      font-size:15px;margin:16px 0 10px;color:var(--accent-tertiary);font-weight:800;
+      padding-left:12px;border-left:3px solid var(--accent-tertiary)
+    }
+    .section-card h4{
+      font-size:14px;margin:14px 0 8px;color:var(--accent-secondary);font-weight:800
+    }
+    .section-card p{margin-bottom:10px;font-size:14px;text-align:justify}
+    .section-card ul,.section-card ol{padding-left:20px;margin:10px 0}
+    .section-card li{margin-bottom:7px;font-size:14px}
+
+    .quick-facts{
+      background:linear-gradient(135deg,rgba(29,185,84,.1),rgba(78,205,196,.1));
+      padding:14px;border-radius:15px;margin:12px 0;border:1px solid rgba(29,185,84,.3)
+    }
+    .quick-facts li{font-size:13px}
+
+    .highlight-box{
+      background:rgba(78,205,196,.1);padding:12px 16px;border-radius:10px;margin:12px 0;
+      border-left:3px solid var(--accent-tertiary)
     }
 
-    :root {
-      --background: #1e1e2f;
-      --shadow-in: #171723;
-      --shadow-out: #25253b;
-      --text-primary: #f0f0ff;
-      --text-secondary: #c0c0e0;
-      --accent: #1db954;
-      --card-bg: #2a2a3f;
+    .memory-tip{
+      background:rgba(255,107,107,.1);padding:14px 16px;border-radius:12px;margin:14px 0;
+      border-left:4px solid var(--accent-secondary)
+    }
+    .memory-tip strong{color:var(--accent-secondary);display:block;margin-bottom:6px;font-size:14px}
+    .memory-tip p{margin:0;font-size:13px;font-style:italic}
+
+    .jamb-alert{
+      background:linear-gradient(135deg,rgba(255,193,7,.15),rgba(255,152,0,.1));
+      border:1px solid rgba(255,193,7,.4);border-radius:12px;padding:14px;margin:16px 0
+    }
+    .jamb-alert h4{color:#ffc107;margin-bottom:8px;font-size:14px;font-weight:900}
+    .jamb-alert li{font-size:13px}
+
+    .formula-box{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .formula-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:6px
+    }
+    .formula-box .line{
+      font-size:13px;margin-bottom:5px
     }
 
-    body.light {
-      --background: #e0e0e0;
-      --shadow-in: #bebebe;
-      --shadow-out: #ffffff;
-      --text-primary: #1a1a1a;
-      --text-secondary: #444;
-      --accent: #1db954;
-      --card-bg: #f8f8f8;
+    .example-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .example-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:8px
+    }
+    .example-box .answer{
+      margin-top:8px;font-size:13px;color:var(--accent-secondary);font-weight:800
     }
 
-    body {
-      background: var(--background);
-      color: var(--text-primary);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
+    .diagram-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:12px;
+      margin:14px 0
+    }
+    .diagram-title{
+      font-size:13px;
+      font-weight:900;
+      color:var(--accent-tertiary);
+      margin-bottom:8px
+    }
+    .diagram-caption{
+      font-size:12px;
+      color:var(--text-secondary);
+      margin-top:8px
+    }
+    svg{
+      width:100%;
+      height:auto;
+      display:block
     }
 
-    .container {
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      border-radius: 20px;
-      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
-      overflow: hidden;
-      position: relative;
-      height: 700px;
-      overflow-y: auto;
-      padding-top: 70px;
-      padding-bottom: 70px;
+    .table-container{
+      width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0;border-radius:12px;
+      box-shadow:3px 3px 8px var(--shadow-in),-3px -3px 8px var(--shadow-out)
+    }
+    .summary-table{
+      width:100%;min-width:1520px;border-collapse:separate;border-spacing:0;font-size:13px
+    }
+    .summary-table th{
+      background:var(--accent);color:#000;padding:12px 10px;text-align:left;font-weight:900;white-space:nowrap
+    }
+    .summary-table td{
+      padding:10px;border-bottom:1px solid var(--shadow-in);background:var(--card-bg);vertical-align:top
+    }
+    .summary-table tr:last-child td{border-bottom:none}
+    .summary-table tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+    .table-scroll-hint{font-size:11px;color:var(--text-secondary);text-align:center;margin-top:4px;font-style:italic}
+
+    .explore-btn{
+      background:var(--accent);border:none;padding:14px 28px;border-radius:25px;color:#000;cursor:pointer;
+      box-shadow:4px 4px 8px var(--shadow-in),-4px -4px 8px var(--shadow-out);
+      font-size:16px;margin:22px auto;display:block;font-weight:900;transition:all .3s ease
+    }
+    .explore-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.98)
     }
 
-    .neumorphic {
-      background: var(--background);
-      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
-      border-radius: 15px;
+    .nav-bar{
+      position:fixed;bottom:0;width:100%;max-width:420px;background:var(--background);padding:10px;
+      display:flex;justify-content:space-around;box-shadow:0 -5px 10px var(--shadow-in);z-index:20
     }
+    .nav-bar .nav-item{text-align:center}
+    .nav-bar .nav-item.center button{
+      width:50px;height:50px;font-size:24px;background:var(--accent);
+      box-shadow:0 0 15px var(--accent),3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      color:#000
+    }
+    .nav-bar p{display:none;font-size:11px;margin-top:4px;color:var(--text-primary)}
 
-    .neumorphic-btn {
-      background: var(--background);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      cursor: pointer;
-      color: var(--text-primary);
-      font-size: 18px;
-    }
-
-    .neumorphic-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .top-bar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 5px 10px var(--shadow-in);
-      z-index: 20;
-    }
-
-    .top-bar .header {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--text-primary);
-    }
-
-    .top-bar .right-icons {
-      display: flex;
-      gap: 10px;
-    }
-
-    .top-bar .profile-upload {
-      position: relative;
-    }
-
-    .top-bar .profile-upload input {
-      opacity: 0;
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-    }
-
-    .content {
-      padding: 20px 16px;
-      line-height: 1.6;
-    }
-
-    .main-header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .main-header h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    .main-header p.subtitle {
-      font-size: 16px;
-      color: var(--text-secondary);
-    }
-
-    .welcome-note {
-      background: var(--card-bg);
-      padding: 28px 20px;
-      border-radius: 20px;
-      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
-      margin-bottom: 30px;
-    }
-
-    .welcome-note h2 {
-      font-size: 22px;
-      margin: 32px 0 16px;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .welcome-note h2:first-child {
-      margin-top: 0;
-    }
-
-    .welcome-note h3 {
-      font-size: 18px;
-      margin: 24px 0 12px;
-      color: var(--accent);
-    }
-
-    .welcome-note p {
-      margin-bottom: 16px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note ul, .welcome-note ol {
-      padding-left: 24px;
-      margin: 16px 0;
-    }
-
-    .welcome-note li {
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note .highlight {
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .diagram-img {
-      width: 100%;
-      border-radius: 12px;
-      margin: 16px 0 8px;
-      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
-    }
-
-    .organelle-list {
-      margin: 16px 0;
-      padding: 12px;
-      background: rgba(0,0,0,0.1);
-      border-radius: 12px;
-    }
-
-    .organelle-list li strong {
-      color: var(--accent);
-    }
-
-    .formula-box {
-      background: rgba(29, 185, 84, 0.1);
-      border-left: 4px solid var(--accent);
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-    }
-
-    .calculation-box {
-      background: rgba(0,0,0,0.15);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box strong {
-      color: var(--accent);
-    }
-
-    .answer-box {
-      background: var(--accent);
-      color: #000;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      margin: 12px 0;
-      text-align: center;
-    }
-
-    .tips-box {
-      background: rgba(255, 193, 7, 0.1);
-      border-left: 4px solid #ffc107;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .warning-box {
-      background: rgba(244, 67, 54, 0.1);
-      border-left: 4px solid #f44336;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      margin: 16px 0;
-      border-radius: 12px;
-      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .table-wrapper::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-track {
-      background: var(--shadow-in);
-      border-radius: 3px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 3px;
-    }
-
-    table {
-      width: 100%;
-      min-width: 500px;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--shadow-in);
-      white-space: nowrap;
-    }
-
-    th {
-      color: var(--accent);
-      font-weight: bold;
-      background: rgba(0,0,0,0.1);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .explore-btn {
-      background: var(--accent);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      color: #000;
-      cursor: pointer;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      font-size: 16px;
-      margin: 24px auto 0;
-      display: block;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .explore-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 10px;
-      display: flex;
-      justify-content: space-around;
-      box-shadow: 0 -5px 10px var(--shadow-in);
-      z-index: 20;
-    }
-
-    .nav-bar .nav-item {
-      text-align: center;
-      position: relative;
-    }
-
-    .nav-bar .nav-item button {
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.center button {
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
-      background: var(--accent);
-      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      color: #000;
-    }
-
-    .nav-bar .nav-item.active button {
-      background: var(--accent);
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar .nav-item p {
-      display: none;
-      font-size: 12px;
-      margin-top: 5px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.active p {
-      display: block;
-    }
+    .math{font-weight:900;color:var(--accent-secondary)}
+    .label{fill:var(--text-primary);font-size:11px;font-weight:700}
+    .axis{stroke:var(--text-primary);stroke-width:2}
+    .grid{stroke:var(--grid);stroke-width:1}
+    .line{stroke:var(--line);stroke-width:3;fill:none}
+    .obj{fill:rgba(29,185,84,.18);stroke:var(--accent);stroke-width:2}
+    .tick{stroke:var(--text-primary);stroke-width:2}
+    .mark{fill:var(--accent-secondary)}
+    .pathline{stroke:var(--accent-tertiary);stroke-width:3;fill:none}
+    .curve{stroke:var(--line);stroke-width:3;fill:none}
+    .hot{fill:rgba(255,107,107,.32);stroke:none}
+    .cool{fill:rgba(78,205,196,.30);stroke:none}
+    .darkfill{fill:rgba(0,0,0,.35)}
+    .lightfill{fill:rgba(255,255,255,.15)}
   </style>
 </head>
+
 <body class="dark">
-  <div class="container">
-    <!-- Top Fixed Bar -->
+  <div class="container" id="scroll-container">
+    <div class="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
+
     <div class="top-bar neumorphic">
-      <button class="neumorphic-btn">←</button>
+      <button class="neumorphic-btn" onclick="history.back()">←</button>
       <div class="header">PHYSICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-        <button class="neumorphic-btn profile-upload">
-          📷
-          <input type="file" accept="image/*" id="profile-upload">
-        </button>
+        <button class="neumorphic-btn" onclick="alert('📌 Saved for revision!')">🚀</button>
       </div>
     </div>
 
-    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Master Reflection of Light! 🚀</h1>
-        <p class="subtitle">– JAMB Chapter 24 Made Easy</p>
+        <h1>🪞 Reflection of Light at Plane and Curved Surfaces</h1>
+        <p>JAMB Physics • laws of reflection • plane mirrors • curved mirrors • mirror formula • magnification • optical instruments</p>
       </div>
 
-      <div class="welcome-note neumorphic">
-        <h2>📚 Chapter 24: Reflection of Light at Plane and Curved Surfaces</h2>
-        
-        <p><strong>🎯 Learning Objectives:</strong> Interpret the laws of reflection, illustrate image formation by plane, concave and convex mirrors, apply the mirror formula, determine linear magnification, and apply laws to instruments like periscope, kaleidoscope, and sextant.</p>
+      <div class="section-card">
+        <h2>🎯 Learning Objective</h2>
+        <p>This chapter explains the laws of reflection, image formation by plane, concave and convex mirrors, the mirror formula, magnification, and applications in instruments like periscope, kaleidoscope, and sextant.</p>
 
-        <h2>1️⃣ Laws of Reflection 🔬</h2>
-        
-        <h3>What is Reflection?</h3>
-        <p>Reflection is the <span class="highlight">bouncing back of light rays</span> when they hit a smooth surface (mirror). The surface that reflects light is called a <strong>mirror</strong>.</p>
-
-        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/reflection.gif" alt="Animation showing incident ray reflecting off mirror surface with angle of incidence equals angle of reflection" class="diagram-img">
-
-        <h3>The Two Laws of Reflection</h3>
-        
-        <div class="organelle-list">
-          <ol>
-            <li><strong>First Law:</strong> The incident ray, the reflected ray, and the normal all lie in the same plane.</li>
-            <br>
-            <li><strong>Second Law:</strong> The angle of incidence (i) equals the angle of reflection (r).
-            <br><strong>i = r</strong></li>
-          </ol>
-        </div>
-
-        <h3>Key Terms</h3>
-        <div class="organelle-list">
+        <div class="quick-facts">
           <ul>
-            <li><strong>Incident Ray:</strong> The light ray approaching the mirror</li>
-            <li><strong>Reflected Ray:</strong> The light ray bouncing off the mirror</li>
-            <li><strong>Normal:</strong> Imaginary line perpendicular to the mirror surface at the point where light hits</li>
-            <li><strong>Angle of Incidence (i):</strong> Angle between incident ray and normal</li>
-            <li><strong>Angle of Reflection (r):</strong> Angle between reflected ray and normal</li>
+            <li>Reflection is the bouncing back of light from a surface</li>
+            <li>For reflection, <span class="math">i = r</span></li>
+            <li>Plane mirrors form virtual upright images</li>
+            <li>Curved mirrors can form real or virtual images depending on position</li>
           </ul>
         </div>
 
-        <img src="https://kimi-web-img.moonshot.cn/img/upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Reflection_angles.svg/1200px-Reflection_angles.svg.png" alt="Diagram showing incident ray, reflected ray, normal, angle of incidence and angle of reflection" class="diagram-img">
-
-        <h2>2️⃣ Plane Mirrors (Flat Mirrors) 🪞</h2>
-
-        <h3>Characteristics of Images in Plane Mirrors</h3>
-        <div class="organelle-list">
-          <ol>
-            <li><strong>Virtual</strong> (cannot be projected on a screen)</li>
-            <li><strong>Erect/Upright</strong> (not inverted)</li>
-            <li><strong>Same size</strong> as the object</li>
-            <li><strong>Laterally inverted</strong> (left appears right, right appears left)</li>
-            <li><strong>Image distance = Object distance</strong> from mirror</li>
-          </ol>
+        <div class="memory-tip">
+          <strong>🧠 Big idea</strong>
+          <p>All image formation by mirrors comes from one key behavior: light reflects in a predictable way.</p>
         </div>
+      </div>
 
-        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/planemirror.gif" alt="Diagram showing image formation in plane mirror with virtual erect same size laterally inverted image" class="diagram-img">
+      <div class="section-card">
+        <h2>1️⃣ Laws of Reflection</h2>
 
-        <h3>Lateral Inversion Explained</h3>
-        <div class="tips-box">
-          When you look in a mirror, your right hand appears as the left hand of your image. This is why <strong>"AMBULANCE"</strong> is written in reverse on emergency vehicles—drivers see it correctly in their rear-view mirrors.
-        </div>
+        <h3>What is reflection?</h3>
+        <p>Reflection is the bouncing back of light rays when they strike a smooth surface such as a mirror.</p>
 
-        <h3>Multiple Reflections</h3>
-        <p>When two plane mirrors are placed at an angle θ to each other:</p>
-        
+        <h3>The two laws of reflection</h3>
+        <ul>
+          <li><strong>First law:</strong> The incident ray, reflected ray, and normal all lie in the same plane.</li>
+          <li><strong>Second law:</strong> The angle of incidence equals the angle of reflection.</li>
+        </ul>
+
         <div class="formula-box">
-          <strong>n = (360°/θ) - 1</strong><br><br>
-          Where n = number of images formed
+          <div class="title">Reflection law</div>
+          <div class="line"><span class="math">i = r</span></div>
         </div>
 
-        <h3>Special Cases</h3>
-        <div class="table-wrapper">
-          <table>
+        <h3>Key terms</h3>
+        <ul>
+          <li><strong>Incident ray:</strong> ray coming toward the mirror</li>
+          <li><strong>Reflected ray:</strong> ray leaving the mirror</li>
+          <li><strong>Normal:</strong> line perpendicular to the mirror at the point of incidence</li>
+          <li><strong>Angle of incidence:</strong> angle between incident ray and normal</li>
+          <li><strong>Angle of reflection:</strong> angle between reflected ray and normal</li>
+        </ul>
+
+        <div class="diagram-box">
+          <div class="diagram-title">Incident ray, normal, and reflected ray</div>
+          <svg viewBox="0 0 340 220" aria-label="Reflection law diagram">
+            <line x1="45" y1="150" x2="295" y2="150" class="axis"/>
+            <line x1="170" y1="40" x2="170" y2="190" class="tick"/>
+            <line x1="85" y1="70" x2="170" y2="150" class="curve"/>
+            <line x1="170" y1="150" x2="255" y2="70" class="curve"/>
+            <text x="70" y="65" class="label">Incident ray</text>
+            <text x="210" y="65" class="label">Reflected ray</text>
+            <text x="178" y="55" class="label">Normal</text>
+            <text x="125" y="118" class="label">i</text>
+            <text x="210" y="118" class="label">r</text>
+            <text x="122" y="173" class="label">Mirror surface</text>
+          </svg>
+          <div class="diagram-caption">The angle of incidence equals the angle of reflection, both measured from the normal.</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>2️⃣ Plane Mirrors</h2>
+
+        <h3>Characteristics of images in plane mirrors</h3>
+        <ul>
+          <li>Virtual</li>
+          <li>Erect or upright</li>
+          <li>Same size as the object</li>
+          <li>Laterally inverted</li>
+          <li>Image distance equals object distance from the mirror</li>
+        </ul>
+
+        <div class="diagram-box">
+          <div class="diagram-title">Image in a plane mirror</div>
+          <svg viewBox="0 0 340 220" aria-label="Plane mirror image diagram">
+            <line x1="170" y1="30" x2="170" y2="190" class="axis"/>
+            <line x1="95" y1="155" x2="95" y2="70" class="tick"/>
+            <line x1="245" y1="155" x2="245" y2="70" class="tick"/>
+            <line x1="95" y1="70" x2="170" y2="110" class="curve"/>
+            <line x1="170" y1="110" x2="115" y2="150" class="curve"/>
+            <line x1="95" y1="70" x2="170" y2="95" class="pathline"/>
+            <line x1="170" y1="95" x2="245" y2="70" class="pathline" stroke-dasharray="5,5"/>
+            <text x="72" y="62" class="label">Object</text>
+            <text x="225" y="62" class="label">Image</text>
+            <text x="177" y="25" class="label">Mirror</text>
+          </svg>
+          <div class="diagram-caption">The image appears behind the mirror, upright and equal in size to the object.</div>
+        </div>
+
+        <h3>Lateral inversion</h3>
+        <p>In a plane mirror, right appears left and left appears right. This is why words on ambulances are often reversed.</p>
+
+        <h3>Multiple reflections</h3>
+        <div class="formula-box">
+          <div class="title">Number of images formed</div>
+          <div class="line"><span class="math">n = (360°/θ) - 1</span></div>
+        </div>
+
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
-              <th>Angle (θ)</th>
-              <th>Number of Images (n)</th>
+              <th>Angle between mirrors</th>
+              <th>Number of images</th>
             </tr>
-            <tr>
-              <td>Parallel (0°)</td>
-              <td>Infinite images</td>
-            </tr>
-            <tr>
-              <td>Perpendicular (90°)</td>
-              <td>n = (360/90) - 1 = 3 images</td>
-            </tr>
-            <tr>
-              <td>60°</td>
-              <td>n = (360/60) - 1 = 5 images</td>
-            </tr>
+            <tr><td>0° (parallel)</td><td>Infinite</td></tr>
+            <tr><td>90°</td><td>3</td></tr>
+            <tr><td>60°</td><td>5</td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
 
-        <h2>🔢 Calculation 1: Multiple Images</h2>
-        <p><strong>Question:</strong> Two plane mirrors are inclined at 72°. Calculate the number of images formed.</p>
-        
-        <div class="calculation-box">
-          <strong>Using n = (360°/θ) - 1:</strong><br>
-          n = (360°/72°) - 1<br>
-          n = 5 - 1 = 4 images
+        <div class="example-box">
+          <div class="title">Calculation 1: Multiple Images</div>
+          <p>Two plane mirrors are inclined at 72°. Find the number of images formed.</p>
+          <p><strong>Step:</strong> <span class="math">n = (360/72) - 1 = 5 - 1 = 4</span></p>
+          <div class="answer">Answer: 4 images</div>
         </div>
-        <div class="answer-box">Answer: 4 images</div>
 
-        <h2>🔢 Calculation 2: Distance in Plane Mirror</h2>
-        <p><strong>Question:</strong> A man stands 2m from a plane mirror. He walks 0.5m towards the mirror. Calculate: (a) Initial distance between man and image, (b) New distance after walking.</p>
-        
-        <div class="calculation-box">
-          (a) <strong>Initial:</strong><br>
-          • Object distance = 2m<br>
-          • Image distance = 2m (behind mirror)<br>
-          • Distance between man and image = 2 + 2 = 4m<br><br>
-          
-          (b) <strong>After walking 0.5m:</strong><br>
-          • New object distance = 2 - 0.5 = 1.5m<br>
-          • New image distance = 1.5m<br>
-          • Distance between man and image = 1.5 + 1.5 = 3m
+        <div class="example-box">
+          <div class="title">Calculation 2: Distance in Plane Mirror</div>
+          <p>A man stands 2 m from a plane mirror. He walks 0.5 m toward it. Find the initial and new distance between the man and his image.</p>
+          <p><strong>Initial:</strong> <span class="math">2 + 2 = 4 m</span></p>
+          <p><strong>New object distance:</strong> <span class="math">2 - 0.5 = 1.5 m</span></p>
+          <p><strong>New man-image distance:</strong> <span class="math">1.5 + 1.5 = 3 m</span></p>
+          <div class="answer">Answer: 4 m and 3 m</div>
         </div>
-        <div class="answer-box">Answer: (a) 4m, (b) 3m</div>
 
-        <h2>🔢 Calculation 3: Minimum Mirror Height</h2>
-        <p><strong>Question:</strong> A man is 1.8m tall with eyes 10cm below the top of his head. Calculate the minimum mirror length required to see his full image.</p>
-        
-        <div class="calculation-box">
-          • Distance from eyes to top = 10cm = 0.1m<br>
-          • Distance from eyes to feet = 1.8 - 0.1 = 1.7m<br><br>
-          
-          Mirror must cover:<br>
-          • From: 0.1/2 = 0.05m above eye level<br>
-          • To: 1.7/2 = 0.85m below eye level<br><br>
-          
-          Minimum mirror height = 0.05 + 0.85 = 0.9m<br><br>
-          
-          <em>Alternative: Height/2 = 1.8/2 = 0.9m</em>
+        <div class="example-box">
+          <div class="title">Calculation 3: Minimum Mirror Height</div>
+          <p>A man is 1.8 m tall. Find the minimum mirror height needed to see his full image.</p>
+          <p><strong>Rule:</strong> Minimum mirror length = half of body height</p>
+          <p><span class="math">= 1.8/2 = 0.9 m</span></p>
+          <div class="answer">Answer: 0.9 m or 90 cm</div>
         </div>
-        <div class="answer-box">Answer: 90 cm (or 0.9 m)</div>
+      </div>
 
-        <h2>3️⃣ Curved Mirrors (Spherical Mirrors) 🔭</h2>
+      <div class="section-card">
+        <h2>3️⃣ Curved Mirrors</h2>
 
-        <h3>Types of Curved Mirrors</h3>
-        
-        <div class="table-wrapper">
-          <table>
+        <h3>Types of curved mirrors</h3>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
-              <th>Concave Mirror (Converging)</th>
-              <th>Convex Mirror (Diverging)</th>
+              <th>Concave Mirror</th>
+              <th>Convex Mirror</th>
             </tr>
-            <tr>
-              <td>Caved inward (inside of spoon)</td>
-              <td>Curved outward (back of spoon)</td>
-            </tr>
-            <tr>
-              <td>Reflecting surface: Inner/concave side</td>
-              <td>Reflecting surface: Outer/convex side</td>
-            </tr>
-            <tr>
-              <td>Converges parallel rays to focus</td>
-              <td>Diverges parallel rays from focus behind</td>
-            </tr>
-            <tr>
-              <td>Uses: Shaving mirrors, headlights, telescopes</td>
-              <td>Uses: Rear-view mirrors, security mirrors</td>
-            </tr>
+            <tr><td>Curves inward</td><td>Bulges outward</td></tr>
+            <tr><td>Converges parallel rays</td><td>Diverges parallel rays</td></tr>
+            <tr><td>Used in shaving mirrors, headlights</td><td>Used in rear-view and security mirrors</td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
 
-        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/concaveconvex.gif" alt="Diagram showing concave mirror converging rays and convex mirror diverging rays" class="diagram-img">
+        <div class="diagram-box">
+          <div class="diagram-title">Concave and convex mirrors</div>
+          <svg viewBox="0 0 340 190" aria-label="Concave and convex mirror diagram">
+            <path d="M130 35 Q85 95 130 155" class="curve"/>
+            <line x1="30" y1="60" x2="125" y2="60" class="pathline"/>
+            <line x1="30" y1="95" x2="125" y2="95" class="pathline"/>
+            <line x1="30" y1="130" x2="125" y2="130" class="pathline"/>
+            <line x1="125" y1="60" x2="90" y2="95" class="curve"/>
+            <line x1="125" y1="95" x2="90" y2="95" class="curve"/>
+            <line x1="125" y1="130" x2="90" y2="95" class="curve"/>
 
-        <h3>Key Terms for Curved Mirrors</h3>
-        
-        <div class="table-wrapper">
-          <table>
+            <path d="M210 35 Q255 95 210 155" class="curve"/>
+            <line x1="140" y1="60" x2="205" y2="60" class="pathline"/>
+            <line x1="140" y1="95" x2="205" y2="95" class="pathline"/>
+            <line x1="140" y1="130" x2="205" y2="130" class="pathline"/>
+            <line x1="205" y1="60" x2="245" y2="45" class="curve"/>
+            <line x1="205" y1="95" x2="245" y2="95" class="curve"/>
+            <line x1="205" y1="130" x2="245" y2="145" class="curve"/>
+            <text x="60" y="175" class="label">Concave</text>
+            <text x="230" y="175" class="label">Convex</text>
+          </svg>
+          <div class="diagram-caption">Concave mirrors converge light, while convex mirrors spread it out.</div>
+        </div>
+
+        <h3>Key terms</h3>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Term</th>
               <th>Symbol</th>
-              <th>Definition</th>
+              <th>Meaning</th>
             </tr>
-            <tr>
-              <td>Pole (Vertex)</td>
-              <td>P</td>
-              <td>Center point
-                            <td>Center point of the mirror surface</td>
-            </tr>
-            <tr>
-              <td>Centre of Curvature</td>
-              <td>C</td>
-              <td>Center of the sphere from which mirror was "cut"</td>
-            </tr>
-            <tr>
-              <td>Radius of Curvature</td>
-              <td>R</td>
-              <td>Distance from pole to center of curvature</td>
-            </tr>
-            <tr>
-              <td>Principal Axis</td>
-              <td>—</td>
-              <td>Line passing through P and C</td>
-            </tr>
-            <tr>
-              <td>Principal Focus</td>
-              <td>F</td>
-              <td>Point where parallel rays converge (concave) or appear to diverge from (convex)</td>
-            </tr>
-            <tr>
-              <td>Focal Length</td>
-              <td>f</td>
-              <td>Distance from pole to focus: f = R/2</td>
-            </tr>
+            <tr><td>Pole</td><td>P</td><td>Central point of mirror surface</td></tr>
+            <tr><td>Centre of curvature</td><td>C</td><td>Centre of the sphere of which the mirror is a part</td></tr>
+            <tr><td>Radius of curvature</td><td>R</td><td>Distance from P to C</td></tr>
+            <tr><td>Principal focus</td><td>F</td><td>Point where parallel rays meet or appear to meet</td></tr>
+            <tr><td>Focal length</td><td>f</td><td>Distance from pole to focus</td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
 
-        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/concavemirrorterms.gif" alt="Diagram showing pole, center of curvature, radius, principal axis, and focus of concave mirror" class="diagram-img">
-
-        <h3>Sign Convention (Cartesian Convention)</h3>
-        <div class="organelle-list">
-          <ul>
-            <li>All distances measured from the pole (P)</li>
-            <li>Real is positive, virtual is negative (for object/image distances)</li>
-            <li>Distances measured against light direction are negative</li>
-            <li>Distances measured with light direction are positive</li>
-            <li><strong>Concave mirror:</strong> f and R are negative</li>
-            <li><strong>Convex mirror:</strong> f and R are positive</li>
-          </ul>
+        <div class="formula-box">
+          <div class="title">Focal length and radius</div>
+          <div class="line"><span class="math">f = R/2</span></div>
+          <div class="line"><span class="math">R = 2f</span></div>
         </div>
 
-        <h2>🔢 Calculation 4: Finding Focal Length from Radius</h2>
-        <p><strong>Question:</strong> A concave mirror has radius of curvature 60 cm. Calculate its focal length.</p>
-        
-        <div class="calculation-box">
-          <strong>Using f = R/2:</strong><br>
-          f = 60/2 = 30 cm<br><br>
-          For concave mirror: f = -30 cm
-        </div>
-        <div class="answer-box">Answer: 30 cm (or -30 cm using sign convention)</div>
+        <h3>Sign convention used here</h3>
+        <ul>
+          <li>Distances are measured from the pole</li>
+          <li>For mirrors, object distance for a real object is usually negative</li>
+          <li>Concave mirror: <span class="math">f</span> is negative</li>
+          <li>Convex mirror: <span class="math">f</span> is positive</li>
+        </ul>
 
-        <h2>🔢 Calculation 5: Finding Radius from Focal Length</h2>
-        <p><strong>Question:</strong> A convex mirror has focal length 20 cm. Calculate its radius of curvature.</p>
-        
-        <div class="calculation-box">
-          <strong>Using R = 2f:</strong><br>
-          R = 2 × 20 = 40 cm<br><br>
-          For convex mirror: R = +40 cm, f = +20 cm
-        </div>
-        <div class="answer-box">Answer: 40 cm</div>
-
-        <h2>4️⃣ Ray Diagrams for Curved Mirrors 📐</h2>
-
-        <h3>Rules for Drawing Ray Diagrams - Concave Mirrors</h3>
-        <div class="organelle-list">
-          <ol>
-            <li>Ray parallel to principal axis → Passes through focus after reflection</li>
-            <li>Ray passing through focus → Emerges parallel to principal axis</li>
-            <li>Ray passing through center of curvature → Retraces its path after reflection</li>
-            <li>Ray striking the pole → Reflects at equal angle to principal axis</li>
-          </ol>
+        <div class="example-box">
+          <div class="title">Calculation 4: Focal Length from Radius</div>
+          <p>A concave mirror has radius of curvature 60 cm. Find the focal length.</p>
+          <p><span class="math">f = R/2 = 60/2 = 30 cm</span></p>
+          <div class="answer">Answer: 30 cm or -30 cm by sign convention</div>
         </div>
 
-        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/concaverays.gif" alt="Diagram showing principal rays for concave mirror image formation" class="diagram-img">
-
-        <h3>Rules for Drawing Ray Diagrams - Convex Mirrors</h3>
-        <div class="organelle-list">
-          <ol>
-            <li>Ray parallel to principal axis → Appears to come from focus behind mirror</li>
-            <li>Ray heading toward focus → Emerges parallel to principal axis</li>
-            <li>Ray heading toward center of curvature → Retraces its path after reflection</li>
-          </ol>
+        <div class="example-box">
+          <div class="title">Calculation 5: Radius from Focal Length</div>
+          <p>A convex mirror has focal length 20 cm. Find the radius of curvature.</p>
+          <p><span class="math">R = 2f = 2 × 20 = 40 cm</span></p>
+          <div class="answer">Answer: 40 cm</div>
         </div>
+      </div>
 
-        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/convexrays.gif" alt="Diagram showing principal rays for convex mirror image formation" class="diagram-img">
+      <div class="section-card">
+        <h2>4️⃣ Ray Diagrams for Curved Mirrors</h2>
 
-        <h3>Image Formation Summary - Concave Mirror</h3>
-        
-        <div class="table-wrapper">
-          <table>
+        <h3>Concave mirror rules</h3>
+        <ul>
+          <li>Ray parallel to principal axis reflects through focus</li>
+          <li>Ray through focus reflects parallel to axis</li>
+          <li>Ray through centre of curvature retraces its path</li>
+          <li>Ray to the pole reflects with equal angle</li>
+        </ul>
+
+        <h3>Convex mirror rules</h3>
+        <ul>
+          <li>Ray parallel to axis appears to come from focus behind mirror</li>
+          <li>Ray directed toward focus reflects parallel to axis</li>
+          <li>Ray directed toward centre of curvature retraces its path</li>
+        </ul>
+
+        <h3>Image summary for concave mirrors</h3>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Object Position</th>
               <th>Image Position</th>
@@ -666,347 +487,237 @@
               <th>Size</th>
               <th>Orientation</th>
             </tr>
-            <tr>
-              <td>At infinity</td>
-              <td>At F</td>
-              <td>Real, point</td>
-              <td>Diminished</td>
-              <td>Inverted</td>
-            </tr>
-            <tr>
-              <td>Beyond C</td>
-              <td>Between C and F</td>
-              <td>Real</td>
-              <td>Diminished</td>
-              <td>Inverted</td>
-            </tr>
-            <tr>
-              <td>At C</td>
-              <td>At C</td>
-              <td>Real</td>
-              <td>Same size</td>
-              <td>Inverted</td>
-            </tr>
-            <tr>
-              <td>Between C and F</td>
-              <td>Beyond C</td>
-              <td>Real</td>
-              <td>Magnified</td>
-              <td>Inverted</td>
-            </tr>
-            <tr>
-              <td>At F</td>
-              <td>At infinity</td>
-              <td>Real, highly magnified</td>
-              <td>—</td>
-              <td>—</td>
-            </tr>
-            <tr>
-              <td>Between F and P</td>
-              <td>Behind mirror</td>
-              <td>Virtual</td>
-              <td>Magnified</td>
-              <td>Erect</td>
-            </tr>
+            <tr><td>At infinity</td><td>At F</td><td>Real</td><td>Diminished</td><td>Inverted</td></tr>
+            <tr><td>Beyond C</td><td>Between C and F</td><td>Real</td><td>Diminished</td><td>Inverted</td></tr>
+            <tr><td>At C</td><td>At C</td><td>Real</td><td>Same size</td><td>Inverted</td></tr>
+            <tr><td>Between C and F</td><td>Beyond C</td><td>Real</td><td>Magnified</td><td>Inverted</td></tr>
+            <tr><td>At F</td><td>At infinity</td><td>Real</td><td>Highly magnified</td><td>Inverted</td></tr>
+            <tr><td>Between F and P</td><td>Behind mirror</td><td>Virtual</td><td>Magnified</td><td>Erect</td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
 
-        <h3>Image Formation Summary - Convex Mirror</h3>
-        <div class="organelle-list">
-          <ul>
-            <li><strong>Position:</strong> Between P and F (behind mirror)</li>
-            <li><strong>Nature:</strong> Virtual</li>
-            <li><strong>Size:</strong> Diminished</li>
-            <li><strong>Orientation:</strong> Erect/Upright</li>
-            <li><strong>Always same result regardless of object position!</strong></li>
-          </ul>
-        </div>
-
-        <h2>5️⃣ The Mirror Formula & Magnification 🧮</h2>
-
-        <div class="formula-box">
-          <strong>Mirror Formula:</strong><br>
-          1/f = 1/u + 1/v<br><br>
-          
-          <strong>Alternative forms:</strong><br>
-          1/v = 1/f - 1/u<br>
-          uv = f(u + v)<br><br>
-          
-          Where:<br>
-          • f = focal length (negative for concave, positive for convex)<br>
-          • u = object distance (always negative for real objects)<br>
-          • v = image distance (negative for virtual, positive for real)
-        </div>
-
-        <div class="formula-box">
-          <strong>Linear Magnification (m):</strong><br>
-          m = Image height/Object height = hᵢ/hₒ = -v/u<br><br>
-          
-          <strong>Interpretation:</strong><br>
-          • |m| > 1: Image is magnified (larger than object)<br>
-          • |m| < 1: Image is diminished (smaller than object)<br>
-          • |m| = 1: Image is same size as object<br>
-          • m is positive: Image is erect (virtual for mirrors)<br>
-          • m is negative: Image is inverted (real for mirrors)
-        </div>
-
-        <h2>🔢 Calculation 6: Concave Mirror - Real Image</h2>
-        <p><strong>Question:</strong> An object is placed 30 cm from a concave mirror of focal length 10 cm. Find the image position and magnification.</p>
-        
-        <div class="calculation-box">
-          <strong>Given:</strong> u = -30 cm, f = -10 cm (concave)<br><br>
-          
-          <strong>Using 1/f = 1/u + 1/v:</strong><br>
-          1/(-10) = 1/(-30) + 1/v<br>
-          -1/10 + 1/30 = 1/v<br>
-          (-3 + 1)/30 = 1/v<br>
-          -2/30 = 1/v<br>
-          v = -15 cm<br><br>
-          
-          <strong>Magnification:</strong><br>
-          m = -v/u = -(-15)/(-30) = -15/30 = -0.5
-        </div>
-        <div class="answer-box">Answer: Image at 15 cm in front of mirror, real, inverted, half the size (m = -0.5)</div>
-
-        <h2>🔢 Calculation 7: Convex Mirror</h2>
-        <p><strong>Question:</strong> A convex mirror has radius of curvature 40 cm. An object is placed 20 cm from the mirror. Find the image position and magnification.</p>
-        
-        <div class="calculation-box">
-          <strong>Given:</strong> R = +40 cm, so f = R/2 = +20 cm<br>
-          u = -20 cm<br><br>
-          
-          <strong>Using 1/f = 1/u + 1/v:</strong><br>
-          1/20 = 1/(-20) + 1/v<br>
-          1/v = 1/20 + 1/20 = 2/20 = 1/10<br>
-          v = +10 cm<br><br>
-          
-          <strong>Magnification:</strong><br>
-          m = -v/u = -(10)/(-20) = +0.5
-        </div>
-        <div class="answer-box">Answer: Image at 10 cm behind mirror, virtual, erect, m = +0.5</div>
-
-        <h2>🔢 Calculation 8: Concave Mirror with Virtual Image</h2>
-        <p><strong>Question:</strong> An object is placed 10 cm from a concave mirror of focal length 15 cm. Calculate the image position and magnification.</p>
-        
-        <div class="calculation-box">
-          <strong>Given:</strong> u = -10 cm, f = -15 cm (concave)<br><br>
-          
-          <strong>Using 1/f = 1/u + 1/v:</strong><br>
-          1/(-15) = 1/(-10) + 1/v<br>
-          1/v = -1/15 + 1/10 = (-2 + 3)/30 = 1/30<br>
-          v = +30 cm<br><br>
-          
-          <strong>Magnification:</strong><br>
-          m = -v/u = -(30)/(-10) = +3
-        </div>
-        <div class="answer-box">Answer: Image at 30 cm behind mirror, virtual, erect, magnified 3×</div>
-
-        <h2>🔢 Calculation 9: Finding Focal Length from Magnification</h2>
-        <p><strong>Question:</strong> An object placed 20 cm from a concave mirror produces a real image twice the size of the object. Find the focal length.</p>
-        
-        <div class="calculation-box">
-          <strong>Given:</strong> u = -20 cm, Real image means m = -2<br><br>
-          
-          <strong>Using m = -v/u:</strong><br>
-          -2 = -v/(-20)<br>
-          v/20 = -2<br>
-          v = -40 cm<br><br>
-          
-          <strong>Using mirror formula:</strong><br>
-          1/f = 1/(-20) + 1/(-40) = -2/40 - 1/40 = -3/40<br>
-          f = -40/3 = -13.33 cm
-        </div>
-        <div class="answer-box">Answer: 13.33 cm (negative confirms concave mirror)</div>
-
-        <h2>🔢 Calculation 10: Object at Center of Curvature</h2>
-        <p><strong>Question:</strong> An object 3 cm tall is placed at the center of curvature of a concave mirror with R = 40 cm. Find the image position, nature, and size.</p>
-        
-        <div class="calculation-box">
-          <strong>Given:</strong> R = -40 cm, f = -20 cm<br>
-          u = -40 cm (at C), hₒ = 3 cm<br><br>
-          
-          <strong>Using 1/f = 1/u + 1/v:</strong><br>
-          1/(-20) = 1/(-40) + 1/v<br>
-          1/v = -1/20 + 1/40 = (-2 + 1)/40 = -1/40<br>
-          v = -40 cm<br><br>
-          
-          <strong>Magnification:</strong> m = -v/u = -(-40)/(-40) = -1<br><br>
-          
-          <strong>Image height:</strong> hᵢ = m × hₒ = -1 × 3 = -3 cm
-        </div>
-        <div class="answer-box">Answer: Image at 40 cm in front of mirror, real, inverted, 3 cm tall (same size)</div>
-
-        <h2>🔢 Calculation 11: Finding Object Position for Specific Image</h2>
-        <p><strong>Question:</strong> Where should an object be placed in front of a concave mirror (f = 20 cm) to produce a real image magnified 3 times?</p>
-        
-        <div class="calculation-box">
-          <strong>Given:</strong> f = -20 cm, Real image means m = -3<br><br>
-          
-          <strong>Using m = -v/u = -3:</strong><br>
-          v/u = 3, so v = 3u<br><br>
-          
-          <strong>Using mirror formula:</strong><br>
-          1/(-20) = 1/u + 1/(3u)<br>
-          -1/20 = (3 + 1)/(3u) = 4/(3u)<br>
-          3u = -80<br>
-          u = -26.67 cm
-        </div>
-        <div class="answer-box">Answer: Object at 26.67 cm (or 26⅔ cm) in front of mirror</div>
-
-        <h2>🔢 Calculation 12: Speed of Image in Plane Mirror</h2>
-        <p><strong>Question:</strong> A boy runs towards a plane mirror at 2 m/s. Calculate the speed at which his image approaches him.</p>
-        
-        <div class="calculation-box">
-          • Boy approaches mirror at 2 m/s<br>
-          • Image approaches mirror at 2 m/s (same speed)<br>
-          • Relative speed between boy and image = 2 + 2 = 4 m/s
-        </div>
-        <div class="answer-box">Answer: 4 m/s</div>
-
-        <h2>6️⃣ Applications of Reflection 🛠️</h2>
-
-        <h3>1. Periscope</h3>
-        <div class="organelle-list">
-          <ul>
-            <li>Uses two plane mirrors at 45° angles</li>
-            <li>Allows viewing over obstacles</li>
-            <li>Used in submarines and trenches</li>
-          </ul>
-        </div>
-
-        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/periscope.gif" alt="Diagram showing periscope with two plane mirrors at 45 degrees" class="diagram-img">
-
-        <h3>2. Kaleidoscope</h3>
-        <div class="organelle-list">
-          <ul>
-            <li>Uses three plane mirrors at 60° to each other</li>
-            <li>Creates beautiful symmetrical patterns</li>
-            <li>Based on multiple reflections</li>
-          </ul>
-        </div>
-
-        <h3>3. Sextant</h3>
-        <div class="organelle-list">
-          <ul>
-            <li>Navigation instrument using mirrors</li>
-            <li>Measures angle between celestial object and horizon</li>
-            <li>Uses double reflection principle</li>
-          </ul>
-        </div>
-
-        <h3>4. Other Applications</h3>
-        <div class="organelle-list">
-          <ul>
-            <li><strong>Concave mirrors:</strong> Solar cookers, satellite dishes, makeup mirrors, ophthalmoscopes</li>
-            <li><strong>Convex mirrors:</strong> Security mirrors, vehicle side mirrors ("Objects in mirror are closer than they appear")</li>
-          </ul>
-        </div>
-
-        <img src="https://kimi-web-img.moonshot.cn/img/www.physicsclassroom.com/mmedia/light/convexsidemirror.gif" alt="Diagram showing wide field of view of convex mirror used in vehicles" class="diagram-img">
-
-        <h2>🔢 Calculation 13: Solar Cooker Application</h2>
-        <p><strong>Question:</strong> A solar cooker uses a concave mirror with R = 2 m. Where should the cooking pot be placed for maximum heating?</p>
-        
-        <div class="calculation-box">
-          For maximum heating, pot must be at the focus where all parallel sun rays converge.<br><br>
-          
-          <strong>Using f = R/2:</strong><br>
-          f = 200/2 = 100 cm = 1 m
-        </div>
-        <div class="answer-box">Answer: 1 m from the mirror (at the focus)</div>
-
-        <h2>📋 Quick Revision Tips 🎯</h2>
-
-        <div class="tips-box">
-          <h3>✅ Memory Aids</h3>
-          <ul>
-            <li><strong>"VIRTUAL IS VIP"</strong> — Virtual images are In Plane and convex mirrors (always erect)</li>
-            <br>
-            <li><strong>Sign Convention:</strong> "Real is Positive, Virtual is Negative" (for distances in some conventions)</li>
-            <br>
-            <li><strong>Concave:</strong> f is negative (it "caves in" the light, so negative)</li>
-            <br>
-            <li><strong>Convex:</strong> f is positive (it "vexes" you by being positive)</li>
-          </ul>
-        </div>
-
-        <div class="warning-box">
-          <h3>⚠️ Common JAMB Traps</h3>
-          <ol>
-            <li><strong>Forgetting sign conventions</strong> — Always check if it's concave or convex first</li>
-            <li><strong>Confusing R and f</strong> — Remember f = R/2</li>
-            <li><strong>Real vs Virtual images</strong> — Real images can be projected on screens; virtual cannot</li>
-            <li><strong>Magnification interpretation</strong> — |m| gives size ratio; sign gives orientation</li>
-          </ol>
-        </div>
-
-        <h2>📝 Practice Questions for JAMB</h2>
-
-        <div class="tips-box">
-          <h3>✅ Test Your Understanding:</h3>
-          <ol>
-            <li><strong>The image formed by a plane mirror is:</strong>
-            <br>(a) Real and inverted (b) Virtual and same size (c) Real and magnified (d) Virtual and diminished
-            <br><em>Answer: (b)</em></li>
-            <br>
-            <li><strong>A concave mirror of f = 15 cm forms an erect image. The object must be placed:</strong>
-            <br>(a) At 15 cm (b) Beyond 15 cm (c) Between 15 and 30 cm (d) Between pole and 15 cm
-            <br><em>Answer: (d)</em></li>
-            <br>
-            <li><strong>A convex mirror is used as rear-view mirror because it:</strong>
-            <br>(a) Produces magnified images (b) Has wide field of view (c) Produces real images (d) Inverts images
-            <br><em>Answer: (b)</em></li>
-          </ol>
-        </div>
-
-        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
-          Great job 🌟 You now master Reflection of Light!
-        </p>
-
-        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 23 (Light Energy) & Chapter 25 (Refraction of Light)</p>
-        <button class="explore-btn" onclick="window.location.href='reflection-quiz.html'">Start JAMB Quiz Now!</button>
+        <h3>Image summary for convex mirrors</h3>
+        <ul>
+          <li>Image is always between P and F behind the mirror</li>
+          <li>Always virtual</li>
+          <li>Always erect</li>
+          <li>Always diminished</li>
+        </ul>
       </div>
+
+      <div class="section-card">
+        <h2>5️⃣ Mirror Formula and Magnification</h2>
+
+        <div class="formula-box">
+          <div class="title">Mirror formula</div>
+          <div class="line"><span class="math">1/f = 1/u + 1/v</span></div>
+        </div>
+
+        <div class="formula-box">
+          <div class="title">Linear magnification</div>
+          <div class="line"><span class="math">m = hᵢ/hₒ = -v/u</span></div>
+        </div>
+
+        <ul>
+          <li><span class="math">|m| &gt; 1</span> → magnified</li>
+          <li><span class="math">|m| &lt; 1</span> → diminished</li>
+          <li><span class="math">|m| = 1</span> → same size</li>
+          <li><span class="math">m &gt; 0</span> → erect</li>
+          <li><span class="math">m &lt; 0</span> → inverted</li>
+        </ul>
+
+        <div class="example-box">
+          <div class="title">Calculation 6: Concave Mirror, Real Image</div>
+          <p>An object is 30 cm from a concave mirror of focal length 10 cm. Find image position and magnification.</p>
+          <p><strong>Given:</strong> <span class="math">u = -30 cm, f = -10 cm</span></p>
+          <p><span class="math">1/(-10) = 1/(-30) + 1/v</span></p>
+          <p><span class="math">1/v = -1/10 + 1/30 = -2/30 = -1/15</span></p>
+          <p><span class="math">v = -15 cm</span></p>
+          <p><span class="math">m = -v/u = -(-15)/(-30) = -0.5</span></p>
+          <div class="answer">Answer: image at 15 cm in front, real, inverted, m = -0.5</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Calculation 7: Convex Mirror</div>
+          <p>A convex mirror has radius 40 cm. An object is placed 20 cm from it. Find image position and magnification.</p>
+          <p><strong>Given:</strong> <span class="math">R = +40 cm, f = +20 cm, u = -20 cm</span></p>
+          <p><span class="math">1/20 = 1/(-20) + 1/v</span></p>
+          <p><span class="math">1/v = 1/20 + 1/20 = 1/10</span></p>
+          <p><span class="math">v = +10 cm</span></p>
+          <p><span class="math">m = -10/(-20) = +0.5</span></p>
+          <div class="answer">Answer: image 10 cm behind mirror, virtual, erect, m = +0.5</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Calculation 8: Concave Mirror, Virtual Image</div>
+          <p>An object is 10 cm from a concave mirror of focal length 15 cm. Find image position and magnification.</p>
+          <p><strong>Given:</strong> <span class="math">u = -10 cm, f = -15 cm</span></p>
+          <p><span class="math">1/(-15) = 1/(-10) + 1/v</span></p>
+          <p><span class="math">1/v = -1/15 + 1/10 = 1/30</span></p>
+          <p><span class="math">v = +30 cm</span></p>
+          <p><span class="math">m = -(30)/(-10) = +3</span></p>
+          <div class="answer">Answer: image 30 cm behind mirror, virtual, erect, magnified 3 times</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Calculation 9: Finding Focal Length from Magnification</div>
+          <p>An object 20 cm from a concave mirror produces a real image twice the size of the object. Find the focal length.</p>
+          <p><strong>Given:</strong> <span class="math">u = -20 cm, m = -2</span></p>
+          <p><span class="math">-2 = -v/u</span> gives <span class="math">v = -40 cm</span></p>
+          <p><span class="math">1/f = 1/(-20) + 1/(-40) = -3/40</span></p>
+          <p><span class="math">f = -40/3 = -13.33 cm</span></p>
+          <div class="answer">Answer: 13.33 cm in magnitude, concave so f = -13.33 cm</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Calculation 10: Object at Centre of Curvature</div>
+          <p>An object 3 cm tall is placed at the centre of curvature of a concave mirror with <span class="math">R = 40 cm</span>.</p>
+          <p><strong>Given:</strong> <span class="math">f = -20 cm, u = -40 cm</span></p>
+          <p><span class="math">1/(-20) = 1/(-40) + 1/v</span></p>
+          <p><span class="math">v = -40 cm</span></p>
+          <p><span class="math">m = -(-40)/(-40) = -1</span></p>
+          <p><span class="math">hᵢ = m × hₒ = -1 × 3 = -3 cm</span></p>
+          <div class="answer">Answer: image at 40 cm in front, real, inverted, same size</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Calculation 11: Object Position for a Real Image Magnified 3 Times</div>
+          <p>Where should an object be placed before a concave mirror of focal length 20 cm to form a real image magnified 3 times?</p>
+          <p><strong>Given:</strong> <span class="math">f = -20 cm, m = -3</span></p>
+          <p><span class="math">-3 = -v/u</span> so <span class="math">v = 3u</span></p>
+          <p><span class="math">1/(-20) = 1/u + 1/(3u) = 4/(3u)</span></p>
+          <p><span class="math">u = -26.67 cm</span></p>
+          <div class="answer">Answer: 26.67 cm in front of the mirror</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Calculation 12: Speed of Image in Plane Mirror</div>
+          <p>A boy runs toward a plane mirror at 2 m/s. Find the speed at which his image approaches him.</p>
+          <p><strong>Step:</strong> Boy approaches mirror at <span class="math">2 m/s</span>, image approaches at <span class="math">2 m/s</span></p>
+          <p><span class="math">Relative speed = 2 + 2 = 4 m/s</span></p>
+          <div class="answer">Answer: 4 m/s</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>6️⃣ Applications of Reflection</h2>
+
+        <h3>Periscope</h3>
+        <p>Uses two plane mirrors set at 45° so that light can be viewed over obstacles.</p>
+
+        <div class="diagram-box">
+          <div class="diagram-title">Periscope</div>
+          <svg viewBox="0 0 340 220" aria-label="Periscope diagram">
+            <rect x="120" y="25" width="90" height="165" class="obj"/>
+            <line x1="135" y1="55" x2="165" y2="85" class="tick"/>
+            <line x1="195" y1="125" x2="165" y2="155" class="tick"/>
+            <line x1="55" y1="55" x2="135" y2="55" class="curve"/>
+            <line x1="150" y1="70" x2="150" y2="140" class="curve"/>
+            <line x1="165" y1="140" x2="260" y2="140" class="curve"/>
+            <text x="45" y="45" class="label">Object</text>
+            <text x="248" y="133" class="label">Eye</text>
+          </svg>
+          <div class="diagram-caption">The mirrors redirect light twice so the observer can see over or around obstacles.</div>
+        </div>
+
+        <h3>Kaleidoscope</h3>
+        <p>Uses three plane mirrors inclined at 60° to form multiple symmetrical patterns by repeated reflection.</p>
+
+        <h3>Sextant</h3>
+        <p>A navigational instrument that uses mirror reflection to measure angular separation.</p>
+
+        <h3>Other uses</h3>
+        <ul>
+          <li><strong>Concave mirrors:</strong> solar cookers, makeup mirrors, ophthalmoscopes, headlights</li>
+          <li><strong>Convex mirrors:</strong> vehicle side mirrors, security mirrors</li>
+        </ul>
+
+        <div class="example-box">
+          <div class="title">Calculation 13: Solar Cooker Application</div>
+          <p>A solar cooker uses a concave mirror of radius 2 m. Where should the cooking pot be placed for maximum heating?</p>
+          <p><span class="math">f = R/2 = 2/2 = 1 m</span></p>
+          <div class="answer">Answer: place the pot 1 m from the mirror, at the focus</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>7️⃣ Quick Revision Tips</h2>
+
+        <div class="jamb-alert">
+          <h4>Memory aids</h4>
+          <ul>
+            <li><strong>Virtual is VIP:</strong> plane mirror images are virtual; convex mirror images are always virtual</li>
+            <li>Remember <span class="math">f = R/2</span></li>
+            <li>Concave mirrors can give both real and virtual images</li>
+            <li>Convex mirrors always give virtual, erect, diminished images</li>
+          </ul>
+        </div>
+
+        <div class="memory-tip">
+          <strong>⚠️ Common traps</strong>
+          <p>Do not confuse focal length with radius, and always check whether the mirror is concave or convex before applying signs.</p>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>8️⃣ Practice Questions for JAMB</h2>
+
+        <div class="example-box">
+          <div class="title">The image formed by a plane mirror is:</div>
+          <p>(a) Real and inverted<br>(b) Virtual and same size<br>(c) Real and magnified<br>(d) Virtual and diminished</p>
+          <div class="answer">Answer: (b)</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">A concave mirror of focal length 15 cm forms an erect image. The object must be placed:</div>
+          <p>(a) At 15 cm<br>(b) Beyond 15 cm<br>(c) Between 15 cm and 30 cm<br>(d) Between pole and 15 cm</p>
+          <div class="answer">Answer: (d)</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">A convex mirror is used as a rear-view mirror because it:</div>
+          <p>(a) Produces magnified images<br>(b) Has wide field of view<br>(c) Produces real images<br>(d) Inverts images</p>
+          <div class="answer">Answer: (b)</div>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🌟 Final line</strong>
+          <p>You now have a complete JAMB-style guide to Reflection of Light. This chapter matters a lot because it combines diagrams, formulas, sign conventions, and practical applications that JAMB loves to test.</p>
+        </div>
+      </div>
+
+      <button class="explore-btn" onclick="alert('Before your quiz, revise i = r, image properties of plane mirrors, f = R/2, the mirror formula, magnification, and uses of concave and convex mirrors.')">Start JAMB Questions</button>
     </div>
   </div>
 
-  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item">
-      <button class="neumorphic-btn">🔍</button>
-      <p>Search</p>
-    </div>
-    <div class="nav-item center">
-      <button class="neumorphic-btn">⭐</button>
-      <p>Favorite</p>
-    </div>
-    <div class="nav-item">
-      <button class="neumorphic-btn">📚</button>
-      <p>Library</p>
-    </div>
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
 
-    function setTheme(theme) {
+    function setTheme(theme){
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
+    setTheme(localStorage.getItem('theme') || 'dark');
 
     themeToggle.addEventListener('click', () => {
-      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
-      setTheme(newTheme);
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
     });
 
-    document.getElementById('profile-upload').addEventListener('change', (e) => {
-      if (e.target.files[0]) {
-        console.log('Profile picture selected!');
-      }
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
     });
   </script>
 </body>
