@@ -1,825 +1,607 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PHYSICS - Simple A.C. Circuits</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JAMB Physics - Simple A.C. Circuits Mastery Guide</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
+    :root{
+      --background:#1e1e2f;--shadow-in:#171723;--shadow-out:#25253b;
+      --text-primary:#f0f0ff;--text-secondary:#c0c0e0;
+      --accent:#1db954;--accent-secondary:#ff6b6b;--accent-tertiary:#4ecdc4;
+      --card-bg:#2a2a3f;--line:#8ea2ff;--grid:rgba(255,255,255,.08)
+    }
+    body.light{
+      --background:#e0e0e0;--shadow-in:#bebebe;--shadow-out:#ffffff;
+      --text-primary:#1a1a1a;--text-secondary:#444;--card-bg:#f8f8f8;--line:#2b59ff;--grid:rgba(0,0,0,.08)
+    }
+    body{
+      background:var(--background);color:var(--text-primary);
+      display:flex;justify-content:center;align-items:center;
+      min-height:100vh;overflow-x:hidden
+    }
+    .container{
+      width:100%;max-width:420px;height:750px;overflow-y:auto;
+      background:var(--background);border-radius:20px;
+      box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out);
+      padding-top:70px;padding-bottom:80px;position:relative
+    }
+    .neumorphic{
+      background:var(--background);
+      box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out);
+      border-radius:15px
+    }
+    .neumorphic-btn{
+      background:var(--background);border:none;border-radius:50%;
+      width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+      box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      cursor:pointer;color:var(--text-primary);font-size:18px;transition:all .3s ease
+    }
+    .neumorphic-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.95)
+    }
+    .top-bar{
+      position:fixed;top:0;width:100%;max-width:420px;
+      background:var(--background);padding:15px;
+      display:flex;align-items:center;justify-content:space-between;
+      box-shadow:0 5px 10px var(--shadow-in);z-index:20
+    }
+    .top-bar .header{font-size:16px;font-weight:900;color:var(--accent)}
+    .top-bar .right-icons{display:flex;gap:10px}
+
+    .progress-container{
+      position:fixed;top:70px;left:0;width:100%;max-width:420px;height:4px;
+      background:var(--shadow-in);z-index:15
+    }
+    .progress-bar{height:100%;background:var(--accent);width:0%;transition:width .3s}
+
+    .content{padding:20px 16px;line-height:1.7}
+    .main-header{
+      text-align:center;margin-bottom:26px;padding:20px;border-radius:20px;
+      background:rgba(29,185,84,.1)
+    }
+    .main-header h1{font-size:20px;margin-bottom:8px;color:var(--accent);font-weight:900}
+    .main-header p{font-size:13px;color:var(--text-secondary);font-weight:500}
+
+    .section-card{
+      background:var(--card-bg);padding:22px 18px;border-radius:20px;
+      box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out);
+      margin-bottom:22px;border-left:4px solid var(--accent)
+    }
+    .section-card h2{
+      font-size:18px;margin-bottom:12px;color:var(--accent);font-weight:900;
+      display:flex;align-items:center;gap:8px
+    }
+    .section-card h3{
+      font-size:15px;margin:16px 0 10px;color:var(--accent-tertiary);font-weight:800;
+      padding-left:12px;border-left:3px solid var(--accent-tertiary)
+    }
+    .section-card h4{
+      font-size:14px;margin:14px 0 8px;color:var(--accent-secondary);font-weight:800
+    }
+    .section-card p{margin-bottom:10px;font-size:14px;text-align:justify}
+    .section-card ul,.section-card ol{padding-left:20px;margin:10px 0}
+    .section-card li{margin-bottom:7px;font-size:14px}
+
+    .quick-facts{
+      background:linear-gradient(135deg,rgba(29,185,84,.1),rgba(78,205,196,.1));
+      padding:14px;border-radius:15px;margin:12px 0;border:1px solid rgba(29,185,84,.3)
+    }
+    .quick-facts li{font-size:13px}
+
+    .highlight-box{
+      background:rgba(78,205,196,.1);padding:12px 16px;border-radius:10px;margin:12px 0;
+      border-left:3px solid var(--accent-tertiary)
     }
 
-    :root {
-      --background: #1e1e2f;
-      --shadow-in: #171723;
-      --shadow-out: #25253b;
-      --text-primary: #f0f0ff;
-      --text-secondary: #c0c0e0;
-      --accent: #1db954;
-      --card-bg: #2a2a3f;
+    .memory-tip{
+      background:rgba(255,107,107,.1);padding:14px 16px;border-radius:12px;margin:14px 0;
+      border-left:4px solid var(--accent-secondary)
+    }
+    .memory-tip strong{color:var(--accent-secondary);display:block;margin-bottom:6px;font-size:14px}
+    .memory-tip p{margin:0;font-size:13px;font-style:italic}
+
+    .jamb-alert{
+      background:linear-gradient(135deg,rgba(255,193,7,.15),rgba(255,152,0,.1));
+      border:1px solid rgba(255,193,7,.4);border-radius:12px;padding:14px;margin:16px 0
+    }
+    .jamb-alert h4{color:#ffc107;margin-bottom:8px;font-size:14px;font-weight:900}
+    .jamb-alert li{font-size:13px}
+
+    .formula-box{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .formula-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:6px
+    }
+    .formula-box .line{
+      font-size:13px;margin-bottom:5px
     }
 
-    body.light {
-      --background: #e0e0e0;
-      --shadow-in: #bebebe;
-      --shadow-out: #ffffff;
-      --text-primary: #1a1a1a;
-      --text-secondary: #444;
-      --accent: #1db954;
-      --card-bg: #f8f8f8;
+    .example-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .example-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:8px
+    }
+    .example-box .answer{
+      margin-top:8px;font-size:13px;color:var(--accent-secondary);font-weight:800
     }
 
-    body {
-      background: var(--background);
-      color: var(--text-primary);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
+    .diagram-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:12px;
+      margin:14px 0
+    }
+    .diagram-title{
+      font-size:13px;
+      font-weight:900;
+      color:var(--accent-tertiary);
+      margin-bottom:8px
+    }
+    .diagram-caption{
+      font-size:12px;
+      color:var(--text-secondary);
+      margin-top:8px
+    }
+    svg{
+      width:100%;
+      height:auto;
+      display:block
     }
 
-    .container {
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      border-radius: 20px;
-      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
-      overflow: hidden;
-      position: relative;
-      height: 700px;
-      overflow-y: auto;
-      padding-top: 70px;
-      padding-bottom: 70px;
+    .table-container{
+      width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0;border-radius:12px;
+      box-shadow:3px 3px 8px var(--shadow-in),-3px -3px 8px var(--shadow-out)
+    }
+    .summary-table{
+      width:100%;min-width:500px;border-collapse:separate;border-spacing:0;font-size:13px
+    }
+    .summary-table th{
+      background:var(--accent);color:#000;padding:12px 10px;text-align:left;font-weight:900;white-space:nowrap
+    }
+    .summary-table td{
+      padding:10px;border-bottom:1px solid var(--shadow-in);background:var(--card-bg);vertical-align:top
+    }
+    .summary-table tr:last-child td{border-bottom:none}
+    .summary-table tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+    .table-scroll-hint{font-size:11px;color:var(--text-secondary);text-align:center;margin-top:4px;font-style:italic}
+
+    .explore-btn{
+      background:var(--accent);border:none;padding:14px 28px;border-radius:25px;color:#000;cursor:pointer;
+      box-shadow:4px 4px 8px var(--shadow-in),-4px -4px 8px var(--shadow-out);
+      font-size:16px;margin:22px auto;display:block;font-weight:900;transition:all .3s ease
+    }
+    .explore-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.98)
     }
 
-    .neumorphic {
-      background: var(--background);
-      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
-      border-radius: 15px;
+    .nav-bar{
+      position:fixed;bottom:0;width:100%;max-width:420px;background:var(--background);padding:10px;
+      display:flex;justify-content:space-around;box-shadow:0 -5px 10px var(--shadow-in);z-index:20
     }
+    .nav-bar .nav-item{text-align:center}
+    .nav-bar .nav-item.center button{
+      width:50px;height:50px;font-size:24px;background:var(--accent);
+      box-shadow:0 0 15px var(--accent),3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      color:#000
+    }
+    .nav-bar p{display:none;font-size:11px;margin-top:4px;color:var(--text-primary)}
 
-    .neumorphic-btn {
-      background: var(--background);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      cursor: pointer;
-      color: var(--text-primary);
-      font-size: 18px;
-    }
-
-    .neumorphic-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .top-bar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 5px 10px var(--shadow-in);
-      z-index: 20;
-    }
-
-    .top-bar .header {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--text-primary);
-    }
-
-    .top-bar .right-icons {
-      display: flex;
-      gap: 10px;
-    }
-
-    .top-bar .profile-upload {
-      position: relative;
-    }
-
-    .top-bar .profile-upload input {
-      opacity: 0;
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-    }
-
-    .content {
-      padding: 20px 16px;
-      line-height: 1.6;
-    }
-
-    .main-header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .main-header h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    .main-header p.subtitle {
-      font-size: 16px;
-      color: var(--text-secondary);
-    }
-
-    .welcome-note {
-      background: var(--card-bg);
-      padding: 28px 20px;
-      border-radius: 20px;
-      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
-      margin-bottom: 30px;
-    }
-
-    .welcome-note h2 {
-      font-size: 22px;
-      margin: 32px 0 16px;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .welcome-note h2:first-child {
-      margin-top: 0;
-    }
-
-    .welcome-note h3 {
-      font-size: 18px;
-      margin: 24px 0 12px;
-      color: var(--accent);
-    }
-
-    .welcome-note p {
-      margin-bottom: 16px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note ul, .welcome-note ol {
-      padding-left: 24px;
-      margin: 16px 0;
-    }
-
-    .welcome-note li {
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note .highlight {
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .formula-box {
-      background: rgba(29, 185, 84, 0.1);
-      border-left: 4px solid var(--accent);
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box {
-      background: rgba(0,0,0,0.15);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box strong {
-      color: var(--accent);
-    }
-
-    .answer-box {
-      background: var(--accent);
-      color: #000;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      margin: 12px 0;
-      text-align: center;
-    }
-
-    .tips-box {
-      background: rgba(255, 193, 7, 0.1);
-      border-left: 4px solid #ffc107;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .warning-box {
-      background: rgba(244, 67, 54, 0.1);
-      border-left: 4px solid #f44336;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      margin: 16px 0;
-      border-radius: 12px;
-      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .table-wrapper::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-track {
-      background: var(--shadow-in);
-      border-radius: 3px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 3px;
-    }
-
-    table {
-      width: 100%;
-      min-width: 500px;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--shadow-in);
-      white-space: nowrap;
-    }
-
-    th {
-      color: var(--accent);
-      font-weight: bold;
-      background: rgba(0,0,0,0.1);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .explore-btn {
-      background: var(--accent);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      color: #000;
-      cursor: pointer;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      font-size: 16px;
-      margin: 24px auto 0;
-      display: block;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .explore-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 10px;
-      display: flex;
-      justify-content: space-around;
-      box-shadow: 0 -5px 10px var(--shadow-in);
-      z-index: 20;
-    }
-
-    .nav-bar .nav-item {
-      text-align: center;
-      position: relative;
-    }
-
-    .nav-bar .nav-item button {
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.center button {
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
-      background: var(--accent);
-      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      color: #000;
-    }
-
-    .nav-bar .nav-item.active button {
-      background: var(--accent);
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar .nav-item p {
-      display: none;
-      font-size: 12px;
-      margin-top: 5px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.active p {
-      display: block;
-    }
-
-    .memory-tip {
-      background: rgba(29, 185, 84, 0.15);
-      border-left: 4px solid var(--accent);
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-style: italic;
-    }
-
-    .component-box {
-      background: rgba(0,0,0,0.1);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      border-left: 4px solid var(--accent);
-    }
-
-    .component-box h4 {
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
+    .math{font-weight:900;color:var(--accent-secondary)}
+    .label{fill:var(--text-primary);font-size:11px;font-weight:700}
+    .curve{stroke:var(--line);stroke-width:3;fill:none}
+    .obj{fill:rgba(29,185,84,.18);stroke:var(--accent);stroke-width:2}
+    .hot{fill:rgba(255,107,107,.35);stroke:none}
+    .cool{fill:rgba(78,205,196,.30);stroke:none}
   </style>
 </head>
+
 <body class="dark">
-  <div class="container">
-    <!-- Top Fixed Bar -->
+  <div class="container" id="scroll-container">
+    <div class="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
+
     <div class="top-bar neumorphic">
-      <button class="neumorphic-btn">←</button>
+      <button class="neumorphic-btn" onclick="history.back()">←</button>
       <div class="header">PHYSICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-        <button class="neumorphic-btn profile-upload">
-          📷
-          <input type="file" accept="image/*" id="profile-upload">
-        </button>
+        <button class="neumorphic-btn" onclick="alert('📌 Saved for revision!')">🚀</button>
       </div>
     </div>
 
-    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Master Simple A.C. Circuits! ⚡</h1>
-        <p class="subtitle">– JAMB Chapter 36 Made Easy</p>
+        <h1>🔄 Simple A.C. Circuits</h1>
+        <p>JAMB Physics • alternating current • RMS values • reactance • impedance • power factor • resonance</p>
       </div>
 
-      <div class="welcome-note neumorphic">
-        <h2>📚 Chapter 36: Simple A.C. Circuits</h2>
-        
-        <p><strong>🎯 Learning Objectives:</strong> Master alternating current concepts, RMS values, reactance, impedance, power in A.C. circuits, resonance, and solve complex circuit calculations for JAMB success.</p>
+      <div class="section-card">
+        <h2>🎯 Learning Objective</h2>
+        <p>This chapter explains alternating current, RMS values, reactance, impedance, power in A.C. circuits, resonance, and common JAMB calculations.</p>
 
-        <h2>1️⃣ Understanding Alternating Current (A.C.) 🔄</h2>
-
-        <p><span class="highlight">Alternating Current (A.C.)</span> is current that periodically reverses direction, flowing first one way then the other, unlike Direct Current (D.C.) which flows in one direction only.</p>
-
-        <div class="formula-box">
-          <strong>Sinusoidal Waveform:</strong><br>
-          I = I₀ sin(ωt) or V = V₀ sin(ωt)<br><br>
-          Where:<br>
-          • I₀, V₀ = Peak/Maximum values<br>
-          • ω = 2πf = Angular frequency (rad/s)<br>
-          • f = Frequency (Hz)<br>
-          • t = Time (s)
+        <div class="quick-facts">
+          <ul>
+            <li>A.C. changes direction periodically</li>
+            <li>RMS values are the effective values used in power calculations</li>
+            <li>Inductors cause lag, capacitors cause lead</li>
+            <li>At resonance, <span class="math">Xₗ = Xᴄ</span> and the circuit behaves like a pure resistor</li>
+          </ul>
         </div>
 
-        <h2>2️⃣ Values in Alternating Current 📊</h2>
+        <div class="memory-tip">
+          <strong>🧠 Big idea</strong>
+          <p>Simple A.C. circuits are all about how resistance and reactance combine to control current, phase, and power.</p>
+        </div>
+      </div>
 
-        <div class="table-wrapper">
-          <table>
+      <div class="section-card">
+        <h2>1️⃣ Understanding Alternating Current</h2>
+
+        <p>Alternating current is current that reverses direction periodically, unlike direct current which flows in one direction only.</p>
+
+        <div class="formula-box">
+          <div class="title">Sinusoidal equations</div>
+          <div class="line"><span class="math">I = I₀ sin(ωt)</span></div>
+          <div class="line"><span class="math">V = V₀ sin(ωt)</span></div>
+          <div class="line"><span class="math">ω = 2πf</span></div>
+        </div>
+
+        <div class="diagram-box">
+          <div class="diagram-title">A.C. sine wave</div>
+          <svg viewBox="0 0 340 180" aria-label="AC waveform diagram">
+            <line x1="20" y1="90" x2="320" y2="90" class="curve" style="stroke-width:1.5"/>
+            <path d="M20 90 C45 20,70 20,95 90 S145 160,170 90 S220 20,245 90 S295 160,320 90" class="curve"/>
+            <text x="292" y="82" class="label">t</text>
+            <text x="28" y="30" class="label">I or V</text>
+          </svg>
+          <div class="diagram-caption">A.C. varies sinusoidally with time and changes direction every half cycle.</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>2️⃣ Values in Alternating Current</h2>
+
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Value</th>
               <th>Definition</th>
               <th>Formula</th>
               <th>When to Use</th>
             </tr>
-            <tr>
-              <td><strong>Peak Value</strong></td>
-              <td>Maximum value reached</td>
-              <td>I₀, V₀ (given)</td>
-              <td>Instantaneous calculations</td>
-            </tr>
-            <tr>
-              <td><strong>Instantaneous</strong></td>
-              <td>Value at any moment</td>
-              <td>I = I₀ sin(ωt)</td>
-              <td>Specific time values</td>
-            </tr>
-            <tr>
-              <td><strong>Mean Value</strong></td>
-              <td>Average over half cycle</td>
-              <td>Iₐᵥ = 2I₀/π ≈ 0.637I₀</td>
-              <td>Rarely used</td>
-            </tr>
-            <tr>
-              <td><strong>RMS Value</strong></td>
-              <td>Effective D.C. equivalent</td>
-              <td>Iᵣₘₛ = I₀/√2 ≈ 0.707I₀</td>
-              <td>Power calculations</td>
-            </tr>
+            <tr><td>Peak value</td><td>Maximum value reached</td><td><span class="math">I₀, V₀</span></td><td>Instantaneous analysis</td></tr>
+            <tr><td>Instantaneous value</td><td>Value at a specific time</td><td><span class="math">I = I₀ sin(ωt)</span></td><td>At a given moment</td></tr>
+            <tr><td>Mean value</td><td>Average over half cycle</td><td><span class="math">Iav = 2I₀/π</span></td><td>Less common</td></tr>
+            <tr><td>RMS value</td><td>Effective D.C. equivalent</td><td><span class="math">Irms = I₀/√2</span></td><td>Power calculations</td></tr>
           </table>
+        </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
+
+        <div class="memory-tip">
+          <strong>🧠 Memory tip</strong>
+          <p>RMS = the effective value that gives the same heating effect as D.C.</p>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Calculation 1: RMS and Peak Values</div>
+          <p>An A.C. voltage has a peak value of 311 V. Find the RMS voltage.</p>
+          <p><span class="math">Vrms = V₀/√2 = 311/1.414 = 220 V</span></p>
+          <div class="answer">Answer: 220 V</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>3️⃣ Components in A.C. Circuits</h2>
+
+        <h3>A. Resistor in A.C.</h3>
+        <ul>
+          <li>Voltage and current are in phase</li>
+          <li>Opposition is ordinary resistance <span class="math">R</span></li>
+          <li>Power is dissipated as heat</li>
+        </ul>
+
+        <h3>B. Inductor in A.C.</h3>
+        <ul>
+          <li>Current lags voltage by 90°</li>
+          <li>Opposition is inductive reactance</li>
+        </ul>
+
+        <div class="formula-box">
+          <div class="title">Inductive reactance</div>
+          <div class="line"><span class="math">Xₗ = 2πfL = ωL</span></div>
         </div>
 
         <div class="memory-tip">
-          💡 Memory Tip: RMS = "Really Means Something" (the effective value that produces same heating as D.C.)
+          <strong>🧠 Memory tip</strong>
+          <p>L for Lag — current comes late in an inductor.</p>
         </div>
 
-        <h2>🔢 Calculation 1: RMS and Peak Values</h2>
-        <p><strong>Question:</strong> An A.C. voltage has peak value of 311V. Find the RMS voltage.</p>
-        
-        <div class="calculation-box">
-          <strong>Vᵣₘₛ = V₀/√2</strong><br>
-          = 311/1.414<br>
-          = 220V
-        </div>
-        <div class="answer-box">Answer: 220V</div>
-
-        <h2>3️⃣ Components in A.C. Circuits 🔧</h2>
-
-        <h3>A. Resistor (R) in A.C. Circuit</h3>
-        <div class="component-box">
-          <h4>⚡ Characteristics</h4>
-          <ul>
-            <li><strong>Phase:</strong> Voltage and current are IN PHASE (0° difference)</li>
-            <li><strong>Opposition:</strong> Resistance (R) - same as D.C.</li>
-            <li><strong>Formula:</strong> Vᵣ = IR</li>
-            <li><strong>Power:</strong> Dissipated as heat</li>
-          </ul>
+        <div class="example-box">
+          <div class="title">Calculation 2: Inductive Reactance</div>
+          <p>A 0.5 H inductor is connected to a 50 Hz supply. Find <span class="math">Xₗ</span>.</p>
+          <p><span class="math">Xₗ = 2πfL = 2 × 3.142 × 50 × 0.5 = 157.1 Ω</span></p>
+          <div class="answer">Answer: 157.1 Ω</div>
         </div>
 
-        <h3>B. Inductor (L) in A.C. Circuit</h3>
-        <div class="component-box">
-          <h4>🔄 Characteristics</h4>
-          <ul>
-            <li><strong>Phase:</strong> Current LAGS voltage by 90° (π/2 rad)</li>
-            <li><strong>Opposition:</strong> Inductive Reactance (Xₗ)</li>
-            <li><strong>Formula:</strong> Xₗ = 2πfL = ωL</li>
-            <li><strong>Key Point:</strong> Higher frequency → Higher Xₗ (blocks high frequencies)</li>
-            <li><strong>Power:</strong> No dissipation (energy stored in magnetic field)</li>
-          </ul>
+        <h3>C. Capacitor in A.C.</h3>
+        <ul>
+          <li>Current leads voltage by 90°</li>
+          <li>Opposition is capacitive reactance</li>
+        </ul>
+
+        <div class="formula-box">
+          <div class="title">Capacitive reactance</div>
+          <div class="line"><span class="math">Xᴄ = 1/(2πfC) = 1/(ωC)</span></div>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🧠 Memory tip</strong>
+          <p>C for Current Comes first in a capacitor.</p>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Calculation 3: Capacitive Reactance</div>
+          <p>A 10 μF capacitor is connected to a 50 Hz supply. Find <span class="math">Xᴄ</span>.</p>
+          <p><span class="math">Xᴄ = 1/(2πfC)</span></p>
+          <p><span class="math">Xᴄ = 1/(2 × 3.142 × 50 × 10 × 10⁻⁶) = 318.3 Ω</span></p>
+          <div class="answer">Answer: 318.3 Ω</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>4️⃣ Impedance in A.C. Circuits</h2>
+
+        <p>Impedance is the total opposition to current in an A.C. circuit.</p>
+
+        <div class="formula-box">
+          <div class="title">Series R-L circuit</div>
+          <div class="line"><span class="math">Z = √(R² + Xₗ²)</span></div>
+          <div class="line"><span class="math">tan φ = Xₗ/R</span></div>
         </div>
 
         <div class="formula-box">
-          <strong>Memory Aid:</strong> "L for Lag - current comes Late"
-        </div>
-
-        <h2>🔢 Calculation 2: Inductive Reactance</h2>
-        <p><strong>Question:</strong> A 0.5H inductor is connected to 50Hz A.C. supply. Calculate Xₗ.</p>
-        
-        <div class="calculation-box">
-          <strong>Xₗ = 2πfL</strong><br>
-          = 2 × 3.142 × 50 × 0.5<br>
-          = 157.1Ω
-        </div>
-        <div class="answer-box">Answer: 157.1Ω</div>
-
-        <h3>C. Capacitor (C) in A.C. Circuit</h3>
-        <div class="component-box">
-          <h4>🔋 Characteristics</h4>
-          <ul>
-            <li><strong>Phase:</strong> Current LEADS voltage by 90° (π/2 rad)</li>
-            <li><strong>Opposition:</strong> Capacitive Reactance (Xᴄ)</li>
-            <li><strong>Formula:</strong> Xᴄ = 1/(2πfC) = 1/(ωC)</li>
-            <li><strong>Key Point:</strong> Higher frequency → Lower Xᴄ (passes high frequencies)</li>
-            <li><strong>Power:</strong> No dissipation (energy stored in electric field)</li>
-          </ul>
+          <div class="title">Series R-C circuit</div>
+          <div class="line"><span class="math">Z = √(R² + Xᴄ²)</span></div>
+          <div class="line"><span class="math">tan φ = Xᴄ/R</span></div>
         </div>
 
         <div class="formula-box">
-          <strong>Memory Aid:</strong> "C for Current Comes first"
+          <div class="title">Series R-L-C circuit</div>
+          <div class="line"><span class="math">Z = √(R² + (Xₗ - Xᴄ)²)</span></div>
+          <div class="line"><span class="math">tan φ = (Xₗ - Xᴄ)/R</span></div>
         </div>
 
-        <h2>🔢 Calculation 3: Capacitive Reactance</h2>
-        <p><strong>Question:</strong> A 10μF capacitor is connected to 50Hz supply. Find Xᴄ.</p>
-        
-        <div class="calculation-box">
-          <strong>Xᴄ = 1/(2πfC)</strong><br>
-          = 1/(2 × 3.142 × 50 × 10 × 10⁻⁶)<br>
-          = 1/0.003142<br>
-          = 318.3Ω
-        </div>
-        <div class="answer-box">Answer: 318.3Ω</div>
+        <ul>
+          <li>If <span class="math">Xₗ &gt; Xᴄ</span>, the circuit is inductive and current lags</li>
+          <li>If <span class="math">Xᴄ &gt; Xₗ</span>, the circuit is capacitive and current leads</li>
+          <li>If <span class="math">Xₗ = Xᴄ</span>, the circuit is at resonance</li>
+        </ul>
 
-        <h2>4️⃣ Impedance (Z) in A.C. Circuits ⚡</h2>
-
-        <p><span class="highlight">Impedance</span> is the total opposition to current flow in A.C. circuits, combining resistance and reactance.</p>
-
-        <div class="formula-box">
-          <strong>Series R-L Circuit:</strong><br>
-          Z = √(R² + Xₗ²)<br>
-          tan φ = Xₗ/R (Current lags voltage)<br><br>
-          
-          <strong>Series R-C Circuit:</strong><br>
-          Z = √(R² + Xᴄ²)<br>
-          tan φ = Xᴄ/R (Current leads voltage)<br><br>
-          
-          <strong>Series R-L-C Circuit (Most Important):</strong><br>
-          Z = √(R² + (Xₗ - Xᴄ)²)<br>
-          tan φ = (Xₗ - Xᴄ)/R
+        <div class="diagram-box">
+          <div class="diagram-title">Reactance idea in RLC circuit</div>
+          <svg viewBox="0 0 340 180" aria-label="RLC vector idea">
+            <line x1="40" y1="130" x2="150" y2="130" class="curve"/>
+            <line x1="150" y1="130" x2="150" y2="55" class="curve"/>
+            <line x1="150" y1="130" x2="150" y2="165" class="curve"/>
+            <line x1="40" y1="130" x2="210" y2="90" class="curve"/>
+            <text x="82" y="122" class="label">R</text>
+            <text x="160" y="85" class="label">Xₗ</text>
+            <text x="160" y="160" class="label">Xᴄ</text>
+            <text x="188" y="95" class="label">Z</text>
+          </svg>
+          <div class="diagram-caption">Mentally place resistance on the horizontal axis, inductive reactance upward, and capacitive reactance downward.</div>
         </div>
 
-        <div class="tips-box">
-          <h3>🎯 Phase Angle Rules</h3>
-          <ul>
-            <li><strong>Xₗ > Xᴄ:</strong> Circuit is INDUCTIVE (current lags) - φ is positive</li>
-            <li><strong>Xᴄ > Xₗ:</strong> Circuit is CAPACITIVE (current leads) - φ is negative</li>
-            <li><strong>Xₗ = Xᴄ:</strong> Circuit is RESISTIVE (resonance) - φ = 0</li>
-          </ul>
+        <div class="example-box">
+          <div class="title">Calculation 4: RLC Circuit Impedance</div>
+          <p>A series RLC circuit has <span class="math">R = 10 Ω</span>, <span class="math">L = 0.1 H</span>, and <span class="math">C = 100 μF</span> at 50 Hz. Find the impedance.</p>
+          <p><span class="math">Xₗ = 2π × 50 × 0.1 = 31.42 Ω</span></p>
+          <p><span class="math">Xᴄ = 1/(2π × 50 × 100 × 10⁻⁶) = 31.83 Ω</span></p>
+          <p><span class="math">Z = √(10² + (31.42 - 31.83)²) ≈ 10 Ω</span></p>
+          <div class="answer">Answer: 10 Ω</div>
         </div>
+      </div>
 
-        <h2>🔢 Calculation 4: RLC Circuit Impedance</h2>
-        <p><strong>Question:</strong> A series R-L-C circuit has R = 10Ω, L = 0.1H, C = 100μF at 50Hz. Find impedance.</p>
-        
-        <div class="calculation-box">
-          <strong>Step 1: Calculate Xₗ</strong><br>
-          Xₗ = 2π × 50 × 0.1 = 31.42Ω<br><br>
-          
-          <strong>Step 2: Calculate Xᴄ</strong><br>
-          Xᴄ = 1/(2π × 50 × 100 × 10⁻⁶) = 31.83Ω<br><br>
-          
-          <strong>Step 3: Calculate Z</strong><br>
-          Z = √(10² + (31.42 - 31.83)²)<br>
-          = √(100 + (-0.41)²)<br>
-          = √100.17 ≈ 10Ω
-        </div>
-        <div class="answer-box">Answer: 10Ω (Near resonance)</div>
+      <div class="section-card">
+        <h2>5️⃣ Power in A.C. Circuits</h2>
 
-        <h2>5️⃣ Power in A.C. Circuits 💡</h2>
-
-        <div class="table-wrapper">
-          <table>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Power Type</th>
               <th>Symbol</th>
               <th>Formula</th>
               <th>Meaning</th>
             </tr>
-            <tr>
-              <td><strong>Instantaneous</strong></td>
-              <td>p</td>
-              <td>p = vi</td>
-              <td>Power at any instant</td>
-            </tr>
-            <tr>
-              <td><strong>Real Power</strong></td>
-              <td>P</td>
-              <td>P = VI cos φ = I²R</td>
-              <td>Actual power consumed (W)</td>
-            </tr>
-            <tr>
-              <td><strong>Apparent Power</strong></td>
-              <td>S</td>
-              <td>S = VI</td>
-              <td>Total power supplied (VA)</td>
-            </tr>
-            <tr>
-              <td><strong>Reactive Power</strong></td>
-              <td>Q</td>
-              <td>Q = VI sin φ</td>
-              <td>Oscillating power (VAR)</td>
-            </tr>
+            <tr><td>Instantaneous power</td><td><span class="math">p</span></td><td><span class="math">p = vi</span></td><td>Power at an instant</td></tr>
+            <tr><td>Real power</td><td><span class="math">P</span></td><td><span class="math">P = VI cos φ = I²R</span></td><td>Actual useful power</td></tr>
+            <tr><td>Apparent power</td><td><span class="math">S</span></td><td><span class="math">S = VI</span></td><td>Total supplied power</td></tr>
+            <tr><td>Reactive power</td><td><span class="math">Q</span></td><td><span class="math">Q = VI sin φ</span></td><td>Oscillating power</td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
 
         <div class="formula-box">
-          <strong>Power Factor:</strong><br>
-          cos φ = R/Z = Real Power/Apparent Power<br><br>
-          • Range: 0 to 1<br>
-          • Unity (cos φ = 1): All power is real power (at resonance)<br>
-          • Low power factor: More reactive power, less efficient
+          <div class="title">Power factor</div>
+          <div class="line"><span class="math">cos φ = R/Z = Real Power/Apparent Power</span></div>
         </div>
 
-        <h2>🔢 Calculation 5: Power Calculations</h2>
-        <p><strong>Question:</strong> A circuit draws 2A from 100V supply with power factor 0.8. Calculate real power.</p>
-        
-        <div class="calculation-box">
-          <strong>P = VI cos φ</strong><br>
-          = 100 × 2 × 0.8<br>
-          = 160W
+        <ul>
+          <li>Power factor ranges from 0 to 1</li>
+          <li>At unity power factor, all power is real power</li>
+          <li>Low power factor means less efficient power use</li>
+        </ul>
+
+        <div class="example-box">
+          <div class="title">Calculation 5: Real Power</div>
+          <p>A circuit draws 2 A from a 100 V supply with power factor 0.8. Find the real power.</p>
+          <p><span class="math">P = VI cos φ = 100 × 2 × 0.8 = 160 W</span></p>
+          <div class="answer">Answer: 160 W</div>
         </div>
-        <div class="answer-box">Answer: 160W</div>
+      </div>
 
-        <h2>6️⃣ Resonance in Series R-L-C Circuits 🎯</h2>
+      <div class="section-card">
+        <h2>6️⃣ Resonance in Series R-L-C Circuits</h2>
 
-        <p><span class="highlight">Resonance</span> occurs when Xₗ = Xᴄ, making the circuit purely resistive.</p>
+        <p>Resonance occurs when inductive reactance equals capacitive reactance.</p>
 
         <div class="formula-box">
-          <strong>Resonant Frequency:</strong><br>
-          f₀ = 1/(2π√(LC))<br><br>
-          
-          <strong>At Resonance:</strong><br>
-          • Impedance is minimum: Z = R<br>
-          • Current is maximum: Iₘₐₓ = V/R<br>
-          • Power factor = 1 (unity)<br>
-          • Phase angle φ = 0
+          <div class="title">Resonant frequency</div>
+          <div class="line"><span class="math">f₀ = 1/(2π√(LC))</span></div>
         </div>
 
-        <h2>🔢 Calculation 6: Resonance Frequency</h2>
-        <p><strong>Question:</strong> Find the resonant frequency for L = 1H and C = 10μF.</p>
-        
-        <div class="calculation-box">
-          <strong>f₀ = 1/(2π√(LC))</strong><br>
-          = 1/(2π√(1 × 10 × 10⁻⁶))<br>
-          = 1/(2π × 3.162 × 10⁻³)<br>
-          = 1/0.01987<br>
-          = 50.3Hz
+        <h3>At resonance</h3>
+        <ul>
+          <li><span class="math">Xₗ = Xᴄ</span></li>
+          <li>Impedance is minimum: <span class="math">Z = R</span></li>
+          <li>Current is maximum: <span class="math">I = V/R</span></li>
+          <li>Power factor is 1</li>
+          <li>Phase angle is 0°</li>
+        </ul>
+
+        <div class="example-box">
+          <div class="title">Calculation 6: Resonance Frequency</div>
+          <p>Find the resonant frequency for <span class="math">L = 1 H</span> and <span class="math">C = 10 μF</span>.</p>
+          <p><span class="math">f₀ = 1/(2π√(LC))</span></p>
+          <p><span class="math">f₀ = 1/(2π√(1 × 10 × 10⁻⁶)) = 50.3 Hz</span></p>
+          <div class="answer">Answer: 50.3 Hz</div>
         </div>
-        <div class="answer-box">Answer: 50.3Hz</div>
+      </div>
 
-        <h2>📋 Summary Table of Formulas</h2>
+      <div class="section-card">
+        <h2>7️⃣ Summary Table of Formulas</h2>
 
-        <div class="table-wrapper">
-          <table>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Formula</th>
               <th>Variables</th>
               <th>When to Use</th>
             </tr>
-            <tr>
-              <td><strong>Iᵣₘₛ = I₀/√2</strong></td>
-              <td>I₀ = Peak current</td>
-              <td>Converting peak to RMS</td>
-            </tr>
-            <tr>
-              <td><strong>Vᵣₘₛ = V₀/√2</strong></td>
-              <td>V₀ = Peak voltage</td>
-              <td>Converting peak to RMS</td>
-            </tr>
-            <tr>
-              <td><strong>ω = 2πf</strong></td>
-              <td>f = frequency</td>
-              <td>Angular frequency</td>
-            </tr>
-            <tr>
-              <td><strong>Xₗ = 2πfL</strong></td>
-              <td>L = inductance (H)</td>
-              <td>Inductive reactance</td>
-            </tr>
-            <tr>
-              <td><strong>Xᴄ = 1/(2πfC)</strong></td>
-              <td>C = capacitance (F)</td>
-              <td>Capacitive reactance</td>
-            </tr>
-            <tr>
-              <td><strong>Z = √(R² + (Xₗ-Xᴄ)²)</strong></td>
-              <td>R = resistance</td>
-              <td>RLC circuit impedance</td>
-            </tr>
-            <tr>
-              <td><strong>tan φ = (Xₗ-Xᴄ)/R</strong></td>
-              <td>φ = phase angle</td>
-              <td>Phase relationships</td>
-            </tr>
-            <tr>
-              <td><strong>P = VI cos φ</strong></td>
-              <td>cos φ = power factor</td>
-              <td>Real power calculation</td>
-            </tr>
-            <tr>
-              <td><strong>f₀ = 1/(2π√(LC))</strong></td>
-              <td>f₀ = resonant freq</td>
-              <td>Resonance frequency</td>
-            </tr>
-            <tr>
-              <td><strong>I = V/Z</strong></td>
-              <td>Z = impedance</td>
-              <td>Ohm's Law for A.C.</td>
-            </tr>
+            <tr><td><span class="math">Irms = I₀/√2</span></td><td><span class="math">I₀</span> = peak current</td><td>Peak to RMS conversion</td></tr>
+            <tr><td><span class="math">Vrms = V₀/√2</span></td><td><span class="math">V₀</span> = peak voltage</td><td>Peak to RMS conversion</td></tr>
+            <tr><td><span class="math">ω = 2πf</span></td><td><span class="math">f</span> = frequency</td><td>Angular frequency</td></tr>
+            <tr><td><span class="math">Xₗ = 2πfL</span></td><td><span class="math">L</span> = inductance</td><td>Inductive reactance</td></tr>
+            <tr><td><span class="math">Xᴄ = 1/(2πfC)</span></td><td><span class="math">C</span> = capacitance</td><td>Capacitive reactance</td></tr>
+            <tr><td><span class="math">Z = √(R² + (Xₗ-Xᴄ)²)</span></td><td><span class="math">R, Xₗ, Xᴄ</span></td><td>Series RLC impedance</td></tr>
+            <tr><td><span class="math">tan φ = (Xₗ-Xᴄ)/R</span></td><td><span class="math">φ</span> = phase angle</td><td>Phase relation</td></tr>
+            <tr><td><span class="math">P = VI cos φ</span></td><td><span class="math">cos φ</span> = power factor</td><td>Real power</td></tr>
+            <tr><td><span class="math">f₀ = 1/(2π√(LC))</span></td><td><span class="math">L, C</span></td><td>Resonant frequency</td></tr>
+            <tr><td><span class="math">I = V/Z</span></td><td><span class="math">Z</span> = impedance</td><td>Ohm’s law for A.C.</td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
+      </div>
 
-        <div class="tips-box">
-          <h3>🎯 JAMB Exam Tips</h3>
-          <ol>
-            <li><strong>Always convert units:</strong> μF to F (×10⁻⁶), mH to H (×10⁻³)</li>
-            <li><strong>Remember RMS is standard:</strong> Unless stated as "peak," assume values are RMS</li>
-            <li><strong>Watch for resonance:</strong> When Xₗ = Xᴄ, calculations become simple (Z = R)</li>
-            <li><strong>Power factor is always positive</strong> between 0 and 1, but phase angle can be positive (lag) or negative (lead)</li>
-            <li><strong>Draw vector diagrams mentally:</strong> R on x-axis, Xₗ up, Xᴄ down</li>
-            <li><strong>Resistors are Reliable:</strong> No phase shift in purely resistive circuits</li>
-          </ol>
+      <div class="section-card">
+        <h2>8️⃣ Comprehensive JAMB Practice Question</h2>
+
+        <div class="example-box">
+          <div class="title">Series RLC Calculation</div>
+          <p>A series circuit consists of <span class="math">R = 30 Ω</span>, <span class="math">L = 0.4 H</span>, and <span class="math">C = 20 μF</span> connected to a 100 V, 50 Hz supply. Find:</p>
+          <p>(a) <span class="math">Xₗ</span>, (b) <span class="math">Xᴄ</span>, (c) <span class="math">Z</span>, (d) Current, (e) Phase angle, (f) Power factor.</p>
+
+          <p><span class="math">(a) Xₗ = 2πfL = 2 × 3.142 × 50 × 0.4 = 125.7 Ω</span></p>
+          <p><span class="math">(b) Xᴄ = 1/(2πfC) = 159.2 Ω</span></p>
+          <p><span class="math">(c) Z = √(30² + (125.7 - 159.2)²) = 45.0 Ω</span></p>
+          <p><span class="math">(d) I = V/Z = 100/45 = 2.22 A</span></p>
+          <p><span class="math">(e) tan φ = (Xₗ - Xᴄ)/R = -33.5/30 = -1.117</span></p>
+          <p><span class="math">φ = -48.1°</span> (capacitive, current leads)</p>
+          <p><span class="math">(f) cos φ = R/Z = 30/45 = 0.667</span></p>
+
+          <div class="answer">Answers: 125.7 Ω, 159.2 Ω, 45 Ω, 2.22 A, -48.1°, 0.667</div>
         </div>
+      </div>
 
-        <h2>🔢 Comprehensive JAMB Practice Question</h2>
-        <p><strong>Question:</strong> A series circuit consists of R = 30Ω, L = 0.4H, and C = 20μF connected to 100V, 50Hz supply. Calculate: (a) Xₗ, (b) Xᴄ, (c) Z, (d) Current, (e) Phase angle, (f) Power factor.</p>
-        
-        <div class="calculation-box">
-          <strong>(a) Xₗ = 2πfL</strong> = 2 × 3.142 × 50 × 0.4 = 125.7Ω<br><br>
-          
-          <strong>(b) Xᴄ = 1/(2πfC)</strong> = 1/(2 × 3.142 × 50 × 20 × 10⁻⁶) = 159.2Ω<br><br>
-          
-          <strong>(c) Z = √(R² + (Xₗ-Xᴄ)²)</strong><br>
-          = √(30² + (125.7-159.2)²)<br>
-          = √(900 + 1122.25) = 45.0Ω<br><br>
-          
-          <strong>(d) I = V/Z</strong> = 100/45 = 2.22A<br><br>
-          
-          <strong>(e) tan φ = (Xₗ-Xᴄ)/R</strong> = -33.5/30 = -1.117<br>
-          φ = tan⁻¹(-1.117) = -48.1° (Capacitive - current leads)<br><br>
-          
-          <strong>(f) cos φ = R/Z</strong> = 30/45 = 0.667
-        </div>
-        <div class="answer-box">Answers: (a) 125.7Ω (b) 159.2Ω (c) 45Ω (d) 2.22A (e) -48.1° (f) 0.667</div>
+      <div class="section-card">
+        <h2>9️⃣ JAMB Exam Tips</h2>
 
-        <h2>📝 Quick Practice Questions</h2>
-
-        <div class="component-box">
+        <div class="jamb-alert">
+          <h4>High-score reminders</h4>
           <ul>
-            <li><strong>Q1.</strong> Calculate the peak current if RMS current is 5A.<br>
-            <strong>Answer:</strong> 7.07A</li>
-            <br>
-            <li><strong>Q2.</strong> At what frequency would a 10H inductor have reactance of 2000Ω?<br>
-            <strong>Answer:</strong> 31.83Hz</li>
-            <br>
-            <li><strong>Q3.</strong> Find the power factor of a circuit with R = 60Ω and Z = 100Ω.<br>
-            <strong>Answer:</strong> 0.6</li>
+            <li>Always convert μF to F and mH to H</li>
+            <li>Unless stated otherwise, A.C. voltages are usually RMS values</li>
+            <li>At resonance, use <span class="math">Z = R</span></li>
+            <li>Power factor is between 0 and 1</li>
+            <li>Pure resistor: no phase difference</li>
           </ul>
         </div>
 
-        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
-          Great job 🌟 You now master Simple A.C. Circuits!
-        </p>
-
-        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 35 (Electromagnetic Induction) & Chapter 37 (Electronics)</p>
-        <button class="explore-btn" onclick="window.location.href='ac-circuits-quiz.html'">Start JAMB Quiz Now!</button>
+        <div class="memory-tip">
+          <strong>⚠️ Common mistakes</strong>
+          <p>Do not mix up lead and lag, and do not forget that higher frequency increases <span class="math">Xₗ</span> but decreases <span class="math">Xᴄ</span>.</p>
+        </div>
       </div>
+
+      <div class="section-card">
+        <h2>🔟 Quick Practice Questions</h2>
+
+        <div class="example-box">
+          <div class="title">Q1. Calculate the peak current if RMS current is 5 A.</div>
+          <p><span class="math">I₀ = √2 × Irms = 1.414 × 5 = 7.07 A</span></p>
+          <div class="answer">Answer: 7.07 A</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Q2. At what frequency would a 10 H inductor have reactance of 2000 Ω?</div>
+          <p><span class="math">Xₗ = 2πfL</span></p>
+          <p><span class="math">f = Xₗ/(2πL) = 2000/(2 × 3.142 × 10) = 31.83 Hz</span></p>
+          <div class="answer">Answer: 31.83 Hz</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Q3. Find the power factor of a circuit with <span class="math">R = 60 Ω</span> and <span class="math">Z = 100 Ω</span>.</div>
+          <p><span class="math">cos φ = R/Z = 60/100 = 0.6</span></p>
+          <div class="answer">Answer: 0.6</div>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🌟 Final line</strong>
+          <p>You now have a complete JAMB-style guide to Simple A.C. Circuits. This chapter is important because it connects wave behavior, circuit analysis, power, and resonance in one very exam-friendly topic.</p>
+        </div>
+      </div>
+
+      <button class="explore-btn" onclick="alert('Before your quiz, revise RMS values, reactance formulas, impedance, phase angle, power factor, and resonance conditions.')">Start JAMB Questions</button>
     </div>
   </div>
 
-  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item">
-      <button class="neumorphic-btn">🔍</button>
-      <p>Search</p>
-    </div>
-    <div class="nav-item center">
-      <button class="neumorphic-btn">⭐</button>
-      <p>Favorite</p>
-    </div>
-    <div class="nav-item">
-      <button class="neumorphic-btn">📚</button>
-      <p>Library</p>
-    </div>
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
 
-    function setTheme(theme) {
+    function setTheme(theme){
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
+    setTheme(localStorage.getItem('theme') || 'dark');
 
     themeToggle.addEventListener('click', () => {
-      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
-      setTheme(newTheme);
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
     });
 
-    document.getElementById('profile-upload').addEventListener('change', (e) => {
-      if (e.target.files[0]) {
-        console.log('Profile picture selected!');
-      }
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
     });
   </script>
 </body>
