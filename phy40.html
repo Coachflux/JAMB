@@ -1,867 +1,587 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PHYSICS - Fiber Optics & Lasers</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JAMB Physics - Fiber Optics and Lasers Mastery Guide</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
+    :root{
+      --background:#1e1e2f;--shadow-in:#171723;--shadow-out:#25253b;
+      --text-primary:#f0f0ff;--text-secondary:#c0c0e0;
+      --accent:#1db954;--accent-secondary:#ff6b6b;--accent-tertiary:#4ecdc4;
+      --card-bg:#2a2a3f;--line:#8ea2ff;--grid:rgba(255,255,255,.08)
+    }
+    body.light{
+      --background:#e0e0e0;--shadow-in:#bebebe;--shadow-out:#ffffff;
+      --text-primary:#1a1a1a;--text-secondary:#444;--card-bg:#f8f8f8;--line:#2b59ff;--grid:rgba(0,0,0,.08)
+    }
+    body{
+      background:var(--background);color:var(--text-primary);
+      display:flex;justify-content:center;align-items:center;
+      min-height:100vh;overflow-x:hidden
+    }
+    .container{
+      width:100%;max-width:420px;height:750px;overflow-y:auto;
+      background:var(--background);border-radius:20px;
+      box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out);
+      padding-top:70px;padding-bottom:80px;position:relative
+    }
+    .neumorphic{
+      background:var(--background);
+      box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out);
+      border-radius:15px
+    }
+    .neumorphic-btn{
+      background:var(--background);border:none;border-radius:50%;
+      width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+      box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      cursor:pointer;color:var(--text-primary);font-size:18px;transition:all .3s ease
+    }
+    .neumorphic-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.95)
+    }
+    .top-bar{
+      position:fixed;top:0;width:100%;max-width:420px;
+      background:var(--background);padding:15px;
+      display:flex;align-items:center;justify-content:space-between;
+      box-shadow:0 5px 10px var(--shadow-in);z-index:20
+    }
+    .top-bar .header{font-size:16px;font-weight:900;color:var(--accent)}
+    .top-bar .right-icons{display:flex;gap:10px}
+
+    .progress-container{
+      position:fixed;top:70px;left:0;width:100%;max-width:420px;height:4px;
+      background:var(--shadow-in);z-index:15
+    }
+    .progress-bar{height:100%;background:var(--accent);width:0%;transition:width .3s}
+
+    .content{padding:20px 16px;line-height:1.7}
+    .main-header{
+      text-align:center;margin-bottom:26px;padding:20px;border-radius:20px;
+      background:rgba(29,185,84,.1)
+    }
+    .main-header h1{font-size:20px;margin-bottom:8px;color:var(--accent);font-weight:900}
+    .main-header p{font-size:13px;color:var(--text-secondary);font-weight:500}
+
+    .section-card{
+      background:var(--card-bg);padding:22px 18px;border-radius:20px;
+      box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out);
+      margin-bottom:22px;border-left:4px solid var(--accent)
+    }
+    .section-card h2{
+      font-size:18px;margin-bottom:12px;color:var(--accent);font-weight:900;
+      display:flex;align-items:center;gap:8px
+    }
+    .section-card h3{
+      font-size:15px;margin:16px 0 10px;color:var(--accent-tertiary);font-weight:800;
+      padding-left:12px;border-left:3px solid var(--accent-tertiary)
+    }
+    .section-card h4{
+      font-size:14px;margin:14px 0 8px;color:var(--accent-secondary);font-weight:800
+    }
+    .section-card p{margin-bottom:10px;font-size:14px;text-align:justify}
+    .section-card ul,.section-card ol{padding-left:20px;margin:10px 0}
+    .section-card li{margin-bottom:7px;font-size:14px}
+
+    .quick-facts{
+      background:linear-gradient(135deg,rgba(29,185,84,.1),rgba(78,205,196,.1));
+      padding:14px;border-radius:15px;margin:12px 0;border:1px solid rgba(29,185,84,.3)
+    }
+    .quick-facts li{font-size:13px}
+
+    .highlight-box{
+      background:rgba(78,205,196,.1);padding:12px 16px;border-radius:10px;margin:12px 0;
+      border-left:3px solid var(--accent-tertiary)
     }
 
-    :root {
-      --background: #1e1e2f;
-      --shadow-in: #171723;
-      --shadow-out: #25253b;
-      --text-primary: #f0f0ff;
-      --text-secondary: #c0c0e0;
-      --accent: #1db954;
-      --card-bg: #2a2a3f;
+    .memory-tip{
+      background:rgba(255,107,107,.1);padding:14px 16px;border-radius:12px;margin:14px 0;
+      border-left:4px solid var(--accent-secondary)
+    }
+    .memory-tip strong{color:var(--accent-secondary);display:block;margin-bottom:6px;font-size:14px}
+    .memory-tip p{margin:0;font-size:13px;font-style:italic}
+
+    .jamb-alert{
+      background:linear-gradient(135deg,rgba(255,193,7,.15),rgba(255,152,0,.1));
+      border:1px solid rgba(255,193,7,.4);border-radius:12px;padding:14px;margin:16px 0
+    }
+    .jamb-alert h4{color:#ffc107;margin-bottom:8px;font-size:14px;font-weight:900}
+    .jamb-alert li{font-size:13px}
+
+    .formula-box{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .formula-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:6px
+    }
+    .formula-box .line{
+      font-size:13px;margin-bottom:5px
     }
 
-    body.light {
-      --background: #e0e0e0;
-      --shadow-in: #bebebe;
-      --shadow-out: #ffffff;
-      --text-primary: #1a1a1a;
-      --text-secondary: #444;
-      --accent: #1db954;
-      --card-bg: #f8f8f8;
+    .example-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .example-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:8px
+    }
+    .example-box .answer{
+      margin-top:8px;font-size:13px;color:var(--accent-secondary);font-weight:800
     }
 
-    body {
-      background: var(--background);
-      color: var(--text-primary);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
+    .diagram-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:12px;
+      margin:14px 0
+    }
+    .diagram-title{
+      font-size:13px;
+      font-weight:900;
+      color:var(--accent-tertiary);
+      margin-bottom:8px
+    }
+    .diagram-caption{
+      font-size:12px;
+      color:var(--text-secondary);
+      margin-top:8px
+    }
+    svg{
+      width:100%;
+      height:auto;
+      display:block
     }
 
-    .container {
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      border-radius: 20px;
-      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
-      overflow: hidden;
-      position: relative;
-      height: 700px;
-      overflow-y: auto;
-      padding-top: 70px;
-      padding-bottom: 70px;
+    .table-container{
+      width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0;border-radius:12px;
+      box-shadow:3px 3px 8px var(--shadow-in),-3px -3px 8px var(--shadow-out)
+    }
+    .summary-table{
+      width:100%;min-width:500px;border-collapse:separate;border-spacing:0;font-size:13px
+    }
+    .summary-table th{
+      background:var(--accent);color:#000;padding:12px 10px;text-align:left;font-weight:900;white-space:nowrap
+    }
+    .summary-table td{
+      padding:10px;border-bottom:1px solid var(--shadow-in);background:var(--card-bg);vertical-align:top
+    }
+    .summary-table tr:last-child td{border-bottom:none}
+    .summary-table tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+    .table-scroll-hint{font-size:11px;color:var(--text-secondary);text-align:center;margin-top:4px;font-style:italic}
+
+    .explore-btn{
+      background:var(--accent);border:none;padding:14px 28px;border-radius:25px;color:#000;cursor:pointer;
+      box-shadow:4px 4px 8px var(--shadow-in),-4px -4px 8px var(--shadow-out);
+      font-size:16px;margin:22px auto;display:block;font-weight:900;transition:all .3s ease
+    }
+    .explore-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.98)
     }
 
-    .neumorphic {
-      background: var(--background);
-      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
-      border-radius: 15px;
+    .nav-bar{
+      position:fixed;bottom:0;width:100%;max-width:420px;background:var(--background);padding:10px;
+      display:flex;justify-content:space-around;box-shadow:0 -5px 10px var(--shadow-in);z-index:20
     }
+    .nav-bar .nav-item{text-align:center}
+    .nav-bar .nav-item.center button{
+      width:50px;height:50px;font-size:24px;background:var(--accent);
+      box-shadow:0 0 15px var(--accent),3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      color:#000
+    }
+    .nav-bar p{display:none;font-size:11px;margin-top:4px;color:var(--text-primary)}
 
-    .neumorphic-btn {
-      background: var(--background);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      cursor: pointer;
-      color: var(--text-primary);
-      font-size: 18px;
-    }
-
-    .neumorphic-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .top-bar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 5px 10px var(--shadow-in);
-      z-index: 20;
-    }
-
-    .top-bar .header {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--text-primary);
-    }
-
-    .top-bar .right-icons {
-      display: flex;
-      gap: 10px;
-    }
-
-    .top-bar .profile-upload {
-      position: relative;
-    }
-
-    .top-bar .profile-upload input {
-      opacity: 0;
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-    }
-
-    .content {
-      padding: 20px 16px;
-      line-height: 1.6;
-    }
-
-    .main-header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .main-header h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    .main-header p.subtitle {
-      font-size: 16px;
-      color: var(--text-secondary);
-    }
-
-    .welcome-note {
-      background: var(--card-bg);
-      padding: 28px 20px;
-      border-radius: 20px;
-      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
-      margin-bottom: 30px;
-    }
-
-    .welcome-note h2 {
-      font-size: 22px;
-      margin: 32px 0 16px;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .welcome-note h2:first-child {
-      margin-top: 0;
-    }
-
-    .welcome-note h3 {
-      font-size: 18px;
-      margin: 24px 0 12px;
-      color: var(--accent);
-    }
-
-    .welcome-note p {
-      margin-bottom: 16px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note ul, .welcome-note ol {
-      padding-left: 24px;
-      margin: 16px 0;
-    }
-
-    .welcome-note li {
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note .highlight {
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .formula-box {
-      background: rgba(29, 185, 84, 0.1);
-      border-left: 4px solid var(--accent);
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box {
-      background: rgba(0,0,0,0.15);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box strong {
-      color: var(--accent);
-    }
-
-    .answer-box {
-      background: var(--accent);
-      color: #000;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      margin: 12px 0;
-      text-align: center;
-    }
-
-    .tips-box {
-      background: rgba(255, 193, 7, 0.1);
-      border-left: 4px solid #ffc107;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .warning-box {
-      background: rgba(244, 67, 54, 0.1);
-      border-left: 4px solid #f44336;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      margin: 16px 0;
-      border-radius: 12px;
-      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .table-wrapper::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-track {
-      background: var(--shadow-in);
-      border-radius: 3px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 3px;
-    }
-
-    table {
-      width: 100%;
-      min-width: 500px;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--shadow-in);
-      white-space: nowrap;
-    }
-
-    th {
-      color: var(--accent);
-      font-weight: bold;
-      background: rgba(0,0,0,0.1);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .explore-btn {
-      background: var(--accent);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      color: #000;
-      cursor: pointer;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      font-size: 16px;
-      margin: 24px auto 0;
-      display: block;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .explore-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 10px;
-      display: flex;
-      justify-content: space-around;
-      box-shadow: 0 -5px 10px var(--shadow-in);
-      z-index: 20;
-    }
-
-    .nav-bar .nav-item {
-      text-align: center;
-      position: relative;
-    }
-
-    .nav-bar .nav-item button {
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.center button {
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
-      background: var(--accent);
-      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      color: #000;
-    }
-
-    .nav-bar .nav-item.active button {
-      background: var(--accent);
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar .nav-item p {
-      display: none;
-      font-size: 12px;
-      margin-top: 5px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.active p {
-      display: block;
-    }
-
-    .memory-aid {
-      background: rgba(29, 185, 84, 0.15);
-      border-left: 4px solid var(--accent);
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-style: italic;
-      font-weight: bold;
-    }
-
-    .component-box {
-      background: rgba(0,0,0,0.1);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      border-left: 4px solid var(--accent);
-    }
-
-    .component-box h4 {
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-
-    .part-header {
-      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
-      color: #000;
-      padding: 16px;
-      border-radius: 12px;
-      margin: 24px 0;
-      text-align: center;
-      font-weight: bold;
-      font-size: 18px;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-    }
-
-    .advantage-list {
-      background: rgba(29, 185, 84, 0.1);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-    }
-
-    .advantage-list li {
-      list-style: none;
-      margin-bottom: 8px;
-    }
-
-    .advantage-list li:before {
-      content: "✓ ";
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .process-box {
-      background: rgba(0,0,0,0.15);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      border-left: 4px solid #ffc107;
-    }
-
-    .process-box h4 {
-      color: #ffc107;
-      margin-bottom: 8px;
-    }
+    .math{font-weight:900;color:var(--accent-secondary)}
+    .label{fill:var(--text-primary);font-size:11px;font-weight:700}
+    .curve{stroke:var(--line);stroke-width:3;fill:none}
+    .obj{fill:rgba(29,185,84,.18);stroke:var(--accent);stroke-width:2}
+    .hot{fill:rgba(255,107,107,.35);stroke:none}
+    .cool{fill:rgba(78,205,196,.30);stroke:none}
   </style>
 </head>
+
 <body class="dark">
-  <div class="container">
-    <!-- Top Fixed Bar -->
+  <div class="container" id="scroll-container">
+    <div class="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
+
     <div class="top-bar neumorphic">
-      <button class="neumorphic-btn">←</button>
+      <button class="neumorphic-btn" onclick="history.back()">←</button>
       <div class="header">PHYSICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-        <button class="neumorphic-btn profile-upload">
-          📷
-          <input type="file" accept="image/*" id="profile-upload">
-        </button>
+        <button class="neumorphic-btn" onclick="alert('📌 Saved for revision!')">🚀</button>
       </div>
     </div>
 
-    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Fiber Optics & Lasers! 🔦</h1>
-        <p class="subtitle">– JAMB Chapter 40 Made Easy</p>
+        <h1>💡 Fiber Optics and Lasers</h1>
+        <p>JAMB Physics • total internal reflection • optical fibers • lasers • stimulated emission • applications</p>
       </div>
 
-      <div class="welcome-note neumorphic">
-        <h2>📚 Chapter 40: Introduction to Fiber Optics and Lasers</h2>
-        
-        <p><strong>🎯 Learning Objectives:</strong> Master total internal reflection, fiber optic communication, laser principles, stimulated emission, and modern applications for JAMB success.</p>
+      <div class="section-card">
+        <h2>🎯 Learning Objective</h2>
+        <p>This chapter explains fiber optics, total internal reflection, optical communication, lasers, stimulated emission, and important modern applications for JAMB success.</p>
 
-        <div class="part-header">💡 PART A: FIBER OPTICS</div>
-
-        <h2>1️⃣ What is Fiber Optics? 🔌</h2>
-
-        <p><span class="highlight">Fiber optics</span> is the technology of transmitting light through thin, flexible fibers made of glass or plastic. These fibers can carry light signals over long distances with very little loss.</p>
-
-        <div class="memory-aid">
-          💡 Key Concept: Think of it as a "light pipe" that guides light from one end to another, even around bends!
-        </div>
-
-        <h2>2️⃣ How Does It Work? (Total Internal Reflection) 🪞</h2>
-
-        <p>The principle behind fiber optics is <span class="highlight">Total Internal Reflection (TIR):</span></p>
-
-        <div class="component-box">
-          <h4>🔄 The Process</h4>
+        <div class="quick-facts">
           <ul>
-            <li>Light travels from a <strong>denser medium</strong> (glass/plastic core) to a <strong>less dense medium</strong> (cladding/air)</li>
-            <li>At an angle <strong>greater than the critical angle</strong>, light reflects back completely into the denser medium</li>
-            <li>Light then <strong>bounces repeatedly</strong> off the walls of the fiber, traveling down the cable</li>
+            <li>Fiber optics works by total internal reflection</li>
+            <li>The core has a higher refractive index than the cladding</li>
+            <li>Laser light is monochromatic, coherent, directional, and intense</li>
+            <li>Stimulated emission is the key process behind laser action</li>
           </ul>
         </div>
 
-        <h3>Structure of an Optical Fiber:</h3>
+        <div class="memory-tip">
+          <strong>🧠 Big idea</strong>
+          <p>This chapter is all about controlling light — guiding it in fibers and amplifying it in lasers.</p>
+        </div>
+      </div>
 
-        <div class="table-wrapper">
-          <table>
+      <div class="section-card">
+        <h2>💡 Part A: Fiber Optics</h2>
+
+        <h3>1. What is fiber optics?</h3>
+        <p>Fiber optics is the transmission of light through thin flexible fibers made of glass or plastic. It carries signals over long distances with very little loss.</p>
+
+        <div class="highlight-box">
+          <p>Think of optical fiber as a light pipe that guides light even around bends.</p>
+        </div>
+
+        <h3>2. How it works: Total internal reflection</h3>
+        <p>Light travels inside the core and reflects repeatedly at the core-cladding boundary when the angle of incidence is greater than the critical angle.</p>
+
+        <div class="diagram-box">
+          <div class="diagram-title">Light guiding in an optical fiber</div>
+          <svg viewBox="0 0 340 180" aria-label="Optical fiber diagram">
+            <rect x="25" y="55" width="290" height="70" rx="16" class="obj"/>
+            <rect x="40" y="72" width="260" height="36" rx="12" class="cool"/>
+            <path d="M55 90 L100 78 L145 102 L190 78 L235 102 L280 90" class="curve"/>
+            <text x="145" y="68" class="label">Core</text>
+            <text x="132" y="138" class="label">Cladding</text>
+          </svg>
+          <div class="diagram-caption">Light reflects internally many times and stays trapped in the core.</div>
+        </div>
+
+        <h3>Structure of an optical fiber</h3>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Component</th>
               <th>Function</th>
             </tr>
-            <tr>
-              <td><strong>Core</strong></td>
-              <td>Central glass/plastic where light travels (high refractive index)</td>
-            </tr>
-            <tr>
-              <td><strong>Cladding</strong></td>
-              <td>Outer layer with lower refractive index that enables TIR</td>
-            </tr>
-            <tr>
-              <td><strong>Buffer Coating</strong></td>
-              <td>Protective plastic layer</td>
-            </tr>
+            <tr><td>Core</td><td>Central region where light travels; has higher refractive index</td></tr>
+            <tr><td>Cladding</td><td>Outer optical layer with lower refractive index; enables TIR</td></tr>
+            <tr><td>Buffer coating</td><td>Protective outer plastic covering</td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
+      </div>
 
-        <h2>3️⃣ Key Terms to Remember 📐</h2>
+      <div class="section-card">
+        <h2>3️⃣ Key Terms to Remember</h2>
 
-        <div class="table-wrapper">
-          <table>
+        <div class="formula-box">
+          <div class="title">Critical angle</div>
+          <div class="line"><span class="math">sin θc = n₂/n₁</span>, where <span class="math">n₁ &gt; n₂</span></div>
+        </div>
+
+        <div class="formula-box">
+          <div class="title">Numerical aperture</div>
+          <div class="line"><span class="math">NA = sin θmax = √(n₁² - n₂²)</span></div>
+        </div>
+
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Term</th>
               <th>Definition</th>
               <th>Formula</th>
             </tr>
-            <tr>
-              <td><strong>Critical Angle (θc)</strong></td>
-              <td>Minimum angle of incidence for TIR to occur</td>
-              <td>sin θc = n₂/n₁ where n₁ > n₂</td>
-            </tr>
-            <tr>
-              <td><strong>Acceptance Angle</strong></td>
-              <td>Maximum angle at which light can enter and still be guided</td>
-              <td>Related to Numerical Aperture</td>
-            </tr>
-            <tr>
-              <td><strong>Numerical Aperture (NA)</strong></td>
-              <td>Measure of fiber's ability to gather light</td>
-              <td>NA = sin θmax = √(n₁² - n₂²)</td>
-            </tr>
+            <tr><td>Critical angle</td><td>Minimum angle of incidence for TIR</td><td><span class="math">sin θc = n₂/n₁</span></td></tr>
+            <tr><td>Acceptance angle</td><td>Maximum angle for light entry and guidance</td><td>Related to NA</td></tr>
+            <tr><td>Numerical aperture</td><td>Ability of the fiber to gather light</td><td><span class="math">NA = √(n₁² - n₂²)</span></td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
+      </div>
 
-        <h2>4️⃣ Types of Optical Fibers 🔧</h2>
+      <div class="section-card">
+        <h2>4️⃣ Types of Optical Fibers</h2>
 
-        <div class="table-wrapper">
-          <table>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Type</th>
               <th>Core Diameter</th>
               <th>Light Propagation</th>
               <th>Use</th>
             </tr>
-            <tr>
-              <td><strong>Single-mode</strong></td>
-              <td>Very small (8-10 μm)</td>
-              <td>One path (straight)</td>
-              <td>Long-distance, high-speed</td>
-            </tr>
-            <tr>
-              <td><strong>Multi-mode</strong></td>
-              <td>Larger (50-100 μm)</td>
-              <td>Multiple paths (bouncing)</td>
-              <td>Short-distance, local networks</td>
-            </tr>
-            <tr>
-              <td><strong>Step-index</strong></td>
-              <td>Uniform core</td>
-              <td>Sharp boundary between core/cladding</td>
-              <td>Simple applications</td>
-            </tr>
-            <tr>
-              <td><strong>Graded-index</strong></td>
-              <td>Varying refractive index</td>
-              <td>Curved paths to reduce dispersion</td>
-              <td>High-speed communications</td>
-            </tr>
+            <tr><td>Single-mode</td><td>8–10 μm</td><td>One path</td><td>Long-distance, high-speed links</td></tr>
+            <tr><td>Multi-mode</td><td>50–100 μm</td><td>Many paths</td><td>Short-distance communication</td></tr>
+            <tr><td>Step-index</td><td>Uniform core index</td><td>Sharp boundary path change</td><td>Simple systems</td></tr>
+            <tr><td>Graded-index</td><td>Gradual refractive index change</td><td>Curved paths, less dispersion</td><td>Fast communication</td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
+      </div>
 
-        <h2>5️⃣ Applications of Fiber Optics 🌍</h2>
+      <div class="section-card">
+        <h2>5️⃣ Applications and Advantages of Fiber Optics</h2>
 
-        <div class="component-box">
-          <ul>
-            <li><strong>Telecommunications:</strong> Phone, internet, cable TV</li>
-            <li><strong>Local Area Networks (LAN):</strong> Connecting computers in buildings</li>
-            <li><strong>Medicine:</strong> Endoscopes for internal examination (laparoscopy)</li>
-            <li><strong>Sensing Devices:</strong> Temperature/pressure sensors</li>
-            <li><strong>Military:</strong> Secure communication systems</li>
-            <li><strong>Decorative Lighting:</strong> Fiber optic lamps</li>
-          </ul>
-        </div>
-
-        <h2>6️⃣ Advantages Over Copper Wires ⚡</h2>
-
-        <div class="advantage-list">
-          <ul>
-            <li>Higher bandwidth (carries more data)</li>
-            <li>Less signal loss over long distances</li>
-            <li>Immune to electromagnetic interference</li>
-            <li>Lighter and thinner</li>
-            <li>More secure (hard to tap)</li>
-            <li>No electrical hazard</li>
-          </ul>
-        </div>
-
-        <div class="part-header">🔴 PART B: LASERS</div>
-
-        <h2>1️⃣ What is a LASER? 🔴</h2>
-
-        <div class="formula-box">
-          <strong>LASER = Light Amplification by Stimulated Emission of Radiation</strong>
-        </div>
-
-        <p>It's a device that produces a very special kind of light that is:</p>
+        <h3>Applications</h3>
         <ul>
-          <li><strong>Monochromatic</strong> (one color/wavelength)</li>
-          <li><strong>Coherent</strong> (waves are in phase)</li>
-          <li><strong>Directional</strong> (travels in a tight beam)</li>
-          <li><strong>High intensity</strong></li>
+          <li>Telecommunications</li>
+          <li>Internet and cable TV</li>
+          <li>Local area networks</li>
+          <li>Medical endoscopy</li>
+          <li>Sensing devices</li>
+          <li>Military communication</li>
+          <li>Decorative lighting</li>
         </ul>
 
-        <h2>2️⃣ How Lasers Work: Three Key Processes ⚛️</h2>
+        <h3>Advantages over copper wires</h3>
+        <ul>
+          <li>Higher bandwidth</li>
+          <li>Lower signal loss</li>
+          <li>Immune to electromagnetic interference</li>
+          <li>Lighter and thinner</li>
+          <li>More secure</li>
+          <li>No electrical hazard</li>
+        </ul>
+      </div>
 
-        <div class="process-box">
-          <h4>1️⃣ Absorption</h4>
-          <p>Atom in ground state (E₁) absorbs a photon and jumps to excited state (E₂)</p>
-          <p><em>Photon in → Electron jumps up</em></p>
+      <div class="section-card">
+        <h2>🔴 Part B: Lasers</h2>
+
+        <h3>1. What is a laser?</h3>
+        <p><strong>LASER</strong> means <strong>Light Amplification by Stimulated Emission of Radiation</strong>.</p>
+
+        <p>Laser light is:</p>
+        <ul>
+          <li>Monochromatic</li>
+          <li>Coherent</li>
+          <li>Highly directional</li>
+          <li>Very intense</li>
+        </ul>
+
+        <div class="table-container">
+          <table class="summary-table">
+            <tr>
+              <th>Property</th>
+              <th>Ordinary Light</th>
+              <th>Laser Light</th>
+            </tr>
+            <tr><td>Direction</td><td>Spreads in all directions</td><td>Highly directional</td></tr>
+            <tr><td>Color</td><td>Many wavelengths</td><td>Single wavelength</td></tr>
+            <tr><td>Phase</td><td>Random</td><td>In phase</td></tr>
+            <tr><td>Intensity</td><td>Lower</td><td>Very high</td></tr>
+            <tr><td>Divergence</td><td>Spreads quickly</td><td>Stays narrow</td></tr>
+          </table>
+        </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
+      </div>
+
+      <div class="section-card">
+        <h2>2️⃣ How Lasers Work</h2>
+
+        <h3>Absorption</h3>
+        <p>An atom absorbs a photon and moves from a lower energy state to a higher energy state.</p>
+
+        <h3>Spontaneous emission</h3>
+        <p>An excited atom returns to a lower level on its own, emitting a random photon.</p>
+
+        <h3>Stimulated emission</h3>
+        <p>An incoming photon triggers an excited atom to emit another identical photon.</p>
+
+        <div class="diagram-box">
+          <div class="diagram-title">Stimulated emission idea</div>
+          <svg viewBox="0 0 340 200" aria-label="Stimulated emission diagram">
+            <line x1="85" y1="145" x2="85" y2="55" class="curve"/>
+            <line x1="255" y1="145" x2="255" y2="55" class="curve"/>
+            <line x1="60" y1="145" x2="110" y2="145" class="curve"/>
+            <line x1="230" y1="145" x2="280" y2="145" class="curve"/>
+            <circle cx="85" cy="55" r="6" class="hot"/>
+            <circle cx="255" cy="55" r="6" class="hot"/>
+            <path d="M25 85 L85 85" class="curve"/>
+            <path d="M255 85 L315 70" class="curve"/>
+            <path d="M255 85 L315 100" class="curve"/>
+            <text x="18" y="78" class="label">photon in</text>
+            <text x="275" y="65" class="label">two identical</text>
+            <text x="286" y="80" class="label">photons out</text>
+          </svg>
+          <div class="diagram-caption">Stimulated emission produces photons with the same direction, phase, and energy.</div>
         </div>
 
-        <div class="process-box">
-          <h4>2️⃣ Spontaneous Emission</h4>
-          <p>Excited atom naturally drops back to ground state, emitting a random photon</p>
-          <p><em>Electron drops down → Random photon out</em></p>
+        <div class="memory-tip">
+          <strong>🧠 Three S's</strong>
+          <p>Stimulated emission gives photons with the Same direction, Same phase, and Same energy.</p>
         </div>
+      </div>
 
-        <div class="process-box">
-          <h4>3️⃣ Stimulated Emission ⭐</h4>
-          <p>Excited atom is triggered by a passing photon to emit an identical photon</p>
-          <p><em>Photon in → Two identical photons out (same direction, phase, energy)</em></p>
+      <div class="section-card">
+        <h2>3️⃣ Conditions for Laser Action</h2>
+
+        <ul>
+          <li><strong>Population inversion:</strong> more atoms in excited state than in ground state</li>
+          <li><strong>Pumping:</strong> external energy source to excite atoms</li>
+          <li><strong>Metastable state:</strong> excited atoms stay long enough to be stimulated</li>
+          <li><strong>Optical cavity:</strong> mirrors reflect photons back and forth for amplification</li>
+        </ul>
+
+        <div class="highlight-box">
+          <p>Population inversion is essential because ordinary matter naturally has more atoms in the lower energy state.</p>
         </div>
+      </div>
 
-        <div class="memory-aid">
-          ✨ The Magic of Stimulated Emission: When one photon stimulates an excited atom, you get two identical photons. These two stimulate two more atoms → four photons → eight photons... This creates an avalanche effect producing intense, coherent light!
-        </div>
+      <div class="section-card">
+        <h2>4️⃣ Types of Lasers</h2>
 
-        <h2>3️⃣ Conditions for Laser Action 🔧</h2>
-
-        <div class="component-box">
-          <h4>Four Essential Requirements:</h4>
-          <ol>
-            <li><strong>Population Inversion:</strong> More atoms in excited state than ground state (unnatural, requires "pumping")</li>
-            <li><strong>Pumping Mechanism:</strong> Energy source to excite atoms (optical, electrical, or chemical)</li>
-            <li><strong>Metastable State:</strong> Energy level where excited atoms "wait" long enough to be stimulated (typically 10⁻³ s vs. normal 10⁻⁸ s)</li>
-            <li><strong>Optical Cavity:</strong> Two mirrors at ends to bounce light back and forth, amplifying it further</li>
-          </ol>
-        </div>
-
-        <h2>4️⃣ Types of Lasers 🔧</h2>
-
-        <div class="table-wrapper">
-          <table>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Type</th>
               <th>Active Medium</th>
               <th>Examples</th>
               <th>Applications</th>
             </tr>
-            <tr>
-              <td><strong>Solid-state</strong></td>
-              <td>Solid crystal</td>
-              <td>Ruby laser, Nd:YAG</td>
-              <td>Surgery, cutting, welding</td>
-            </tr>
-            <tr>
-              <td><strong>Gas</strong></td>
-              <td>Gas mixture</td>
-              <td>He-Ne laser, CO₂ laser</td>
-              <td>Pointers, surgery, engraving</td>
-            </tr>
-            <tr>
-              <td><strong>Liquid (Dye)</strong></td>
-              <td>Organic dyes</td>
-              <td>Rhodamine dye</td>
-              <td>Research, spectroscopy</td>
-            </tr>
-            <tr>
-              <td><strong>Semiconductor</strong></td>
-              <td>Diode junction</td>
-              <td>Laser diodes</td>
-              <td>CD/DVD players, fiber optics, barcode scanners</td>
-            </tr>
+            <tr><td>Solid-state</td><td>Solid crystal</td><td>Ruby, Nd:YAG</td><td>Surgery, welding, cutting</td></tr>
+            <tr><td>Gas</td><td>Gas mixture</td><td>He-Ne, CO₂</td><td>Pointers, engraving, surgery</td></tr>
+            <tr><td>Liquid dye</td><td>Organic dye</td><td>Rhodamine</td><td>Research, spectroscopy</td></tr>
+            <tr><td>Semiconductor</td><td>Diode junction</td><td>Laser diode</td><td>CD players, barcode scanners, fiber optics</td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
+      </div>
 
-        <h2>5️⃣ Ruby Laser (Classic Example) 💎</h2>
+      <div class="section-card">
+        <h2>5️⃣ Ruby Laser</h2>
 
-        <div class="component-box">
-          <h4>🔴 Components & Process</h4>
-          <ul>
-            <li><strong>Active medium:</strong> Ruby crystal (Al₂O₃ with Cr³⁺ ions)</li>
-            <li><strong>Pumping:</strong> Flash lamp excites chromium ions</li>
-            <li><strong>Process:</strong>
-              <ol>
-                <li>Flash lamp → Electrons jump to high energy band</li>
-                <li>Quickly drop to metastable state</li>
-                <li>Stimulated emission produces red light (694.3 nm)</li>
-                <li>Mirrors reflect light to amplify</li>
-                <li>One mirror is partially transparent to release laser beam</li>
-              </ol>
-            </li>
-          </ul>
+        <p>The ruby laser is the classic example used in basic physics.</p>
+
+        <ul>
+          <li><strong>Active medium:</strong> ruby crystal with chromium ions</li>
+          <li><strong>Pumping:</strong> flash lamp</li>
+          <li><strong>Output:</strong> red laser light of wavelength 694.3 nm</li>
+        </ul>
+
+        <div class="diagram-box">
+          <div class="diagram-title">Simple ruby laser setup</div>
+          <svg viewBox="0 0 340 180" aria-label="Ruby laser setup">
+            <rect x="70" y="75" width="200" height="30" rx="8" class="hot"/>
+            <rect x="55" y="65" width="10" height="50" class="cool"/>
+            <rect x="275" y="65" width="10" height="50" class="cool"/>
+            <path d="M285 90 L325 90" class="curve"/>
+            <text x="108" y="68" class="label">Ruby rod</text>
+            <text x="32" y="58" class="label">Mirror</text>
+            <text x="250" y="58" class="label">Partly silvered mirror</text>
+            <text x="292" y="82" class="label">Laser beam</text>
+          </svg>
+          <div class="diagram-caption">Light is amplified between the mirrors, and part escapes as the laser beam.</div>
         </div>
+      </div>
 
-        <h2>6️⃣ Applications of Lasers 🎯</h2>
+      <div class="section-card">
+        <h2>6️⃣ Applications of Lasers</h2>
 
-        <div class="table-wrapper">
-          <table>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Field</th>
               <th>Applications</th>
             </tr>
-            <tr>
-              <td><strong>Medicine</strong></td>
-              <td>Eye surgery (LASIK), tumor removal, dental procedures, bloodless surgery</td>
-            </tr>
-            <tr>
-              <td><strong>Communications</strong></td>
-              <td>Fiber optic data transmission, laser printers, barcode readers</td>
-            </tr>
-            <tr>
-              <td><strong>Industry</strong></td>
-              <td>Cutting/welding metals, drilling, precision measurement</td>
-            </tr>
-            <tr>
-              <td><strong>Military</strong></td>
-              <td>Target designation, range finding, missile defense</td>
-            </tr>
-            <tr>
-              <td><strong>Research</strong></td>
-              <td>Holography, spectroscopy, laser cooling</td>
-            </tr>
-            <tr>
-              <td><strong>Entertainment</strong></td>
-              <td>Laser shows, CD/DVD/Blu-ray players</td>
-            </tr>
-            <tr>
-              <td><strong>Daily Life</strong></td>
-              <td>Laser pointers, computer mice, scanners</td>
-            </tr>
+            <tr><td>Medicine</td><td>Eye surgery, dental work, tumor removal, bloodless surgery</td></tr>
+            <tr><td>Communications</td><td>Fiber optic transmission, barcode readers, laser printers</td></tr>
+            <tr><td>Industry</td><td>Cutting, welding, drilling, precision measurement</td></tr>
+            <tr><td>Military</td><td>Range finding, target designation, missile defense</td></tr>
+            <tr><td>Research</td><td>Holography, spectroscopy, laser cooling</td></tr>
+            <tr><td>Entertainment</td><td>Laser shows, CD/DVD/Blu-ray systems</td></tr>
+            <tr><td>Daily life</td><td>Laser pointers, scanners, computer mice</td></tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe table to see more →</div>
 
-        <div class="warning-box">
-          <strong>⚠️ Dangers of Lasers:</strong>
+        <h3>Dangers of lasers</h3>
+        <ul>
+          <li>Can damage the eyes</li>
+          <li>Can cause skin burns</li>
+          <li>High-power lasers can start fires</li>
+          <li>Never look directly into a laser beam</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>🎯 Past Question Tips</h2>
+
+        <div class="jamb-alert">
+          <h4>Common exam patterns</h4>
           <ul>
-            <li>Can cause eye damage (even blindness)</li>
-            <li>Can cause skin burns</li>
-            <li>Never look directly into a laser beam</li>
-            <li>High-power lasers can start fires</li>
+            <li>Explain total internal reflection in fiber optics</li>
+            <li>Calculate critical angle from refractive indices</li>
+            <li>Differentiate spontaneous and stimulated emission</li>
+            <li>Define population inversion and explain why it is necessary</li>
+            <li>List applications of lasers or fiber optics</li>
+            <li>Compare laser light with ordinary light</li>
           </ul>
         </div>
 
-        <h2>📊 Quick Comparison: Ordinary Light vs. Laser Light</h2>
-
-        <div class="table-wrapper">
-          <table>
-            <tr>
-              <th>Property</th>
-              <th>Ordinary Light (Bulb)</th>
-              <th>Laser Light</th>
-            </tr>
-            <tr>
-              <td><strong>Direction</strong></td>
-              <td>Goes in all directions</td>
-              <td>Highly directional (beam stays narrow)</td>
-            </tr>
-            <tr>
-              <td><strong>Color</strong></td>
-              <td>Many colors (polychromatic)</td>
-              <td>One color (monochromatic)</td>
-            </tr>
-            <tr>
-              <td><strong>Phase</strong></td>
-              <td>Waves are random (incoherent)</td>
-              <td>Waves in step (coherent)</td>
-            </tr>
-            <tr>
-              <td><strong>Intensity</strong></td>
-              <td>Spread out, relatively weak</td>
-              <td>Concentrated, very intense</td>
-            </tr>
-            <tr>
-              <td><strong>Divergence</strong></td>
-              <td>Spreads quickly</td>
-              <td>Stays focused over long distances</td>
-            </tr>
-          </table>
+        <div class="example-box">
+          <div class="title">Sample quick answer</div>
+          <p>Total internal reflection occurs when light travels from a denser medium to a less dense medium at an angle greater than the critical angle, causing complete reflection. In fiber optics, this keeps light trapped inside the core so it can travel long distances with little loss.</p>
         </div>
+      </div>
 
-        <h2>🎯 Past Question Tips (JAMB/WAEC Style)</h2>
-
-        <div class="tips-box">
-          <h3>Common Question Patterns:</h3>
-          <ol>
-            <li>Explain total internal reflection and how it applies to fiber optics</li>
-            <li>Calculate critical angle given refractive indices</li>
-            <li>Distinguish between spontaneous and stimulated emission</li>
-            <li>What is population inversion and why is it necessary?</li>
-            <li>List applications of fiber optics or lasers</li>
-            <li>Compare laser light with ordinary light</li>
-          </ol>
-        </div>
-
-        <div class="component-box">
-          <h4>📝 Sample Quick Answer:</h4>
-          <p>"<strong>Total internal reflection</strong> occurs when light travels from a denser to a less dense medium at an angle greater than the critical angle, causing all light to reflect back. In fiber optics, this principle traps light inside the glass core, allowing it to bounce repeatedly down the fiber even around curves, enabling transmission over long distances with minimal loss."</p>
-        </div>
-
+      <div class="section-card">
         <h2>🧠 Memory Aids</h2>
 
-        <div class="memory-aid">
-          <strong>For Fiber Optics:</strong><br>
-          • TIR = Total Internal Reflection (The "magic" that keeps light in)<br>
-          • Core > Cladding (Core must have higher refractive index)<br>
-          • NA = "Numerical Ability" to collect light
+        <div class="memory-tip">
+          <strong>For fiber optics</strong>
+          <p>TIR keeps the light in. Also remember: the core must have a higher refractive index than the cladding.</p>
         </div>
 
-        <div class="memory-aid">
-          <strong>For Lasers:</strong><br>
-          • LASER = Light Amplification by Stimulated Emission of Radiation<br>
-          • Three S's: Stimulated emission produces Same direction, Same phase, Same energy<br>
-          • Population Inversion = More "up" than "down" (unnatural state requiring pumping)
+        <div class="memory-tip">
+          <strong>For lasers</strong>
+          <p>LASER = Light Amplification by Stimulated Emission of Radiation. Also, population inversion means more atoms are up than down.</p>
         </div>
-
-        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
-          Great job 🌟 You now master Fiber Optics & Lasers!
-        </p>
-
-        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 25 (Refraction) & Chapter 38 (Modern Physics)</p>
-        <button class="explore-btn" onclick="window.location.href='fiber-lasers-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
+
+      <button class="explore-btn" onclick="alert('Before your quiz, revise total internal reflection, critical angle, numerical aperture, fiber types, stimulated emission, population inversion, ruby laser, and laser applications.')">Start JAMB Questions</button>
     </div>
   </div>
 
-  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item">
-      <button class="neumorphic-btn">🔍</button>
-      <p>Search</p>
-    </div>
-    <div class="nav-item center">
-      <button class="neumorphic-btn">⭐</button>
-      <p>Favorite</p>
-    </div>
-    <div class="nav-item">
-      <button class="neumorphic-btn">📚</button>
-      <p>Library</p>
-    </div>
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
 
-    function setTheme(theme) {
+    function setTheme(theme){
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
+    setTheme(localStorage.getItem('theme') || 'dark');
 
     themeToggle.addEventListener('click', () => {
-      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
-      setTheme(newTheme);
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
     });
 
-    document.getElementById('profile-upload').addEventListener('change', (e) => {
-      if (e.target.files[0]) {
-        console.log('Profile picture selected!');
-      }
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
     });
   </script>
 </body>
