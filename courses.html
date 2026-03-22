@@ -1,373 +1,504 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TOPSCORE Courses Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TopScore Courses Page</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
     }
 
     :root {
       --background: #1e1e2f;
+      --surface: #242438;
       --shadow-in: #171723;
-      --shadow-out: #25253b;
-      --text: #fff;
+      --shadow-out: #2a2a40;
+      --text: #ffffff;
+      --text-muted: #c4c4d6;
       --accent: #1db954;
+      --radius: 18px;
     }
 
     body.light {
       --background: #e0e0e0;
+      --surface: #ececec;
       --shadow-in: #bebebe;
       --shadow-out: #ffffff;
-      --text: #333;
+      --text: #2f2f2f;
+      --text-muted: #666666;
       --accent: #1db954;
     }
 
     body {
       background: var(--background);
       color: var(--text);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
+      padding: 16px;
     }
 
-    .container {
+    .app-shell {
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
+      height: 780px;
       background: var(--background);
-      border-radius: 20px;
-      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
+      border-radius: 28px;
+      box-shadow: 12px 12px 24px var(--shadow-in), -12px -12px 24px var(--shadow-out);
       overflow: hidden;
       position: relative;
-      height: 700px;
-      overflow-y: auto;
-      padding-top: 70px; /* Space for fixed top bar */
-      padding-bottom: 70px; /* Space for fixed nav bar */
     }
 
-    /* Neumorphism Styles */
+    .app-scroll {
+      height: 100%;
+      overflow-y: auto;
+      padding-top: 78px;
+      padding-bottom: 92px;
+    }
+
     .neumorphic {
       background: var(--background);
-      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
-      border-radius: 15px;
+      box-shadow: 6px 6px 12px var(--shadow-in), -6px -6px 12px var(--shadow-out);
+      border-radius: var(--radius);
     }
 
-    .neumorphic-btn {
-      background: var(--background);
+    .icon-btn {
+      width: 42px;
+      height: 42px;
       border: none;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      background: var(--background);
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      cursor: pointer;
-      color: var(--text);
-      font-size: 20px;
+      box-shadow: 4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
+      transition: all 0.2s ease;
     }
 
-    .neumorphic-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    .icon-btn:active {
+      transform: scale(0.96);
+      box-shadow: inset 4px 4px 8px var(--shadow-in), inset -4px -4px 8px var(--shadow-out);
     }
 
-    /* Top Fixed Container */
     .top-bar {
-      position: fixed;
+      position: absolute;
       top: 0;
-      width: 100%;
-      max-width: 400px;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      padding: 16px;
       background: var(--background);
-      padding: 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 5px 10px var(--shadow-in);
-      z-index: 20;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     .top-bar .header {
       font-size: 18px;
-      font-weight: bold;
+      font-weight: 700;
       color: var(--text);
     }
 
     .top-bar .right-icons {
       display: flex;
       gap: 10px;
+      align-items: center;
     }
 
-    .top-bar .profile-upload {
+    .upload-wrap {
       position: relative;
     }
 
-    .top-bar .profile-upload input {
-      opacity: 0;
+    .upload-wrap input {
       position: absolute;
-      width: 40px;
-      height: 40px;
+      inset: 0;
+      opacity: 0;
       cursor: pointer;
     }
 
-    /* Courses Container */
-    .courses {
-      padding: 10px 10px;
-      margin-top: 7px; /* Space below top bar */
-      margin-bottom: 120px; /* Space above footer nav bar */
-      position: absolute;
-      z-index: 1;
+    .page-content {
+      padding: 16px;
+    }
+
+    .intro-card {
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .intro-card h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .intro-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .search-box {
+      margin-top: 14px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 16px;
+      box-shadow: inset 4px 4px 8px var(--shadow-in), inset -4px -4px 8px var(--shadow-out);
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      width: 100%;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 18px 0 14px;
+    }
+
+    .section-title h3 {
+      font-size: 16px;
+    }
+
+    .section-title button {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .course-list {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      height: calc(100% - 310px); /* Adjust for top bar, margins, and nav bar */
+      gap: 14px;
     }
 
     .course-card {
-      position: relative;
-      width: calc(100% - 20px);
-      margin: 0 auto 20px auto; /* Space between cards */
-      background: var(--background);
-      border-radius: 15px;
-      padding: 15px;
-      box-shadow: 8px 8px 13px var(--shadow-in);
+      border-radius: 20px;
+      padding: 14px;
+      color: #fff;
+      box-shadow: 8px 8px 14px rgba(0,0,0,0.16);
+      transition: transform 0.2s ease, outline 0.2s ease;
       cursor: pointer;
     }
 
     .course-card.active {
-      border: 2px solid var(--accent);
-    }
-
-    .course-card h3 {
-      font-size: 16px;
-      margin-bottom: 5px;
-      color: var(--text);
-    }
-
-    .course-card p {
-      font-size: 12px;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-
-    body.light .course-card p {
-      color: #fff;
+      outline: 2px solid var(--accent);
+      transform: translateY(-2px);
     }
 
     .course-card img {
       width: 100%;
-      height: 150px;
+      height: 165px;
       object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-
-    .course-card .explore-btn {
-      background: var(--accent);
-      border: none;
-      padding: 8px 15px;
-      border-radius: 15px;
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 3px 3px 6px var(--shadow-in);
+      border-radius: 14px;
+      margin-bottom: 12px;
       display: block;
     }
 
-    /* Colors for each card */
-    .course-card:nth-child(1) { background: #4BCA81; }
-    .course-card:nth-child(2) { background: #F9A800; }
-    .course-card:nth-child(3) { background: #FF6F61; }
-    .course-card:nth-child(4) { background: #E6F7FF; }
-    .course-card:nth-child(5) { background: #A29FEC; }
-    .course-card:nth-child(6) { background: #4A90E2; }
-    .course-card:nth-child(7) { background: #50E3C2; }
-    .course-card:nth-child(8) { background: #343A40; }
+    .course-card h4 {
+      font-size: 18px;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
 
-    /* Footer Nav Bar */
-    .nav-bar {
-      position: fixed;
+    .course-card p {
+      font-size: 13px;
+      line-height: 1.45;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .course-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(6px);
+    }
+
+    .explore-btn {
+      border: none;
+      background: rgba(255,255,255,0.95);
+      color: #222;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .course-green { background: linear-gradient(135deg, #36c275, #1f9d57); }
+    .course-yellow { background: linear-gradient(135deg, #ffb703, #fb8500); }
+    .course-red { background: linear-gradient(135deg, #ff6f61, #d94c40); }
+    .course-blue { background: linear-gradient(135deg, #4a90e2, #2359a8); }
+    .course-purple { background: linear-gradient(135deg, #8e7dff, #6356d8); }
+    .course-teal { background: linear-gradient(135deg, #38d9c5, #169b8a); }
+    .course-dark { background: linear-gradient(135deg, #343a40, #16191d); }
+    .course-pink { background: linear-gradient(135deg, #ff7eb3, #d94f88); }
+
+    .bottom-nav {
+      position: absolute;
+      left: 0;
+      right: 0;
       bottom: 0;
-      width: 100%;
-      max-width: 400px;
+      padding: 10px 14px 14px;
       background: var(--background);
-      padding: 10px;
       display: flex;
       justify-content: space-around;
-      box-shadow: 0 -5px 10px var(--shadow-in);
+      align-items: end;
+      box-shadow: 0 -6px 14px rgba(0,0,0,0.12);
       z-index: 20;
     }
 
-    .nav-bar .nav-item {
+    .nav-item {
       text-align: center;
-      position: relative;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
     }
 
-    .nav-bar .nav-item button {
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
+    .nav-item .icon-btn {
+      margin: 0 auto 4px;
     }
 
-    .nav-bar .nav-item.center button {
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
-      background: var(--accent);
-      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
+    .nav-item p {
+      font-size: 11px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
     }
 
-    .nav-bar .nav-item.active button {
-      background: var(--accent);
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar .nav-item p {
-      display: none;
-      font-size: 12px;
-      margin-top: 5px;
+    .nav-item.active {
       color: var(--text);
     }
 
-    .nav-bar .nav-item.active p {
-      display: block;
+    .nav-item.active p {
+      opacity: 1;
+    }
+
+    .nav-item.center .icon-btn {
+      width: 52px;
+      height: 52px;
+      font-size: 24px;
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 0 18px rgba(29,185,84,0.45), 4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
+    }
+
+    @media (max-width: 420px) {
+      body {
+        padding: 0;
+      }
+
+      .app-shell {
+        max-width: 100%;
+        height: 100vh;
+        border-radius: 0;
+      }
     }
   </style>
 </head>
 <body class="dark">
-  <div class="container">
-    <!-- Top Fixed Container -->
-    <div class="top-bar neumorphic">
-      <a href="dashboard.html">
-      <button class="neumorphic-btn">←</button></a>
+  <div class="app-shell">
+    <header class="top-bar">
+      <a href="dashboard.html" aria-label="Go back">
+        <button class="icon-btn">←</button>
+      </a>
+
       <div class="header">Courses</div>
+
       <div class="right-icons">
-        <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-        <button class="neumorphic-btn profile-upload">
-          🚀
-          <input type="file" accept="image/*" id="profile-upload">
-        </button>
+        <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <label class="upload-wrap">
+          <button class="icon-btn" type="button" aria-label="Upload profile">🚀</button>
+          <input type="file" accept="image/*" id="profile-upload" />
+        </label>
       </div>
-    </div>
+    </header>
 
-    <!-- Courses Container -->
-    <div class="courses">
-      <div class="course-card">
-        <h3>Course 1</h3>
-        <p>Lorem ipsum dolor sit amet.</p>
-        <img src="./img/humans1.png" alt="Course 1">
-        <button class="explore-btn">Explore</button>
-      </div>
-      <div class="course-card">
-        <h3>Course 2</h3>
-        <p>Consectetur adipiscing elit.</p>
-        <img src="./img/humans2.png" alt="Course 2">
-        <button class="explore-btn">Explore</button>
-      </div>
-      <div class="course-card">
-        <h3>HUMAN Anatomy</h3>
-        <p>Explore The Anatomy Of The Human Body.</p>
-        <img src="./img/humans3.png" alt="Course 3">
-        <button class="explore-btn">Explore</button>
-      </div>
-      <div class="course-card">
-        <h3>Course 4</h3>
-        <p>Ut enim ad minim veniam.</p>
-        <img src="./img/humans4.png" alt="Course 4">
-        <button class="explore-btn">Explore</button>
-      </div>
-      <div class="course-card">
-        <h3>Course 5</h3>
-        <p>Quis nostrud exercitation.</p>
-        <img src="./img/humans5.png" alt="Course 5">
-        <button class="explore-btn">Explore</button>
-      </div>
-      <div class="course-card">
-        <h3>Course 6</h3>
-        <p>Duis aute irure dolor.</p>
-        <img src="./img/humans6.png" alt="Course 6">
-        <button class="explore-btn">Explore</button>
-      </div>
-      <div class="course-card">
-        <h3>Course 7</h3>
-        <p>In reprehenderit in voluptate.</p>
-        <img src="./img/humans1.png" alt="Course 7">
-        <button class="explore-btn">Explore</button>
-      </div>
-      <div class="course-card active">
-        <h3>Course 8</h3>
-        <p>Excepteur sint occaecat.</p>
-        <img src="./img/humans2.png" alt="Course 8">
-        <button class="explore-btn">Explore</button>
-      </div>
-    </div>
-  </div>
+    <main class="app-scroll">
+      <div class="page-content">
+        <section class="intro-card neumorphic">
+          <h2>Keep learning strong</h2>
+          <p>Pick a course, explore key topics, and stay consistent with your exam preparation.</p>
 
-  <!-- Footer Nav Bar -->
-  <div class="nav-bar">
-    <div class="nav-item">
-      <button class="neumorphic-btn">💬</button>
-      <p>Chat</p>
-    </div>
-    <div class="nav-item center">
-      <button class="neumorphic-btn">⭐</button>
-      <p>Favorite</p>
-    </div>
-    <div class="nav-item">
-      <button class="neumorphic-btn">📚</button>
-      <p>Library</p>
-    </div>
+          <div class="search-box">
+            <span>🔍</span>
+            <input type="text" placeholder="Search courses..." />
+          </div>
+        </section>
+
+        <div class="section-title">
+          <h3>Available Courses</h3>
+          <button type="button">See All</button>
+        </div>
+
+        <section class="course-list">
+          <article class="course-card course-green">
+            <img src="./img/humans1.png" alt="Biology essentials">
+            <h4>Biology Basics</h4>
+            <p>Build your understanding of cells, tissues, organisms, and the foundations of life science.</p>
+            <div class="course-meta">
+              <span class="course-tag">Beginner</span>
+              <button class="explore-btn" type="button">Explore</button>
+            </div>
+          </article>
+
+          <article class="course-card course-yellow">
+            <img src="./img/humans2.png" alt="Chemistry concepts">
+            <h4>Chemistry Essentials</h4>
+            <p>Learn atoms, elements, bonding, reactions, and calculation patterns commonly tested in exams.</p>
+            <div class="course-meta">
+              <span class="course-tag">Core Course</span>
+              <button class="explore-btn" type="button">Explore</button>
+            </div>
+          </article>
+
+          <article class="course-card course-red active">
+            <img src="./img/humans3.png" alt="Human anatomy course">
+            <h4>Human Anatomy</h4>
+            <p>Explore the organs, body systems, tissues, and structures that make up the human body.</p>
+            <div class="course-meta">
+              <span class="course-tag">Popular</span>
+              <button class="explore-btn" type="button">Explore</button>
+            </div>
+          </article>
+
+          <article class="course-card course-blue">
+            <img src="./img/humans4.png" alt="Physics course">
+            <h4>Physics Principles</h4>
+            <p>Study motion, energy, waves, electricity, and the reasoning skills needed for problem solving.</p>
+            <div class="course-meta">
+              <span class="course-tag">Exam Ready</span>
+              <button class="explore-btn" type="button">Explore</button>
+            </div>
+          </article>
+
+          <article class="course-card course-purple">
+            <img src="./img/humans5.png" alt="Mathematics course">
+            <h4>Mathematics Toolkit</h4>
+            <p>Practice algebra, geometry, trigonometry, and shortcuts that improve your speed and accuracy.</p>
+            <div class="course-meta">
+              <span class="course-tag">Practice</span>
+              <button class="explore-btn" type="button">Explore</button>
+            </div>
+          </article>
+
+          <article class="course-card course-teal">
+            <img src="./img/humans6.png" alt="English language course">
+            <h4>English Mastery</h4>
+            <p>Improve grammar, comprehension, vocabulary, and expression for stronger exam performance.</p>
+            <div class="course-meta">
+              <span class="course-tag">Language</span>
+              <button class="explore-btn" type="button">Explore</button>
+            </div>
+          </article>
+
+          <article class="course-card course-dark">
+            <img src="./img/humans1.png" alt="History course">
+            <h4>History and Civics</h4>
+            <p>Review major events, national development, and civic ideas in a clear and memorable way.</p>
+            <div class="course-meta">
+              <span class="course-tag">Theory</span>
+              <button class="explore-btn" type="button">Explore</button>
+            </div>
+          </article>
+
+          <article class="course-card course-pink">
+            <img src="./img/humans2.png" alt="General studies course">
+            <h4>General Studies</h4>
+            <p>Strengthen broad academic awareness with mixed-topic learning and revision support.</p>
+            <div class="course-meta">
+              <span class="course-tag">Mixed</span>
+              <button class="explore-btn" type="button">Explore</button>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <div class="nav-item">
+        <button class="icon-btn" aria-label="Chat">💬</button>
+        <p>Chat</p>
+      </div>
+
+      <div class="nav-item center active">
+        <button class="icon-btn" aria-label="Favorite">⭐</button>
+        <p>Favorite</p>
+      </div>
+
+      <div class="nav-item">
+        <button class="icon-btn" aria-label="Library">📚</button>
+        <p>Library</p>
+      </div>
+    </nav>
   </div>
 
   <script>
-    // Theme Toggle
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+    const profileUpload = document.getElementById('profile-upload');
+    const courseCards = document.querySelectorAll('.course-card');
+    const navItems = document.querySelectorAll('.nav-item');
 
     function setTheme(theme) {
       body.className = theme;
-      themeToggle.textContent = theme === 'light' ? '🌙' : '☀';
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
+    setTheme(localStorage.getItem('theme') || 'dark');
 
     themeToggle.addEventListener('click', () => {
       const newTheme = body.classList.contains('light') ? 'dark' : 'light';
       setTheme(newTheme);
     });
 
-    // Profile Upload
-    const profileUpload = document.getElementById('profile-upload');
     profileUpload.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          console.log('Profile image uploaded:', e.target.result);
-        };
-        reader.readAsDataURL(file);
+        console.log('Uploaded file:', file.name);
       }
     });
 
-    // Course Card Interaction
-    const courseCards = document.querySelectorAll('.course-card');
     courseCards.forEach(card => {
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
+        if (e.target.classList.contains('explore-btn')) return;
         courseCards.forEach(c => c.classList.remove('active'));
         card.classList.add('active');
       });
     });
 
-    // Footer Navigation Bar
-    const navItems = document.querySelectorAll('.nav-bar .nav-item');
     navItems.forEach(item => {
       item.addEventListener('click', () => {
         navItems.forEach(i => i.classList.remove('active'));
