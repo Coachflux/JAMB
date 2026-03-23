@@ -5,56 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TopScore Bulk Code Generator</title>
   <style>
-    *{box-sizing:border-box;font-family:Arial,sans-serif}
+    *{box-sizing:border-box}
     body{
       margin:0;
-      background:#1e1e2f;
-      color:#fff;
       padding:20px;
+      background:#181a23;
+      color:#fff;
+      font-family:Arial,Helvetica,sans-serif;
     }
     .wrap{
       max-width:1100px;
       margin:0 auto;
     }
-    .card{
-      background:#232338;
-      border-radius:16px;
-      padding:20px;
-      margin-bottom:20px;
-      box-shadow:0 8px 24px rgba(0,0,0,.25);
+    .title{
+      margin-bottom:18px;
     }
-    h1{
+    .title h1{
       margin:0 0 8px;
-      color:#1db954;
+      color:#22c55e;
+      font-size:30px;
     }
-    p{
-      color:#b8bfd3;
-      margin:0 0 20px;
+    .title p{
+      margin:0;
+      color:#aab2c5;
+      line-height:1.5;
     }
     .grid{
       display:grid;
-      grid-template-columns:320px 1fr;
+      grid-template-columns:340px 1fr;
       gap:20px;
+    }
+    .card{
+      background:#222533;
+      border-radius:16px;
+      padding:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .card h2{
+      margin:0 0 14px;
+      font-size:18px;
     }
     label{
       display:block;
-      margin-bottom:6px;
-      color:#b8bfd3;
+      margin:10px 0 6px;
       font-size:14px;
+      color:#b5bfd4;
     }
     input, textarea{
       width:100%;
-      padding:12px;
       border:none;
+      outline:none;
       border-radius:10px;
-      background:#181824;
+      padding:12px;
+      background:#141722;
       color:#fff;
-      margin-bottom:14px;
       font-size:14px;
     }
     textarea{
-      min-height:220px;
+      min-height:260px;
       resize:vertical;
+      line-height:1.45;
+    }
+    .row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
     }
     button{
       border:none;
@@ -62,86 +78,99 @@
       padding:12px 16px;
       cursor:pointer;
       font-weight:700;
-      margin:4px 6px 8px 0;
-    }
-    .primary{background:#1db954;color:#fff}
-    .secondary{background:#2e3148;color:#fff}
-    .danger{background:#ff4d4d;color:#fff}
-    .status{
-      margin-top:10px;
-      color:#1db954;
       font-size:14px;
-      min-height:20px;
     }
+    .btn-green{background:#22c55e;color:#fff}
+    .btn-dark{background:#34384d;color:#fff}
+    .btn-red{background:#ef4444;color:#fff}
     .stats{
       display:flex;
-      gap:12px;
+      gap:10px;
       flex-wrap:wrap;
-      margin-top:10px;
+      margin-top:16px;
     }
     .stat{
-      background:#181824;
-      padding:12px 16px;
+      background:#151925;
       border-radius:10px;
-      min-width:120px;
+      padding:12px 14px;
+      min-width:110px;
     }
     .stat strong{
       display:block;
-      color:#1db954;
+      color:#22c55e;
       font-size:18px;
+      margin-bottom:4px;
+    }
+    .status{
+      min-height:20px;
+      margin-top:12px;
+      font-size:14px;
+      color:#22c55e;
+    }
+    .table-wrap{
+      overflow:auto;
+      border-radius:12px;
+      background:#151925;
     }
     table{
       width:100%;
       border-collapse:collapse;
-      margin-top:10px;
+      min-width:700px;
+    }
+    th,td{
+      padding:12px;
+      text-align:left;
+      border-bottom:1px solid rgba(255,255,255,.06);
       font-size:14px;
     }
-    th, td{
-      padding:10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      text-align:left;
-    }
     th{
-      color:#b8bfd3;
+      color:#b5bfd4;
+      background:#1b1f2d;
     }
-    .section-title{
-      margin-bottom:14px;
-      font-size:18px;
-      font-weight:700;
+    .out-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+      margin-top:20px;
+    }
+    .small{
+      color:#aab2c5;
+      font-size:12px;
+      margin-top:6px;
     }
     @media(max-width:900px){
-      .grid{grid-template-columns:1fr}
+      .grid,.out-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="card">
-      <h1>TopScore Bulk Code Generator</h1>
-      <p>Generate unique access codes and export them as JSON and CSV.</p>
+    <div class="title">
+      <h1>TopScore Bulk Code Generator BCG</h1>
+      <p>Generate unique access codes for users, preview them, and export as Firebase JSON or CSV.</p>
     </div>
 
     <div class="grid">
       <div class="card">
-        <div class="section-title">Settings</div>
+        <h2>Settings</h2>
 
         <label for="quizId">Quiz ID</label>
-        <input id="quizId" value="jamb-physics-motion">
+        <input id="quizId" type="text" value="jamb-physics-motion">
 
-        <label for="count">How many codes?</label>
-        <input id="count" type="number" value="100" min="1">
+        <label for="count">Number of codes</label>
+        <input id="count" type="number" min="1" max="50000" value="100">
 
         <label for="ownerPrefix">Owner prefix</label>
-        <input id="ownerPrefix" value="TopScore User">
+        <input id="ownerPrefix" type="text" value="TopScore User">
 
         <label for="codeLength">Code length</label>
-        <input id="codeLength" type="number" value="10" min="4" max="20">
+        <input id="codeLength" type="number" min="4" max="20" value="10">
 
-        <button class="primary" id="generateBtn">Generate Codes</button>
-        <button class="secondary" id="shuffleBtn">Shuffle Preview</button>
-        <button class="danger" id="clearBtn">Clear</button>
-
-        <div class="status" id="statusMsg"></div>
+        <div class="row">
+          <button id="generateBtn" class="btn-green" type="button">Generate Codes</button>
+          <button id="shuffleBtn" class="btn-dark" type="button">Shuffle Preview</button>
+          <button id="clearBtn" class="btn-red" type="button">Clear</button>
+        </div>
 
         <div class="stats">
           <div class="stat">
@@ -153,11 +182,14 @@
             <span>Length</span>
           </div>
         </div>
+
+        <div class="status" id="statusMsg"></div>
+        <div class="small">This version avoids inline button handlers and is safer for local Chrome use.</div>
       </div>
 
       <div class="card">
-        <div class="section-title">Preview</div>
-        <div style="overflow:auto;">
+        <h2>Preview</h2>
+        <div class="table-wrap">
           <table>
             <thead>
               <tr>
@@ -176,245 +208,285 @@
       </div>
     </div>
 
-    <div class="grid">
+    <div class="out-grid">
       <div class="card">
-        <div class="section-title">Firebase JSON</div>
-        <button class="secondary" id="copyJsonBtn">Copy JSON</button>
-        <button class="primary" id="downloadJsonBtn">Download JSON</button>
+        <h2>Firebase JSON</h2>
+        <div class="row">
+          <button id="copyJsonBtn" class="btn-dark" type="button">Copy JSON</button>
+          <button id="downloadJsonBtn" class="btn-green" type="button">Download JSON</button>
+        </div>
         <textarea id="jsonOutput"></textarea>
       </div>
 
       <div class="card">
-        <div class="section-title">CSV</div>
-        <button class="secondary" id="copyCsvBtn">Copy CSV</button>
-        <button class="primary" id="downloadCsvBtn">Download CSV</button>
+        <h2>CSV</h2>
+        <div class="row">
+          <button id="copyCsvBtn" class="btn-dark" type="button">Copy CSV</button>
+          <button id="downloadCsvBtn" class="btn-green" type="button">Download CSV</button>
+        </div>
         <textarea id="csvOutput"></textarea>
       </div>
     </div>
   </div>
 
   <script>
-    var generatedList = [];
-    var CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    (function(){
+      var generatedList = [];
+      var CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-    function setStatus(msg, isError){
-      var el = document.getElementById("statusMsg");
-      el.style.color = isError ? "#ff4d4d" : "#1db954";
-      el.textContent = msg;
-    }
-
-    function randomCode(length){
-      var code = "";
-      for(var i=0;i<length;i++){
-        code += CHARS.charAt(Math.floor(Math.random() * CHARS.length));
-      }
-      return code;
-    }
-
-    function updateStats(length){
-      document.getElementById("statCount").textContent = generatedList.length;
-      document.getElementById("statLength").textContent = length || 0;
-    }
-
-    function renderPreview(){
-      var body = document.getElementById("previewBody");
-
-      if(!generatedList.length){
-        body.innerHTML = '<tr><td colspan="5">Nothing generated yet.</td></tr>';
-        return;
+      function byId(id){
+        return document.getElementById(id);
       }
 
-      var rows = "";
-      var limit = Math.min(generatedList.length, 100);
-
-      for(var i=0;i<limit;i++){
-        var item = generatedList[i];
-        rows += "<tr>" +
-          "<td>" + (i+1) + "</td>" +
-          "<td><strong>" + item.accessCode + "</strong></td>" +
-          "<td>" + item.quizId + "</td>" +
-          "<td>" + item.status + "</td>" +
-          "<td>" + item.ownerName + "</td>" +
-          "</tr>";
+      function setStatus(message, isError){
+        var el = byId("statusMsg");
+        el.style.color = isError ? "#ef4444" : "#22c55e";
+        el.textContent = message;
       }
 
-      body.innerHTML = rows;
-    }
-
-    function renderOutputs(){
-      var jsonObj = { quiz_access_codes: {} };
-
-      for(var i=0;i<generatedList.length;i++){
-        var item = generatedList[i];
-        jsonObj.quiz_access_codes[item.accessCode] = {
-          quizId: item.quizId,
-          accessCode: item.accessCode,
-          status: item.status,
-          deviceToken: item.deviceToken,
-          activatedAt: item.activatedAt,
-          lastSeenAt: item.lastSeenAt,
-          expiresAt: item.expiresAt,
-          ownerName: item.ownerName
-        };
+      function randomCode(length){
+        var out = "";
+        for(var i = 0; i < length; i++){
+          out += CHARS.charAt(Math.floor(Math.random() * CHARS.length));
+        }
+        return out;
       }
 
-      document.getElementById("jsonOutput").value = JSON.stringify(jsonObj, null, 2);
-
-      var csv = "accessCode,quizId,status,deviceToken,activatedAt,lastSeenAt,expiresAt,ownerName
-";
-      for(var j=0;j<generatedList.length;j++){
-        var x = generatedList[j];
-        csv += [
-          x.accessCode,
-          x.quizId,
-          x.status,
-          x.deviceToken || "",
-          x.activatedAt || "",
-          x.lastSeenAt || "",
-          x.expiresAt || "",
-          '"' + String(x.ownerName).replace(/"/g,'""') + '"'
-        ].join(",") + "
-";
+      function updateStats(length){
+        byId("statCount").textContent = String(generatedList.length);
+        byId("statLength").textContent = String(length || 0);
       }
 
-      document.getElementById("csvOutput").value = csv;
-    }
+      function renderPreview(){
+        var body = byId("previewBody");
 
-    function generateCodes(){
-      var quizId = document.getElementById("quizId").value.trim();
-      var count = parseInt(document.getElementById("count").value, 10);
-      var ownerPrefix = document.getElementById("ownerPrefix").value.trim() || "TopScore User";
-      var codeLength = parseInt(document.getElementById("codeLength").value, 10);
+        if(!generatedList.length){
+          body.innerHTML = '<tr><td colspan="5">Nothing generated yet.</td></tr>';
+          return;
+        }
 
-      if(!quizId){
-        setStatus("Please enter a quiz ID.", true);
-        return;
+        var html = "";
+        var max = Math.min(generatedList.length, 100);
+
+        for(var i = 0; i < max; i++){
+          var item = generatedList[i];
+          html += "<tr>"
+            + "<td>" + (i + 1) + "</td>"
+            + "<td><strong>" + item.accessCode + "</strong></td>"
+            + "<td>" + item.quizId + "</td>"
+            + "<td>" + item.status + "</td>"
+            + "<td>" + item.ownerName + "</td>"
+            + "</tr>";
+        }
+
+        body.innerHTML = html;
       }
 
-      if(!count || count < 1){
-        setStatus("Please enter a valid number of codes.", true);
-        return;
+      function escapeCsv(value){
+        var str = String(value == null ? "" : value);
+        if(str.indexOf(",") !== -1 || str.indexOf('"') !== -1 || str.indexOf("
+") !== -1){
+          return '"' + str.replace(/"/g, '""') + '"';
+        }
+        return str;
       }
 
-      if(!codeLength || codeLength < 4){
-        setStatus("Please enter a valid code length.", true);
-        return;
+      function renderOutputs(){
+        var jsonObj = { quiz_access_codes: {} };
+
+        for(var i = 0; i < generatedList.length; i++){
+          var item = generatedList[i];
+          jsonObj.quiz_access_codes[item.accessCode] = {
+            quizId: item.quizId,
+            accessCode: item.accessCode,
+            status: item.status,
+            deviceToken: item.deviceToken,
+            activatedAt: item.activatedAt,
+            lastSeenAt: item.lastSeenAt,
+            expiresAt: item.expiresAt,
+            ownerName: item.ownerName
+          };
+        }
+
+        byId("jsonOutput").value = JSON.stringify(jsonObj, null, 2);
+
+        var csvLines = [];
+        csvLines.push("accessCode,quizId,status,deviceToken,activatedAt,lastSeenAt,expiresAt,ownerName");
+
+        for(var j = 0; j < generatedList.length; j++){
+          var x = generatedList[j];
+          csvLines.push([
+            escapeCsv(x.accessCode),
+            escapeCsv(x.quizId),
+            escapeCsv(x.status),
+            escapeCsv(x.deviceToken || ""),
+            escapeCsv(x.activatedAt || ""),
+            escapeCsv(x.lastSeenAt || ""),
+            escapeCsv(x.expiresAt || ""),
+            escapeCsv(x.ownerName)
+          ].join(","));
+        }
+
+        byId("csvOutput").value = csvLines.join("
+");
       }
 
-      generatedList = [];
-      var used = {};
+      function generateCodes(){
+        try{
+          var quizId = byId("quizId").value.trim();
+          var count = parseInt(byId("count").value, 10);
+          var ownerPrefix = byId("ownerPrefix").value.trim() || "TopScore User";
+          var codeLength = parseInt(byId("codeLength").value, 10);
 
-      while(generatedList.length < count){
-        var code = randomCode(codeLength);
-        if(used[code]) continue;
-        used[code] = true;
+          if(!quizId){
+            setStatus("Please enter a quiz ID.", true);
+            return;
+          }
 
-        generatedList.push({
-          accessCode: code,
-          quizId: quizId,
-          status: "unused",
-          deviceToken: null,
-          activatedAt: null,
-          lastSeenAt: null,
-          expiresAt: null,
-          ownerName: ownerPrefix + " " + (generatedList.length + 1)
+          if(!count || count < 1){
+            setStatus("Please enter a valid number of codes.", true);
+            return;
+          }
+
+          if(!codeLength || codeLength < 4){
+            setStatus("Please enter a valid code length.", true);
+            return;
+          }
+
+          generatedList = [];
+          var used = Object.create(null);
+
+          while(generatedList.length < count){
+            var code = randomCode(codeLength);
+            if(used[code]) continue;
+            used[code] = true;
+
+            generatedList.push({
+              accessCode: code,
+              quizId: quizId,
+              status: "unused",
+              deviceToken: null,
+              activatedAt: null,
+              lastSeenAt: null,
+              expiresAt: null,
+              ownerName: ownerPrefix + " " + (generatedList.length + 1)
+            });
+          }
+
+          renderPreview();
+          renderOutputs();
+          updateStats(codeLength);
+          setStatus(generatedList.length + " codes generated successfully.", false);
+        }catch(err){
+          console.error(err);
+          setStatus("Something went wrong while generating codes.", true);
+        }
+      }
+
+      function shuffleCodes(){
+        if(!generatedList.length){
+          setStatus("Generate codes first.", true);
+          return;
+        }
+
+        for(var i = generatedList.length - 1; i > 0; i--){
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = generatedList[i];
+          generatedList[i] = generatedList[j];
+          generatedList[j] = temp;
+        }
+
+        renderPreview();
+        renderOutputs();
+        setStatus("Preview shuffled.", false);
+      }
+
+      function clearAllData(){
+        generatedList = [];
+        byId("jsonOutput").value = "";
+        byId("csvOutput").value = "";
+        byId("previewBody").innerHTML = '<tr><td colspan="5">Nothing generated yet.</td></tr>';
+        updateStats(0);
+        setStatus("Cleared.", false);
+      }
+
+      function downloadFile(filename, content, type){
+        var blob = new Blob([content], { type: type });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function downloadJson(){
+        var text = byId("jsonOutput").value;
+        if(!text){
+          setStatus("Generate codes first.", true);
+          return;
+        }
+        downloadFile("quiz-codes.json", text, "application/json");
+        setStatus("JSON downloaded.", false);
+      }
+
+      function downloadCsv(){
+        var text = byId("csvOutput").value;
+        if(!text){
+          setStatus("Generate codes first.", true);
+          return;
+        }
+        downloadFile("quiz-codes.csv", text, "text/csv");
+        setStatus("CSV downloaded.", false);
+      }
+
+      function copyJson(){
+        var text = byId("jsonOutput").value;
+        if(!text){
+          setStatus("Generate codes first.", true);
+          return;
+        }
+        navigator.clipboard.writeText(text).then(function(){
+          setStatus("JSON copied.", false);
+        }).catch(function(){
+          setStatus("Could not copy JSON. Try manually.", true);
         });
       }
 
-      renderPreview();
-      renderOutputs();
-      updateStats(codeLength);
-      setStatus(generatedList.length + " codes generated successfully.", false);
-    }
-
-    function shuffleCodes(){
-      if(!generatedList.length){
-        setStatus("Generate codes first.", true);
-        return;
+      function copyCsv(){
+        var text = byId("csvOutput").value;
+        if(!text){
+          setStatus("Generate codes first.", true);
+          return;
+        }
+        navigator.clipboard.writeText(text).then(function(){
+          setStatus("CSV copied.", false);
+        }).catch(function(){
+          setStatus("Could not copy CSV. Try manually.", true);
+        });
       }
 
-      for(var i=generatedList.length-1;i>0;i--){
-        var j=Math.floor(Math.random()*(i+1));
-        var temp=generatedList[i];
-        generatedList[i]=generatedList[j];
-        generatedList[j]=temp;
+      function init(){
+        byId("generateBtn").addEventListener("click", generateCodes);
+        byId("shuffleBtn").addEventListener("click", shuffleCodes);
+        byId("clearBtn").addEventListener("click", clearAllData);
+        byId("copyJsonBtn").addEventListener("click", copyJson);
+        byId("copyCsvBtn").addEventListener("click", copyCsv);
+        byId("downloadJsonBtn").addEventListener("click", downloadJson);
+        byId("downloadCsvBtn").addEventListener("click", downloadCsv);
+
+        updateStats(10);
+        setStatus("Ready.", false);
       }
 
-      renderPreview();
-      renderOutputs();
-      setStatus("Preview shuffled.", false);
-    }
-
-    function clearAllData(){
-      generatedList = [];
-      document.getElementById("jsonOutput").value = "";
-      document.getElementById("csvOutput").value = "";
-      document.getElementById("previewBody").innerHTML = '<tr><td colspan="5">Nothing generated yet.</td></tr>';
-      updateStats(0);
-      setStatus("Cleared.", false);
-    }
-
-    function downloadFile(filename, content, type){
-      var blob = new Blob([content], {type:type});
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    function downloadJson(){
-      var text = document.getElementById("jsonOutput").value;
-      if(!text){
-        setStatus("Generate codes first.", true);
-        return;
+      if(document.readyState === "loading"){
+        document.addEventListener("DOMContentLoaded", init);
+      }else{
+        init();
       }
-      downloadFile("quiz-codes.json", text, "application/json");
-    }
-
-    function downloadCsv(){
-      var text = document.getElementById("csvOutput").value;
-      if(!text){
-        setStatus("Generate codes first.", true);
-        return;
-      }
-      downloadFile("quiz-codes.csv", text, "text/csv");
-    }
-
-    function copyJson(){
-      var text = document.getElementById("jsonOutput").value;
-      if(!text){
-        setStatus("Generate codes first.", true);
-        return;
-      }
-      navigator.clipboard.writeText(text).then(function(){
-        setStatus("JSON copied.", false);
-      });
-    }
-
-    function copyCsv(){
-      var text = document.getElementById("csvOutput").value;
-      if(!text){
-        setStatus("Generate codes first.", true);
-        return;
-      }
-      navigator.clipboard.writeText(text).then(function(){
-        setStatus("CSV copied.", false);
-      });
-    }
-
-    document.getElementById("generateBtn").addEventListener("click", generateCodes);
-    document.getElementById("shuffleBtn").addEventListener("click", shuffleCodes);
-    document.getElementById("clearBtn").addEventListener("click", clearAllData);
-    document.getElementById("downloadJsonBtn").addEventListener("click", downloadJson);
-    document.getElementById("downloadCsvBtn").addEventListener("click", downloadCsv);
-    document.getElementById("copyJsonBtn").addEventListener("click", copyJson);
-    document.getElementById("copyCsvBtn").addEventListener("click", copyCsv);
-
-    updateStats(10);
+    })();
   </script>
 </body>
 </html>
