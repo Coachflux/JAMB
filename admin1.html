@@ -7,201 +7,40 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
     :root{
-      --bg:#1e1e2f;
-      --si:#171723;
-      --so:#2a2a42;
-      --text:#ffffff;
-      --muted:#9aa0b4;
-      --accent:#1db954;
-      --danger:#ff4d4d;
-      --card:#232338;
-      --line:rgba(255,255,255,.06);
+      --bg:#1e1e2f;--si:#171723;--so:#2a2a42;--text:#fff;--muted:#9aa0b4;
+      --accent:#1db954;--danger:#ff4d4d;--card:#232338;--line:rgba(255,255,255,.06)
     }
-    body{
-      background:var(--bg);
-      color:var(--text);
-      min-height:100vh;
-      padding:20px;
-    }
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-    }
-    .hero{
-      margin-bottom:18px;
-    }
-    .hero h1{
-      font-size:28px;
-      color:var(--accent);
-      margin-bottom:8px;
-      letter-spacing:.2px;
-    }
-    .hero p{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns:360px 1fr;
-      gap:18px;
-    }
-    .card{
-      background:var(--bg);
-      border-radius:20px;
-      padding:20px;
-      box-shadow:8px 8px 18px var(--si), -8px -8px 18px var(--so);
-    }
-    .section-title{
-      font-size:16px;
-      margin-bottom:14px;
-      font-weight:700;
-    }
-    .field{
-      margin-bottom:14px;
-    }
-    .label{
-      display:block;
-      font-size:13px;
-      color:var(--muted);
-      margin-bottom:8px;
-    }
-    input, select, textarea{
-      width:100%;
-      border:none;
-      outline:none;
-      border-radius:12px;
-      padding:14px 14px;
-      background:var(--bg);
-      color:var(--text);
-      box-shadow:inset 3px 3px 6px var(--si), inset -3px -3px 6px var(--so);
-      font-size:14px;
-    }
-    textarea{
-      min-height:140px;
-      resize:vertical;
-      line-height:1.5;
-    }
-    .btn-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:6px;
-    }
-    button{
-      border:none;
-      cursor:pointer;
-      border-radius:12px;
-      padding:12px 16px;
-      color:var(--text);
-      background:var(--bg);
-      box-shadow:4px 4px 8px var(--si), -4px -4px 8px var(--so);
-      font-weight:700;
-      font-size:14px;
-      transition:transform .12s ease, opacity .12s ease;
-    }
-    button:active{transform:scale(.98)}
-    button.primary{
-      background:var(--accent);
-      color:#fff;
-      box-shadow:0 8px 18px rgba(29,185,84,.22);
-    }
-    button.danger{
-      background:var(--danger);
-      color:#fff;
-      box-shadow:0 8px 18px rgba(255,77,77,.18);
-    }
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-      margin-top:14px;
-    }
-    .stat{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      text-align:center;
-    }
-    .stat .big{
-      font-size:20px;
-      font-weight:800;
-      color:var(--accent);
-      margin-bottom:4px;
-    }
-    .stat .small{
-      font-size:12px;
-      color:var(--muted);
-    }
-    .table-wrap{
-      overflow:auto;
-      border-radius:16px;
-      margin-top:14px;
-      border:1px solid var(--line);
-    }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      min-width:700px;
-    }
-    th, td{
-      padding:12px 14px;
-      text-align:left;
-      border-bottom:1px solid var(--line);
-      font-size:13px;
-    }
-    th{
-      color:var(--muted);
-      background:rgba(255,255,255,.03);
-      position:sticky;
-      top:0;
-    }
-    tr:hover td{
-      background:rgba(255,255,255,.02);
-    }
-    .pill{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(29,185,84,.12);
-      color:var(--accent);
-      font-size:12px;
-      font-weight:700;
-    }
-    .out{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-      margin-top:18px;
-    }
-    .hint{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:10px;
-      line-height:1.5;
-    }
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-bottom:12px;
-    }
-    .mini{
-      font-size:12px;
-      color:var(--muted);
-    }
-    .success{
-      margin-top:10px;
-      font-size:13px;
-      color:var(--accent);
-      min-height:18px;
-    }
-    @media(max-width:900px){
-      .grid{grid-template-columns:1fr}
-      .out{grid-template-columns:1fr}
-    }
+    body{background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
+    .wrap{max-width:1100px;margin:0 auto}
+    .hero{margin-bottom:18px}
+    .hero h1{font-size:28px;color:var(--accent);margin-bottom:8px}
+    .hero p{color:var(--muted);font-size:14px;line-height:1.6}
+    .grid{display:grid;grid-template-columns:360px 1fr;gap:18px}
+    .card{background:var(--bg);border-radius:20px;padding:20px;box-shadow:8px 8px 18px var(--si),-8px -8px 18px var(--so)}
+    .section-title{font-size:16px;margin-bottom:14px;font-weight:700}
+    .field{margin-bottom:14px}
+    .label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+    input,textarea{width:100%;border:none;outline:none;border-radius:12px;padding:14px;background:var(--bg);color:var(--text);box-shadow:inset 3px 3px 6px var(--si),inset -3px -3px 6px var(--so);font-size:14px}
+    textarea{min-height:140px;resize:vertical;line-height:1.5}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+    button{border:none;cursor:pointer;border-radius:12px;padding:12px 16px;color:var(--text);background:var(--bg);box-shadow:4px 4px 8px var(--si),-4px -4px 8px var(--so);font-weight:700;font-size:14px}
+    button.primary{background:var(--accent);color:#fff;box-shadow:0 8px 18px rgba(29,185,84,.22)}
+    button.danger{background:var(--danger);color:#fff;box-shadow:0 8px 18px rgba(255,77,77,.18)}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
+    .stat .big{font-size:20px;font-weight:800;color:var(--accent);margin-bottom:4px}
+    .stat .small{font-size:12px;color:var(--muted)}
+    .table-wrap{overflow:auto;border-radius:16px;margin-top:14px;border:1px solid var(--line)}
+    table{width:100%;border-collapse:collapse;min-width:700px}
+    th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);font-size:13px}
+    th{color:var(--muted);background:rgba(255,255,255,.03);position:sticky;top:0}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(29,185,84,.12);color:var(--accent);font-size:12px;font-weight:700}
+    .out{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+    .hint{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+    .mini{font-size:12px;color:var(--muted)}
+    .success{margin-top:10px;font-size:13px;color:var(--accent);min-height:18px}
+    @media(max-width:900px){.grid,.out{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -408,9 +247,7 @@
     }
 
     function renderOutputs(){
-      const firebaseJson = {
-        quiz_access_codes: {}
-      };
+      const firebaseJson = { quiz_access_codes: {} };
 
       generatedList.forEach(item => {
         firebaseJson.quiz_access_codes[item.accessCode] = {
@@ -427,17 +264,7 @@
 
       document.getElementById('jsonOutput').value = JSON.stringify(firebaseJson, null, 2);
 
-      const header = [
-        'accessCode',
-        'quizId',
-        'status',
-        'deviceToken',
-        'activatedAt',
-        'lastSeenAt',
-        'expiresAt',
-        'ownerName'
-      ];
-
+      const header = ['accessCode','quizId','status','deviceToken','activatedAt','lastSeenAt','expiresAt','ownerName'];
       const rows = generatedList.map(item => [
         item.accessCode,
         item.quizId,
@@ -449,12 +276,8 @@
         item.ownerName
       ]);
 
-      const csv = [
-        header.join(','),
-        ...rows.map(row => row.map(csvEscape).join(','))
-      ].join('
+      const csv = [header.join(','), ...rows.map(row => row.map(csvEscape).join(','))].join('
 ');
-
       document.getElementById('csvOutput').value = csv;
     }
 
@@ -543,6 +366,14 @@
       updateStats('');
       setStatus('Cleared.');
     }
+
+    window.generateCodes = generateCodes;
+    window.shuffleCodes = shuffleCodes;
+    window.clearAllData = clearAllData;
+    window.copyJson = copyJson;
+    window.copyCsv = copyCsv;
+    window.downloadJson = downloadJson;
+    window.downloadCsv = downloadCsv;
 
     updateStats('');
   </script>
