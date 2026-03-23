@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JAMB CBT Examination</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+    :root{
+      --bg:#f3f5f7;
+      --panel:#ffffff;
+      --line:#d7dde5;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --green:#0f9d58;
+      --green-dark:#0b7d46;
+      --blue:#1d4ed8;
+      --red:#dc2626;
+      --amber:#d97706;
+      --shadow:0 2px 10px rgba(0,0,0,.08);
+    }
+    body{
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+    .hidden{display:none !important}
+    #loadingScreen{
+      position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:5000
+    }
+    .spinner{
+      width:44px;height:44px;border:4px solid #dfe5ec;border-top-color:var(--green);border-radius:50%;animation:spin 1s linear infinite
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    #accessScreen,#subjectScreen,#resultScreen{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+    .auth-card,.subject-card,.result-card{
+      width:100%;
+      max-width:520px;
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:8px;
+      box-shadow:var(--shadow);
+      padding:28px;
+    }
+    .brand{
+      text-align:center;
+      margin-bottom:20px;
+    }
+    .brand h1{
+      font-size:26px;
+      color:var(--green);
+      margin-bottom:8px;
+      font-weight:700;
+    }
+    .brand p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+    .field{
+      margin-bottom:16px;
+    }
+    .field label{
+      display:block;
+      font-size:13px;
+      color:#374151;
+      margin-bottom:6px;
+      font-weight:700;
+    }
+    .field input{
+      width:100%;
+      padding:14px 12px;
+      border:1px solid #cfd6df;
+      border-radius:4px;
+      font-size:16px;
+      background:#fff;
+      color:#111827;
+    }
+    .field input:focus{
+      outline:none;
+      border-color:var(--green);
+      box-shadow:0 0 0 3px rgba(15,157,88,.12);
+    }
+    .btn{
+      border:none;
+      border-radius:4px;
+      cursor:pointer;
+      font-weight:700;
+      transition:.15s;
+    }
+    .btn:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+    }
+    .btn-green{
+      background:var(--green);
+      color:#fff;
+    }
+    .btn-green:hover{background:var(--green-dark)}
+    .btn-outline{
+      background:#fff;
+      color:#1f2937;
+      border:1px solid #cbd5e1;
+    }
+    .btn-block{
+      width:100%;
+      padding:14px 16px;
+      font-size:15px;
+    }
+    .msg{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:4px;
+      font-size:13px;
+      display:none;
+    }
+    .msg.show{display:block}
+    .msg.error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+    .msg.ok{background:#ecfdf5;color:#065f46;border:1px solid #bbf7d0}
+
+    .subject-card h2,.result-card h2{
+      margin-bottom:10px;
+      color:#111827;
+      font-size:23px;
+    }
+    .subject-card p,.result-card p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+    .choice-box{
+      margin-top:20px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    .choice{
+      border:1px solid #cfd6df;
+      border-radius:6px;
+      padding:18px 14px;
+      text-align:center;
+      cursor:pointer;
+      background:#fff;
+      transition:.15s;
+    }
+    .choice:hover{border-color:var(--green)}
+    .choice.active{
+      border-color:var(--green);
+      background:#ecfdf5;
+      box-shadow:0 0 0 3px rgba(15,157,88,.1);
+    }
+    .choice strong{
+      display:block;
+      font-size:16px;
+      margin-bottom:6px;
+    }
+    .choice span{
+      font-size:12px;
+      color:var(--muted);
+    }
+    .subject-summary{
+      margin-top:18px;
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:6px;
+      padding:14px;
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    #examScreen{
+      display:none;
+      min-height:100vh;
+      background:#eef2f6;
+    }
+    .exam-shell{
+      display:grid;
+      grid-template-columns:250px 1fr 280px;
+      min-height:100vh;
+    }
+
+    .left-panel{
+      background:#fff;
+      border-right:1px solid var(--line);
+      padding:16px;
+    }
+    .jamb-logo{
+      background:var(--green);
+      color:#fff;
+      padding:12px;
+      border-radius:6px;
+      text-align:center;
+      font-weight:700;
+      margin-bottom:16px;
+      line-height:1.4;
+      font-size:14px;
+    }
+    .candidate-card{
+      border:1px solid var(--line);
+      border-radius:6px;
+      padding:12px;
+      margin-bottom:16px;
+      background:#fafafa;
+    }
+    .candidate-card h3{
+      font-size:14px;
+      margin-bottom:10px;
+      color:#111827;
+    }
+    .mini-row{
+      margin-bottom:8px;
+      font-size:12px;
+      color:#374151;
+      line-height:1.45;
+    }
+    .mini-row strong{
+      display:block;
+      color:#6b7280;
+      font-size:11px;
+      margin-bottom:2px;
+      text-transform:uppercase;
+      letter-spacing:.2px;
+    }
+    .subject-list{
+      margin-top:12px;
+    }
+    .subject-chip{
+      display:block;
+      width:100%;
+      text-align:left;
+      border:1px solid #d1d5db;
+      background:#fff;
+      border-radius:4px;
+      padding:10px 12px;
+      margin-bottom:8px;
+      cursor:pointer;
+      font-size:13px;
+      font-weight:700;
+    }
+    .subject-chip.active{
+      background:var(--green);
+      color:#fff;
+      border-color:var(--green);
+    }
+    .subject-chip small{
+      display:block;
+      font-weight:400;
+      opacity:.85;
+      margin-top:2px;
+    }
+
+    .main-panel{
+      padding:0;
+      display:flex;
+      flex-direction:column;
+    }
+    .topbar{
+      background:#fff;
+      border-bottom:1px solid var(--line);
+      padding:12px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .topbar-title{
+      font-size:15px;
+      font-weight:700;
+      color:#111827;
+    }
+    .timer-box{
+      background:#111827;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:4px;
+      min-width:120px;
+      text-align:center;
+      font-weight:700;
+      font-size:16px;
+    }
+    .timer-box.warn{background:var(--amber)}
+    .timer-box.danger{background:var(--red)}
+
+    .subject-tabs{
+      background:#f9fafb;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      gap:0;
+      overflow:auto;
+    }
+    .subject-tab{
+      flex:1;
+      min-width:140px;
+      padding:14px 10px;
+      text-align:center;
+      cursor:pointer;
+      border-right:1px solid var(--line);
+      font-size:13px;
+      font-weight:700;
+      background:#f9fafb;
+    }
+    .subject-tab.active{
+      background:#fff;
+      color:var(--green);
+      border-bottom:3px solid var(--green);
+    }
+
+    .question-wrap{
+      padding:18px;
+      flex:1;
+    }
+    .question-box{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:8px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .question-head{
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      background:#f8fafc;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .question-meta{
+      font-size:13px;
+      color:#374151;
+      font-weight:700;
+    }
+    .question-meta span{
+      color:var(--green);
+    }
+    .question-body{
+      padding:18px 16px;
+    }
+    .passage-box{
+      background:#f9fafb;
+      border:1px solid #e5e7eb;
+      border-left:4px solid var(--blue);
+      border-radius:6px;
+      padding:14px;
+      margin-bottom:16px;
+    }
+    .passage-box h4{
+      margin-bottom:8px;
+      font-size:14px;
+      color:#1e3a8a;
+    }
+    .passage-box p{
+      font-size:14px;
+      color:#374151;
+      line-height:1.7;
+      white-space:pre-line;
+    }
+    .question-text{
+      font-size:17px;
+      line-height:1.65;
+      color:#111827;
+      margin-bottom:18px;
+      font-weight:700;
+    }
+    .options{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .option{
+      border:1px solid #cfd6df;
+      border-radius:6px;
+      padding:14px 14px;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      cursor:pointer;
+      transition:.15s;
+      background:#fff;
+    }
+    .option:hover{border-color:var(--green)}
+    .option.selected{
+      border-color:var(--green);
+      background:#ecfdf5;
+    }
+    .option-label{
+      min-width:32px;
+      height:32px;
+      border-radius:50%;
+      background:#eef2f7;
+      border:1px solid #d1d5db;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:14px;
+      color:#111827;
+      flex-shrink:0;
+    }
+    .option.selected .option-label{
+      background:var(--green);
+      border-color:var(--green);
+      color:#fff;
+    }
+    .option-text{
+      font-size:15px;
+      line-height:1.6;
+      color:#111827;
+    }
+
+    .question-foot{
+      padding:14px 16px;
+      border-top:1px solid var(--line);
+      background:#fafafa;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .qbtns{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .qbtn{
+      padding:11px 16px;
+      font-size:14px;
+    }
+
+    .right-panel{
+      background:#fff;
+      border-left:1px solid var(--line);
+      padding:16px;
+    }
+    .palette-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:12px;
+      gap:10px;
+    }
+    .palette-head h3{
+      font-size:15px;
+      color:#111827;
+    }
+    .legend{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:8px;
+      margin-bottom:14px;
+      font-size:12px;
+      color:#374151;
+    }
+    .legend-item{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .dot{
+      width:14px;height:14px;border-radius:3px;border:1px solid #cbd5e1;background:#fff
+    }
+    .dot.answered{background:var(--green);border-color:var(--green)}
+    .dot.current{background:#2563eb;border-color:#2563eb}
+    .palette-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:8px;
+      margin-bottom:16px;
+    }
+    .pbtn{
+      border:1px solid #cbd5e1;
+      background:#fff;
+      border-radius:4px;
+      height:38px;
+      cursor:pointer;
+      font-size:13px;
+      font-weight:700;
+    }
+    .pbtn.answered{
+      background:var(--green);
+      color:#fff;
+      border-color:var(--green);
+    }
+    .pbtn.current{
+      background:#2563eb;
+      color:#fff;
+      border-color:#2563eb;
+    }
+
+    .calc-box{
+      margin-top:16px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      overflow:hidden;
+      display:none;
+    }
+    .calc-box.show{display:block}
+    .calc-head{
+      background:#f8fafc;
+      padding:10px 12px;
+      border-bottom:1px solid var(--line);
+      font-size:13px;
+      font-weight:700;
+      color:#111827;
+    }
+    .calc-display{
+      width:100%;
+      border:none;
+      outline:none;
+      padding:14px 12px;
+      font-size:20px;
+      text-align:right;
+      background:#fff;
+      color:#111827;
+      border-bottom:1px solid var(--line);
+    }
+    .calc-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:1px;
+      background:#e5e7eb;
+    }
+    .calc-key{
+      border:none;
+      background:#fff;
+      min-height:52px;
+      font-size:16px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .calc-key.op{background:#f8fafc}
+    .calc-key.eq{background:var(--green);color:#fff}
+    .calc-key.cl{background:#fee2e2;color:#991b1b}
+
+    .result-card .score-big{
+      font-size:48px;
+      font-weight:700;
+      color:var(--green);
+      text-align:center;
+      margin:10px 0 20px;
+    }
+    .breakdown{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:6px;
+      overflow:hidden;
+    }
+    .break-row{
+      display:grid;
+      grid-template-columns:1fr auto auto;
+      gap:10px;
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      font-size:14px;
+      align-items:center;
+    }
+    .break-row:last-child{border-bottom:none}
+    .break-row.head{
+      background:#f8fafc;
+      font-weight:700;
+    }
+    .final-note{
+      margin-top:16px;
+      padding:12px;
+      background:#f9fafb;
+      border:1px solid #e5e7eb;
+      border-radius:6px;
+      font-size:13px;
+      color:#4b5563;
+      line-height:1.6;
+    }
+
+    @media(max-width:1100px){
+      .exam-shell{grid-template-columns:220px 1fr}
+      .right-panel{grid-column:1 / -1;border-left:none;border-top:1px solid var(--line)}
+    }
+    @media(max-width:760px){
+      .exam-shell{grid-template-columns:1fr}
+      .left-panel{border-right:none;border-bottom:1px solid var(--line)}
+      .right-panel{border-top:1px solid var(--line)}
+      .choice-box{grid-template-columns:1fr}
+      .palette-grid{grid-template-columns:repeat(4,1fr)}
+      .question-text{font-size:16px}
+    }
+  </style>
+</head>
+<body>
+  <div id="loadingScreen"><div class="spinner"></div></div>
+
+  <section id="accessScreen" class="hidden">
+    <div class="auth-card">
+      <div class="brand">
+        <h1>JAMB CBT Examination</h1>
+        <p>Unified Tertiary Matriculation Examination Mock Interface<br>Enter your 8-character access code to continue.</p>
+      </div>
+      <div class="field">
+        <label for="accessCode">Access Code</label>
+        <input id="accessCode" maxlength="8" placeholder="XXXXXXXX" autocomplete="off" />
+      </div>
+      <button id="loginBtn" class="btn btn-green btn-block">Login to Examination</button>
+      <div id="loginMsg" class="msg"></div>
+    </div>
+  </section>
+
+  <section id="subjectScreen" class="hidden">
+    <div class="subject-card">
+      <h2>Subject Combination Confirmation</h2>
+      <p>Use of English, Chemistry and Physics are compulsory in this mock setup. Choose only one additional subject below to complete your four-subject combination.</p>
+
+      <div class="choice-box">
+        <div class="choice" data-subject="biology">
+          <strong>Biology</strong>
+          <span>Choose Biology as your fourth subject</span>
+        </div>
+        <div class="choice" data-subject="maths">
+          <strong>Mathematics</strong>
+          <span>Choose Mathematics as your fourth subject</span>
+        </div>
+      </div>
+
+      <div class="subject-summary" id="subjectSummary">
+        <strong>Selected Subjects:</strong><br>
+        Use of English<br>
+        Chemistry<br>
+        Physics<br>
+        <span style="color:#b91c1c">Choose Biology or Mathematics</span>
+      </div>
+
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="backToLoginBtn" class="btn btn-outline btn-block" style="flex:1">Back</button>
+        <button id="startExamBtn" class="btn btn-green btn-block" style="flex:1" disabled>Start Examination</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="examScreen">
+    <div class="exam-shell">
+      <aside class="left-panel">
+        <div class="jamb-logo">
+          JOINT ADMISSIONS AND MATRICULATION BOARD<br>
+          CBT EXAMINATION PORTAL
+        </div>
+
+        <div class="candidate-card">
+          <h3>Candidate Information</h3>
+          <div class="mini-row">
+            <strong>Name</strong>
+            <span id="candName">Candidate</span>
+          </div>
+          <div class="mini-row">
+            <strong>Access Code</strong>
+            <span id="candCode">--------</span>
+          </div>
+          <div class="mini-row">
+            <strong>Exam Title</strong>
+            <span id="candExamTitle">JAMB Mock CBT</span>
+          </div>
+          <div class="mini-row">
+            <strong>Total Questions</strong>
+            <span id="candTotalQuestions">180</span>
+          </div>
+        </div>
+
+        <div class="candidate-card">
+          <h3>Subjects</h3>
+          <div class="subject-list" id="subjectChipList"></div>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <div class="topbar">
+          <div class="topbar-title" id="topbarTitle">Use of English</div>
+          <div class="timer-box" id="timerBox">120:00</div>
+        </div>
+
+        <div class="subject-tabs" id="subjectTabs"></div>
+
+        <div class="question-wrap">
+          <div class="question-box">
+            <div class="question-head">
+              <div class="question-meta" id="questionMeta">Subject: <span>Use of English</span> | Question 1 of 60</div>
+              <div class="question-meta" id="globalMeta">Overall 1 of 180</div>
+            </div>
+
+            <div class="question-body">
+              <div id="passageBox" class="passage-box hidden">
+                <h4 id="passageTitle">Comprehension Passage</h4>
+                <p id="passageText"></p>
+              </div>
+
+              <div class="question-text" id="questionText"></div>
+              <div class="options" id="optionsBox"></div>
+            </div>
+
+            <div class="question-foot">
+              <div class="qbtns">
+                <button id="prevBtn" class="btn btn-outline qbtn">Previous</button>
+                <button id="nextBtn" class="btn btn-outline qbtn">Next</button>
+                <button id="clearAnswerBtn" class="btn btn-outline qbtn">Clear Answer</button>
+              </div>
+              <div class="qbtns">
+                <button id="submitExamBtn" class="btn btn-green qbtn">Submit Examination</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <aside class="right-panel">
+        <div class="palette-head">
+          <h3>Question Palette</h3>
+        </div>
+
+        <div class="legend">
+          <div class="legend-item"><span class="dot answered"></span> Answered</div>
+          <div class="legend-item"><span class="dot current"></span> Current</div>
+          <div class="legend-item"><span class="dot"></span> Unanswered</div>
+        </div>
+
+        <div class="palette-grid" id="paletteGrid"></div>
+
+        <div id="calculatorBox" class="calc-box">
+          <div class="calc-head">On-Screen Calculator</div>
+          <input id="calcDisplay" class="calc-display" value="" readonly />
+          <div class="calc-grid">
+            <button class="calc-key cl" data-calc="C">C</button>
+            <button class="calc-key cl" data-calc="⌫">⌫</button>
+            <button class="calc-key op" data-calc="%">%</button>
+            <button class="calc-key op" data-calc="/">÷</button>
+
+            <button class="calc-key" data-calc="7">7</button>
+            <button class="calc-key" data-calc="8">8</button>
+            <button class="calc-key" data-calc="9">9</button>
+            <button class="calc-key op" data-calc="*">×</button>
+
+            <button class="calc-key" data-calc="4">4</button>
+            <button class="calc-key" data-calc="5">5</button>
+            <button class="calc-key" data-calc="6">6</button>
+            <button class="calc-key op" data-calc="-">−</button>
+
+            <button class="calc-key" data-calc="1">1</button>
+            <button class="calc-key" data-calc="2">2</button>
+            <button class="calc-key" data-calc="3">3</button>
+            <button class="calc-key op" data-calc="+">+</button>
+
+            <button class="calc-key" data-calc="0">0</button>
+            <button class="calc-key" data-calc=".">.</button>
+            <button class="calc-key" data-calc="(">(</button>
+            <button class="calc-key" data-calc=")">)</button>
+
+            <button class="calc-key eq" data-calc="=" style="grid-column:1 / -1">=</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="resultScreen" class="hidden">
+    <div class="result-card">
+      <h2>Examination Result</h2>
+      <p>Your mock examination has been submitted successfully. Below is your total JAMB score estimate and subject-by-subject breakdown.</p>
+      <div class="score-big" id="totalScoreBig">0</div>
+
+      <div class="breakdown">
+        <div class="break-row head">
+          <div>Subject</div>
+          <div>Score</div>
+          <div>Out Of</div>
+        </div>
+        <div id="breakdownRows"></div>
+      </div>
+
+      <div class="final-note">
+        This interface is designed in a strict JAMB-style mock format. Full correction is hidden here to preserve examination feel.
+      </div>
+
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-block" onclick="location.reload()">Restart</button>
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "000000000000",
+      appId: "1:000000000000:web:xxxxxxxxxxxxxxxx"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const EXAM_ID = "jamb-cbt-2026";
+    const PASSAGE_TAG = "__PASSAGE__";
+
+    const MOCK_BANK = {
+      english: {
+        comprehension_blocks: [
+          {
+            id: "eng_comp_1",
+            title: "Comprehension Passage 1",
+            passage: "Read the passage carefully and answer the questions that follow.
+
+The school principal addressed the students on the need for hard work, discipline and honesty. She explained that true success is built not only on brilliance but also on consistency, self-control and respect for rules. According to her, students who form good habits early in life are more likely to succeed in their studies and future careers.",
+            questions: [
+              { q: "According to the passage, success is built on brilliance and", o: ["money", "consistency", "luck", "travel"], a: 1 },
+              { q: "The principal stressed the importance of all except", o: ["discipline", "honesty", "disobedience", "hard work"], a: 2 },
+              { q: "Students who form good habits early are more likely to", o: ["be punished", "succeed later", "avoid school", "be ignored"], a: 1 },
+              { q: "The principal's message was mainly about", o: ["sports", "career abroad", "character and study habits", "school fees"], a: 2 },
+              { q: "The word 'consistency' as used in the passage is closest in meaning to", o: ["steadiness", "anger", "speed", "laziness"], a: 0 }
+            ]
+          },
+          {
+            id: "eng_comp_2",
+            title: "Comprehension Passage 2",
+            passage: "Read the passage carefully and answer the questions that follow.
+
+In many communities, cleanliness is regarded as a collective responsibility. When people dispose of waste properly and keep their surroundings tidy, they reduce the spread of disease and create a healthier environment. Public campaigns have therefore encouraged residents to see sanitation not as a burden but as a civic duty.",
+            questions: [
+              { q: "Cleanliness is described in the passage as", o: ["a private burden", "a collective responsibility", "an expensive task", "a village law"], a: 1 },
+              { q: "Proper waste disposal helps to", o: ["increase disease", "reduce the spread of disease", "destroy roads", "waste water"], a: 1 },
+              { q: "Public campaigns encourage residents to view sanitation as", o: ["a punishment", "a waste of time", "a civic duty", "a government trick"], a: 2 },
+              { q: "The tone of the passage is mainly", o: ["discouraging", "informative", "comic", "careless"], a: 1 },
+              { q: "A suitable title for the passage is", o: ["The Burden of Taxes", "Community Sanitation and Health", "Political Campaigns", "The Price of Water"], a: 1 }
+            ]
+          }
+        ],
+        objective: [
+          { q: "Choose the option nearest in meaning to the underlined word: The man was very diligent in his work.", o: ["lazy", "careful", "hardworking", "careless"], a: 2 },
+          { q: "Choose the word opposite in meaning to: scarce", o: ["rare", "few", "plenty", "small"], a: 2 },
+          { q: "Choose the word that best completes the sentence: If I _____ him, I would apologize.", o: ["am", "were", "was", "be"], a: 1 },
+          { q: "Choose the correct interpretation of the idiom: To spill the beans means to", o: ["waste food", "reveal a secret", "cook badly", "be careless"], a: 1 },
+          { q: "Choose the correctly punctuated sentence.", o: ["However we tried, we failed.", "However, we tried we failed.", "However we tried we, failed.", "However, we tried, we failed."], a: 3 },
+          { q: "Choose the word that best completes the sentence: The committee has _____ its report.", o: ["submit", "submits", "submitted", "submitting"], a: 2 },
+          { q: "Choose the word opposite in meaning to: victory", o: ["defeat", "success", "progress", "glory"], a: 0 },
+          { q: "Choose the option nearest in meaning to: The child was timid.", o: ["bold", "fearful", "playful", "wise"], a: 1 },
+          { q: "Select the correct spelling.", o: ["Accomodation", "Accommodation", "Acommodation", "Acommodetion"], a: 1 },
+          { q: "Choose the sentence with correct grammar.", o: ["Neither of the boys have come.", "Neither of the boys has come.", "Neither of the boys are coming.", "Neither of the boys were here."], a: 1 },
+          { q: "Choose the option that best completes: She insisted _____ paying the bill.", o: ["on", "at", "for", "with"], a: 0 },
+          { q: "The phrase 'once in a blue moon' means", o: ["every day", "very rarely", "during the moonlight", "once a month"], a: 1 },
+          { q: "Choose the word nearest in meaning to: enormous", o: ["tiny", "huge", "silent", "empty"], a: 1 },
+          { q: "Choose the option opposite in meaning to: accept", o: ["admit", "receive", "reject", "allow"], a: 2 },
+          { q: "Choose the word that best completes the sentence: We arrived _____ the station early.", o: ["at", "in", "on", "for"], a: 0 },
+          { q: "Choose the sentence with the correct tense.", o: ["She has went home.", "She has gone home.", "She have gone home.", "She gone home."], a: 1 },
+          { q: "Choose the correct interpretation: To hit the nail on the head means to", o: ["strike metal", "be exactly right", "miss the point", "build a house"], a: 1 },
+          { q: "Choose the correctly spelt word.", o: ["Occasion", "Ocassion", "Occassion", "Ocasion"], a: 0 },
+          { q: "The antonym of 'ancient' is", o: ["old", "modern", "historic", "aged"], a: 1 },
+          { q: "Choose the best completion: The students were warned not to _____ the examination rules.", o: ["break", "broken", "breaking", "broke"], a: 0 },
+          { q: "Choose the option nearest in meaning to: transparent", o: ["opaque", "clear", "solid", "dark"], a: 1 },
+          { q: "Choose the word opposite in meaning to: expand", o: ["stretch", "grow", "contract", "increase"], a: 2 },
+          { q: "Choose the correct sentence.", o: ["He and I am friends.", "He and I are friends.", "He and I is friends.", "He and I be friends."], a: 1 },
+          { q: "Choose the best word: The judge gave a fair _____.", o: ["judgement", "judge", "justice", "sentenceful"], a: 0 },
+          { q: "Choose the word nearest in meaning to: cautious", o: ["careful", "reckless", "angry", "weak"], a: 0 },
+          { q: "A person who writes books is an", o: ["artist", "author", "actor", "editor"], a: 1 },
+          { q: "Choose the sentence with correct concord.", o: ["The list of items are long.", "The list of items is long.", "The list of items were long.", "The list of items have been long."], a: 1 },
+          { q: "Choose the correct preposition: He is good _____ Mathematics.", o: ["on", "at", "in", "for"], a: 1 },
+          { q: "The synonym of 'rapid' is", o: ["slow", "quick", "quiet", "steady"], a: 1 },
+          { q: "Choose the sentence that is correctly punctuated.", o: ["Yes I agree with you.", "Yes, I agree with you.", "Yes I, agree with you.", "Yes, I agree, with you."], a: 1 },
+          { q: "Choose the word opposite in meaning to: temporary", o: ["brief", "lasting", "short", "passing"], a: 1 },
+          { q: "The expression 'at daggers drawn' means", o: ["in close agreement", "in serious conflict", "ready to fight with knives", "preparing for dinner"], a: 1 },
+          { q: "Choose the best completion: The teacher, as well as the students, _____ present.", o: ["were", "are", "was", "have"], a: 2 },
+          { q: "Choose the nearest meaning of 'generous'.", o: ["kind and giving", "hostile", "careless", "strict"], a: 0 },
+          { q: "Choose the correct spelling.", o: ["Privilege", "Priviledge", "Privelege", "Privilage"], a: 0 },
+          { q: "Choose the opposite of 'combine'.", o: ["separate", "join", "attach", "merge"], a: 0 },
+          { q: "Choose the best option: She prefers tea _____ coffee.", o: ["than", "to", "from", "over"], a: 1 },
+          { q: "Choose the correct sentence.", o: ["Everybody have finished.", "Everybody has finished.", "Everybody were finished.", "Everybody finish."], a: 1 },
+          { q: "Choose the meaning of 'feeble'.", o: ["strong", "weak", "energetic", "active"], a: 1 },
+          { q: "Choose the word opposite in meaning to: permit", o: ["allow", "forbid", "approve", "accept"], a: 1 },
+          { q: "Choose the correct word: The news _____ shocking.", o: ["are", "were", "is", "have"], a: 2 },
+          { q: "Choose the option nearest in meaning to: hostile", o: ["friendly", "unfriendly", "careful", "silent"], a: 1 },
+          { q: "Choose the best completion: No sooner had he arrived _____ it began to rain.", o: ["when", "than", "then", "and"], a: 1 },
+          { q: "Choose the correct spelling.", o: ["Definite", "Definate", "Defenite", "Definete"], a: 0 },
+          { q: "The antonym of 'optimistic' is", o: ["hopeful", "cheerful", "pessimistic", "excited"], a: 2 },
+          { q: "Choose the best word: He was accused _____ theft.", o: ["with", "for", "of", "at"], a: 2 },
+          { q: "Choose the correct sentence.", o: ["One of the girls have gone.", "One of the girls has gone.", "One of the girls are gone.", "One of the girls were gone."], a: 1 },
+          { q: "Choose the word nearest in meaning to: relieve", o: ["ease", "burden", "attack", "worry"], a: 0 },
+          { q: "Choose the opposite in meaning to: innocent", o: ["guilty", "gentle", "harmless", "honest"], a: 0 },
+          { q: "Choose the best completion: He succeeded _____ solving the problem.", o: ["in", "on", "at", "for"], a: 0 }
+        ]
+      },
+
+      biology: [
+        { q:"The basic structural unit of life is the", o:["organ","cell","tissue","nucleus"], a:1 },
+        { q:"Photosynthesis takes place mainly in the", o:["root","stem","leaf","flower"], a:2 },
+        { q:"The process by which green plants manufacture food is", o:["respiration","photosynthesis","transpiration","germination"], a:1 },
+        { q:"The organelle responsible for energy release in cells is the", o:["ribosome","mitochondrion","chloroplast","vacuole"], a:1 },
+        { q:"A group of similar cells performing the same function is called", o:["organ","system","tissue","organism"], a:2 },
+        { q:"The fluid part of blood is", o:["plasma","serum","lymph","platelet"], a:0 },
+        { q:"Human beings have _____ pairs of chromosomes.", o:["21","22","23","24"], a:2 },
+        { q:"The male reproductive cell is the", o:["ovum","zygote","spermatozoon","embryo"], a:2 },
+        { q:"Pollination is the transfer of pollen grains from", o:["stigma to ovary","anther to stigma","ovule to style","anther to ovary"], a:1 },
+        { q:"The part of the alimentary canal where most absorption occurs is the", o:["stomach","small intestine","large intestine","oesophagus"], a:1 },
+        { q:"The movement of water from the soil into root hairs is by", o:["diffusion","osmosis","active transport","translocation"], a:1 },
+        { q:"The process whereby organisms maintain a constant internal environment is", o:["irritability","homeostasis","adaptation","evolution"], a:1 },
+        { q:"A plant hormone responsible for growth is", o:["auxin","insulin","adrenaline","thyroxine"], a:0 },
+        { q:"The excretory organ in humans is the", o:["heart","kidney","pancreas","lung"], a:1 },
+        { q:"The gas released during photosynthesis is", o:["nitrogen","carbon dioxide","oxygen","hydrogen"], a:2 },
+        { q:"The site of fertilization in flowering plants is the", o:["ovary","anther","stigma","ovule"], a:3 },
+        { q:"The largest part of the human brain is the", o:["cerebellum","medulla","cerebrum","spinal cord"], a:2 },
+        { q:"The movement response of plant roots towards water is", o:["phototropism","hydrotropism","geotropism","thigmotropism"], a:1 },
+        { q:"Respiration in living cells releases", o:["light energy","chemical energy","sound energy","solar energy"], a:1 },
+        { q:"The blood vessels that carry blood away from the heart are", o:["veins","capillaries","arteries","venules"], a:2 },
+        { q:"The smallest unit of classification is", o:["genus","species","family","order"], a:1 },
+        { q:"The fusion of male and female gametes is called", o:["pollination","fertilization","budding","germination"], a:1 },
+        { q:"The function of the red blood cells is to", o:["fight infection","carry oxygen","clot blood","digest food"], a:1 },
+        { q:"An example of an invertebrate is", o:["lizard","earthworm","bird","toad"], a:1 },
+        { q:"The opening and closing of stomata are controlled by", o:["root hairs","guard cells","mesophyll cells","palisade cells"], a:1 },
+        { q:"The bone that protects the brain is the", o:["rib","femur","skull","vertebra"], a:2 },
+        { q:"A relationship in which both organisms benefit is called", o:["parasitism","commensalism","mutualism","predation"], a:2 },
+        { q:"The first cervical vertebra is called", o:["atlas","axis","sacrum","ilium"], a:0 },
+        { q:"The transfer of characteristics from parents to offspring is", o:["variation","evolution","heredity","adaptation"], a:2 },
+        { q:"The process of cell division for growth and repair is", o:["meiosis","mitosis","binary fission","budding"], a:1 },
+        { q:"The green pigment in plants is", o:["chlorophyll","haemoglobin","melanin","carotene"], a:0 },
+        { q:"The main site of water reabsorption in the nephron is the", o:["Bowman's capsule","loop of Henle","collecting duct","glomerulus"], a:1 },
+        { q:"Which of these is a monocotyledon?", o:["beans","maize","mango","hibiscus"], a:1 },
+        { q:"The organ for gaseous exchange in fish is the", o:["gill","skin","lung","fin"], a:0 },
+        { q:"The movement of food from leaves to other parts of the plant is", o:["translocation","transpiration","respiration","diffusion"], a:0 },
+        { q:"The deficiency disease caused by lack of vitamin C is", o:["rickets","scurvy","beriberi","night blindness"], a:1 },
+        { q:"The part of the microscope used for focusing is the", o:["revolving nosepiece","adjustment knob","eyepiece","mirror"], a:1 },
+        { q:"The process by which plants lose water vapour is", o:["translocation","transfusion","transpiration","osmosis"], a:2 },
+        { q:"The chamber of the heart with the thickest wall is the", o:["left ventricle","right ventricle","left auricle","right auricle"], a:0 },
+        { q:"A sudden inheritable change in a gene is called", o:["adaptation","mutation","selection","speciation"], a:1 }
+      ],
+
+      maths: [
+        { q:"If 2x + 5 = 17, find x.", o:["5","6","7","8"], a:1 },
+        { q:"Evaluate 15% of 240.", o:["24","30","36","40"], a:2 },
+        { q:"Solve: 3x = 21", o:["6","7","8","9"], a:1 },
+        { q:"The value of 2³ is", o:["6","8","9","12"], a:1 },
+        { q:"If y = 4 when x = 2 in y = kx, then k =", o:["1","2","3","4"], a:1 },
+        { q:"Find the median of 2, 4, 6, 8, 10", o:["4","5","6","7"], a:2 },
+        { q:"The angle in a straight line is", o:["45°","90°","180°","360°"], a:2 },
+        { q:"The simple interest on ₦1000 at 10% per annum for 2 years is", o:["₦100","₦150","₦200","₦250"], a:2 },
+        { q:"What is the perimeter of a rectangle of length 8 cm and width 5 cm?", o:["13 cm","26 cm","40 cm","20 cm"], a:1 },
+        { q:"Solve: 5 + 2(3) =", o:["11","16","8","10"], a:0 },
+        { q:"The value of √144 is", o:["10","11","12","14"], a:2 },
+        { q:"If a:b = 2:3 and b = 12, then a =", o:["6","8","9","18"], a:1 },
+        { q:"The probability of obtaining a head in a single toss of a fair coin is", o:["0","1/4","1/2","1"], a:2 },
+        { q:"Expand: (x + 3)(x + 2)", o:["x² + 5x + 6","x² + 6x + 5","x² + x + 6","x² + 3x + 2"], a:0 },
+        { q:"What is 0.75 as a fraction?", o:["1/2","3/4","2/3","4/5"], a:1 },
+        { q:"The area of a triangle with base 10 cm and height 6 cm is", o:["16 cm²","30 cm²","60 cm²","20 cm²"], a:1 },
+        { q:"If 3, 6, 9, 12, ... is an AP, the common difference is", o:["2","3","4","6"], a:1 },
+        { q:"What is the mode of 2, 2, 3, 4, 4, 4, 5?", o:["2","3","4","5"], a:2 },
+        { q:"The sum of angles in a triangle is", o:["90°","180°","270°","360°"], a:1 },
+        { q:"If 7x = 56, x =", o:["6","7","8","9"], a:2 },
+        { q:"The gradient of a horizontal line is", o:["1","0","undefined","-1"], a:1 },
+        { q:"What is 25% of 80?", o:["15","20","25","30"], a:1 },
+        { q:"The reciprocal of 5/8 is", o:["5/8","8/5","3/5","8/3"], a:1 },
+        { q:"Simplify: 4a + 3a", o:["7","7a","12a","a"], a:1 },
+        { q:"If a square has side 7 cm, its area is", o:["14 cm²","28 cm²","49 cm²","21 cm²"], a:2 },
+        { q:"Find the mean of 4, 6, 8, 10", o:["6","7","8","9"], a:1 },
+        { q:"The next term in 2, 4, 8, 16, ... is", o:["18","24","32","64"], a:2 },
+        { q:"What is 3/5 of 25?", o:["10","12","15","20"], a:2 },
+        { q:"Factorize: x² - 9", o:["(x-9)(x+1)","(x-3)(x+3)","(x-1)(x-9)","(x+9)(x+1)"], a:1 },
+        { q:"The circumference of a circle is given by", o:["πr²","2πr","πd²","r²/2"], a:1 },
+        { q:"Convert 0.2 to percentage.", o:["2%","20%","200%","0.2%"], a:1 },
+        { q:"The value of 3² + 4² is", o:["7","12","25","49"], a:2 },
+        { q:"If an item costs ₦500 and is sold for ₦650, the profit is", o:["₦100","₦120","₦150","₦180"], a:2 },
+        { q:"The equation of a line with zero gradient is", o:["vertical","horizontal","curved","parallel to y-axis only"], a:1 },
+        { q:"Simplify: 2(x + 4)", o:["2x + 4","x + 8","2x + 8","8x"], a:2 },
+        { q:"The decimal equivalent of 1/8 is", o:["0.125","0.25","0.5","0.75"], a:0 },
+        { q:"If a = 3 and b = 2, find ab + a", o:["5","6","8","9"], a:3 },
+        { q:"A right angle is", o:["45°","60°","90°","180°"], a:2 },
+        { q:"The LCM of 4 and 6 is", o:["8","10","12","24"], a:2 },
+        { q:"The HCF of 12 and 18 is", o:["2","3","6","9"], a:2 }
+      ],
+
+      chemistry: [
+        { q:"The smallest particle of an element that takes part in a chemical reaction is the", o:["molecule","atom","ion","electron"], a:1 },
+        { q:"Water is made up of hydrogen and", o:["nitrogen","chlorine","oxygen","helium"], a:2 },
+        { q:"The atomic number of an element is the number of", o:["neutrons","protons","nucleons","shells"], a:1 },
+        { q:"A substance that changes the rate of a reaction without being used up is a", o:["reactant","product","catalyst","salt"], a:2 },
+        { q:"The pH of a neutral solution is", o:["1","7","10","14"], a:1 },
+        { q:"The process by which a solid changes directly to gas is", o:["melting","evaporation","sublimation","condensation"], a:2 },
+        { q:"An acid turns blue litmus paper", o:["green","red","white","yellow"], a:1 },
+        { q:"The gas used in welding is", o:["oxygen","chlorine","nitrogen","helium"], a:0 },
+        { q:"The formula of sodium chloride is", o:["NaCl","Na₂Cl","NaCl₂","NCl"], a:0 },
+        { q:"The periodic table is arranged mainly according to", o:["mass number","atomic number","density","reactivity only"], a:1 },
+        { q:"Matter is anything that has", o:["mass and occupies space","energy only","volume only","weight only"], a:0 },
+        { q:"The SI unit of amount of substance is", o:["mole","gram","litre","molar"], a:0 },
+        { q:"A base soluble in water is called", o:["salt","alkali","acid","oxide"], a:1 },
+        { q:"The common gas present in the atmosphere in the highest proportion is", o:["oxygen","nitrogen","carbon dioxide","argon"], a:1 },
+        { q:"The process of rusting requires iron, water and", o:["nitrogen","oxygen","hydrogen","chlorine"], a:1 },
+        { q:"The colour of methyl orange in an acid is", o:["yellow","red","blue","green"], a:1 },
+        { q:"An example of a noble gas is", o:["oxygen","neon","nitrogen","hydrogen"], a:1 },
+        { q:"A mixture of metals is called", o:["alloy","salt","compound","ore"], a:0 },
+        { q:"The valency of oxygen is", o:["1","2","3","4"], a:1 },
+        { q:"The gas evolved when an acid reacts with a carbonate is", o:["oxygen","hydrogen","carbon dioxide","chlorine"], a:2 },
+        { q:"The process used in separating crude oil into fractions is", o:["distillation","fractional distillation","evaporation","filtration"], a:1 },
+        { q:"The cathode is the electrode where", o:["oxidation occurs","reduction occurs","burning occurs","boiling occurs"], a:1 },
+        { q:"A solution with a pH less than 7 is", o:["neutral","basic","acidic","salty"], a:2 },
+        { q:"The particle with negative charge is the", o:["proton","electron","neutron","nucleon"], a:1 },
+        { q:"The law of conservation of mass states that mass can neither be created nor", o:["boiled","measured","destroyed","melted"], a:2 },
+        { q:"The simplest organic compounds are", o:["alkanes","alkenes","alkanols","alkanoic acids"], a:0 },
+        { q:"The symbol for potassium is", o:["Po","Pt","K","P"], a:2 },
+        { q:"The number of electrons in a neutral sodium atom of atomic number 11 is", o:["10","11","12","23"], a:1 },
+        { q:"The process of adding oxygen to a substance is", o:["oxidation","reduction","electrolysis","hydrolysis"], a:0 },
+        { q:"The common salt used at home is", o:["calcium chloride","sodium chloride","potassium nitrate","magnesium sulphate"], a:1 },
+        { q:"An example of a strong acid is", o:["ethanoic acid","hydrochloric acid","carbonic acid","citric acid"], a:1 },
+        { q:"Air is a", o:["compound","mixture","solution","element"], a:1 },
+        { q:"The boiling point of pure water at standard pressure is", o:["50°C","80°C","100°C","120°C"], a:2 },
+        { q:"The gas responsible for photosynthesis is", o:["nitrogen","oxygen","carbon dioxide","hydrogen"], a:2 },
+        { q:"The process of coating iron with zinc is", o:["electroplating","galvanizing","smelting","alloying"], a:1 },
+        { q:"The empirical formula of benzene CH is related to its molecular formula C₆H₆ by a factor of", o:["2","3","4","6"], a:3 },
+        { q:"The unit used to measure concentration may be", o:["mol/dm³","kg/m","m/s","N/m"], a:0 },
+        { q:"A substance that donates proton is a", o:["base","salt","acid","catalyst"], a:2 },
+        { q:"The metal extracted from bauxite is", o:["iron","aluminium","copper","zinc"], a:1 },
+        { q:"When magnesium burns in air, it forms", o:["magnesium chloride","magnesium sulphide","magnesium oxide","magnesium nitrate"], a:2 }
+      ],
+
+      physics: [
+        { q:"The SI unit of force is", o:["joule","newton","watt","pascal"], a:1 },
+        { q:"A body continues in its state of rest or uniform motion unless acted upon by", o:["heat","a resultant force","mass","pressure"], a:1 },
+        { q:"Speed is distance divided by", o:["mass","time","force","energy"], a:1 },
+        { q:"The acceleration due to gravity on Earth is approximately", o:["9.8 m/s²","98 m/s²","0.98 m/s²","1.8 m/s²"], a:0 },
+        { q:"A scalar quantity among the following is", o:["velocity","force","distance","acceleration"], a:2 },
+        { q:"The instrument used to measure electric current is", o:["voltmeter","ammeter","thermometer","barometer"], a:1 },
+        { q:"Work done is force multiplied by", o:["speed","distance","mass","pressure"], a:1 },
+        { q:"The unit of power is", o:["joule","newton","watt","volt"], a:2 },
+        { q:"A machine is said to be 100% efficient when", o:["MA = VR","efficiency = 1","friction is high","load is zero"], a:1 },
+        { q:"The pressure in a liquid increases with", o:["depth","volume","shape","colour"], a:0 },
+        { q:"The image formed by a plane mirror is", o:["real and inverted","virtual and erect","real and magnified","virtual and inverted"], a:1 },
+        { q:"The frequency of a wave is measured in", o:["metres","seconds","hertz","newtons"], a:2 },
+        { q:"The product of mass and velocity is", o:["force","energy","momentum","impulse"], a:2 },
+        { q:"A positively charged rod brought near a neutral body causes", o:["electromagnetic induction","electrostatic induction","magnetization","radiation"], a:1 },
+        { q:"The speed of light in vacuum is approximately", o:["3 × 10⁸ m/s","3 × 10⁶ m/s","3 × 10⁵ km/s","3 × 10⁴ m/s"], a:0 },
+        { q:"A body of mass 2 kg moving with velocity 3 m/s has kinetic energy", o:["3 J","6 J","9 J","18 J"], a:2 },
+        { q:"The turning effect of a force is called", o:["moment","pressure","power","energy"], a:0 },
+        { q:"A convex lens is thicker at the", o:["edges","centre","top","bottom"], a:1 },
+        { q:"The unit of resistance is", o:["ampere","ohm","volt","farad"], a:1 },
+        { q:"In a series circuit, the current is", o:["different in each resistor","the same throughout","zero at the source","greater at the end"], a:1 },
+        { q:"The energy stored in a stretched spring is", o:["kinetic","chemical","elastic potential","electrical"], a:2 },
+        { q:"The atmospheric pressure is measured with a", o:["hygrometer","barometer","thermometer","ammeter"], a:1 },
+        { q:"The process by which heat is transferred in solids mainly is", o:["conduction","convection","radiation","evaporation"], a:0 },
+        { q:"The rainbow is formed mainly due to", o:["reflection only","dispersion of light","magnetism","polarization"], a:1 },
+        { q:"The unit of विद्युत potential difference is", o:["ampere","ohm","watt","volt"], a:3 },
+        { q:"A car moving round a bend experiences", o:["centripetal force","upthrust","frictionless motion","zero acceleration"], a:0 },
+        { q:"An object immersed in fluid experiences an upthrust equal to the", o:["weight of object","volume of object","weight of displaced fluid","density of fluid"], a:2 },
+        { q:"The relationship between frequency f and period T is", o:["f = T","f = 1/T","T = 1/f²","f = 2T"], a:1 },
+        { q:"The energy possessed by a body due to its position is", o:["kinetic","potential","thermal","sound"], a:1 },
+        { q:"A transformer works with", o:["direct current only","alternating current","mechanical waves","electrolysis"], a:1 },
+        { q:"The refractive index of a medium is the ratio of", o:["real depth to apparent depth","speed in medium to speed in vacuum","speed in vacuum to speed in medium","angle of incidence to angle of refraction"], a:2 },
+        { q:"The slope of a velocity-time graph represents", o:["speed","distance","acceleration","momentum"], a:2 },
+        { q:"The device used to convert sound energy to electrical energy is a", o:["loudspeaker","microphone","transformer","motor"], a:1 },
+        { q:"The boiling point of pure water at standard atmospheric pressure is", o:["0°C","50°C","100°C","2120°C"], a:2 },
+        { q:"When white light passes through a prism, it", o:["converges","disperses","polarizes","vanishes"], a:1 },
+        { q:"The unit of momentum is", o:["kgm/s","Nm²","Js","kg/m"], a:0 },
+        { q:"A fuse wire is connected in", o:["parallel","series","either way","earth only"], a:1 },
+        { q:"The force that opposes motion between two surfaces is", o:["tension","friction","thrust","upthrust"], a:1 },
+        { q:"Echo is due to", o:["refraction","reflection","diffraction","polarization"], a:1 },
+        { q:"The earth wire in a plug is usually coloured", o:["red","blue","green/yellow","brown"], a:2 }
+      ]
+    };
+
+    const state = {
+      config: null,
+      accessCode: "",
+      candidateName: "Candidate",
+      chosenElective: null,
+      startedAt: null,
+      subjects: [],
+      subjectQuestions: {},
+      answers: {},
+      flatMap: [],
+      currentSubject: null,
+      currentIndexInSubject: 0,
+      timerRef: null,
+      timeLeft: 7200,
+      codeRecordStatus: null
+    };
+
+    function byId(id){ return document.getElementById(id); }
+    function show(el){ el.classList.remove("hidden"); }
+    function hide(el){ el.classList.add("hidden"); }
+
+    function showLoginMessage(text, type){
+      const el = byId("loginMsg");
+      el.textContent = text;
+      el.className = "msg show " + (type === "ok" ? "ok" : "error");
+    }
+
+    function getDeviceToken(){
+      let token = localStorage.getItem("jamb_device_token");
+      if(!token){
+        token = crypto.randomUUID ? crypto.randomUUID() : "dev-" + Math.random().toString(36).slice(2) + Date.now();
+        localStorage.setItem("jamb_device_token", token);
+      }
+      return token;
+    }
+
+    function shuffleArray(arr){
+      const copy = [...arr];
+      for(let i = copy.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function shuffleOptions(question){
+      const opts = question.o.map((text, idx) => ({ text, originalIndex: idx }));
+      const shuffled = shuffleArray(opts);
+      const newAnswerIndex = shuffled.findIndex(x => x.originalIndex === question.a);
+      return {
+        ...question,
+        o: shuffled.map(x => x.text),
+        a: newAnswerIndex
+      };
+    }
+
+    function buildEnglishQuestions(){
+      const out = [];
+
+      const compBlocks = MOCK_BANK.english.comprehension_blocks.map(block => ({
+        ...block,
+        questions: block.questions.map(q => shuffleOptions(q))
+      }));
+
+      const shuffledObjectives = shuffleArray(MOCK_BANK.english.objective).map(q => shuffleOptions(q));
+
+      compBlocks.forEach(block => {
+        block.questions.forEach((q, idx) => {
+          out.push({
+            ...q,
+            subject: "english",
+            type: "comprehension",
+            blockId: block.id,
+            blockTitle: block.title,
+            passage: block.passage,
+            blockQuestionNumber: idx + 1
+          });
+        });
+      });
+
+      shuffledObjectives.forEach(q => {
+        out.push({
+          ...q,
+          subject: "english",
+          type: "objective",
+          blockId: null,
+          blockTitle: null,
+          passage: null
+        });
+      });
+
+      while(out.length < 60){
+        const base = shuffledObjectives[out.length % shuffledObjectives.length];
+        out.push({
+          ...shuffleOptions(base),
+          subject: "english",
+          type: "objective",
+          blockId: null,
+          blockTitle: null,
+          passage: null
+        });
+      }
+
+      return out.slice(0,60);
+    }
+
+    function buildSubjectQuestions(subjectKey, count){
+      const source = MOCK_BANK[subjectKey] || [];
+      let bank = shuffleArray(source).map(q => shuffleOptions(q));
+      const out = [];
+      while(out.length < count){
+        const q = bank[out.length % bank.length];
+        out.push({
+          ...shuffleOptions(q),
+          subject: subjectKey,
+          type: "objective",
+          blockId: null,
+          blockTitle: null,
+          passage: null
+        });
+      }
+      return out.slice(0,count);
+    }
