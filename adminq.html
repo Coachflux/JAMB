@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JAMB CBT Admin Panel</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+    body{background:#eef2f6;color:#1f2937;padding:20px}
+    .wrap{max-width:1100px;margin:0 auto}
+    .hero{background:#0f9d58;color:#fff;border-radius:10px;padding:20px 22px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+    .hero h1{font-size:28px;margin-bottom:8px}
+    .hero p{font-size:14px;line-height:1.6;opacity:.96}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .card{background:#fff;border:1px solid #d7dde5;border-radius:10px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+    .card h2{font-size:18px;color:#111827;margin-bottom:8px}
+    .muted{color:#6b7280;font-size:13px;line-height:1.6}
+    .field{margin-top:14px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;padding:12px 12px;border:1px solid #cfd6df;border-radius:6px;font-size:14px}
+    .field textarea{min-height:120px;resize:vertical}
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .btn{border:none;border-radius:6px;padding:12px 14px;font-weight:700;cursor:pointer}
+    .btn-green{background:#0f9d58;color:#fff}.btn-dark{background:#111827;color:#fff}.btn-outline{background:#fff;border:1px solid #cbd5e1;color:#1f2937}.btn-red{background:#dc2626;color:#fff}
+    .small{font-size:12px}
+    .msg{margin-top:12px;padding:10px 12px;border-radius:6px;font-size:13px;display:none}.msg.show{display:block}.msg.ok{background:#ecfdf5;color:#065f46;border:1px solid #bbf7d0}.msg.error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+    table{width:100%;border-collapse:collapse;margin-top:14px}th,td{border:1px solid #e5e7eb;padding:10px 8px;text-align:left;font-size:13px;vertical-align:top}th{background:#f8fafc}
+    .tag{display:inline-block;background:#f3f4f6;border:1px solid #e5e7eb;padding:4px 8px;border-radius:999px;font-size:12px;margin-right:6px;margin-bottom:6px}
+    .mono{font-family:Consolas,monospace}
+    .preview{background:#0b1220;color:#e5e7eb;border-radius:8px;padding:14px;overflow:auto;max-height:380px;font-size:12px;line-height:1.6;margin-top:14px;white-space:pre-wrap}
+    .full{grid-column:1 / -1}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>JAMB CBT Admin Panel</h1>
+      <p>Generate 8-character access codes, set your local examination window, load candidate names, optionally import question banks later, and export a ready <span class="mono">exam-data.json</span> file for your local exam system.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>1) Exam Settings</h2>
+        <p class="muted">These settings will be exported into the JSON file used by the exam page.</p>
+        <div class="field">
+          <label for="examTitle">Exam Title</label>
+          <input id="examTitle" value="JAMB Local Mock CBT" />
+        </div>
+        <div class="field">
+          <label for="startAt">Start Date & Time</label>
+          <input id="startAt" type="datetime-local" />
+        </div>
+        <div class="field">
+          <label for="endAt">End Date & Time</label>
+          <input id="endAt" type="datetime-local" />
+        </div>
+        <div class="field">
+          <label for="durationMinutes">Duration (minutes)</label>
+          <input id="durationMinutes" type="number" min="1" value="120" />
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2) Access Code Generator</h2>
+        <p class="muted">Generate unique 8-character codes. You can also add candidate names before generation.</p>
+        <div class="field">
+          <label for="candidateNames">Candidate Names (one per line, optional)</label>
+          <textarea id="candidateNames" placeholder="Candidate 1&#10;Candidate 2&#10;Candidate 3"></textarea>
+        </div>
+        <div class="field">
+          <label for="codeCount">How many codes to generate?</label>
+          <input id="codeCount" type="number" min="1" value="10" />
+        </div>
+        <div class="btn-row">
+          <button id="generateBtn" class="btn btn-green">Generate Codes</button>
+          <button id="clearCodesBtn" class="btn btn-red">Clear Codes</button>
+        </div>
+        <div id="codeMsg" class="msg"></div>
+      </div>
+
+      <div class="card full">
+        <h2>3) Generated Candidates & Codes</h2>
+        <p class="muted">Each code is exported with owner name, status, and ready structure for the exam system.</p>
+        <div id="codeTags" style="margin-top:12px"></div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:50px">#</th>
+              <th>Candidate Name</th>
+              <th>Access Code</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="codeTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>4) Optional Question Bank Import</h2>
+        <p class="muted">This is optional for now. Later, your exam page can read these banks from JSON too.</p>
+        <div class="field">
+          <label for="questionFile">Load Question Bank JSON File</label>
+          <input id="questionFile" type="file" accept="application/json" />
+        </div>
+        <div id="questionMsg" class="msg"></div>
+      </div>
+
+      <div class="card">
+        <h2>5) Export</h2>
+        <p class="muted">This will generate a complete <span class="mono">exam-data.json</span> file containing settings, access codes, and optional imported question bank data.</p>
+        <div class="btn-row">
+          <button id="previewBtn" class="btn btn-dark">Preview JSON</button>
+          <button id="downloadBtn" class="btn btn-green">Download exam-data.json</button>
+        </div>
+        <div id="exportMsg" class="msg"></div>
+      </div>
+
+      <div class="card full">
+        <h2>JSON Preview</h2>
+        <div id="jsonPreview" class="preview">No preview yet.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      accessCodes: {},
+      questionBank: null
+    };
+
+    function byId(id){ return document.getElementById(id); }
+
+    function showMsg(id,text,type='ok'){
+      const el = byId(id);
+      el.textContent = text;
+      el.className = 'msg show ' + type;
+    }
+
+    function clearMsg(id){
+      const el = byId(id);
+      el.textContent = '';
+      el.className = 'msg';
+    }
+
+    function pad(n){
+      return String(n).padStart(2,'0');
+    }
+
+    function toDateTimeLocalValue(date){
+      return date.getFullYear() + '-' +
+        pad(date.getMonth()+1) + '-' +
+        pad(date.getDate()) + 'T' +
+        pad(date.getHours()) + ':' +
+        pad(date.getMinutes());
+    }
+
+    function toIsoFromLocalValue(v){
+      if(!v) return null;
+      return new Date(v).toISOString();
+    }
+
+    function randomCode(){
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let out = '';
+      for(let i=0;i<8;i++) out += chars[Math.floor(Math.random()*chars.length)];
+      return out;
+    }
+
+    function generateUniqueCode(existing){
+      let code = randomCode();
+      while(existing[code]) code = randomCode();
+      return code;
+    }
+
+    function getCandidateNames(){
+      return byId('candidateNames').value
+        .split('
+')
+        .map(x => x.trim())
+        .filter(Boolean);
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
+    }
+
+    function renderCodes(){
+      const body = byId('codeTableBody');
+      const tags = byId('codeTags');
+      body.innerHTML = '';
+      tags.innerHTML = '';
+
+      const entries = Object.entries(state.accessCodes);
+
+      if(!entries.length){
+        body.innerHTML = '<tr><td colspan="4">No generated codes yet.</td></tr>';
+        return;
+      }
+
+      entries.forEach(([code, rec], idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>'+(idx+1)+'</td>' +
+          '<td>'+escapeHtml(rec.ownerName || 'Candidate')+'</td>' +
+          '<td class="mono">'+code+'</td>' +
+          '<td>'+rec.status+'</td>';
+        body.appendChild(tr);
+
+        const tag = document.createElement('span');
+        tag.className = 'tag mono';
+        tag.textContent = code;
+        tags.appendChild(tag);
+      });
+    }
+
+    function buildExportObject(){
+      return {
+        examTitle: byId('examTitle').value.trim() || 'JAMB Local Mock CBT',
+        startAt: toIsoFromLocalValue(byId('startAt').value),
+        endAt: toIsoFromLocalValue(byId('endAt').value),
+        durationMinutes: Number(byId('durationMinutes').value) || 120,
+        accessCodes: state.accessCodes,
+        questionBank: state.questionBank
+      };
+    }
+
+    function validateBeforeExport(){
+      const title = byId('examTitle').value.trim();
+      const start = byId('startAt').value;
+      const end = byId('endAt').value;
+      const duration = Number(byId('durationMinutes').value);
+
+      if(!title) return 'Enter exam title.';
+      if(!start) return 'Select start date and time.';
+      if(!end) return 'Select end date and time.';
+      if(new Date(start) >= new Date(end)) return 'End date must be later than start date.';
+      if(!duration || duration < 1) return 'Enter a valid duration.';
+      if(!Object.keys(state.accessCodes).length) return 'Generate at least one access code.';
+      return null;
+    }
+
+    byId('generateBtn').addEventListener('click', () => {
+      clearMsg('codeMsg');
+
+      const count = Number(byId('codeCount').value);
+      if(!count || count < 1){
+        return showMsg('codeMsg','Enter a valid number of codes to generate.','error');
+      }
+
+      const names = getCandidateNames();
+      const fresh = {};
+
+      for(let i=0;i<count;i++){
+        const code = generateUniqueCode({...state.accessCodes, ...fresh});
+        fresh[code] = {
+          ownerName: names[i] || ('Candidate ' + (Object.keys(state.accessCodes).length + i + 1)),
+          status: 'unused'
+        };
+      }
+
+      state.accessCodes = { ...state.accessCodes, ...fresh };
+      renderCodes();
+      showMsg('codeMsg', count + ' code(s) generated successfully.');
+    });
+
+    byId('clearCodesBtn').addEventListener('click', () => {
+      state.accessCodes = {};
+      renderCodes();
+      showMsg('codeMsg','All generated codes cleared.');
+    });
+
+    byId('questionFile').addEventListener('change', async (e) => {
+      clearMsg('questionMsg');
+      const file = e.target.files[0];
+      if(!file) return;
+
+      try{
+        const text = await file.text();
+        const json = JSON.parse(text);
+        state.questionBank = json;
+        showMsg('questionMsg','Question bank JSON loaded successfully.');
+      }catch(err){
+        state.questionBank = null;
+        showMsg('questionMsg','Invalid JSON file.','error');
+      }
+    });
+
+    byId('previewBtn').addEventListener('click', () => {
+      clearMsg('exportMsg');
+      const err = validateBeforeExport();
+      if(err) return showMsg('exportMsg', err, 'error');
+
+      const obj = buildExportObject();
+      byId('jsonPreview').textContent = JSON.stringify(obj, null, 2);
+      showMsg('exportMsg','Preview generated.');
+    });
+
+    byId('downloadBtn').addEventListener('click', () => {
+      clearMsg('exportMsg');
+      const err = validateBeforeExport();
+      if(err) return showMsg('exportMsg', err, 'error');
+
+      const obj = buildExportObject();
+      const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'exam-data.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
+      byId('jsonPreview').textContent = JSON.stringify(obj, null, 2);
+      showMsg('exportMsg','exam-data.json downloaded successfully.');
+    });
+
+    (function initDefaults(){
+      const now = new Date();
+      const later = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000));
+      byId('startAt').value = toDateTimeLocalValue(now);
+      byId('endAt').value = toDateTimeLocalValue(later);
+      renderCodes();
+    })();
+  </script>
+</body>
+</html>
