@@ -1190,3 +1190,620 @@ In many communities, cleanliness is regarded as a collective responsibility. Whe
       }
       return out.slice(0,count);
     }
+    function buildExam(){
+      state.subjects = [
+        { key:"english", label:"Use of English", count:60 },
+        { key:state.chosenElective, label:state.chosenElective === "biology" ? "Biology" : "Mathematics", count:40 },
+        { key:"chemistry", label:"Chemistry", count:40 },
+        { key:"physics", label:"Physics", count:40 }
+      ];
+
+      state.subjectQuestions = {
+        english: buildEnglishQuestions(),
+        [state.chosenElective]: buildSubjectQuestions(state.chosenElective, 40),
+        chemistry: buildSubjectQuestions("chemistry", 40),
+        physics: buildSubjectQuestions("physics", 40)
+      };
+
+      state.answers = {};
+      state.flatMap = [];
+      let overall = 0;
+
+      state.subjects.forEach(sub => {
+        const arr = state.subjectQuestions[sub.key];
+        arr.forEach((q, idx) => {
+          const id = sub.key + "_" + idx;
+          q._id = id;
+          q._subjectIndex = idx;
+          q._overallIndex = overall;
+          state.flatMap.push({
+            id,
+            subject: sub.key,
+            subjectIndex: idx,
+            overallIndex: overall
+          });
+          state.answers[id] = null;
+          overall++;
+        });
+      });
+
+      state.currentSubject = "english";
+      state.currentIndexInSubject = 0;
+    }
+
+    function subjectLabel(key){
+      if(key === "english") return "Use of English";
+      if(key === "biology") return "Biology";
+      if(key === "maths") return "Mathematics";
+      if(key === "chemistry") return "Chemistry";
+      if(key === "physics") return "Physics";
+      return key;
+    }
+
+    function currentQuestion(){
+      return state.subjectQuestions[state.currentSubject][state.currentIndexInSubject];
+    }
+
+    function overallPositionForCurrent(){
+      const q = currentQuestion();
+      return q._overallIndex + 1;
+    }
+
+    function answeredCount(){
+      return Object.values(state.answers).filter(v => v !== null).length;
+    }
+
+    function canShowCalculator(subject){
+      return ["maths","chemistry","physics"].includes(subject);
+    }
+
+    function renderSubjectChips(){
+      const box = byId("subjectChipList");
+      box.innerHTML = "";
+      state.subjects.forEach(sub => {
+        const btn = document.createElement("button");
+        btn.className = "subject-chip" + (state.currentSubject === sub.key ? " active" : "");
+        btn.innerHTML = `${sub.label}<small>${sub.count} Questions</small>`;
+        btn.onclick = () => {
+          state.currentSubject = sub.key;
+          state.currentIndexInSubject = 0;
+          renderAll();
+        };
+        box.appendChild(btn);
+      });
+    }
+
+    function renderTabs(){
+      const box = byId("subjectTabs");
+      box.innerHTML = "";
+      state.subjects.forEach(sub => {
+        const div = document.createElement("div");
+        div.className = "subject-tab" + (state.currentSubject === sub.key ? " active" : "");
+        div.textContent = sub.label;
+        div.onclick = () => {
+          state.currentSubject = sub.key;
+          state.currentIndexInSubject = 0;
+          renderAll();
+        };
+        box.appendChild(div);
+      });
+    }
+
+    function renderPalette(){
+      const grid = byId("paletteGrid");
+      grid.innerHTML = "";
+      const arr = state.subjectQuestions[state.currentSubject];
+
+      arr.forEach((q, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "pbtn";
+        if(state.answers[q._id] !== null) btn.classList.add("answered");
+        if(idx === state.currentIndexInSubject) btn.classList.add("current");
+        btn.textContent = idx + 1;
+        btn.onclick = () => {
+          state.currentIndexInSubject = idx;
+          renderAll();
+        };
+        grid.appendChild(btn);
+      });
+    }
+
+    function renderQuestion(){
+      const q = currentQuestion();
+      byId("topbarTitle").textContent = subjectLabel(state.currentSubject);
+      byId("questionMeta").innerHTML = `Subject: <span>${subjectLabel(state.currentSubject)}</span> | Question ${state.currentIndexInSubject + 1} of ${state.subjectQuestions[state.currentSubject].length}`;
+      byId("globalMeta").textContent = `Overall ${overallPositionForCurrent()} of 180`;
+      byId("questionText").textContent = q.q;
+
+      const pBox = byId("passageBox");
+      if(q.type === "comprehension" && q.passage){
+        pBox.classList.remove("hidden");
+        byId("passageTitle").textContent = q.blockTitle || "Comprehension Passage";
+        byId("passageText").textContent = q.passage;
+      }else{
+        pBox.classList.add("hidden");
+      }
+
+      const optBox = byId("optionsBox");
+      optBox.innerHTML = "";
+      q.o.forEach((opt, i) => {
+        const div = document.createElement("div");
+        div.className = "option" + (state.answers[q._id] === i ? " selected" : "");
+        div.innerHTML = `
+          <div class="option-label">${String.fromCharCode(65 + i)}</div>
+          <div class="option-text">${opt}</div>
+        `;
+        div.onclick = () => {
+          state.answers[q._id] = i;
+          saveLocalProgress();
+          renderQuestion();
+          renderPalette();
+        };
+        optBox.appendChild(div);
+      });
+
+      byId("prevBtn").disabled = (state.currentIndexInSubject === 0);
+      byId("nextBtn").textContent = state.currentIndexInSubject === state.subjectQuestions[state.currentSubject].length - 1 ? "Next Subject" : "Next";
+
+      const calc = byId("calculatorBox");
+      if(canShowCalculator(state.currentSubject)) calc.classList.add("show");
+      else calc.classList.remove("show");
+    }
+
+    function renderCandidateInfo(){
+      byId("candName").textContent = state.candidateName || "Candidate";
+      byId("candCode").textContent = state.accessCode || "--------";
+      byId("candExamTitle").textContent = state.config?.title || "JAMB Mock CBT";
+      byId("candTotalQuestions").textContent = "180";
+    }
+
+    function renderAll(){
+      renderCandidateInfo();
+      renderSubjectChips();
+      renderTabs();
+      renderPalette();
+      renderQuestion();
+    }
+
+    function movePrev(){
+      if(state.currentIndexInSubject > 0){
+        state.currentIndexInSubject--;
+        renderAll();
+        return;
+      }
+
+      const currentSubjectPos = state.subjects.findIndex(s => s.key === state.currentSubject);
+      if(currentSubjectPos > 0){
+        const prevSubject = state.subjects[currentSubjectPos - 1];
+        state.currentSubject = prevSubject.key;
+        state.currentIndexInSubject = state.subjectQuestions[prevSubject.key].length - 1;
+        renderAll();
+      }
+    }
+
+    function moveNext(){
+      const arr = state.subjectQuestions[state.currentSubject];
+      if(state.currentIndexInSubject < arr.length - 1){
+        state.currentIndexInSubject++;
+        renderAll();
+        return;
+      }
+
+      const currentSubjectPos = state.subjects.findIndex(s => s.key === state.currentSubject);
+      if(currentSubjectPos < state.subjects.length - 1){
+        const nextSubject = state.subjects[currentSubjectPos + 1];
+        state.currentSubject = nextSubject.key;
+        state.currentIndexInSubject = 0;
+        renderAll();
+        return;
+      }
+
+      const remaining = 180 - answeredCount();
+      if(remaining > 0){
+        if(confirm(`You still have ${remaining} unanswered question(s). Submit anyway?`)){
+          submitExam();
+        }
+      }else{
+        submitExam();
+      }
+    }
+
+    function clearCurrentAnswer(){
+      const q = currentQuestion();
+      state.answers[q._id] = null;
+      saveLocalProgress();
+      renderQuestion();
+      renderPalette();
+    }
+
+    function formatTime(seconds){
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+    }
+
+    function updateTimerUI(){
+      const box = byId("timerBox");
+      box.textContent = formatTime(state.timeLeft);
+      box.className = "timer-box";
+      if(state.timeLeft <= 300) box.classList.add("warn");
+      if(state.timeLeft <= 60) box.classList.add("danger");
+    }
+
+    function startTimer(){
+      if(state.timerRef) clearInterval(state.timerRef);
+      updateTimerUI();
+
+      state.timerRef = setInterval(() => {
+        state.timeLeft--;
+        updateTimerUI();
+        saveLocalProgress();
+
+        if(state.timeLeft <= 0){
+          clearInterval(state.timerRef);
+          submitExam(true);
+        }
+      }, 1000);
+    }
+
+    function jambScoreFromRaw(correct, total){
+      return Math.round((correct / total) * 100);
+    }
+
+    function calculateResult(){
+      const result = {
+        totalCorrect: 0,
+        totalQuestions: 180,
+        totalJambScore: 0,
+        subjects: []
+      };
+
+      state.subjects.forEach(sub => {
+        const arr = state.subjectQuestions[sub.key];
+        let correct = 0;
+        arr.forEach(q => {
+          if(state.answers[q._id] === q.a) correct++;
+        });
+
+        const jambEquivalent = jambScoreFromRaw(correct, arr.length);
+        result.subjects.push({
+          key: sub.key,
+          label: sub.label,
+          correct,
+          total: arr.length,
+          score: jambEquivalent
+        });
+        result.totalCorrect += correct;
+      });
+
+      result.totalJambScore = result.subjects.reduce((sum, s) => sum + s.score, 0);
+      return result;
+    }
+
+    function renderResult(result){
+      hide(byId("examScreen"));
+      show(byId("resultScreen"));
+      byId("totalScoreBig").textContent = result.totalJambScore;
+
+      const rows = byId("breakdownRows");
+      rows.innerHTML = "";
+      result.subjects.forEach(sub => {
+        const row = document.createElement("div");
+        row.className = "break-row";
+        row.innerHTML = `
+          <div>${sub.label}</div>
+          <div>${sub.score}</div>
+          <div>${sub.correct}/${sub.total}</div>
+        `;
+        rows.appendChild(row);
+      });
+    }
+
+    async function submitExam(auto = false){
+      if(state.timerRef) clearInterval(state.timerRef);
+      saveLocalProgress(true);
+      const result = calculateResult();
+      renderResult(result);
+      if(auto) alert("Time is up. Your examination has been submitted.");
+    }
+
+    function saveLocalProgress(submitted = false){
+      const payload = {
+        accessCode: state.accessCode,
+        chosenElective: state.chosenElective,
+        startedAt: state.startedAt,
+        currentSubject: state.currentSubject,
+        currentIndexInSubject: state.currentIndexInSubject,
+        answers: state.answers,
+        timeLeft: state.timeLeft,
+        submitted,
+        timestamp: Date.now()
+      };
+      sessionStorage.setItem("jamb_cbt_progress", JSON.stringify(payload));
+    }
+
+    function tryRestoreLocalProgress(){
+      const raw = sessionStorage.getItem("jamb_cbt_progress");
+      if(!raw) return false;
+
+      try{
+        const data = JSON.parse(raw);
+        if(!data || data.submitted) return false;
+        if(!data.accessCode || data.accessCode !== state.accessCode) return false;
+        if(!data.chosenElective) return false;
+
+        state.chosenElective = data.chosenElective;
+        buildExam();
+
+        state.startedAt = data.startedAt || Date.now();
+        state.currentSubject = data.currentSubject || "english";
+        state.currentIndexInSubject = Number.isInteger(data.currentIndexInSubject) ? data.currentIndexInSubject : 0;
+        state.answers = { ...state.answers, ...(data.answers || {}) };
+        state.timeLeft = typeof data.timeLeft === "number" ? data.timeLeft : ((state.config?.durationMinutes || 120) * 60);
+        return true;
+      }catch(e){
+        return false;
+      }
+    }
+
+    async function loadExamConfig(){
+      const snap = await get(ref(db, "exam_config"));
+      if(snap.exists()) return snap.val();
+      return {
+        title: "JAMB Mock CBT 2026",
+        startAt: "2026-03-23T08:00:00",
+        endAt: "2026-03-30T23:59:59",
+        durationMinutes: 120,
+        accessCodeLength: 8
+      };
+    }
+
+    async function validateExamWindow(config){
+      const now = new Date();
+      const startAt = new Date(config.startAt);
+      const endAt = new Date(config.endAt);
+
+      if(now < startAt){
+        return { ok:false, message:"The examination has not started yet." };
+      }
+      if(now > endAt){
+        return { ok:false, message:"The examination window has closed." };
+      }
+      return { ok:true };
+    }
+
+    async function checkAccessCode(accessCode){
+      const cleanCode = accessCode.trim().toUpperCase();
+      const snap = await get(ref(db, `quiz_access_codes/${cleanCode}`));
+
+      if(!snap.exists()){
+        return { ok:false, status:"invalid_code", message:"Invalid access code." };
+      }
+
+      const data = snap.val();
+
+      if(data.quizId && data.quizId !== EXAM_ID){
+        return { ok:false, status:"wrong_exam", message:"This code does not match this examination." };
+      }
+
+      if(data.status === "revoked"){
+        return { ok:false, status:"revoked", message:"This code has been revoked." };
+      }
+
+      if(data.expiresAt && new Date(data.expiresAt) < new Date()){
+        return { ok:false, status:"expired", message:"This code has expired." };
+      }
+
+      const deviceToken = getDeviceToken();
+      const codeRef = ref(db, `quiz_access_codes/${cleanCode}`);
+
+      if(data.status === "unused"){
+        await update(codeRef, {
+          status: "active",
+          deviceToken,
+          activatedAt: new Date().toISOString(),
+          lastSeenAt: new Date().toISOString()
+        });
+        return {
+          ok:true,
+          status:"activated",
+          candidateName: data.ownerName || "Candidate"
+        };
+      }
+
+      if(data.status === "active" && data.deviceToken === deviceToken){
+        await update(codeRef, { lastSeenAt: new Date().toISOString() });
+        return {
+          ok:true,
+          status:"recognized",
+          candidateName: data.ownerName || "Candidate"
+        };
+      }
+
+      return {
+        ok:false,
+        status:"locked_to_other_device",
+        message:"This code is already active on another device."
+      };
+    }
+
+    async function handleLogin(){
+      const btn = byId("loginBtn");
+      const code = byId("accessCode").value.trim().toUpperCase();
+
+      if(code.length !== 8){
+        showLoginMessage("Enter an 8-character access code.", "error");
+        return;
+      }
+
+      if(!/^[A-Z0-9]{8}$/.test(code)){
+        showLoginMessage("Invalid code format.", "error");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Checking...";
+
+      try{
+        state.config = await loadExamConfig();
+        const examWindow = await validateExamWindow(state.config);
+        if(!examWindow.ok){
+          showLoginMessage(examWindow.message, "error");
+          return;
+        }
+
+        const result = await checkAccessCode(code);
+        if(!result.ok){
+          showLoginMessage(result.message || "Access denied.", "error");
+          return;
+        }
+
+        state.accessCode = code;
+        state.candidateName = result.candidateName || "Candidate";
+        showLoginMessage("Login successful. Continue to subject selection.", "ok");
+
+        setTimeout(() => {
+          hide(byId("accessScreen"));
+          show(byId("subjectScreen"));
+        }, 350);
+      }catch(err){
+        console.error(err);
+        showLoginMessage("Could not connect to Firebase. Check your config and database rules.", "error");
+      }finally{
+        btn.disabled = false;
+        btn.textContent = "Login to Examination";
+      }
+    }
+
+    function updateSubjectSummary(){
+      const sum = byId("subjectSummary");
+      if(!state.chosenElective){
+        sum.innerHTML = `
+          <strong>Selected Subjects:</strong><br>
+          Use of English<br>
+          Chemistry<br>
+          Physics<br>
+          <span style="color:#b91c1c">Choose Biology or Mathematics</span>
+        `;
+      }else{
+        sum.innerHTML = `
+          <strong>Selected Subjects:</strong><br>
+          Use of English<br>
+          ${state.chosenElective === "biology" ? "Biology" : "Mathematics"}<br>
+          Chemistry<br>
+          Physics
+        `;
+      }
+    }
+
+    function handleSubjectChoice(subject){
+      state.chosenElective = subject;
+      document.querySelectorAll(".choice").forEach(el => {
+        el.classList.toggle("active", el.dataset.subject === subject);
+      });
+      byId("startExamBtn").disabled = false;
+      updateSubjectSummary();
+    }
+
+    function startExamFlow(){
+      if(!state.chosenElective) return;
+
+      state.timeLeft = ((state.config?.durationMinutes || 120) * 60);
+      buildExam();
+      state.startedAt = Date.now();
+
+      hide(byId("subjectScreen"));
+      show(byId("examScreen"));
+
+      renderAll();
+      updateTimerUI();
+      startTimer();
+      saveLocalProgress(false);
+    }
+
+    function tryResumeAfterLogin(){
+      if(tryRestoreLocalProgress()){
+        hide(byId("subjectScreen"));
+        show(byId("examScreen"));
+        renderAll();
+        updateTimerUI();
+        startTimer();
+        return true;
+      }
+      return false;
+    }
+
+    function setupCalculator(){
+      const display = byId("calcDisplay");
+      document.querySelectorAll(".calc-key").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const val = btn.dataset.calc;
+
+          if(val === "C"){
+            display.value = "";
+            return;
+          }
+          if(val === "⌫"){
+            display.value = display.value.slice(0, -1);
+            return;
+          }
+          if(val === "="){
+            try{
+              const expr = display.value.replace(/%/g, "/100");
+              const result = Function(`"use strict"; return (${expr})`)();
+              display.value = String(result);
+            }catch(e){
+              display.value = "Error";
+            }
+            return;
+          }
+          if(display.value === "Error") display.value = "";
+          display.value += val;
+        });
+      });
+    }
+
+    async function init(){
+      setupCalculator();
+
+      byId("loginBtn").addEventListener("click", handleLogin);
+      byId("accessCode").addEventListener("keypress", e => {
+        if(e.key === "Enter") handleLogin();
+      });
+
+      byId("backToLoginBtn").addEventListener("click", () => {
+        hide(byId("subjectScreen"));
+        show(byId("accessScreen"));
+      });
+
+      document.querySelectorAll(".choice").forEach(el => {
+        el.addEventListener("click", () => handleSubjectChoice(el.dataset.subject));
+      });
+
+      byId("startExamBtn").addEventListener("click", () => {
+        if(tryResumeAfterLogin()) return;
+        startExamFlow();
+      });
+
+      byId("prevBtn").addEventListener("click", movePrev);
+      byId("nextBtn").addEventListener("click", moveNext);
+      byId("clearAnswerBtn").addEventListener("click", clearCurrentAnswer);
+      byId("submitExamBtn").addEventListener("click", () => {
+        const remaining = 180 - answeredCount();
+        if(remaining > 0){
+          if(confirm(`You still have ${remaining} unanswered question(s). Submit anyway?`)){
+            submitExam();
+          }
+        }else{
+          submitExam();
+        }
+      });
+
+      hide(byId("loadingScreen"));
+      show(byId("accessScreen"));
+    }
+
+    init();
+  </script>
+</body>
+</html>
