@@ -283,8 +283,7 @@
 
     function csvEscape(value){
       var str = String(value == null ? "" : value);
-      if(str.indexOf(",") !== -1 || str.indexOf('"') !== -1 || str.indexOf("
-") !== -1){
+      if(str.indexOf(",") !== -1 || str.indexOf('"') !== -1 || str.indexOf("\n") !== -1){
         return '"' + str.replace(/"/g, '""') + '"';
       }
       return str;
@@ -309,8 +308,7 @@
 
       byId("jsonOutput").value = JSON.stringify(obj, null, 2);
 
-      var csv = "accessCode,quizId,status,deviceToken,activatedAt,lastSeenAt,expiresAt,ownerName
-";
+      var csv = "accessCode,quizId,status,deviceToken,activatedAt,lastSeenAt,expiresAt,ownerName\n";
       for(var j=0;j<generatedList.length;j++){
         var x = generatedList[j];
         csv += [
@@ -322,8 +320,7 @@
           csvEscape(x.lastSeenAt || ""),
           csvEscape(x.expiresAt || ""),
           csvEscape(x.ownerName)
-        ].join(",") + "
-";
+        ].join(",") + "\n";
       }
 
       byId("csvOutput").value = csv;
