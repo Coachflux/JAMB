@@ -185,7 +185,7 @@
           </div>
         </div>
 
-        <div class="small">This version uses plain button listeners and simple JavaScript for maximum local-file reliability.</div>
+        <div class="small">Codes persist automatically until you generate new ones or clear them.</div>
       </div>
 
       <div class="card">
@@ -233,9 +233,39 @@
   <script>
     var generatedList = [];
     var CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    var STORAGE_KEY = "topscore_generated_codes";
 
     function byId(id){
       return document.getElementById(id);
+    }
+
+    function saveToStorage(){
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(generatedList));
+      } catch(e) {
+        console.warn("Could not save to localStorage:", e);
+      }
+    }
+
+    function loadFromStorage(){
+      try {
+        var stored = localStorage.getItem(STORAGE_KEY);
+        if(stored){
+          generatedList = JSON.parse(stored);
+          return true;
+        }
+      } catch(e) {
+        console.warn("Could not load from localStorage:", e);
+      }
+      return false;
+    }
+
+    function clearStorage(){
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch(e) {
+        console.warn("Could not clear localStorage:", e);
+      }
     }
 
     function setStatus(msg, isError){
@@ -326,6 +356,15 @@
       byId("csvOutput").value = csv;
     }
 
+    function restoreDisplay(){
+      if(generatedList.length > 0){
+        renderPreview();
+        renderOutputs();
+        updateStats(generatedList[0].accessCode ? generatedList[0].accessCode.length : 0);
+        setStatus("Restored " + generatedList.length + " codes from previous session.", false);
+      }
+    }
+
     function generateCodes(){
       var quizId = byId("quizId").value.trim();
       var count = parseInt(byId("count").value, 10);
@@ -367,6 +406,7 @@
         });
       }
 
+      saveToStorage();
       renderPreview();
       renderOutputs();
       updateStats(codeLength);
@@ -386,6 +426,7 @@
         generatedList[j] = temp;
       }
 
+      saveToStorage();
       renderPreview();
       renderOutputs();
       setStatus("Preview shuffled.", false);
@@ -393,6 +434,7 @@
 
     function clearAllData(){
       generatedList = [];
+      clearStorage();
       byId("previewBody").innerHTML = '<tr><td colspan="5">Nothing generated yet.</td></tr>';
       byId("jsonOutput").value = "";
       byId("csvOutput").value = "";
@@ -456,6 +498,11 @@
       }).catch(function(){
         setStatus("Couldn't copy CSV automatically.", true);
       });
+    }
+
+    // Initialize
+    if(loadFromStorage()){
+      restoreDisplay();
     }
 
     document.getElementById("generateBtn").addEventListener("click", generateCodes);
