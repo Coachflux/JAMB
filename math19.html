@@ -1,495 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MATHEMATICS - Representation of Data</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JAMB Mathematics - Representation of Data</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
+    :root{
+      --background:#1e1e2f;--shadow-in:#171723;--shadow-out:#25253b;
+      --text-primary:#f0f0ff;--text-secondary:#c0c0e0;
+      --accent:#1db954;--accent-secondary:#ff6b6b;--accent-tertiary:#4ecdc4;
+      --card-bg:#2a2a3f;--line:#8ea2ff;--grid:rgba(255,255,255,.08)
+    }
+    body.light{
+      --background:#e0e0e0;--shadow-in:#bebebe;--shadow-out:#ffffff;
+      --text-primary:#1a1a1a;--text-secondary:#444;--card-bg:#f8f8f8;--line:#2b59ff;--grid:rgba(0,0,0,.08)
+    }
+    body{
+      background:var(--background);color:var(--text-primary);
+      display:flex;justify-content:center;align-items:center;
+      min-height:100vh;overflow-x:hidden
+    }
+    .container{
+      width:100%;max-width:420px;height:750px;overflow-y:auto;
+      background:var(--background);border-radius:20px;
+      box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out);
+      padding-top:70px;padding-bottom:80px;position:relative
+    }
+    .neumorphic{
+      background:var(--background);
+      box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out);
+      border-radius:15px
+    }
+    .neumorphic-btn{
+      background:var(--background);border:none;border-radius:50%;
+      width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+      box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      cursor:pointer;color:var(--text-primary);font-size:18px;transition:all .3s ease
+    }
+    .neumorphic-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.95)
+    }
+    .top-bar{
+      position:fixed;top:0;width:100%;max-width:420px;
+      background:var(--background);padding:15px;
+      display:flex;align-items:center;justify-content:space-between;
+      box-shadow:0 5px 10px var(--shadow-in);z-index:20
+    }
+    .top-bar .header{font-size:16px;font-weight:900;color:var(--accent)}
+    .top-bar .right-icons{display:flex;gap:10px}
+
+    .progress-container{
+      position:fixed;top:70px;left:0;width:100%;max-width:420px;height:4px;
+      background:var(--shadow-in);z-index:15
+    }
+    .progress-bar{height:100%;background:var(--accent);width:0%;transition:width .3s}
+
+    .content{padding:20px 16px;line-height:1.7}
+    .main-header{
+      text-align:center;margin-bottom:26px;padding:20px;border-radius:20px;
+      background:rgba(29,185,84,.1)
+    }
+    .main-header h1{font-size:20px;margin-bottom:8px;color:var(--accent);font-weight:900}
+    .main-header p{font-size:13px;color:var(--text-secondary);font-weight:500}
+
+    .section-card{
+      background:var(--card-bg);padding:22px 18px;border-radius:20px;
+      box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out);
+      margin-bottom:22px;border-left:4px solid var(--accent)
+    }
+    .section-card h2{
+      font-size:18px;margin-bottom:12px;color:var(--accent);font-weight:900;
+      display:flex;align-items:center;gap:8px
+    }
+    .section-card h3{
+      font-size:15px;margin:16px 0 10px;color:var(--accent-tertiary);font-weight:800;
+      padding-left:12px;border-left:3px solid var(--accent-tertiary)
+    }
+    .section-card h4{
+      font-size:14px;margin:14px 0 8px;color:var(--accent-secondary);font-weight:800
+    }
+    .section-card p{margin-bottom:10px;font-size:14px;text-align:justify}
+    .section-card ul,.section-card ol{padding-left:20px;margin:10px 0}
+    .section-card li{margin-bottom:7px;font-size:14px}
+
+    .quick-facts{
+      background:linear-gradient(135deg,rgba(29,185,84,.1),rgba(78,205,196,.1));
+      padding:14px;border-radius:15px;margin:12px 0;border:1px solid rgba(29,185,84,.3)
+    }
+    .quick-facts li{font-size:13px}
+
+    .highlight-box{
+      background:rgba(78,205,196,.1);padding:12px 16px;border-radius:10px;margin:12px 0;
+      border-left:3px solid var(--accent-tertiary)
     }
 
-    :root {
-      --background: #1e1e2f;
-      --shadow-in: #171723;
-      --shadow-out: #25253b;
-      --text-primary: #f0f0ff;
-      --text-secondary: #c0c0e0;
-      --accent: #1db954;
-      --card-bg: #2a2a3f;
+    .memory-tip{
+      background:rgba(255,107,107,.1);padding:14px 16px;border-radius:12px;margin:14px 0;
+      border-left:4px solid var(--accent-secondary)
+    }
+    .memory-tip strong{color:var(--accent-secondary);display:block;margin-bottom:6px;font-size:14px}
+    .memory-tip p{margin:0;font-size:13px;font-style:italic}
+
+    .jamb-alert{
+      background:linear-gradient(135deg,rgba(255,193,7,.15),rgba(255,152,0,.1));
+      border:1px solid rgba(255,193,7,.4);border-radius:12px;padding:14px;margin:16px 0
+    }
+    .jamb-alert h4{color:#ffc107;margin-bottom:8px;font-size:14px;font-weight:900}
+    .jamb-alert li{font-size:13px}
+
+    .formula-box{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .formula-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:6px
+    }
+    .formula-box .line{
+      font-size:13px;margin-bottom:5px
     }
 
-    body.light {
-      --background: #e0e0e0;
-      --shadow-in: #bebebe;
-      --shadow-out: #ffffff;
-      --text-primary: #1a1a1a;
-      --text-secondary: #444;
-      --accent: #1db954;
-      --card-bg: #f8f8f8;
+    .example-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .example-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:8px
+    }
+    .example-box .answer{
+      margin-top:8px;font-size:13px;color:var(--accent-secondary);font-weight:800
     }
 
-    body {
-      background: var(--background);
-      color: var(--text-primary);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
+    .diagram-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:12px;
+      margin:14px 0
+    }
+    .diagram-title{
+      font-size:13px;
+      font-weight:900;
+      color:var(--accent-tertiary);
+      margin-bottom:8px
+    }
+    .diagram-caption{
+      font-size:12px;
+      color:var(--text-secondary);
+      margin-top:8px
+    }
+    svg{
+      width:100%;
+      height:auto;
+      display:block
     }
 
-    .container {
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      border-radius: 20px;
-      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
-      overflow: hidden;
-      position: relative;
-      height: 700px;
-      overflow-y: auto;
-      padding-top: 70px;
-      padding-bottom: 70px;
+    .table-container{
+      width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0;border-radius:12px;
+      box-shadow:3px 3px 8px var(--shadow-in),-3px -3px 8px var(--shadow-out)
     }
+    .summary-table{
+      width:100%;min-width:500px;border-collapse:separate;border-spacing:0;font-size:13px
+    }
+    .summary-table th{
+      background:var(--accent);color:#000;padding:12px 10px;text-align:left;font-weight:900;white-space:nowrap
+    }
+    .summary-table td{
+      padding:10px;border-bottom:1px solid var(--shadow-in);background:var(--card-bg);vertical-align:top
+    }
+    .summary-table tr:last-child td{border-bottom:none}
+    .summary-table tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+    .table-scroll-hint{font-size:11px;color:var(--text-secondary);text-align:center;margin-top:4px;font-style:italic}
 
-    .neumorphic {
-      background: var(--background);
-      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
-      border-radius: 15px;
+    .nav-bar{
+      position:fixed;bottom:0;width:100%;max-width:420px;background:var(--background);padding:10px;
+      display:flex;justify-content:space-around;box-shadow:0 -5px 10px var(--shadow-in);z-index:20
     }
+    .nav-bar .nav-item{text-align:center}
+    .nav-bar .nav-item.center button{
+      width:50px;height:50px;font-size:24px;background:var(--accent);
+      box-shadow:0 0 15px var(--accent),3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      color:#000
+    }
+    .nav-bar p{display:none;font-size:11px;margin-top:4px;color:var(--text-primary)}
 
-    .neumorphic-btn {
-      background: var(--background);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      cursor: pointer;
-      color: var(--text-primary);
-      font-size: 18px;
+    .explore-btn{
+      background:var(--accent);border:none;padding:14px 28px;border-radius:25px;color:#000;cursor:pointer;
+      box-shadow:4px 4px 8px var(--shadow-in),-4px -4px 8px var(--shadow-out);
+      font-size:16px;margin:22px auto;display:block;font-weight:900;transition:all .3s ease
     }
-
-    .neumorphic-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    .explore-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.98)
     }
-
-    .top-bar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 5px 10px var(--shadow-in);
-      z-index: 20;
+    .math{
+      font-weight:900;color:var(--accent-secondary)
     }
-
-    .top-bar .header {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--text-primary);
+    .label{
+      fill:var(--text-primary);
+      font-size:11px;
+      font-weight:700
     }
-
-    .top-bar .right-icons {
-      display: flex;
-      gap: 10px;
+    .axis{
+      stroke:var(--text-primary);
+      stroke-width:2
     }
-
-    .top-bar .profile-upload {
-      position: relative;
+    .bar{
+      fill:rgba(29,185,84,.75)
     }
-
-    .top-bar .profile-upload input {
-      opacity: 0;
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
+    .hist{
+      fill:rgba(78,205,196,.75)
     }
-
-    .content {
-      padding: 20px 16px;
-      line-height: 1.6;
+    .curve{
+      stroke:var(--line);
+      stroke-width:3;
+      fill:none
     }
-
-    .main-header {
-      text-align: center;
-      margin-bottom: 32px;
+    .line-soft{
+      stroke:var(--line);
+      stroke-width:3;
+      fill:none
     }
-
-    .main-header h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-      color: var(--accent);
-      font-weight: 800;
+    .line-dash{
+      stroke:var(--line);
+      stroke-width:2;
+      stroke-dasharray:6 4;
+      fill:none
     }
-
-    .main-header p.subtitle {
-      font-size: 16px;
-      color: var(--text-secondary);
-    }
-
-    .welcome-note {
-      background: var(--card-bg);
-      padding: 28px 20px;
-      border-radius: 20px;
-      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
-      margin-bottom: 30px;
-    }
-
-    .welcome-note h2 {
-      font-size: 22px;
-      margin: 32px 0 16px;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .welcome-note h2:first-child {
-      margin-top: 0;
-    }
-
-    .welcome-note h3 {
-      font-size: 18px;
-      margin: 24px 0 12px;
-      color: var(--accent);
-    }
-
-    .welcome-note p {
-      margin-bottom: 16px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note ul, .welcome-note ol {
-      padding-left: 24px;
-      margin: 16px 0;
-    }
-
-    .welcome-note li {
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note .highlight {
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .formula-box {
-      background: rgba(29, 185, 84, 0.1);
-      border-left: 4px solid var(--accent);
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box {
-      background: rgba(0,0,0,0.15);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box strong {
-      color: var(--accent);
-    }
-
-    .answer-box {
-      background: var(--accent);
-      color: #000;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      margin: 12px 0;
-      text-align: center;
-    }
-
-    .tips-box {
-      background: rgba(255, 193, 7, 0.1);
-      border-left: 4px solid #ffc107;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .warning-box {
-      background: rgba(244, 67, 54, 0.1);
-      border-left: 4px solid #f44336;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      margin: 16px 0;
-      border-radius: 12px;
-      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .table-wrapper::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-track {
-      background: var(--shadow-in);
-      border-radius: 3px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 3px;
-    }
-
-    table {
-      width: 100%;
-      min-width: 600px;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--shadow-in);
-      white-space: nowrap;
-    }
-
-    th {
-      color: var(--accent);
-      font-weight: bold;
-      background: rgba(0,0,0,0.1);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .explore-btn {
-      background: var(--accent);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      color: #000;
-      cursor: pointer;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      font-size: 16px;
-      margin: 24px auto 0;
-      display: block;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .explore-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 10px;
-      display: flex;
-      justify-content: space-around;
-      box-shadow: 0 -5px 10px var(--shadow-in);
-      z-index: 20;
-    }
-
-    .nav-bar .nav-item {
-      text-align: center;
-      position: relative;
-    }
-
-    .nav-bar .nav-item button {
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.center button {
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
-      background: var(--accent);
-      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      color: #000;
-    }
-
-    .nav-bar .nav-item.active button {
-      background: var(--accent);
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar .nav-item p {
-      display: none;
-      font-size: 12px;
-      margin-top: 5px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.active p {
-      display: block;
-    }
-
-    .memory-aid {
-      background: rgba(29, 185, 84, 0.15);
-      border-left: 4px solid var(--accent);
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-style: italic;
-      font-weight: bold;
-    }
-
-    .component-box {
-      background: rgba(0,0,0,0.1);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      border-left: 4px solid var(--accent);
-    }
-
-    .component-box h4 {
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-
-    .section-header {
-      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
-      color: #000;
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin: 24px 0;
-      text-align: center;
-      font-weight: bold;
-      font-size: 16px;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-    }
-
-    .shortcut-box {
-      background: rgba(255, 193, 7, 0.2);
-      border: 2px solid #ffc107;
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-    }
-
-    .shortcut-box h4 {
-      color: #ffc107;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-
-    .checklist-box {
-      background: rgba(29, 185, 84, 0.1);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-    }
-
-    .checklist-box li {
-      list-style: none;
-      margin-bottom: 8px;
-    }
-
-    .checklist-box li:before {
-      content: "✅ ";
-      color: var(--accent);
-    }
-
-    .practice-box {
-      background: rgba(33, 150, 243, 0.1);
-      border-left: 4px solid #2196f3;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .practice-box strong {
-      color: #2196f3;
-    }
-
-    .fraction {
-      display: inline-block;
-      text-align: center;
-      vertical-align: middle;
-      margin: 0 2px;
-    }
-
-    .fraction .top {
-      border-bottom: 1px solid var(--text-primary);
-      display: block;
-      padding: 0 2px;
-    }
-
-    .fraction .bottom {
-      display: block;
-      padding: 0 2px;
-    }
-
-    .sigma {
-      font-family: 'Courier New', monospace;
-      color: var(--accent);
-    }
+    .mark{fill:var(--accent-secondary)}
+    .slice1{fill:#1db954}
+    .slice2{fill:#4ecdc4}
+    .slice3{fill:#ff6b6b}
+    .slice4{fill:#f7b731}
   </style>
 </head>
+
 <body class="dark">
-  <div class="container">
-    <!-- Top Fixed Bar -->
+  <div class="container" id="scroll-container">
+    <div class="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
+
     <div class="top-bar neumorphic">
-      <button class="neumorphic-btn">←</button>
+      <button class="neumorphic-btn" onclick="history.back()">←</button>
       <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-        <button class="neumorphic-btn profile-upload">
-          🚀
-          <input type="file" accept="image/*" id="profile-upload">
-        </button>
+        <button class="neumorphic-btn" onclick="alert('📌 Saved for revision!')">🚀</button>
       </div>
     </div>
 
-    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Representation of Data! 📊</h1>
-        <p class="subtitle">– JAMB Chapter 19</p>
+        <h1>📊 Representation of Data</h1>
+        <p>JAMB Mathematics • statistics • tables • graphs • mean • median • mode • dispersion • ogive</p>
       </div>
 
-      <div class="welcome-note neumorphic">
-        <h2>📊 Chapter 19: Representation of Data</h2>
-        
-        <p>This chapter covers <span class="highlight">statistics and data visualization</span> - crucial topics for your JAMB exam.</p>
+      <div class="section-card">
+        <h2>📋 Chapter Overview</h2>
+        <p>This chapter covers <strong>statistics and data visualization</strong>, which are very important for JAMB.</p>
+        <p>You need to know how data is classified, displayed, summarized, and interpreted.</p>
 
-        <div class="section-header">1️⃣ TYPES OF DATA</div>
+        <div class="quick-facts">
+          <ul>
+            <li>Know the difference between grouped and ungrouped data</li>
+            <li>Learn which graph fits which type of data</li>
+            <li>Be confident with mean, median, and mode formulas</li>
+            <li>Revise cumulative frequency and ogive interpretation</li>
+          </ul>
+        </div>
 
-        <h2>Data Classification 📋</h2>
-        
-        <div class="table-wrapper">
-          <table>
+        <div class="memory-tip">
+          <strong>🧠 Big idea</strong>
+          <p>Representation of data is about organizing information clearly so that patterns, averages, and comparisons become easy to see.</p>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>1️⃣ Types of Data</h2>
+
+        <h3>Data Classification</h3>
+        <div class="table-container">
+          <table class="summary-table" style="min-width:860px">
             <tr>
               <th>Type</th>
               <th>Description</th>
@@ -507,238 +300,354 @@
             </tr>
             <tr>
               <td>Quantitative (Continuous)</td>
-              <td>Measurable, any value in range</td>
+              <td>Measurable and can take any value in a range</td>
               <td>Height, weight, temperature</td>
             </tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe left/right to see more →</div>
+      </div>
 
-        <div class="section-header">2️⃣ DATA REPRESENTATION METHODS</div>
+      <div class="section-card">
+        <h2>2️⃣ Data Representation Methods</h2>
 
-        <h2>A. Frequency Distribution Tables 📊</h2>
-        
+        <h3>A. Frequency Distribution Tables</h3>
         <div class="formula-box">
-          <strong>Key Terms:</strong><br>
-          • <span class="highlight">Class width:</span> Upper boundary − Lower boundary<br>
-          • <span class="highlight">Midpoint:</span> (Lower limit + Upper limit) ÷ 2
+          <div class="title">Key terms</div>
+          <div class="line"><span class="math">Class width = Upper boundary - Lower boundary</span></div>
+          <div class="line"><span class="math">Midpoint = (Lower limit + Upper limit)/2</span></div>
         </div>
 
-        <h3>🔢 Example 1: Ungrouped Data</h3>
-        <p>Raw data: 3, 5, 2, 3, 4, 5, 3, 2, 4, 3</p>
-        
-        <div class="calculation-box">
-          Value (x) | Tally | Frequency (f)<br>
-          ----------+-------+--------------<br>
-              2     |  II   |      2<br>
-              3     |  IIII |      4<br>
-              4     |  II   |      2<br>
-              5     |  II   |      2<br>
-          ----------+-------+--------------<br>
-          <strong>Total</strong> |       |     <strong>10</strong>
+        <div class="example-box">
+          <div class="title">Example 1: Ungrouped Data</div>
+          <p>Raw data: 3, 5, 2, 3, 4, 5, 3, 2, 4, 3</p>
+
+          <div class="table-container">
+            <table class="summary-table" style="min-width:620px">
+              <tr>
+                <th>Value (x)</th>
+                <th>Tally</th>
+                <th>Frequency (f)</th>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>II</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>IIII</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>II</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>II</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td></td>
+                <td>10</td>
+              </tr>
+            </table>
+          </div>
+          <div class="table-scroll-hint">← Swipe left/right to see more →</div>
         </div>
 
-        <h3>🔢 Example 2: Grouped Data</h3>
-        
-        <div class="calculation-box">
-          Height (cm) | f | Class Boundaries | Midpoint (x)<br>
-          ------------+---+------------------+------------<br>
-           150-154    | 3 |   149.5-154.5    |    152<br>
-           155-159    | 7 |   154.5-159.5    |    157<br>
-           160-164    | 12|   159.5-164.5    |    162<br>
-           165-169    | 5 |   164.5-169.5    |    167<br>
-           170-174    | 3 |   169.5-174.5    |    172
+        <div class="example-box">
+          <div class="title">Example 2: Grouped Data</div>
+          <div class="table-container">
+            <table class="summary-table" style="min-width:860px">
+              <tr>
+                <th>Height (cm)</th>
+                <th>f</th>
+                <th>Class Boundaries</th>
+                <th>Midpoint (x)</th>
+              </tr>
+              <tr>
+                <td>150-154</td>
+                <td>3</td>
+                <td>149.5-154.5</td>
+                <td>152</td>
+              </tr>
+              <tr>
+                <td>155-159</td>
+                <td>7</td>
+                <td>154.5-159.5</td>
+                <td>157</td>
+              </tr>
+              <tr>
+                <td>160-164</td>
+                <td>12</td>
+                <td>159.5-164.5</td>
+                <td>162</td>
+              </tr>
+              <tr>
+                <td>165-169</td>
+                <td>5</td>
+                <td>164.5-169.5</td>
+                <td>167</td>
+              </tr>
+              <tr>
+                <td>170-174</td>
+                <td>3</td>
+                <td>169.5-174.5</td>
+                <td>172</td>
+              </tr>
+            </table>
+          </div>
+          <div class="table-scroll-hint">← Swipe left/right to see more →</div>
         </div>
 
-        <h2>B. Bar Charts 📊</h2>
-        
-        <div class="memory-aid">
-          💡 Used for discrete or categorical data. Bars have equal width and gaps between them.
+        <h3>B. Bar Charts</h3>
+        <p>Bar charts are used for <strong>discrete or categorical data</strong>. The bars have equal width and there are <strong>gaps</strong> between them.</p>
+
+        <div class="diagram-box">
+          <div class="diagram-title">Bar chart idea</div>
+          <svg viewBox="0 0 340 220" aria-label="Bar chart diagram">
+            <line x1="40" y1="190" x2="310" y2="190" class="axis"/>
+            <line x1="50" y1="205" x2="50" y2="30" class="axis"/>
+            <rect x="80" y="120" width="35" height="70" class="bar"/>
+            <rect x="140" y="90" width="35" height="100" class="bar"/>
+            <rect x="200" y="60" width="35" height="130" class="bar"/>
+            <text x="86" y="205" class="label">A</text>
+            <text x="146" y="205" class="label">B</text>
+            <text x="206" y="205" class="label">C</text>
+          </svg>
+          <div class="diagram-caption">Bar charts have spaces between bars.</div>
         </div>
 
-        <h2>C. Histograms 📈</h2>
-        
+        <h3>C. Histograms</h3>
+        <p>Histograms are used for <strong>continuous data</strong>. The bars <strong>touch each other</strong> because the classes are continuous.</p>
+
+        <div class="diagram-box">
+          <div class="diagram-title">Histogram idea</div>
+          <svg viewBox="0 0 340 220" aria-label="Histogram diagram">
+            <line x1="40" y1="190" x2="310" y2="190" class="axis"/>
+            <line x1="50" y1="205" x2="50" y2="30" class="axis"/>
+            <rect x="70" y="130" width="45" height="60" class="hist"/>
+            <rect x="115" y="95" width="45" height="95" class="hist"/>
+            <rect x="160" y="60" width="45" height="130" class="hist"/>
+            <rect x="205" y="100" width="45" height="90" class="hist"/>
+          </svg>
+          <div class="diagram-caption">Histogram bars touch each other because the data is continuous.</div>
+        </div>
+
+        <h3>D. Frequency Polygon</h3>
+        <p>To draw a frequency polygon:</p>
+        <ol>
+          <li>Find the midpoint of each class interval</li>
+          <li>Plot the points <span class="math">(midpoint, frequency)</span></li>
+          <li>Join the points with straight lines</li>
+          <li>Extend to the x-axis at both ends</li>
+        </ol>
+
+        <h3>E. Pie Charts</h3>
         <div class="formula-box">
-          <strong>Key Difference:</strong> Histograms touch each other (no gaps) - used for continuous data. Area represents frequency.
+          <div class="title">Sector angle</div>
+          <div class="line"><span class="math">Sector Angle = (Component / Total) × 360°</span></div>
         </div>
 
-        <h2>D. Frequency Polygon 📉</h2>
-        
-        <div class="component-box">
-          <h4>How to Draw:</h4>
-          <p>1. Find midpoint of each class interval</p>
-          <p>2. Plot point (midpoint, frequency)</p>
-          <p>3. Join points with straight lines</p>
-          <p>4. Extend to x-axis at both ends</p>
+        <div class="example-box">
+          <div class="title">Example: Pie Chart Calculation</div>
+          <p>Expenditure: Food ₦40k, Rent ₦30k, Transport ₦20k, Others ₦10k. Total = ₦100k</p>
+          <p><span class="math">Food = (40,000 / 100,000) × 360° = 144°</span></p>
+          <p><span class="math">Rent = (30,000 / 100,000) × 360° = 108°</span></p>
+          <p><span class="math">Transport = (20,000 / 100,000) × 360° = 72°</span></p>
+          <p><span class="math">Others = (10,000 / 100,000) × 360° = 36°</span></p>
+          <div class="answer">Answer: Food 144°, Rent 108°, Transport 72°, Others 36°</div>
         </div>
 
-        <h2>E. Pie Charts 🥧</h2>
-        
+        <div class="diagram-box">
+          <div class="diagram-title">Pie chart idea</div>
+          <svg viewBox="0 0 340 240" aria-label="Pie chart diagram">
+            <circle cx="170" cy="120" r="80" fill="none" stroke="var(--text-primary)" stroke-width="2"/>
+            <path d="M170 120 L170 40 A80 80 0 0 1 235 166 Z" class="slice1"/>
+            <path d="M170 120 L235 166 A80 80 0 0 1 114 177 Z" class="slice2"/>
+            <path d="M170 120 L114 177 A80 80 0 0 1 101 72 Z" class="slice3"/>
+            <path d="M170 120 L101 72 A80 80 0 0 1 170 40 Z" class="slice4"/>
+            <text x="212" y="88" class="label">Food</text>
+            <text x="215" y="180" class="label">Rent</text>
+            <text x="85" y="182" class="label">Transport</text>
+            <text x="88" y="70" class="label">Others</text>
+          </svg>
+          <div class="diagram-caption">A pie chart represents parts of a whole using sector angles.</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>3️⃣ Measures of Central Tendency</h2>
+
+        <h3>A. Mean (Average)</h3>
         <div class="formula-box">
-          <strong>Sector Angle =</strong> <span class="fraction"><span class="top">Component</span><span class="bottom">Total</span></span> × 360°
+          <div class="title">Mean formulas</div>
+          <div class="line"><span class="math">Ungrouped: x̄ = ∑x / n</span> or <span class="math">∑fx / ∑f</span></div>
+          <div class="line"><span class="math">Grouped: x̄ = ∑fx / ∑f</span>, where <span class="math">x</span> is the midpoint</div>
         </div>
 
-        <h3>🔢 Example: Pie Chart Calculation</h3>
-        <p>Expenditure: Food ₦40k, Rent ₦30k, Transport ₦20k, Others ₦10k (Total ₦100k)</p>
-        
-        <div class="calculation-box">
-          • Food: <span class="fraction"><span class="top">40,000</span><span class="bottom">100,000</span></span> × 360° = <strong>144°</strong><br>
-          • Rent: <span class="fraction"><span class="top">30,000</span><span class="bottom">100,000</span></span> × 360° = <strong>108°</strong><br>
-          • Transport: <span class="fraction"><span class="top">20,000</span><span class="bottom">100,000</span></span> × 360° = <strong>72°</strong><br>
-          • Others: <span class="fraction"><span class="top">10,000</span><span class="bottom">100,000</span></span> × 360° = <strong>36°</strong>
+        <div class="example-box">
+          <div class="title">Example 3: Mean from Ungrouped Data</div>
+          <div class="table-container">
+            <table class="summary-table" style="min-width:620px">
+              <tr>
+                <th>x</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+              </tr>
+              <tr>
+                <td>f</td>
+                <td>4</td>
+                <td>6</td>
+                <td>5</td>
+                <td>3</td>
+                <td>2</td>
+              </tr>
+            </table>
+          </div>
+          <div class="table-scroll-hint">← Swipe left/right to see more →</div>
+          <p><span class="math">∑fx = (2×4) + (3×6) + (4×5) + (5×3) + (6×2)</span></p>
+          <p><span class="math">= 8 + 18 + 20 + 15 + 12 = 73</span></p>
+          <p><span class="math">∑f = 4 + 6 + 5 + 3 + 2 = 20</span></p>
+          <p><span class="math">Mean = 73/20 = 3.65</span></p>
+          <div class="answer">Answer: 3.65</div>
         </div>
 
-        <div class="section-header">3️⃣ MEASURES OF CENTRAL TENDENCY</div>
+        <div class="example-box">
+          <div class="title">Example 4: Mean from Grouped Data</div>
+          <p>Class: 0-10, 10-20, 20-30, 30-40, 40-50</p>
+          <p>Frequency: 3, 5, 8, 4, 2</p>
+          <p>Midpoints: 5, 15, 25, 35, 45</p>
+          <p><span class="math">∑fx = (5×3) + (15×5) + (25×8) + (35×4) + (45×2)</span></p>
+          <p><span class="math">= 15 + 75 + 200 + 140 + 90 = 520</span></p>
+          <p><span class="math">∑f = 3 + 5 + 8 + 4 + 2 = 22</span></p>
+          <p><span class="math">Mean = 520/22 = 23.64</span> (2 d.p.)</p>
+          <div class="answer">Answer: 23.64</div>
+        </div>
 
-        <h2>A. Mean (Average) 📐</h2>
-        
+        <h3>B. Median</h3>
         <div class="formula-box">
-          <strong>Ungrouped:</strong> x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span> x</span><span class="bottom">n</span></span> or <span class="fraction"><span class="top"><span class="sigma">∑</span> fx</span><span class="bottom"><span class="sigma">∑</span> f</span></span><br><br>
-          
-          <strong>Grouped:</strong> x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span> fx</span><span class="bottom"><span class="sigma">∑</span> f</span></span> where x = midpoint
+          <div class="title">Grouped median formula</div>
+          <div class="line"><span class="math">Median = L + [(N/2 - Fb) / fm] × c</span></div>
+          <div class="line">Where <span class="math">L</span> = lower boundary, <span class="math">N</span> = total frequency, <span class="math">Fb</span> = cumulative frequency before, <span class="math">fm</span> = median class frequency, <span class="math">c</span> = class width</div>
         </div>
 
-        <h3>🔢 Example 3: Mean from Ungrouped Data</h3>
-        
-        <div class="calculation-box">
-          x  | 2 | 3 | 4 | 5 | 6<br>
-          f  | 4 | 6 | 5 | 3 | 2<br><br>
-          
-          <span class="sigma">∑</span>fx = (2×4) + (3×6) + (4×5) + (5×3) + (6×2)<br>
-              = 8 + 18 + 20 + 15 + 12 = <strong>73</strong><br><br>
-          
-          <span class="sigma">∑</span>f = 4 + 6 + 5 + 3 + 2 = <strong>20</strong><br><br>
-          
-          Mean = <span class="fraction"><span class="top">73</span><span class="bottom">20</span></span> = <strong>3.65</strong>
+        <div class="example-box">
+          <div class="title">Example 5: Median from Grouped Data</div>
+          <p>Class: 10-20, 20-30, 30-40, 40-50, 50-60</p>
+          <p>Frequency: 4, 6, 10, 7, 3</p>
+          <p>Cumulative: 4, 10, 20, 27, 30</p>
+          <p><span class="math">N = 30</span>, so <span class="math">N/2 = 15</span></p>
+          <p>Median class is <span class="math">30-40</span></p>
+          <p><span class="math">L = 29.5, Fb = 10, fm = 10, c = 10</span></p>
+          <p><span class="math">Median = 29.5 + [(15 - 10)/10] × 10</span></p>
+          <p><span class="math">= 29.5 + 5 = 34.5</span></p>
+          <div class="answer">Answer: 34.5</div>
         </div>
 
-        <h3>🔢 Example 4: Mean from Grouped Data</h3>
-        
-        <div class="calculation-box">
-          Class   | 0-10 | 10-20 | 20-30 | 30-40 | 40-50<br>
-          f       |   3  |   5   |   8   |   4   |   2<br><br>
-          
-          Midpoint (x): 5, 15, 25, 35, 45<br><br>
-          
-          <span class="sigma">∑</span>fx = (5×3) + (15×5) + (25×8) + (35×4) + (45×2)<br>
-              = 15 + 75 + 200 + 140 + 90 = <strong>520</strong><br><br>
-          
-          <span class="sigma">∑</span>f = 3 + 5 + 8 + 4 + 2 = <strong>22</strong><br><br>
-          
-          Mean = <span class="fraction"><span class="top">520</span><span class="bottom">22</span></span> = <strong>23.64</strong> (2 d.p.)
-        </div>
-
-        <h2>B. Median 📊</h2>
-        
+        <h3>C. Mode</h3>
         <div class="formula-box">
-          <strong>Grouped Data Formula:</strong><br>
-          Median = L + <span class="fraction"><span class="top"><span class="fraction"><span class="top">N</span><span class="bottom">2</span></span> - F<sub>b</sub></span><span class="bottom">f<sub>m</sub></span></span> × c<br><br>
-          
-          Where: L = Lower boundary, N = Total frequency, F<sub>b</sub> = Cumulative freq before, f<sub>m</sub> = Median class freq, c = Class width
+          <div class="title">Grouped mode formula</div>
+          <div class="line"><span class="math">Mode = L + [D1 / (D1 + D2)] × c</span></div>
+          <div class="line">Where <span class="math">D1 = modal frequency - previous frequency</span> and <span class="math">D2 = modal frequency - next frequency</span></div>
         </div>
 
-        <h3>🔢 Example 5: Median from Grouped Data</h3>
-        
-        <div class="calculation-box">
-          Class       | 10-20 | 20-30 | 30-40 | 40-50 | 50-60<br>
-          Frequency   |   4   |   6   |   10  |   7   |   3<br>
-          Cumulative  |   4   |   10  |   20  |   27  |   30<br><br>
-          
-          N = 30, N/2 = 15<br>
-          Median class: 30-40 (where cumulative freq reaches 15)<br><br>
-          
-          L = 29.5, F<sub>b</sub> = 10, f<sub>m</sub> = 10, c = 10<br><br>
-          
-          Median = 29.5 + [<span class="fraction"><span class="top">15 - 10</span><span class="bottom">10</span></span>] × 10<br>
-                 = 29.5 + 5 = <strong>34.5</strong>
+        <div class="example-box">
+          <div class="title">Example 6: Mode from Grouped Data</div>
+          <p>Class: 0-10, 10-20, 20-30, 30-40, 40-50</p>
+          <p>Frequency: 3, 7, 12, 6, 2</p>
+          <p>Modal class is <span class="math">20-30</span></p>
+          <p><span class="math">L = 19.5, D1 = 12 - 7 = 5, D2 = 12 - 6 = 6, c = 10</span></p>
+          <p><span class="math">Mode = 19.5 + [5/(5+6)] × 10</span></p>
+          <p><span class="math">= 19.5 + 50/11</span></p>
+          <p><span class="math">= 19.5 + 4.55 = 24.05</span></p>
+          <div class="answer">Answer: 24.05</div>
         </div>
+      </div>
 
-        <h2>C. Mode 📈</h2>
-        
+      <div class="section-card">
+        <h2>4️⃣ Measures of Dispersion</h2>
+
+        <h3>Range, Variance, and Standard Deviation</h3>
         <div class="formula-box">
-          <strong>Grouped Data Formula:</strong><br>
-          Mode = L + <span class="fraction"><span class="top">D<sub>1</sub></span><span class="bottom">D<sub>1</sub> + D<sub>2</sub></span></span> × c<br><br>
-          
-          Where: L = Lower boundary of modal class, D<sub>1</sub> = Modal freq − Previous freq, D<sub>2</sub> = Modal freq − Next freq
+          <div class="title">Main formulas</div>
+          <div class="line"><span class="math">Range = Highest value - Lowest value</span></div>
+          <div class="line"><span class="math">Variance = σ² = (∑fx² / ∑f) - x̄²</span></div>
+          <div class="line"><span class="math">Standard Deviation = σ = √Variance</span></div>
         </div>
 
-        <h3>🔢 Example 6: Mode from Grouped Data</h3>
-        
-        <div class="calculation-box">
-          Class       | 0-10 | 10-20 | 20-30 | 30-40 | 40-50<br>
-          Frequency   |   3  |   7   |  12   |   6   |   2<br><br>
-          
-          Modal class: 20-30 (highest freq = 12)<br>
-          L = 19.5, D<sub>1</sub> = 12-7 = 5, D<sub>2</sub> = 12-6 = 6, c = 10<br><br>
-          
-          Mode = 19.5 + [<span class="fraction"><span class="top">5</span><span class="bottom">5+6</span></span>] × 10<br>
-               = 19.5 + <span class="fraction"><span class="top">50</span><span class="bottom">11</span></span><br>
-               = 19.5 + 4.55 = <strong>24.05</strong>
+        <div class="example-box">
+          <div class="title">Example 7: Standard Deviation</div>
+          <p>x: 2, 4, 6, 8, 10</p>
+          <p>f: 3, 5, 8, 4, 2</p>
+          <p><strong>Step 1: Find mean</strong></p>
+          <p><span class="math">∑fx = 6 + 20 + 48 + 32 + 20 = 126</span></p>
+          <p><span class="math">∑f = 22</span></p>
+          <p><span class="math">Mean = 126/22 = 5.727</span></p>
+          <p><strong>Step 2: Find ∑fx²</strong></p>
+          <p><span class="math">x²: 4, 16, 36, 64, 100</span></p>
+          <p><span class="math">fx²: 12, 80, 288, 256, 200</span></p>
+          <p><span class="math">∑fx² = 836</span></p>
+          <p><strong>Step 3: Variance</strong></p>
+          <p><span class="math">σ² = (836/22) - (5.727)²</span></p>
+          <p><span class="math">= 38 - 32.8 = 5.2</span></p>
+          <p><strong>Step 4: Standard deviation</strong></p>
+          <p><span class="math">σ = √5.2 = 2.28</span></p>
+          <div class="answer">Answer: Standard deviation = 2.28</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>5️⃣ Cumulative Frequency and Ogive</h2>
+
+        <h3>Ogive (Cumulative Frequency Curve)</h3>
+        <p>An ogive shows the <strong>running total</strong> of frequencies.</p>
+
+        <div class="highlight-box">
+          <p><strong>From an ogive:</strong> Median is read near <span class="math">N/2</span>, lower quartile near <span class="math">N/4</span>, and upper quartile near <span class="math">3N/4</span>.</p>
         </div>
 
-        <div class="section-header">4️⃣ MEASURES OF DISPERSION</div>
-
-        <h2>Range, Variance & Standard Deviation 📊</h2>
-        
-        <div class="formula-box">
-          <strong>Range:</strong> Highest value − Lowest value<br><br>
-          
-          <strong>Variance:</strong> σ² = <span class="fraction"><span class="top"><span class="sigma">∑</span>fx²</span><span class="bottom"><span class="sigma">∑</span>f</span></span> − x̄²<br><br>
-          
-          <strong>Standard Deviation:</strong> σ = <span class="sigma">√</span>Variance
+        <div class="example-box">
+          <div class="title">Example 8: Ogive</div>
+          <p>Upper boundaries: &lt;10, &lt;20, &lt;30, &lt;40, &lt;50</p>
+          <p>Cumulative frequencies: 3, 8, 16, 24, 30</p>
+          <p>Plot the points:</p>
+          <p><span class="math">(10,3), (20,8), (30,16), (40,24), (50,30)</span></p>
+          <p>From the ogive:</p>
+          <p><span class="math">Median ≈ 32</span> where <span class="math">y = 15</span></p>
+          <p><span class="math">Q1 ≈ 22</span> where <span class="math">y = 7.5</span></p>
+          <p><span class="math">Q3 ≈ 42</span> where <span class="math">y = 22.5</span></p>
+          <div class="answer">Answer: Median ≈ 32, Q1 ≈ 22, Q3 ≈ 42</div>
         </div>
 
-        <h3>🔢 Example 7: Standard Deviation</h3>
-        
-        <div class="calculation-box">
-          x  | 2 | 4 | 6 | 8 | 10<br>
-          f  | 3 | 5 | 8 | 4 | 2<br><br>
-          
-          <strong>Step 1:</strong> Find mean<br>
-          <span class="sigma">∑</span>fx = 6 + 20 + 48 + 32 + 20 = 126<br>
-          <span class="sigma">∑</span>f = 22<br>
-          Mean = <span class="fraction"><span class="top">126</span><span class="bottom">22</span></span> = 5.727<br><br>
-          
-          <strong>Step 2:</strong> Calculate fx²<br>
-          x² |  4  |  16  |  36  |  64  | 100<br>
-          fx²| 12  |  80  | 288  | 256  | 200<br>
-          <span class="sigma">∑</span>fx² = 836<br><br>
-          
-          <strong>Step 3:</strong> Variance<br>
-          σ² = (<span class="fraction"><span class="top">836</span><span class="bottom">22</span></span>) − (5.727)²<br>
-             = 38 − 32.8 = <strong>5.2</strong><br><br>
-          
-          <strong>Step 4:</strong> Standard Deviation<br>
-          σ = <span class="sigma">√</span>5.2 = <strong>2.28</strong>
+        <div class="diagram-box">
+          <div class="diagram-title">Ogive idea</div>
+          <svg viewBox="0 0 340 220" aria-label="Ogive diagram">
+            <line x1="40" y1="190" x2="310" y2="190" class="axis"/>
+            <line x1="50" y1="205" x2="50" y2="20" class="axis"/>
+            <path d="M70 175 L120 150 L170 110 L220 70 L270 40" class="curve"/>
+            <circle cx="70" cy="175" r="4" class="mark"/>
+            <circle cx="120" cy="150" r="4" class="mark"/>
+            <circle cx="170" cy="110" r="4" class="mark"/>
+            <circle cx="220" cy="70" r="4" class="mark"/>
+            <circle cx="270" cy="40" r="4" class="mark"/>
+          </svg>
+          <div class="diagram-caption">An ogive rises steadily because cumulative frequency keeps increasing.</div>
         </div>
+      </div>
 
-        <div class="section-header">5️⃣ CUMULATIVE FREQUENCY & OGIVE</div>
+      <div class="section-card">
+        <h2>📋 Essential Formulas Summary</h2>
 
-        <h2>Ogive (Cumulative Frequency Curve) 📈</h2>
-        
-        <div class="memory-aid">
-          💡 Shows "running total" of frequencies. From ogive: Median ≈ where y = N/2, Q1 ≈ where y = N/4, Q3 ≈ where y = 3N/4
-        </div>
-
-        <h3>🔢 Example 8: Ogive</h3>
-        
-        <div class="calculation-box">
-          Upper Boundary | <10 | <20 | <30 | <40 | <50<br>
-          Cumulative f   |  3  |  8  |  16 |  24 |  30<br><br>
-          
-          Plot: (10,3), (20,8), (30,16), (40,24), (50,30)<br><br>
-          
-          From ogive:<br>
-          • Median ≈ 32 (where y = 15)<br>
-          • Lower quartile (Q1) ≈ 22 (where y = 7.5)<br>
-          • Upper quartile (Q3) ≈ 42 (where y = 22.5)
-        </div>
-
-        <div class="section-header">📋 ESSENTIAL FORMULAS SUMMARY</div>
-
-        <h2>All Statistics Formulas 📚</h2>
-        
-        <div class="table-wrapper">
-          <table>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Concept</th>
               <th>Formula</th>
@@ -746,138 +655,142 @@
             </tr>
             <tr>
               <td>Mean (Grouped)</td>
-              <td>x̄ = <span class="fraction"><span class="top"><span class="sigma">∑</span>fx</span><span class="bottom"><span class="sigma">∑</span>f</span></span></td>
+              <td><span class="math">x̄ = ∑fx / ∑f</span></td>
               <td>x = midpoint, f = frequency</td>
             </tr>
             <tr>
               <td>Median (Grouped)</td>
-              <td>L + <span class="fraction"><span class="top"><span class="fraction"><span class="top">N</span><span class="bottom">2</span></span> − F<sub>b</sub></span><span class="bottom">f<sub>m</sub></span></span> × c</td>
-              <td>L=lower boundary, N=total freq</td>
+              <td><span class="math">L + [(N/2 - Fb)/fm] × c</span></td>
+              <td>L = lower boundary, N = total frequency</td>
             </tr>
             <tr>
               <td>Mode (Grouped)</td>
-              <td>L + <span class="fraction"><span class="top">D<sub>1</sub></span><span class="bottom">D<sub>1</sub> + D<sub>2</sub></span></span> × c</td>
-              <td>D₁=modal−prev, D₂=modal−next</td>
+              <td><span class="math">L + [D1/(D1 + D2)] × c</span></td>
+              <td>D1 = modal-prev, D2 = modal-next</td>
             </tr>
             <tr>
               <td>Range</td>
-              <td>Highest − Lowest</td>
+              <td><span class="math">Highest - Lowest</span></td>
               <td></td>
             </tr>
             <tr>
               <td>Variance</td>
-              <td><span class="fraction"><span class="top"><span class="sigma">∑</span>fx²</span><span class="bottom"><span class="sigma">∑</span>f</span></span> − x̄²</td>
-              <td>Alternative: <span class="fraction"><span class="top"><span class="sigma">∑</span>f(x−x̄)²</span><span class="bottom"><span class="sigma">∑</span>f</span></span></td>
+              <td><span class="math">(∑fx² / ∑f) - x̄²</span></td>
+              <td>Alternative form also exists</td>
             </tr>
             <tr>
               <td>Standard Deviation</td>
-              <td>σ = <span class="sigma">√</span>Variance</td>
+              <td><span class="math">σ = √Variance</span></td>
               <td></td>
             </tr>
             <tr>
               <td>Class Width</td>
-              <td>Upper boundary − Lower boundary</td>
+              <td><span class="math">Upper boundary - Lower boundary</span></td>
               <td></td>
             </tr>
             <tr>
               <td>Midpoint</td>
-              <td><span class="fraction"><span class="top">Lower + Upper</span><span class="bottom">2</span></span></td>
+              <td><span class="math">(Lower + Upper)/2</span></td>
               <td></td>
             </tr>
             <tr>
               <td>Pie Chart Angle</td>
-              <td><span class="fraction"><span class="top">Component</span><span class="bottom">Total</span></span> × 360°</td>
+              <td><span class="math">(Component / Total) × 360°</span></td>
               <td></td>
             </tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe left/right to see more →</div>
+      </div>
 
-        <div class="practice-box">
-          <p><strong>✏️ PRACTICE QUESTION:</strong></p>
-          <p style="margin-top: 8px;">Marks distribution of 50 students:</p>
+      <div class="section-card">
+        <h2>✏️ Practice Question</h2>
+
+        <div class="example-box">
+          <div class="title">Marks Distribution of 50 Students</div>
           <p>Marks: 20-29, 30-39, 40-49, 50-59, 60-69, 70-79</p>
-          <p>Freq: 4, 8, 12, 10, 9, 7</p>
-          <p style="margin-top: 12px;"><strong>Find:</strong> (a) Mean (b) Median (c) Mode</p>
-          <p style="margin-top: 8px; color: var(--accent); font-weight: bold;">Answers: Mean ≈ 51.9, Median ≈ 51.25, Mode ≈ 46.17</p>
+          <p>Frequency: 4, 8, 12, 10, 9, 7</p>
+          <p>Find:</p>
+          <p>(a) Mean</p>
+          <p>(b) Median</p>
+          <p>(c) Mode</p>
+          <div class="answer">Answers: Mean ≈ 51.9, Median ≈ 51.25, Mode ≈ 46.17</div>
         </div>
+      </div>
 
-        <div class="tips-box">
-          <h3>🎯 JAMB EXAM TIPS</h3>
-          <p>1. <strong>Check data type:</strong> Grouped or ungrouped before applying formulas</p>
-          <p>2. <strong>Class boundaries:</strong> For discrete data (e.g., 10-20), boundaries are 9.5-20.5</p>
-          <p>3. <strong>Histogram vs Bar chart:</strong> Histograms touch (continuous), bar charts have gaps (discrete)</p>
-          <p>4. <strong>Ogive readings:</strong> Use ruler to draw lines from y-axis to curve to x-axis for quartiles</p>
-          <p>5. <strong>Calculator:</strong> Master statistical functions for speed</p>
-        </div>
+      <div class="section-card">
+        <h2>🎯 JAMB Exam Tips</h2>
 
-        <div class="checklist-box">
-          <h3>Pre-Exam Checklist:</h3>
+        <div class="jamb-alert">
+          <h4>How to avoid common mistakes</h4>
           <ul>
-            <li>Types of data (qualitative vs quantitative)</li>
-            <li>Frequency distribution tables</li>
-            <li>Class boundaries and midpoints</li>
-            <li>Bar charts (discrete, gaps)</li>
-            <li>Histograms (continuous, touch)</li>
-            <li>Frequency polygons</li>
-            <li>Pie charts (angle calculations)</li>
-            <li>Mean (grouped and ungrouped)</li>
-            <li>Median (grouped formula)</li>
-            <li>Mode (grouped formula)</li>
-            <li>Range, variance, standard deviation</li>
-            <li>Cumulative frequency</li>
-            <li>Ogive curve interpretation</li>
+            <li>Check first whether the data is grouped or ungrouped</li>
+            <li>Use class boundaries correctly, for example 10-20 becomes 9.5-20.5 for continuous treatment</li>
+            <li>Remember: histogram bars touch, bar chart bars do not</li>
+            <li>Use a ruler properly when reading quartiles from an ogive</li>
+            <li>Practise calculator use for faster statistical work</li>
           </ul>
         </div>
-
-        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
-          Excellent! 🌟 You now master Data Representation!
-        </p>
-
-        <p style="text-align: center; margin: 20px 0;">Connects to Probability & Statistics</p>
-        <button class="explore-btn" onclick="window.location.href='statistics-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
+
+      <div class="section-card">
+        <h2>✅ Pre-Exam Checklist</h2>
+
+        <div class="memory-tip">
+          <strong>🧠 Checklist</strong>
+          <p>Revise types of data, frequency distribution tables, class boundaries, and midpoints. Know bar charts, histograms, frequency polygons, and pie charts. Practise mean for grouped and ungrouped data. Learn the grouped formulas for median and mode. Revise range, variance, and standard deviation. Also practise cumulative frequency tables and ogive interpretation.</p>
+        </div>
+
+        <div class="highlight-box">
+          <p><strong>Connects to:</strong> Probability and Statistics.</p>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>🌟 Final Revision Note</h2>
+
+        <div class="memory-tip">
+          <strong>Excellent!</strong>
+          <p>You now have a complete guide to Data Representation with tables, graphs, averages, dispersion, and cumulative frequency. This topic is highly practical, and once the formulas are clear, the questions become much easier.</p>
+        </div>
+      </div>
+
+      <button class="explore-btn" onclick="alert('Practise frequency tables, graphs, mean, median, mode, dispersion, and ogive questions today.')">Start JAMB Questions</button>
     </div>
   </div>
 
-  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item">
-      <button class="neumorphic-btn">🔍</button>
-      <p>Search</p>
-    </div>
-    <div class="nav-item center">
-      <button class="neumorphic-btn">⭐</button>
-      <p>Favorite</p>
-    </div>
-    <div class="nav-item">
-      <button class="neumorphic-btn">📚</button>
-      <p>Library</p>
-    </div>
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
 
-    function setTheme(theme) {
+    function setTheme(theme){
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
+    setTheme(localStorage.getItem('theme') || 'dark');
 
     themeToggle.addEventListener('click', () => {
-      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
-      setTheme(newTheme);
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
     });
 
-    document.getElementById('profile-upload').addEventListener('change', (e) => {
-      if (e.target.files[0]) {
-        console.log('Profile picture selected!');
-      }
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
     });
+
+    function showAns(id){
+      document.getElementById(id).style.display = 'block';
+    }
   </script>
 </body>
 </html>
