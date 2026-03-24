@@ -1,500 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MATHEMATICS - Indices, Logarithms & Surds</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JAMB Mathematics - Indices, Logarithms and Surds</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
+    :root{
+      --background:#1e1e2f;--shadow-in:#171723;--shadow-out:#25253b;
+      --text-primary:#f0f0ff;--text-secondary:#c0c0e0;
+      --accent:#1db954;--accent-secondary:#ff6b6b;--accent-tertiary:#4ecdc4;
+      --card-bg:#2a2a3f;--line:#8ea2ff;--grid:rgba(255,255,255,.08)
+    }
+    body.light{
+      --background:#e0e0e0;--shadow-in:#bebebe;--shadow-out:#ffffff;
+      --text-primary:#1a1a1a;--text-secondary:#444;--card-bg:#f8f8f8;--line:#2b59ff;--grid:rgba(0,0,0,.08)
+    }
+    body{
+      background:var(--background);color:var(--text-primary);
+      display:flex;justify-content:center;align-items:center;
+      min-height:100vh;overflow-x:hidden
+    }
+    .container{
+      width:100%;max-width:420px;height:750px;overflow-y:auto;
+      background:var(--background);border-radius:20px;
+      box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out);
+      padding-top:70px;padding-bottom:80px;position:relative
+    }
+    .neumorphic{
+      background:var(--background);
+      box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out);
+      border-radius:15px
+    }
+    .neumorphic-btn{
+      background:var(--background);border:none;border-radius:50%;
+      width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+      box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      cursor:pointer;color:var(--text-primary);font-size:18px;transition:all .3s ease
+    }
+    .neumorphic-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.95)
+    }
+    .top-bar{
+      position:fixed;top:0;width:100%;max-width:420px;
+      background:var(--background);padding:15px;
+      display:flex;align-items:center;justify-content:space-between;
+      box-shadow:0 5px 10px var(--shadow-in);z-index:20
+    }
+    .top-bar .header{font-size:16px;font-weight:900;color:var(--accent)}
+    .top-bar .right-icons{display:flex;gap:10px}
+
+    .progress-container{
+      position:fixed;top:70px;left:0;width:100%;max-width:420px;height:4px;
+      background:var(--shadow-in);z-index:15
+    }
+    .progress-bar{height:100%;background:var(--accent);width:0%;transition:width .3s}
+
+    .content{padding:20px 16px;line-height:1.7}
+    .main-header{
+      text-align:center;margin-bottom:26px;padding:20px;border-radius:20px;
+      background:rgba(29,185,84,.1)
+    }
+    .main-header h1{font-size:20px;margin-bottom:8px;color:var(--accent);font-weight:900}
+    .main-header p{font-size:13px;color:var(--text-secondary);font-weight:500}
+
+    .section-card{
+      background:var(--card-bg);padding:22px 18px;border-radius:20px;
+      box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out);
+      margin-bottom:22px;border-left:4px solid var(--accent)
+    }
+    .section-card h2{
+      font-size:18px;margin-bottom:12px;color:var(--accent);font-weight:900;
+      display:flex;align-items:center;gap:8px
+    }
+    .section-card h3{
+      font-size:15px;margin:16px 0 10px;color:var(--accent-tertiary);font-weight:800;
+      padding-left:12px;border-left:3px solid var(--accent-tertiary)
+    }
+    .section-card h4{
+      font-size:14px;margin:14px 0 8px;color:var(--accent-secondary);font-weight:800
+    }
+    .section-card p{margin-bottom:10px;font-size:14px;text-align:justify}
+    .section-card ul,.section-card ol{padding-left:20px;margin:10px 0}
+    .section-card li{margin-bottom:7px;font-size:14px}
+
+    .quick-facts{
+      background:linear-gradient(135deg,rgba(29,185,84,.1),rgba(78,205,196,.1));
+      padding:14px;border-radius:15px;margin:12px 0;border:1px solid rgba(29,185,84,.3)
+    }
+    .quick-facts li{font-size:13px}
+
+    .highlight-box{
+      background:rgba(78,205,196,.1);padding:12px 16px;border-radius:10px;margin:12px 0;
+      border-left:3px solid var(--accent-tertiary)
     }
 
-    :root {
-      --background: #1e1e2f;
-      --shadow-in: #171723;
-      --shadow-out: #25253b;
-      --text-primary: #f0f0ff;
-      --text-secondary: #c0c0e0;
-      --accent: #1db954;
-      --card-bg: #2a2a3f;
+    .memory-tip{
+      background:rgba(255,107,107,.1);padding:14px 16px;border-radius:12px;margin:14px 0;
+      border-left:4px solid var(--accent-secondary)
+    }
+    .memory-tip strong{color:var(--accent-secondary);display:block;margin-bottom:6px;font-size:14px}
+    .memory-tip p{margin:0;font-size:13px;font-style:italic}
+
+    .jamb-alert{
+      background:linear-gradient(135deg,rgba(255,193,7,.15),rgba(255,152,0,.1));
+      border:1px solid rgba(255,193,7,.4);border-radius:12px;padding:14px;margin:16px 0
+    }
+    .jamb-alert h4{color:#ffc107;margin-bottom:8px;font-size:14px;font-weight:900}
+    .jamb-alert li{font-size:13px}
+
+    .formula-box{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .formula-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:6px
+    }
+    .formula-box .line{
+      font-size:13px;margin-bottom:5px
     }
 
-    body.light {
-      --background: #e0e0e0;
-      --shadow-in: #bebebe;
-      --shadow-out: #ffffff;
-      --text-primary: #1a1a1a;
-      --text-secondary: #444;
-      --accent: #1db954;
-      --card-bg: #f8f8f8;
+    .example-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .example-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:8px
+    }
+    .example-box .answer{
+      margin-top:8px;font-size:13px;color:var(--accent-secondary);font-weight:800
     }
 
-    body {
-      background: var(--background);
-      color: var(--text-primary);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
+    .diagram-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:12px;
+      margin:14px 0
+    }
+    .diagram-title{
+      font-size:13px;
+      font-weight:900;
+      color:var(--accent-tertiary);
+      margin-bottom:8px
+    }
+    .diagram-caption{
+      font-size:12px;
+      color:var(--text-secondary);
+      margin-top:8px
+    }
+    svg{
+      width:100%;
+      height:auto;
+      display:block
     }
 
-    .container {
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      border-radius: 20px;
-      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
-      overflow: hidden;
-      position: relative;
-      height: 700px;
-      overflow-y: auto;
-      padding-top: 70px;
-      padding-bottom: 70px;
+    .table-container{
+      width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0;border-radius:12px;
+      box-shadow:3px 3px 8px var(--shadow-in),-3px -3px 8px var(--shadow-out)
+    }
+    .summary-table{
+      width:100%;min-width:500px;border-collapse:separate;border-spacing:0;font-size:13px
+    }
+    .summary-table th{
+      background:var(--accent);color:#000;padding:12px 10px;text-align:left;font-weight:900;white-space:nowrap
+    }
+    .summary-table td{
+      padding:10px;border-bottom:1px solid var(--shadow-in);background:var(--card-bg);vertical-align:top
+    }
+    .summary-table tr:last-child td{border-bottom:none}
+    .summary-table tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+    .table-scroll-hint{font-size:11px;color:var(--text-secondary);text-align:center;margin-top:4px;font-style:italic}
+
+    .quiz-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .quiz-box .q{font-size:14px;font-weight:900;color:var(--accent-tertiary);margin-bottom:8px}
+    .quiz-box button{
+      width:100%;margin-top:10px;border:none;border-radius:12px;padding:12px 14px;font-weight:900;cursor:pointer;
+      background:var(--accent);color:#000;
+      box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out)
+    }
+    .quiz-answer{
+      margin-top:10px;font-size:13px;color:var(--text-secondary);display:none
     }
 
-    .neumorphic {
-      background: var(--background);
-      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
-      border-radius: 15px;
+    .nav-bar{
+      position:fixed;bottom:0;width:100%;max-width:420px;background:var(--background);padding:10px;
+      display:flex;justify-content:space-around;box-shadow:0 -5px 10px var(--shadow-in);z-index:20
     }
-
-    .neumorphic-btn {
-      background: var(--background);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      cursor: pointer;
-      color: var(--text-primary);
-      font-size: 18px;
+    .nav-bar .nav-item{text-align:center}
+    .nav-bar .nav-item.center button{
+      width:50px;height:50px;font-size:24px;background:var(--accent);
+      box-shadow:0 0 15px var(--accent),3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      color:#000
     }
+    .nav-bar p{display:none;font-size:11px;margin-top:4px;color:var(--text-primary)}
 
-    .neumorphic-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    .explore-btn{
+      background:var(--accent);border:none;padding:14px 28px;border-radius:25px;color:#000;cursor:pointer;
+      box-shadow:4px 4px 8px var(--shadow-in),-4px -4px 8px var(--shadow-out);
+      font-size:16px;margin:22px auto;display:block;font-weight:900;transition:all .3s ease
     }
-
-    .top-bar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 5px 10px var(--shadow-in);
-      z-index: 20;
+    .explore-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.98)
     }
-
-    .top-bar .header {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--text-primary);
+    .math{
+      font-weight:900;color:var(--accent-secondary)
     }
-
-    .top-bar .right-icons {
-      display: flex;
-      gap: 10px;
+    .label{
+      fill:var(--text-primary);
+      font-size:11px;
+      font-weight:700
     }
-
-    .top-bar .profile-upload {
-      position: relative;
+    .axis{
+      stroke:var(--text-primary);
+      stroke-width:2
     }
-
-    .top-bar .profile-upload input {
-      opacity: 0;
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
+    .curve{
+      stroke:var(--line);
+      stroke-width:3;
+      fill:none
     }
-
-    .content {
-      padding: 20px 16px;
-      line-height: 1.6;
+    .grid{
+      stroke:var(--grid);
+      stroke-width:1
     }
-
-    .main-header {
-      text-align: center;
-      margin-bottom: 32px;
+    .mark{
+      fill:var(--accent-secondary)
     }
-
-    .main-header h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-      color: var(--accent);
-      font-weight: 800;
+    .radical{
+      stroke:var(--line);
+      stroke-width:3;
+      fill:none
     }
-
-    .main-header p.subtitle {
-      font-size: 16px;
-      color: var(--text-secondary);
+    .fill-soft{
+      fill:rgba(29,185,84,.22)
     }
-
-    .welcome-note {
-      background: var(--card-bg);
-      padding: 28px 20px;
-      border-radius: 20px;
-      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
-      margin-bottom: 30px;
-    }
-
-    .welcome-note h2 {
-      font-size: 22px;
-      margin: 32px 0 16px;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .welcome-note h2:first-child {
-      margin-top: 0;
-    }
-
-    .welcome-note h3 {
-      font-size: 18px;
-      margin: 24px 0 12px;
-      color: var(--accent);
-    }
-
-    .welcome-note p {
-      margin-bottom: 16px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note ul, .welcome-note ol {
-      padding-left: 24px;
-      margin: 16px 0;
-    }
-
-    .welcome-note li {
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note .highlight {
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .formula-box {
-      background: rgba(29, 185, 84, 0.1);
-      border-left: 4px solid var(--accent);
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box {
-      background: rgba(0,0,0,0.15);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box strong {
-      color: var(--accent);
-    }
-
-    .answer-box {
-      background: var(--accent);
-      color: #000;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      margin: 12px 0;
-      text-align: center;
-    }
-
-    .tips-box {
-      background: rgba(255, 193, 7, 0.1);
-      border-left: 4px solid #ffc107;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .warning-box {
-      background: rgba(244, 67, 54, 0.1);
-      border-left: 4px solid #f44336;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      margin: 16px 0;
-      border-radius: 12px;
-      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .table-wrapper::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-track {
-      background: var(--shadow-in);
-      border-radius: 3px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 3px;
-    }
-
-    table {
-      width: 100%;
-      min-width: 500px;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--shadow-in);
-      white-space: nowrap;
-    }
-
-    th {
-      color: var(--accent);
-      font-weight: bold;
-      background: rgba(0,0,0,0.1);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .explore-btn {
-      background: var(--accent);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      color: #000;
-      cursor: pointer;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      font-size: 16px;
-      margin: 24px auto 0;
-      display: block;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .explore-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 10px;
-      display: flex;
-      justify-content: space-around;
-      box-shadow: 0 -5px 10px var(--shadow-in);
-      z-index: 20;
-    }
-
-    .nav-bar .nav-item {
-      text-align: center;
-      position: relative;
-    }
-
-    .nav-bar .nav-item button {
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.center button {
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
-      background: var(--accent);
-      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      color: #000;
-    }
-
-    .nav-bar .nav-item.active button {
-      background: var(--accent);
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar .nav-item p {
-      display: none;
-      font-size: 12px;
-      margin-top: 5px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.active p {
-      display: block;
-    }
-
-    .memory-aid {
-      background: rgba(29, 185, 84, 0.15);
-      border-left: 4px solid var(--accent);
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-style: italic;
-      font-weight: bold;
-    }
-
-    .component-box {
-      background: rgba(0,0,0,0.1);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      border-left: 4px solid var(--accent);
-    }
-
-    .component-box h4 {
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-
-    .section-header {
-      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
-      color: #000;
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin: 24px 0;
-      text-align: center;
-      font-weight: bold;
-      font-size: 16px;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-    }
-
-    .shortcut-box {
-      background: rgba(255, 193, 7, 0.2);
-      border: 2px solid #ffc107;
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-    }
-
-    .shortcut-box h4 {
-      color: #ffc107;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-
-    .checklist-box {
-      background: rgba(29, 185, 84, 0.1);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-    }
-
-    .checklist-box li {
-      list-style: none;
-      margin-bottom: 8px;
-    }
-
-    .checklist-box li:before {
-      content: "✅ ";
-      color: var(--accent);
-    }
-
-    .fraction {
-      display: inline-block;
-      text-align: center;
-      vertical-align: middle;
-      margin: 0 2px;
-    }
-
-    .fraction .top {
-      border-bottom: 1px solid var(--text-primary);
-      display: block;
-      padding: 0 2px;
-    }
-
-    .fraction .bottom {
-      display: block;
-      padding: 0 2px;
-    }
-
-    .base-sub {
-      font-size: 0.7em;
-      vertical-align: sub;
-    }
-
-    .practice-box {
-      background: rgba(33, 150, 243, 0.1);
-      border-left: 4px solid #2196f3;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .practice-box strong {
-      color: #2196f3;
-    }
-
-    .sqrt {
-      font-family: 'Times New Roman', serif;
-      font-size: 1.1em;
+    .fill-soft-2{
+      fill:rgba(78,205,196,.22)
     }
   </style>
 </head>
+
 <body class="dark">
-  <div class="container">
-    <!-- Top Fixed Bar -->
+  <div class="container" id="scroll-container">
+    <div class="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
+
     <div class="top-bar neumorphic">
-      <button class="neumorphic-btn">←</button>
+      <button class="neumorphic-btn" onclick="history.back()">←</button>
       <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-        <button class="neumorphic-btn profile-upload">
-          🚀
-          <input type="file" accept="image/*" id="profile-upload">
-        </button>
+        <button class="neumorphic-btn" onclick="alert('📌 Saved for revision!')">🚀</button>
       </div>
     </div>
 
-    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Powers & Roots! 🔢</h1>
-        <p class="subtitle">– JAMB Chapter 3 Made Easy</p>
+        <h1>📘 Indices, Logarithms & Surds</h1>
+        <p>JAMB Mathematics • powers • logarithmic equations • surd operations • rationalization • worked examples</p>
       </div>
 
-      <div class="welcome-note neumorphic">
-        <h2>📚 Chapter 3: Indices, Logarithms and Surds</h2>
-        
-        <p><strong>🎯 Learning Objectives:</strong> Master laws of indices, logarithmic equations, and surd operations for JAMB success. This chapter appears frequently in exams!</p>
+      <div class="section-card">
+        <h2>📋 Introduction to Chapter 3</h2>
+        <p>This chapter covers <strong>indices, logarithms, and surds</strong>. These topics appear frequently in JAMB because they test both manipulation skills and understanding of rules.</p>
+        <p>To do well, you need to know the laws, apply them carefully, and avoid common mistakes like adding logarithms incorrectly or forgetting to rationalize a denominator.</p>
 
-        <div class="section-header">1️⃣ INDICES (Powers/Exponents)</div>
+        <div class="quick-facts">
+          <ul>
+            <li>Indices questions often become easy when all terms are written in the same base</li>
+            <li>Logarithms are only defined for positive values</li>
+            <li>Surds should be simplified fully in final answers</li>
+            <li>Conjugates are important in rationalization</li>
+          </ul>
+        </div>
 
-        <h2>Basic Laws of Indices 📈</h2>
-        
-        <div class="table-wrapper">
-          <table>
+        <div class="memory-tip">
+          <strong>🧠 Fast memory link</strong>
+          <p>Indices deal with powers, logarithms reverse powers, and surds come from fractional powers. So these three topics are strongly connected.</p>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>1️⃣ Indices (Powers / Exponents)</h2>
+
+        <h3>Basic Laws of Indices</h3>
+        <div class="table-container">
+          <table class="summary-table" style="min-width:920px">
             <tr>
               <th>Law</th>
               <th>Formula</th>
@@ -502,91 +301,97 @@
             </tr>
             <tr>
               <td>Multiplication</td>
-              <td>a<sup>m</sup> × a<sup>n</sup> = a<sup>m+n</sup></td>
+              <td>aᵐ × aⁿ = aᵐ⁺ⁿ</td>
               <td>2³ × 2⁴ = 2⁷ = 128</td>
             </tr>
             <tr>
               <td>Division</td>
-              <td>a<sup>m</sup> ÷ a<sup>n</sup> = a<sup>m-n</sup></td>
+              <td>aᵐ ÷ aⁿ = aᵐ⁻ⁿ</td>
               <td>5⁶ ÷ 5² = 5⁴ = 625</td>
             </tr>
             <tr>
               <td>Power of Power</td>
-              <td>(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></td>
+              <td>(aᵐ)ⁿ = aᵐⁿ</td>
               <td>(3²)³ = 3⁶ = 729</td>
             </tr>
             <tr>
               <td>Zero Index</td>
-              <td>a⁰ = 1 (a ≠ 0)</td>
-              <td>7⁰ = 1, (-5)⁰ = 1</td>
+              <td>a⁰ = 1, a ≠ 0</td>
+              <td>7⁰ = 1</td>
             </tr>
             <tr>
               <td>Negative Index</td>
-              <td>a<sup>-n</sup> = <span class="fraction"><span class="top">1</span><span class="bottom">a<sup>n</sup></span></span></td>
-              <td>2<sup>-3</sup> = <span class="fraction"><span class="top">1</span><span class="bottom">8</span></span></td>
+              <td>a⁻ⁿ = 1/aⁿ</td>
+              <td>2⁻³ = 1/8</td>
             </tr>
             <tr>
               <td>Fractional Index</td>
-              <td>a<sup><span class="fraction"><span class="top">1</span><span class="bottom">n</span></span></sup> = <span class="sqrt">√[n]</span>a</td>
-              <td>8<sup><span class="fraction"><span class="top">1</span><span class="bottom">3</span></span></sup> = 2</td>
+              <td>a^(1/n) = ⁿ√a</td>
+              <td>8^(1/3) = 2</td>
             </tr>
             <tr>
-              <td>General Fractional</td>
-              <td>a<sup><span class="fraction"><span class="top">m</span><span class="bottom">n</span></span></sup> = (<span class="sqrt">√[n]</span>a)<sup>m</sup></td>
-              <td>16<sup><span class="fraction"><span class="top">3</span><span class="bottom">4</span></span></sup> = 2³ = 8</td>
+              <td>General Fractional Index</td>
+              <td>a^(m/n) = (ⁿ√a)^m</td>
+              <td>16^(3/4) = 2³ = 8</td>
             </tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe left/right to see more →</div>
 
-        <h2>🔢 Example 1: Simplifying Expressions</h2>
-        <p>Simplify: <span class="fraction"><span class="top">3⁵ × 3<sup>-2</sup></span><span class="bottom">3³</span></span></p>
-        <div class="calculation-box">
-          <strong>Solution:</strong><br>
-          • Numerator: 3⁵ × 3<sup>-2</sup> = 3<sup>5+(-2)</sup> = 3³<br>
-          • Division: <span class="fraction"><span class="top">3³</span><span class="bottom">3³</span></span> = 3<sup>3-3</sup> = 3⁰ = 1
-        </div>
-        <div class="answer-box">Answer: 1</div>
-
-        <h2>🔢 Example 2: Solving Exponential Equations</h2>
-        <p>Solve: 2<sup>2x+1</sup> = 8<sup>x-1</sup></p>
-        <div class="calculation-box">
-          <strong>Solution:</strong><br>
-          Express both sides with base 2:<br>
-          • 8 = 2³, so 8<sup>x-1</sup> = (2³)<sup>x-1</sup> = 2<sup>3x-3</sup><br><br>
-          
-          Therefore: 2<sup>2x+1</sup> = 2<sup>3x-3</sup><br>
-          Equate exponents: 2x + 1 = 3x - 3<br>
-          1 + 3 = 3x - 2x<br>
-          x = 4
-        </div>
-        <div class="answer-box">Answer: x = 4</div>
-
-        <h2>🔢 Example 3: Fractional Indices</h2>
-        <p>Evaluate: 27<sup><span class="fraction"><span class="top">2</span><span class="bottom">3</span></span></sup> + 16<sup><span class="fraction"><span class="top">3</span><span class="bottom">4</span></span></sup></p>
-        <div class="calculation-box">
-          <strong>Solution:</strong><br>
-          • 27<sup><span class="fraction"><span class="top">2</span><span class="bottom">3</span></span></sup> = (<span class="sqrt">³√</span>27)² = 3² = 9<br>
-          • 16<sup><span class="fraction"><span class="top">3</span><span class="bottom">4</span></span></sup> = (<span class="sqrt">⁴√</span>16)³ = 2³ = 8<br><br>
-          
-          Answer: 9 + 8 = 17
-        </div>
-        <div class="answer-box">Answer: 17</div>
-
-        <div class="section-header">2️⃣ LOGARITHMS</div>
-
-        <h2>Definition 📖</h2>
-        <div class="formula-box">
-          <strong>If a<sup>x</sup> = N, then log<sub>a</sub> N = x</strong><br><br>
-          Where:<br>
-          • a = base (must be positive and ≠ 1)<br>
-          • N = number (must be positive)<br>
-          • x = logarithm
+        <div class="example-box">
+          <div class="title">Example 1: Simplify (3⁵ × 3⁻²) / 3³</div>
+          <p><strong>Step 1:</strong> Add powers in the numerator</p>
+          <p><span class="math">3⁵ × 3⁻² = 3^(5 + -2) = 3³</span></p>
+          <p><strong>Step 2:</strong> Divide using subtraction of powers</p>
+          <p><span class="math">3³ / 3³ = 3^(3 - 3) = 3⁰ = 1</span></p>
+          <div class="answer">Answer: 1</div>
         </div>
 
-        <h2>Laws of Logarithms 📊</h2>
-        
-        <div class="table-wrapper">
-          <table>
+        <div class="example-box">
+          <div class="title">Example 2: Solve 2^(2x+1) = 8^(x-1)</div>
+          <p><strong>Step 1:</strong> Express 8 in base 2</p>
+          <p><span class="math">8 = 2³</span>, so <span class="math">8^(x-1) = (2³)^(x-1) = 2^(3x-3)</span></p>
+          <p><strong>Step 2:</strong> Equate powers because the bases are the same</p>
+          <p><span class="math">2x + 1 = 3x - 3</span></p>
+          <p><strong>Step 3:</strong> Solve</p>
+          <p><span class="math">x = 4</span></p>
+          <div class="answer">Answer: x = 4</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Example 3: Evaluate 27^(2/3) + 16^(3/4)</div>
+          <p><strong>Step 1:</strong> Evaluate the first term</p>
+          <p><span class="math">27^(2/3) = (³√27)² = 3² = 9</span></p>
+          <p><strong>Step 2:</strong> Evaluate the second term</p>
+          <p><span class="math">16^(3/4) = (⁴√16)³ = 2³ = 8</span></p>
+          <p><strong>Step 3:</strong> Add</p>
+          <p><span class="math">9 + 8 = 17</span></p>
+          <div class="answer">Answer: 17</div>
+        </div>
+
+        <div class="memory-tip">
+          <strong>🧠 Indices shortcut</strong>
+          <p>When solving equations, always try to rewrite all numbers using one common base. That usually makes the question much shorter.</p>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>2️⃣ Logarithms</h2>
+
+        <h3>Definition</h3>
+        <p>If <span class="math">aˣ = N</span>, then <span class="math">logₐN = x</span>.</p>
+
+        <div class="quick-facts">
+          <ul>
+            <li><strong>a</strong> is the base and must be positive and not equal to 1</li>
+            <li><strong>N</strong> must be positive</li>
+            <li><strong>x</strong> is the logarithm</li>
+          </ul>
+        </div>
+
+        <h3>Laws of Logarithms</h3>
+        <div class="table-container">
+          <table class="summary-table" style="min-width:980px">
             <tr>
               <th>Law</th>
               <th>Formula</th>
@@ -594,92 +399,97 @@
             </tr>
             <tr>
               <td>Product Rule</td>
-              <td>log<sub>a</sub>(MN) = log<sub>a</sub> M + log<sub>a</sub> N</td>
-              <td>log₂(8×4) = 3+2 = 5</td>
+              <td>logₐ(MN) = logₐM + logₐN</td>
+              <td>log₂(8×4) = 3 + 2 = 5</td>
             </tr>
             <tr>
               <td>Quotient Rule</td>
-              <td>log<sub>a</sub>(<span class="fraction"><span class="top">M</span><span class="bottom">N</span></span>) = log<sub>a</sub> M - log<sub>a</sub> N</td>
-              <td>log₃(<span class="fraction"><span class="top">27</span><span class="bottom">9</span></span>) = 3-2 = 1</td>
+              <td>logₐ(M/N) = logₐM - logₐN</td>
+              <td>log₃(27/9) = 3 - 2 = 1</td>
             </tr>
             <tr>
               <td>Power Rule</td>
-              <td>log<sub>a</sub>(M<sup>n</sup>) = n·log<sub>a</sub> M</td>
-              <td>log₅(25²) = 2×2 = 4</td>
+              <td>logₐ(Mⁿ) = n logₐM</td>
+              <td>log₅(25²) = 2 × 2 = 4</td>
             </tr>
             <tr>
               <td>Change of Base</td>
-              <td>log<sub>a</sub> b = <span class="fraction"><span class="top">log<sub>c</sub> b</span><span class="bottom">log<sub>c</sub> a</span></span></td>
-              <td>log₂ 8 = <span class="fraction"><span class="top">log 8</span><span class="bottom">log 2</span></span></td>
+              <td>logₐb = (logcb)/(logca)</td>
+              <td>log₂8 = log8 / log2</td>
             </tr>
             <tr>
               <td>Log of Base</td>
-              <td>log<sub>a</sub> a = 1</td>
-              <td>log₅ 5 = 1</td>
+              <td>logₐa = 1</td>
+              <td>log₅5 = 1</td>
             </tr>
             <tr>
               <td>Log of 1</td>
-              <td>log<sub>a</sub> 1 = 0</td>
-              <td>log₇ 1 = 0</td>
+              <td>logₐ1 = 0</td>
+              <td>log₇1 = 0</td>
             </tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe left/right to see more →</div>
 
-        <div class="component-box">
-          <h4>Common and Natural Logarithms</h4>
-          <p>• <strong>Common logarithms:</strong> Base 10 (log₁₀ or simply log)</p>
-          <p>• <strong>Natural logarithms:</strong> Base e (ln or logₑ) where e ≈ 2.718</p>
+        <h3>Common and Natural Logarithms</h3>
+        <p><strong>Common logarithms</strong> are base 10 and are usually written simply as <span class="math">log</span>.</p>
+        <p><strong>Natural logarithms</strong> are base <span class="math">e</span> and written as <span class="math">ln</span>, where <span class="math">e ≈ 2.718</span>.</p>
+
+        <div class="example-box">
+          <div class="title">Example 4: Simplify log₃54 + log₃2 - log₃4</div>
+          <p><strong>Step 1:</strong> Use the product rule</p>
+          <p><span class="math">log₃54 + log₃2 = log₃(54 × 2) = log₃108</span></p>
+          <p><strong>Step 2:</strong> Use the quotient rule</p>
+          <p><span class="math">log₃108 - log₃4 = log₃(108/4) = log₃27</span></p>
+          <p><strong>Step 3:</strong> Evaluate</p>
+          <p><span class="math">27 = 3³, so log₃27 = 3</span></p>
+          <div class="answer">Answer: 3</div>
         </div>
 
-        <h2>🔢 Example 4: Using Logarithm Laws</h2>
-        <p>Simplify: log₃ 54 + log₃ 2 - log₃ 4</p>
-        <div class="calculation-box">
-          <strong>Solution:</strong><br>
-          • log₃ 54 + log₃ 2 = log₃(54 × 2) = log₃ 108<br>
-          • log₃ 108 - log₃ 4 = log₃(<span class="fraction"><span class="top">108</span><span class="bottom">4</span></span>) = log₃ 27<br>
-          • Since 27 = 3³: log₃ 27 = 3
-        </div>
-        <div class="answer-box">Answer: 3</div>
-
-        <h2>🔢 Example 5: Solving Logarithmic Equations</h2>
-        <p>Solve: log₂(x+3) + log₂(x-1) = 3</p>
-        <div class="calculation-box">
-          <strong>Solution:</strong><br>
-          • Combine: log₂[(x+3)(x-1)] = 3<br>
-          • Convert to exponential: (x+3)(x-1) = 2³ = 8<br>
-          • Expand: x² + 2x - 3 = 8<br>
-          • x² + 2x - 11 = 0<br><br>
-          
-          Using quadratic formula:<br>
-          x = <span class="fraction"><span class="top">-2 ± <span class="sqrt">√</span>(4 + 44)</span><span class="bottom">2</span></span> = <span class="fraction"><span class="top">-2 ± <span class="sqrt">√</span>48</span><span class="bottom">2</span></span> = -1 ± 2<span class="sqrt">√</span>3<br><br>
-          
-          <em>Since x > 1 (for log₂(x-1) to exist):</em><br>
-          x = -1 + 2<span class="sqrt">√</span>3 ≈ 2.46
-        </div>
-        <div class="answer-box">Answer: x = -1 + 2√3 ≈ 2.46</div>
-
-        <h2>🔢 Example 6: Change of Base</h2>
-        <p>Evaluate: log₄ 8</p>
-        <div class="calculation-box">
-          <strong>Solution:</strong><br>
-          log₄ 8 = <span class="fraction"><span class="top">log₂ 8</span><span class="bottom">log₂ 4</span></span> = <span class="fraction"><span class="top">3</span><span class="bottom">2</span></span> = 1.5
-        </div>
-        <div class="answer-box">Answer: 1.5</div>
-
-        <div class="section-header">3️⃣ SURDS (Irrational Roots)</div>
-
-        <h2>Definition √</h2>
-        <p><span class="highlight">Surds</span> are irrational numbers expressed as roots that cannot be simplified to exact rational numbers.</p>
-        
-        <div class="component-box">
-          <h4>Examples:</h4>
-          <p>• <span class="sqrt">√</span>2, <span class="sqrt">√</span>3, <span class="sqrt">³√</span>5</p>
+        <div class="example-box">
+          <div class="title">Example 5: Solve log₂(x + 3) + log₂(x - 1) = 3</div>
+          <p><strong>Step 1:</strong> Combine the logarithms</p>
+          <p><span class="math">log₂[(x + 3)(x - 1)] = 3</span></p>
+          <p><strong>Step 2:</strong> Convert to exponential form</p>
+          <p><span class="math">(x + 3)(x - 1) = 2³ = 8</span></p>
+          <p><strong>Step 3:</strong> Expand</p>
+          <p><span class="math">x² + 2x - 3 = 8</span></p>
+          <p><span class="math">x² + 2x - 11 = 0</span></p>
+          <p><strong>Step 4:</strong> Use quadratic formula</p>
+          <p><span class="math">x = (-2 ± √48)/2 = -1 ± 2√3</span></p>
+          <p><strong>Step 5:</strong> Check domain</p>
+          <p>Since <span class="math">x - 1 &gt; 0</span>, we need <span class="math">x &gt; 1</span>. So only the positive value is valid.</p>
+          <div class="answer">Answer: x = -1 + 2√3 ≈ 2.46</div>
         </div>
 
-        <h2>Types of Surds 📊</h2>
-        
-        <div class="table-wrapper">
-          <table>
+        <div class="example-box">
+          <div class="title">Example 6: Evaluate log₄8</div>
+          <p><strong>Step 1:</strong> Use change of base</p>
+          <p><span class="math">log₄8 = (log₂8) / (log₂4)</span></p>
+          <p><strong>Step 2:</strong> Evaluate</p>
+          <p><span class="math">= 3/2 = 1.5</span></p>
+          <div class="answer">Answer: 1.5</div>
+        </div>
+
+        <div class="jamb-alert">
+          <h4>Very important log warning</h4>
+          <ul>
+            <li><span class="math">logₐ(M + N) ≠ logₐM + logₐN</span></li>
+            <li>The log laws work for products, quotients, and powers — not sums</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>3️⃣ Surds (Irrational Roots)</h2>
+
+        <h3>Definition</h3>
+        <p>Surds are irrational numbers expressed as roots that cannot be simplified into exact rational numbers.</p>
+        <p>Examples include <span class="math">√2, √3, ³√5</span>.</p>
+
+        <h3>Types of Surds</h3>
+        <div class="table-container">
+          <table class="summary-table" style="min-width:900px">
             <tr>
               <th>Type</th>
               <th>Description</th>
@@ -687,302 +497,335 @@
             </tr>
             <tr>
               <td>Quadratic Surd</td>
-              <td>Square root of non-perfect square</td>
-              <td><span class="sqrt">√</span>5, <span class="sqrt">√</span>18</td>
+              <td>Square root of a non-perfect square</td>
+              <td>√5, √18</td>
             </tr>
             <tr>
               <td>Cubic Surd</td>
-              <td>Cube root of non-perfect cube</td>
-              <td><span class="sqrt">³√</span>2, <span class="sqrt">³√</span>7</td>
+              <td>Cube root of a non-perfect cube</td>
+              <td>³√2, ³√7</td>
             </tr>
             <tr>
               <td>Binomial Surd</td>
-              <td>Sum/difference of two surds</td>
-              <td>3 + <span class="sqrt">√</span>2, <span class="sqrt">√</span>5 - <span class="sqrt">√</span>3</td>
+              <td>Sum or difference of two surds</td>
+              <td>3 + √2, √5 - √3</td>
             </tr>
             <tr>
               <td>Conjugate Surd</td>
-              <td>Change sign between terms</td>
-              <td>If a + <span class="sqrt">√</span>b, conjugate is a - <span class="sqrt">√</span>b</td>
+              <td>Changes the sign between two terms</td>
+              <td>If a + √b, conjugate is a - √b</td>
             </tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe left/right to see more →</div>
 
         <h3>Operations with Surds</h3>
-
-        <h2>Simplification 📝</h2>
         <div class="formula-box">
-          <span class="sqrt">√</span>(a × b) = <span class="sqrt">√</span>a × <span class="sqrt">√</span>b<br>
-          <span class="sqrt">√</span>(a² × b) = a<span class="sqrt">√</span>b
+          <div class="title">Simplification rules</div>
+          <div class="line"><span class="math">√(a × b) = √a × √b</span></div>
+          <div class="line"><span class="math">√(a² × b) = a√b</span></div>
         </div>
 
-        <div class="memory-aid">
-          💡 Example: <span class="sqrt">√</span>50 = <span class="sqrt">√</span>(25 × 2) = 5<span class="sqrt">√</span>2
+        <div class="highlight-box">
+          <p><strong>Example idea:</strong> <span class="math">√50 = √(25 × 2) = 5√2</span></p>
         </div>
 
-        <h2>Rationalization 🎯</h2>
-        <p>Removing surds from the denominator.</p>
+        <h3>Rationalization</h3>
+        <p>Rationalization means removing surds from the denominator.</p>
 
-        <div class="table-wrapper">
-          <table>
+        <div class="table-container">
+          <table class="summary-table" style="min-width:960px">
             <tr>
               <th>Form</th>
-              <th>Multiply by</th>
+              <th>Multiply By</th>
               <th>Result</th>
             </tr>
             <tr>
-              <td><span class="fraction"><span class="top">1</span><span class="bottom"><span class="sqrt">√</span>a</span></span></td>
-              <td><span class="fraction"><span class="top"><span class="sqrt">√</span>a</span><span class="bottom"><span class="sqrt">√</span>a</span></span></td>
-              <td><span class="fraction"><span class="top"><span class="sqrt">√</span>a</span><span class="bottom">a</span></span></td>
+              <td>1/√a</td>
+              <td>√a / √a</td>
+              <td>√a / a</td>
             </tr>
             <tr>
-              <td><span class="fraction"><span class="top">1</span><span class="bottom">a + <span class="sqrt">√</span>b</span></span></td>
-              <td><span class="fraction"><span class="top">a - <span class="sqrt">√</span>b</span><span class="bottom">a - <span class="sqrt">√</span>b</span></span></td>
-              <td><span class="fraction"><span class="top">a - <span class="sqrt">√</span>b</span><span class="bottom">a² - b</span></span></td>
+              <td>1/(a + √b)</td>
+              <td>(a - √b)/(a - √b)</td>
+              <td>(a - √b)/(a² - b)</td>
             </tr>
             <tr>
-              <td><span class="fraction"><span class="top">1</span><span class="bottom"><span class="sqrt">√</span>a + <span class="sqrt">√</span>b</span></span></td>
-              <td><span class="fraction"><span class="top"><span class="sqrt">√</span>a - <span class="sqrt">√</span>b</span><span class="bottom"><span class="sqrt">√</span>a - <span class="sqrt">√</span>b</span></span></td>
-              <td><span class="fraction"><span class="top"><span class="sqrt">√</span>a - <span class="sqrt">√</span>b</span><span class="bottom">a - b</span></span></td>
+              <td>1/(√a + √b)</td>
+              <td>(√a - √b)/(√a - √b)</td>
+              <td>(√a - √b)/(a - b)</td>
             </tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe left/right to see more →</div>
 
-        <h2>🔢 Example 7: Simplifying Surds</h2>
-        <p>Simplify: <span class="sqrt">√</span>72 + <span class="sqrt">√</span>50 - <span class="sqrt">√</span>32</p>
-        <div class="calculation-box">
-          <strong>Solution:</strong><br>
-          • <span class="sqrt">√</span>72 = <span class="sqrt">√</span>(36 × 2) = 6<span class="sqrt">√</span>2<br>
-          • <span class="sqrt">√</span>50 = <span class="sqrt">√</span>(25 × 2) = 5<span class="sqrt">√</span>2<br>
-          • <span class="sqrt">√</span>32 = <span class="sqrt">√</span>(16 × 2) = 4<span class="sqrt">√</span>2<br><br>
-          
-          Answer: 6<span class="sqrt">√</span>2 + 5<span class="sqrt">√</span>2 - 4<span class="sqrt">√</span>2 = 7<span class="sqrt">√</span>2
+        <div class="example-box">
+          <div class="title">Example 7: Simplify √72 + √50 - √32</div>
+          <p><strong>Step 1:</strong> Simplify each surd</p>
+          <p><span class="math">√72 = √(36 × 2) = 6√2</span></p>
+          <p><span class="math">√50 = √(25 × 2) = 5√2</span></p>
+          <p><span class="math">√32 = √(16 × 2) = 4√2</span></p>
+          <p><strong>Step 2:</strong> Add like surds</p>
+          <p><span class="math">6√2 + 5√2 - 4√2 = 7√2</span></p>
+          <div class="answer">Answer: 7√2</div>
         </div>
-        <div class="answer-box">Answer: 7√2</div>
 
-        <h2>🔢 Example 8: Rationalization</h2>
-        <p>Rationalize: <span class="fraction"><span class="top">3</span><span class="bottom">2 + <span class="sqrt">√</span>5</span></span></p>
-        <div class="calculation-box">
-          <strong>Solution:</strong><br>
-          Multiply by conjugate (2 - <span class="sqrt">√</span>5):<br><br>
-          
-          <span class="fraction"><span class="top">3</span><span class="bottom">2 + <span class="sqrt">√</span>5</span></span> × <span class="fraction"><span class="top">2 - <span class="sqrt">√</span>5</span><span class="bottom">2 - <span class="sqrt">√</span>5</span></span> = <span class="fraction"><span class="top">3(2 - <span class="sqrt">√</span>5)</span><span class="bottom">4 - 5</span></span><br><br>
-          
-          = <span class="fraction"><span class="top">6 - 3<span class="sqrt">√</span>5</span><span class="bottom">-1</span></span> = 3<span class="sqrt">√</span>5 - 6
+        <div class="example-box">
+          <div class="title">Example 8: Rationalize 3 / (2 + √5)</div>
+          <p><strong>Step 1:</strong> Multiply by the conjugate <span class="math">(2 - √5)</span></p>
+          <p><span class="math">[3/(2 + √5)] × [(2 - √5)/(2 - √5)]</span></p>
+          <p><strong>Step 2:</strong> Simplify denominator</p>
+          <p><span class="math">(2 + √5)(2 - √5) = 4 - 5 = -1</span></p>
+          <p><strong>Step 3:</strong> Simplify numerator</p>
+          <p><span class="math">3(2 - √5) = 6 - 3√5</span></p>
+          <p><strong>Step 4:</strong> Divide by -1</p>
+          <p><span class="math">(6 - 3√5)/(-1) = 3√5 - 6</span></p>
+          <div class="answer">Answer: 3√5 - 6</div>
         </div>
-        <div class="answer-box">Answer: 3√5 - 6</div>
 
-        <h2>🔢 Example 9: Binomial Surds</h2>
-        <p>If a = 3 + 2<span class="sqrt">√</span>2 and b = 3 - 2<span class="sqrt">√</span>2, find a² + b²</p>
-        <div class="calculation-box">
-          <strong>Solution:</strong><br>
-          • Note that a + b = 6 and ab = 9 - 8 = 1<br>
-          • a² + b² = (a+b)² - 2ab = 36 - 2 = 34
+        <div class="example-box">
+          <div class="title">Example 9: If a = 3 + 2√2 and b = 3 - 2√2, find a² + b²</div>
+          <p><strong>Step 1:</strong> Find <span class="math">a + b</span> and <span class="math">ab</span></p>
+          <p><span class="math">a + b = 6</span></p>
+          <p><span class="math">ab = (3 + 2√2)(3 - 2√2) = 9 - 8 = 1</span></p>
+          <p><strong>Step 2:</strong> Use identity</p>
+          <p><span class="math">a² + b² = (a + b)² - 2ab</span></p>
+          <p><span class="math">= 6² - 2(1) = 36 - 2 = 34</span></p>
+          <div class="answer">Answer: 34</div>
         </div>
-        <div class="answer-box">Answer: 34</div>
 
-        <div class="section-header">📋 COMPLETE FORMULA SUMMARY</div>
+        <div class="diagram-box">
+          <div class="diagram-title">Conjugate idea</div>
+          <svg viewBox="0 0 340 170" aria-label="Conjugate illustration">
+            <rect x="35" y="50" width="120" height="55" rx="10" class="fill-soft"/>
+            <rect x="185" y="50" width="120" height="55" rx="10" class="fill-soft-2"/>
+            <text x="60" y="82" class="label">a + √b</text>
+            <text x="210" y="82" class="label">a - √b</text>
+            <text x="98" y="132" class="label">Conjugates</text>
+          </svg>
+          <div class="diagram-caption">Conjugates have the same terms but opposite signs. Their product removes the surd in the middle term.</div>
+        </div>
+      </div>
 
-        <h2>Indices, Logarithms & Surds 📊</h2>
-        
-        <div class="table-wrapper">
-          <table>
+      <div class="section-card">
+        <h2>4️⃣ Complete Formula Summary</h2>
+
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Category</th>
               <th>Formula</th>
-              <th>Key Notes</th>
+              <th>Key Note</th>
             </tr>
             <tr>
-              <td colspan="3" style="background: rgba(29,185,84,0.2); font-weight: bold; text-align: center;">INDICES</td>
-            </tr>
-            <tr>
-              <td>Multiplication</td>
-              <td>a<sup>m</sup> × a<sup>n</sup> = a<sup>m+n</sup></td>
+              <td>Indices multiplication</td>
+              <td>aᵐ × aⁿ = aᵐ⁺ⁿ</td>
               <td>Same base, add powers</td>
             </tr>
             <tr>
-              <td>Division</td>
-              <td><span class="fraction"><span class="top">a<sup>m</sup></span><span class="bottom">a<sup>n</sup></span></span> = a<sup>m-n</sup></td>
+              <td>Indices division</td>
+              <td>aᵐ / aⁿ = aᵐ⁻ⁿ</td>
               <td>Same base, subtract powers</td>
             </tr>
             <tr>
               <td>Power of power</td>
-              <td>(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></td>
-              <td>Multiply powers</td>
+              <td>(aᵐ)ⁿ = aᵐⁿ</td>
+              <td>Multiply the powers</td>
             </tr>
             <tr>
               <td>Zero power</td>
               <td>a⁰ = 1</td>
-              <td>Any non-zero number</td>
+              <td>For any non-zero a</td>
             </tr>
             <tr>
               <td>Negative power</td>
-              <td>a<sup>-n</sup> = <span class="fraction"><span class="top">1</span><span class="bottom">a<sup>n</sup></span></span></td>
-              <td>Reciprocal</td>
+              <td>a⁻ⁿ = 1/aⁿ</td>
+              <td>Reciprocal form</td>
             </tr>
             <tr>
               <td>Fractional power</td>
-              <td>a<sup><span class="fraction"><span class="top">m</span><span class="bottom">n</span></span></sup> = <span class="sqrt">√[n]</span>(a<sup>m</sup>)</td>
-              <td>nth root</td>
+              <td>a^(m/n) = ⁿ√(aᵐ)</td>
+              <td>Denominator is the root</td>
             </tr>
             <tr>
-              <td colspan="3" style="background: rgba(29,185,84,0.2); font-weight: bold; text-align: center;">LOGARITHMS</td>
+              <td>Log definition</td>
+              <td>If aˣ = N, then logₐN = x</td>
+              <td>a &gt; 0, a ≠ 1, N &gt; 0</td>
             </tr>
             <tr>
-              <td>Definition</td>
-              <td>If a<sup>x</sup> = N, then log<sub>a</sub> N = x</td>
-              <td>a > 0, a ≠ 1, N > 0</td>
+              <td>Log product</td>
+              <td>logₐ(MN) = logₐM + logₐN</td>
+              <td>Product becomes sum</td>
             </tr>
             <tr>
-              <td>Product</td>
-              <td>log<sub>a</sub>(MN) = log<sub>a</sub> M + log<sub>a</sub> N</td>
-              <td>Log of product = sum of logs</td>
+              <td>Log quotient</td>
+              <td>logₐ(M/N) = logₐM - logₐN</td>
+              <td>Quotient becomes difference</td>
             </tr>
             <tr>
-              <td>Quotient</td>
-              <td>log<sub>a</sub>(<span class="fraction"><span class="top">M</span><span class="bottom">N</span></span>) = log<sub>a</sub> M - log<sub>a</sub> N</td>
-              <td>Log of quotient = difference</td>
-            </tr>
-            <tr>
-              <td>Power</td>
-              <td>log<sub>a</sub>(M<sup>n</sup>) = n·log<sub>a</sub> M</td>
+              <td>Log power</td>
+              <td>logₐ(Mⁿ) = n logₐM</td>
               <td>Power comes to front</td>
             </tr>
             <tr>
               <td>Change of base</td>
-              <td>log<sub>a</sub> b = <span class="fraction"><span class="top">log<sub>c</sub> b</span><span class="bottom">log<sub>c</sub> a</span></span></td>
-              <td>Useful for calculators</td>
+              <td>logₐb = (logcb)/(logca)</td>
+              <td>Useful on calculators</td>
             </tr>
             <tr>
-              <td>Special values</td>
-              <td>log<sub>a</sub> 1 = 0, log<sub>a</sub> a = 1</td>
+              <td>Special logs</td>
+              <td>logₐ1 = 0, logₐa = 1</td>
               <td>Always true</td>
             </tr>
             <tr>
-              <td colspan="3" style="background: rgba(29,185,84,0.2); font-weight: bold; text-align: center;">SURDS</td>
-            </tr>
-            <tr>
-              <td>Simplification</td>
-              <td><span class="sqrt">√</span>(a²b) = a<span class="sqrt">√</span>b</td>
+              <td>Surd simplification</td>
+              <td>√(a²b) = a√b</td>
               <td>Extract perfect squares</td>
             </tr>
             <tr>
-              <td>Addition</td>
-              <td>a<span class="sqrt">√</span>c + b<span class="sqrt">√</span>c = (a+b)<span class="sqrt">√</span>c</td>
-              <td>Like surds only</td>
+              <td>Like surds</td>
+              <td>a√c + b√c = (a+b)√c</td>
+              <td>Add only like surds</td>
             </tr>
             <tr>
-              <td>Rationalization (single)</td>
-              <td><span class="fraction"><span class="top">1</span><span class="bottom"><span class="sqrt">√</span>a</span></span> = <span class="fraction"><span class="top"><span class="sqrt">√</span>a</span><span class="bottom">a</span></span></td>
-              <td>Remove root from denominator</td>
+              <td>Single surd rationalization</td>
+              <td>1/√a = √a/a</td>
+              <td>Remove root below</td>
             </tr>
             <tr>
-              <td>Rationalization (binomial)</td>
-              <td colspan="2">Multiply by conjugate: <span class="fraction"><span class="top">1</span><span class="bottom">a+<span class="sqrt">√</span>b</span></span> × <span class="fraction"><span class="top">a-<span class="sqrt">√</span>b</span><span class="bottom">a-<span class="sqrt">√</span>b</span></span></td>
+              <td>Binomial rationalization</td>
+              <td>Multiply by conjugate</td>
+              <td>Use opposite sign</td>
             </tr>
             <tr>
-              <td>Conjugate pairs</td>
-              <td>(a+<span class="sqrt">√</span>b)(a-<span class="sqrt">√</span>b) = a² - b</td>
+              <td>Conjugate identity</td>
+              <td>(a + √b)(a - √b) = a² - b</td>
               <td>Difference of squares</td>
             </tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe left/right to see more →</div>
+      </div>
 
-        <div class="tips-box">
-          <h3>🎯 JAMB Exam Tips</h3>
-          <ol>
-            <li><strong>Indices:</strong> Always try to express numbers with the same base when solving equations</li>
-            <li><strong>Logarithms:</strong> Remember that log<sub>a</sub> N is only defined when N > 0</li>
-            <li><strong>Surds:</strong> When rationalizing, the conjugate always has the opposite sign</li>
-            <li><strong>Common mistake:</strong> log<sub>a</sub>(M + N) ≠ log<sub>a</sub> M + log<sub>a</sub> N (product rule only, not sum!)</li>
-          </ol>
-        </div>
+      <div class="section-card">
+        <h2>5️⃣ JAMB Exam Tips</h2>
 
-        <div class="warning-box">
-          <h4>⚠️ Common Pitfall</h4>
-          <p>Remember: There is no law for log<sub>a</sub>(M + N)! Many students mistakenly think log<sub>a</sub>(M + N) = log<sub>a</sub> M + log<sub>a</sub> N. This is FALSE!</p>
-        </div>
-
-        <h2>📝 Practice Questions</h2>
-
-        <div class="practice-box">
-          <p><strong>Q1:</strong> Simplify: <span class="fraction"><span class="top">25<sup><span class="fraction"><span class="top">1</span><span class="bottom">2</span></span></sup> × 8<sup><span class="fraction"><span class="top">2</span><span class="bottom">3</span></span></sup></span><span class="bottom">16<sup><span class="fraction"><span class="top">3</span><span class="bottom">4</span></span></sup></span></span></p>
-          <p style="margin-top: 8px;"><em>Answer: <span class="fraction"><span class="top">5 × 4</span><span class="bottom">8</span></span> = 2.5 or <span class="fraction"><span class="top">5</span><span class="bottom">2</span></span></em></p>
-        </div>
-
-        <div class="practice-box">
-          <p><strong>Q2:</strong> Solve: log₃ x + log₃(x-2) = 1</p>
-          <p style="margin-top: 8px;"><em>Answer: x = 3</em></p>
-        </div>
-
-        <div class="practice-box">
-          <p><strong>Q3:</strong> Rationalize: <span class="fraction"><span class="top"><span class="sqrt">√</span>5 + <span class="sqrt">√</span>3</span><span class="bottom"><span class="sqrt">√</span>5 - <span class="sqrt">√</span>3</span></span></p>
-          <p style="margin-top: 8px;"><em>Answer: 4 + <span class="sqrt">√</span>15</em></p>
-        </div>
-
-        <h3>Quick Checklist for Chapter 3:</h3>
-        <div class="checklist-box">
+        <div class="jamb-alert">
+          <h4>How to score high in this chapter</h4>
           <ul>
-            <li>Same base required for index operations</li>
-            <li>Negative indices mean reciprocals</li>
-            <li>Fractional indices: denominator = root, numerator = power</li>
-            <li>Logs are only defined for positive numbers</li>
-            <li>Product rule: log(MN) = log M + log N</li>
-            <li>Power rule: log(Mⁿ) = n·log M</li>
-            <li>When rationalizing binomials, always use the conjugate</li>
-            <li>Simplify surds by extracting perfect squares</li>
+            <li>For indices, express numbers in the same base whenever possible</li>
+            <li>For logarithms, always check that the expression inside the log is positive</li>
+            <li>For surds, simplify fully before giving the final answer</li>
+            <li>When rationalizing a binomial denominator, use the conjugate</li>
+            <li>Never apply log laws to addition or subtraction inside brackets</li>
           </ul>
         </div>
 
-        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
-          Great job 🌟 You now master Indices, Logarithms & Surds!
-        </p>
-
-        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 2 (Fractions) & Chapter 4 (Algebra)</p>
-        <button class="explore-btn" onclick="window.location.href='indices-quiz.html'">Start JAMB Quiz Now!</button>
+        <div class="highlight-box">
+          <p><strong>Common pitfall:</strong> <span class="math">logₐ(M + N)</span> is not equal to <span class="math">logₐM + logₐN</span>. This is false and causes many avoidable mistakes.</p>
+        </div>
       </div>
+
+      <div class="section-card">
+        <h2>6️⃣ Practice Questions</h2>
+
+        <div class="example-box">
+          <div class="title">Q1: Simplify [25^(1/2) × 8^(2/3)] / 16^(3/4)</div>
+          <p><strong>Step 1:</strong> Evaluate each term</p>
+          <p><span class="math">25^(1/2) = 5</span></p>
+          <p><span class="math">8^(2/3) = (³√8)² = 2² = 4</span></p>
+          <p><span class="math">16^(3/4) = (⁴√16)³ = 2³ = 8</span></p>
+          <p><strong>Step 2:</strong> Simplify</p>
+          <p><span class="math">(5 × 4) / 8 = 20/8 = 5/2 = 2.5</span></p>
+          <div class="answer">Answer: 5/2 or 2.5</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Q2: Solve log₃x + log₃(x - 2) = 1</div>
+          <p><strong>Step 1:</strong> Combine logs</p>
+          <p><span class="math">log₃[x(x - 2)] = 1</span></p>
+          <p><strong>Step 2:</strong> Convert to exponential form</p>
+          <p><span class="math">x(x - 2) = 3</span></p>
+          <p><strong>Step 3:</strong> Expand and solve</p>
+          <p><span class="math">x² - 2x - 3 = 0</span></p>
+          <p><span class="math">(x - 3)(x + 1) = 0</span></p>
+          <p><strong>Step 4:</strong> Check valid solution</p>
+          <p><span class="math">x = 3</span> or <span class="math">x = -1</span>, but <span class="math">x - 2</span> must be positive.</p>
+          <div class="answer">Answer: x = 3</div>
+        </div>
+
+        <div class="example-box">
+          <div class="title">Q3: Rationalize (√5 + √3) / (√5 - √3)</div>
+          <p><strong>Step 1:</strong> Multiply by the conjugate of the denominator</p>
+          <p><span class="math">[(√5 + √3)/(√5 - √3)] × [(√5 + √3)/(√5 + √3)]</span></p>
+          <p><strong>Step 2:</strong> Simplify denominator</p>
+          <p><span class="math">(√5 - √3)(√5 + √3) = 5 - 3 = 2</span></p>
+          <p><strong>Step 3:</strong> Simplify numerator</p>
+          <p><span class="math">(√5 + √3)² = 5 + 3 + 2√15 = 8 + 2√15</span></p>
+          <p><strong>Step 4:</strong> Divide by 2</p>
+          <p><span class="math">(8 + 2√15)/2 = 4 + √15</span></p>
+          <div class="answer">Answer: 4 + √15</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>7️⃣ Quick Checklist for Chapter 3</h2>
+
+        <div class="memory-tip">
+          <strong>🧠 Checklist</strong>
+          <p>Use the same base for indices. Negative indices mean reciprocals. In fractional indices, denominator means root and numerator means power. Logs are only defined for positive values. Use product and power rules correctly. Rationalize binomial denominators with the conjugate. Simplify surds by extracting perfect square factors.</p>
+        </div>
+
+        <div class="highlight-box">
+          <p><strong>Connects to:</strong> Chapter 2 Fractions and Chapter 4 Algebra.</p>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>8️⃣ Final Revision Note</h2>
+
+        <div class="memory-tip">
+          <strong>🌟 Final line</strong>
+          <p>You now have a complete guide to Indices, Logarithms, and Surds with formulas, examples, tables, and JAMB warnings. Revise the laws until they feel automatic, then practise daily.</p>
+        </div>
+      </div>
+
+      <button class="explore-btn" onclick="alert('Practise powers, logarithmic equations, surd simplification, and rationalization questions today.')">Start JAMB Questions</button>
     </div>
   </div>
 
-  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item">
-      <button class="neumorphic-btn">🔍</button>
-      <p>Search</p>
-    </div>
-    <div class="nav-item center">
-      <button class="neumorphic-btn">⭐</button>
-      <p>Favorite</p>
-    </div>
-    <div class="nav-item">
-      <button class="neumorphic-btn">📚</button>
-      <p>Library</p>
-    </div>
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
 
-    function setTheme(theme) {
+    function setTheme(theme){
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
+    setTheme(localStorage.getItem('theme') || 'dark');
 
     themeToggle.addEventListener('click', () => {
-      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
-      setTheme(newTheme);
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
     });
 
-    document.getElementById('profile-upload').addEventListener('change', (e) => {
-      if (e.target.files[0]) {
-        console.log('Profile picture selected!');
-      }
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
     });
+
+    function showAns(id){
+      document.getElementById(id).style.display = 'block';
+    }
   </script>
 </body>
 </html>
