@@ -1,509 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MATHEMATICS - Matrices & Determinants</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JAMB Mathematics - Matrices and Determinants</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
+    :root{
+      --background:#1e1e2f;--shadow-in:#171723;--shadow-out:#25253b;
+      --text-primary:#f0f0ff;--text-secondary:#c0c0e0;
+      --accent:#1db954;--accent-secondary:#ff6b6b;--accent-tertiary:#4ecdc4;
+      --card-bg:#2a2a3f;--line:#8ea2ff;--grid:rgba(255,255,255,.08)
+    }
+    body.light{
+      --background:#e0e0e0;--shadow-in:#bebebe;--shadow-out:#ffffff;
+      --text-primary:#1a1a1a;--text-secondary:#444;--card-bg:#f8f8f8;--line:#2b59ff;--grid:rgba(0,0,0,.08)
+    }
+    body{
+      background:var(--background);color:var(--text-primary);
+      display:flex;justify-content:center;align-items:center;
+      min-height:100vh;overflow-x:hidden
+    }
+    .container{
+      width:100%;max-width:420px;height:750px;overflow-y:auto;
+      background:var(--background);border-radius:20px;
+      box-shadow:10px 10px 20px var(--shadow-in),-10px -10px 20px var(--shadow-out);
+      padding-top:70px;padding-bottom:80px;position:relative
+    }
+    .neumorphic{
+      background:var(--background);
+      box-shadow:5px 5px 10px var(--shadow-in),-5px -5px 10px var(--shadow-out);
+      border-radius:15px
+    }
+    .neumorphic-btn{
+      background:var(--background);border:none;border-radius:50%;
+      width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+      box-shadow:3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      cursor:pointer;color:var(--text-primary);font-size:18px;transition:all .3s ease
+    }
+    .neumorphic-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.95)
+    }
+    .top-bar{
+      position:fixed;top:0;width:100%;max-width:420px;
+      background:var(--background);padding:15px;
+      display:flex;align-items:center;justify-content:space-between;
+      box-shadow:0 5px 10px var(--shadow-in);z-index:20
+    }
+    .top-bar .header{font-size:16px;font-weight:900;color:var(--accent)}
+    .top-bar .right-icons{display:flex;gap:10px}
+
+    .progress-container{
+      position:fixed;top:70px;left:0;width:100%;max-width:420px;height:4px;
+      background:var(--shadow-in);z-index:15
+    }
+    .progress-bar{height:100%;background:var(--accent);width:0%;transition:width .3s}
+
+    .content{padding:20px 16px;line-height:1.7}
+    .main-header{
+      text-align:center;margin-bottom:26px;padding:20px;border-radius:20px;
+      background:rgba(29,185,84,.1)
+    }
+    .main-header h1{font-size:20px;margin-bottom:8px;color:var(--accent);font-weight:900}
+    .main-header p{font-size:13px;color:var(--text-secondary);font-weight:500}
+
+    .section-card{
+      background:var(--card-bg);padding:22px 18px;border-radius:20px;
+      box-shadow:inset 4px 4px 10px var(--shadow-in),inset -4px -4px 10px var(--shadow-out);
+      margin-bottom:22px;border-left:4px solid var(--accent)
+    }
+    .section-card h2{
+      font-size:18px;margin-bottom:12px;color:var(--accent);font-weight:900;
+      display:flex;align-items:center;gap:8px
+    }
+    .section-card h3{
+      font-size:15px;margin:16px 0 10px;color:var(--accent-tertiary);font-weight:800;
+      padding-left:12px;border-left:3px solid var(--accent-tertiary)
+    }
+    .section-card h4{
+      font-size:14px;margin:14px 0 8px;color:var(--accent-secondary);font-weight:800
+    }
+    .section-card p{margin-bottom:10px;font-size:14px;text-align:justify}
+    .section-card ul,.section-card ol{padding-left:20px;margin:10px 0}
+    .section-card li{margin-bottom:7px;font-size:14px}
+
+    .quick-facts{
+      background:linear-gradient(135deg,rgba(29,185,84,.1),rgba(78,205,196,.1));
+      padding:14px;border-radius:15px;margin:12px 0;border:1px solid rgba(29,185,84,.3)
+    }
+    .quick-facts li{font-size:13px}
+
+    .highlight-box{
+      background:rgba(78,205,196,.1);padding:12px 16px;border-radius:10px;margin:12px 0;
+      border-left:3px solid var(--accent-tertiary)
     }
 
-    :root {
-      --background: #1e1e2f;
-      --shadow-in: #171723;
-      --shadow-out: #25253b;
-      --text-primary: #f0f0ff;
-      --text-secondary: #c0c0e0;
-      --accent: #1db954;
-      --card-bg: #2a2a3f;
+    .memory-tip{
+      background:rgba(255,107,107,.1);padding:14px 16px;border-radius:12px;margin:14px 0;
+      border-left:4px solid var(--accent-secondary)
+    }
+    .memory-tip strong{color:var(--accent-secondary);display:block;margin-bottom:6px;font-size:14px}
+    .memory-tip p{margin:0;font-size:13px;font-style:italic}
+
+    .jamb-alert{
+      background:linear-gradient(135deg,rgba(255,193,7,.15),rgba(255,152,0,.1));
+      border:1px solid rgba(255,193,7,.4);border-radius:12px;padding:14px;margin:16px 0
+    }
+    .jamb-alert h4{color:#ffc107;margin-bottom:8px;font-size:14px;font-weight:900}
+    .jamb-alert li{font-size:13px}
+
+    .formula-box{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .formula-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:6px
+    }
+    .formula-box .line{
+      font-size:13px;margin-bottom:5px
     }
 
-    body.light {
-      --background: #e0e0e0;
-      --shadow-in: #bebebe;
-      --shadow-out: #ffffff;
-      --text-primary: #1a1a1a;
-      --text-secondary: #444;
-      --accent: #1db954;
-      --card-bg: #f8f8f8;
+    .example-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;border-radius:14px;margin:12px 0
+    }
+    .example-box .title{
+      font-size:15px;font-weight:900;color:var(--accent-tertiary);margin-bottom:8px
+    }
+    .example-box .answer{
+      margin-top:8px;font-size:13px;color:var(--accent-secondary);font-weight:800
     }
 
-    body {
-      background: var(--background);
-      color: var(--text-primary);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
+    .table-container{
+      width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0;border-radius:12px;
+      box-shadow:3px 3px 8px var(--shadow-in),-3px -3px 8px var(--shadow-out)
+    }
+    .summary-table{
+      width:100%;min-width:500px;border-collapse:separate;border-spacing:0;font-size:13px
+    }
+    .summary-table th{
+      background:var(--accent);color:#000;padding:12px 10px;text-align:left;font-weight:900;white-space:nowrap
+    }
+    .summary-table td{
+      padding:10px;border-bottom:1px solid var(--shadow-in);background:var(--card-bg);vertical-align:top
+    }
+    .summary-table tr:last-child td{border-bottom:none}
+    .summary-table tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+    .table-scroll-hint{font-size:11px;color:var(--text-secondary);text-align:center;margin-top:4px;font-style:italic}
+
+    .matrix-block{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px;
+      padding:14px;
+      margin:12px 0;
+      overflow-x:auto
+    }
+    .matrix{
+      font-family:"Courier New",monospace;
+      font-size:15px;
+      white-space:pre;
+      line-height:1.5;
+      color:var(--text-primary)
     }
 
-    .container {
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      border-radius: 20px;
-      box-shadow: 10px 10px 20px var(--shadow-in), -10px -10px 20px var(--shadow-out);
-      overflow: hidden;
-      position: relative;
-      height: 700px;
-      overflow-y: auto;
-      padding-top: 70px;
-      padding-bottom: 70px;
+    .nav-bar{
+      position:fixed;bottom:0;width:100%;max-width:420px;background:var(--background);padding:10px;
+      display:flex;justify-content:space-around;box-shadow:0 -5px 10px var(--shadow-in);z-index:20
     }
-
-    .neumorphic {
-      background: var(--background);
-      box-shadow: 5px 5px 10px var(--shadow-in), -5px -5px 10px var(--shadow-out);
-      border-radius: 15px;
+    .nav-bar .nav-item{text-align:center}
+    .nav-bar .nav-item.center button{
+      width:50px;height:50px;font-size:24px;background:var(--accent);
+      box-shadow:0 0 15px var(--accent),3px 3px 6px var(--shadow-in),-3px -3px 6px var(--shadow-out);
+      color:#000
     }
+    .nav-bar p{display:none;font-size:11px;margin-top:4px;color:var(--text-primary)}
 
-    .neumorphic-btn {
-      background: var(--background);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      cursor: pointer;
-      color: var(--text-primary);
-      font-size: 18px;
+    .explore-btn{
+      background:var(--accent);border:none;padding:14px 28px;border-radius:25px;color:#000;cursor:pointer;
+      box-shadow:4px 4px 8px var(--shadow-in),-4px -4px 8px var(--shadow-out);
+      font-size:16px;margin:22px auto;display:block;font-weight:900;transition:all .3s ease
     }
-
-    .neumorphic-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+    .explore-btn:active{
+      box-shadow:inset 3px 3px 6px var(--shadow-in),inset -3px -3px 6px var(--shadow-out);
+      transform:scale(.98)
     }
-
-    .top-bar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 5px 10px var(--shadow-in);
-      z-index: 20;
-    }
-
-    .top-bar .header {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--text-primary);
-    }
-
-    .top-bar .right-icons {
-      display: flex;
-      gap: 10px;
-    }
-
-    .top-bar .profile-upload {
-      position: relative;
-    }
-
-    .top-bar .profile-upload input {
-      opacity: 0;
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-    }
-
-    .content {
-      padding: 20px 16px;
-      line-height: 1.6;
-    }
-
-    .main-header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .main-header h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    .main-header p.subtitle {
-      font-size: 16px;
-      color: var(--text-secondary);
-    }
-
-    .welcome-note {
-      background: var(--card-bg);
-      padding: 28px 20px;
-      border-radius: 20px;
-      box-shadow: inset 4px 4px 10px var(--shadow-in), inset -4px -4px 10px var(--shadow-out);
-      margin-bottom: 30px;
-    }
-
-    .welcome-note h2 {
-      font-size: 22px;
-      margin: 32px 0 16px;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .welcome-note h2:first-child {
-      margin-top: 0;
-    }
-
-    .welcome-note h3 {
-      font-size: 18px;
-      margin: 24px 0 12px;
-      color: var(--accent);
-    }
-
-    .welcome-note p {
-      margin-bottom: 16px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note ul, .welcome-note ol {
-      padding-left: 24px;
-      margin: 16px 0;
-    }
-
-    .welcome-note li {
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: var(--text-primary);
-    }
-
-    .welcome-note .highlight {
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .formula-box {
-      background: rgba(29, 185, 84, 0.1);
-      border-left: 4px solid var(--accent);
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box {
-      background: rgba(0,0,0,0.15);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .calculation-box strong {
-      color: var(--accent);
-    }
-
-    .answer-box {
-      background: var(--accent);
-      color: #000;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      margin: 12px 0;
-      text-align: center;
-    }
-
-    .tips-box {
-      background: rgba(255, 193, 7, 0.1);
-      border-left: 4px solid #ffc107;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .warning-box {
-      background: rgba(244, 67, 54, 0.1);
-      border-left: 4px solid #f44336;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      margin: 16px 0;
-      border-radius: 12px;
-      box-shadow: 3px 3px 8px var(--shadow-in), -3px -3px 8px var(--shadow-out);
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .table-wrapper::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-track {
-      background: var(--shadow-in);
-      border-radius: 3px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 3px;
-    }
-
-    table {
-      width: 100%;
-      min-width: 500px;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--shadow-in);
-      white-space: nowrap;
-    }
-
-    th {
-      color: var(--accent);
-      font-weight: bold;
-      background: rgba(0,0,0,0.1);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .explore-btn {
-      background: var(--accent);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      color: #000;
-      cursor: pointer;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      font-size: 16px;
-      margin: 24px auto 0;
-      display: block;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .explore-btn:active {
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      max-width: 400px;
-      background: var(--background);
-      padding: 10px;
-      display: flex;
-      justify-content: space-around;
-      box-shadow: 0 -5px 10px var(--shadow-in);
-      z-index: 20;
-    }
-
-    .nav-bar .nav-item {
-      text-align: center;
-      position: relative;
-    }
-
-    .nav-bar .nav-item button {
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.center button {
-      width: 50px;
-      height: 50px;
-      font-size: 24px;
-      background: var(--accent);
-      box-shadow: 0 0 15px var(--accent), 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-      color: #000;
-    }
-
-    .nav-bar .nav-item.active button {
-      background: var(--accent);
-      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
-    }
-
-    .nav-bar .nav-item p {
-      display: none;
-      font-size: 12px;
-      margin-top: 5px;
-      color: var(--text-primary);
-    }
-
-    .nav-bar .nav-item.active p {
-      display: block;
-    }
-
-    .memory-aid {
-      background: rgba(29, 185, 84, 0.15);
-      border-left: 4px solid var(--accent);
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      font-style: italic;
-      font-weight: bold;
-    }
-
-    .component-box {
-      background: rgba(0,0,0,0.1);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-      border-left: 4px solid var(--accent);
-    }
-
-    .component-box h4 {
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-
-    .section-header {
-      background: linear-gradient(135deg, var(--accent) 0%, #2e8b47 100%);
-      color: #000;
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin: 24px 0;
-      text-align: center;
-      font-weight: bold;
-      font-size: 16px;
-      box-shadow: 3px 3px 6px var(--shadow-in), -3px -3px 6px var(--shadow-out);
-    }
-
-    .shortcut-box {
-      background: rgba(255, 193, 7, 0.2);
-      border: 2px solid #ffc107;
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-    }
-
-    .shortcut-box h4 {
-      color: #ffc107;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-
-    .checklist-box {
-      background: rgba(29, 185, 84, 0.1);
-      padding: 16px;
-      border-radius: 12px;
-      margin: 16px 0;
-    }
-
-    .checklist-box li {
-      list-style: none;
-      margin-bottom: 8px;
-    }
-
-    .checklist-box li:before {
-      content: "✅ ";
-      color: var(--accent);
-    }
-
-    .fraction {
-      display: inline-block;
-      text-align: center;
-      vertical-align: middle;
-      margin: 0 2px;
-    }
-
-    .fraction .top {
-      border-bottom: 1px solid var(--text-primary);
-      display: block;
-      padding: 0 2px;
-    }
-
-    .fraction .bottom {
-      display: block;
-      padding: 0 2px;
-    }
-
-    .matrix {
-      display: inline-block;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      line-height: 1.4;
-      vertical-align: middle;
-    }
-
-    .practice-box {
-      background: rgba(33, 150, 243, 0.1);
-      border-left: 4px solid #2196f3;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
-
-    .practice-box strong {
-      color: #2196f3;
+    .math{
+      font-weight:900;color:var(--accent-secondary)
     }
   </style>
 </head>
+
 <body class="dark">
-  <div class="container">
-    <!-- Top Fixed Bar -->
+  <div class="container" id="scroll-container">
+    <div class="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
+
     <div class="top-bar neumorphic">
-      <button class="neumorphic-btn">←</button>
+      <button class="neumorphic-btn" onclick="history.back()">←</button>
       <div class="header">MATHEMATICS</div>
       <div class="right-icons">
         <button class="neumorphic-btn" id="theme-toggle">🌙</button>
-        <button class="neumorphic-btn profile-upload">
-          🚀
-          <input type="file" accept="image/*" id="profile-upload">
-        </button>
+        <button class="neumorphic-btn" onclick="alert('📌 Saved for revision!')">🚀</button>
       </div>
     </div>
 
-    <!-- Main Content -->
     <div class="content">
       <div class="main-header">
-        <h1>Matrices & Determinants! 🔢</h1>
-        <p class="subtitle">– JAMB Chapter 10 Made Easy</p>
+        <h1>🧮 Matrices and Determinants</h1>
+        <p>JAMB Mathematics • matrix types • addition • subtraction • multiplication • determinants • inverse of 2×2 matrices</p>
       </div>
 
-      <div class="welcome-note neumorphic">
-        <h2>📚 Chapter 10: Matrices and Determinants</h2>
-        
-        <p><strong>🎯 Learning Objectives:</strong> Perform basic operations (×, +, −, ÷) on matrices up to 3×3, calculate determinants, and compute inverses of 2×2 matrices.</p>
+      <div class="section-card">
+        <h2>📋 Introduction to Chapter 10</h2>
+        <p>This chapter teaches how to work with <strong>matrices and determinants</strong>. You will learn matrix types, matrix operations, how to calculate determinants, and how to find inverses of 2×2 matrices.</p>
+        <p>Matrix questions in JAMB are usually direct if you first check the matrix dimensions and then apply the correct formula carefully.</p>
 
-        <h2>What is a Matrix? 🤔</h2>
-        <p>A matrix is a <span class="highlight">rectangular array of numbers</span> arranged in rows and columns, enclosed in brackets.</p>
-
-        <div class="formula-box">
-          <strong>Example:</strong><br>
-          A = ( 1  2  3 )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( 4  5  6 )<br><br>
-          
-          This is a <strong>2×3 matrix</strong> (2 rows, 3 columns)
+        <div class="quick-facts">
+          <ul>
+            <li>Matrices are arranged in rows and columns</li>
+            <li>Addition and subtraction require the same order</li>
+            <li>Matrix multiplication depends on matching inner dimensions</li>
+            <li>Only square matrices have determinants</li>
+            <li>A matrix has an inverse only if its determinant is not zero</li>
+          </ul>
         </div>
 
-        <div class="section-header">1️⃣ TYPES OF MATRICES</div>
+        <div class="memory-tip">
+          <strong>🧠 Big idea</strong>
+          <p>Most matrix mistakes happen when students ignore dimensions. Always check the order first before doing any operation.</p>
+        </div>
+      </div>
 
-        <h2>JAMB Focus Types 📊</h2>
-        
-        <div class="table-wrapper">
-          <table>
+      <div class="section-card">
+        <h2>❓ What is a Matrix?</h2>
+        <p>A matrix is a rectangular array of numbers arranged in rows and columns and enclosed in brackets.</p>
+
+        <div class="matrix-block">
+          <div class="matrix">A = ( 1  2  3 )
+    ( 4  5  6 )</div>
+        </div>
+
+        <p>This is a <span class="math">2 × 3</span> matrix because it has 2 rows and 3 columns.</p>
+      </div>
+
+      <div class="section-card">
+        <h2>1️⃣ Types of Matrices</h2>
+
+        <h3>JAMB Focus Types</h3>
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Type</th>
               <th>Description</th>
@@ -512,226 +260,241 @@
             <tr>
               <td>Row Matrix</td>
               <td>One row only</td>
-              <td>( 2  5  1 ) (1×3)</td>
+              <td>( 2  5  1 )  → 1×3</td>
             </tr>
             <tr>
               <td>Column Matrix</td>
               <td>One column only</td>
-              <td>( 3 )<br>( 7 ) (2×1)</td>
+              <td>( 3 )<br>( 7 )  → 2×1</td>
             </tr>
             <tr>
               <td>Square Matrix</td>
-              <td>Equal rows & columns</td>
-              <td>( 1  2 )<br>( 3  4 ) (2×2)</td>
+              <td>Same number of rows and columns</td>
+              <td>( 1  2 )<br>( 3  4 )</td>
             </tr>
             <tr>
               <td>Diagonal Matrix</td>
-              <td>Non-zero only on main diagonal</td>
+              <td>Non-zero entries only on the main diagonal</td>
               <td>( 5  0 )<br>( 0  3 )</td>
             </tr>
             <tr>
-              <td>Identity Matrix (I)</td>
-              <td>Diagonal = 1, others = 0</td>
+              <td>Identity Matrix</td>
+              <td>Main diagonal entries are 1, others are 0</td>
               <td>( 1  0 )<br>( 0  1 )</td>
             </tr>
             <tr>
-              <td>Zero/Null Matrix</td>
-              <td>All elements = 0</td>
+              <td>Zero / Null Matrix</td>
+              <td>All elements are 0</td>
               <td>( 0  0 )<br>( 0  0 )</td>
             </tr>
             <tr>
-              <td>Transpose (A<sup>T</sup>)</td>
+              <td>Transpose</td>
               <td>Rows become columns</td>
-              <td>If A=(1 2;3 4), then A<sup>T</sup>=(1 3;2 4)</td>
+              <td>If A = (1 2; 3 4), then Aᵀ = (1 3; 2 4)</td>
             </tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe left/right to see more →</div>
+      </div>
 
-        <div class="section-header">2️⃣ ALGEBRA OF MATRICES</div>
+      <div class="section-card">
+        <h2>2️⃣ Algebra of Matrices</h2>
 
-        <h2>A. Addition & Subtraction ➕➖</h2>
-        <div class="memory-aid">
-          💡 Rule: Matrices must have the same order (same number of rows and columns). Add/subtract corresponding elements.
+        <h3>A. Addition and Subtraction</h3>
+        <div class="highlight-box">
+          <p><strong>Rule:</strong> Matrices must have the same order before you can add or subtract them.</p>
         </div>
 
-        <h2>🔢 Example 1: Addition</h2>
-        <div class="calculation-box">
-          ( 2  5 ) + ( 4  2 ) = ( 2+4  5+2 ) = ( 6  7 )<br>
-          ( 3  1 )&nbsp;&nbsp;&nbsp;( 1  6 )&nbsp;&nbsp;&nbsp;( 3+1  1+6 )&nbsp;&nbsp;&nbsp;( 4  7 )
+        <div class="example-box">
+          <div class="title">Example 1: Matrix Addition</div>
+          <div class="matrix-block">
+            <div class="matrix">( 2  5 )   +   ( 4  2 )   =   ( 6  7 )
+( 3  1 )       ( 1  6 )       ( 4  7 )</div>
+          </div>
+          <div class="answer">Answer: ( 6  7 ; 4  7 )</div>
         </div>
 
-        <h2>🔢 Example 2: Subtraction</h2>
-        <div class="calculation-box">
-          ( 8  3 ) - ( 2  1 ) = ( 6  2 )<br>
-          ( 5  9 )&nbsp;&nbsp;&nbsp;( 4  3 )&nbsp;&nbsp;&nbsp;( 1  6 )
+        <div class="example-box">
+          <div class="title">Example 2: Matrix Subtraction</div>
+          <div class="matrix-block">
+            <div class="matrix">( 8  3 )   -   ( 2  1 )   =   ( 6  2 )
+( 5  9 )       ( 4  3 )       ( 1  6 )</div>
+          </div>
+          <div class="answer">Answer: ( 6  2 ; 1  6 )</div>
         </div>
 
-        <h2>B. Scalar Multiplication ✖️</h2>
-        <p>Multiply every element by the scalar (number).</p>
+        <h3>B. Scalar Multiplication</h3>
+        <p>Multiply every entry of the matrix by the scalar.</p>
 
-        <h2>🔢 Example 3: Scalar Multiplication</h2>
-        <div class="calculation-box">
-          3 × ( 2  4 ) = ( 6  12 )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( 1  5 )&nbsp;&nbsp;&nbsp;( 3  15 )
+        <div class="example-box">
+          <div class="title">Example 3: Scalar Multiplication</div>
+          <div class="matrix-block">
+            <div class="matrix">3 × ( 2  4 )   =   ( 6  12 )
+    ( 1  5 )       ( 3  15 )</div>
+          </div>
+          <div class="answer">Answer: ( 6  12 ; 3  15 )</div>
         </div>
 
-        <h2>C. Matrix Multiplication ⚠️ VERY IMPORTANT</h2>
-        <div class="warning-box">
-          <h4>⚠️ Key Rules:</h4>
-          <p>• Number of <strong>columns in A</strong> must equal number of <strong>rows in B</strong></p>
-          <p>• Result has dimensions: (rows of A) × (columns of B)</p>
-          <p>• <strong>Method:</strong> Multiply row by column and sum the products</p>
+        <h3>C. Matrix Multiplication</h3>
+        <div class="jamb-alert">
+          <h4>Key rules</h4>
+          <ul>
+            <li>The number of columns in the first matrix must equal the number of rows in the second</li>
+            <li>The result has order: (rows of first matrix) × (columns of second matrix)</li>
+            <li>Multiply row by column, then add the products</li>
+          </ul>
         </div>
 
-        <h2>🔢 Example 4: 2×2 by 2×2</h2>
-        <p>( 1  2 ) × ( 5  6 ) = ?</p>
-        <p>( 3  4 )&nbsp;&nbsp;&nbsp;( 7  8 )</p>
-        
-        <div class="calculation-box">
-          <strong>Step-by-step:</strong><br><br>
-          
-          Row 1, Column 1: (1×5) + (2×7) = 5 + 14 = <strong>19</strong><br>
-          Row 1, Column 2: (1×6) + (2×8) = 6 + 16 = <strong>22</strong><br>
-          Row 2, Column 1: (3×5) + (4×7) = 15 + 28 = <strong>43</strong><br>
-          Row 2, Column 2: (3×6) + (4×8) = 18 + 32 = <strong>50</strong><br><br>
-          
-          Result: ( 19  22 )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( 43  50 )
+        <div class="example-box">
+          <div class="title">Example 4: Multiply a 2×2 matrix by a 2×2 matrix</div>
+          <div class="matrix-block">
+            <div class="matrix">( 1  2 )   ×   ( 5  6 )
+( 3  4 )       ( 7  8 )</div>
+          </div>
+          <p><strong>Row 1, Column 1:</strong> <span class="math">(1×5) + (2×7) = 19</span></p>
+          <p><strong>Row 1, Column 2:</strong> <span class="math">(1×6) + (2×8) = 22</span></p>
+          <p><strong>Row 2, Column 1:</strong> <span class="math">(3×5) + (4×7) = 43</span></p>
+          <p><strong>Row 2, Column 2:</strong> <span class="math">(3×6) + (4×8) = 50</span></p>
+          <div class="matrix-block">
+            <div class="matrix">Result = ( 19  22 )
+         ( 43  50 )</div>
+          </div>
+          <div class="answer">Answer: ( 19  22 ; 43  50 )</div>
         </div>
 
-        <h2>🔢 Example 5: 2×3 by 3×2</h2>
-        <p>( 1  2  3 ) × ( 7   8  )</p>
-        <p>( 4  5  6 )&nbsp;&nbsp;&nbsp;( 9  10 )</p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( 11 12 )</p>
-        
-        <div class="calculation-box">
-          <strong>Calculations:</strong><br><br>
-          
-          Row 1, Col 1: (1×7)+(2×9)+(3×11) = 7+18+33 = <strong>58</strong><br>
-          Row 1, Col 2: (1×8)+(2×10)+(3×12) = 8+20+36 = <strong>64</strong><br>
-          Row 2, Col 1: (4×7)+(5×9)+(6×11) = 28+45+66 = <strong>139</strong><br>
-          Row 2, Col 2: (4×8)+(5×10)+(6×12) = 32+50+72 = <strong>154</strong><br><br>
-          
-          Result: ( 58   64  ) (2×2 matrix)<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( 139 154 )
+        <div class="example-box">
+          <div class="title">Example 5: Multiply a 2×3 matrix by a 3×2 matrix</div>
+          <div class="matrix-block">
+            <div class="matrix">( 1  2  3 )   ×   (  7   8 )
+( 4  5  6 )       (  9  10 )
+                  ( 11  12 )</div>
+          </div>
+          <p><strong>Row 1, Column 1:</strong> <span class="math">(1×7)+(2×9)+(3×11)=58</span></p>
+          <p><strong>Row 1, Column 2:</strong> <span class="math">(1×8)+(2×10)+(3×12)=64</span></p>
+          <p><strong>Row 2, Column 1:</strong> <span class="math">(4×7)+(5×9)+(6×11)=139</span></p>
+          <p><strong>Row 2, Column 2:</strong> <span class="math">(4×8)+(5×10)+(6×12)=154</span></p>
+          <div class="matrix-block">
+            <div class="matrix">Result = (  58   64 )
+         ( 139  154 )</div>
+          </div>
+          <div class="answer">Answer: ( 58  64 ; 139  154 )</div>
         </div>
+      </div>
 
-        <div class="section-header">3️⃣ DETERMINANTS</div>
+      <div class="section-card">
+        <h2>3️⃣ Determinants</h2>
 
-        <h2>What is a Determinant? 🔢</h2>
-        <p>The determinant is a special number calculated from a <span class="highlight">square matrix</span>. Denoted as |A| or det(A).</p>
+        <h3>What is a Determinant?</h3>
+        <p>A determinant is a special number associated with a square matrix. It is written as <span class="math">|A|</span> or <span class="math">det(A)</span>.</p>
 
-        <h2>A. Determinant of 2×2 Matrix 📐</h2>
+        <h3>A. Determinant of a 2×2 Matrix</h3>
         <div class="formula-box">
-          For A = ( a  b )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( c  d )<br><br>
-          
-          <strong>|A| = ad - bc</strong>
+          <div class="title">2×2 determinant formula</div>
+          <div class="line">For <span class="math">A = ( a  b ; c  d )</span></div>
+          <div class="line"><span class="math">|A| = ad - bc</span></div>
         </div>
 
-        <h2>🔢 Example 6: 2×2 Determinant</h2>
-        <div class="calculation-box">
-          | 3  5 | = (3×4) - (5×2) = 12 - 10 = <strong>2</strong><br>
-          | 2  4 |
+        <div class="example-box">
+          <div class="title">Example 6: Find the determinant of ( 3  5 ; 2  4 )</div>
+          <p><span class="math">|A| = (3×4) - (5×2)</span></p>
+          <p><span class="math">= 12 - 10 = 2</span></p>
+          <div class="answer">Answer: 2</div>
         </div>
 
-        <h2>B. Determinant of 3×3 Matrix 🧮</h2>
+        <h3>B. Determinant of a 3×3 Matrix</h3>
         <div class="formula-box">
-          For A = ( a  b  c )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( d  e  f )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( g  h  i )<br><br>
-          
-          <strong>|A| = a(ei - fh) - b(di - fg) + c(dh - eg)</strong><br><br>
-          
-          <em>Memory Tip: Expand along first row using alternating signs (+, −, +)</em>
+          <div class="title">3×3 determinant formula</div>
+          <div class="line">For <span class="math">A = ( a  b  c ; d  e  f ; g  h  i )</span></div>
+          <div class="line"><span class="math">|A| = a(ei - fh) - b(di - fg) + c(dh - eg)</span></div>
         </div>
 
-        <h2>🔢 Example 7: 3×3 Determinant</h2>
-        <div class="calculation-box">
-          | 1  2  3 |<br>
-          | 4  5  6 |<br>
-          | 7  8  9 |<br><br>
-          
-          = 1| 5  6 | - 2| 4  6 | + 3| 4  5 |<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 8  9 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 7  9 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 7  8 |<br><br>
-          
-          = 1(45-48) - 2(36-42) + 3(32-35)<br>
-          = 1(-3) - 2(-6) + 3(-3)<br>
-          = -3 + 12 - 9<br>
-          = <strong>0</strong>
+        <div class="memory-tip">
+          <strong>🧠 Memory tip</strong>
+          <p>Expand along the first row and remember the sign pattern: <span class="math">+, −, +</span>.</p>
         </div>
 
-        <div class="section-header">4️⃣ INVERSE OF A MATRIX</div>
+        <div class="example-box">
+          <div class="title">Example 7: Find the determinant of ( 1  2  3 ; 4  5  6 ; 7  8  9 )</div>
+          <p><span class="math">|A| = 1(45 - 48) - 2(36 - 42) + 3(32 - 35)</span></p>
+          <p><span class="math">= 1(-3) - 2(-6) + 3(-3)</span></p>
+          <p><span class="math">= -3 + 12 - 9 = 0</span></p>
+          <div class="answer">Answer: 0</div>
+        </div>
+      </div>
 
-        <div class="memory-aid">
-          💡 Only square matrices with <strong>non-zero determinants</strong> have inverses.
+      <div class="section-card">
+        <h2>4️⃣ Inverse of a Matrix</h2>
+
+        <div class="highlight-box">
+          <p><strong>Important:</strong> Only square matrices with non-zero determinants have inverses.</p>
         </div>
 
-        <h2>Inverse of 2×2 Matrix ⭐ JAMB FAVORITE</h2>
+        <h3>Inverse of a 2×2 Matrix</h3>
         <div class="formula-box">
-          For A = ( a  b )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( c  d )<br><br>
-          
-          <strong>A<sup>-1</sup> = <span class="fraction"><span class="top">1</span><span class="bottom">|A|</span></span> ( d  -b )</strong><br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>( -c  a )</strong><br><br>
-          
-          <strong>Steps:</strong><br>
-          1. Find determinant |A| = ad - bc<br>
-          2. Swap a and d (main diagonal)<br>
-          3. Change signs of b and c (off-diagonal)<br>
-          4. Multiply by <span class="fraction"><span class="top">1</span><span class="bottom">|A|</span></span>
+          <div class="title">2×2 inverse formula</div>
+          <div class="line">For <span class="math">A = ( a  b ; c  d )</span></div>
+          <div class="line"><span class="math">A⁻¹ = (1/|A|) ( d  -b ; -c  a )</span></div>
         </div>
 
-        <h2>🔢 Example 8: Finding Inverse</h2>
-        <p>Find the inverse of A = ( 4  7 )</p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( 2  6 )</p>
-        
-        <div class="calculation-box">
-          <strong>Step 1:</strong> |A| = (4×6) - (7×2) = 24 - 14 = <strong>10</strong><br><br>
-          
-          <strong>Step 2:</strong> Apply formula<br>
-          A<sup>-1</sup> = <span class="fraction"><span class="top">1</span><span class="bottom">10</span></span> ( 6  -7 )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( -2  4 )<br><br>
-          
-          = ( 0.6  -0.7 )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;( -0.2  0.4 )<br><br>
-          
-          Or in fractions:<br>
-          = ( <span class="fraction"><span class="top">3</span><span class="bottom">5</span></span>  -<span class="fraction"><span class="top">7</span><span class="bottom">10</span></span> )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;( -<span class="fraction"><span class="top">1</span><span class="bottom">5</span></span>   <span class="fraction"><span class="top">2</span><span class="bottom">5</span></span>  )
+        <div class="quick-facts">
+          <ul>
+            <li>Find the determinant first</li>
+            <li>Swap the diagonal entries</li>
+            <li>Change the signs of the off-diagonal entries</li>
+            <li>Multiply everything by <span class="math">1/|A|</span></li>
+          </ul>
         </div>
 
-        <h2>Using Inverse to Solve Simultaneous Equations 📐</h2>
-
-        <h2>🔢 Example 9: Solving with Matrices</h2>
-        <p>Solve:</p>
-        <p>2x + 3y = 8</p>
-        <p>5x + 4y = 13</p>
-        
-        <div class="calculation-box">
-          <strong>Matrix Form: AX = B</strong><br>
-          ( 2  3 ) ( x ) = ( 8 )<br>
-          ( 5  4 ) ( y )&nbsp;&nbsp;&nbsp;( 13 )<br><br>
-          
-          <strong>Solution: X = A<sup>-1</sup>B</strong><br><br>
-          
-          Step 1: |A| = (2×4) - (3×5) = 8 - 15 = <strong>-7</strong><br><br>
-          
-          Step 2: A<sup>-1</sup> = <span class="fraction"><span class="top">1</span><span class="bottom">-7</span></span>( 4  -3 ) = ( -<span class="fraction"><span class="top">4</span><span class="bottom">7</span></span>   <span class="fraction"><span class="top">3</span><span class="bottom">7</span></span> )<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( -5  2 )&nbsp;&nbsp;&nbsp;(  <span class="fraction"><span class="top">5</span><span class="bottom">7</span></span>  -<span class="fraction"><span class="top">2</span><span class="bottom">7</span></span> )<br><br>
-          
-          Step 3: Multiply A<sup>-1</sup> × B<br>
-          ( x ) = ( -<span class="fraction"><span class="top">4</span><span class="bottom">7</span></span>×8 + <span class="fraction"><span class="top">3</span><span class="bottom">7</span></span>×13 ) = ( <span class="fraction"><span class="top">-32+39</span><span class="bottom">7</span></span> ) = ( 1 )<br>
-          ( y )&nbsp;&nbsp;&nbsp;(  <span class="fraction"><span class="top">5</span><span class="bottom">7</span></span>×8 + (-<span class="fraction"><span class="top">2</span><span class="bottom">7</span></span>)×13 )&nbsp;&nbsp;&nbsp;( <span class="fraction"><span class="top">40-26</span><span class="bottom">7</span></span> )&nbsp;&nbsp;&nbsp;( 2 )
+        <div class="example-box">
+          <div class="title">Example 8: Find the inverse of A = ( 4  7 ; 2  6 )</div>
+          <p><strong>Step 1:</strong> Find the determinant</p>
+          <p><span class="math">|A| = (4×6) - (7×2) = 24 - 14 = 10</span></p>
+          <p><strong>Step 2:</strong> Apply the formula</p>
+          <p><span class="math">A⁻¹ = (1/10)( 6  -7 ; -2  4 )</span></p>
+          <p><strong>Step 3:</strong> Write the final answer</p>
+          <div class="matrix-block">
+            <div class="matrix">A⁻¹ = (  0.6  -0.7 )
+      ( -0.2   0.4 )</div>
+          </div>
+          <p>Or in fractions:</p>
+          <div class="matrix-block">
+            <div class="matrix">A⁻¹ = (  3/5   -7/10 )
+      ( -1/5    2/5  )</div>
+          </div>
+          <div class="answer">Answer: A⁻¹ = (1/10)( 6  -7 ; -2  4 )</div>
         </div>
-        <div class="answer-box">Answer: x = 1, y = 2</div>
+      </div>
 
-        <div class="section-header">📋 SUMMARY TABLE</div>
+      <div class="section-card">
+        <h2>5️⃣ Using Inverse to Solve Simultaneous Equations</h2>
 
-        <h2>All Matrix Formulas 📊</h2>
-        
-        <div class="table-wrapper">
-          <table>
+        <div class="example-box">
+          <div class="title">Example 9: Solve 2x + 3y = 8 and 5x + 4y = 13 using matrices</div>
+          <p><strong>Step 1:</strong> Write in matrix form <span class="math">AX = B</span></p>
+          <div class="matrix-block">
+            <div class="matrix">( 2  3 ) ( x )   =   (  8 )
+( 5  4 ) ( y )       ( 13 )</div>
+          </div>
+
+          <p><strong>Step 2:</strong> Find the determinant of A</p>
+          <p><span class="math">|A| = (2×4) - (3×5) = 8 - 15 = -7</span></p>
+
+          <p><strong>Step 3:</strong> Find <span class="math">A⁻¹</span></p>
+          <p><span class="math">A⁻¹ = (1/-7)( 4  -3 ; -5  2 )</span></p>
+
+          <p><strong>Step 4:</strong> Compute <span class="math">X = A⁻¹B</span></p>
+          <p><span class="math">x = (-4/7)×8 + (3/7)×13 = (-32 + 39)/7 = 1</span></p>
+          <p><span class="math">y = (5/7)×8 + (-2/7)×13 = (40 - 26)/7 = 2</span></p>
+
+          <div class="answer">Answer: x = 1, y = 2</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>6️⃣ Summary Table</h2>
+
+        <div class="table-container">
+          <table class="summary-table">
             <tr>
               <th>Operation</th>
               <th>Formula / Rule</th>
@@ -739,27 +502,27 @@
             </tr>
             <tr>
               <td>Matrix Addition</td>
-              <td>(A + B)<sub>ij</sub> = a<sub>ij</sub> + b<sub>ij</sub></td>
+              <td>(A + B)ᵢⱼ = aᵢⱼ + bᵢⱼ</td>
               <td>Same order required</td>
             </tr>
             <tr>
               <td>Matrix Subtraction</td>
-              <td>(A - B)<sub>ij</sub> = a<sub>ij</sub> - b<sub>ij</sub></td>
+              <td>(A - B)ᵢⱼ = aᵢⱼ - bᵢⱼ</td>
               <td>Same order required</td>
             </tr>
             <tr>
               <td>Scalar Multiplication</td>
-              <td>(kA)<sub>ij</sub> = k × a<sub>ij</sub></td>
-              <td>Multiply every element</td>
+              <td>(kA)ᵢⱼ = k × aᵢⱼ</td>
+              <td>Multiply every entry</td>
             </tr>
             <tr>
               <td>Matrix Multiplication</td>
-              <td>(AB)<sub>ij</sub> = Σ a<sub>ik</sub>b<sub>kj</sub></td>
-              <td>Cols of A = Rows of B</td>
+              <td>(AB)ᵢⱼ = Σ aᵢₖbₖⱼ</td>
+              <td>Columns of A must equal rows of B</td>
             </tr>
             <tr>
               <td>Determinant (2×2)</td>
-              <td>| a  b | = ad - bc<br>| c  d |</td>
+              <td>| a  b ; c  d | = ad - bc</td>
               <td>Square matrix only</td>
             </tr>
             <tr>
@@ -769,114 +532,120 @@
             </tr>
             <tr>
               <td>Inverse (2×2)</td>
-              <td>A<sup>-1</sup> = <span class="fraction"><span class="top">1</span><span class="bottom">|A|</span></span>( d  -b )<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( -c  a )</td>
-              <td>|A| ≠ 0 required</td>
+              <td>A⁻¹ = (1/|A|)( d  -b ; -c  a )</td>
+              <td>Only if |A| ≠ 0</td>
             </tr>
             <tr>
               <td>Identity Matrix</td>
               <td>AI = IA = A</td>
-              <td>I = ( 1  0 ; 0  1 )</td>
+              <td>I = ( 1 0 ; 0 1 )</td>
             </tr>
             <tr>
               <td>Transpose</td>
-              <td>(A<sup>T</sup>)<sub>ij</sub> = a<sub>ji</sub></td>
-              <td>Rows ↔ Columns</td>
+              <td>(Aᵀ)ᵢⱼ = aⱼᵢ</td>
+              <td>Rows become columns</td>
             </tr>
             <tr>
-              <td>Solving AX=B</td>
-              <td>X = A<sup>-1</sup>B</td>
+              <td>Solving AX = B</td>
+              <td>X = A⁻¹B</td>
               <td>Pre-multiply by inverse</td>
             </tr>
           </table>
         </div>
+        <div class="table-scroll-hint">← Swipe left/right to see more →</div>
+      </div>
 
-        <div class="tips-box">
-          <h3>🎯 JAMB Past Question Style</h3>
-          <p><strong>Likely Question:</strong></p>
-          <p>"If A = ( 2  1 ) and B = ( 1  2 ), find AB and the determinant of AB."</p>
-          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( 3  4 )&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( 0  3 )</p>
-          
-          <div class="calculation-box" style="margin-top: 12px;">
-            <strong>Solution:</strong><br>
-            1. AB = ( (2×1+1×0)  (2×2+1×3) ) = ( 2  7 )<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( (3×1+4×0)  (3×2+4×3) )&nbsp;&nbsp;&nbsp;( 3  18 )<br><br>
-            
-            2. |AB| = (2×18) - (7×3) = 36 - 21 = <strong>15</strong>
+      <div class="section-card">
+        <h2>7️⃣ JAMB Past Question Style</h2>
+
+        <div class="example-box">
+          <div class="title">If A = ( 2  1 ; 3  4 ) and B = ( 1  2 ; 0  3 ), find AB and |AB|</div>
+          <p><strong>Step 1:</strong> Multiply A and B</p>
+          <p><span class="math">AB = ( (2×1 + 1×0)   (2×2 + 1×3) ; (3×1 + 4×0)   (3×2 + 4×3) )</span></p>
+          <div class="matrix-block">
+            <div class="matrix">AB = ( 2   7 )
+     ( 3  18 )</div>
           </div>
+          <p><strong>Step 2:</strong> Find the determinant</p>
+          <p><span class="math">|AB| = (2×18) - (7×3) = 36 - 21 = 15</span></p>
+          <div class="answer">Answer: AB = ( 2  7 ; 3  18 ), and |AB| = 15</div>
         </div>
+      </div>
 
-        <div class="shortcut-box">
-          <h4>⚡ Key Points to Remember</h4>
-          <p>✅ Matrix multiplication is <strong>NOT commutative</strong>: AB ≠ BA (usually)</p>
-          <p>✅ Determinant of identity matrix = 1</p>
-          <p>✅ If determinant = 0, matrix has <strong>NO inverse</strong> (singular matrix)</p>
-          <p>✅ For inverse: Swap diagonal, negate off-diagonal, divide by determinant</p>
-          <p>✅ Always check matrix orders before attempting operations</p>
-          <p>✅ 3×3 determinants: Use cofactor expansion (alternating signs +, −, +)</p>
-        </div>
+      <div class="section-card">
+        <h2>8️⃣ Key Points to Remember</h2>
 
-        <h3>Quick Checklist for Matrix Problems:</h3>
-        <div class="checklist-box">
+        <div class="jamb-alert">
+          <h4>Important facts</h4>
           <ul>
-            <li>Check matrix dimensions before operations</li>
-            <li>For multiplication: verify columns of A = rows of B</li>
-            <li>For determinants: matrix must be square</li>
-            <li>For inverse: check |A| ≠ 0 first</li>
-            <li>Remember: swap diagonal, negate off-diagonal for 2×2 inverse</li>
-            <li>For 3×3 determinants: use alternating signs (+, −, +)</li>
-            <li>Solving equations: X = A<sup>-1</sup>B (pre-multiply)</li>
+            <li>Matrix multiplication is usually not commutative, so AB ≠ BA in general</li>
+            <li>The determinant of the identity matrix is 1</li>
+            <li>If the determinant is 0, the matrix has no inverse</li>
+            <li>For 2×2 inverse, swap the diagonal and negate the off-diagonal</li>
+            <li>For 3×3 determinants, use alternating signs: +, −, +</li>
+            <li>Always check matrix order before operating</li>
           </ul>
         </div>
-
-        <p style="text-align: center; font-size: 17px; margin: 32px 0; font-weight: bold;">
-          Great job 🌟 You now master Matrices & Determinants!
-        </p>
-
-        <p style="text-align: center; margin: 20px 0;">Connects to Chapter 9 (Binary Operations) & Chapter 11 (Geometry)</p>
-        <button class="explore-btn" onclick="window.location.href='matrices-quiz.html'">Start JAMB Quiz Now!</button>
       </div>
+
+      <div class="section-card">
+        <h2>9️⃣ Quick Checklist for Matrix Problems</h2>
+
+        <div class="memory-tip">
+          <strong>🧠 Checklist</strong>
+          <p>Check the matrix dimensions first. For multiplication, make sure the number of columns of the first matrix equals the number of rows of the second. For determinants, the matrix must be square. For inverses, verify that <span class="math">|A| ≠ 0</span>. For 2×2 inverse, swap the diagonal and change the signs of the off-diagonal entries. For 3×3 determinants, use the sign pattern <span class="math">+, −, +</span>. For solving equations, use <span class="math">X = A⁻¹B</span>.</p>
+        </div>
+
+        <div class="highlight-box">
+          <p><strong>Connects to:</strong> Chapter 9 Binary Operations and Chapter 11 Geometry.</p>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>🔟 Final Revision Note</h2>
+
+        <div class="memory-tip">
+          <strong>🌟 Final line</strong>
+          <p>You now have a full guide to Matrices and Determinants with matrix operations, determinant formulas, inverse method, and exam tips. Once you check dimensions carefully, this topic becomes much easier.</p>
+        </div>
+      </div>
+
+      <button class="explore-btn" onclick="alert('Practise matrix addition, multiplication, determinants, inverses, and AX = B questions today.')">Start JAMB Questions</button>
     </div>
   </div>
 
-  <!-- Footer Nav Bar -->
   <div class="nav-bar">
-    <div class="nav-item">
-      <button class="neumorphic-btn">🔍</button>
-      <p>Search</p>
-    </div>
-    <div class="nav-item center">
-      <button class="neumorphic-btn">⭐</button>
-      <p>Favorite</p>
-    </div>
-    <div class="nav-item">
-      <button class="neumorphic-btn">📚</button>
-      <p>Library</p>
-    </div>
+    <div class="nav-item"><button class="neumorphic-btn">🔍</button><p>Search</p></div>
+    <div class="nav-item center"><button class="neumorphic-btn">⭐</button><p>Save</p></div>
+    <div class="nav-item"><button class="neumorphic-btn">📚</button><p>Library</p></div>
   </div>
 
   <script>
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
+    const container = document.getElementById('scroll-container');
+    const progressBar = document.getElementById('progress-bar');
 
-    function setTheme(theme) {
+    function setTheme(theme){
       body.className = theme;
       themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
       localStorage.setItem('theme', theme);
     }
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
+    setTheme(localStorage.getItem('theme') || 'dark');
 
     themeToggle.addEventListener('click', () => {
-      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
-      setTheme(newTheme);
+      setTheme(body.classList.contains('light') ? 'dark' : 'light');
     });
 
-    document.getElementById('profile-upload').addEventListener('change', (e) => {
-      if (e.target.files[0]) {
-        console.log('Profile picture selected!');
-      }
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight - container.clientHeight;
+      progressBar.style.width = ((scrollTop / scrollHeight) * 100) + '%';
     });
+
+    function showAns(id){
+      document.getElementById(id).style.display = 'block';
+    }
   </script>
 </body>
 </html>
