@@ -80,7 +80,6 @@
     .det-item .ans-row{display:flex;gap:16px;margin-bottom:6px;font-size:14px}
     .det-item .ans-row strong{min-width:80px}
     .det-item .exp{font-size:13px;color:#666;margin-top:10px;padding:12px;background:var(--bg);border-radius:8px;box-shadow:inset 2px 2px 4px var(--si);line-height:1.6}
-    .hide{display:none!important}
     @media(max-width:400px){
       .opt{padding:12px}
       .res-box{padding:24px}
@@ -91,7 +90,6 @@
   </style>
 </head>
 <body>
-  <!-- Access -->
   <div id="access">
     <div class="card">
       <h1>🔐 JAMB Literature</h1>
@@ -101,7 +99,7 @@
       <div class="msg" id="msg"></div>
     </div>
   </div>
-  <!-- Quiz -->
+
   <div id="quiz">
     <div class="top">
       <button class="btn" onclick="exit()">←</button>
@@ -122,7 +120,7 @@
       <button class="nav-btn primary" id="nextBtn" onclick="next()">Next →</button>
     </div>
   </div>
-  <!-- Navigator -->
+
   <div class="pop" id="pop" onclick="hidePop(event)">
     <div class="pop-box" onclick="event.stopPropagation()">
       <div class="pop-head">
@@ -130,14 +128,9 @@
         <button class="btn" onclick="hidePop()">✕</button>
       </div>
       <div class="pop-grid" id="pgrid"></div>
-      <div style="font-size:12px;color:#888;text-align:center;margin-top:8px">
-        <span style="color:var(--a)">●</span> Answered  
-        <span style="color:var(--t)">●</span> Current  
-        <span style="color:#666">●</span> Unanswered
-      </div>
     </div>
   </div>
-  <!-- Results -->
+
   <div class="res" id="res">
     <div class="res-box">
       <div class="res-circle">
@@ -145,7 +138,7 @@
         <div class="res-label">Score</div>
       </div>
       <h2 id="rtitle">Quiz Complete!</h2>
-      <p id="rmsg">You completed the quiz</p>
+      <p id="rmsg"></p>
       <div class="res-btns">
         <button class="primary" onclick="showDet()">📊 View Details</button>
         <button class="nav-btn" onclick="continueQuiz()">↩ Continue</button>
@@ -153,7 +146,7 @@
       </div>
     </div>
   </div>
-  <!-- Details -->
+
   <div class="det" id="det">
     <div class="det-head">
       <button class="btn" onclick="hideDet()">← Back</button>
@@ -162,21 +155,9 @@
     </div>
     <div id="dcont"></div>
   </div>
+
 <script>
-// Configuration - 10 minutes for 30 questions
-const CONFIG={TIME:600,PASS:30};
-// Section mapping for 30 questions (1 section)
-const SECTIONS={
-  0:"A: Chapter 1 - Dusk"
-};
-function getSection(qIndex){
-  const keys=Object.keys(SECTIONS).map(Number).sort((a,b)=>b-a);
-  for(let k of keys){
-    if(qIndex>=k)return SECTIONS[k];
-  }
-  return "Introduction";
-}
-// Quiz Data - 30 JAMB Literature Questions on The Lekki Headmaster, Chapter 1 (Dusk)
+const CONFIG={TIME:600, PASS:30};
 const QUIZ_DATA=[
   {q:"What is the title of Chapter 1?",o:["The Enticement","Dusk","Migration Tales","Arrival"],a:1,e:"The chapter is explicitly titled 'Dusk' and opens with the dramatic assembly scene."},
   {q:"The primary setting of Chapter 1 is",o:["The principal's office","A classroom","The morning assembly in the school hall/chapel","The schoolyard"],a:2,e:"The chapter begins and centers on the unusual morning assembly where the principal breaks down."},
@@ -209,25 +190,36 @@ const QUIZ_DATA=[
   {q:"The assembly is dismissed at what general time frame?",o:["After a full hour","Early, soon after the breakdown","At noon","Never dismissed"],a:1,e:"The Vice Principal ends it promptly and sends students to class."},
   {q:"What theme is introduced through the principal's vulnerability?",o:["Perfect leadership","Emotional/mental health struggles behind strong facades","Financial success","Student rebellion"],a:1,e:"It contrasts his usual strength with personal distress."}
 ];
-let state={data:QUIZ_DATA,ans:new Array(QUIZ_DATA.length).fill(null),q:0,time:CONFIG.TIME,timer:null,submitted:false};
+
+let state={
+  data: QUIZ_DATA,
+  ans: new Array(QUIZ_DATA.length).fill(null),
+  q: 0,
+  time: CONFIG.TIME,
+  timer: null,
+  submitted: false
+};
+
+const STORE_KEY = 'lekki_headmaster_quiz_progress';
+const AUTH_KEY = 'lekki_headmaster_quiz_auth';
+
 function init(){
-  const saved=sessionStorage.getItem('math_fractions_decimals_quiz_progress');
+  const saved = sessionStorage.getItem(STORE_KEY);
   if(saved){
     const d=JSON.parse(saved);
-    if(Date.now()-d.ts<86400000&&!d.submitted&&confirm('Resume previous session?')){
-      state.q=d.q;state.ans=d.ans;state.time=d.time;
+    if(Date.now()-d.ts < 86400000 && !d.submitted && confirm('Resume previous session?')){
+      state.q=d.q; state.ans=d.ans; state.time=d.time;
     }
   }
-  document.getElementById('access').style.display='flex';
 }
+
 function unlock(){
   const c=document.getElementById('code').value.trim().toUpperCase();
   const btn=document.getElementById('unlockBtn');
   if(c.length!==8){showMsg('Enter 8-character code','err');return;}
-  btn.disabled=true;btn.textContent='Checking...';
+  btn.disabled=true; btn.textContent='Checking...';
   setTimeout(()=>{
-    if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid code format','err');btn.disabled=false;btn.textContent='Start Quiz';return;}
-    localStorage.setItem('math_fractions_decimals_quiz_auth',c);
+    localStorage.setItem(AUTH_KEY, c);
     showMsg('Access granted!','ok');
     setTimeout(()=>{
       document.getElementById('access').style.display='none';
@@ -237,48 +229,51 @@ function unlock(){
     },400);
   },300);
 }
+
 function showMsg(t,type){
   const m=document.getElementById('msg');
-  m.textContent=t;m.className='msg show '+type;
+  m.textContent=t; m.className='msg show '+type;
 }
+
 function startTimer(){
-  if(state.timer)clearInterval(state.timer);
+  if(state.timer) clearInterval(state.timer);
   state.timer=setInterval(()=>{
     if(state.time>0){
       state.time--;
       updateTimer();
-      if(state.time%10===0)saveProgress();
-    }else{
+    } else {
       submit(true);
     }
   },1000);
 }
+
 function updateTimer(){
-  const m=Math.floor(state.time/60),s=state.time%60;
+  const m=Math.floor(state.time/60), s=state.time%60;
   const el=document.getElementById('timer');
-  el.textContent=⏱️ ${m}:${s.toString().padStart(2,'0')};
+  el.textContent=`⏱️ ${m}:${s.toString().padStart(2,'0')}`;
   el.className='timer'+(state.time<60?' danger':state.time<300?' warn':'');
 }
+
 function render(){
   const q=state.data[state.q];
   const done=state.ans.filter(x=>x!==null).length;
   document.getElementById('pbar').style.width=(done/state.data.length*100)+'%';
-  document.getElementById('ptxt').textContent=${done}/${state.data.length};
-  document.getElementById('stype').textContent=Section ${getSection(state.q)} • Question ${state.q+1}/30;
+  document.getElementById('ptxt').textContent=`${done}/${state.data.length}`;
+  document.getElementById('stype').textContent=`Chapter 1 - Dusk • Question ${state.q+1}/30`;
   document.getElementById('question').textContent=q.q;
   const opts=document.getElementById('opts');
   opts.innerHTML='';
   q.o.forEach((o,i)=>{
     const d=document.createElement('div');
     d.className='opt'+(state.ans[state.q]===i?' sel':'');
-    d.innerHTML=<div class="opt-mark">${String.fromCharCode(65+i)}</div><p>${o}</p>;
+    d.innerHTML=`<div class="opt-mark">${String.fromCharCode(65+i)}</div><p>${o}</p>`;
     d.onclick=()=>select(i);
     opts.appendChild(d);
   });
   document.getElementById('prevBtn').disabled=state.q===0;
-  const isLast=state.q===state.data.length-1;
-  document.getElementById('nextBtn').textContent=isLast?'Submit Quiz ✓':'Next →';
+  document.getElementById('nextBtn').textContent= (state.q===state.data.length-1)?'Submit Quiz ✓':'Next →';
 }
+
 function select(i){
   state.ans[state.q]=i;
   document.querySelectorAll('.opt').forEach((el,idx)=>{
@@ -286,124 +281,115 @@ function select(i){
   });
   saveProgress();
 }
+
 function next(){
-  const isLast=state.q===state.data.length-1;
-  if(isLast){
+  if(state.q === state.data.length-1){
     const unans=state.ans.filter(x=>x===null).length;
-    if(unans>0&&!confirm(${unans} question(s) unanswered. Submit anyway?)){
-      showPop();return;
-    }
-    submit(false);return;
+    if(unans>0 && !confirm(`${unans} question(s) unanswered. Submit anyway?`)) return;
+    submit(false); 
+    return;
   }
   state.q++;
   render();
 }
+
 function prev(){
-  if(state.q>0){state.q--;}
+  if(state.q>0) state.q--;
   render();
 }
+
 function saveProgress(){
-  sessionStorage.setItem('math_fractions_decimals_quiz_progress',JSON.stringify({
-    q:state.q,ans:state.ans,time:state.time,submitted:state.submitted,ts:Date.now()
+  sessionStorage.setItem(STORE_KEY, JSON.stringify({
+    q:state.q, ans:state.ans, time:state.time, submitted:state.submitted, ts:Date.now()
   }));
 }
+
 function submit(timeout){
   clearInterval(state.timer);
   state.submitted=true;
   saveProgress();
   let correct=0;
-  state.data.forEach((q,i)=>{
-    if(state.ans[i]===q.a)correct++;
-  });
+  state.data.forEach((q,i)=>{ if(state.ans[i]===q.a) correct++; });
   const pct=Math.round((correct/state.data.length)*100);
   document.getElementById('quiz').style.display='none';
   document.getElementById('res').style.display='flex';
   document.getElementById('res').classList.add('show');
   document.getElementById('rscore').textContent=pct+'%';
   document.getElementById('rtitle').textContent=pct>=CONFIG.PASS?'🎉 Excellent!':timeout?'⏰ Time Up!':'Quiz Complete';
-  document.getElementById('rmsg').innerHTML=You scored <strong>${correct}/${state.data.length}</strong> (${pct}%)<br>${pct>=CONFIG.PASS?'✓ Pass mark achieved!':'Keep practicing!'}<br><br>${pct>=70?'Outstanding JAMB preparation!':pct>=60?'Good progress, aim higher':pct>=50?'Average, needs more practice':'Study fundamentals thoroughly'};
+  document.getElementById('rmsg').innerHTML=`You scored <strong>${correct}/${state.data.length}</strong> (${pct}%)<br>${pct>=50?'✓ Good job!':'Keep studying!'}`;
 }
+
 function continueQuiz(){
   document.getElementById('res').classList.remove('show');
   document.getElementById('res').style.display='none';
   document.getElementById('quiz').style.display='block';
 }
+
 function showPop(){
   const g=document.getElementById('pgrid');
   g.innerHTML='';
   state.data.forEach((_,i)=>{
     const b=document.createElement('button');
     b.textContent=i+1;
-    const ans=state.ans[i]!==null;
-    const cur=i===state.q;
-    if(ans)b.className='ans';
-    if(cur)b.style.border='2px solid var(--a)';
-    b.onclick=()=>{state.q=i;hidePop();render();};
+    if(state.ans[i]!==null) b.className='ans';
+    if(i===state.q) b.style.border='2px solid var(--a)';
+    b.onclick=()=>{state.q=i; hidePop(); render();};
     g.appendChild(b);
   });
   document.getElementById('pop').classList.add('show');
 }
+
 function hidePop(e){
-  if(!e||e.target.id==='pop')document.getElementById('pop').classList.remove('show');
+  if(!e || e.target.id==='pop') document.getElementById('pop').classList.remove('show');
 }
+
 function showDet(){
   const c=document.getElementById('dcont');
   c.innerHTML='';
   let correct=0;
-  state.data.forEach((q,i)=>{
-    if(state.ans[i]===q.a)correct++;
-  });
+  state.data.forEach((q,i)=>{ if(state.ans[i]===q.a) correct++; });
   const pct=Math.round((correct/state.data.length)*100);
+  
   const sum=document.createElement('div');
   sum.className='det-summary';
-  sum.innerHTML=<div class="big">${pct}%</div><div>${correct}/${state.data.length} correct</div>;
+  sum.innerHTML=`<div class="big">${pct}%</div><div>${correct}/${state.data.length} correct</div>`;
   c.appendChild(sum);
-  const sections=[0,30];
-  const sectionNames=["A: Chapter 1 - Dusk"];
-  for(let s=0;s<1;s++){
-    const start=sections[s];
-    const end=sections[s+1];
-    const ph=document.createElement('div');
-    ph.style.cssText='margin:20px 0 12px;padding:12px;background:var(--a);color:#fff;border-radius:8px;font-size:14px';
-    ph.innerHTML=<strong>Section ${sectionNames[s]}</strong>;
-    c.appendChild(ph);
-    for(let i=start;i<end;i++){
-      const q=state.data[i];
-      const ans=state.ans[i];
-      const ok=ans===q.a;
-      const d=document.createElement('div');
-      d.className='det-item'+(ok?' ok':'');
-      d.innerHTML=<h4>Question ${i+1}</h4><div class="q-text">${q.q}</div><div class="ans-row"><strong>Your answer:</strong> ${ans!==null?String.fromCharCode(65+ans)+') '+q.o[ans]:'Not answered'}</div><div class="ans-row"><strong>Correct:</strong> ${String.fromCharCode(65+q.a)+') '+q.o[q.a]}</div><div class="exp">${q.e}</div>;
-      c.appendChild(d);
-    }
-  }
+
+  state.data.forEach((q,i)=>{
+    const ans=state.ans[i];
+    const ok=ans===q.a;
+    const d=document.createElement('div');
+    d.className='det-item'+(ok?' ok':'');
+    d.innerHTML=`<h4>Question ${i+1}</h4><div class="q-text">${q.q}</div><div class="ans-row"><strong>Your answer:</strong> ${ans!==null?String.fromCharCode(65+ans)+') '+q.o[ans]:'Not answered'}</div><div class="ans-row"><strong>Correct:</strong> ${String.fromCharCode(65+q.a)+') '+q.o[q.a]}</div><div class="exp">${q.e}</div>`;
+    c.appendChild(d);
+  });
+  
   document.getElementById('res').classList.remove('show');
   document.getElementById('res').style.display='none';
   document.getElementById('det').style.display='block';
 }
+
 function hideDet(){
   document.getElementById('det').style.display='none';
   document.getElementById('res').style.display='flex';
   document.getElementById('res').classList.add('show');
 }
+
 function restart(){
-  if(!confirm('Start a new quiz? All progress will be reset.'))return;
-  localStorage.removeItem('math_fractions_decimals_quiz_auth');
-  sessionStorage.removeItem('math_fractions_decimals_quiz_progress');
+  if(!confirm('Start a new quiz? All progress will be reset.')) return;
+  sessionStorage.removeItem(STORE_KEY);
   location.reload();
 }
+
 function exit(){
-  if(confirm('Exit quiz? Your progress is saved.')){saveProgress();location.reload();}
+  if(confirm('Exit quiz? Your progress is saved.')){ saveProgress(); location.reload(); }
 }
+
 function toggleTheme(){
   document.body.classList.toggle('light');
-  localStorage.setItem('math_fractions_decimals_quiz_theme',document.body.classList.contains('light')?'light':'dark');
 }
-document.addEventListener('DOMContentLoaded',()=>{
-  if(localStorage.getItem('math_fractions_decimals_quiz_theme')==='light')document.body.classList.add('light');
-  document.getElementById('code').addEventListener('keypress',e=>{if(e.key==='Enter')unlock();});
-  init();
-});
+
+document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
