@@ -1,0 +1,303 @@
+
+<script>
+// Configuration
+const CONFIG={TIME:600,PASS:60}; // 10 minutes for 30 questions
+
+// Section mapping - variable section sizes (12,18,12,8,6,4)
+const SECTIONS={
+  0:"Chapter 1: Dusk"
+};
+
+function getSection(qIndex){
+  const keys=Object.keys(SECTIONS).map(Number).sort((a,b)=>b-a);
+  for(let k of keys){
+    if(qIndex>=k)return SECTIONS[k];
+  }
+  return "Introduction";
+}
+
+// Quiz Data - 30 JAMB Literature Questions (The Lekki Headmaster - Chapter 1: Dusk)
+const QUIZ_DATA=[
+  {q:"What is the title of Chapter 1?",o:["The Enticement","Dusk","Migration Tales","Arrival"],a:1,e:"The chapter is explicitly titled \"Dusk\" and opens with the dramatic assembly scene."},
+  {q:"The primary setting of Chapter 1 is",o:["The principal's office","A classroom","The morning assembly in the school hall/chapel","The schoolyard"],a:2,e:"The chapter begins and centers on the unusual morning assembly where the principal breaks down."},
+  {q:"Who is the principal of Stardom Schools?",o:["Mrs. Grace Apeh","Mr. Bepo Adewale","Mrs. Ibidun Gloss","Mr. Audu"],a:1,e:"Mr. Bepo Adewale is introduced as the principal (also nicknamed \"The Lekki Headmaster\")."},
+  {q:"What unusual behavior does the principal display at the assembly?",o:["He gives a long motivational speech","He walks ponderously, stares blankly, drops the microphone, and sobs uncontrollably","He scolds the students harshly","He dances to entertain everyone"],a:1,e:"His gait is awkward, he avoids eye contact, tries to speak but fails, and cries for over 30 minutes."},
+  {q:"How long did the principal sob during the assembly?",o:["Over 10 minutes","Over 30 minutes","Less than 5 minutes","Exactly 15 minutes"],a:1,e:"The text states he sobbed for over 30 minutes."},
+  {q:"What happens to the microphone during the principal's breakdown?",o:["He throws it away","It slips from his hand and falls to the floor","He speaks loudly into it","A student takes it from him"],a:1,e:"Tears stream, and the microphone clatters to the floor."},
+  {q:"Who first asks \"What is the matter, principal?\" during the breakdown?",o:["The school nurse","The Vice Principal, Mrs. Grace Apeh","Mr. Audu","The chapel prefect"],a:1,e:"Mrs. Grace Apeh steps forward to inquire and console him."},
+  {q:"Who offers the principal a handkerchief?",o:["Mrs. Grace Apeh","Mrs. Titi (the school nurse)","Mr. Oyelana","Mrs. Ibidun Gloss"],a:1,e:"The nurse, Mrs. Titi, provides a handkerchief to help him."},
+  {q:"After the breakdown, who helps escort the principal to his office?",o:["Only students","Staff members including the VP, nurse, and others like Mr. Oyelana","The MD alone","The chapel prefect"],a:1,e:"Several staff members, including VP Apeh and nurse Titi, assist him."},
+  {q:"What does the Vice Principal do immediately after the incident?",o:["Continues the assembly","Dismisses the assembly and sends students to classes","Calls the parents","Gives a speech herself"],a:1,e:"Mrs. Apeh ends the assembly early to restore order."},
+  {q:"In the principal's office, what does he repeatedly mutter when asked about his problem?",o:["I am fine","Thank you. I will be all right","Leave me alone","Call my wife"],a:1,e:"He mutters this response despite agitation and continued tears."},
+  {q:"Who is the Managing Director (MD) of Stardom Schools?",o:["Mrs. Grace Apeh","Mrs. Ibidun Gloss","Mrs. Titi","Mr. Audu"],a:1,e:"Mrs. Ibidun Gloss is referred to as the MD."},
+  {q:"What humorous comment does Mr. Audu (Fine Arts teacher) make about the MD?",o:["She is kind-hearted","She is a \"witch\" or \"wizard\" for school changes","She should resign","She loves the principal"],a:1,e:"He jokingly blames her \"witchcraft\" for fee reductions and policy changes."},
+  {q:"What school fee change is mentioned in rumors/gossip?",o:["Increase in tuition","Reduction in boarding fees from over ₦250,000 to ₦165,000","Free education policy","No change at all"],a:1,e:"Boarding fees were reduced significantly, leading to more boarders."},
+  {q:"Who is the chapel prefect mentioned in the assembly?",o:["Angel","Ikenna","Nike","Titi"],a:0,e:"Angel handles the microphone initially."},
+  {q:"What does the principal usually do that contrasts with this chapter?",o:["Remain silent","Give confident pep talks with eye contact and smiles","Avoid the podium","Cry often"],a:1,e:"He is typically charismatic and engaging."},
+  {q:"What item does the principal stare at during his silence?",o:["The ceiling","The floor tiles","The students' faces","The clock"],a:1,e:"His head drops, and he gazes at the tiles."},
+  {q:"Which staff member is from Fine Arts?",o:["Mr. Oyelana","Mr. Audu","Pastor Wande","Mrs. Apeh"],a:1,e:"Mr. Audu is the Fine Arts teacher who gossips humorously."},
+  {q:"What rumor spreads among some parents?",o:["The principal resigned","He was rolling on the floor crying","He won an award","The school closed"],a:1,e:"Exaggerated versions include rolling on the floor."},
+  {q:"At what approximate time does the MD arrive after being informed?",o:["7:45 a.m.","About 9:30 a.m.","Noon","Evening"],a:1,e:"She arrives around 9:30 a.m. to check on him."},
+  {q:"What is the school nicknamed for its status?",o:["Village school","Posh/elite school in Lekki","Government school","Poorly funded"],a:1,e:"It's described as a posh, elite institution in Lekki."},
+  {q:"Who fetched a chair for the sobbing principal?",o:["Students","The VP and staff","The MD","No one"],a:1,e:"Staff help him sit and console him."},
+  {q:"What emotion dominates the students' reaction?",o:["Joy","Puzzlement and silence","Anger","Laughter"],a:1,e:"They are perplexed, with tears and heavy silence."},
+  {q:"Which subject teacher is mentioned as Mr. Oyelana?",o:["Fine Arts","CRK","Physics","Chemistry"],a:1,e:"Mr. Oyelana is associated with CRK."},
+  {q:"What does the chapter build?",o:["Immediate resolution","Suspense about the cause of the breakdown","A happy ending","School closure"],a:1,e:"The reason remains unexplained, creating suspense."},
+  {q:"The principal's tears are described as",o:["Fake","Uncontrollable and streaming","Only a few drops","From laughter"],a:1,e:"Tears stream uncontrollably down his face."},
+  {q:"Who is nicknamed \"The Lekki Headmaster\"?",o:["The MD","Mr. Bepo Adewale","Mrs. Apeh","Mr. Audu"],a:1,e:"Due to his imitations of Village Headmaster characters."},
+  {q:"What ritual is briefly mentioned in school routines?",o:["Daily fights","Recitation of National Anthem and prayers on specific days","No prayers","Only sports"],a:1,e:"Anthem and prayers (Christian/Muslim) on set days."},
+  {q:"The assembly is dismissed at what general time frame?",o:["After a full hour","Early, soon after the breakdown","At noon","Never dismissed"],a:1,e:"VP ends it promptly to send students to class."},
+  {q:"What theme is introduced through the principal's vulnerability?",o:["Perfect leadership","Emotional/mental health struggles behind strong facades","Financial success","Student rebellion"],a:1,e:"It contrasts his usual strength with personal distress."}
+];
+
+let state={data:QUIZ_DATA,ans:new Array(QUIZ_DATA.length).fill(null),q:0,time:CONFIG.TIME,timer:null,submitted:false};
+
+function init(){
+  const saved=sessionStorage.getItem('adaptations_quiz_progress');
+  if(saved){
+    const d=JSON.parse(saved);
+    if(Date.now()-d.ts<86400000&&!d.submitted&&confirm('Resume previous session?')){
+      state.q=d.q;state.ans=d.ans;state.time=d.time;
+    }
+  }
+  const savedName=localStorage.getItem('adaptations_quiz_name');
+  if(savedName){document.getElementById('name').value=savedName;}
+  document.getElementById('load').classList.add('hide');
+  document.getElementById('access').style.display='flex';
+}
+
+function unlock(){
+  const n=document.getElementById('name').value.trim();
+  const c=document.getElementById('code').value.trim().toUpperCase();
+  const btn=document.getElementById('unlockBtn');
+  
+  if(!n){showMsg('Enter your name','err');return;}
+  if(c.length!==8){showMsg('Enter 8-character code','err');return;}
+  
+  btn.disabled=true;btn.textContent='Checking...';
+  
+  setTimeout(()=>{
+    if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid code format','err');btn.disabled=false;btn.textContent='Start Quiz';return;}
+    localStorage.setItem('adaptations_quiz_name',n);
+    localStorage.setItem('adaptations_quiz_auth',c);
+    showMsg('Access granted!','ok');
+    setTimeout(()=>{
+      document.getElementById('access').style.display='none';
+      document.getElementById('quiz').style.display='block';
+      startTimer();
+      render();
+    },400);
+  },300);
+}
+
+function showMsg(t,type){
+  const m=document.getElementById('msg');
+  m.textContent=t;m.className='msg show '+type;
+}
+
+function startTimer(){
+  if(state.timer)clearInterval(state.timer);
+  state.timer=setInterval(()=>{
+    if(state.time>0){
+      state.time--;
+      updateTimer();
+      if(state.time%10===0)saveProgress();
+    }else{
+      submit(true);
+    }
+  },1000);
+}
+
+function updateTimer(){
+  const m=Math.floor(state.time/60),s=state.time%60;
+  const el=document.getElementById('timer');
+  el.textContent=`⏱️ ${m}:${s.toString().padStart(2,'0')}`;
+  el.className='timer'+(state.time<60?' danger':state.time<300?' warn':'');
+}
+
+function render(){
+  const q=state.data[state.q];
+  
+  // Progress
+  const done=state.ans.filter(x=>x!==null).length;
+  document.getElementById('pbar').style.width=(done/state.data.length*100)+'%';
+  document.getElementById('ptxt').textContent=`${done}/${state.data.length}`;
+  
+  // Section
+  document.getElementById('stype').textContent=`Section ${getSection(state.q)} • Question ${state.q+1}/${state.data.length}`;
+  
+  // Question
+  document.getElementById('question').textContent=q.q;
+  
+  // Options
+  const opts=document.getElementById('opts');
+  opts.innerHTML='';
+  q.o.forEach((o,i)=>{
+    const d=document.createElement('div');
+    d.className='opt'+(state.ans[state.q]===i?' sel':'');
+    d.innerHTML=`<div class="opt-mark">${String.fromCharCode(65+i)}</div><p>${o}</p>`;
+    d.onclick=()=>select(i);
+    opts.appendChild(d);
+  });
+  
+  // Navigation
+  document.getElementById('prevBtn').disabled=state.q===0;
+  const isLast=state.q===state.data.length-1;
+  document.getElementById('nextBtn').textContent=isLast?'Submit Quiz ✓':'Next →';
+}
+
+function select(i){
+  state.ans[state.q]=i;
+  document.querySelectorAll('.opt').forEach((el,idx)=>{
+    el.classList.toggle('sel',idx===i);
+  });
+  saveProgress();
+}
+
+function next(){
+  const isLast=state.q===state.data.length-1;
+  
+  if(isLast){
+    const unans=state.ans.filter(x=>x===null).length;
+    if(unans>0&&!confirm(`${unans} question(s) unanswered. Submit anyway?`)){
+      showPop();return;
+    }
+    submit(false);return;
+  }
+  
+  state.q++;
+  render();
+}
+
+function prev(){
+  if(state.q>0){state.q--;}
+  render();
+}
+
+function saveProgress(){
+  sessionStorage.setItem('adaptations_quiz_progress',JSON.stringify({
+    q:state.q,ans:state.ans,time:state.time,submitted:state.submitted,ts:Date.now()
+  }));
+}
+
+function submit(timeout){
+  clearInterval(state.timer);
+  state.submitted=true;
+  saveProgress();
+  
+  let correct=0;
+  state.data.forEach((q,i)=>{
+    if(state.ans[i]===q.a)correct++;
+  });
+  
+  const pct=Math.round((correct/state.data.length)*100);
+  
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('res').style.display='flex';
+  document.getElementById('res').classList.add('show');
+  
+  document.getElementById('rscore').textContent=pct+'%';
+  document.getElementById('rtitle').textContent=pct>=CONFIG.PASS?'🎉 Excellent!':timeout?'⏰ Time Up!':'Quiz Complete';
+  document.getElementById('rmsg').innerHTML=`You scored <strong>${correct}/${state.data.length}</strong> (${pct}%)<br>${pct>=CONFIG.PASS?'✓ Pass mark achieved!':'Keep practicing!'}<br><br>${pct>=45?'Ready for JAMB!':pct>=38?'Good, review weak areas':pct>=30?'Average, needs more practice':'Study fundamentals again'}`;
+}
+
+function continueQuiz(){
+  document.getElementById('res').classList.remove('show');
+  document.getElementById('res').style.display='none';
+  document.getElementById('quiz').style.display='block';
+}
+
+function showPop(){
+  const g=document.getElementById('pgrid');
+  g.innerHTML='';
+  state.data.forEach((_,i)=>{
+    const b=document.createElement('button');
+    b.textContent=i+1;
+    const ans=state.ans[i]!==null;
+    const cur=i===state.q;
+    if(ans)b.className='ans';
+    if(cur)b.style.border='2px solid var(--a)';
+    b.onclick=()=>{state.q=i;hidePop();render();};
+    g.appendChild(b);
+  });
+  document.getElementById('pop').classList.add('show');
+}
+
+function hidePop(e){
+  if(!e||e.target.id==='pop')document.getElementById('pop').classList.remove('show');
+}
+
+function showDet(){
+  const c=document.getElementById('dcont');
+  c.innerHTML='';
+  
+  let correct=0;
+  state.data.forEach((q,i)=>{
+    if(state.ans[i]===q.a)correct++;
+  });
+  const pct=Math.round((correct/state.data.length)*100);
+  
+  const sum=document.createElement('div');
+  sum.className='det-summary';
+  sum.innerHTML=`<div class="big">${pct}%</div><div>${correct}/${state.data.length} correct</div>`;
+  c.appendChild(sum);
+  
+  // Group by sections - using actual section boundaries
+  const sectionStarts=[0,30];
+  const sectionNames=["Chapter 1: Dusk"];
+  
+  for(let s=0;s<1;s++){
+    const start=sectionStarts[s];
+    const end=sectionStarts[s+1];
+    
+    const ph=document.createElement('div');
+    ph.style.cssText='margin:20px 0 12px;padding:12px;background:var(--a);color:#fff;border-radius:8px;font-size:14px';
+    ph.innerHTML=`<strong>Section ${sectionNames[s]}</strong>`;
+    c.appendChild(ph);
+    
+    for(let i=start;i<end;i++){
+      const q=state.data[i];
+      const ans=state.ans[i];
+      const ok=ans===q.a;
+      const d=document.createElement('div');
+      d.className='det-item'+(ok?' ok':'');
+      d.innerHTML=`<h4>Question ${i+1}</h4><div class="q-text">${q.q}</div><div class="ans-row"><strong>Your answer:</strong> ${ans!==null?String.fromCharCode(65+ans)+') '+q.o[ans]:'Not answered'}</div><div class="ans-row"><strong>Correct:</strong> ${String.fromCharCode(65+q.a)+') '+q.o[q.a]}</div><div class="exp">${q.e}</div>`;
+      c.appendChild(d);
+    }
+  }
+  
+  document.getElementById('res').classList.remove('show');
+  document.getElementById('res').style.display='none';
+  document.getElementById('det').style.display='block';
+}
+
+function hideDet(){
+  document.getElementById('det').style.display='none';
+  document.getElementById('res').style.display='flex';
+  document.getElementById('res').classList.add('show');
+}
+
+function restart(){
+  if(!confirm('Start a new quiz? All progress will be reset.'))return;
+  localStorage.removeItem('adaptations_quiz_auth');
+  sessionStorage.removeItem('adaptations_quiz_progress');
+  location.reload();
+}
+
+function exit(){
+  if(confirm('Exit quiz? Your progress is saved.')){saveProgress();location.reload();}
+}
+
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  localStorage.setItem('adaptations_quiz_theme',document.body.classList.contains('light')?'light':'dark');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(localStorage.getItem('adaptations_quiz_theme')==='light')document.body.classList.add('light');
+  document.getElementById('code').addEventListener('keypress',e=>{if(e.key==='Enter')unlock();});
+  init();
+});
+</script>
+</body>
+</html>
