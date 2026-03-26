@@ -9,10 +9,6 @@
     :root{--bg:#1e1e2f;--si:#171723;--so:#25253b;--t:#fff;--a:#1db954;--d:#ff4d4d;--w:#ff9800;--info:#2196f3}
     body.light{--bg:#e0e5ec;--si:#a3b1c6;--so:#ffffff;--t:#2d3748;--a:#48bb78;--d:#e53e3e;--w:#dd6b20;--info:#1976d2}
     body{background:var(--bg);color:var(--t);min-height:100vh;line-height:1.6}
-    #load{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
-    #load.hide{opacity:0;pointer-events:none}
-    .spinner{width:40px;height:40px;border:3px solid var(--si);border-top-color:var(--a);border-radius:50%;animation:spin 1s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
     #access{display:none;min-height:100vh;padding:20px;align-items:center;justify-content:center}
     .card{background:var(--bg);padding:32px;border-radius:16px;width:100%;max-width:400px;box-shadow:8px 8px 16px var(--si),-8px -8px 16px var(--so)}
     .card h1{color:var(--a);margin-bottom:8px;font-size:24px}
@@ -95,8 +91,7 @@
   </style>
 </head>
 <body>
-  <!-- Loading -->
-
+  <!-- Access -->
   <div id="access">
     <div class="card">
       <h1>🔐 JAMB Literature</h1>
@@ -223,7 +218,6 @@ function init(){
       state.q=d.q;state.ans=d.ans;state.time=d.time;
     }
   }
-  document.getElementById('load').classList.add('hide');
   document.getElementById('access').style.display='flex';
 }
 function unlock(){
