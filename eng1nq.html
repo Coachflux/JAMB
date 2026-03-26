@@ -9,11 +9,7 @@
     :root{--bg:#1e1e2f;--si:#171723;--so:#25253b;--t:#fff;--a:#1db954;--d:#ff4d4d;--w:#ff9800;--info:#2196f3}
     body.light{--bg:#e0e5ec;--si:#a3b1c6;--so:#ffffff;--t:#2d3748;--a:#48bb78;--d:#e53e3e;--w:#dd6b20;--info:#1976d2}
     body{background:var(--bg);color:var(--t);min-height:100vh;line-height:1.6}
-    #load{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
-    #load.hide{opacity:0;pointer-events:none}
-    .spinner{width:40px;height:40px;border:3px solid var(--si);border-top-color:var(--a);border-radius:50%;animation:spin 1s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    #access{display:none;min-height:100vh;padding:20px;align-items:center;justify-content:center}
+    #access{display:flex;min-height:100vh;padding:20px;align-items:center;justify-content:center}
     .card{background:var(--bg);padding:32px;border-radius:16px;width:100%;max-width:400px;box-shadow:8px 8px 16px var(--si),-8px -8px 16px var(--so)}
     .card h1{color:var(--a);margin-bottom:8px;font-size:24px}
     .card p{color:#888;font-size:14px;margin-bottom:24px}
@@ -95,8 +91,6 @@
   </style>
 </head>
 <body>
-  <!-- Loading -->
-  <div id="load"><div class="spinner"></div></div>
   <!-- Access -->
   <div id="access">
     <div class="card">
@@ -224,7 +218,6 @@ function init(){
       state.q=d.q;state.ans=d.ans;state.time=d.time;
     }
   }
-  document.getElementById('load').classList.add('hide');
   document.getElementById('access').style.display='flex';
 }
 function unlock(){
@@ -268,15 +261,11 @@ function updateTimer(){
 }
 function render(){
   const q=state.data[state.q];
-  // Progress
   const done=state.ans.filter(x=>x!==null).length;
   document.getElementById('pbar').style.width=(done/state.data.length*100)+'%';
   document.getElementById('ptxt').textContent=${done}/${state.data.length};
-  // Section
   document.getElementById('stype').textContent=Section ${getSection(state.q)} • Question ${state.q+1}/30;
-  // Question
   document.getElementById('question').textContent=q.q;
-  // Options
   const opts=document.getElementById('opts');
   opts.innerHTML='';
   q.o.forEach((o,i)=>{
@@ -286,7 +275,6 @@ function render(){
     d.onclick=()=>select(i);
     opts.appendChild(d);
   });
-  // Navigation
   document.getElementById('prevBtn').disabled=state.q===0;
   const isLast=state.q===state.data.length-1;
   document.getElementById('nextBtn').textContent=isLast?'Submit Quiz ✓':'Next →';
@@ -370,7 +358,6 @@ function showDet(){
   sum.className='det-summary';
   sum.innerHTML=<div class="big">${pct}%</div><div>${correct}/${state.data.length} correct</div>;
   c.appendChild(sum);
-  // Group by sections
   const sections=[0,30];
   const sectionNames=["A: Chapter 1 - Dusk"];
   for(let s=0;s<1;s++){
