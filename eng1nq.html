@@ -9,7 +9,11 @@
     :root{--bg:#1e1e2f;--si:#171723;--so:#25253b;--t:#fff;--a:#1db954;--d:#ff4d4d;--w:#ff9800;--info:#2196f3}
     body.light{--bg:#e0e5ec;--si:#a3b1c6;--so:#ffffff;--t:#2d3748;--a:#48bb78;--d:#e53e3e;--w:#dd6b20;--info:#1976d2}
     body{background:var(--bg);color:var(--t);min-height:100vh;line-height:1.6}
-    #access{display:flex;min-height:100vh;padding:20px;align-items:center;justify-content:center}
+    #load{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
+    #load.hide{opacity:0;pointer-events:none}
+    .spinner{width:40px;height:40px;border:3px solid var(--si);border-top-color:var(--a);border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    #access{display:none;min-height:100vh;padding:20px;align-items:center;justify-content:center}
     .card{background:var(--bg);padding:32px;border-radius:16px;width:100%;max-width:400px;box-shadow:8px 8px 16px var(--si),-8px -8px 16px var(--so)}
     .card h1{color:var(--a);margin-bottom:8px;font-size:24px}
     .card p{color:#888;font-size:14px;margin-bottom:24px}
@@ -91,6 +95,8 @@
   </style>
 </head>
 <body>
+  <!-- Loading -->
+  <div id="load"><div class="spinner"></div></div>
   <!-- Access -->
   <div id="access">
     <div class="card">
@@ -105,7 +111,7 @@
   <div id="quiz">
     <div class="top">
       <button class="btn" onclick="exit()">←</button>
-      <h1>The Lekki Headmaster - Dusk</h1>
+      <h1>The Lekki Headmaster - Chapter 1</h1>
       <button class="btn" onclick="toggleTheme()">🌙</button>
     </div>
     <div class="prog"><div class="prog-bar" id="pbar"></div></div>
@@ -163,7 +169,9 @@
     <div id="dcont"></div>
   </div>
 <script>
-const CONFIG={TIME:600,PASS:30};
+// Configuration
+const CONFIG={TIME:600,PASS:30}; // 10 minutes for 30 questions
+// Section mapping
 const SECTIONS={
   0:"A: Chapter 1 (Dusk)"
 };
@@ -174,6 +182,7 @@ function getSection(qIndex){
   }
   return "Introduction";
 }
+// Quiz Data - 30 JAMB Literature Questions
 const QUIZ_DATA=[
   {q:"What is the title of Chapter 1?",o:["The Enticement","Dusk","Migration Tales","Arrival"],a:1,e:"The chapter is explicitly titled "Dusk" and opens with the dramatic assembly scene."},
   {q:"The primary setting of Chapter 1 is",o:["The principal's office","A classroom","The morning assembly in the school hall/chapel","The schoolyard"],a:2,e:"The chapter begins and centers on the unusual morning assembly where the principal breaks down."},
@@ -208,30 +217,36 @@ const QUIZ_DATA=[
 ];
 let state={data:QUIZ_DATA,ans:new Array(QUIZ_DATA.length).fill(null),q:0,time:CONFIG.TIME,timer:null,submitted:false};
 function init(){
-  const saved=sessionStorage.getItem('lit_quiz_progress');
+  const saved=sessionStorage.getItem('chem_quiz_progress');
   if(saved){
     const d=JSON.parse(saved);
     if(Date.now()-d.ts<86400000&&!d.submitted&&confirm('Resume previous session?')){
       state.q=d.q;state.ans=d.ans;state.time=d.time;
     }
   }
-  updateTimer();
+  document.getElementById('load').classList.add('hide');
+  document.getElementById('access').style.display='flex';
 }
 function unlock(){
   const c=document.getElementById('code').value.trim().toUpperCase();
+  const btn=document.getElementById('unlockBtn');
   if(c.length!==8){showMsg('Enter 8-character code','err');return;}
-  if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid code format','err');return;}
-  localStorage.setItem('lit_quiz_auth',c);
-  showMsg('Access granted!','ok');
-  document.getElementById('access').style.display='none';
-  document.getElementById('quiz').style.display='block';
-  startTimer();
-  render();
+  btn.disabled=true;btn.textContent='Checking...';
+  setTimeout(()=>{
+    if(!/^[A-Z0-9]{8}$/.test(c)){showMsg('Invalid code format','err');btn.disabled=false;btn.textContent='Start Quiz';return;}
+    localStorage.setItem('chem_quiz_auth',c);
+    showMsg('Access granted!','ok');
+    setTimeout(()=>{
+      document.getElementById('access').style.display='none';
+      document.getElementById('quiz').style.display='block';
+      startTimer();
+      render();
+    },400);
+  },300);
 }
 function showMsg(t,type){
   const m=document.getElementById('msg');
-  m.textContent=t;
-  m.className='msg show '+type;
+  m.textContent=t;m.className='msg show '+type;
 }
 function startTimer(){
   if(state.timer)clearInterval(state.timer);
@@ -253,11 +268,15 @@ function updateTimer(){
 }
 function render(){
   const q=state.data[state.q];
+  // Progress
   const done=state.ans.filter(x=>x!==null).length;
   document.getElementById('pbar').style.width=(done/state.data.length*100)+'%';
   document.getElementById('ptxt').textContent=${done}/${state.data.length};
+  // Section
   document.getElementById('stype').textContent=Section ${getSection(state.q)} • Question ${state.q+1}/30;
+  // Question
   document.getElementById('question').textContent=q.q;
+  // Options
   const opts=document.getElementById('opts');
   opts.innerHTML='';
   q.o.forEach((o,i)=>{
@@ -267,6 +286,7 @@ function render(){
     d.onclick=()=>select(i);
     opts.appendChild(d);
   });
+  // Navigation
   document.getElementById('prevBtn').disabled=state.q===0;
   const isLast=state.q===state.data.length-1;
   document.getElementById('nextBtn').textContent=isLast?'Submit Quiz ✓':'Next →';
@@ -283,21 +303,19 @@ function next(){
   if(isLast){
     const unans=state.ans.filter(x=>x===null).length;
     if(unans>0&&!confirm(${unans} question(s) unanswered. Submit anyway?)){
-      showPop();
-      return;
+      showPop();return;
     }
-    submit(false);
-    return;
+    submit(false);return;
   }
   state.q++;
   render();
 }
 function prev(){
-  if(state.q>0)state.q--;
+  if(state.q>0){state.q--;}
   render();
 }
 function saveProgress(){
-  sessionStorage.setItem('lit_quiz_progress',JSON.stringify({
+  sessionStorage.setItem('chem_quiz_progress',JSON.stringify({
     q:state.q,ans:state.ans,time:state.time,submitted:state.submitted,ts:Date.now()
   }));
 }
@@ -352,6 +370,7 @@ function showDet(){
   sum.className='det-summary';
   sum.innerHTML=<div class="big">${pct}%</div><div>${correct}/${state.data.length} correct</div>;
   c.appendChild(sum);
+  // Group by sections
   const sections=[0,30];
   const sectionNames=["A: Chapter 1 (Dusk)"];
   for(let s=0;s<1;s++){
@@ -388,22 +407,19 @@ function hideDet(){
 }
 function restart(){
   if(!confirm('Start a new quiz? All progress will be reset.'))return;
-  localStorage.removeItem('lit_quiz_auth');
-  sessionStorage.removeItem('lit_quiz_progress');
+  localStorage.removeItem('chem_quiz_auth');
+  sessionStorage.removeItem('chem_quiz_progress');
   location.reload();
 }
 function exit(){
-  if(confirm('Exit quiz? Your progress is saved.')){
-    saveProgress();
-    location.reload();
-  }
+  if(confirm('Exit quiz? Your progress is saved.')){saveProgress();location.reload();}
 }
 function toggleTheme(){
   document.body.classList.toggle('light');
-  localStorage.setItem('lit_quiz_theme',document.body.classList.contains('light')?'light':'dark');
+  localStorage.setItem('chem_quiz_theme',document.body.classList.contains('light')?'light':'dark');
 }
 document.addEventListener('DOMContentLoaded',()=>{
-  if(localStorage.getItem('lit_quiz_theme')==='light')document.body.classList.add('light');
+  if(localStorage.getItem('chem_quiz_theme')==='light')document.body.classList.add('light');
   document.getElementById('code').addEventListener('keypress',e=>{if(e.key==='Enter')unlock();});
   init();
 });
